@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ConsumerGroupData(id, name, type, systemData.Value, location.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value);
+            return new ConsumerGroupData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value, location.Value);
         }
     }
 }

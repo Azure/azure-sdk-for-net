@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResourceNameAvailabilityContent(string name, CheckNameResourceTypes resourceType)
+        public ResourceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
             if (name == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Resource name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
-        public CheckNameResourceTypes ResourceType { get; }
+        public CheckNameResourceType ResourceType { get; }
         /// <summary> Is fully qualified domain name. </summary>
         public bool? IsFqdn { get; set; }
     }

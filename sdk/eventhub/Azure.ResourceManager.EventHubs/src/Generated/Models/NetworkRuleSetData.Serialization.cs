@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, systemData.Value, location.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess));
+            return new NetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), location.Value);
         }
     }
 }

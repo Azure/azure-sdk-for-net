@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, kind.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties));
+            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties), kind.Value);
         }
     }
 }

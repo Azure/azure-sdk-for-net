@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerSettings))
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.Resources.Models
         internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
-            AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
             Optional<ScriptStorageConfiguration> storageAccountSettings = default;
-            Optional<ScriptCleanupOptions> cleanupPreference = default;
+            Optional<ScriptCleanupOption> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
             Optional<BinaryData> outputs = default;
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Resources.Models
                     identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("kind"))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Resources.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("location"))
                 {
-                    kind = new ScriptType(property.Value.GetString());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
+                            cleanupPreference = new ScriptCleanupOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            return new AzureCliScript(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
     }
 }

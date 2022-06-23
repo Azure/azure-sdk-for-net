@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource));
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan);
         }
     }
 }

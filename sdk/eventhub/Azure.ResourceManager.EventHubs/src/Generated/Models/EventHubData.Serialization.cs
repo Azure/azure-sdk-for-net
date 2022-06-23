@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData.Value, location.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value);
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, location.Value);
         }
     }
 }

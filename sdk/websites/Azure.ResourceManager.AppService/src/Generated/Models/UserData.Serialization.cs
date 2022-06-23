@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new UserData(id, name, type, systemData.Value, kind.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value);
+            return new UserData(id, name, type, systemData.Value, publishingUserName.Value, publishingPassword.Value, publishingPasswordHash.Value, publishingPasswordHashSalt.Value, scmUri.Value, kind.Value);
         }
     }
 }

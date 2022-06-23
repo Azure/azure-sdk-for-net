@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new BackupRequest(id, name, type, systemData.Value, kind.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases));
+            return new BackupRequest(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value);
         }
     }
 }

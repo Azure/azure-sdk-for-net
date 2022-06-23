@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the TriggeredWebJob data model. </summary>
-    public partial class TriggeredWebJobData : ProxyOnlyResource
+    public partial class TriggeredWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
         public TriggeredWebJobData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="latestRun"> Latest job run information. </param>
         /// <param name="historyUri"> History URL. </param>
         /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
@@ -38,7 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.AppService
             Error = error;
             UsingSdk = usingSdk;
             Settings = settings;
+            Kind = kind;
         }
 
         /// <summary> Latest job run information. </summary>
@@ -72,5 +73,7 @@ namespace Azure.ResourceManager.AppService
         public bool? UsingSdk { get; set; }
         /// <summary> Job settings. </summary>
         public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

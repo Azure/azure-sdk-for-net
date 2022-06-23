@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceType type, bool? isFqdn)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceType type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(name, nameof(name));
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, string name, CheckNameResourceType type, bool? isFqdn = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(name, nameof(name));

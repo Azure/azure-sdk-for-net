@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the BackupItem data model. </summary>
-    public partial class BackupItemData : ProxyOnlyResource
+    public partial class BackupItemData : ResourceData
     {
         /// <summary> Initializes a new instance of BackupItemData. </summary>
         public BackupItemData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupId"> Id of the backup. </param>
         /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
         /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
@@ -42,7 +41,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="finishedTimeStamp"> Timestamp when this backup finished. </param>
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? backupId, string storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, string storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.AppService
             FinishedTimeStamp = finishedTimeStamp;
             CorrelationId = correlationId;
             WebsiteSizeInBytes = websiteSizeInBytes;
+            Kind = kind;
         }
 
         /// <summary> Id of the backup. </summary>
@@ -88,5 +89,7 @@ namespace Azure.ResourceManager.AppService
         public string CorrelationId { get; }
         /// <summary> Size of the original web app which has been backed up. </summary>
         public long? WebsiteSizeInBytes { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

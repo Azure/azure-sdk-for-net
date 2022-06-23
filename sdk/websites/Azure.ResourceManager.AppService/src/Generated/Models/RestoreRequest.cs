@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a restore request. </summary>
-    public partial class RestoreRequest : ProxyOnlyResource
+    public partial class RestoreRequest : ResourceData
     {
         /// <summary> Initializes a new instance of RestoreRequest. </summary>
         public RestoreRequest()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <param name="blobName"> Name of a blob which contains the backup. </param>
         /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
@@ -40,7 +39,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="operationType"> Operation type. </param>
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
-        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string storageAccountUri, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountUri, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             OperationType = operationType;
             AdjustConnectionStrings = adjustConnectionStrings;
             HostingEnvironment = hostingEnvironment;
+            Kind = kind;
         }
 
         /// <summary> SAS URL to the container. </summary>
@@ -80,5 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? AdjustConnectionStrings { get; set; }
         /// <summary> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </summary>
         public string HostingEnvironment { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
-    public partial class MsDeploy : ProxyOnlyResource
+    public partial class MsDeploy : ResourceData
     {
         /// <summary> Initializes a new instance of MsDeploy. </summary>
         public MsDeploy()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="packageUri"> Package URI. </param>
         /// <param name="connectionString"> SQL Connection String. </param>
         /// <param name="dbType"> Database Type. </param>
@@ -41,7 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, string kind) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
             SetParameters = setParameters;
             SkipAppData = skipAppData;
             AppOffline = appOffline;
+            Kind = kind;
         }
 
         /// <summary> Package URI. </summary>
@@ -74,5 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
         public bool? AppOffline { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

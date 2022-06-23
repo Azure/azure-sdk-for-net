@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal TextNer(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetrics? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
+        internal TextNer(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetric? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             DataSettings = dataSettings;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only &apos;Accuracy&apos; is supported for Text-NER, so user need not set this explicitly.
         /// </summary>
-        public ClassificationPrimaryMetrics? PrimaryMetric { get; }
+        public ClassificationPrimaryMetric? PrimaryMetric { get; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

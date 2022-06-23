@@ -17,14 +17,12 @@ namespace Azure.ResourceManager.Resources
     /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
     /// </summary>
-    public partial class ArmDeploymentScriptData : ResourceData
+    public partial class ArmDeploymentScriptData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
-        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        public ArmDeploymentScriptData(AzureLocation location)
+        /// <param name="location"> The location. </param>
+        public ArmDeploymentScriptData(AzureLocation location) : base(location)
         {
-            Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
@@ -32,24 +30,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
-        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
-        internal ArmDeploymentScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmDeploymentScriptManagedIdentity identity, ScriptType kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            Location = location;
-            Tags = tags;
             Kind = kind;
         }
 
         /// <summary> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </summary>
         public ArmDeploymentScriptManagedIdentity Identity { get; set; }
-        /// <summary> The location of the ACI and the storage account for the deployment script. </summary>
-        public AzureLocation Location { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Type of the script. </summary>
         internal ScriptType Kind { get; set; }
     }

@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences));
+            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone.Value, Optional.ToNullable(hostPoolType), exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan);
         }
     }
 }

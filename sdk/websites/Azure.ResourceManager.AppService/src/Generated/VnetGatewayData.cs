@@ -6,13 +6,12 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the VnetGateway data model. </summary>
-    public partial class VnetGatewayData : ProxyOnlyResource
+    public partial class VnetGatewayData : ResourceData
     {
         /// <summary> Initializes a new instance of VnetGatewayData. </summary>
         public VnetGatewayData()
@@ -24,18 +23,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="vnetName"> The Virtual Network name. </param>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
-        internal VnetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string vnetName, string vpnPackageUri) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal VnetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, string vpnPackageUri, string kind) : base(id, name, resourceType, systemData)
         {
             VnetName = vnetName;
             VpnPackageUri = vpnPackageUri;
+            Kind = kind;
         }
 
         /// <summary> The Virtual Network name. </summary>
         public string VnetName { get; set; }
         /// <summary> The URI where the VPN package can be downloaded. </summary>
         public string VpnPackageUri { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

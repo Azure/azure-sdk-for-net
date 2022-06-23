@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteSourceControlData(id, name, type, systemData.Value, kind.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value);
+            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value);
         }
     }
 }

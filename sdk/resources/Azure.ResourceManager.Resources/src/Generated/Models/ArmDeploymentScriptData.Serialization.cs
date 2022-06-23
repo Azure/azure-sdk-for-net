@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
-            AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Resources
                     identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("kind"))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("location"))
                 {
-                    kind = new ScriptType(property.Value.GetString());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind);
+            return new ArmDeploymentScriptData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, kind);
         }
     }
 }
