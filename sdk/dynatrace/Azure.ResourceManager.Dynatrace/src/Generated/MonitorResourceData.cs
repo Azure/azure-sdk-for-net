@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="liftrResourceCategory"> Liftr Resource category. </param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal MonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, MonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, UserInfo userInfo, PlanData planData, LiftrResourceCategories? liftrResourceCategory, int? liftrResourcePreference, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal MonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, MonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DynatraceEnvironmentProperties dynatraceEnvironmentProperties, UserInfo userInfo, PlanData planData, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MonitoringStatus = monitoringStatus;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <summary> Billing plan information. </summary>
         public PlanData PlanData { get; set; }
         /// <summary> Liftr Resource category. </summary>
-        public LiftrResourceCategories? LiftrResourceCategory { get; }
+        public LiftrResourceCategory? LiftrResourceCategory { get; }
         /// <summary> The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
         /// <summary> Provisioning state of the resource. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, OperatingSystemTypes osType) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, OperatingSystemType osType) : base(location)
         {
             if (containers == null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IPAddress ipAddress, OperatingSystemTypes osType, IList<ContainerInstanceVolume> volumes, ContainerGroupPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IPAddress ipAddress, OperatingSystemType osType, IList<ContainerInstanceVolume> volumes, ContainerGroupPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The IP address type of the container group. </summary>
         public IPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes OSType { get; set; }
+        public OperatingSystemType OSType { get; set; }
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerInstanceVolume> Volumes { get; }
         /// <summary> The instance view of the container group. Only valid in response. </summary>

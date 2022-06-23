@@ -48,14 +48,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "31",
+        "Content-Length": "20",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0-alpha.20220303.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 ) azsdk-net-ResourceManager/1.0.0-alpha.20220303.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
         "x-ms-client-request-id": "3aabb14d3d4eb8c47a60615866776436",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,

@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DedicatedHostGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DedicatedHostGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DedicatedHostGroupData> Get(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<DedicatedHostGroupData> Get(string subscriptionId, string resourceGroupName, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
