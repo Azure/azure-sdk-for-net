@@ -12,7 +12,6 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 internal class PartitionPublisherConfiguration
 {
-    // Test Configuration Values
 
     /// <summary>
     ///   The number of events to generate and put into a batch during each iteration of
