@@ -15,8 +15,8 @@ LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
+// Use BinaryData to serialize instances of an anonymous type into JSON
 BinaryData data = BinaryData.FromObjectAsJson(
-    // Use an anonymous type to create the payload
     new[] {
         new
         {
@@ -46,7 +46,7 @@ BinaryData data = BinaryData.FromObjectAsJson(
         },
     });
 
-// Make the request
+// Upload our logs
 Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
 ```
 

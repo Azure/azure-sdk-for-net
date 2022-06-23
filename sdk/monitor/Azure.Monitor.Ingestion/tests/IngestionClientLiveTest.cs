@@ -76,7 +76,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             string query = TestEnvironment.TableName + " | count;";
             string countQueryId = batch.AddWorkspaceQuery(
-                TestEnvironment.WorkspaceId,
+                TestEnvironment.Ingestion_WorkspaceId,
                 query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
@@ -105,7 +105,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var batch = new LogsBatchQuery();
             string query = TestEnvironment.TableName + " | count;";
             string countQueryId = batch.AddWorkspaceQuery(
-                TestEnvironment.WorkspaceId,
+                TestEnvironment.Ingestion_WorkspaceId,
                 query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 

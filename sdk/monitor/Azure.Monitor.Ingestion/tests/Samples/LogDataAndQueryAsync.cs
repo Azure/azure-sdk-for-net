@@ -29,8 +29,8 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 
             DateTimeOffset currentTime = DateTimeOffset.UtcNow;
 
+            // Use BinaryData to serialize instances of an anonymous type into JSON
             BinaryData data = BinaryData.FromObjectAsJson(
-                // Use an anonymous type to create the payload
                 new[] {
                     new
                     {
@@ -60,7 +60,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                     },
                 });
 
-            // Make the request
+            // Upload our logs
             Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
             #endregion
         }
@@ -77,7 +77,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 #endif
 
             LogsQueryClient logsQueryClient = new(credential);
-            LogsBatchQuery batch = new LogsBatchQuery();
+            LogsBatchQuery batch = new();
             string query = tableName + " | count;";
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,

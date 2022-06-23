@@ -15,7 +15,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
         public string DCREndpoint => GetRecordedVariable("DCREndpoint");
 
-        public string WorkspaceId => GetRecordedVariable("WorkspaceId");
+        public string Ingestion_WorkspaceId => GetRecordedVariable("Ingestion_WorkspaceId");
 
         public string StreamName => GetRecordedVariable("StreamName");
 

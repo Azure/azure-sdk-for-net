@@ -12,7 +12,7 @@ TokenCredential credential = new DefaultAzureCredential();
 string tableName = "...";
 
 LogsQueryClient logsQueryClient = new(credential);
-LogsBatchQuery batch = new LogsBatchQuery();
+LogsBatchQuery batch = new();
 string query = tableName + " | count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
