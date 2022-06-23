@@ -22,7 +22,7 @@ namespace Azure.IoT.DeviceUpdate
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _instanceId;
         private readonly string _apiVersion;
 
@@ -42,7 +42,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options)
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(instanceId, nameof(instanceId));
@@ -1538,7 +1538,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates", false);
@@ -1563,7 +1563,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates:import", false);
@@ -1582,7 +1582,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1608,7 +1608,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1630,7 +1630,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers", false);
@@ -1647,7 +1647,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1666,7 +1666,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1691,7 +1691,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1714,7 +1714,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
@@ -1742,7 +1742,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/operations", false);
@@ -1767,7 +1767,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/operations/", false);
@@ -1789,7 +1789,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1803,7 +1803,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1817,7 +1817,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1831,7 +1831,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1845,7 +1845,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1859,7 +1859,7 @@ namespace Azure.IoT.DeviceUpdate
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
