@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<AccessRights>> rights = default;
+            Optional<IList<AccessRight>> rights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AccessRights> array = new List<AccessRights>();
+                            List<AccessRight> array = new List<AccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString().ToAccessRights());
+                                array.Add(item.GetString().ToAccessRight());
                             }
                             rights = array;
                             continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToList(rights));
+            return new ServiceBusAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
         }
     }
 }

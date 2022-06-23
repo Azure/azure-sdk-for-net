@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the ContinuousWebJob data model. </summary>
-    public partial class ContinuousWebJobData : ProxyOnlyResource
+    public partial class ContinuousWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of ContinuousWebJobData. </summary>
         public ContinuousWebJobData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Job status. </param>
         /// <param name="detailedStatus"> Detailed status. </param>
         /// <param name="logUri"> Log URL. </param>
@@ -38,7 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             Status = status;
             DetailedStatus = detailedStatus;
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.AppService
             Error = error;
             UsingSdk = usingSdk;
             Settings = settings;
+            Kind = kind;
         }
 
         /// <summary> Job status. </summary>
@@ -72,5 +73,7 @@ namespace Azure.ResourceManager.AppService
         public bool? UsingSdk { get; set; }
         /// <summary> Job settings. </summary>
         public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

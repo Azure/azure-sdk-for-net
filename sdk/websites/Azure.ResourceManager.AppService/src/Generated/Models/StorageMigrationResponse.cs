@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Response for a migration of app content request. </summary>
-    public partial class StorageMigrationResponse : ProxyOnlyResource
+    public partial class StorageMigrationResponse : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMigrationResponse. </summary>
         public StorageMigrationResponse()
@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="operationId"> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </param>
-        internal StorageMigrationResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string operationId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StorageMigrationResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationId, string kind) : base(id, name, resourceType, systemData)
         {
             OperationId = operationId;
+            Kind = kind;
         }
 
         /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
         public string OperationId { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

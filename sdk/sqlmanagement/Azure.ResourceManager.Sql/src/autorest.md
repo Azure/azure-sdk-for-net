@@ -22,6 +22,9 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+keep-plural-enums:
+  - DiffBackupIntervalInHours
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus

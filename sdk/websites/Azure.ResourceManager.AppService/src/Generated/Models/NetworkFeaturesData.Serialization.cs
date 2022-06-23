@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new NetworkFeaturesData(id, name, type, systemData.Value, kind.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2));
+            return new NetworkFeaturesData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2), kind.Value);
         }
     }
 }

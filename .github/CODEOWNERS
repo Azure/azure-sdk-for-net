@@ -13,7 +13,7 @@
 #########
 
 # Catch all
-/sdk/                                           
+/sdk/                                           @pallavit @jsquire
 
 # ######## Core Libraries ########
 

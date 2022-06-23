@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new MigrationConfigPropertiesData(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value);
+            return new MigrationConfigPropertiesData(id, name, type, systemData.Value, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value, Optional.ToNullable(location));
         }
     }
 }

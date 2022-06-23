@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public class PrivateEndpointConnectionTests : EventHubTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private EventHubNamespaceResource _eventHubNamespace;
+        private EventHubsNamespaceResource _eventHubNamespace;
         private EventHubsPrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _eventHubNamespace.GetEventHubsPrivateEndpointConnections(); }
         public PrivateEndpointConnectionTests(bool async) : base(async)
         {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            _eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            _eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
         }
 
         [TearDown]
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
             List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             EventHubsPrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(PrivateLinkConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.AreEqual(EventHubsPrivateLinkConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
 
             _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new EventHubsPrivateEndpointConnectionData()
             {
-                ConnectionState = new Models.ConnectionState()
+                ConnectionState = new Models.EventHubsPrivateLinkServiceConnectionState()
                 {
                     Status = "Approved",
                     Description = "Approved by test",
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnection = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(PrivateLinkConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
+            Assert.AreEqual(EventHubsPrivateLinkConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
+                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");

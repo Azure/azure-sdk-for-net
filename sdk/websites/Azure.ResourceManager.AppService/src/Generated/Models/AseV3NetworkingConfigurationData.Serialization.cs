@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, kind.Value, Optional.ToList(windowsOutboundIpAddresses), Optional.ToList(linuxOutboundIpAddresses), Optional.ToList(externalInboundIpAddresses), Optional.ToList(internalInboundIpAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections));
+            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Optional.ToList(windowsOutboundIpAddresses), Optional.ToList(linuxOutboundIpAddresses), Optional.ToList(externalInboundIpAddresses), Optional.ToList(internalInboundIpAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value);
         }
     }
 }

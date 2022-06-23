@@ -10,8 +10,7 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-mgmt-debug:
-  show-request-path: true
+
 batch:
   - tag: package-common-type-2022-04
   - tag: package-resources-2022-04
@@ -230,6 +229,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
 
 rename-rules:
   CPU: Cpu
