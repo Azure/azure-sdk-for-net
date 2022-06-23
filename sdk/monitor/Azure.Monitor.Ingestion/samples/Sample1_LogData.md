@@ -9,7 +9,7 @@ You can create a client and call the client's `Upload` method
 ```C# Snippet:UploadCustomLogs
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-string dcrImmutableId = "...";
+string dataCollectionRuleImmutableId = "...";
 string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
@@ -47,7 +47,7 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Make the request
-Response response = client.Upload(dcrImmutableId, streamName, RequestContent.Create(data));
+Response response = client.Upload(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data));
 ```
 
 To see the full example source files, see:

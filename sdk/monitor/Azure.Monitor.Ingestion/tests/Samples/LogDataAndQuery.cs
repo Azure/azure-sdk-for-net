@@ -17,7 +17,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #region Snippet:CreateLogsIngestionClient
             Uri dataCollectionEndpoint = new Uri("...");
             TokenCredential credential = new DefaultAzureCredential();
-            var client = new LogsIngestionClient(dataCollectionEndpoint, credential);
+            LogsIngestionClient client = new LogsIngestionClient(dataCollectionEndpoint, credential);
             #endregion
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #region Snippet:UploadCustomLogs
             Uri dataCollectionEndpoint = new Uri("...");
             TokenCredential credential = new DefaultAzureCredential();
-            string dcrImmutableId = "...";
+            string dataCollectionRuleImmutableId = "...";
             string streamName = "...";
 #if SNIPPET
 #else
@@ -69,7 +69,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 });
 
             // Make the request
-            Response response = client.Upload(dcrImmutableId, streamName, RequestContent.Create(data));
+            Response response = client.Upload(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data));
             #endregion
         }
 
@@ -92,9 +92,9 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = logsQueryClient.QueryBatch(batch);
+            Response<LogsBatchQueryResultCollection> queryResponse = logsQueryClient.QueryBatch(batch);
 
-            Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
+            Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
             #endregion
         }
     }

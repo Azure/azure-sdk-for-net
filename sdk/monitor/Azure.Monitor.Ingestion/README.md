@@ -41,7 +41,7 @@ To authenticate, the following example uses `DefaultAzureCredential` from the [A
 ```C# Snippet:CreateLogsIngestionClient
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-var client = new LogsIngestionClient(dataCollectionEndpoint, credential);
+LogsIngestionClient client = new LogsIngestionClient(dataCollectionEndpoint, credential);
 ```
 
 ## Key concepts
@@ -103,7 +103,7 @@ You can create a client and call the client's `Upload` method.
 ```C# Snippet:UploadCustomLogs
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-string dcrImmutableId = "...";
+string dataCollectionRuleImmutableId = "...";
 string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
@@ -141,7 +141,7 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Make the request
-Response response = client.Upload(dcrImmutableId, streamName, RequestContent.Create(data));
+Response response = client.Upload(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data));
 ```
 
 ### Verify logs
@@ -161,9 +161,9 @@ string countQueryId = batch.AddWorkspaceQuery(
     query,
     new QueryTimeRange(TimeSpan.FromDays(1)));
 
-Response<LogsBatchQueryResultCollection> responseLogsQuery = logsQueryClient.QueryBatch(batch);
+Response<LogsBatchQueryResultCollection> queryResponse = logsQueryClient.QueryBatch(batch);
 
-Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
+Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
 ## Troubleshooting

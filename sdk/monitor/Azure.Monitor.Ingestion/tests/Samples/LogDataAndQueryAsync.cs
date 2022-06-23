@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             #region Snippet:UploadCustomLogsAsync
             Uri dataCollectionEndpoint = new Uri("...");
             TokenCredential credential = new DefaultAzureCredential();
-            string dcrImmutableId = "...";
+            string dataCollectionRuleImmutableId = "...";
             string streamName = "...";
 #if SNIPPET
 #else
@@ -61,7 +61,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 });
 
             // Make the request
-            Response response = await client.UploadAsync(dcrImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
+            Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
             #endregion
         }
 
@@ -84,9 +84,9 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                 query,
                 new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
+            Response<LogsBatchQueryResultCollection> queryResponse = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
-            Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
+            Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
             #endregion
         }
     }

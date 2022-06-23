@@ -19,9 +19,9 @@ string countQueryId = batch.AddWorkspaceQuery(
     query,
     new QueryTimeRange(TimeSpan.FromDays(1)));
 
-Response<LogsBatchQueryResultCollection> responseLogsQuery = logsQueryClient.QueryBatch(batch);
+Response<LogsBatchQueryResultCollection> queryResponse = logsQueryClient.QueryBatch(batch);
 
-Console.WriteLine("Table entry count: " + responseLogsQuery.Value.GetResult<int>(countQueryId).Single());
+Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
 To see the full example source files, see:

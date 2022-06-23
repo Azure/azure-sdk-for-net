@@ -9,7 +9,7 @@ You can create a client and call the client's `UploadAsync` method
 ```C# Snippet:UploadCustomLogsAsync
 Uri dataCollectionEndpoint = new Uri("...");
 TokenCredential credential = new DefaultAzureCredential();
-string dcrImmutableId = "...";
+string dataCollectionRuleImmutableId = "...";
 string streamName = "...";
 LogsIngestionClient client = new(dataCollectionEndpoint, credential);
 
@@ -47,7 +47,7 @@ BinaryData data = BinaryData.FromObjectAsJson(
     });
 
 // Make the request
-Response response = await client.UploadAsync(dcrImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
+Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
 ```
 
 To see the full example source files, see:
