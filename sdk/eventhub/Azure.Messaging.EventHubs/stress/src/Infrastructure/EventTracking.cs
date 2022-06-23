@@ -129,7 +129,7 @@ public class EventTracking
     {
         var roleList = new List<Role>(roles);
 
-        var numPublishers = roleList.Where(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher)).Count();
+        var numPublishers = roleList.Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
         var thisPublisherIndex = (roleList.GetRange(0,roleIndex)).Where(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher)).Count();
 
         var baseNum = partitionCount/numPublishers;
