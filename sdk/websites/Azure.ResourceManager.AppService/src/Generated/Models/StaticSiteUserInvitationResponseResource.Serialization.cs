@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserInvitationResponseResource(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(expiresOn), invitationUrl.Value);
+            return new StaticSiteUserInvitationResponseResource(id, name, type, systemData.Value, Optional.ToNullable(expiresOn), invitationUrl.Value, kind.Value);
         }
     }
 }

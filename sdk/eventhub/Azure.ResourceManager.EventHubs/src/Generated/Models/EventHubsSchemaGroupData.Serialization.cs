@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable
+    public partial class SchemaGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element)
+        internal static SchemaGroupData DeserializeSchemaGroupData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> updatedAtUtc = default;
             Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<ETag> eTag = default;
+            Optional<Guid> eTag = default;
             Optional<IDictionary<string, string>> groupProperties = default;
             Optional<SchemaCompatibility> schemaCompatibility = default;
             Optional<SchemaType> schemaType = default;
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            eTag = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("groupProperties"))
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
+            return new SchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
         }
     }
 }

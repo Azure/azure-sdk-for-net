@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PublicCertificateData(id, name, type, systemData.Value, kind.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value);
+            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
         }
     }
 }

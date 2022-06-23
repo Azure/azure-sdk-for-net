@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the SiteSourceControl data model. </summary>
-    public partial class SiteSourceControlData : ProxyOnlyResource
+    public partial class SiteSourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteSourceControlData. </summary>
         public SiteSourceControlData()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="repoUri"> Repository or source control URL. </param>
         /// <param name="branch"> Name of branch to use for deployment. </param>
         /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
@@ -33,7 +32,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="deploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.AppService
             DeploymentRollbackEnabled = deploymentRollbackEnabled;
             IsMercurial = isMercurial;
             GitHubActionConfiguration = gitHubActionConfiguration;
+            Kind = kind;
         }
 
         /// <summary> Repository or source control URL. </summary>
@@ -58,5 +59,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsMercurial { get; set; }
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

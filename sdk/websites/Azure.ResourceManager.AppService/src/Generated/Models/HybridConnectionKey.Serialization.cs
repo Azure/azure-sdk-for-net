@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new HybridConnectionKey(id, name, type, systemData.Value, kind.Value, sendKeyName.Value, sendKeyValue.Value);
+            return new HybridConnectionKey(id, name, type, systemData.Value, sendKeyName.Value, sendKeyValue.Value, kind.Value);
         }
     }
 }
