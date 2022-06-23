@@ -179,7 +179,7 @@ public class EventTracking
     private int CheckEvent(EventData eventData, string partitionReceivedFrom, Metrics metrics)
     {
         // Id Checks
-        var hasID = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
+        var hasId = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
         var eventId = eventIdProperty?.ToString();
 
         if (!hasID)
