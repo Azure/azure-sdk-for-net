@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Preferences related to the shipment logistics of the order. </summary>
         internal TransportPreferences TransportPreferences { get; set; }
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
-        public TransportShipmentTypes? TransportPreferencesPreferredShipmentType
+        public TransportShipmentType? TransportPreferencesPreferredShipmentType
         {
-            get => TransportPreferences is null ? default(TransportShipmentTypes?) : TransportPreferences.PreferredShipmentType;
+            get => TransportPreferences is null ? default(TransportShipmentType?) : TransportPreferences.PreferredShipmentType;
             set
             {
                 TransportPreferences = value.HasValue ? new TransportPreferences(value.Value) : null;

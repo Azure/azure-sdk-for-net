@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SkuDescription sku, int? workerSizeId, ComputeModeOptions? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
+        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             WorkerSizeId = workerSizeId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Worker size ID for referencing this worker pool. </summary>
         public int? WorkerSizeId { get; set; }
         /// <summary> Shared or dedicated app hosting. </summary>
-        public ComputeModeOptions? ComputeMode { get; set; }
+        public ComputeModeOption? ComputeMode { get; set; }
         /// <summary> VM size of the worker pool instances. </summary>
         public string WorkerSize { get; set; }
         /// <summary> Number of instances in the worker pool. </summary>

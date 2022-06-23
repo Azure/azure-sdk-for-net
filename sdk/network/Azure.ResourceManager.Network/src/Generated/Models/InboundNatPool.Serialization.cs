@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<TransportProtocol> protocol = default;
+            Optional<LoadBalancerTransportProtocol> protocol = default;
             Optional<int> frontendPortRangeStart = default;
             Optional<int> frontendPortRangeEnd = default;
             Optional<int> backendPort = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protocol = new TransportProtocol(property0.Value.GetString());
+                            protocol = new LoadBalancerTransportProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("frontendPortRangeStart"))

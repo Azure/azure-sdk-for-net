@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> excludeFromLatest = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<ReplicationMode> replicationMode = default;
             Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationMode"))

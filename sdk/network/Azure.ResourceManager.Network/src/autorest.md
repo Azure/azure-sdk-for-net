@@ -225,6 +225,7 @@ directive:
       };
       $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
       $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
+      $.TrafficAnalyticsConfigurationProperties.properties.trafficAnalyticsInterval['x-ms-client-name'] = 'TrafficAnalyticsIntervalInMinutes';
       $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
@@ -237,6 +238,7 @@ directive:
       $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
       $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
       $.FlowLogPropertiesFormat.properties.storageId['x-ms-format'] = 'arm-id';
+      $.TroubleshootingProperties.properties.storagePath['x-ms-client-name'] = 'storageUri';
       $.ProtocolConfiguration.properties.HTTPConfiguration['x-ms-client-name'] = 'HttpProtocolConfiguration';
       $.FlowLogFormatParameters['x-ms-client-name'] = 'FlowLogFormat';
       $.TrafficAnalyticsProperties.properties.networkWatcherFlowAnalyticsConfiguration['x-ms-client-name'] = 'TrafficAnalyticsConfiguration';
@@ -300,6 +302,10 @@ directive:
     where: $.definitions
     transform: >
       $.PublicIPAddressPropertiesFormat.properties.deleteOption['x-ms-enum']['name'] = 'IPAddressDeleteOption';
+  - from: loadBalancer.json
+    where: $.definitions
+    transform: >
+      $.TransportProtocol['x-ms-enum']['name'] = 'LoadBalancerTransportProtocol';
 ```
 
 ### Tag: package-track2-preview

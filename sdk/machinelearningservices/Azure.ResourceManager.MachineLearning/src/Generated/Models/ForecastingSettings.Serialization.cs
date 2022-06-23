@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> countryOrRegionForHolidays = default;
             Optional<int> cvStepSize = default;
-            Optional<FeatureLags> featureLags = default;
+            Optional<FeatureLag> featureLags = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
             Optional<Seasonality> seasonality = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featureLags = new FeatureLags(property.Value.GetString());
+                    featureLags = new FeatureLag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("forecastHorizon"))

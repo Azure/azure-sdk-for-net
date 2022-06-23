@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of Regression. </summary>
         public Regression()
         {
-            AllowedModels = new ChangeTrackingList<RegressionModels>();
-            BlockedModels = new ChangeTrackingList<RegressionModels>();
+            AllowedModels = new ChangeTrackingList<RegressionModel>();
+            BlockedModels = new ChangeTrackingList<RegressionModel>();
             TaskType = TaskType.Regression;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
-        internal Regression(LogVerbosity? logVerbosity, TaskType taskType, IList<RegressionModels> allowedModels, IList<RegressionModels> blockedModels, RegressionPrimaryMetrics? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
+        internal Regression(LogVerbosity? logVerbosity, TaskType taskType, IList<RegressionModel> allowedModels, IList<RegressionModel> blockedModels, RegressionPrimaryMetric? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
         {
             AllowedModels = allowedModels;
             BlockedModels = blockedModels;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for regression task. </summary>
-        public IList<RegressionModels> AllowedModels { get; set; }
+        public IList<RegressionModel> AllowedModels { get; set; }
         /// <summary> Blocked models for regression task. </summary>
-        public IList<RegressionModels> BlockedModels { get; set; }
+        public IList<RegressionModel> BlockedModels { get; set; }
         /// <summary> Primary metric for regression task. </summary>
-        public RegressionPrimaryMetrics? PrimaryMetric { get; set; }
+        public RegressionPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public TableVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
