@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceManagementClient.html",
-          "hash": "F3uAOW5FWFIhchNT9E+q2A=="
+          "hash": "yrsTu/xWJ2lz/XdKE27gAg=="
         }
       },
       "is_incremental": false,
@@ -39,7 +39,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.IoT.DeviceUpdate/Azure.IoT.DeviceUpdate.DeviceUpdateClient.html",
-          "hash": "L4S7otDh3xrr7mXA+6GSTQ=="
+          "hash": "WnqHOYjyPLvq8VwY0zUw/A=="
         }
       },
       "is_incremental": false,
