@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmApplicationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData
     {
         public ArmApplicationData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy JitAccessPolicy { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public string ManagedBy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedResourceGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode? ManagementMode { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
@@ -35,7 +34,6 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? PublisherTenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
     }
@@ -185,10 +183,12 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
     {
-        public ArmDeploymentScriptData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ArmDeploymentScriptData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ArmDeploymentScriptResource : Azure.ResourceManager.ArmResource
     {
@@ -338,12 +338,14 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class TemplateSpecData : Azure.ResourceManager.Models.ResourceData
     {
-        public TemplateSpecData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TemplateSpecData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
     }
     public partial class TemplateSpecResource : Azure.ResourceManager.ArmResource
@@ -384,13 +386,15 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData
     {
-        public TemplateSpecVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TemplateSpecVersionData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact> LinkedTemplates { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.BinaryData MainTemplate { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.BinaryData UiFormDefinition { get { throw null; } set { } }
     }
     public partial class TemplateSpecVersionResource : Azure.ResourceManager.ArmResource
@@ -574,7 +578,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Uri AzureGovernmentUri { get { throw null; } }
         public System.Uri AzurePublicCloudUri { get { throw null; } }
     }
-    public partial class ArmApplicationPatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ArmApplicationPatch : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData
     {
         public ArmApplicationPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
@@ -586,7 +590,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy JitAccessPolicy { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public string ManagedBy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedResourceGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode? ManagementMode { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
@@ -594,7 +597,6 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? PublisherTenantId { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ArmApplicationSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
     }

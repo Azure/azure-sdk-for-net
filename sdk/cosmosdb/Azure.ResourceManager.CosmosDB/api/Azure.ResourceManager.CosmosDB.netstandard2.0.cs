@@ -400,11 +400,7 @@ namespace Azure.ResourceManager.CosmosDB
         public Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy ConsistencyPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CorsPolicy> Cors { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CreateMode? CreateMode { get { throw null; } set { } }
-<<<<<<< HEAD
         public Azure.ResourceManager.CosmosDB.Models.DatabaseAccountOfferType? DatabaseAccountOfferType { get { throw null; } }
-=======
-        public string DatabaseAccountOfferType { get { throw null; } }
->>>>>>> origin/main
         public string DefaultIdentity { get { throw null; } set { } }
         public bool? DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -1744,11 +1740,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.ConsistencyPolicy ConsistencyPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CorsPolicy> Cors { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.CreateMode? CreateMode { get { throw null; } set { } }
-<<<<<<< HEAD
         public Azure.ResourceManager.CosmosDB.Models.DatabaseAccountOfferType DatabaseAccountOfferType { get { throw null; } set { } }
-=======
-        public string DatabaseAccountOfferType { get { throw null; } set { } }
->>>>>>> origin/main
         public string DefaultIdentity { get { throw null; } set { } }
         public bool? DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -1804,7 +1796,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string LocationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
-<<<<<<< HEAD
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DatabaseAccountOfferType : System.IEquatable<Azure.ResourceManager.CosmosDB.Models.DatabaseAccountOfferType>
     {
@@ -1822,8 +1813,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator !=(Azure.ResourceManager.CosmosDB.Models.DatabaseAccountOfferType left, Azure.ResourceManager.CosmosDB.Models.DatabaseAccountOfferType right) { throw null; }
         public override string ToString() { throw null; }
     }
-=======
->>>>>>> origin/main
     public partial class DatabaseAccountPatch
     {
         public DatabaseAccountPatch() { }
