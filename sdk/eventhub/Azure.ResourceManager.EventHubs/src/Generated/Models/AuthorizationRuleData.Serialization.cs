@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static AuthorizationRuleData DeserializeAuthorizationRuleData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -46,7 +46,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new AuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), location.Value);
+            return new AuthorizationRuleData(id, name, type, systemData.Value, Optional.ToList(rights), Optional.ToNullable(location));
         }
     }
 }

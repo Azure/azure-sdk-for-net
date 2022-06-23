@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, string statusUri, string detectorUri, string consoleUri, string healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind) : base(id, name, resourceType, systemData)
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind) : base(id, name, resourceType, systemData)
         {
             State = state;
             StatusUri = statusUri;
@@ -47,13 +48,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the state. </summary>
         public SiteRuntimeState? State { get; set; }
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
-        public string StatusUri { get; set; }
+        public Uri StatusUri { get; set; }
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
-        public string DetectorUri { get; set; }
+        public Uri DetectorUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public string ConsoleUri { get; set; }
+        public Uri ConsoleUri { get; set; }
         /// <summary> Link to the console to web app instance. </summary>
-        public string HealthCheckUri { get; set; }
+        public Uri HealthCheckUri { get; set; }
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         public IDictionary<string, ContainerInfo> Containers { get; }
         /// <summary> Kind of resource. </summary>

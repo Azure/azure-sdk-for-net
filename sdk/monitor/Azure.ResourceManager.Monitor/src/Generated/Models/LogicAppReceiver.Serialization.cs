@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("resourceId");
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("callbackUrl");
-            writer.WriteStringValue(CallbackUri);
+            writer.WriteStringValue(CallbackUri.AbsoluteUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema");
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             string name = default;
             string resourceId = default;
-            string callbackUrl = default;
+            Uri callbackUrl = default;
             Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("callbackUrl"))
                 {
-                    callbackUrl = property.Value.GetString();
+                    callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("useCommonAlertSchema"))

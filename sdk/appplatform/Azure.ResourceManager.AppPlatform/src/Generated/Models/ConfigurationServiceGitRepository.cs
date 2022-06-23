@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="uri"> URI of the repository. </param>
         /// <param name="label"> Label of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="patterns"/>, <paramref name="uri"/> or <paramref name="label"/> is null. </exception>
-        public ConfigurationServiceGitRepository(string name, IEnumerable<string> patterns, string uri, string label)
+        public ConfigurationServiceGitRepository(string name, IEnumerable<string> patterns, Uri uri, string label)
         {
             if (name == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
         /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        internal ConfigurationServiceGitRepository(string name, IList<string> patterns, string uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
+        internal ConfigurationServiceGitRepository(string name, IList<string> patterns, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
         {
             Name = name;
             Patterns = patterns;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Collection of patterns of the repository. </summary>
         public IList<string> Patterns { get; }
         /// <summary> URI of the repository. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Label of the repository. </summary>
         public string Label { get; set; }
         /// <summary> Searching path of the repository. </summary>

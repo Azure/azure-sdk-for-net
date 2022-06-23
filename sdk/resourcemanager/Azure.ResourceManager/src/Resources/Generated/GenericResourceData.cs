@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the GenericResource data model. </summary>
-    public partial class GenericResourceData : TrackedResourceData
+    public partial class GenericResourceData : TrackedResourceExtendedData
     {
         /// <summary> Initializes a new instance of GenericResourceData. </summary>
         /// <param name="location"> The location. </param>
@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
         /// <param name="plan"> The plan of the resource. </param>
         /// <param name="properties"> The resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
@@ -38,8 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;
@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.Resources
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             ProvisioningState = provisioningState;
-            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The plan of the resource. </summary>
@@ -71,7 +70,5 @@ namespace Azure.ResourceManager.Resources
         public DateTimeOffset? ChangedOn { get; }
         /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
         public string ProvisioningState { get; }
-        /// <summary> Resource extended location. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

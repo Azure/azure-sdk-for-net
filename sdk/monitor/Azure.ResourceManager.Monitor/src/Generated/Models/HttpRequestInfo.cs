@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The Http request info. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="clientIpAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
-        internal HttpRequestInfo(string clientRequestId, string clientIpAddress, string method, string uri)
+        internal HttpRequestInfo(string clientRequestId, string clientIpAddress, string method, Uri uri)
         {
             ClientRequestId = clientRequestId;
             ClientIpAddress = clientIpAddress;
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the Http request method. </summary>
         public string Method { get; }
         /// <summary> the Uri. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
     }
 }

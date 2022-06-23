@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Forward shipment details. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>
         /// <param name="trackingUri"> TrackingUrl of the package. </param>
-        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, string trackingUri)
+        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri)
         {
             CarrierName = carrierName;
             CarrierDisplayName = carrierDisplayName;
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> TrackingId of the package. </summary>
         public string TrackingId { get; }
         /// <summary> TrackingUrl of the package. </summary>
-        public string TrackingUri { get; }
+        public Uri TrackingUri { get; }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string UpdateValue = "update";
         private const string ManageContactsValue = "managecontacts";
         private const string GetIssuersValue = "getissuers";
-        private const string ListissuersValue = "listissuers";
+        private const string ListIssuersValue = "listissuers";
         private const string SetIssuersValue = "setissuers";
         private const string DeleteIssuersValue = "deleteissuers";
         private const string ManageIssuersValue = "manageissuers";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> getissuers. </summary>
         public static CertificatePermission GetIssuers { get; } = new CertificatePermission(GetIssuersValue);
         /// <summary> listissuers. </summary>
-        public static CertificatePermission Listissuers { get; } = new CertificatePermission(ListissuersValue);
+        public static CertificatePermission ListIssuers { get; } = new CertificatePermission(ListIssuersValue);
         /// <summary> setissuers. </summary>
         public static CertificatePermission SetIssuers { get; } = new CertificatePermission(SetIssuersValue);
         /// <summary> deleteissuers. </summary>

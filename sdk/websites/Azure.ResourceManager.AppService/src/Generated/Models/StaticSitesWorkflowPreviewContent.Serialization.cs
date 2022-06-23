@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl");
-                writer.WriteStringValue(RepositoryUri);
+                writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> repositoryUrl = default;
+            Optional<Uri> repositoryUrl = default;
             Optional<string> branch = default;
             Optional<StaticSiteBuildProperties> buildProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("repositoryUrl"))
                         {
-                            repositoryUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repositoryUrl = null;
+                                continue;
+                            }
+                            repositoryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))

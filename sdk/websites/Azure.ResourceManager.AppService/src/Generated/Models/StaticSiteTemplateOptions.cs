@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Template Options for the static site. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="repositoryName"> Name of the newly generated repository. </param>
         /// <param name="description"> Description of the newly generated repository. </param>
         /// <param name="isPrivate"> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </param>
-        internal StaticSiteTemplateOptions(string templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate)
+        internal StaticSiteTemplateOptions(Uri templateRepositoryUri, string owner, string repositoryName, string description, bool? isPrivate)
         {
             TemplateRepositoryUri = templateRepositoryUri;
             Owner = owner;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>
-        public string TemplateRepositoryUri { get; set; }
+        public Uri TemplateRepositoryUri { get; set; }
         /// <summary> Owner of the newly generated repository. </summary>
         public string Owner { get; set; }
         /// <summary> Name of the newly generated repository. </summary>

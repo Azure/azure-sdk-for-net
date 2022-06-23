@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="clientId"> The public identifier for the application. </param>
         /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>
         /// <param name="issuerUri"> The URI of Issuer Identifier. </param>
-        internal SsoProperties(IList<string> scope, string clientId, string clientSecret, string issuerUri)
+        internal SsoProperties(IList<string> scope, string clientId, string clientSecret, Uri issuerUri)
         {
             Scope = scope;
             ClientId = clientId;
@@ -39,6 +40,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> The secret known only to the application and the authorization server. </summary>
         public string ClientSecret { get; set; }
         /// <summary> The URI of Issuer Identifier. </summary>
-        public string IssuerUri { get; set; }
+        public Uri IssuerUri { get; set; }
     }
 }

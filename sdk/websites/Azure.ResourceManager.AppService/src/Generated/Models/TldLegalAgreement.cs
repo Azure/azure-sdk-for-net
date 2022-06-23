@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
-        internal TldLegalAgreement(string agreementKey, string title, string content, string uri)
+        internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri)
         {
             AgreementKey = agreementKey;
             Title = title;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Agreement details. </summary>
         public string Content { get; }
         /// <summary> URL where a copy of the agreement details is hosted. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
     }
 }

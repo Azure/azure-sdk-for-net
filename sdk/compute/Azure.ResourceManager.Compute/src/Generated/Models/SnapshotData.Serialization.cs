@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingGroup))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
-                writer.WriteObjectValue(EncryptionSettingGroup);
+                writer.WriteObjectValue(EncryptionSettingsGroup);
             }
             if (Optional.IsDefined(Incremental))
             {
@@ -119,6 +119,16 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("completionPercent");
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
+            if (Optional.IsDefined(CopyCompletionError))
+            {
+                writer.WritePropertyName("copyCompletionError");
+                writer.WriteObjectValue(CopyCompletionError);
+            }
+            if (Optional.IsDefined(DataAccessAuthMode))
+            {
+                writer.WritePropertyName("dataAccessAuthMode");
+                writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -135,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Optional<OperatingSystemTypes> osType = default;
+            Optional<SupportedOperatingSystemType> osType = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
@@ -144,7 +154,7 @@ namespace Azure.ResourceManager.Compute
             Optional<long> diskSizeBytes = default;
             Optional<DiskState> diskState = default;
             Optional<string> uniqueId = default;
-            Optional<EncryptionSettingGroup> encryptionSettingsCollection = default;
+            Optional<EncryptionSettingsGroup> encryptionSettingsCollection = default;
             Optional<string> provisioningState = default;
             Optional<bool> incremental = default;
             Optional<DiskEncryption> encryption = default;
@@ -154,6 +164,8 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> supportsHibernation = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<float> completionPercent = default;
+            Optional<CopyCompletionError> copyCompletionError = default;
+            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
@@ -252,7 +264,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
@@ -337,7 +349,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionSettingsCollection = EncryptionSettingGroup.DeserializeEncryptionSettingGroup(property0.Value);
+                            encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -425,11 +437,31 @@ namespace Azure.ResourceManager.Compute
                             completionPercent = property0.Value.GetSingle();
                             continue;
                         }
+                        if (property0.NameEquals("copyCompletionError"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            copyCompletionError = CopyCompletionError.DeserializeCopyCompletionError(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("dataAccessAuthMode"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataAccessAuthMode = new DataAccessAuthMode(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(incremental), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent));
+            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(incremental), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode));
         }
     }
 }

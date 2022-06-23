@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="secrets"> [Required] Service principal secrets. </param>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
         /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        internal CertificateDatastoreCredentials(CredentialsType credentialsType, string authorityUri, Guid clientId, string resourceUri, CertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType)
+        internal CertificateDatastoreCredentials(CredentialsType credentialsType, Uri authorityUri, Guid clientId, Uri resourceUri, CertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint) : base(credentialsType)
         {
             AuthorityUri = authorityUri;
             ClientId = clientId;
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Authority URL used for authentication. </summary>
-        public string AuthorityUri { get; set; }
+        public Uri AuthorityUri { get; set; }
         /// <summary> [Required] Service principal client ID. </summary>
         public Guid ClientId { get; set; }
         /// <summary> Resource the service principal has access to. </summary>
-        public string ResourceUri { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> [Required] Service principal secrets. </summary>
         public CertificateDatastoreSecrets Secrets { get; set; }
         /// <summary> [Required] ID of the tenant to which the service principal belongs. </summary>

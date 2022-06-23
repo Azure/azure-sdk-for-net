@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> expiresOn = default;
-            Optional<string> invitationUrl = default;
+            Optional<Uri> invitationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -90,7 +90,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("invitationUrl"))
                         {
-                            invitationUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                invitationUrl = null;
+                                continue;
+                            }
+                            invitationUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

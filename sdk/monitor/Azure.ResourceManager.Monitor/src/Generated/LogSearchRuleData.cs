@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         /// </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, string kind, string etag) : base(id, name, resourceType, systemData, tags, location)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, string kind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
@@ -110,6 +111,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; }
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

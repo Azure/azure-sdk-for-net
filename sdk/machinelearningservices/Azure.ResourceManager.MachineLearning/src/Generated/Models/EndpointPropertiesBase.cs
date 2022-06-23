@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
-        internal EndpointPropertiesBase(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, string scoringUri, string swaggerUri)
+        internal EndpointPropertiesBase(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri)
         {
             AuthMode = authMode;
             Description = description;
@@ -53,8 +54,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
         public IDictionary<string, string> Properties { get; set; }
         /// <summary> Endpoint URI. </summary>
-        public string ScoringUri { get; }
+        public Uri ScoringUri { get; }
         /// <summary> Endpoint Swagger URI. </summary>
-        public string SwaggerUri { get; }
+        public Uri SwaggerUri { get; }
     }
 }

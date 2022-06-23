@@ -123,6 +123,48 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CommunityGalleryResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
+        public static CommunityGalleryCollection GetCommunityGalleries(this SubscriptionResource subscriptionResource)
+        {
+            return GetExtensionClient(subscriptionResource).GetCommunityGalleries();
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+        /// Operation Id: CommunityGalleries_Get
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+        /// Operation Id: CommunityGalleries_Get
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CommunityGalleryResource> GetCommunityGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
@@ -210,109 +252,171 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Lists all availability sets in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
-        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
+        /// Operation Id: Usage_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailabilitySetResource> GetAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComputeUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAvailabilitySetsAsync(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all availability sets in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
-        /// Operation Id: AvailabilitySets_ListBySubscription
+        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
+        /// Operation Id: Usage_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailabilitySetResource> GetAvailabilitySets(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAvailabilitySets(expand, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all proximity placement groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
-        /// Operation Id: ProximityPlacementGroups_ListBySubscription
+        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
+        /// Operation Id: VirtualMachineSizes_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProximityPlacementGroupResource> GetProximityPlacementGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProximityPlacementGroupsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all proximity placement groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
-        /// Operation Id: ProximityPlacementGroups_ListBySubscription
+        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
+        /// Operation Id: VirtualMachineSizes_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProximityPlacementGroupResource> GetProximityPlacementGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProximityPlacementGroups(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
-        /// Operation Id: DedicatedHostGroups_ListBySubscription
+        /// Gets all the VM scale sets under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DedicatedHostGroupResource> GetDedicatedHostGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDedicatedHostGroupsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
-        /// Operation Id: DedicatedHostGroups_ListBySubscription
+        /// Gets all the VM scale sets under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListByLocation
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DedicatedHostGroupResource> GetDedicatedHostGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDedicatedHostGroups(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
-        /// Operation Id: SshPublicKeys_ListBySubscription
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListAll
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SshPublicKeyResource> GetSshPublicKeysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSshPublicKeysAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
-        /// Operation Id: SshPublicKeys_ListBySubscription
+        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
+        /// Operation Id: VirtualMachineScaleSets_ListAll
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SshPublicKeyResource> GetSshPublicKeys(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSshPublicKeys(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSets(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the virtual machines under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+        /// Operation Id: VirtualMachines_ListByLocation
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the virtual machines under the specified subscription for the specified location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
+        /// Operation Id: VirtualMachines_ListByLocation
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+        /// Operation Id: VirtualMachines_ListAll
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
+        /// Operation Id: VirtualMachines_ListAll
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetVirtualMachines(statusOnly, filter, cancellationToken);
         }
 
         /// <summary>
@@ -521,6 +625,44 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
             return GetExtensionClient(subscriptionResource).GetVirtualMachineImageSkus(location, publisherName, offer, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified edge zone
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages
+        /// Operation Id: VirtualMachineImages_ListByEdgeZone
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtual machine image versions for the specified edge zone
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/vmimages
+        /// Operation Id: VirtualMachineImages_ListByEdgeZone
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
+
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagesByEdgeZone(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -758,169 +900,109 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
-        /// Operation Id: Usage_List
+        /// Lists all availability sets in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
+        /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ComputeUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailabilitySetResource> GetAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvailabilitySetsAsync(expand, cancellationToken);
         }
 
         /// <summary>
-        /// Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/usages
-        /// Operation Id: Usage_List
+        /// Lists all availability sets in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/availabilitySets
+        /// Operation Id: AvailabilitySets_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are &apos;instanceView&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailabilitySetResource> GetAvailabilitySets(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAvailabilitySets(expand, cancellationToken);
         }
 
         /// <summary>
-        /// Gets all the virtual machines under the specified subscription for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
-        /// Operation Id: VirtualMachines_ListByLocation
+        /// Lists all proximity placement groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
+        /// Operation Id: ProximityPlacementGroups_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ProximityPlacementGroupResource> GetProximityPlacementGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProximityPlacementGroupsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Gets all the virtual machines under the specified subscription for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachines
-        /// Operation Id: VirtualMachines_ListByLocation
+        /// Lists all proximity placement groups in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/proximityPlacementGroups
+        /// Operation Id: ProximityPlacementGroups_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ProximityPlacementGroupResource> GetProximityPlacementGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetProximityPlacementGroups(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
-        /// Operation Id: VirtualMachines_ListAll
+        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
+        /// Operation Id: DedicatedHostGroups_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DedicatedHostGroupResource> GetDedicatedHostGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachinesAsync(statusOnly, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDedicatedHostGroupsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines
-        /// Operation Id: VirtualMachines_ListAll
+        /// Lists all of the dedicated host groups in the subscription. Use the nextLink property in the response to get the next page of dedicated host groups.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/hostGroups
+        /// Operation Id: DedicatedHostGroups_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DedicatedHostGroupResource> GetDedicatedHostGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachines(statusOnly, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDedicatedHostGroups(cancellationToken);
         }
 
         /// <summary>
-        /// Gets all the VM scale sets under the specified subscription for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
-        /// Operation Id: VirtualMachineScaleSets_ListByLocation
+        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
+        /// Operation Id: SshPublicKeys_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SshPublicKeyResource> GetSshPublicKeysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSshPublicKeysAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Gets all the VM scale sets under the specified subscription for the specified location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/virtualMachineScaleSets
-        /// Operation Id: VirtualMachineScaleSets_ListByLocation
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
-        /// Operation Id: VirtualMachineScaleSets_ListAll
+        /// Lists all of the SSH public keys in the subscription. Use the nextLink property in the response to get the next page of SSH public keys.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/sshPublicKeys
+        /// Operation Id: SshPublicKeys_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SshPublicKeyResource> GetSshPublicKeys(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachineScaleSets
-        /// Operation Id: VirtualMachineScaleSets_ListAll
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSets(cancellationToken);
-        }
-
-        /// <summary>
-        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// This API is deprecated. Use [Resources Skus](https://docs.microsoft.com/rest/api/compute/resourceskus/list)
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/vmSizes
-        /// Operation Id: VirtualMachineSizes_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSshPublicKeys(cancellationToken);
         }
 
         /// <summary>
@@ -984,7 +1066,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, ExpandTypesForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken);
         }
@@ -998,7 +1080,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, ExpandTypesForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
+        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
         }
@@ -1140,6 +1222,110 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+        /// Lists all the disks under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedDisksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the disks under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
+        /// Operation Id: Disks_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedDiskResource> GetManagedDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedDisks(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the disk access resources under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
+        /// Operation Id: DiskAccesses_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskAccessResource> GetDiskAccessesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetDiskAccessesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the disk access resources under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
+        /// Operation Id: DiskAccesses_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskAccessResource> GetDiskAccesses(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetDiskAccesses(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the disk encryption sets under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
+        /// Operation Id: DiskEncryptionSets_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiskEncryptionSetResource> GetDiskEncryptionSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetDiskEncryptionSetsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the disk encryption sets under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
+        /// Operation Id: DiskEncryptionSets_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiskEncryptionSetResource> GetDiskEncryptionSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetDiskEncryptionSets(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists snapshots under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSnapshotsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists snapshots under a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSnapshots(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/skus
         /// Operation Id: ResourceSkus_List
@@ -1170,110 +1356,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Lists all the disks under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
-        /// Operation Id: Disks_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedDisksAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disks under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/disks
-        /// Operation Id: Disks_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedDiskResource> GetManagedDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedDisks(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists snapshots under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
-        /// Operation Id: Snapshots_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSnapshotsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists snapshots under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/snapshots
-        /// Operation Id: Snapshots_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetSnapshots(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk encryption sets under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
-        /// Operation Id: DiskEncryptionSets_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiskEncryptionSetResource> GetDiskEncryptionSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskEncryptionSetsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk encryption sets under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskEncryptionSets
-        /// Operation Id: DiskEncryptionSets_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiskEncryptionSetResource> GetDiskEncryptionSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskEncryptionSets(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk access resources under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
-        /// Operation Id: DiskAccesses_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DiskAccessResource> GetDiskAccessesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskAccessesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the disk access resources under a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/diskAccesses
-        /// Operation Id: DiskAccesses_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DiskAccessResource> GetDiskAccesses(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetDiskAccesses(cancellationToken);
-        }
-
-        /// <summary>
         /// List galleries under a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/galleries
         /// Operation Id: Galleries_List
@@ -1297,126 +1379,6 @@ namespace Azure.ResourceManager.Compute
         public static Pageable<GalleryResource> GetGalleries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGalleries(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
-        /// Operation Id: CommunityGalleries_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        public static async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-
-            return await GetExtensionClient(subscriptionResource).GetCommunityGalleryAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery by gallery public name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
-        /// Operation Id: CommunityGalleries_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
-        public static Response<CommunityGallery> GetCommunityGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-
-            return GetExtensionClient(subscriptionResource).GetCommunityGallery(location, publicGalleryName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a community gallery image.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}
-        /// Operation Id: CommunityGalleryImages_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        public static async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
-
-            return await GetExtensionClient(subscriptionResource).GetCommunityGalleryImageAsync(location, publicGalleryName, galleryImageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery image.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}
-        /// Operation Id: CommunityGalleryImages_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        public static Response<CommunityGalleryImage> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
-
-            return GetExtensionClient(subscriptionResource).GetCommunityGalleryImage(location, publicGalleryName, galleryImageName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a community gallery image version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
-        /// Operation Id: CommunityGalleryImageVersions_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
-        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public static async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
-
-            return await GetExtensionClient(subscriptionResource).GetCommunityGalleryImageVersionAsync(location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a community gallery image version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}
-        /// Operation Id: CommunityGalleryImageVersions_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
-        /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
-        /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public static Response<CommunityGalleryImageVersion> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
-            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
-            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
-
-            return GetExtensionClient(subscriptionResource).GetCommunityGalleryImageVersion(location, publicGalleryName, galleryImageName, galleryImageVersionName, cancellationToken);
         }
 
         /// <summary>
@@ -1452,6 +1414,90 @@ namespace Azure.ResourceManager.Compute
                 return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
+        }
+
+        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
+        public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachineScaleSets();
+        }
+
+        /// <summary>
+        /// Display information about a virtual machine scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
+        /// Operation Id: VirtualMachineScaleSets_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Display information about a virtual machine scale set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
+        /// Operation Id: VirtualMachineScaleSets_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
+        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachines();
+        }
+
+        /// <summary>
+        /// Retrieves information about the model view or the instance view of a virtual machine.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+        /// Operation Id: VirtualMachines_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about the model view or the instance view of a virtual machine.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
+        /// Operation Id: VirtualMachines_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetVirtualMachines().Get(vmName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>
@@ -1556,7 +1602,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -1573,7 +1619,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
@@ -1616,90 +1662,6 @@ namespace Azure.ResourceManager.Compute
         public static Response<SshPublicKeyResource> GetSshPublicKey(this ResourceGroupResource resourceGroupResource, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetVirtualMachines();
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
-        /// Operation Id: VirtualMachines_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
-        /// Operation Id: VirtualMachines_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetVirtualMachines().Get(vmName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
-        public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetVirtualMachineScaleSets();
-        }
-
-        /// <summary>
-        /// Display information about a virtual machine scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
-        /// Operation Id: VirtualMachineScaleSets_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Display information about a virtual machine scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
-        /// Operation Id: VirtualMachineScaleSets_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
@@ -1758,15 +1720,15 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePointCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetRestorePointGroups().GetAsync(restorePointGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1775,15 +1737,15 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: RestorePointCollections_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
+            return resourceGroupResource.GetRestorePointGroups().Get(restorePointGroupName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CapacityReservationGroupResources in the ResourceGroupResource. </summary>
@@ -1806,7 +1768,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -1823,7 +1785,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
         }
@@ -1868,44 +1830,44 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetManagedDisks().Get(diskName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
+        public static DiskAccessCollection GetDiskAccesses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSnapshots();
+            return GetExtensionClient(resourceGroupResource).GetDiskAccesses();
         }
 
         /// <summary>
-        /// Gets information about a snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
-        /// Operation Id: Snapshots_Get
+        /// Gets information about a disk access resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
+        /// Operation Id: DiskAccesses_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about a snapshot.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
-        /// Operation Id: Snapshots_Get
+        /// Gets information about a disk access resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
+        /// Operation Id: DiskAccesses_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
+        public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSnapshots().Get(snapshotName, cancellationToken);
+            return resourceGroupResource.GetDiskAccesses().Get(diskAccessName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource. </summary>
@@ -1948,44 +1910,44 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
-        public static DiskAccessCollection GetDiskAccesses(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
+        public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDiskAccesses();
+            return GetExtensionClient(resourceGroupResource).GetSnapshots();
         }
 
         /// <summary>
-        /// Gets information about a disk access resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
-        /// Operation Id: DiskAccesses_Get
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about a disk access resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
-        /// Operation Id: DiskAccesses_Get
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
+        public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDiskAccesses().Get(diskAccessName, cancellationToken);
+            return resourceGroupResource.GetSnapshots().Get(snapshotName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GalleryResources in the ResourceGroupResource. </summary>
@@ -2004,13 +1966,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetGalleries().GetAsync(galleryName, select, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetGalleries().GetAsync(galleryName, select, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2021,13 +1984,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetGalleries().Get(galleryName, select, cancellationToken);
+            return resourceGroupResource.GetGalleries().Get(galleryName, select, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceResources in the ResourceGroupResource. </summary>
@@ -2069,6 +2033,158 @@ namespace Azure.ResourceManager.Compute
         {
             return resourceGroupResource.GetCloudServices().Get(cloudServiceName, cancellationToken);
         }
+
+        #region VirtualMachineScaleSetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetResource" /> object. </returns>
+        public static VirtualMachineScaleSetResource GetVirtualMachineScaleSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetExtensionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetExtensionResource" /> object. </returns>
+        public static VirtualMachineScaleSetExtensionResource GetVirtualMachineScaleSetExtensionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetExtensionResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetExtensionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetRollingUpgradeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
+        public static VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetRollingUpgradeResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetRollingUpgradeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetVmExtensionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource" /> object. </returns>
+        public static VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetVmExtensionResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetVmExtensionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineScaleSetVmResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource" /> object. </returns>
+        public static VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineScaleSetVmResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetVmResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineExtensionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineExtensionResource" /> object. </returns>
+        public static VirtualMachineExtensionResource GetVirtualMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineExtensionResource.ValidateResourceId(id);
+                return new VirtualMachineExtensionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
+        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineResource.ValidateResourceId(id);
+                return new VirtualMachineResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualMachineExtensionImageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtensionImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtensionImageResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineExtensionImageResource" /> object. </returns>
+        public static VirtualMachineExtensionImageResource GetVirtualMachineExtensionImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualMachineExtensionImageResource.ValidateResourceId(id);
+                return new VirtualMachineExtensionImageResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         #region AvailabilitySetResource
         /// <summary>
@@ -2160,82 +2276,6 @@ namespace Azure.ResourceManager.Compute
             {
                 SshPublicKeyResource.ValidateResourceId(id);
                 return new SshPublicKeyResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineExtensionImageResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineExtensionImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineExtensionImageResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionImageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineExtensionImageResource" /> object. </returns>
-        public static VirtualMachineExtensionImageResource GetVirtualMachineExtensionImageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineExtensionImageResource.ValidateResourceId(id);
-                return new VirtualMachineExtensionImageResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineExtensionResource" /> object. </returns>
-        public static VirtualMachineExtensionResource GetVirtualMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineExtensionResource.ValidateResourceId(id);
-                return new VirtualMachineExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
-        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineResource.ValidateResourceId(id);
-                return new VirtualMachineResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineScaleSetResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetResource" /> object. </returns>
-        public static VirtualMachineScaleSetResource GetVirtualMachineScaleSetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetResource(client, id);
             }
             );
         }
@@ -2336,82 +2376,6 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetExtensionResource" /> object. </returns>
-        public static VirtualMachineScaleSetExtensionResource GetVirtualMachineScaleSetExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetExtensionResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineScaleSetRollingUpgradeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
-        public static VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetRollingUpgradeResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetRollingUpgradeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineScaleSetVmExtensionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetVmExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource" /> object. </returns>
-        public static VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetVmExtensionResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetVmExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VirtualMachineScaleSetVmResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource" /> object. </returns>
-        public static VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineScaleSetVmResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetVmResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region VirtualMachineRunCommandResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2469,44 +2433,6 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region SnapshotResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
-        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DiskEncryptionSetResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DiskEncryptionSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiskEncryptionSetResource.CreateResourceIdentifier" /> to create a <see cref="DiskEncryptionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskEncryptionSetResource" /> object. </returns>
-        public static DiskEncryptionSetResource GetDiskEncryptionSetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DiskEncryptionSetResource.ValidateResourceId(id);
-                return new DiskEncryptionSetResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region DiskAccessResource
         /// <summary>
         /// Gets an object representing a <see cref="DiskAccessResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2545,6 +2471,25 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
+        #region DiskEncryptionSetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskEncryptionSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskEncryptionSetResource.CreateResourceIdentifier" /> to create a <see cref="DiskEncryptionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiskEncryptionSetResource" /> object. </returns>
+        public static DiskEncryptionSetResource GetDiskEncryptionSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DiskEncryptionSetResource.ValidateResourceId(id);
+                return new DiskEncryptionSetResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region DiskRestorePointResource
         /// <summary>
         /// Gets an object representing a <see cref="DiskRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2559,6 +2504,25 @@ namespace Azure.ResourceManager.Compute
             {
                 DiskRestorePointResource.ValidateResourceId(id);
                 return new DiskRestorePointResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SnapshotResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
+        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SnapshotResource.ValidateResourceId(id);
+                return new SnapshotResource(client, id);
             }
             );
         }
@@ -2711,6 +2675,63 @@ namespace Azure.ResourceManager.Compute
             {
                 SharedGalleryImageVersionResource.ValidateResourceId(id);
                 return new SharedGalleryImageVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CommunityGalleryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunityGalleryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunityGalleryResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommunityGalleryResource" /> object. </returns>
+        public static CommunityGalleryResource GetCommunityGalleryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CommunityGalleryResource.ValidateResourceId(id);
+                return new CommunityGalleryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CommunityGalleryImageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunityGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunityGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommunityGalleryImageResource" /> object. </returns>
+        public static CommunityGalleryImageResource GetCommunityGalleryImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CommunityGalleryImageResource.ValidateResourceId(id);
+                return new CommunityGalleryImageResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CommunityGalleryImageVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunityGalleryImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunityGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CommunityGalleryImageVersionResource" /> object. </returns>
+        public static CommunityGalleryImageVersionResource GetCommunityGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CommunityGalleryImageVersionResource.ValidateResourceId(id);
+                return new CommunityGalleryImageVersionResource(client, id);
             }
             );
         }

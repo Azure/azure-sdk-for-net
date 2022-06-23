@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="customPersistentDisks"> List of custom persistent disks. </param>
         /// <param name="enableEndToEndTls"> Indicate if end to end TLS is enabled. </param>
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
-        internal AppResourceProperties(bool? @public, string uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskData> customPersistentDisks, bool? enableEndToEndTls, IList<LoadedCertificate> loadedCertificates)
+        internal AppResourceProperties(bool? @public, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskData> customPersistentDisks, bool? enableEndToEndTls, IList<LoadedCertificate> loadedCertificates)
         {
             Public = @public;
             Uri = uri;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Indicates whether the App exposes public endpoint. </summary>
         public bool? Public { get; set; }
         /// <summary> URL of the App. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
         /// <summary> Collection of addons. </summary>
         public IDictionary<string, IDictionary<string, BinaryData>> AddonConfigs { get; }
         /// <summary> Provisioning state of the App. </summary>

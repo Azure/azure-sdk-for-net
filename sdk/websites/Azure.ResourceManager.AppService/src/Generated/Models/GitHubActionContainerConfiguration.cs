@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The GitHub action container configuration. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="imageName"> The image name for the build. </param>
         /// <param name="username"> The username used to upload the image to the container registry. </param>
         /// <param name="password"> The password used to upload the image to the container registry. </param>
-        internal GitHubActionContainerConfiguration(string serverUri, string imageName, string username, string password)
+        internal GitHubActionContainerConfiguration(Uri serverUri, string imageName, string username, string password)
         {
             ServerUri = serverUri;
             ImageName = imageName;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The server URL for the container registry where the build will be hosted. </summary>
-        public string ServerUri { get; set; }
+        public Uri ServerUri { get; set; }
         /// <summary> The image name for the build. </summary>
         public string ImageName { get; set; }
         /// <summary> The username used to upload the image to the container registry. </summary>

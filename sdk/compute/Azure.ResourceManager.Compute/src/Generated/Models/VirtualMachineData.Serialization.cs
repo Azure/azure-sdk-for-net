@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -196,8 +197,8 @@ namespace Azure.ResourceManager.Compute
             Optional<WritableSubResource> availabilitySet = default;
             Optional<WritableSubResource> virtualMachineScaleSet = default;
             Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachinePriorityTypes> priority = default;
-            Optional<VirtualMachineEvictionPolicyTypes> evictionPolicy = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<WritableSubResource> host = default;
             Optional<WritableSubResource> hostGroup = default;
@@ -211,6 +212,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> userData = default;
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -434,7 +436,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new VirtualMachinePriorityTypes(property0.Value.GetString());
+                            priority = new VirtualMachinePriorityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"))
@@ -444,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            evictionPolicy = new VirtualMachineEvictionPolicyTypes(property0.Value.GetString());
+                            evictionPolicy = new VirtualMachineEvictionPolicyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingProfile"))
@@ -552,11 +554,21 @@ namespace Azure.ResourceManager.Compute
                             applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value);
+            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

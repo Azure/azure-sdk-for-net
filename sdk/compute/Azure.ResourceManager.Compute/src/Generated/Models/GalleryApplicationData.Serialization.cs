@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> eula = default;
-            Optional<string> privacyStatementUri = default;
-            Optional<string> releaseNoteUri = default;
+            Optional<Uri> privacyStatementUri = default;
+            Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<OperatingSystemTypes> supportedOSType = default;
+            Optional<SupportedOperatingSystemType> supportedOSType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -150,12 +150,22 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("privacyStatementUri"))
                         {
-                            privacyStatementUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privacyStatementUri = null;
+                                continue;
+                            }
+                            privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("releaseNoteUri"))
                         {
-                            releaseNoteUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                releaseNoteUri = null;
+                                continue;
+                            }
+                            releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("endOfLifeDate"))
@@ -175,7 +185,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportedOSType = property0.Value.GetString().ToOperatingSystemTypes();
+                            supportedOSType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                     }

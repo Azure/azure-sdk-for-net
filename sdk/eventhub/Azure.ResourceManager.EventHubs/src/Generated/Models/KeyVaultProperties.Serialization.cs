@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri");
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyVersion))
             {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
             Optional<string> keyName = default;
-            Optional<string> keyVaultUri = default;
+            Optional<Uri> keyVaultUri = default;
             Optional<string> keyVersion = default;
             Optional<UserAssignedIdentityProperties> identity = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +54,12 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    keyVaultUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultUri = null;
+                        continue;
+                    }
+                    keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVersion"))

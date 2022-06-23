@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="keyUri"> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </param>
         /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
-        internal EncryptionScopeKeyVaultProperties(string keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
+        internal EncryptionScopeKeyVaultProperties(Uri keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
         {
             KeyUri = keyUri;
             CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
         /// <summary> The object identifier of the current versioned Key Vault Key in use. </summary>
         public string CurrentVersionedKeyIdentifier { get; }
         /// <summary> Timestamp of last rotation of the Key Vault Key. </summary>

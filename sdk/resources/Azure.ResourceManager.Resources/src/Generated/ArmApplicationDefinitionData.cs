@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, string packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application definition description. </summary>
         public string Description { get; set; }
         /// <summary> The managed application definition package file Uri. Use this element. </summary>
-        public string PackageFileUri { get; set; }
+        public Uri PackageFileUri { get; set; }
         /// <summary> The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string. </summary>
         public BinaryData MainTemplate { get; set; }
         /// <summary> The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string. </summary>

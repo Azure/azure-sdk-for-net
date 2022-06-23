@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bomUrl");
-            writer.WriteStringValue(BomUri);
+            writer.WriteStringValue(BomUri.AbsoluteUri);
             writer.WritePropertyName("sapBitsStorageAccountId");
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion");
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element)
         {
-            string bomUrl = default;
+            Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
             Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 if (property.NameEquals("bomUrl"))
                 {
-                    bomUrl = property.Value.GetString();
+                    bomUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sapBitsStorageAccountId"))

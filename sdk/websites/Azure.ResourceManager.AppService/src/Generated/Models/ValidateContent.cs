@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -16,16 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public ValidateContent(string name, ValidateResourceType validateResourceType, string location)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
 
             Name = name;
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Resource type used for verification. </summary>
         public ValidateResourceType ValidateResourceType { get; }
         /// <summary> Expected location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         public string ServerFarmId { get; set; }
         /// <summary> Name of the target SKU for the App Service plan. </summary>
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
         public bool? IsXenon { get; set; }
         /// <summary> Base URL of the container registry. </summary>
-        public string ContainerRegistryBaseUri { get; set; }
+        public Uri ContainerRegistryBaseUri { get; set; }
         /// <summary> Username for to access the container registry. </summary>
         public string ContainerRegistryUsername { get; set; }
         /// <summary> Password for to access the container registry. </summary>

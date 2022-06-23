@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AuthorityUri != null)
                 {
                     writer.WritePropertyName("authorityUrl");
-                    writer.WriteStringValue(AuthorityUri);
+                    writer.WriteStringValue(AuthorityUri.AbsoluteUri);
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ResourceUri != null)
                 {
                     writer.WritePropertyName("resourceUrl");
-                    writer.WriteStringValue(ResourceUri);
+                    writer.WriteStringValue(ResourceUri.AbsoluteUri);
                 }
                 else
                 {
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ServicePrincipalDatastoreCredentials DeserializeServicePrincipalDatastoreCredentials(JsonElement element)
         {
-            Optional<string> authorityUrl = default;
+            Optional<Uri> authorityUrl = default;
             Guid clientId = default;
-            Optional<string> resourceUrl = default;
+            Optional<Uri> resourceUrl = default;
             ServicePrincipalDatastoreSecrets secrets = default;
             Guid tenantId = default;
             CredentialsType credentialsType = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         authorityUrl = null;
                         continue;
                     }
-                    authorityUrl = property.Value.GetString();
+                    authorityUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientId"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resourceUrl = null;
                         continue;
                     }
-                    resourceUrl = property.Value.GetString();
+                    resourceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secrets"))

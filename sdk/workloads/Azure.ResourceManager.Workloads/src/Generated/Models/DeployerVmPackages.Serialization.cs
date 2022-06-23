@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DeployerVmPackages DeserializeDeployerVmPackages(JsonElement element)
         {
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             Optional<string> storageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobName"> Name of the training job which produced this model. </param>
         /// <param name="modelType"> The storage format for this entity. Used for NCD. </param>
         /// <param name="modelUri"> The URI path to the model contents. </param>
-        internal ModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, FlavorData> flavors, string jobName, ModelType? modelType, string modelUri) : base(description, properties, tags, isAnonymous, isArchived)
+        internal ModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, IDictionary<string, FlavorData> flavors, string jobName, ModelType? modelType, Uri modelUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             Flavors = flavors;
             JobName = jobName;
@@ -44,6 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The storage format for this entity. Used for NCD. </summary>
         public ModelType? ModelType { get; set; }
         /// <summary> The URI path to the model contents. </summary>
-        public string ModelUri { get; set; }
+        public Uri ModelUri { get; set; }
     }
 }

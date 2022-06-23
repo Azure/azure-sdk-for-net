@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label");
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static ConfigServerGitProperty DeserializeConfigServerGitProperty(JsonElement element)
         {
             Optional<IList<GitPatternRepository>> repositories = default;
-            string uri = default;
+            Uri uri = default;
             Optional<string> label = default;
             Optional<IList<string>> searchPaths = default;
             Optional<string> username = default;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("label"))

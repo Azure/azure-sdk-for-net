@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, string etag) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Version = version;
             Deleted = deleted;
@@ -110,6 +111,6 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
         public bool? EnableNfsV3AllSquash { get; set; }
         /// <summary> Resource Etag. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

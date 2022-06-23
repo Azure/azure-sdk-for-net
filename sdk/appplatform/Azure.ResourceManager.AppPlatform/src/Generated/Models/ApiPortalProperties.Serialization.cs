@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -58,10 +59,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<ApiPortalProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             Optional<bool> httpsOnly = default;
             Optional<IList<string>> gatewayIds = default;
-            Optional<IList<string>> sourceUrls = default;
+            Optional<IList<Uri>> sourceUrls = default;
             Optional<SsoProperties> ssoProperties = default;
             Optional<ApiPortalResourceRequests> resourceRequests = default;
             Optional<IReadOnlyList<ApiPortalInstance>> instances = default;
@@ -89,7 +90,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpsOnly"))
@@ -124,10 +130,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     sourceUrls = array;
                     continue;

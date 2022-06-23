@@ -1,16 +1,35 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Rename plenty of classes and property names.
+- Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `GalleryUpdateResourceData` was removed.
+- Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.9 (2022-06-13)
+
+### Breaking Changes
+
+- Rename plenty of classes and property names according to the architecture board's review.
+
+### Other Changes
+
+- Updated API version of compute RP to `2022-03-01`.
+- Updated API version of disk RP to `2022-03-02`.
+- Updated API version of gallery RP to `2022-01-03`.
 
 ## 1.0.0-beta.8 (2022-04-08)
 
@@ -304,7 +323,7 @@ var vmData = new VirtualMachineData(location)
             Version = "latest"
         }
     },
-    HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
+    HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
 };
 ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
 VirtualMachineResource vm = vmOperation.Value;

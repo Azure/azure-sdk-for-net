@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url");
-                writer.WriteStringValue(ExtraInfoUri);
+                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> runCommand = default;
-            Optional<string> url = default;
-            Optional<string> extraInfoUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> extraInfoUrl = default;
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
@@ -137,12 +137,22 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                url = null;
+                                continue;
+                            }
+                            url = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extra_info_url"))
                         {
-                            extraInfoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extraInfoUrl = null;
+                                continue;
+                            }
+                            extraInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("web_job_type"))

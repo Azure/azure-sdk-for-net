@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ComputeInstanceApplication. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
         /// <param name="endpointUri"> Application&apos; endpoint URI. </param>
-        internal ComputeInstanceApplication(string displayName, string endpointUri)
+        internal ComputeInstanceApplication(string displayName, Uri endpointUri)
         {
             DisplayName = displayName;
             EndpointUri = endpointUri;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Name of the ComputeInstance application. </summary>
         public string DisplayName { get; }
         /// <summary> Application&apos; endpoint URI. </summary>
-        public string EndpointUri { get; }
+        public Uri EndpointUri { get; }
     }
 }

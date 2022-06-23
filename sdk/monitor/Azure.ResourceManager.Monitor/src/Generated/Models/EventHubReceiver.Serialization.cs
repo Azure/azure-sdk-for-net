@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             writer.WritePropertyName("subscriptionId");
             writer.WriteStringValue(SubscriptionId);
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string eventHubNameSpace = default;
             string eventHubName = default;
             Optional<bool> useCommonAlertSchema = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             string subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +74,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new EventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), tenantId.Value, subscriptionId);
+            return new EventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId);
         }
     }
 }

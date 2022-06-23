@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
-        public KeyVaultSecretReference(string secretUri, WritableSubResource sourceVault)
+        public KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault)
         {
             if (secretUri == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The URL referencing a secret in a Key Vault. </summary>
-        public string SecretUri { get; set; }
+        public Uri SecretUri { get; set; }
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
         internal WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets Id. </summary>

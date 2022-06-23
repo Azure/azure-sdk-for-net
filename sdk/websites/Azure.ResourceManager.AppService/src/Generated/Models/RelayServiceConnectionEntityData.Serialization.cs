@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(BiztalkUri))
             {
                 writer.WritePropertyName("biztalkUri");
-                writer.WriteStringValue(BiztalkUri);
+                writer.WriteStringValue(BiztalkUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> resourceConnectionString = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
-            Optional<string> biztalkUri = default;
+            Optional<Uri> biztalkUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -143,7 +144,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("biztalkUri"))
                         {
-                            biztalkUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                biztalkUri = null;
+                                continue;
+                            }
+                            biztalkUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

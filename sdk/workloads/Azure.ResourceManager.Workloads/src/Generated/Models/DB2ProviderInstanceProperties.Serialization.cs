@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri");
-                writer.WriteStringValue(DBPasswordUri);
+                writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SapSid))
             {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> dbPort = default;
             Optional<string> dbUsername = default;
             Optional<string> dbPassword = default;
-            Optional<string> dbPasswordUri = default;
+            Optional<Uri> dbPasswordUri = default;
             Optional<string> sapSid = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("dbPasswordUri"))
                 {
-                    dbPasswordUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dbPasswordUri = null;
+                        continue;
+                    }
+                    dbPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sapSid"))

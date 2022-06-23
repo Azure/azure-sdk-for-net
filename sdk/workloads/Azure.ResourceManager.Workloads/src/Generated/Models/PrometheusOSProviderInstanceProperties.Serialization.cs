@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(PrometheusUri))
             {
                 writer.WritePropertyName("prometheusUrl");
-                writer.WriteStringValue(PrometheusUri);
+                writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
             writer.WritePropertyName("providerType");
             writer.WriteStringValue(ProviderType);
@@ -27,13 +28,18 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element)
         {
-            Optional<string> prometheusUrl = default;
+            Optional<Uri> prometheusUrl = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prometheusUrl"))
                 {
-                    prometheusUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        prometheusUrl = null;
+                        continue;
+                    }
+                    prometheusUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("providerType"))

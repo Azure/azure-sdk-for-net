@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource name availability request content. </summary>
-    internal partial class ResourceNameAvailabilityContent
+    public partial class ResourceNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of ResourceNameAvailabilityContent. </summary>
         /// <param name="name"> Resource name to verify. </param>

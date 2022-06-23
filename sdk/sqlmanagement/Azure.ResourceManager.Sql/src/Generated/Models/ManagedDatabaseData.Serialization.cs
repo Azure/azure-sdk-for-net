@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri");
-                writer.WriteStringValue(StorageContainerUri);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> defaultSecondaryLocation = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<string> storageContainerUri = default;
+            Optional<Uri> storageContainerUri = default;
             Optional<string> sourceDatabaseId = default;
             Optional<string> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
@@ -251,7 +251,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("storageContainerUri"))
                         {
-                            storageContainerUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageContainerUri = null;
+                                continue;
+                            }
+                            storageContainerUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseId"))

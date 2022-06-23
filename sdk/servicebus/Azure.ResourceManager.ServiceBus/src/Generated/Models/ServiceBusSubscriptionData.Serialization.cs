@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusSubscriptionData DeserializeServiceBusSubscriptionData(JsonElement element)
         {
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -121,6 +122,16 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<ServiceBusClientAffineProperties> clientAffineProperties = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -339,7 +350,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(messageCount), Optional.ToNullable(createdAt), Optional.ToNullable(accessedAt), Optional.ToNullable(updatedAt), countDetails.Value, Optional.ToNullable(lockDuration), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(isClientAffine), clientAffineProperties.Value);
+            return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(messageCount), Optional.ToNullable(createdAt), Optional.ToNullable(accessedAt), Optional.ToNullable(updatedAt), countDetails.Value, Optional.ToNullable(lockDuration), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(isClientAffine), clientAffineProperties.Value, Optional.ToNullable(location));
         }
     }
 }

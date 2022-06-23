@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contextUri");
-            writer.WriteStringValue(ContextUri);
+            writer.WriteStringValue(ContextUri.AbsoluteUri);
             if (Optional.IsDefined(DockerfilePath))
             {
                 if (DockerfilePath != null)
@@ -34,13 +35,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static BuildContext DeserializeBuildContext(JsonElement element)
         {
-            string contextUri = default;
+            Uri contextUri = default;
             Optional<string> dockerfilePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contextUri"))
                 {
-                    contextUri = property.Value.GetString();
+                    contextUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dockerfilePath"))

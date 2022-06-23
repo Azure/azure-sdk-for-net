@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element)
         {
             Optional<ResourceTypeAliasPathTokenType> type = default;
-            Optional<ResourceTypeAliasPathAttribute> attributes = default;
+            Optional<ResourceTypeAliasPathAttributes> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attributes = new ResourceTypeAliasPathAttribute(property.Value.GetString());
+                    attributes = new ResourceTypeAliasPathAttributes(property.Value.GetString());
                     continue;
                 }
             }

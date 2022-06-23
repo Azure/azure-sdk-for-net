@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> clientRequestId = default;
             Optional<string> clientIpAddress = default;
             Optional<string> method = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"))
@@ -37,7 +38,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

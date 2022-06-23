@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl");
-                writer.WriteStringValue(PackageUri);
+                writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Configuration))
             {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl");
-                writer.WriteStringValue(ConfigurationUri);
+                writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StartCloudService))
             {
@@ -95,9 +96,9 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> packageUrl = default;
+            Optional<Uri> packageUrl = default;
             Optional<string> configuration = default;
-            Optional<string> configurationUrl = default;
+            Optional<Uri> configurationUrl = default;
             Optional<bool> startCloudService = default;
             Optional<bool> allowModelOverride = default;
             Optional<CloudServiceUpgradeMode> upgradeMode = default;
@@ -165,7 +166,12 @@ namespace Azure.ResourceManager.Compute
                     {
                         if (property0.NameEquals("packageUrl"))
                         {
-                            packageUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                packageUrl = null;
+                                continue;
+                            }
+                            packageUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("configuration"))
@@ -175,7 +181,12 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("configurationUrl"))
                         {
-                            configurationUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationUrl = null;
+                                continue;
+                            }
+                            configurationUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startCloudService"))

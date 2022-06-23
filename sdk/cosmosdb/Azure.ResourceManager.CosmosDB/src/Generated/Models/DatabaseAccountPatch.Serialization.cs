@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri");
-                writer.WriteStringValue(KeyVaultKeyUri);
+                writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {

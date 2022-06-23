@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuerUri");
-                writer.WriteStringValue(IssuerUri);
+                writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<string>> scope = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
-            Optional<string> issuerUri = default;
+            Optional<Uri> issuerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -79,7 +80,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("issuerUri"))
                 {
-                    issuerUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        issuerUri = null;
+                        continue;
+                    }
+                    issuerUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

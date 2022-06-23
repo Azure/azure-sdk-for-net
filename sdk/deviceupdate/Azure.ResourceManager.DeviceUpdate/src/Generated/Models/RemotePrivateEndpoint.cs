@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="privateLinkServiceConnections"> List of automatically approved private link service connections. </param>
         /// <param name="privateLinkServiceProxies"> List of private link service proxies. </param>
         /// <param name="connectionDetails"> List of connection details. </param>
-        internal RemotePrivateEndpoint(string id, string location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails)
+        internal RemotePrivateEndpoint(string id, AzureLocation? location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails)
         {
             Id = id;
             Location = location;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Remote endpoint resource ID. </summary>
         public string Id { get; set; }
         /// <summary> ARM location of the remote private endpoint. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Original subscription ID needed by Microsoft.Network. </summary>
         public string ImmutableSubscriptionId { get; set; }
         /// <summary> Original resource ID needed by Microsoft.Network. </summary>

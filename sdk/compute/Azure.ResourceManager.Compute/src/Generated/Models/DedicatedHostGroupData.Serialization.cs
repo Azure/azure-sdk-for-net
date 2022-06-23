@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("supportAutomaticPlacement");
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
+            if (Optional.IsDefined(AdditionalCapabilities))
+            {
+                writer.WritePropertyName("additionalCapabilities");
+                writer.WriteObjectValue(AdditionalCapabilities);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<SubResource>> hosts = default;
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
+            Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"))
@@ -187,11 +193,21 @@ namespace Azure.ResourceManager.Compute
                             supportAutomaticPlacement = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("additionalCapabilities"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement));
+            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
         }
     }
 }

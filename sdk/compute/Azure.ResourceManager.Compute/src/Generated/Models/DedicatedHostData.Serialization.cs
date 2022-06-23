@@ -69,10 +69,11 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> autoReplaceOnFailure = default;
             Optional<string> hostId = default;
             Optional<IReadOnlyList<SubResource>> virtualMachines = default;
-            Optional<DedicatedHostLicenseTypes> licenseType = default;
+            Optional<DedicatedHostLicenseType> licenseType = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
             Optional<DedicatedHostInstanceView> instanceView = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            licenseType = property0.Value.GetString().ToDedicatedHostLicenseTypes();
+                            licenseType = property0.Value.GetString().ToDedicatedHostLicenseType();
                             continue;
                         }
                         if (property0.NameEquals("provisioningTime"))
@@ -209,11 +210,21 @@ namespace Azure.ResourceManager.Compute
                             instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value);
+            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Id))
             {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element)
         {
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> id = default;
             Optional<string> relativePath = default;
             Optional<string> contentVersion = default;
@@ -54,7 +55,12 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountUri, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
+        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> SAS URL to the container. </summary>
-        public string StorageAccountUri { get; set; }
+        public Uri StorageAccountUri { get; set; }
         /// <summary> Name of a blob which contains the backup. </summary>
         public string BlobName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>

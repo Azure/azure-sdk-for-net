@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Uri != null)
                 {
                     writer.WritePropertyName("uri");
-                    writer.WriteStringValue(Uri);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
                 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static TritonModelJobOutput DeserializeTritonModelJobOutput(JsonElement element)
         {
             Optional<OutputDeliveryMode> mode = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> description = default;
             JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         uri = null;
                         continue;
                     }
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

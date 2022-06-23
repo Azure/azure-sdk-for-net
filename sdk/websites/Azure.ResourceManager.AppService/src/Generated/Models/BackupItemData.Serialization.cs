@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> id0 = default;
-            Optional<string> storageAccountUrl = default;
+            Optional<Uri> storageAccountUrl = default;
             Optional<string> blobName = default;
             Optional<string> name0 = default;
             Optional<BackupItemStatus> status = default;
@@ -104,7 +104,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            storageAccountUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageAccountUrl = null;
+                                continue;
+                            }
+                            storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("blobName"))

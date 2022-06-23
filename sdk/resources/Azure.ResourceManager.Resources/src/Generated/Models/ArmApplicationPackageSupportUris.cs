@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The appliance package support URLs. </summary>
@@ -18,15 +20,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationPackageSupportUris. </summary>
         /// <param name="azurePublicCloudUri"> The public azure support URL. </param>
         /// <param name="azureGovernmentUri"> The government cloud support URL. </param>
-        internal ArmApplicationPackageSupportUris(string azurePublicCloudUri, string azureGovernmentUri)
+        internal ArmApplicationPackageSupportUris(Uri azurePublicCloudUri, Uri azureGovernmentUri)
         {
             AzurePublicCloudUri = azurePublicCloudUri;
             AzureGovernmentUri = azureGovernmentUri;
         }
 
         /// <summary> The public azure support URL. </summary>
-        public string AzurePublicCloudUri { get; }
+        public Uri AzurePublicCloudUri { get; }
         /// <summary> The government cloud support URL. </summary>
-        public string AzureGovernmentUri { get; }
+        public Uri AzureGovernmentUri { get; }
     }
 }

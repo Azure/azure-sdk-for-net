@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeUri != null)
                 {
                     writer.WritePropertyName("codeUri");
-                    writer.WriteStringValue(CodeUri);
+                    writer.WriteStringValue(CodeUri.AbsoluteUri);
                 }
                 else
                 {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CodeVersionProperties DeserializeCodeVersionProperties(JsonElement element)
         {
-            Optional<string> codeUri = default;
+            Optional<Uri> codeUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeUri = null;
                         continue;
                     }
-                    codeUri = property.Value.GetString();
+                    codeUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

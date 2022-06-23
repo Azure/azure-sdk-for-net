@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of TritonModelJobInput. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public TritonModelJobInput(string uri)
+        public TritonModelJobInput(Uri uri)
         {
             if (uri == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal TritonModelJobInput(string description, JobInputType jobInputType, InputDeliveryMode? mode, string uri) : base(description, jobInputType)
+        internal TritonModelJobInput(string description, JobInputType jobInputType, InputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
         {
             Mode = mode;
             Uri = uri;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Input Asset Delivery Mode. </summary>
         public InputDeliveryMode? Mode { get; set; }
         /// <summary> [Required] Input Asset URI. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

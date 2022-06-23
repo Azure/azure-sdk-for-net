@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url");
-                writer.WriteStringValue(ExtensionUri);
+                writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url");
-                writer.WriteStringValue(ProjectUri);
+                writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url");
-                writer.WriteStringValue(IconUri);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url");
-                writer.WriteStringValue(LicenseUri);
+                writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url");
-                writer.WriteStringValue(FeedUri);
+                writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.AppService
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<string> version = default;
-            Optional<string> extensionUrl = default;
-            Optional<string> projectUrl = default;
-            Optional<string> iconUrl = default;
-            Optional<string> licenseUrl = default;
-            Optional<string> feedUrl = default;
+            Optional<Uri> extensionUrl = default;
+            Optional<Uri> projectUrl = default;
+            Optional<Uri> iconUrl = default;
+            Optional<Uri> licenseUrl = default;
+            Optional<Uri> feedUrl = default;
             Optional<IList<string>> authors = default;
             Optional<string> installerCommandLineParams = default;
             Optional<DateTimeOffset> publishedDateTime = default;
@@ -240,27 +240,52 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("extension_url"))
                         {
-                            extensionUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extensionUrl = null;
+                                continue;
+                            }
+                            extensionUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("project_url"))
                         {
-                            projectUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                projectUrl = null;
+                                continue;
+                            }
+                            projectUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("icon_url"))
                         {
-                            iconUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                iconUrl = null;
+                                continue;
+                            }
+                            iconUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("license_url"))
                         {
-                            licenseUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                licenseUrl = null;
+                                continue;
+                            }
+                            licenseUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("feed_url"))
                         {
-                            feedUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                feedUrl = null;
+                                continue;
+                            }
+                            feedUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authors"))

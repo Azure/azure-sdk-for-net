@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(SapPasswordUri))
             {
                 writer.WritePropertyName("sapPasswordUri");
-                writer.WriteStringValue(SapPasswordUri);
+                writer.WriteStringValue(SapPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SapClientId))
             {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(SapSslCertificateUri))
             {
                 writer.WritePropertyName("sapSslCertificateUri");
-                writer.WriteStringValue(SapSslCertificateUri);
+                writer.WriteStringValue(SapSslCertificateUri.AbsoluteUri);
             }
             writer.WritePropertyName("providerType");
             writer.WriteStringValue(ProviderType);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IList<string>> sapHostFileEntries = default;
             Optional<string> sapUsername = default;
             Optional<string> sapPassword = default;
-            Optional<string> sapPasswordUri = default;
+            Optional<Uri> sapPasswordUri = default;
             Optional<string> sapClientId = default;
             Optional<string> sapPortNumber = default;
-            Optional<string> sapSslCertificateUri = default;
+            Optional<Uri> sapSslCertificateUri = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -133,7 +134,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("sapPasswordUri"))
                 {
-                    sapPasswordUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sapPasswordUri = null;
+                        continue;
+                    }
+                    sapPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sapClientId"))
@@ -148,7 +154,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("sapSslCertificateUri"))
                 {
-                    sapSslCertificateUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sapSslCertificateUri = null;
+                        continue;
+                    }
+                    sapSslCertificateUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("providerType"))

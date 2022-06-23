@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(DiscoveryUri))
             {
                 writer.WritePropertyName("discoveryUrl");
-                writer.WriteStringValue(DiscoveryUri);
+                writer.WriteStringValue(DiscoveryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<string> applicationInsights = default;
             Optional<string> containerRegistry = default;
             Optional<string> storageAccount = default;
-            Optional<string> discoveryUrl = default;
+            Optional<Uri> discoveryUrl = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<EncryptionProperty> encryption = default;
             Optional<bool> hbiWorkspace = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<string> primaryUserAssignedIdentity = default;
             Optional<Guid> tenantId = default;
             Optional<bool> storageHnsEnabled = default;
-            Optional<string> mlFlowTrackingUri = default;
+            Optional<Uri> mlFlowTrackingUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -289,7 +289,12 @@ namespace Azure.ResourceManager.MachineLearning
                         }
                         if (property0.NameEquals("discoveryUrl"))
                         {
-                            discoveryUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                discoveryUrl = null;
+                                continue;
+                            }
+                            discoveryUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -439,7 +444,12 @@ namespace Azure.ResourceManager.MachineLearning
                         }
                         if (property0.NameEquals("mlFlowTrackingUri"))
                         {
-                            mlFlowTrackingUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                mlFlowTrackingUri = null;
+                                continue;
+                            }
+                            mlFlowTrackingUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

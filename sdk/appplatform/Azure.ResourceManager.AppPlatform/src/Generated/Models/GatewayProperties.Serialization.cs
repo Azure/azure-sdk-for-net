@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<GatewayProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             Optional<bool> httpsOnly = default;
             Optional<SsoProperties> ssoProperties = default;
             Optional<GatewayApiMetadataProperties> apiMetadataProperties = default;
@@ -85,7 +86,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpsOnly"))

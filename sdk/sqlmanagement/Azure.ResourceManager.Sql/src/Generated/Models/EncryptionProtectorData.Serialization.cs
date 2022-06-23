@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Sql
         internal static EncryptionProtectorData DeserializeEncryptionProtectorData(JsonElement element)
         {
             Optional<string> kind = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> subregion = default;
             Optional<string> serverKeyName = default;
             Optional<ServerKeyType> serverKeyType = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +62,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -120,7 +126,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("uri"))
                         {
-                            uri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uri = null;
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))
@@ -142,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new EncryptionProtectorData(id, name, type, systemData.Value, kind.Value, location.Value, subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
+            return new EncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

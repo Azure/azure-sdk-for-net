@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
-        public AccessPolicyEntry AccessPolicy { get; internal set; }
+        public VaultAccessPolicy AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Certificates = { new CertificatePermission("all") },
                 Storage = { new StoragePermission("all") },
             };
-            AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
+            AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
             VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+            VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new IPRule("1.2.3.4/32"),
-                    new IPRule("1.0.0.0/25")
+                    new VaultIPRule("1.2.3.4/32"),
+                    new VaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmCollection = ResourceGroupResource.GetManagedHsms();
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
-            ManagedHsmProperties.CreateMode = CreateMode.Default;
+            ManagedHsmProperties.CreateMode = ManagedHsmCreateMode.Default;
             ManagedHsmProperties.EnableSoftDelete = true;
             ManagedHsmProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             ManagedHsmProperties.EnablePurgeProtection = false;

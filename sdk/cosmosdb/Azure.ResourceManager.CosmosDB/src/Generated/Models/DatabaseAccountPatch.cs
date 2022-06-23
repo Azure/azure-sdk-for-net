@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location of the resource group to which the resource belongs. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
-        public string KeyVaultKeyUri { get; set; }
+        public Uri KeyVaultKeyUri { get; set; }
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>

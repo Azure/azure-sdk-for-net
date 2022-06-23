@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="marketplacePublisher"> Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Marketplace offer. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, string privacyPolicyUri, string legalTermsUri, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData)
+        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, bool? promoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Product = product;
@@ -62,9 +63,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> App Service plans this offer is restricted to. </summary>
         public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
         /// <summary> Privacy policy URL. </summary>
-        public string PrivacyPolicyUri { get; set; }
+        public Uri PrivacyPolicyUri { get; set; }
         /// <summary> Legal terms URL. </summary>
-        public string LegalTermsUri { get; set; }
+        public Uri LegalTermsUri { get; set; }
         /// <summary> Marketplace publisher. </summary>
         public string MarketplacePublisher { get; set; }
         /// <summary> Marketplace offer. </summary>

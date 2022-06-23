@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount, string location) : base(id, name, resourceType, systemData)
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, long? pendingReplicationOperationsCount, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Number of entities pending to be replicated. </summary>
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

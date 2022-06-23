@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigServerGitProperty. </summary>
         /// <param name="uri"> URI of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ConfigServerGitProperty(string uri)
+        public ConfigServerGitProperty(Uri uri)
         {
             if (uri == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
         /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        internal ConfigServerGitProperty(IList<GitPatternRepository> repositories, string uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
+        internal ConfigServerGitProperty(IList<GitPatternRepository> repositories, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
         {
             Repositories = repositories;
             Uri = uri;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Repositories of git. </summary>
         public IList<GitPatternRepository> Repositories { get; }
         /// <summary> URI of the repository. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Label of the repository. </summary>
         public string Label { get; set; }
         /// <summary> Searching path of the repository. </summary>

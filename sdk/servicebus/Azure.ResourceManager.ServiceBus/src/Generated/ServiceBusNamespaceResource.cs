@@ -179,6 +179,39 @@ namespace Azure.ResourceManager.ServiceBus
             return GetDisasterRecoveries().Get(alias, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MigrationConfigPropertiesResources in the ServiceBusNamespace. </summary>
+        /// <returns> An object representing collection of MigrationConfigPropertiesResources and their operations over a MigrationConfigPropertiesResource. </returns>
+        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
+        {
+            return GetCachedClient(Client => new MigrationConfigPropertiesCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves Migration Config
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// Operation Id: MigrationConfigs_Get
+        /// </summary>
+        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MigrationConfigPropertiesResource>> GetMigrationConfigPropertiesAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        {
+            return await GetMigrationConfigProperties().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves Migration Config
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// Operation Id: MigrationConfigs_Get
+        /// </summary>
+        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<MigrationConfigPropertiesResource> GetMigrationConfigProperties(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        {
+            return GetMigrationConfigProperties().Get(configName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
@@ -214,39 +247,6 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Response<NamespaceAuthorizationRuleResource> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MigrationConfigPropertiesResources in the ServiceBusNamespace. </summary>
-        /// <returns> An object representing collection of MigrationConfigPropertiesResources and their operations over a MigrationConfigPropertiesResource. </returns>
-        public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
-        {
-            return GetCachedClient(Client => new MigrationConfigPropertiesCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves Migration Config
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
-        /// Operation Id: MigrationConfigs_Get
-        /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationConfigPropertiesResource>> GetMigrationConfigPropertiesAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
-        {
-            return await GetMigrationConfigProperties().GetAsync(configName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves Migration Config
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
-        /// Operation Id: MigrationConfigs_Get
-        /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<MigrationConfigPropertiesResource> GetMigrationConfigProperties(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
-        {
-            return GetMigrationConfigProperties().Get(configName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceBusQueueResources in the ServiceBusNamespace. </summary>

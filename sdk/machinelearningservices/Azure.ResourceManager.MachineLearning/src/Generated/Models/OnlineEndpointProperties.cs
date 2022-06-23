@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="publicNetworkAccess"> Set to &quot;Enabled&quot; for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
-        internal OnlineEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, string scoringUri, string swaggerUri, string compute, IDictionary<string, int> mirrorTraffic, EndpointProvisioningState? provisioningState, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal OnlineEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, IDictionary<string, int> mirrorTraffic, EndpointProvisioningState? provisioningState, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Compute = compute;
             MirrorTraffic = mirrorTraffic;

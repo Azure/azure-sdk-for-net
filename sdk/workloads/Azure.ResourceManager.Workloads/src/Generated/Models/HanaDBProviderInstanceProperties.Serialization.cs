@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -48,12 +49,12 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri");
-                writer.WriteStringValue(DBPasswordUri);
+                writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DBSslCertificateUri))
             {
                 writer.WritePropertyName("dbSslCertificateUri");
-                writer.WriteStringValue(DBSslCertificateUri);
+                writer.WriteStringValue(DBSslCertificateUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SslHostNameInCertificate))
             {
@@ -73,8 +74,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> instanceNumber = default;
             Optional<string> dbUsername = default;
             Optional<string> dbPassword = default;
-            Optional<string> dbPasswordUri = default;
-            Optional<string> dbSslCertificateUri = default;
+            Optional<Uri> dbPasswordUri = default;
+            Optional<Uri> dbSslCertificateUri = default;
             Optional<string> sslHostNameInCertificate = default;
             string providerType = default;
             foreach (var property in element.EnumerateObject())
@@ -111,12 +112,22 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("dbPasswordUri"))
                 {
-                    dbPasswordUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dbPasswordUri = null;
+                        continue;
+                    }
+                    dbPasswordUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbSslCertificateUri"))
                 {
-                    dbSslCertificateUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dbSslCertificateUri = null;
+                        continue;
+                    }
+                    dbSslCertificateUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sslHostNameInCertificate"))

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource upload definition payload. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ResourceUploadResult. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
-        internal ResourceUploadResult(string relativePath, string uploadUri)
+        internal ResourceUploadResult(string relativePath, Uri uploadUri)
         {
             RelativePath = relativePath;
             UploadUri = uploadUri;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Source relative path. </summary>
         public string RelativePath { get; }
         /// <summary> Upload URL. </summary>
-        public string UploadUri { get; }
+        public Uri UploadUri { get; }
     }
 }

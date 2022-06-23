@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -24,12 +25,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="codeUri"> Uri where code is located. </param>
-        internal CodeVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, string codeUri) : base(description, properties, tags, isAnonymous, isArchived)
+        internal CodeVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, Uri codeUri) : base(description, properties, tags, isAnonymous, isArchived)
         {
             CodeUri = codeUri;
         }
 
         /// <summary> Uri where code is located. </summary>
-        public string CodeUri { get; set; }
+        public Uri CodeUri { get; set; }
     }
 }

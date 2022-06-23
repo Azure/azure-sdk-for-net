@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri");
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri");
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {

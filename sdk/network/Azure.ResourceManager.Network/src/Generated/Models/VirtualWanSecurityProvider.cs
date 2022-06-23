@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Collection of SecurityProviders. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the security provider. </param>
         /// <param name="uri"> Url of the security provider. </param>
         /// <param name="providerType"> Name of the security provider. </param>
-        internal VirtualWanSecurityProvider(string name, string uri, VirtualWanSecurityProviderType? providerType)
+        internal VirtualWanSecurityProvider(string name, Uri uri, VirtualWanSecurityProviderType? providerType)
         {
             Name = name;
             Uri = uri;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Name of the security provider. </summary>
         public string Name { get; }
         /// <summary> Url of the security provider. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
         /// <summary> Name of the security provider. </summary>
         public VirtualWanSecurityProviderType? ProviderType { get; }
     }

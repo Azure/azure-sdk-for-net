@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetUri))
             {
                 writer.WritePropertyName("targetUrl");
-                writer.WriteStringValue(TargetUri);
+                writer.WriteStringValue(TargetUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IncludePath))
             {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceType> type = default;
             Optional<ApplicationGatewayRedirectType> redirectType = default;
             Optional<WritableSubResource> targetListener = default;
-            Optional<string> targetUrl = default;
+            Optional<Uri> targetUrl = default;
             Optional<bool> includePath = default;
             Optional<bool> includeQueryString = default;
             Optional<IList<WritableSubResource>> requestRoutingRules = default;
@@ -171,7 +172,12 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("targetUrl"))
                         {
-                            targetUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                targetUrl = null;
+                                continue;
+                            }
+                            targetUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("includePath"))

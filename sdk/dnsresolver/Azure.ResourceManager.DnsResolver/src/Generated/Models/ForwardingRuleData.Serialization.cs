@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static ForwardingRuleData DeserializeForwardingRuleData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -71,7 +72,12 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new ForwardingRuleData(id, name, type, systemData.Value, etag.Value, domainName.Value, Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
+            return new ForwardingRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), domainName.Value, Optional.ToList(targetDnsServers), Optional.ToDictionary(metadata), Optional.ToNullable(forwardingRuleState), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
                 writer.WritePropertyName("managedDiskCustomerKeyUri");
-                writer.WriteStringValue(ManagedDiskCustomerKeyUri);
+                writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
                 writer.WritePropertyName("backupStorageCustomerKeyUri");
-                writer.WriteStringValue(BackupStorageCustomerKeyUri);
+                writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> nodeCount = default;
             Optional<IReadOnlyList<SeedNode>> seedNodes = default;
             Optional<string> base64EncodedCassandraYamlFragment = default;
-            Optional<string> managedDiskCustomerKeyUri = default;
-            Optional<string> backupStorageCustomerKeyUri = default;
+            Optional<Uri> managedDiskCustomerKeyUri = default;
+            Optional<Uri> backupStorageCustomerKeyUri = default;
             Optional<string> sku = default;
             Optional<string> diskSku = default;
             Optional<int> diskCapacity = default;
@@ -142,12 +143,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("managedDiskCustomerKeyUri"))
                 {
-                    managedDiskCustomerKeyUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        managedDiskCustomerKeyUri = null;
+                        continue;
+                    }
+                    managedDiskCustomerKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupStorageCustomerKeyUri"))
                 {
-                    backupStorageCustomerKeyUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        backupStorageCustomerKeyUri = null;
+                        continue;
+                    }
+                    backupStorageCustomerKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))

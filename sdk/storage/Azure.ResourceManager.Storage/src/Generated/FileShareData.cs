@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocol? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, string etag) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocol? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -107,6 +108,6 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </summary>
         public DateTimeOffset? SnapshotOn { get; }
         /// <summary> Resource Etag. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

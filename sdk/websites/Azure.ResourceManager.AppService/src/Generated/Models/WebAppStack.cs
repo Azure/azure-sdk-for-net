@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOS"> Web App stack preferred OS. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredO? preferredOS, string kind) : base(id, name, resourceType, systemData)
+        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayText = displayText;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Web App stack location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Web App stack (display only). </summary>
         public string DisplayText { get; }
         /// <summary> Web App stack name. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of major versions available. </summary>
         public IReadOnlyList<WebAppMajorVersion> MajorVersions { get; }
         /// <summary> Web App stack preferred OS. </summary>
-        public StackPreferredO? PreferredOS { get; }
+        public StackPreferredOS? PreferredOS { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

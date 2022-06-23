@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion");
@@ -27,13 +28,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element)
         {
-            string uri = default;
+            Uri uri = default;
             Optional<string> contentVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("contentVersion"))

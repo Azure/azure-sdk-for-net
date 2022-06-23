@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the SQL server provider properties. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal MsSqlServerProviderInstanceProperties(string providerType, string hostname, string dbPort, string dbUsername, string dbPassword, string dbPasswordUri, string sapSid) : base(providerType)
+        internal MsSqlServerProviderInstanceProperties(string providerType, string hostname, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
         {
             Hostname = hostname;
             DBPort = dbPort;
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the database password. </summary>
         public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public string DBPasswordUri { get; set; }
+        public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
     }

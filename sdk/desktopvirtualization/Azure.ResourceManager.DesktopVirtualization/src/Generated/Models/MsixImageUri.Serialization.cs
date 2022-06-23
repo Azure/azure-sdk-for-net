@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }

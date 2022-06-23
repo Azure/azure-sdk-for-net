@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("dataType");
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri");
-            writer.WriteStringValue(DataUri);
+            writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous");
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UriFolderDataVersion DeserializeUriFolderDataVersion(JsonElement element)
         {
             DataType dataType = default;
-            string dataUri = default;
+            Uri dataUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("dataUri"))
                 {
-                    dataUri = property.Value.GetString();
+                    dataUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

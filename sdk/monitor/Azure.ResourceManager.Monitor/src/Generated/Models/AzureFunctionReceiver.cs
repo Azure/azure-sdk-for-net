@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="functionName"> The function name in the function app. </param>
         /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="functionAppResourceId"/>, <paramref name="functionName"/> or <paramref name="httpTriggerUri"/> is null. </exception>
-        public AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, string httpTriggerUri)
+        public AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, Uri httpTriggerUri)
         {
             if (name == null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="functionName"> The function name in the function app. </param>
         /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, string httpTriggerUri, bool? useCommonAlertSchema)
+        internal AzureFunctionReceiver(string name, string functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema)
         {
             Name = name;
             FunctionAppResourceId = functionAppResourceId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The function name in the function app. </summary>
         public string FunctionName { get; set; }
         /// <summary> The http trigger url where http request sent to. </summary>
-        public string HttpTriggerUri { get; set; }
+        public Uri HttpTriggerUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }

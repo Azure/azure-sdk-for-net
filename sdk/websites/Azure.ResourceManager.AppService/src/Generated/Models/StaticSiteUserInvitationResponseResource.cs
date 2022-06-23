@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expiresOn"> The expiration time of the invitation. </param>
         /// <param name="invitationUri"> The url for the invitation link. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteUserInvitationResponseResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expiresOn, string invitationUri, string kind) : base(id, name, resourceType, systemData)
+        internal StaticSiteUserInvitationResponseResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expiresOn, Uri invitationUri, string kind) : base(id, name, resourceType, systemData)
         {
             ExpiresOn = expiresOn;
             InvitationUri = invitationUri;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The expiration time of the invitation. </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The url for the invitation link. </summary>
-        public string InvitationUri { get; }
+        public Uri InvitationUri { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

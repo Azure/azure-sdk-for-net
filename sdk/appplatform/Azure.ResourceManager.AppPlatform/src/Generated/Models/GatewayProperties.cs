@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway. </param>
         /// <param name="operatorProperties"> Properties of the Spring Cloud Gateway Operator. </param>
-        internal GatewayProperties(GatewayProvisioningState? provisioningState, bool? @public, string uri, bool? httpsOnly, SsoProperties ssoProperties, GatewayApiMetadataProperties apiMetadataProperties, GatewayCorsProperties corsProperties, GatewayResourceRequests resourceRequests, IReadOnlyList<GatewayInstance> instances, GatewayOperatorProperties operatorProperties)
+        internal GatewayProperties(GatewayProvisioningState? provisioningState, bool? @public, Uri uri, bool? httpsOnly, SsoProperties ssoProperties, GatewayApiMetadataProperties apiMetadataProperties, GatewayCorsProperties corsProperties, GatewayResourceRequests resourceRequests, IReadOnlyList<GatewayInstance> instances, GatewayOperatorProperties operatorProperties)
         {
             ProvisioningState = provisioningState;
             Public = @public;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Indicates whether the Spring Cloud Gateway exposes endpoint. </summary>
         public bool? Public { get; set; }
         /// <summary> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
         /// <summary> Indicate if only https is allowed. </summary>
         public bool? HttpsOnly { get; set; }
         /// <summary> Single sign-on related configuration. </summary>

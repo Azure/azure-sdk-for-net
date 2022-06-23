@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Latest job run information. </summary>
         public TriggeredJobRun LatestRun { get; set; }
         /// <summary> History URL. </summary>
-        public string HistoryUri { get; set; }
+        public Uri HistoryUri { get; set; }
         /// <summary> Scheduler Logs URL. </summary>
-        public string SchedulerLogsUri { get; set; }
+        public Uri SchedulerLogsUri { get; set; }
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public string ExtraInfoUri { get; set; }
+        public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>

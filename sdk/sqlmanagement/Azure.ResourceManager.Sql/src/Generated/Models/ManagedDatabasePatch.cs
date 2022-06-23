@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </summary>
         public ManagedDatabaseCreateMode? CreateMode { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </summary>
-        public string StorageContainerUri { get; set; }
+        public Uri StorageContainerUri { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public string SourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>

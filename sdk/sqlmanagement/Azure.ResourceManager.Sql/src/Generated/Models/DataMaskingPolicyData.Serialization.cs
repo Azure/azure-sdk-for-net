@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static DataMaskingPolicyData DeserializeDataMaskingPolicyData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -49,7 +49,12 @@ namespace Azure.ResourceManager.Sql
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -120,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DataMaskingPolicyData(id, name, type, systemData.Value, location.Value, kind.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
+            return new DataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value);
         }
     }
 }

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerSettings))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri");
-                writer.WriteStringValue(PrimaryScriptUri);
+                writer.WriteStringValue(PrimaryScriptUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SupportingScriptUris))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.Resources.Models
         internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
-            ScriptType kind = default;
-            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
             Optional<ScriptStorageConfiguration> storageAccountSettings = default;
-            Optional<ScriptCleanupOption> cleanupPreference = default;
+            Optional<ScriptCleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
             Optional<BinaryData> outputs = default;
-            Optional<string> primaryScriptUri = default;
-            Optional<IList<string>> supportingScriptUris = default;
+            Optional<Uri> primaryScriptUri = default;
+            Optional<IList<Uri>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
             Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Resources.Models
                     identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("location"))
                 {
-                    kind = new ScriptType(property.Value.GetString());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Resources.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("kind"))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cleanupPreference = new ScriptCleanupOption(property0.Value.GetString());
+                            cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -266,7 +266,12 @@ namespace Azure.ResourceManager.Resources.Models
                         }
                         if (property0.NameEquals("primaryScriptUri"))
                         {
-                            primaryScriptUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                primaryScriptUri = null;
+                                continue;
+                            }
+                            primaryScriptUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("supportingScriptUris"))
@@ -276,10 +281,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             supportingScriptUris = array;
                             continue;
@@ -338,7 +343,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureCliScript(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<WordPressVersion> version = default;
             Optional<string> databaseName = default;
             Optional<string> databaseUser = default;
-            Optional<string> siteUrl = default;
+            Optional<Uri> siteUrl = default;
             Optional<ApplicationProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +108,12 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("siteUrl"))
                         {
-                            siteUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                siteUrl = null;
+                                continue;
+                            }
+                            siteUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

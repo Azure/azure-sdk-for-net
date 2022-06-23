@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a virtual machine from a VM scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}
         /// Operation Id: VirtualMachineScaleSetVMs_Get
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetVmResource>> GetVirtualMachineScaleSetVmAsync(string instanceId, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetVmResource>> GetVirtualMachineScaleSetVmAsync(string instanceId, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return await GetVirtualMachineScaleSetVms().GetAsync(instanceId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a virtual machine from a VM scale set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualmachines/{instanceId}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}
         /// Operation Id: VirtualMachineScaleSetVMs_Get
         /// </summary>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetVmResource> GetVirtualMachineScaleSetVm(string instanceId, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVmResource> GetVirtualMachineScaleSetVm(string instanceId, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             return GetVirtualMachineScaleSetVms().Get(instanceId, expand, cancellationToken);
         }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetAsync(ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetAsync(ExpandTypesForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.Get");
             scope.Start();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineScaleSetResource> Get(ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetResource> Get(ExpandTypesForGetVmScaleSet? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.Get");
             scope.Start();
@@ -1117,14 +1117,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk
         /// </summary>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
+        /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
+        /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1140,14 +1142,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk
         /// </summary>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
+        /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
+        /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, cancellationToken);
+                var response = _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, cancellationToken);
                 return response;
             }
             catch (Exception e)

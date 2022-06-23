@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="filters"> To modify the request before sending it to the target endpoint, or the received response. </param>
         /// <param name="order"> Route processing order. </param>
         /// <param name="tags"> Classification tags, will be applied to methods in the generated OpenAPI documentation. </param>
-        internal GatewayApiRoute(string title, string description, string uri, bool? ssoEnabled, bool? tokenRelay, IList<string> predicates, IList<string> filters, int? order, IList<string> tags)
+        internal GatewayApiRoute(string title, string description, Uri uri, bool? ssoEnabled, bool? tokenRelay, IList<string> predicates, IList<string> filters, int? order, IList<string> tags)
         {
             Title = title;
             Description = description;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> A description, will be applied to methods in the generated OpenAPI documentation. </summary>
         public string Description { get; set; }
         /// <summary> Full uri, will override `appName`. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Enable sso validation. </summary>
         public bool? SsoEnabled { get; set; }
         /// <summary> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </summary>

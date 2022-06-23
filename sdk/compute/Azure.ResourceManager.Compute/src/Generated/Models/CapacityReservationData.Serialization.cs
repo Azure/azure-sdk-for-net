@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Compute
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
             Optional<CapacityReservationInstanceView> instanceView = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -187,11 +188,21 @@ namespace Azure.ResourceManager.Compute
                             instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value);
+            return new CapacityReservationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

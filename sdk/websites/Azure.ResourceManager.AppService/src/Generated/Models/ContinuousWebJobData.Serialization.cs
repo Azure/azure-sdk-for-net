@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LogUri))
             {
                 writer.WritePropertyName("log_url");
-                writer.WriteStringValue(LogUri);
+                writer.WriteStringValue(LogUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RunCommand))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url");
-                writer.WriteStringValue(ExtraInfoUri);
+                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService
             Optional<SystemData> systemData = default;
             Optional<ContinuousWebJobStatus> status = default;
             Optional<string> detailedStatus = default;
-            Optional<string> logUrl = default;
+            Optional<Uri> logUrl = default;
             Optional<string> runCommand = default;
-            Optional<string> url = default;
-            Optional<string> extraInfoUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> extraInfoUrl = default;
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
@@ -165,7 +165,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("log_url"))
                         {
-                            logUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                logUrl = null;
+                                continue;
+                            }
+                            logUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("run_command"))
@@ -175,12 +180,22 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                url = null;
+                                continue;
+                            }
+                            url = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extra_info_url"))
                         {
-                            extraInfoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extraInfoUrl = null;
+                                continue;
+                            }
+                            extraInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("web_job_type"))

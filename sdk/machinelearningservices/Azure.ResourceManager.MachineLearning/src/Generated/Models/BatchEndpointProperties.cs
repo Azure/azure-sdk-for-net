@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
         /// <param name="defaults"> Default values for Batch Endpoint. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        internal BatchEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, string scoringUri, string swaggerUri, BatchEndpointDefaults defaults, EndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal BatchEndpointProperties(EndpointAuthMode authMode, string description, EndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, EndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
         {
             Defaults = defaults;
             ProvisioningState = provisioningState;

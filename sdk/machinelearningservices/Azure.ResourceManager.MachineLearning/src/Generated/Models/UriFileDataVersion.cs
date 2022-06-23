@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of UriFileDataVersion. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public UriFileDataVersion(string dataUri) : base(dataUri)
+        public UriFileDataVersion(Uri dataUri) : base(dataUri)
         {
             if (dataUri == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
-        internal UriFileDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, string dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        internal UriFileDataVersion(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, DataType dataType, Uri dataUri) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
         {
             DataType = dataType;
         }

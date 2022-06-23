@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public ApiPortalProperties()
         {
             GatewayIds = new ChangeTrackingList<string>();
-            SourceUris = new ChangeTrackingList<string>();
+            SourceUris = new ChangeTrackingList<Uri>();
             Instances = new ChangeTrackingList<ApiPortalInstance>();
         }
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? @public, string uri, bool? httpsOnly, IList<string> gatewayIds, IList<string> sourceUris, SsoProperties ssoProperties, ApiPortalResourceRequests resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
+        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? @public, Uri uri, bool? httpsOnly, IList<string> gatewayIds, IList<Uri> sourceUris, SsoProperties ssoProperties, ApiPortalResourceRequests resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
         {
             ProvisioningState = provisioningState;
             Public = @public;
@@ -49,13 +50,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Indicates whether the API portal exposes endpoint. </summary>
         public bool? Public { get; set; }
         /// <summary> URL of the API portal, exposed when &apos;public&apos; is true. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
         /// <summary> Indicate if only https is allowed. </summary>
         public bool? HttpsOnly { get; set; }
         /// <summary> The array of resource Ids of gateway to integrate with API portal. </summary>
         public IList<string> GatewayIds { get; }
         /// <summary> Collection of OpenAPI source URL locations. </summary>
-        public IList<string> SourceUris { get; }
+        public IList<Uri> SourceUris { get; }
         /// <summary> Single sign-on related configuration. </summary>
         public SsoProperties SsoProperties { get; set; }
         /// <summary> The requested resource quantity for required CPU and Memory. </summary>

@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Resources
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -30,8 +32,6 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecVersionData DeserializeTemplateSpecVersionData(JsonElement element)
         {
-            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.Resources
             Optional<BinaryData> uiFormDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,11 +113,6 @@ namespace Azure.ResourceManager.Resources
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new TemplateSpecVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value);
+            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value);
         }
     }
 }

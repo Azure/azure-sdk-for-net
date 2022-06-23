@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="databaseUser"> User name used by the application to connect to database. </param>
         /// <param name="siteUri"> Site Url to access the WordPress application. </param>
         /// <param name="provisioningState"> WordPress instance provisioning state. </param>
-        internal WordPressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordPressVersion? version, string databaseName, string databaseUser, string siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal WordPressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordPressVersion? version, string databaseName, string databaseUser, Uri siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Version = version;
             DatabaseName = databaseName;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> User name used by the application to connect to database. </summary>
         public string DatabaseUser { get; set; }
         /// <summary> Site Url to access the WordPress application. </summary>
-        public string SiteUri { get; }
+        public Uri SiteUri { get; }
         /// <summary> WordPress instance provisioning state. </summary>
         public ApplicationProvisioningState? ProvisioningState { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, string targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType)
+        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType)
         {
             Etag = etag;
             RedirectType = redirectType;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Url to redirect the request to. </summary>
-        public string TargetUri { get; set; }
+        public Uri TargetUri { get; set; }
         /// <summary> Include path in the redirected url. </summary>
         public bool? IncludePath { get; set; }
         /// <summary> Include query string in the redirected url. </summary>

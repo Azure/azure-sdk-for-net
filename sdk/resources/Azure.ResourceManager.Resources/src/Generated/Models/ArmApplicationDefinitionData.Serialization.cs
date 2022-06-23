@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(PackageFileUri))
             {
                 writer.WritePropertyName("packageFileUri");
-                writer.WriteStringValue(PackageFileUri);
+                writer.WriteStringValue(PackageFileUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MainTemplate))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
             Optional<IList<ArmApplicationAuthorization>> authorizations = default;
             Optional<IList<ArmApplicationDefinitionArtifact>> artifacts = default;
             Optional<string> description = default;
-            Optional<string> packageFileUri = default;
+            Optional<Uri> packageFileUri = default;
             Optional<BinaryData> mainTemplate = default;
             Optional<BinaryData> createUiDefinition = default;
             Optional<ArmApplicationNotificationPolicy> notificationPolicy = default;
@@ -290,7 +290,12 @@ namespace Azure.ResourceManager.Resources
                         }
                         if (property0.NameEquals("packageFileUri"))
                         {
-                            packageFileUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                packageFileUri = null;
+                                continue;
+                            }
+                            packageFileUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("mainTemplate"))

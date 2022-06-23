@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url");
-                writer.WriteStringValue(OutputUri);
+                writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url");
-                writer.WriteStringValue(ErrorUri);
+                writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(JobName))
             {
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<TimeSpan> duration = default;
-            Optional<string> outputUrl = default;
-            Optional<string> errorUrl = default;
-            Optional<string> url = default;
+            Optional<Uri> outputUrl = default;
+            Optional<Uri> errorUrl = default;
+            Optional<Uri> url = default;
             Optional<string> jobName = default;
             Optional<string> trigger = default;
             foreach (var property in element.EnumerateObject())
@@ -141,17 +141,32 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("output_url"))
                 {
-                    outputUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputUrl = null;
+                        continue;
+                    }
+                    outputUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error_url"))
                 {
-                    errorUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorUrl = null;
+                        continue;
+                    }
+                    errorUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("job_name"))

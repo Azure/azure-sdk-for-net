@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -127,8 +128,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<EndpointAuthKeys> keys = default;
             Optional<IDictionary<string, string>> properties = default;
-            Optional<string> scoringUri = default;
-            Optional<string> swaggerUri = default;
+            Optional<Uri> scoringUri = default;
+            Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"))
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scoringUri = null;
                         continue;
                     }
-                    scoringUri = property.Value.GetString();
+                    scoringUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("swaggerUri"))
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         swaggerUri = null;
                         continue;
                     }
-                    swaggerUri = property.Value.GetString();
+                    swaggerUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

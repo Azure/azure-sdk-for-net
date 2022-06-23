@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="dbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
-        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, string dbPasswordUri, string dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
+        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
         {
             Hostname = hostname;
             DBName = dbName;
@@ -54,9 +56,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the database password. </summary>
         public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public string DBPasswordUri { get; set; }
+        public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the DB. </summary>
-        public string DBSslCertificateUri { get; set; }
+        public Uri DBSslCertificateUri { get; set; }
         /// <summary> Gets or sets the hostname(s) in the SSL certificate. </summary>
         public string SslHostNameInCertificate { get; set; }
     }

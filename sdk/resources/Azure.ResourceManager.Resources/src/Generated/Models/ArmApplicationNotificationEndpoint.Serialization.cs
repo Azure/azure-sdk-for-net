@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,18 +17,18 @@ namespace Azure.ResourceManager.Resources.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static ArmApplicationNotificationEndpoint DeserializeArmApplicationNotificationEndpoint(JsonElement element)
         {
-            string uri = default;
+            Uri uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

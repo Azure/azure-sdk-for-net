@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class AzurePowerShellScript : ArmDeploymentScriptData
     {
         /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azPowerShellVersion"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(azPowerShellVersion));
             }
 
-            SupportingScriptUris = new ChangeTrackingList<string>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzPowerShellVersion = azPowerShellVersion;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
+        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
-        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmDeploymentScriptManagedIdentity identity, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOption? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, string primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, resourceType, systemData, tags, location, identity, kind)
+        internal AzurePowerShellScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azPowerShellVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Storage Account settings. </summary>
         public ScriptStorageConfiguration StorageAccountSettings { get; set; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
-        public ScriptCleanupOption? CleanupPreference { get; set; }
+        public ScriptCleanupOptions? CleanupPreference { get; set; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
         public ScriptProvisioningState? ProvisioningState { get; }
         /// <summary> Contains the results of script execution. </summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> List of script outputs. </summary>
         public BinaryData Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
-        public string PrimaryScriptUri { get; set; }
+        public Uri PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>
-        public IList<string> SupportingScriptUris { get; }
+        public IList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
         /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>

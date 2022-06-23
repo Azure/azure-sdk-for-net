@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in ReferencedUris)
                     {
-                        writer.WriteStringValue(item);
+                        writer.WriteStringValue(item.AbsoluteUri);
                     }
                     writer.WriteEndArray();
                 }
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("dataType");
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri");
-            writer.WriteStringValue(DataUri);
+            writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous");
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MLTableData DeserializeMLTableData(JsonElement element)
         {
-            Optional<IList<string>> referencedUris = default;
+            Optional<IList<Uri>> referencedUris = default;
             DataType dataType = default;
-            string dataUri = default;
+            Uri dataUri = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -117,10 +118,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         referencedUris = null;
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     referencedUris = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("dataUri"))
                 {
-                    dataUri = property.Value.GetString();
+                    dataUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"))

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="name"> Name of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
-        public GitPatternRepository(string name, string uri)
+        public GitPatternRepository(string name, Uri uri)
         {
             if (name == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
         /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        internal GitPatternRepository(string name, IList<string> pattern, string uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
+        internal GitPatternRepository(string name, IList<string> pattern, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? strictHostKeyChecking)
         {
             Name = name;
             Pattern = pattern;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Collection of pattern of the repository. </summary>
         public IList<string> Pattern { get; }
         /// <summary> URI of the repository. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Label of the repository. </summary>
         public string Label { get; set; }
         /// <summary> Searching path of the repository. </summary>

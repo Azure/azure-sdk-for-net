@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static P2SVpnConnectionHealth DeserializeP2SVpnConnectionHealth(JsonElement element)
         {
-            Optional<string> sasUrl = default;
+            Optional<Uri> sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"))
                 {
-                    sasUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sasUrl = null;
+                        continue;
+                    }
+                    sasUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

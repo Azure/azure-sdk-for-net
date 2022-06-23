@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultUri"/> or <paramref name="keyVaultCertName"/> is null. </exception>
-        public KeyVaultCertificateProperties(string vaultUri, string keyVaultCertName)
+        public KeyVaultCertificateProperties(Uri vaultUri, string keyVaultCertName)
         {
             if (vaultUri == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <param name="certVersion"> The certificate version of key vault. </param>
         /// <param name="excludePrivateKey"> Optional. If set to true, it will not import private key from key vault. </param>
-        internal KeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, string vaultUri, string keyVaultCertName, string certVersion, bool? excludePrivateKey) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        internal KeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames, Uri vaultUri, string keyVaultCertName, string certVersion, bool? excludePrivateKey) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
         {
             VaultUri = vaultUri;
             KeyVaultCertName = keyVaultCertName;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> The vault uri of user key vault. </summary>
-        public string VaultUri { get; set; }
+        public Uri VaultUri { get; set; }
         /// <summary> The certificate name of key vault. </summary>
         public string KeyVaultCertName { get; set; }
         /// <summary> The certificate version of key vault. </summary>

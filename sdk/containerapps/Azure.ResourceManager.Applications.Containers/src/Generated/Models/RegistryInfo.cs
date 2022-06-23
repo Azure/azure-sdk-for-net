@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
     /// <summary> Container App registry information. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="registryUri"> registry server Url. </param>
         /// <param name="registryUserName"> registry username. </param>
         /// <param name="registryPassword"> registry secret. </param>
-        internal RegistryInfo(string registryUri, string registryUserName, string registryPassword)
+        internal RegistryInfo(Uri registryUri, string registryUserName, string registryPassword)
         {
             RegistryUri = registryUri;
             RegistryUserName = registryUserName;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         }
 
         /// <summary> registry server Url. </summary>
-        public string RegistryUri { get; set; }
+        public Uri RegistryUri { get; set; }
         /// <summary> registry username. </summary>
         public string RegistryUserName { get; set; }
         /// <summary> registry secret. </summary>

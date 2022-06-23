@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, string extensionUri, string projectUri, string iconUri, string licenseUri, string feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, string kind) : base(id, name, resourceType, systemData)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, string kind) : base(id, name, resourceType, systemData)
         {
             ExtensionId = extensionId;
             Title = title;
@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Version information. </summary>
         public string Version { get; set; }
         /// <summary> Extension URL. </summary>
-        public string ExtensionUri { get; set; }
+        public Uri ExtensionUri { get; set; }
         /// <summary> Project URL. </summary>
-        public string ProjectUri { get; set; }
+        public Uri ProjectUri { get; set; }
         /// <summary> Icon URL. </summary>
-        public string IconUri { get; set; }
+        public Uri IconUri { get; set; }
         /// <summary> License URL. </summary>
-        public string LicenseUri { get; set; }
+        public Uri LicenseUri { get; set; }
         /// <summary> Feed URL. </summary>
-        public string FeedUri { get; set; }
+        public Uri FeedUri { get; set; }
         /// <summary> List of authors. </summary>
         public IList<string> Authors { get; }
         /// <summary> Installer command line parameters. </summary>

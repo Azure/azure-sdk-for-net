@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AzureTableStorageApplicationLogsConfig. </summary>
         /// <param name="sasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
-        public AzureTableStorageApplicationLogsConfig(string sasUri)
+        public AzureTableStorageApplicationLogsConfig(Uri sasUri)
         {
             if (sasUri == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AzureTableStorageApplicationLogsConfig. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
-        internal AzureTableStorageApplicationLogsConfig(LogLevel? level, string sasUri)
+        internal AzureTableStorageApplicationLogsConfig(LogLevel? level, Uri sasUri)
         {
             Level = level;
             SasUri = sasUri;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Log level. </summary>
         public LogLevel? Level { get; set; }
         /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
-        public string SasUri { get; set; }
+        public Uri SasUri { get; set; }
     }
 }

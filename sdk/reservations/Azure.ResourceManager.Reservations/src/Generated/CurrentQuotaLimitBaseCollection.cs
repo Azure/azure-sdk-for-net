@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations
         private readonly ClientDiagnostics _currentQuotaLimitBaseQuotaClientDiagnostics;
         private readonly QuotaRestOperations _currentQuotaLimitBaseQuotaRestClient;
         private readonly string _providerId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseCollection"/> class for mocking. </summary>
         protected CurrentQuotaLimitBaseCollection()
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        internal CurrentQuotaLimitBaseCollection(ArmClient client, ResourceIdentifier id, string providerId, string location) : base(client, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal CurrentQuotaLimitBaseCollection(ArmClient client, ResourceIdentifier id, string providerId, AzureLocation location) : base(client, id)
         {
             _providerId = providerId;
             _location = location;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, _providerId, _location, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, _location, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdate(Id.SubscriptionId, _providerId, _location, resourceName, data, cancellationToken);
-                var operation = new ReservationsArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, _location, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdate(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data, cancellationToken);
+                var operation = new ReservationsArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id.SubscriptionId, _providerId, _location, resourceName, cancellationToken);
+                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _currentQuotaLimitBaseQuotaRestClient.ListAsync(Id.SubscriptionId, _providerId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _currentQuotaLimitBaseQuotaRestClient.ListAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CurrentQuotaLimitBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await _currentQuotaLimitBaseQuotaRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _currentQuotaLimitBaseQuotaRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CurrentQuotaLimitBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _currentQuotaLimitBaseQuotaRestClient.List(Id.SubscriptionId, _providerId, _location, cancellationToken: cancellationToken);
+                    var response = _currentQuotaLimitBaseQuotaRestClient.List(Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CurrentQuotaLimitBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = _currentQuotaLimitBaseQuotaRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, _location, cancellationToken: cancellationToken);
+                    var response = _currentQuotaLimitBaseQuotaRestClient.ListNextPage(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CurrentQuotaLimitBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id.SubscriptionId, _providerId, _location, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _currentQuotaLimitBaseQuotaRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id.SubscriptionId, _providerId, _location, resourceName, cancellationToken: cancellationToken);
+                var response = _currentQuotaLimitBaseQuotaRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

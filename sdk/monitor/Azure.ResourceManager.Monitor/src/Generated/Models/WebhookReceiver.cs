@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
-        public WebhookReceiver(string name, string serviceUri)
+        public WebhookReceiver(string name, Uri serviceUri)
         {
             if (name == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
-        internal WebhookReceiver(string name, string serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, string identifierUri, string tenantId)
+        internal WebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The name of the webhook receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
         /// <summary> The URI where webhooks should be sent. </summary>
-        public string ServiceUri { get; set; }
+        public Uri ServiceUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
         /// <summary> Indicates whether or not use AAD authentication. </summary>
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Indicates the webhook app object Id for aad auth. </summary>
         public string ObjectId { get; set; }
         /// <summary> Indicates the identifier uri for aad auth. </summary>
-        public string IdentifierUri { get; set; }
+        public Uri IdentifierUri { get; set; }
         /// <summary> Indicates the tenant id for aad auth. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

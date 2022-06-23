@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, string kind) : base(id, name, resourceType, systemData)
+        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, string kind) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -54,13 +55,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Package URI. </summary>
-        public string PackageUri { get; set; }
+        public Uri PackageUri { get; set; }
         /// <summary> SQL Connection String. </summary>
         public string ConnectionString { get; set; }
         /// <summary> Database Type. </summary>
         public string DbType { get; set; }
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
-        public string SetParametersXmlFileUri { get; set; }
+        public Uri SetParametersXmlFileUri { get; set; }
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
         public IDictionary<string, string> SetParameters { get; }
         /// <summary>

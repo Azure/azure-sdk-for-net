@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultRedirectUri"> If action type is redirect, this field represents the default redirect URL for the client. </param>
         /// <param name="defaultCustomBlockResponseStatusCode"> If the action type is block, this field defines the default customer overridable http response status code. </param>
         /// <param name="defaultCustomBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
-        internal PolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, string defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, string defaultCustomBlockResponseBody)
+        internal PolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, string defaultCustomBlockResponseBody)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
         public PolicyMode? Mode { get; set; }
         /// <summary> If action type is redirect, this field represents the default redirect URL for the client. </summary>
-        public string DefaultRedirectUri { get; set; }
+        public Uri DefaultRedirectUri { get; set; }
         /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
         /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>

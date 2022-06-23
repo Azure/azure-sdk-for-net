@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<WritableSubResource>> ipAllocations = default;
             Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
             Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
-            Optional<IList<Delegation>> delegations = default;
+            Optional<IList<ServiceDelegation>> delegations = default;
             Optional<string> purpose = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
@@ -378,10 +378,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Delegation> array = new List<Delegation>();
+                            List<ServiceDelegation> array = new List<ServiceDelegation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Delegation.DeserializeDelegation(item));
+                                array.Add(ServiceDelegation.DeserializeServiceDelegation(item));
                             }
                             delegations = array;
                             continue;

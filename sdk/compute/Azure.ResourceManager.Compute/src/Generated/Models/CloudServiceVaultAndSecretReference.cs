@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
         /// <param name="sourceVault"></param>
         /// <param name="secretUri"></param>
-        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, string secretUri)
+        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri)
         {
             SourceVault = sourceVault;
             SecretUri = secretUri;
@@ -42,6 +43,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets or sets the secret uri. </summary>
-        public string SecretUri { get; set; }
+        public Uri SecretUri { get; set; }
     }
 }

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static AppResourceProperties DeserializeAppResourceProperties(JsonElement element)
         {
             Optional<bool> @public = default;
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
             Optional<AppResourceProvisioningState> provisioningState = default;
             Optional<string> fqdn = default;
@@ -118,7 +118,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addonConfigs"))

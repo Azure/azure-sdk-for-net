@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri");
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static BootDiagnostics DeserializeBootDiagnostics(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<string> storageUri = default;
+            Optional<Uri> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -46,7 +47,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("storageUri"))
                 {
-                    storageUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        storageUri = null;
+                        continue;
+                    }
+                    storageUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

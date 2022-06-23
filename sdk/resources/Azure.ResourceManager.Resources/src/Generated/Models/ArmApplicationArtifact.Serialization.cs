@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ArmApplicationArtifact DeserializeArmApplicationArtifact(JsonElement element)
         {
             ArmApplicationArtifactName name = default;
-            string uri = default;
+            Uri uri = default;
             ArmApplicationArtifactType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))

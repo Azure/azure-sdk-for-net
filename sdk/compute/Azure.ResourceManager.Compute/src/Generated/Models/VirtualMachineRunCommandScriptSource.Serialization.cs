@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUri");
-                writer.WriteStringValue(ScriptUri);
+                writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CommandId))
             {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineRunCommandScriptSource DeserializeVirtualMachineRunCommandScriptSource(JsonElement element)
         {
             Optional<string> script = default;
-            Optional<string> scriptUri = default;
+            Optional<Uri> scriptUri = default;
             Optional<string> commandId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +48,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("scriptUri"))
                 {
-                    scriptUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scriptUri = null;
+                        continue;
+                    }
+                    scriptUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commandId"))

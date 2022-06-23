@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.Compute
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones");
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -43,12 +53,18 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("colocationStatus");
                 writer.WriteObjectValue(ColocationStatus);
             }
+            if (Optional.IsDefined(Intent))
+            {
+                writer.WritePropertyName("intent");
+                writer.WriteObjectValue(Intent);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ProximityPlacementGroupData DeserializeProximityPlacementGroupData(JsonElement element)
         {
+            Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -60,8 +76,24 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
             Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
+            Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("zones"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -181,11 +213,21 @@ namespace Azure.ResourceManager.Compute
                             colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("intent"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value);
+            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value);
         }
     }
 }

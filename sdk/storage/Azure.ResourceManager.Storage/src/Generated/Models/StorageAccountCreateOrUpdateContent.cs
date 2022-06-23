@@ -19,16 +19,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
-        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location)
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location)
         {
             if (sku == null)
             {
                 throw new ArgumentNullException(nameof(sku));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
 
             Sku = sku;
@@ -42,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Required. Indicates the type of storage account. </summary>
         public StorageKind Kind { get; }
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </summary>
@@ -73,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
         public Encryption Encryption { get; set; }
         /// <summary> Network rule set. </summary>
         public NetworkRuleSet NetworkRuleSet { get; set; }
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public AccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -103,5 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? DefaultToOAuthAuthentication { get; set; }
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </summary>
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+        /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
+        public DnsEndpointType? DnsEndpointType { get; set; }
     }
 }

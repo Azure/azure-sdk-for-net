@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,7 +49,12 @@ namespace Azure.ResourceManager.EventHubs
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -130,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), location.Value);
+            return new DisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), Optional.ToNullable(location));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> retentionDays = default;
-            Optional<DiffBackupIntervalInHour> diffBackupIntervalInHours = default;
+            Optional<DiffBackupIntervalInHours> diffBackupIntervalInHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            diffBackupIntervalInHours = new DiffBackupIntervalInHour(property0.Value.GetInt32());
+                            diffBackupIntervalInHours = new DiffBackupIntervalInHours(property0.Value.GetInt32());
                             continue;
                         }
                     }

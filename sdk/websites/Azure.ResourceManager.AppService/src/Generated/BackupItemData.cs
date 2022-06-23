@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, string storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
+        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Id of the backup. </summary>
         public int? BackupId { get; }
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
-        public string StorageAccountUri { get; }
+        public Uri StorageAccountUri { get; }
         /// <summary> Name of the blob which contains data for this backup. </summary>
         public string BlobName { get; }
         /// <summary> Name of this backup. </summary>

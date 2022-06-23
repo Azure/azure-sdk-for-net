@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Recommended actions based on discovered issues. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="actionText"> Description of recommended actions. </param>
         /// <param name="actionUri"> The uri linking to a documentation for the recommended troubleshooting actions. </param>
         /// <param name="actionUriText"> The information from the URI for the recommended troubleshooting actions. </param>
-        internal TroubleshootingRecommendedActions(string actionId, string actionText, string actionUri, string actionUriText)
+        internal TroubleshootingRecommendedActions(string actionId, string actionText, Uri actionUri, string actionUriText)
         {
             ActionId = actionId;
             ActionText = actionText;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Description of recommended actions. </summary>
         public string ActionText { get; }
         /// <summary> The uri linking to a documentation for the recommended troubleshooting actions. </summary>
-        public string ActionUri { get; }
+        public Uri ActionUri { get; }
         /// <summary> The information from the URI for the recommended troubleshooting actions. </summary>
         public string ActionUriText { get; }
     }

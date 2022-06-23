@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="creationOn"> The server key creation date. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string subregion, ServerKeyType? serverKeyType, string uri, string thumbprint, DateTimeOffset? creationOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        internal ServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? creationOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Subregion of the server key. </summary>
         public string Subregion { get; }
         /// <summary> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
         public ServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Thumbprint of the server key. </summary>
         public string Thumbprint { get; }
         /// <summary> The server key creation date. </summary>

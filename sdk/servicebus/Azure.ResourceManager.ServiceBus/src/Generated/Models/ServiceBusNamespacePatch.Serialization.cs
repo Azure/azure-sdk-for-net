@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneRedundant))
-            {
-                writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
-            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption");
@@ -68,6 +63,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 writer.WritePropertyName("disableLocalAuth");
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
+            }
+            if (Optional.IsDefined(AlternateName))
+            {
+                writer.WritePropertyName("alternateName");
+                writer.WriteStringValue(AlternateName);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
-            Optional<bool> zoneRedundant = default;
             Optional<EncryptionProperties> encryption = default;
             Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
+            Optional<string> alternateName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -209,16 +209,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                             metricId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            zoneRedundant = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("encryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -254,11 +244,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("alternateName"))
+                        {
+                            alternateName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceBusNamespacePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth));
+            return new ServiceBusNamespacePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }

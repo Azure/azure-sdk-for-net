@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceUri"> Resource URI. </param>
         /// <param name="properties"> Resource metric definition properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, string resourceUri, IReadOnlyDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
+        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of time grains supported for the metric together with retention period. </summary>
         public IReadOnlyList<ResourceMetricAvailability> MetricAvailabilities { get; }
         /// <summary> Resource URI. </summary>
-        public string ResourceUri { get; }
+        public Uri ResourceUri { get; }
         /// <summary> Resource metric definition properties. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> Kind of resource. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Applications.Containers.Models;
 using Azure.ResourceManager.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlOperationState? operationState, string repoUri, string branch, GithubActionConfiguration githubActionConfiguration) : base(id, name, resourceType, systemData)
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SourceControlOperationState? operationState, Uri repoUri, string branch, GithubActionConfiguration githubActionConfiguration) : base(id, name, resourceType, systemData)
         {
             OperationState = operationState;
             RepoUri = repoUri;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> Current provisioning State of the operation. </summary>
         public SourceControlOperationState? OperationState { get; }
         /// <summary> The repo url which will be integrated to ContainerApp. </summary>
-        public string RepoUri { get; set; }
+        public Uri RepoUri { get; set; }
         /// <summary> The branch which will trigger the auto deployment. </summary>
         public string Branch { get; set; }
         /// <summary>

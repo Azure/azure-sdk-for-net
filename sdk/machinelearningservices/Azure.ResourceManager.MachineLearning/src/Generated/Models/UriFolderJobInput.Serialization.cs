@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UriFolderJobInput DeserializeUriFolderJobInput(JsonElement element)
         {
             Optional<InputDeliveryMode> mode = default;
-            string uri = default;
+            Uri uri = default;
             Optional<string> description = default;
             JobInputType jobInputType = default;
             foreach (var property in element.EnumerateObject())
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

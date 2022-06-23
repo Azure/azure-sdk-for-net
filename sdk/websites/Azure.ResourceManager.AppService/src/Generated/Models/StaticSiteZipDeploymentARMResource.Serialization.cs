@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl");
-                writer.WriteStringValue(AppZipUri);
+                writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl");
-                writer.WriteStringValue(ApiZipUri);
+                writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentTitle))
             {
@@ -59,8 +60,8 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> appZipUrl = default;
-            Optional<string> apiZipUrl = default;
+            Optional<Uri> appZipUrl = default;
+            Optional<Uri> apiZipUrl = default;
             Optional<string> deploymentTitle = default;
             Optional<string> provider = default;
             Optional<string> functionLanguage = default;
@@ -107,12 +108,22 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("appZipUrl"))
                         {
-                            appZipUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                appZipUrl = null;
+                                continue;
+                            }
+                            appZipUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("apiZipUrl"))
                         {
-                            apiZipUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                apiZipUrl = null;
+                                continue;
+                            }
+                            apiZipUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deploymentTitle"))

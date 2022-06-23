@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,18 +15,28 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationPackageSupportUris DeserializeArmApplicationPackageSupportUris(JsonElement element)
         {
-            Optional<string> publicAzure = default;
-            Optional<string> governmentCloud = default;
+            Optional<Uri> publicAzure = default;
+            Optional<Uri> governmentCloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicAzure"))
                 {
-                    publicAzure = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicAzure = null;
+                        continue;
+                    }
+                    publicAzure = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("governmentCloud"))
                 {
-                    governmentCloud = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        governmentCloud = null;
+                        continue;
+                    }
+                    governmentCloud = new Uri(property.Value.GetString());
                     continue;
                 }
             }

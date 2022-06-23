@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the HyperVGeneration Type associated with a resource. </summary>
+    /// <summary> Specifies the HyperVGeneration Type. </summary>
     public readonly partial struct HyperVGenerationType : IEquatable<HyperVGenerationType>
     {
         private readonly string _value;

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static OutboundEndpointData DeserializeOutboundEndpointData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -59,7 +60,12 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new OutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, etag.Value, subnet, Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new OutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), resourceGuid.Value);
         }
     }
 }

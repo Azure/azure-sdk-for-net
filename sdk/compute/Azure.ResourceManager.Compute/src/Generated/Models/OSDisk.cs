@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the operating system disk used by the virtual machine. &lt;br&gt;&lt;br&gt; For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
@@ -12,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of OSDisk. </summary>
         /// <param name="createOption"> Specifies how the virtual machine should be created.&lt;br&gt;&lt;br&gt; Possible values are:&lt;br&gt;&lt;br&gt; **Attach** \u2013 This value is used when you are using a specialized disk to create the virtual machine.&lt;br&gt;&lt;br&gt; **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
-        public OSDisk(DiskCreateOptionTypes createOption)
+        public OSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
         }
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the os disk is retained after VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **detach**. For an ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for ephemeral OS Disk. </param>
-        internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption)
+        internal OSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; set; }
         /// <summary> The disk name. </summary>
@@ -55,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual hard disk. </summary>
         internal VirtualHardDisk Vhd { get; set; }
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public string VhdUri
+        public Uri VhdUri
         {
             get => Vhd is null ? default : Vhd.Uri;
             set
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </summary>
         internal VirtualHardDisk Image { get; set; }
         /// <summary> Specifies the virtual hard disk&apos;s uri. </summary>
-        public string ImageUri
+        public Uri ImageUri
         {
             get => Image is null ? default : Image.Uri;
             set
@@ -81,18 +83,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None** for Standard storage. **ReadOnly** for Premium storage. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
         public DiffDiskSettings DiffDiskSettings { get; set; }
         /// <summary> Specifies how the virtual machine should be created.&lt;br&gt;&lt;br&gt; Possible values are:&lt;br&gt;&lt;br&gt; **Attach** \u2013 This value is used when you are using a specialized disk to create the virtual machine.&lt;br&gt;&lt;br&gt; **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </summary>
-        public DiskCreateOptionTypes CreateOption { get; set; }
+        public DiskCreateOptionType CreateOption { get; set; }
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> The managed disk parameters. </summary>
         public ManagedDiskParameters ManagedDisk { get; set; }
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the os disk is retained after VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **detach**. For an ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for ephemeral OS Disk. </summary>
-        public DiskDeleteOptionTypes? DeleteOption { get; set; }
+        public DiskDeleteOptionType? DeleteOption { get; set; }
     }
 }

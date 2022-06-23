@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static ConfigServerSettingsErrorRecord DeserializeConfigServerSettingsErrorRecord(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<IReadOnlyList<string>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,7 +28,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("messages"))

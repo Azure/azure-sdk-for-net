@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="port"></param>
         /// <param name="biztalkUri"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, string biztalkUri, string kind) : base(id, name, resourceType, systemData)
+        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, string kind) : base(id, name, resourceType, systemData)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the port. </summary>
         public int? Port { get; set; }
         /// <summary> Gets or sets the biztalk uri. </summary>
-        public string BiztalkUri { get; set; }
+        public Uri BiztalkUri { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

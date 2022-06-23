@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bomUri"/>, <paramref name="sapBitsStorageAccountId"/> or <paramref name="softwareVersion"/> is null. </exception>
-        public SapInstallWithoutOSConfigSoftwareConfiguration(string bomUri, string sapBitsStorageAccountId, string softwareVersion)
+        public SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri, string sapBitsStorageAccountId, string softwareVersion)
         {
             if (bomUri == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, string bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
+        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, Uri bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
         {
             BomUri = bomUri;
             SapBitsStorageAccountId = sapBitsStorageAccountId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The URL to the SAP Build of Materials(BOM) file. </summary>
-        public string BomUri { get; set; }
+        public Uri BomUri { get; set; }
         /// <summary> The SAP bits storage account id. </summary>
         public string SapBitsStorageAccountId { get; set; }
         /// <summary> The software version to install. </summary>

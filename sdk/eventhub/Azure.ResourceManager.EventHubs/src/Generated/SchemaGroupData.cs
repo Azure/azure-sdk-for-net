@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType, string location) : base(id, name, resourceType, systemData)
+        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Gets or sets the schema type. </summary>
         public SchemaType? SchemaType { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

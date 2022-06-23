@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Single sign-on request information for domain management. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use &apos;application/x-www-form-urlencoded&apos; encoding for this value. </param>
-        internal DomainControlCenterSsoRequest(string uri, string postParameterKey, string postParameterValue)
+        internal DomainControlCenterSsoRequest(Uri uri, string postParameterKey, string postParameterValue)
         {
             Uri = uri;
             PostParameterKey = postParameterKey;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL where the single sign-on request is to be made. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
         /// <summary> Post parameter key. </summary>
         public string PostParameterKey { get; }
         /// <summary> Post parameter value. Client should use &apos;application/x-www-form-urlencoded&apos; encoding for this value. </summary>

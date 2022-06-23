@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="userMetadata"> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata, string location) : base(id, name, resourceType, systemData)
+        internal ConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string userMetadata, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </summary>
         public string UserMetadata { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

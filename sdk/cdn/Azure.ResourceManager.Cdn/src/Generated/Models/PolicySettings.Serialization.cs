@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DefaultRedirectUri))
             {
                 writer.WritePropertyName("defaultRedirectUrl");
-                writer.WriteStringValue(DefaultRedirectUri);
+                writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
-            Optional<string> defaultRedirectUrl = default;
+            Optional<Uri> defaultRedirectUrl = default;
             Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
             Optional<string> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +82,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("defaultRedirectUrl"))
                 {
-                    defaultRedirectUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultRedirectUrl = null;
+                        continue;
+                    }
+                    defaultRedirectUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultCustomBlockResponseStatusCode"))

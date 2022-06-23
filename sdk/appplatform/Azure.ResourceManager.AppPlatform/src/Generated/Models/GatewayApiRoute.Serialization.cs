@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(SsoEnabled))
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Optional<string> title = default;
             Optional<string> description = default;
-            Optional<string> uri = default;
+            Optional<Uri> uri = default;
             Optional<bool> ssoEnabled = default;
             Optional<bool> tokenRelay = default;
             Optional<IList<string>> predicates = default;
@@ -104,7 +105,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        uri = null;
+                        continue;
+                    }
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ssoEnabled"))
