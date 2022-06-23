@@ -9,7 +9,6 @@ This library allows you to send data from virtually any source to supported buil
 **Resources:**
 * [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
 * [Package (NuGet)](https://www.nuget.org/packages/Azure.Monitor.Ingestion)
-* [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/monitor/ingestion?view=azure-dotnet)
 * [Service documentation](https://docs.microsoft.com/azure/azure-monitor/overview)
 * [Change log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/CHANGELOG.md)
 
