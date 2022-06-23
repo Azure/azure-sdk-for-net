@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal PrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, NetworkProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType)
+        internal PrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the private link service connection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource id of private link service. </summary>
-        public string PrivateLinkServiceId { get; set; }
+        public ResourceIdentifier PrivateLinkServiceId { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>

@@ -251,6 +251,8 @@ directive:
     where: $.definitions
     transform: >
         $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
+        $.ServiceAssociationLinkPropertiesFormat.properties.linkedResourceType['x-ms-format'] = 'resource-type';
+        $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
   - from: endpointService.json
     where: $.definitions
     transform: >
@@ -289,6 +291,7 @@ directive:
     where: $.definitions
     transform: >
       $.PrivateLinkServiceConnectionProperties.properties.privateLinkServiceConnectionState['x-ms-client-name'] = 'connectionState';
+      $.PrivateLinkServiceConnectionProperties.properties.privateLinkServiceId['x-ms-format'] = 'arm-id';
   - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
