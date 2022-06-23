@@ -4,7 +4,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         public AuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRights> Rights { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.AccessRight> Rights { get { throw null; } }
     }
     public partial class ConsumerGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ConsumerGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ConsumerGroupResource>, System.Collections.IEnumerable
     {
@@ -495,22 +495,22 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string SecondaryKey { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccessRights : System.IEquatable<Azure.ResourceManager.EventHubs.Models.AccessRights>
+    public readonly partial struct AccessRight : System.IEquatable<Azure.ResourceManager.EventHubs.Models.AccessRight>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AccessRights(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.AccessRights Listen { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.AccessRights Manage { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.AccessRights Send { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.AccessRights other) { throw null; }
+        public AccessRight(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.AccessRight Listen { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.AccessRight Manage { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.AccessRight Send { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.AccessRight other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.AccessRights left, Azure.ResourceManager.EventHubs.Models.AccessRights right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.AccessRights (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.AccessRights left, Azure.ResourceManager.EventHubs.Models.AccessRights right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.AccessRight left, Azure.ResourceManager.EventHubs.Models.AccessRight right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.AccessRight (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.AccessRight left, Azure.ResourceManager.EventHubs.Models.AccessRight right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AvailableCluster

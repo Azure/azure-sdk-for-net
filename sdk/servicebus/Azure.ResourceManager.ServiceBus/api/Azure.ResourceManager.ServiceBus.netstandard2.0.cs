@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public ServiceBusAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRights> Rights { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRight> Rights { get { throw null; } }
     }
     public static partial class ServiceBusExtensions
     {
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
     }
-    public enum AccessRights
+    public enum AccessRight
     {
         Manage = 0,
         Send = 1,

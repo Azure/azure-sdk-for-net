@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal TextClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetrics? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
+        internal TextClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetric? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             DataSettings = dataSettings;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Primary metric for Text-Classification task. </summary>
-        public ClassificationPrimaryMetrics? PrimaryMetric { get; set; }
+        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

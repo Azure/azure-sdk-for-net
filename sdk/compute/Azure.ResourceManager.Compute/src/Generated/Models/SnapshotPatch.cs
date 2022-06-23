@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
         public SnapshotSku Sku { get; set; }
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>

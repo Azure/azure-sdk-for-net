@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfile DeserializeSharingProfile(JsonElement element)
         {
-            Optional<GallerySharingPermissionTypes> permissions = default;
+            Optional<GallerySharingPermissionType> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
             Optional<BinaryData> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    permissions = new GallerySharingPermissionTypes(property.Value.GetString());
+                    permissions = new GallerySharingPermissionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groups"))
