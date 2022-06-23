@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class DataVersionData : IUtf8JsonSerializable
+    public partial class DataVersionBaseData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteEndObject();
         }
 
-        internal static DataVersionData DeserializeDataVersionData(JsonElement element)
+        internal static DataVersionBaseData DeserializeDataVersionBaseData(JsonElement element)
         {
-            DataVersionProperties properties = default;
+            DataVersionBaseProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = DataVersionProperties.DeserializeDataVersionProperties(property.Value);
+                    properties = DataVersionBaseProperties.DeserializeDataVersionBaseProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -53,11 +53,16 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new DataVersionData(id, name, type, systemData, properties);
+            return new DataVersionBaseData(id, name, type, systemData.Value, properties);
         }
     }
 }

@@ -9,7 +9,7 @@ foreach ($file in $ymlfiles)
   $ymlContent = Get-Content $file.FullName -Raw
   $ymlObject = ConvertFrom-Yaml $ymlContent -Ordered
 
-  if ($ymlObject.Contains("resources"))
+  if ($ymlObject -and ($ymlObject.Contains("resources")))
   {
     if ($ymlObject["resources"]["repositories"])
     {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="responseBasedDetectedErrorTypes"> Type of response errors for real user requests for which origin will be deemed unhealthy. </param>
         /// <param name="responseBasedFailoverThresholdPercentage"> The percentage of failed requests in the sample where failover should trigger. </param>
         /// <param name="httpErrorRanges"> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </param>
-        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorTypes? responseBasedDetectedErrorTypes, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges)
+        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges)
         {
             ResponseBasedDetectedErrorTypes = responseBasedDetectedErrorTypes;
             ResponseBasedFailoverThresholdPercentage = responseBasedFailoverThresholdPercentage;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Type of response errors for real user requests for which origin will be deemed unhealthy. </summary>
-        public ResponseBasedDetectedErrorTypes? ResponseBasedDetectedErrorTypes { get; set; }
+        public ResponseBasedDetectedErrorType? ResponseBasedDetectedErrorTypes { get; set; }
         /// <summary> The percentage of failed requests in the sample where failover should trigger. </summary>
         public int? ResponseBasedFailoverThresholdPercentage { get; set; }
         /// <summary> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </summary>

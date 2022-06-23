@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Graph.Rbac;
+using Azure.Identity;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Microsoft.Graph;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
-        public AccessPolicyEntry AccessPolicy { get; internal set; }
+        public VaultAccessPolicy AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
@@ -67,14 +69,20 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                ServicePrincipalsOperations spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                List<Graph.Rbac.Models.ServicePrincipal> servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
-                foreach (var servicePrincipal in servicePrincipalList)
+                // Get ObjectId of Service Principal
+                // [warning] Microsoft.Graph required corresponding api permission, Please make sure the service has these two api permissions as follows.
+                // 1. ServicePrincipalEndpoint.Read.All(TYPE-Application) 2.ServicePrincipalEndpoint.ReadWrite.All(TYPE-Application)
+                var scopes = new[] { "https://graph.microsoft.com/.default" };
+                var options = new TokenCredentialOptions
                 {
-                    this.ObjectId = servicePrincipal.ObjectId;
-                    Recording.GetVariable(ObjectIdKey, this.ObjectId);
-                    break;
-                }
+                    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
+                };
+                var clientSecretCredential = new ClientSecretCredential(TestEnvironment.TenantId, TestEnvironment.ClientId, TestEnvironment.ClientSecret, options);
+                var graphClient = new GraphServiceClient(clientSecretCredential, scopes);
+                var response = await graphClient.ServicePrincipals.Request().GetAsync();
+                var result = response.CurrentPage.Where(i => i.AppId == TestEnvironment.ClientId).FirstOrDefault();
+                this.ObjectId = result.Id;
+                Recording.GetVariable(ObjectIdKey, this.ObjectId);
             }
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
@@ -94,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Certificates = { new CertificatePermission("all") },
                 Storage = { new StoragePermission("all") },
             };
-            AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
+            AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
             VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
@@ -104,13 +112,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+            VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new IPRule("1.2.3.4/32"),
-                    new IPRule("1.0.0.0/25")
+                    new VaultIPRule("1.2.3.4/32"),
+                    new VaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
@@ -118,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmCollection = ResourceGroupResource.GetManagedHsms();
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
-            ManagedHsmProperties.CreateMode = CreateMode.Default;
+            ManagedHsmProperties.CreateMode = ManagedHsmCreateMode.Default;
             ManagedHsmProperties.EnableSoftDelete = true;
             ManagedHsmProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             ManagedHsmProperties.EnablePurgeProtection = false;

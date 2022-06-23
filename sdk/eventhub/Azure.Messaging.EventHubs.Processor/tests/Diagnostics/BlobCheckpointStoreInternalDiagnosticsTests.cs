@@ -234,37 +234,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on failure.
-        /// </summary>
-        ///
-        [Test]
-        public void ClaimOwnershipForMissingPartitionLogsClaimOwnershipError()
-        {
-            var partitionOwnership = new List<EventProcessorPartitionOwnership>
-            {
-                new EventProcessorPartitionOwnership
-                {
-                    FullyQualifiedNamespace = FullyQualifiedNamespace,
-                    EventHubName = EventHubName,
-                    ConsumerGroup = ConsumerGroup,
-                    OwnerIdentifier = OwnershipIdentifier,
-                    PartitionId = PartitionId,
-                    LastModifiedTime = DateTime.UtcNow,
-                    Version = MatchingEtag
-                }
-            };
-
-            var mockBlobContainerClient = new MockBlobContainerClient().AddBlobClient($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/1", _ => { });
-            var target = new BlobCheckpointStoreInternal(mockBlobContainerClient);
-
-            var mockLog = new Mock<BlobEventStoreEventSource>();
-            target.Logger = mockLog.Object;
-
-            Assert.That(async () => await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.ClaimOwnershipError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.BlobNotFound.ToString()))));
-        }
-
-        /// <summary>
         ///   Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///

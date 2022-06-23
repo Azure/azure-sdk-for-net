@@ -98,6 +98,13 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/appplatform/**/*.cs",
+      "words": [
+        "dynatrace",
+        "fqdns"
+      ]
+    },
+    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "cref",
@@ -242,6 +249,12 @@
         "mhsmip"
       ]
     },
+	{
+      "filename": "**/sdk/networkfunction/**/*.cs",
+      "words": [
+        "ipfix"
+      ]
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
@@ -372,7 +385,38 @@
         "Plex",
         "Vstsrm"
       ]
-    }
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
+      ]
+    },
+   {
+      "filename": "**/sdk/containerinstance/**/*.cs",
+      "words": [
+        "Noreuse",
+        "Unsecure"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningservices/**/*.cs",
+      "words": [
+        "Skus",
+        "Cname",
+        "Kube",
+        "Gluster",
+        "Gepc",
+        "Conda",
+        "Reimage",
+        "Cran",
+        "Rscript",
+        "VCPUs"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }

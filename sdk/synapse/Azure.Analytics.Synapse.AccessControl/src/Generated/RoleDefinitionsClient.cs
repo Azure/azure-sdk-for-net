@@ -64,38 +64,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleDefinitionsListResponse</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -121,38 +109,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleDefinitionsListResponse</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -179,38 +155,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -239,38 +203,26 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
+        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   name: string, # Optional. Name of the Synapse role
+        ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
+        ///   description: string, # Optional. Description for the Synapse role
         ///   permissions: [
         ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
+        ///       actions: [string], # Optional. List of actions
+        ///       notActions: [string], # Optional. List of Not actions
+        ///       dataActions: [string], # Optional. List of data actions
+        ///       notDataActions: [string], # Optional. List of Not data actions
         ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. Permissions for the Synapse role
+        ///   scopes: [string], # Optional. Allowed scopes for the Synapse role
+        ///   availabilityStatus: string, # Optional. Availability of the Synapse role
         /// }
         /// </code>
         /// 
@@ -295,25 +247,6 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
@@ -332,25 +265,6 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> List rbac scopes. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response GetScopes(RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");

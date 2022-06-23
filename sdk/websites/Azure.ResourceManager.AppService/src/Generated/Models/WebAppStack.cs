@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App stack. </summary>
-    public partial class WebAppStack : ProxyOnlyResource
+    public partial class WebAppStack : ResourceData
     {
         /// <summary> Initializes a new instance of WebAppStack. </summary>
         public WebAppStack()
@@ -25,23 +25,24 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="location"> Web App stack location. </param>
         /// <param name="displayText"> Web App stack (display only). </param>
         /// <param name="value"> Web App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOS"> Web App stack preferred OS. </param>
-        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayText = displayText;
             Value = value;
             MajorVersions = majorVersions;
             PreferredOS = preferredOS;
+            Kind = kind;
         }
 
         /// <summary> Web App stack location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Web App stack (display only). </summary>
         public string DisplayText { get; }
         /// <summary> Web App stack name. </summary>
@@ -50,5 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IReadOnlyList<WebAppMajorVersion> MajorVersions { get; }
         /// <summary> Web App stack preferred OS. </summary>
         public StackPreferredOS? PreferredOS { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public override async Task AddRuleAsync(
+        public override async Task CreateRuleAsync(
             RuleProperties properties,
             CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
@@ -182,12 +182,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public override async Task RemoveRuleAsync(string ruleName, CancellationToken cancellationToken) =>
+        public override async Task DeleteRuleAsync(string ruleName, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
                 static async (value, timeout, token) =>
                 {
                     var (manager, ruleName) = value;
-                    await manager.RemoveRuleInternalAsync(ruleName, timeout).ConfigureAwait(false);
+                    await manager.DeleteRuleInternalAsync(ruleName, timeout).ConfigureAwait(false);
                 },
                 (this, ruleName),
                 _connectionScope,
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        private async Task RemoveRuleInternalAsync(
+        private async Task DeleteRuleInternalAsync(
             string ruleName,
             TimeSpan timeout)
         {
@@ -225,34 +225,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Get rules associated with the subscription.
         /// </summary>
-        ///
+        /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
+        /// <param name="top">The number of rules to retrieve per service request.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>Returns a list of rules description</returns>
-        public override async Task<List<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken) =>
+        public override async Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                static async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout).ConfigureAwait(false),
+                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false),
                 this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Get rules associated with the subscription.
         /// </summary>
-        ///
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
-        ///
+        /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
+        /// <param name="top">The number of rules to retrieve per service request.</param>
         /// <returns>Returns a list of rules description</returns>
-        private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout)
+        private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout, int skip, int top)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.EnumerateRulesOperation,
                     timeout,
                     null);
-            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = int.MaxValue;
-            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = 0;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
 
             var response = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,

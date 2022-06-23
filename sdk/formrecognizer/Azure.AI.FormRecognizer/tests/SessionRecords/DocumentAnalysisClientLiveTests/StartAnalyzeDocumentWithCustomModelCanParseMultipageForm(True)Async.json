@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "93",
+        "Content-Length": "94",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f7d8b11246b2134cb008a1e5b3fc2627-f70a880c8bdb3649-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "c6846eef315af3891c20d43b5d9a418b",
+        "traceparent": "00-1f9bdd555dba76b86d2ea48a0a0dd27e-d630a3ca968aa0d0-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5c77cc1da9e19ac91be41367def59f03",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "499584192",
+        "modelId": "1310049402",
         "buildMode": "template",
         "azureBlobSource": {
           "containerUrl": "Sanitized"
@@ -22,319 +22,283 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "099b8e1e-9c46-409e-8db0-a22c7670cdbc",
+        "apim-request-id": "f0c1c224-4cb9-4049-a85e-643ee2d5326f",
         "Content-Length": "0",
-        "Date": "Wed, 26 Jan 2022 00:20:39 GMT",
-        "operation-location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc?api-version=2022-01-30-preview",
+        "Date": "Fri, 20 May 2022 22:32:07 GMT",
+        "operation-location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513282078_f0c1c224-4cb9-4049-a85e-643ee2d5326f?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "2857"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5337"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513282078_f0c1c224-4cb9-4049-a85e-643ee2d5326f?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "c91fe29e094dad3c6eedd85583189be1",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "79cedb12700c54a7e2438846544e4f59",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cca44788-4f6b-4c3d-b741-9a85a2590d18",
+        "apim-request-id": "9f829bd8-0839-491d-8840-6a643b7de1f8",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:39 GMT",
+        "Date": "Fri, 20 May 2022 22:32:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022operationId\u0022: \u002231523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc\u0022,\n",
-        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
-        "  \u0022status\u0022: \u0022running\u0022,\n",
-        "  \u0022createdDateTime\u0022: \u00222022-01-26T00:20:37Z\u0022,\n",
-        "  \u0022lastUpdatedDateTime\u0022: \u00222022-01-26T00:20:40Z\u0022,\n",
-        "  \u0022resourceLocation\u0022: \u0022https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192?api-version=2022-01-30-preview\u0022\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "operationId": "31513282078_f0c1c224-4cb9-4049-a85e-643ee2d5326f",
+        "kind": "documentModelBuild",
+        "status": "running",
+        "createdDateTime": "2022-05-20T22:32:01Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:07Z",
+        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402?api-version=2022-06-30-preview"
+      }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31513282078_f0c1c224-4cb9-4049-a85e-643ee2d5326f?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3c011dcaee741e3bd515011422c25eac",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "909a59f8aee07b7076ecd75dc7852a26",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "75c881a3-6cf9-4197-88fe-1cc8a64897f3",
+        "apim-request-id": "0fe8ac59-dec0-4a98-b21d-31b8ec07ac0b",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:40 GMT",
+        "Date": "Fri, 20 May 2022 22:32:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022operationId\u0022: \u002231523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc\u0022,\n",
-        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
-        "  \u0022status\u0022: \u0022running\u0022,\n",
-        "  \u0022createdDateTime\u0022: \u00222022-01-26T00:20:37Z\u0022,\n",
-        "  \u0022lastUpdatedDateTime\u0022: \u00222022-01-26T00:20:40Z\u0022,\n",
-        "  \u0022resourceLocation\u0022: \u0022https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192?api-version=2022-01-30-preview\u0022\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "operationId": "31513282078_f0c1c224-4cb9-4049-a85e-643ee2d5326f",
+        "kind": "documentModelBuild",
+        "status": "succeeded",
+        "createdDateTime": "2022-05-20T22:32:01Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:08Z",
+        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402?api-version=2022-06-30-preview",
+        "percentCompleted": 100,
+        "result": {
+          "docTypes": {
+            "1310049402": {
+              "fieldSchema": {
+                "Gold": {
+                  "type": "string"
+                },
+                "Silver": {
+                  "type": "string"
+                },
+                "Bronze": {
+                  "type": "string"
+                },
+                "Full": {
+                  "type": "string"
+                },
+                "Half": {
+                  "type": "string"
+                },
+                "CompanyName": {
+                  "type": "string"
+                },
+                "Contact": {
+                  "type": "string"
+                }
+              },
+              "buildMode": "template",
+              "fieldConfidence": {
+                "Bronze": 0.995,
+                "CompanyName": 0.8,
+                "Contact": 0.995,
+                "Full": 0.995,
+                "Gold": 0.995,
+                "Half": 0.995,
+                "Silver": 0.995
+              }
+            }
+          },
+          "modelId": "1310049402",
+          "createdDateTime": "2022-05-20T22:32:08Z",
+          "apiVersion": "2022-06-30-preview"
+        }
+      }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/operations/31523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc?api-version=2022-01-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "12573852ea77e67231d7586d59336f04",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "f3e4c523-1eed-47de-8376-76b44ec25f88",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:41 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
-      },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022operationId\u0022: \u002231523211563_099b8e1e-9c46-409e-8db0-a22c7670cdbc\u0022,\n",
-        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
-        "  \u0022status\u0022: \u0022succeeded\u0022,\n",
-        "  \u0022createdDateTime\u0022: \u00222022-01-26T00:20:37Z\u0022,\n",
-        "  \u0022lastUpdatedDateTime\u0022: \u00222022-01-26T00:20:42Z\u0022,\n",
-        "  \u0022resourceLocation\u0022: \u0022https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192?api-version=2022-01-30-preview\u0022,\n",
-        "  \u0022percentCompleted\u0022: 100,\n",
-        "  \u0022result\u0022: {\n",
-        "    \u0022docTypes\u0022: {\n",
-        "      \u0022499584192\u0022: {\n",
-        "        \u0022fieldSchema\u0022: {\n",
-        "          \u0022Gold\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Silver\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Bronze\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Full\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Half\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022CompanyName\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Contact\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          }\n",
-        "        },\n",
-        "        \u0022buildMode\u0022: \u0022template\u0022,\n",
-        "        \u0022fieldConfidence\u0022: {\n",
-        "          \u0022Bronze\u0022: 0.95,\n",
-        "          \u0022CompanyName\u0022: 0.8,\n",
-        "          \u0022Contact\u0022: 0.95,\n",
-        "          \u0022Full\u0022: 0.95,\n",
-        "          \u0022Gold\u0022: 0.95,\n",
-        "          \u0022Half\u0022: 0.95,\n",
-        "          \u0022Silver\u0022: 0.95\n",
-        "        }\n",
-        "      }\n",
-        "    },\n",
-        "    \u0022modelId\u0022: \u0022499584192\u0022,\n",
-        "    \u0022createdDateTime\u0022: \u00222022-01-26T00:20:42Z\u0022,\n",
-        "    \u0022apiVersion\u0022: \u00222022-01-30-preview\u0022\n",
-        "  }\n",
-        "}"
-      ]
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "711607",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8bb259dfb583be4bafea1fab99c0a504-d026516b45519b45-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3f71f3850598af17a700f33708278aab",
+        "traceparent": "00-d514ee5c858ee5ff26f33164858b5eaa-9493a684082cf9e5-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b778e8b0377bad6e24227a9e208345cd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "7967e568-67e8-48d1-a158-b76e2b536eaf",
+        "apim-request-id": "a811e3f2-1df6-4705-af17-cde3b88b38e9",
         "Content-Length": "0",
-        "Date": "Wed, 26 Jan 2022 00:20:42 GMT",
-        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+        "Date": "Fri, 20 May 2022 22:32:08 GMT",
+        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "412"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "296"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4a032b8e88c0e069aa1b0a9c95cec5a2",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "856eb9950f5b63236a53021f984a8c5c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8176fb4c-f2b4-493a-a213-b6a39c96a2e5",
+        "apim-request-id": "46e224fc-5922-4d67-950f-a76672578b5f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:42 GMT",
+        "Date": "Fri, 20 May 2022 22:32:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:42Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:42Z"
+        "createdDateTime": "2022-05-20T22:32:09Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:09Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2f8ffca51f504d1321a86b77f63add0a",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6b95621897d5c0deebec6bbd34d25af3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8832ec6a-e97a-4d67-bd29-7649a37d0727",
+        "apim-request-id": "e0a90f99-55c1-40a2-9057-ae8a8af06c3e",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:43 GMT",
+        "Date": "Fri, 20 May 2022 22:32:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:42Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:42Z"
+        "createdDateTime": "2022-05-20T22:32:09Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:09Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "2ddead4c2430fd438991947dfa7a19d8",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0ec80aa6a517a0cbc5154d27354e14d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e277dc26-10a9-4c1b-8e07-32ffd9ad8326",
+        "apim-request-id": "805ecf30-695d-4d9a-ae22-1914560c40e2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:44 GMT",
+        "Date": "Fri, 20 May 2022 22:32:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:42Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:42Z"
+        "createdDateTime": "2022-05-20T22:32:09Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:09Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "0b92513b5b986f5a18b629181df2ea70",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "be851d95d9eefdf7dbad9a6ea4662f97",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "db736ece-cbfc-4437-b629-97246b7702ea",
+        "apim-request-id": "7dc427b3-3bc9-4531-a6bb-fe771a969cc2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:46 GMT",
+        "Date": "Fri, 20 May 2022 22:32:13 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:42Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:42Z"
+        "createdDateTime": "2022-05-20T22:32:09Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:09Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192/analyzeResults/7967e568-67e8-48d1-a158-b76e2b536eaf?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402/analyzeResults/a811e3f2-1df6-4705-af17-cde3b88b38e9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e850003d98f08071b992a5bf8a9552a6",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8d780ff87e82734496f4a6c049b68b9c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "919e356a-115c-49e5-8a68-19313f2ca1a7",
+        "apim-request-id": "e097f9a6-41f0-4b83-9434-9b400e565fe0",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:47 GMT",
+        "Date": "Fri, 20 May 2022 22:32:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "150"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-01-26T00:20:42Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:47Z",
+        "createdDateTime": "2022-05-20T22:32:09Z",
+        "lastUpdatedDateTime": "2022-05-20T22:32:14Z",
         "analyzeResult": {
-          "apiVersion": "2022-01-30-preview",
-          "modelId": "499584192",
+          "apiVersion": "2022-06-30-preview",
+          "modelId": "1310049402",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in\nMaple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person\nwaitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form\nbelow, and attach a check made out to:\nContoso Ltd.\n2345 Dogwood Lane\nBirch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth\nPre-keynote thank you\nLogo on poster\nFull page ad in program guide\n$1,500\nSilver Sponsor\nFull booth\nPost-keynote thank you\nLogo on poster\nHalf page ad in program guide\n$1,200\nBronze Sponsor\n\u00B7\nFull booth\nLogo on poster\n50% discount on program guide\nadvertisements\n$1,000\nFull Booth\nFull booth\n50% discount on program guide\nadvertisements\n$600\nHalf Booth\nFull booth\n25% discount on program guide\nadvertisements\n$350\nVendor #:121\nVendor Details:\nCompany Name: Southridge Video\nContact: Jamie@southridgevideo.com\nPreferred Package: Gold\nSpecial Requests: N/a",
+          "content": "Vendor #:121\nVendor Registration\nContoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form below, and attach a check made out to:\nContoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123\nRates:\nPackage\nIncluded\nPrice\nGold Sponsor\nFull booth Pre-keynote thank you Logo on poster\n$1,500\nFull page ad in program guide\nSilver Sponsor\nFull booth Post-keynote thank you Logo on poster\n$1,200\nHalf page ad in program guide\nBronze Sponsor\nFull booth\n$1,000\nLogo on poster 50% discount on program guide advertisements\nFull Booth\nFull booth 50% discount on program guide advertisements\n$600\nHalf Booth\nFull booth 25% discount on program guide advertisements\n$350\nVendor #:121\nVendor Details: Company Name: Southridge Video Contact: Jamie@southridgevideo.com Preferred Package: Gold Special Requests: N/a",
           "pages": [
             {
               "pageNumber": 1,
@@ -345,7 +309,7 @@
               "words": [
                 {
                   "content": "Vendor",
-                  "boundingBox": [
+                  "polygon": [
                     6.1276,
                     1.0667,
                     6.8657,
@@ -363,7 +327,7 @@
                 },
                 {
                   "content": "#:121",
-                  "boundingBox": [
+                  "polygon": [
                     6.9307,
                     1.0759,
                     7.4833,
@@ -381,7 +345,7 @@
                 },
                 {
                   "content": "Vendor",
-                  "boundingBox": [
+                  "polygon": [
                     2.2268,
                     1.5733,
                     3.703,
@@ -399,7 +363,7 @@
                 },
                 {
                   "content": "Registration",
-                  "boundingBox": [
+                  "polygon": [
                     3.8661,
                     1.5883,
                     6.2379,
@@ -417,7 +381,7 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     1.0078,
                     2.5919,
                     1.5548,
@@ -435,7 +399,7 @@
                 },
                 {
                   "content": "Ltd.",
-                  "boundingBox": [
+                  "polygon": [
                     1.6125,
                     2.5856,
                     1.843,
@@ -453,7 +417,7 @@
                 },
                 {
                   "content": "Conference",
-                  "boundingBox": [
+                  "polygon": [
                     1.8996,
                     2.5846,
                     2.6636,
@@ -471,7 +435,7 @@
                 },
                 {
                   "content": "will",
-                  "boundingBox": [
+                  "polygon": [
                     2.7122,
                     2.5852,
                     2.9307,
@@ -489,7 +453,7 @@
                 },
                 {
                   "content": "be",
-                  "boundingBox": [
+                  "polygon": [
                     2.9922,
                     2.5852,
                     3.1419,
@@ -507,7 +471,7 @@
                 },
                 {
                   "content": "held",
-                  "boundingBox": [
+                  "polygon": [
                     3.1987,
                     2.5852,
                     3.4704,
@@ -525,7 +489,7 @@
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     3.53,
                     2.62,
                     3.6846,
@@ -543,7 +507,7 @@
                 },
                 {
                   "content": "May",
-                  "boundingBox": [
+                  "polygon": [
                     3.7498,
                     2.5934,
                     4.0422,
@@ -561,7 +525,7 @@
                 },
                 {
                   "content": "28-29,",
-                  "boundingBox": [
+                  "polygon": [
                     4.0877,
                     2.5914,
                     4.5042,
@@ -579,7 +543,7 @@
                 },
                 {
                   "content": "2020",
-                  "boundingBox": [
+                  "polygon": [
                     4.5586,
                     2.5914,
                     4.884,
@@ -597,7 +561,7 @@
                 },
                 {
                   "content": "at",
-                  "boundingBox": [
+                  "polygon": [
                     4.9351,
                     2.6014,
                     5.0577,
@@ -615,7 +579,7 @@
                 },
                 {
                   "content": "the",
-                  "boundingBox": [
+                  "polygon": [
                     5.1033,
                     2.5852,
                     5.3202,
@@ -633,7 +597,7 @@
                 },
                 {
                   "content": "Elm",
-                  "boundingBox": [
+                  "polygon": [
                     5.3787,
                     2.5852,
                     5.6051,
@@ -651,7 +615,7 @@
                 },
                 {
                   "content": "Conference",
-                  "boundingBox": [
+                  "polygon": [
                     5.6624,
                     2.5846,
                     6.4263,
@@ -669,7 +633,7 @@
                 },
                 {
                   "content": "Center",
-                  "boundingBox": [
+                  "polygon": [
                     6.4796,
                     2.5919,
                     6.9234,
@@ -687,7 +651,7 @@
                 },
                 {
                   "content": "in",
-                  "boundingBox": [
+                  "polygon": [
                     6.9765,
                     2.5905,
                     7.0776,
@@ -705,7 +669,7 @@
                 },
                 {
                   "content": "Maple",
-                  "boundingBox": [
+                  "polygon": [
                     1.014,
                     2.8036,
                     1.4242,
@@ -723,7 +687,7 @@
                 },
                 {
                   "content": "City,",
-                  "boundingBox": [
+                  "polygon": [
                     1.4763,
                     2.8089,
                     1.7576,
@@ -741,7 +705,7 @@
                 },
                 {
                   "content": "Massachusetts.",
-                  "boundingBox": [
+                  "polygon": [
                     1.8195,
                     2.8036,
                     2.8383,
@@ -759,7 +723,7 @@
                 },
                 {
                   "content": "The",
-                  "boundingBox": [
+                  "polygon": [
                     2.8883,
                     2.8036,
                     3.1326,
@@ -777,7 +741,7 @@
                 },
                 {
                   "content": "conference",
-                  "boundingBox": [
+                  "polygon": [
                     3.1842,
                     2.8029,
                     3.9301,
@@ -795,7 +759,7 @@
                 },
                 {
                   "content": "has",
-                  "boundingBox": [
+                  "polygon": [
                     3.9871,
                     2.8036,
                     4.2019,
@@ -813,7 +777,7 @@
                 },
                 {
                   "content": "sold",
-                  "boundingBox": [
+                  "polygon": [
                     4.2529,
                     2.8036,
                     4.5104,
@@ -831,7 +795,7 @@
                 },
                 {
                   "content": "out",
-                  "boundingBox": [
+                  "polygon": [
                     4.5701,
                     2.8197,
                     4.7871,
@@ -849,7 +813,7 @@
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     4.8373,
                     2.8029,
                     4.9701,
@@ -867,7 +831,7 @@
                 },
                 {
                   "content": "its",
-                  "boundingBox": [
+                  "polygon": [
                     5.0169,
                     2.8089,
                     5.1601,
@@ -885,7 +849,7 @@
                 },
                 {
                   "content": "1,500",
-                  "boundingBox": [
+                  "polygon": [
                     5.2167,
                     2.81,
                     5.5766,
@@ -903,7 +867,7 @@
                 },
                 {
                   "content": "tickets,",
-                  "boundingBox": [
+                  "polygon": [
                     5.6227,
                     2.8036,
                     6.0928,
@@ -921,7 +885,7 @@
                 },
                 {
                   "content": "with",
-                  "boundingBox": [
+                  "polygon": [
                     6.1461,
                     2.8036,
                     6.4308,
@@ -939,7 +903,7 @@
                 },
                 {
                   "content": "a",
-                  "boundingBox": [
+                  "polygon": [
                     6.488,
                     2.8383,
                     6.548,
@@ -957,7 +921,7 @@
                 },
                 {
                   "content": "400",
-                  "boundingBox": [
+                  "polygon": [
                     6.6016,
                     2.81,
                     6.8449,
@@ -975,7 +939,7 @@
                 },
                 {
                   "content": "person",
-                  "boundingBox": [
+                  "polygon": [
                     6.8998,
                     2.8383,
                     7.3457,
@@ -993,7 +957,7 @@
                 },
                 {
                   "content": "waitlist.",
-                  "boundingBox": [
+                  "polygon": [
                     1.0043,
                     3.0236,
                     1.5194,
@@ -1011,7 +975,7 @@
                 },
                 {
                   "content": "Vendor",
-                  "boundingBox": [
+                  "polygon": [
                     1.5733,
                     3.0239,
                     2.0654,
@@ -1029,7 +993,7 @@
                 },
                 {
                   "content": "applications",
-                  "boundingBox": [
+                  "polygon": [
                     2.1132,
                     3.0236,
                     2.9143,
@@ -1047,7 +1011,7 @@
                 },
                 {
                   "content": "are",
-                  "boundingBox": [
+                  "polygon": [
                     2.9675,
                     3.0583,
                     3.1726,
@@ -1065,7 +1029,7 @@
                 },
                 {
                   "content": "being",
-                  "boundingBox": [
+                  "polygon": [
                     3.2306,
                     3.0236,
                     3.5889,
@@ -1083,7 +1047,7 @@
                 },
                 {
                   "content": "accepted",
-                  "boundingBox": [
+                  "polygon": [
                     3.6388,
                     3.0239,
                     4.2336,
@@ -1101,7 +1065,7 @@
                 },
                 {
                   "content": "through",
-                  "boundingBox": [
+                  "polygon": [
                     4.2862,
                     3.0236,
                     4.8127,
@@ -1119,7 +1083,7 @@
                 },
                 {
                   "content": "Feb",
-                  "boundingBox": [
+                  "polygon": [
                     4.8815,
                     3.0236,
                     5.1133,
@@ -1137,7 +1101,7 @@
                 },
                 {
                   "content": "28,",
-                  "boundingBox": [
+                  "polygon": [
                     5.163,
                     3.0297,
                     5.361,
@@ -1155,7 +1119,7 @@
                 },
                 {
                   "content": "2020.",
-                  "boundingBox": [
+                  "polygon": [
                     5.413,
                     3.0297,
                     5.7774,
@@ -1173,7 +1137,7 @@
                 },
                 {
                   "content": "Please",
-                  "boundingBox": [
+                  "polygon": [
                     5.8406,
                     3.0236,
                     6.2537,
@@ -1191,7 +1155,7 @@
                 },
                 {
                   "content": "fill",
-                  "boundingBox": [
+                  "polygon": [
                     6.3022,
                     3.0229,
                     6.4539,
@@ -1209,7 +1173,7 @@
                 },
                 {
                   "content": "in",
-                  "boundingBox": [
+                  "polygon": [
                     6.5131,
                     3.0289,
                     6.6158,
@@ -1227,7 +1191,7 @@
                 },
                 {
                   "content": "the",
-                  "boundingBox": [
+                  "polygon": [
                     6.6673,
                     3.0236,
                     6.8842,
@@ -1245,7 +1209,7 @@
                 },
                 {
                   "content": "form",
-                  "boundingBox": [
+                  "polygon": [
                     6.9317,
                     3.0229,
                     7.2482,
@@ -1263,7 +1227,7 @@
                 },
                 {
                   "content": "below,",
-                  "boundingBox": [
+                  "polygon": [
                     1.0125,
                     3.2436,
                     1.4459,
@@ -1281,7 +1245,7 @@
                 },
                 {
                   "content": "and",
-                  "boundingBox": [
+                  "polygon": [
                     1.5024,
                     3.2439,
                     1.7371,
@@ -1299,7 +1263,7 @@
                 },
                 {
                   "content": "attach",
-                  "boundingBox": [
+                  "polygon": [
                     1.7968,
                     3.2436,
                     2.2047,
@@ -1317,7 +1281,7 @@
                 },
                 {
                   "content": "a",
-                  "boundingBox": [
+                  "polygon": [
                     2.2619,
                     3.2783,
                     2.3219,
@@ -1335,7 +1299,7 @@
                 },
                 {
                   "content": "check",
-                  "boundingBox": [
+                  "polygon": [
                     2.379,
                     3.2436,
                     2.7529,
@@ -1353,7 +1317,7 @@
                 },
                 {
                   "content": "made",
-                  "boundingBox": [
+                  "polygon": [
                     2.8076,
                     3.2439,
                     3.17,
@@ -1371,7 +1335,7 @@
                 },
                 {
                   "content": "out",
-                  "boundingBox": [
+                  "polygon": [
                     3.2251,
                     3.2597,
                     3.4421,
@@ -1389,7 +1353,7 @@
                 },
                 {
                   "content": "to:",
-                  "boundingBox": [
+                  "polygon": [
                     3.4869,
                     3.2597,
                     3.6599,
@@ -1407,7 +1371,7 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     1.0078,
                     3.5802,
                     1.5548,
@@ -1425,7 +1389,7 @@
                 },
                 {
                   "content": "Ltd.",
-                  "boundingBox": [
+                  "polygon": [
                     1.6125,
                     3.5739,
                     1.843,
@@ -1443,7 +1407,7 @@
                 },
                 {
                   "content": "2345",
-                  "boundingBox": [
+                  "polygon": [
                     1.0093,
                     3.8,
                     1.3297,
@@ -1461,7 +1425,7 @@
                 },
                 {
                   "content": "Dogwood",
-                  "boundingBox": [
+                  "polygon": [
                     1.3899,
                     3.7939,
                     2.0149,
@@ -1479,7 +1443,7 @@
                 },
                 {
                   "content": "Lane",
-                  "boundingBox": [
+                  "polygon": [
                     2.0788,
                     3.8012,
                     2.3768,
@@ -1497,7 +1461,7 @@
                 },
                 {
                   "content": "Birch,",
-                  "boundingBox": [
+                  "polygon": [
                     1.014,
                     4.0136,
                     1.3745,
@@ -1515,7 +1479,7 @@
                 },
                 {
                   "content": "Kansas",
-                  "boundingBox": [
+                  "polygon": [
                     1.4375,
                     4.0212,
                     1.8819,
@@ -1533,7 +1497,7 @@
                 },
                 {
                   "content": "98123",
-                  "boundingBox": [
+                  "polygon": [
                     1.9318,
                     4.02,
                     2.3377,
@@ -1551,7 +1515,7 @@
                 },
                 {
                   "content": "Rates:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0204,
                     4.4248,
                     1.5303,
@@ -1569,7 +1533,7 @@
                 },
                 {
                   "content": "Package",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     4.6986,
                     1.6232,
@@ -1587,7 +1551,7 @@
                 },
                 {
                   "content": "Included",
-                  "boundingBox": [
+                  "polygon": [
                     2.713,
                     4.6986,
                     3.2707,
@@ -1605,7 +1569,7 @@
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.838,
                     4.7039,
                     6.1513,
@@ -1623,11 +1587,11 @@
                 },
                 {
                   "content": "Gold",
-                  "boundingBox": [
+                  "polygon": [
                     1.0857,
-                    4.9086,
+                    4.9085,
                     1.3842,
-                    4.9086,
+                    4.9085,
                     1.3842,
                     5.0247,
                     1.0857,
@@ -1641,7 +1605,7 @@
                 },
                 {
                   "content": "Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.4423,
                     4.915,
                     1.9831,
@@ -1659,7 +1623,7 @@
                 },
                 {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     4.9169,
                     3.4295,
@@ -1677,7 +1641,7 @@
                 },
                 {
                   "content": "booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.492,
                     4.9169,
                     3.8726,
@@ -1695,7 +1659,7 @@
                 },
                 {
                   "content": "Pre-keynote",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.1302,
                     4.0183,
@@ -1713,7 +1677,7 @@
                 },
                 {
                   "content": "thank",
-                  "boundingBox": [
+                  "polygon": [
                     4.0665,
                     5.1302,
                     4.4475,
@@ -1731,7 +1695,7 @@
                 },
                 {
                   "content": "you",
-                  "boundingBox": [
+                  "polygon": [
                     4.4903,
                     5.165,
                     4.7267,
@@ -1749,7 +1713,7 @@
                 },
                 {
                   "content": "Logo",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.3495,
                     3.5163,
@@ -1767,7 +1731,7 @@
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     3.5686,
                     5.3767,
                     3.7244,
@@ -1785,7 +1749,7 @@
                 },
                 {
                   "content": "poster",
-                  "boundingBox": [
+                  "polygon": [
                     3.7888,
                     5.358,
                     4.2093,
@@ -1802,116 +1766,8 @@
                   }
                 },
                 {
-                  "content": "Full",
-                  "boundingBox": [
-                    3.214,
-                    5.5552,
-                    3.4295,
-                    5.5552,
-                    3.4295,
-                    5.6713,
-                    3.214,
-                    5.6713
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 492,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "page",
-                  "boundingBox": [
-                    3.492,
-                    5.59,
-                    3.7989,
-                    5.59,
-                    3.7989,
-                    5.6994,
-                    3.492,
-                    5.6994
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 497,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "ad",
-                  "boundingBox": [
-                    3.8519,
-                    5.5556,
-                    3.9991,
-                    5.5556,
-                    3.9991,
-                    5.6713,
-                    3.8519,
-                    5.6713
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 502,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "in",
-                  "boundingBox": [
-                    4.0599,
-                    5.5605,
-                    4.1626,
-                    5.5605,
-                    4.1626,
-                    5.6703,
-                    4.0599,
-                    5.6703
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 505,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "program",
-                  "boundingBox": [
-                    4.2248,
-                    5.59,
-                    4.7839,
-                    5.59,
-                    4.7839,
-                    5.6994,
-                    4.2248,
-                    5.6994
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 508,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "guide",
-                  "boundingBox": [
-                    4.8367,
-                    5.5556,
-                    5.201,
-                    5.5556,
-                    5.201,
-                    5.6994,
-                    4.8367,
-                    5.6994
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 516,
-                    "length": 5
-                  }
-                },
-                {
                   "content": "$1,500",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     4.8977,
                     6.2829,
@@ -1923,13 +1779,121 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 522,
+                    "offset": 492,
                     "length": 6
                   }
                 },
                 {
+                  "content": "Full",
+                  "polygon": [
+                    3.214,
+                    5.5552,
+                    3.4295,
+                    5.5552,
+                    3.4295,
+                    5.6713,
+                    3.214,
+                    5.6713
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 499,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "page",
+                  "polygon": [
+                    3.492,
+                    5.59,
+                    3.7989,
+                    5.59,
+                    3.7989,
+                    5.6994,
+                    3.492,
+                    5.6994
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 504,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "ad",
+                  "polygon": [
+                    3.8519,
+                    5.5555,
+                    3.9991,
+                    5.5555,
+                    3.9991,
+                    5.6713,
+                    3.8519,
+                    5.6713
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 509,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "in",
+                  "polygon": [
+                    4.0599,
+                    5.5605,
+                    4.1626,
+                    5.5605,
+                    4.1626,
+                    5.6703,
+                    4.0599,
+                    5.6703
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 512,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "program",
+                  "polygon": [
+                    4.2248,
+                    5.59,
+                    4.7839,
+                    5.59,
+                    4.7839,
+                    5.6994,
+                    4.2248,
+                    5.6994
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 515,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "guide",
+                  "polygon": [
+                    4.8367,
+                    5.5555,
+                    5.201,
+                    5.5555,
+                    5.201,
+                    5.6994,
+                    4.8367,
+                    5.6994
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 523,
+                    "length": 5
+                  }
+                },
+                {
                   "content": "Silver",
-                  "boundingBox": [
+                  "polygon": [
                     1.0842,
                     5.9786,
                     1.4443,
@@ -1947,7 +1911,7 @@
                 },
                 {
                   "content": "Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.4904,
                     5.985,
                     2.0339,
@@ -1965,7 +1929,7 @@
                 },
                 {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.9869,
                     3.4295,
@@ -1983,7 +1947,7 @@
                 },
                 {
                   "content": "booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.492,
                     5.9869,
                     3.8726,
@@ -2001,7 +1965,7 @@
                 },
                 {
                   "content": "Post-keynote",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.1986,
                     4.0878,
@@ -2019,7 +1983,7 @@
                 },
                 {
                   "content": "thank",
-                  "boundingBox": [
+                  "polygon": [
                     4.1348,
                     6.1986,
                     4.5158,
@@ -2037,7 +2001,7 @@
                 },
                 {
                   "content": "you",
-                  "boundingBox": [
+                  "polygon": [
                     4.5586,
                     6.2333,
                     4.7938,
@@ -2055,7 +2019,7 @@
                 },
                 {
                   "content": "Logo",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.4179,
                     3.5163,
@@ -2073,7 +2037,7 @@
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     3.5686,
                     6.445,
                     3.7244,
@@ -2091,7 +2055,7 @@
                 },
                 {
                   "content": "poster",
-                  "boundingBox": [
+                  "polygon": [
                     3.7888,
                     6.4264,
                     4.2093,
@@ -2108,116 +2072,8 @@
                   }
                 },
                 {
-                  "content": "Half",
-                  "boundingBox": [
-                    3.214,
-                    6.6229,
-                    3.4739,
-                    6.6229,
-                    3.4739,
-                    6.7397,
-                    3.214,
-                    6.7397
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 593,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "page",
-                  "boundingBox": [
-                    3.5224,
-                    6.6583,
-                    3.8326,
-                    6.6583,
-                    3.8326,
-                    6.7678,
-                    3.5224,
-                    6.7678
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 598,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "ad",
-                  "boundingBox": [
-                    3.8843,
-                    6.6239,
-                    4.0315,
-                    6.6239,
-                    4.0315,
-                    6.7397,
-                    3.8843,
-                    6.7397
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 603,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "in",
-                  "boundingBox": [
-                    4.0923,
-                    6.6289,
-                    4.195,
-                    6.6289,
-                    4.195,
-                    6.7387,
-                    4.0923,
-                    6.7387
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 606,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "program",
-                  "boundingBox": [
-                    4.2563,
-                    6.6583,
-                    4.8148,
-                    6.6583,
-                    4.8148,
-                    6.7678,
-                    4.2563,
-                    6.7678
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 609,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "guide",
-                  "boundingBox": [
-                    4.8695,
-                    6.6239,
-                    5.2314,
-                    6.6239,
-                    5.2314,
-                    6.7678,
-                    4.8695,
-                    6.7678
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 617,
-                    "length": 5
-                  }
-                },
-                {
                   "content": "$1,200",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     5.9677,
                     6.2829,
@@ -2229,13 +2085,121 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 623,
+                    "offset": 593,
                     "length": 6
                   }
                 },
                 {
+                  "content": "Half",
+                  "polygon": [
+                    3.214,
+                    6.6229,
+                    3.4739,
+                    6.6229,
+                    3.4739,
+                    6.7397,
+                    3.214,
+                    6.7397
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 600,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "page",
+                  "polygon": [
+                    3.5224,
+                    6.6583,
+                    3.8326,
+                    6.6583,
+                    3.8326,
+                    6.7678,
+                    3.5224,
+                    6.7678
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 605,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "ad",
+                  "polygon": [
+                    3.8843,
+                    6.6239,
+                    4.0315,
+                    6.6239,
+                    4.0315,
+                    6.7397,
+                    3.8843,
+                    6.7397
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 610,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "in",
+                  "polygon": [
+                    4.0923,
+                    6.6289,
+                    4.195,
+                    6.6289,
+                    4.195,
+                    6.7387,
+                    4.0923,
+                    6.7387
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 613,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "program",
+                  "polygon": [
+                    4.2563,
+                    6.6583,
+                    4.8148,
+                    6.6583,
+                    4.8148,
+                    6.7678,
+                    4.2563,
+                    6.7678
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 616,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "guide",
+                  "polygon": [
+                    4.8695,
+                    6.6239,
+                    5.2314,
+                    6.6239,
+                    5.2314,
+                    6.7678,
+                    4.8695,
+                    6.7678
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 624,
+                    "length": 5
+                  }
+                },
+                {
                   "content": "Bronze",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     6.8417,
                     1.545,
@@ -2253,7 +2217,7 @@
                 },
                 {
                   "content": "Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.5951,
                     6.84,
                     2.1362,
@@ -2270,26 +2234,8 @@
                   }
                 },
                 {
-                  "content": "\u00B7",
-                  "boundingBox": [
-                    2.9463,
-                    6.8655,
-                    3.0132,
-                    6.8655,
-                    3.0132,
-                    6.98,
-                    2.9511,
-                    6.98
-                  ],
-                  "confidence": 0.232,
-                  "span": {
-                    "offset": 645,
-                    "length": 1
-                  }
-                },
-                {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.8419,
                     3.4295,
@@ -2301,13 +2247,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 647,
+                    "offset": 645,
                     "length": 4
                   }
                 },
                 {
                   "content": "booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.492,
                     6.8419,
                     3.8726,
@@ -2319,175 +2265,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 652,
+                    "offset": 650,
                     "length": 5
-                  }
-                },
-                {
-                  "content": "Logo",
-                  "boundingBox": [
-                    3.214,
-                    7.0629,
-                    3.5163,
-                    7.0629,
-                    3.5163,
-                    7.1994,
-                    3.214,
-                    7.1994
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 658,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "on",
-                  "boundingBox": [
-                    3.5686,
-                    7.09,
-                    3.7244,
-                    7.09,
-                    3.7244,
-                    7.1713,
-                    3.5686,
-                    7.1713
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 663,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "poster",
-                  "boundingBox": [
-                    3.7888,
-                    7.0714,
-                    4.2093,
-                    7.0714,
-                    4.2093,
-                    7.1994,
-                    3.7888,
-                    7.1994
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 666,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "50%",
-                  "boundingBox": [
-                    3.2082,
-                    7.2717,
-                    3.4817,
-                    7.2717,
-                    3.4817,
-                    7.3845,
-                    3.2082,
-                    7.3845
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 673,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "discount",
-                  "boundingBox": [
-                    3.533,
-                    7.2672,
-                    4.1018,
-                    7.2672,
-                    4.1018,
-                    7.383,
-                    3.533,
-                    7.383
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 677,
-                    "length": 8
-                  }
-                },
-                {
-                  "content": "on",
-                  "boundingBox": [
-                    4.1512,
-                    7.3017,
-                    4.307,
-                    7.3017,
-                    4.307,
-                    7.383,
-                    4.1512,
-                    7.383
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 686,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "program",
-                  "boundingBox": [
-                    4.3682,
-                    7.3017,
-                    4.9253,
-                    7.3017,
-                    4.9253,
-                    7.4111,
-                    4.3682,
-                    7.4111
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 689,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "guide",
-                  "boundingBox": [
-                    4.981,
-                    7.2672,
-                    5.3419,
-                    7.2672,
-                    5.3419,
-                    7.4111,
-                    4.981,
-                    7.4111
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 697,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "advertisements",
-                  "boundingBox": [
-                    3.2075,
-                    7.4706,
-                    4.2429,
-                    7.4706,
-                    4.2429,
-                    7.5863,
-                    3.2075,
-                    7.5863
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 703,
-                    "length": 14
                   }
                 },
                 {
                   "content": "$1,000",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     6.8227,
                     6.2829,
@@ -2499,13 +2283,175 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 718,
+                    "offset": 656,
                     "length": 6
                   }
                 },
                 {
+                  "content": "Logo",
+                  "polygon": [
+                    3.214,
+                    7.0629,
+                    3.5163,
+                    7.0629,
+                    3.5163,
+                    7.1994,
+                    3.214,
+                    7.1994
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 663,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "on",
+                  "polygon": [
+                    3.5686,
+                    7.09,
+                    3.7244,
+                    7.09,
+                    3.7244,
+                    7.1713,
+                    3.5686,
+                    7.1713
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 668,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "poster",
+                  "polygon": [
+                    3.7888,
+                    7.0714,
+                    4.2093,
+                    7.0714,
+                    4.2093,
+                    7.1994,
+                    3.7888,
+                    7.1994
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 671,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "50%",
+                  "polygon": [
+                    3.2082,
+                    7.2717,
+                    3.4817,
+                    7.2717,
+                    3.4817,
+                    7.3845,
+                    3.2082,
+                    7.3845
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 678,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "discount",
+                  "polygon": [
+                    3.533,
+                    7.2672,
+                    4.1018,
+                    7.2672,
+                    4.1018,
+                    7.383,
+                    3.533,
+                    7.383
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 682,
+                    "length": 8
+                  }
+                },
+                {
+                  "content": "on",
+                  "polygon": [
+                    4.1512,
+                    7.3017,
+                    4.307,
+                    7.3017,
+                    4.307,
+                    7.383,
+                    4.1512,
+                    7.383
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 691,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "program",
+                  "polygon": [
+                    4.3682,
+                    7.3017,
+                    4.9253,
+                    7.3017,
+                    4.9253,
+                    7.4111,
+                    4.3682,
+                    7.4111
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 694,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "guide",
+                  "polygon": [
+                    4.981,
+                    7.2672,
+                    5.3419,
+                    7.2672,
+                    5.3419,
+                    7.4111,
+                    4.981,
+                    7.4111
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 702,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "advertisements",
+                  "polygon": [
+                    3.2075,
+                    7.4706,
+                    4.2429,
+                    7.4706,
+                    4.2429,
+                    7.5863,
+                    3.2075,
+                    7.5863
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 708,
+                    "length": 14
+                  }
+                },
+                {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     7.6819,
                     1.3079,
@@ -2517,13 +2463,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 725,
+                    "offset": 723,
                     "length": 4
                   }
                 },
                 {
                   "content": "Booth",
-                  "boundingBox": [
+                  "polygon": [
                     1.3718,
                     7.6819,
                     1.7537,
@@ -2535,13 +2481,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 730,
+                    "offset": 728,
                     "length": 5
                   }
                 },
                 {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     7.6902,
                     3.4295,
@@ -2553,13 +2499,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 736,
+                    "offset": 734,
                     "length": 4
                   }
                 },
                 {
                   "content": "booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.492,
                     7.6902,
                     3.8726,
@@ -2571,13 +2517,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 741,
+                    "offset": 739,
                     "length": 5
                   }
                 },
                 {
                   "content": "50%",
-                  "boundingBox": [
+                  "polygon": [
                     3.2082,
                     7.9067,
                     3.4817,
@@ -2589,13 +2535,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 747,
+                    "offset": 745,
                     "length": 3
                   }
                 },
                 {
                   "content": "discount",
-                  "boundingBox": [
+                  "polygon": [
                     3.533,
                     7.9022,
                     4.1018,
@@ -2607,13 +2553,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 751,
+                    "offset": 749,
                     "length": 8
                   }
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     4.1512,
                     7.9367,
                     4.307,
@@ -2625,13 +2571,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 760,
+                    "offset": 758,
                     "length": 2
                   }
                 },
                 {
                   "content": "program",
-                  "boundingBox": [
+                  "polygon": [
                     4.3682,
                     7.9367,
                     4.9253,
@@ -2643,13 +2589,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 763,
+                    "offset": 761,
                     "length": 7
                   }
                 },
                 {
                   "content": "guide",
-                  "boundingBox": [
+                  "polygon": [
                     4.981,
                     7.9022,
                     5.3419,
@@ -2661,17 +2607,17 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 771,
+                    "offset": 769,
                     "length": 5
                   }
                 },
                 {
                   "content": "advertisements",
-                  "boundingBox": [
+                  "polygon": [
                     3.2075,
-                    8.1056,
+                    8.1055,
                     4.2429,
-                    8.1056,
+                    8.1055,
                     4.2429,
                     8.2213,
                     3.2075,
@@ -2679,13 +2625,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 777,
+                    "offset": 775,
                     "length": 14
                   }
                 },
                 {
                   "content": "$600",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     7.6711,
                     6.1586,
@@ -2697,13 +2643,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 792,
+                    "offset": 790,
                     "length": 4
                   }
                 },
                 {
                   "content": "Half",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     8.3162,
                     1.3522,
@@ -2715,13 +2661,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 797,
+                    "offset": 795,
                     "length": 4
                   }
                 },
                 {
                   "content": "Booth",
-                  "boundingBox": [
+                  "polygon": [
                     1.4022,
                     8.3169,
                     1.7854,
@@ -2733,13 +2679,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 802,
+                    "offset": 800,
                     "length": 5
                   }
                 },
                 {
                   "content": "Full",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     8.3252,
                     3.4295,
@@ -2751,13 +2697,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 808,
+                    "offset": 806,
                     "length": 4
                   }
                 },
                 {
                   "content": "booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.492,
                     8.3252,
                     3.8726,
@@ -2769,13 +2715,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 813,
+                    "offset": 811,
                     "length": 5
                   }
                 },
                 {
                   "content": "25%",
-                  "boundingBox": [
+                  "polygon": [
                     3.2093,
                     8.5417,
                     3.4817,
@@ -2787,13 +2733,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 819,
+                    "offset": 817,
                     "length": 3
                   }
                 },
                 {
                   "content": "discount",
-                  "boundingBox": [
+                  "polygon": [
                     3.533,
                     8.5372,
                     4.1018,
@@ -2805,13 +2751,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 823,
+                    "offset": 821,
                     "length": 8
                   }
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     4.1512,
                     8.5717,
                     4.307,
@@ -2823,13 +2769,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 832,
+                    "offset": 830,
                     "length": 2
                   }
                 },
                 {
                   "content": "program",
-                  "boundingBox": [
+                  "polygon": [
                     4.3682,
                     8.5717,
                     4.9253,
@@ -2841,13 +2787,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 835,
+                    "offset": 833,
                     "length": 7
                   }
                 },
                 {
                   "content": "guide",
-                  "boundingBox": [
+                  "polygon": [
                     4.981,
                     8.5372,
                     5.3419,
@@ -2859,13 +2805,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 843,
+                    "offset": 841,
                     "length": 5
                   }
                 },
                 {
                   "content": "advertisements",
-                  "boundingBox": [
+                  "polygon": [
                     3.2075,
                     8.7406,
                     4.2429,
@@ -2877,13 +2823,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 849,
+                    "offset": 847,
                     "length": 14
                   }
                 },
                 {
                   "content": "$350",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     8.3061,
                     6.1586,
@@ -2895,16 +2841,15 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 864,
+                    "offset": 862,
                     "length": 4
                   }
                 }
               ],
-              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Vendor #:121",
-                  "boundingBox": [
+                  "polygon": [
                     6.1276,
                     1.0667,
                     7.4833,
@@ -2923,7 +2868,7 @@
                 },
                 {
                   "content": "Vendor Registration",
-                  "boundingBox": [
+                  "polygon": [
                     2.2268,
                     1.5733,
                     6.2379,
@@ -2942,7 +2887,7 @@
                 },
                 {
                   "content": "Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in",
-                  "boundingBox": [
+                  "polygon": [
                     1.0078,
                     2.5846,
                     7.0776,
@@ -2961,7 +2906,7 @@
                 },
                 {
                   "content": "Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person",
-                  "boundingBox": [
+                  "polygon": [
                     1.014,
                     2.8029,
                     7.3457,
@@ -2980,7 +2925,7 @@
                 },
                 {
                   "content": "waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form",
-                  "boundingBox": [
+                  "polygon": [
                     1.0043,
                     3.0229,
                     7.2482,
@@ -2999,7 +2944,7 @@
                 },
                 {
                   "content": "below, and attach a check made out to:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0125,
                     3.2436,
                     3.6599,
@@ -3018,7 +2963,7 @@
                 },
                 {
                   "content": "Contoso Ltd.",
-                  "boundingBox": [
+                  "polygon": [
                     1.0078,
                     3.5739,
                     1.843,
@@ -3037,7 +2982,7 @@
                 },
                 {
                   "content": "2345 Dogwood Lane",
-                  "boundingBox": [
+                  "polygon": [
                     1.0093,
                     3.7939,
                     2.3768,
@@ -3056,7 +3001,7 @@
                 },
                 {
                   "content": "Birch, Kansas 98123",
-                  "boundingBox": [
+                  "polygon": [
                     1.014,
                     4.0136,
                     2.3377,
@@ -3075,7 +3020,7 @@
                 },
                 {
                   "content": "Rates:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0204,
                     4.4248,
                     1.5303,
@@ -3094,7 +3039,7 @@
                 },
                 {
                   "content": "Package",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     4.6986,
                     1.6232,
@@ -3113,7 +3058,7 @@
                 },
                 {
                   "content": "Included",
-                  "boundingBox": [
+                  "polygon": [
                     2.713,
                     4.6986,
                     3.2707,
@@ -3132,7 +3077,7 @@
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.838,
                     4.7039,
                     6.1513,
@@ -3151,11 +3096,11 @@
                 },
                 {
                   "content": "Gold Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.0857,
-                    4.9086,
+                    4.9085,
                     1.9831,
-                    4.9086,
+                    4.9085,
                     1.9831,
                     5.0528,
                     1.0857,
@@ -3170,7 +3115,7 @@
                 },
                 {
                   "content": "Full booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     4.9169,
                     3.8726,
@@ -3189,7 +3134,7 @@
                 },
                 {
                   "content": "Pre-keynote thank you",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.1302,
                     4.7267,
@@ -3208,7 +3153,7 @@
                 },
                 {
                   "content": "Logo on poster",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.3495,
                     4.2093,
@@ -3226,27 +3171,8 @@
                   ]
                 },
                 {
-                  "content": "Full page ad in program guide",
-                  "boundingBox": [
-                    3.214,
-                    5.5552,
-                    5.201,
-                    5.5552,
-                    5.201,
-                    5.6994,
-                    3.214,
-                    5.6994
-                  ],
-                  "spans": [
-                    {
-                      "offset": 492,
-                      "length": 29
-                    }
-                  ]
-                },
-                {
                   "content": "$1,500",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     4.8977,
                     6.2829,
@@ -3258,14 +3184,33 @@
                   ],
                   "spans": [
                     {
-                      "offset": 522,
+                      "offset": 492,
                       "length": 6
                     }
                   ]
                 },
                 {
+                  "content": "Full page ad in program guide",
+                  "polygon": [
+                    3.214,
+                    5.5552,
+                    5.201,
+                    5.5552,
+                    5.201,
+                    5.6994,
+                    3.214,
+                    5.6994
+                  ],
+                  "spans": [
+                    {
+                      "offset": 499,
+                      "length": 29
+                    }
+                  ]
+                },
+                {
                   "content": "Silver Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.0842,
                     5.9786,
                     2.0339,
@@ -3284,7 +3229,7 @@
                 },
                 {
                   "content": "Full booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     5.9869,
                     3.8726,
@@ -3303,7 +3248,7 @@
                 },
                 {
                   "content": "Post-keynote thank you",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.1986,
                     4.7938,
@@ -3322,7 +3267,7 @@
                 },
                 {
                   "content": "Logo on poster",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.4179,
                     4.2093,
@@ -3340,27 +3285,8 @@
                   ]
                 },
                 {
-                  "content": "Half page ad in program guide",
-                  "boundingBox": [
-                    3.214,
-                    6.6229,
-                    5.2314,
-                    6.6229,
-                    5.2314,
-                    6.7678,
-                    3.214,
-                    6.7678
-                  ],
-                  "spans": [
-                    {
-                      "offset": 593,
-                      "length": 29
-                    }
-                  ]
-                },
-                {
                   "content": "$1,200",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     5.9677,
                     6.2829,
@@ -3372,14 +3298,33 @@
                   ],
                   "spans": [
                     {
-                      "offset": 623,
+                      "offset": 593,
                       "length": 6
                     }
                   ]
                 },
                 {
+                  "content": "Half page ad in program guide",
+                  "polygon": [
+                    3.214,
+                    6.6229,
+                    5.2314,
+                    6.6229,
+                    5.2314,
+                    6.7678,
+                    3.214,
+                    6.7678
+                  ],
+                  "spans": [
+                    {
+                      "offset": 600,
+                      "length": 29
+                    }
+                  ]
+                },
+                {
                   "content": "Bronze Sponsor",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     6.84,
                     2.1362,
@@ -3397,27 +3342,8 @@
                   ]
                 },
                 {
-                  "content": "\u00B7",
-                  "boundingBox": [
-                    2.9463,
-                    6.8655,
-                    3.0275,
-                    6.8655,
-                    3.0371,
-                    6.9753,
-                    2.9559,
-                    6.98
-                  ],
-                  "spans": [
-                    {
-                      "offset": 645,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
                   "content": "Full booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     6.8419,
                     3.8726,
@@ -3429,71 +3355,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 647,
+                      "offset": 645,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "content": "Logo on poster",
-                  "boundingBox": [
-                    3.214,
-                    7.0629,
-                    4.2093,
-                    7.0629,
-                    4.2093,
-                    7.1994,
-                    3.214,
-                    7.1994
-                  ],
-                  "spans": [
-                    {
-                      "offset": 658,
-                      "length": 14
-                    }
-                  ]
-                },
-                {
-                  "content": "50% discount on program guide",
-                  "boundingBox": [
-                    3.2082,
-                    7.2672,
-                    5.3419,
-                    7.2672,
-                    5.3419,
-                    7.4111,
-                    3.2082,
-                    7.4111
-                  ],
-                  "spans": [
-                    {
-                      "offset": 673,
-                      "length": 29
-                    }
-                  ]
-                },
-                {
-                  "content": "advertisements",
-                  "boundingBox": [
-                    3.2075,
-                    7.4706,
-                    4.2429,
-                    7.4706,
-                    4.2429,
-                    7.5863,
-                    3.2075,
-                    7.5863
-                  ],
-                  "spans": [
-                    {
-                      "offset": 703,
-                      "length": 14
-                    }
-                  ]
-                },
-                {
                   "content": "$1,000",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     6.8227,
                     6.2829,
@@ -3505,14 +3374,71 @@
                   ],
                   "spans": [
                     {
-                      "offset": 718,
+                      "offset": 656,
                       "length": 6
                     }
                   ]
                 },
                 {
+                  "content": "Logo on poster",
+                  "polygon": [
+                    3.214,
+                    7.0629,
+                    4.2093,
+                    7.0629,
+                    4.2093,
+                    7.1994,
+                    3.214,
+                    7.1994
+                  ],
+                  "spans": [
+                    {
+                      "offset": 663,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
+                  "content": "50% discount on program guide",
+                  "polygon": [
+                    3.2082,
+                    7.2672,
+                    5.3419,
+                    7.2672,
+                    5.3419,
+                    7.4111,
+                    3.2082,
+                    7.4111
+                  ],
+                  "spans": [
+                    {
+                      "offset": 678,
+                      "length": 29
+                    }
+                  ]
+                },
+                {
+                  "content": "advertisements",
+                  "polygon": [
+                    3.2075,
+                    7.4706,
+                    4.2429,
+                    7.4706,
+                    4.2429,
+                    7.5863,
+                    3.2075,
+                    7.5863
+                  ],
+                  "spans": [
+                    {
+                      "offset": 708,
+                      "length": 14
+                    }
+                  ]
+                },
+                {
                   "content": "Full Booth",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     7.6819,
                     1.7537,
@@ -3524,14 +3450,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 725,
+                      "offset": 723,
                       "length": 10
                     }
                   ]
                 },
                 {
                   "content": "Full booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     7.6902,
                     3.8726,
@@ -3543,14 +3469,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 736,
+                      "offset": 734,
                       "length": 10
                     }
                   ]
                 },
                 {
                   "content": "50% discount on program guide",
-                  "boundingBox": [
+                  "polygon": [
                     3.2082,
                     7.9022,
                     5.3419,
@@ -3562,18 +3488,18 @@
                   ],
                   "spans": [
                     {
-                      "offset": 747,
+                      "offset": 745,
                       "length": 29
                     }
                   ]
                 },
                 {
                   "content": "advertisements",
-                  "boundingBox": [
+                  "polygon": [
                     3.2075,
-                    8.1056,
+                    8.1055,
                     4.2429,
-                    8.1056,
+                    8.1055,
                     4.2429,
                     8.2213,
                     3.2075,
@@ -3581,14 +3507,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 777,
+                      "offset": 775,
                       "length": 14
                     }
                   ]
                 },
                 {
                   "content": "$600",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     7.6711,
                     6.1586,
@@ -3600,14 +3526,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 792,
+                      "offset": 790,
                       "length": 4
                     }
                   ]
                 },
                 {
                   "content": "Half Booth",
-                  "boundingBox": [
+                  "polygon": [
                     1.0923,
                     8.3162,
                     1.7854,
@@ -3619,14 +3545,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 797,
+                      "offset": 795,
                       "length": 10
                     }
                   ]
                 },
                 {
                   "content": "Full booth",
-                  "boundingBox": [
+                  "polygon": [
                     3.214,
                     8.3252,
                     3.8726,
@@ -3638,14 +3564,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 808,
+                      "offset": 806,
                       "length": 10
                     }
                   ]
                 },
                 {
                   "content": "25% discount on program guide",
-                  "boundingBox": [
+                  "polygon": [
                     3.2093,
                     8.5372,
                     5.3419,
@@ -3657,14 +3583,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 819,
+                      "offset": 817,
                       "length": 29
                     }
                   ]
                 },
                 {
                   "content": "advertisements",
-                  "boundingBox": [
+                  "polygon": [
                     3.2075,
                     8.7406,
                     4.2429,
@@ -3676,14 +3602,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 849,
+                      "offset": 847,
                       "length": 14
                     }
                   ]
                 },
                 {
                   "content": "$350",
-                  "boundingBox": [
+                  "polygon": [
                     5.8328,
                     8.3061,
                     6.1586,
@@ -3695,7 +3621,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 864,
+                      "offset": 862,
                       "length": 4
                     }
                   ]
@@ -3704,9 +3630,10 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 868
+                  "length": 866
                 }
-              ]
+              ],
+              "kind": "document"
             },
             {
               "pageNumber": 2,
@@ -3717,7 +3644,7 @@
               "words": [
                 {
                   "content": "Vendor",
-                  "boundingBox": [
+                  "polygon": [
                     6.1276,
                     1.0667,
                     6.8657,
@@ -3729,13 +3656,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 869,
+                    "offset": 867,
                     "length": 6
                   }
                 },
                 {
                   "content": "#:121",
-                  "boundingBox": [
+                  "polygon": [
                     6.9307,
                     1.0759,
                     7.4833,
@@ -3747,13 +3674,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 876,
+                    "offset": 874,
                     "length": 5
                   }
                 },
                 {
                   "content": "Vendor",
-                  "boundingBox": [
+                  "polygon": [
                     1.0044,
                     2.1778,
                     1.6496,
@@ -3765,13 +3692,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 882,
+                    "offset": 880,
                     "length": 6
                   }
                 },
                 {
                   "content": "Details:",
-                  "boundingBox": [
+                  "polygon": [
                     1.7239,
                     2.1771,
                     2.35,
@@ -3783,13 +3710,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 889,
+                    "offset": 887,
                     "length": 8
                   }
                 },
                 {
                   "content": "Company",
-                  "boundingBox": [
+                  "polygon": [
                     1.0065,
                     2.7749,
                     1.651,
@@ -3801,13 +3728,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 898,
+                    "offset": 896,
                     "length": 7
                   }
                 },
                 {
                   "content": "Name:",
-                  "boundingBox": [
+                  "polygon": [
                     1.7019,
                     2.7764,
                     2.1376,
@@ -3819,13 +3746,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 906,
+                    "offset": 904,
                     "length": 5
                   }
                 },
                 {
                   "content": "Southridge",
-                  "boundingBox": [
+                  "polygon": [
                     2.1925,
                     2.7686,
                     2.9184,
@@ -3837,13 +3764,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 912,
+                    "offset": 910,
                     "length": 10
                   }
                 },
                 {
                   "content": "Video",
-                  "boundingBox": [
+                  "polygon": [
                     2.9691,
                     2.7689,
                     3.3477,
@@ -3855,13 +3782,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 923,
+                    "offset": 921,
                     "length": 5
                   }
                 },
                 {
                   "content": "Contact:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0065,
                     3.1049,
                     1.5706,
@@ -3873,13 +3800,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 929,
+                    "offset": 927,
                     "length": 8
                   }
                 },
                 {
                   "content": "Jamie@southridgevideo.com",
-                  "boundingBox": [
+                  "polygon": [
                     1.6205,
                     3.0986,
                     3.5766,
@@ -3891,13 +3818,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 938,
+                    "offset": 936,
                     "length": 25
                   }
                 },
                 {
                   "content": "Preferred",
-                  "boundingBox": [
+                  "polygon": [
                     1.0115,
                     3.4296,
                     1.6499,
@@ -3909,13 +3836,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 964,
+                    "offset": 962,
                     "length": 9
                   }
                 },
                 {
                   "content": "Package:",
-                  "boundingBox": [
+                  "polygon": [
                     1.7092,
                     3.4302,
                     2.2978,
@@ -3927,13 +3854,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 974,
+                    "offset": 972,
                     "length": 8
                   }
                 },
                 {
                   "content": "Gold",
-                  "boundingBox": [
+                  "polygon": [
                     2.3557,
                     3.4302,
                     2.6542,
@@ -3945,13 +3872,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 983,
+                    "offset": 981,
                     "length": 4
                   }
                 },
                 {
                   "content": "Special",
-                  "boundingBox": [
+                  "polygon": [
                     1.0052,
                     3.7602,
                     1.475,
@@ -3963,13 +3890,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 988,
+                    "offset": 986,
                     "length": 7
                   }
                 },
                 {
                   "content": "Requests:",
-                  "boundingBox": [
+                  "polygon": [
                     1.5342,
                     3.7684,
                     2.1899,
@@ -3981,13 +3908,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 996,
+                    "offset": 994,
                     "length": 9
                   }
                 },
                 {
                   "content": "N/a",
-                  "boundingBox": [
+                  "polygon": [
                     2.254,
                     3.7537,
                     2.4783,
@@ -3999,16 +3926,15 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1006,
+                    "offset": 1004,
                     "length": 3
                   }
                 }
               ],
-              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Vendor #:121",
-                  "boundingBox": [
+                  "polygon": [
                     6.1276,
                     1.0667,
                     7.4833,
@@ -4020,14 +3946,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 869,
+                      "offset": 867,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Vendor Details:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0044,
                     2.1771,
                     2.35,
@@ -4039,14 +3965,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 882,
+                      "offset": 880,
                       "length": 15
                     }
                   ]
                 },
                 {
                   "content": "Company Name: Southridge Video",
-                  "boundingBox": [
+                  "polygon": [
                     1.0065,
                     2.7686,
                     3.3477,
@@ -4058,14 +3984,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 898,
+                      "offset": 896,
                       "length": 30
                     }
                   ]
                 },
                 {
                   "content": "Contact: Jamie@southridgevideo.com",
-                  "boundingBox": [
+                  "polygon": [
                     1.0065,
                     3.0986,
                     3.5766,
@@ -4077,14 +4003,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 929,
+                      "offset": 927,
                       "length": 34
                     }
                   ]
                 },
                 {
                   "content": "Preferred Package: Gold",
-                  "boundingBox": [
+                  "polygon": [
                     1.0115,
                     3.4296,
                     2.6542,
@@ -4096,14 +4022,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 964,
+                      "offset": 962,
                       "length": 23
                     }
                   ]
                 },
                 {
                   "content": "Special Requests: N/a",
-                  "boundingBox": [
+                  "polygon": [
                     1.0052,
                     3.7537,
                     2.4783,
@@ -4115,7 +4041,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 988,
+                      "offset": 986,
                       "length": 21
                     }
                   ]
@@ -4123,36 +4049,35 @@
               ],
               "spans": [
                 {
-                  "offset": 868,
-                  "length": 141
+                  "offset": 867,
+                  "length": 140
                 }
-              ]
+              ],
+              "kind": "document"
             }
           ],
           "tables": [
             {
-              "rowCount": 6,
+              "rowCount": 17,
               "columnCount": 3,
               "cells": [
                 {
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Package",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        4.646,
-                        2.6212,
-                        4.646,
-                        2.6212,
-                        4.8546,
-                        0.9996,
-                        4.8546
+                      "polygon": [
+                        0.9971,
+                        4.6503,
+                        2.6098,
+                        4.6437,
+                        2.6098,
+                        4.8557,
+                        0.9971,
+                        4.8557
                       ]
                     }
                   ],
@@ -4167,21 +4092,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Included",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        4.646,
-                        5.7443,
-                        4.646,
-                        5.7443,
-                        4.8546,
-                        2.6212,
-                        4.8546
+                      "polygon": [
+                        2.6098,
+                        4.6437,
+                        5.7409,
+                        4.6437,
+                        5.7409,
+                        4.8557,
+                        2.6098,
+                        4.8557
                       ]
                     }
                   ],
@@ -4196,21 +4119,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Price",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        4.646,
-                        7.486,
-                        4.646,
-                        7.486,
-                        4.8546,
-                        5.7443,
-                        4.8546
+                      "polygon": [
+                        5.7409,
+                        4.6437,
+                        7.4818,
+                        4.6503,
+                        7.4818,
+                        4.8557,
+                        5.7409,
+                        4.8557
                       ]
                     }
                   ],
@@ -4224,21 +4145,20 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 5,
                   "content": "Gold Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        4.8546,
-                        2.6212,
-                        4.8546,
-                        2.6212,
-                        5.9234,
-                        0.9996,
-                        5.9234
+                      "polygon": [
+                        0.9971,
+                        4.8557,
+                        2.6098,
+                        4.8557,
+                        2.6166,
+                        5.929,
+                        0.9971,
+                        5.9224
                       ]
                     }
                   ],
@@ -4252,77 +4172,101 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Full booth Pre-keynote thank you Logo on poster Full page ad in program guide",
+                  "rowSpan": 3,
+                  "content": "Full booth Pre-keynote thank you Logo on poster",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        4.8546,
-                        5.7443,
-                        4.8546,
-                        5.7443,
-                        5.9299,
-                        2.6212,
-                        5.9234
+                      "polygon": [
+                        2.6098,
+                        4.8557,
+                        5.7409,
+                        4.8557,
+                        5.7409,
+                        5.5182,
+                        2.6098,
+                        5.5182
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 444,
-                      "length": 77
+                      "length": 47
                     }
                   ]
                 },
                 {
                   "rowIndex": 1,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 5,
                   "content": "$1,500",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        4.8546,
-                        7.486,
-                        4.8546,
-                        7.486,
-                        5.9299,
-                        5.7443,
-                        5.9299
+                      "polygon": [
+                        5.7409,
+                        4.8557,
+                        7.4818,
+                        4.8557,
+                        7.4886,
+                        5.9224,
+                        5.7409,
+                        5.929
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 522,
+                      "offset": 492,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 2,
+                  "rowIndex": 4,
+                  "columnIndex": 1,
+                  "rowSpan": 2,
+                  "content": "Full page ad in program guide",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6098,
+                        5.5182,
+                        5.7409,
+                        5.5182,
+                        5.7409,
+                        5.929,
+                        2.6166,
+                        5.929
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 499,
+                      "length": 29
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 6,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 4,
                   "content": "Silver Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        5.9234,
-                        2.6212,
-                        5.9234,
-                        2.6212,
-                        6.7836,
-                        0.9996,
-                        6.7836
+                      "polygon": [
+                        0.9971,
+                        5.9224,
+                        2.6166,
+                        5.929,
+                        2.6166,
+                        6.7838,
+                        0.9971,
+                        6.7838
                       ]
                     }
                   ],
@@ -4334,79 +4278,102 @@
                   ]
                 },
                 {
-                  "rowIndex": 2,
+                  "rowIndex": 6,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Full booth Post-keynote thank you Logo on poster Half page ad in program guide",
+                  "rowSpan": 3,
+                  "content": "Full booth Post-keynote thank you Logo on poster",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        5.9234,
-                        5.7443,
-                        5.9299,
-                        5.7443,
-                        6.7836,
-                        2.6212,
-                        6.7836
+                      "polygon": [
+                        2.6166,
+                        5.929,
+                        5.7409,
+                        5.929,
+                        5.7409,
+                        6.585,
+                        2.6166,
+                        6.585
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 544,
-                      "length": 78
+                      "length": 48
                     }
                   ]
                 },
                 {
-                  "rowIndex": 2,
+                  "rowIndex": 6,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 4,
                   "content": "$1,200",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        5.9299,
-                        7.486,
-                        5.9299,
-                        7.486,
-                        6.7771,
-                        5.7443,
-                        6.7836
+                      "polygon": [
+                        5.7409,
+                        5.929,
+                        7.4886,
+                        5.9224,
+                        7.4886,
+                        6.7838,
+                        5.7409,
+                        6.7838
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 623,
+                      "offset": 593,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 3,
+                  "rowIndex": 9,
+                  "columnIndex": 1,
+                  "content": "Half page ad in program guide",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        2.6166,
+                        6.585,
+                        5.7409,
+                        6.585,
+                        5.7409,
+                        6.7838,
+                        2.6166,
+                        6.7838
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 600,
+                      "length": 29
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 10,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 3,
                   "content": "Bronze Sponsor",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        6.7836,
-                        2.6212,
-                        6.7836,
-                        2.6212,
-                        7.6309,
-                        0.9996,
-                        7.6309
+                      "polygon": [
+                        0.9971,
+                        6.7838,
+                        2.6166,
+                        6.7838,
+                        2.6166,
+                        7.6318,
+                        0.9971,
+                        7.6318
                       ]
                     }
                   ],
@@ -4418,225 +4385,264 @@
                   ]
                 },
                 {
-                  "rowIndex": 3,
+                  "rowIndex": 10,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "\u00B7 Full booth Logo on poster 50% discount on program guide advertisements",
+                  "content": "Full booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        6.7836,
-                        5.7443,
-                        6.7836,
-                        5.7443,
-                        7.6309,
-                        2.6212,
-                        7.6309
+                      "polygon": [
+                        2.6166,
+                        6.7838,
+                        5.7409,
+                        6.7838,
+                        5.7409,
+                        7.0223,
+                        2.6166,
+                        7.0223
                       ]
                     }
                   ],
                   "spans": [
                     {
                       "offset": 645,
-                      "length": 72
+                      "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 3,
+                  "rowIndex": 10,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "$1,000",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        6.7836,
-                        7.486,
-                        6.7771,
-                        7.486,
-                        7.6309,
-                        5.7443,
-                        7.6309
+                      "polygon": [
+                        5.7409,
+                        6.7838,
+                        7.4886,
+                        6.7838,
+                        7.4886,
+                        7.0157,
+                        5.7409,
+                        7.0223
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 718,
+                      "offset": 656,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
-                  "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
-                  "content": "Full Booth",
+                  "rowIndex": 11,
+                  "columnIndex": 1,
+                  "rowSpan": 2,
+                  "content": "Logo on poster 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        7.6309,
-                        2.6212,
-                        7.6309,
-                        2.6212,
-                        8.2696,
-                        0.9996,
-                        8.263
+                      "polygon": [
+                        2.6166,
+                        7.0223,
+                        5.7409,
+                        7.0223,
+                        5.7409,
+                        7.6318,
+                        2.6166,
+                        7.6318
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 725,
+                      "offset": 663,
+                      "length": 59
+                    }
+                  ]
+                },
+                {
+                  "rowIndex": 11,
+                  "columnIndex": 2,
+                  "rowSpan": 2,
+                  "content": "",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.7409,
+                        7.0223,
+                        7.4886,
+                        7.0157,
+                        7.4886,
+                        7.6318,
+                        5.7409,
+                        7.6318
+                      ]
+                    }
+                  ],
+                  "spans": []
+                },
+                {
+                  "rowIndex": 13,
+                  "columnIndex": 0,
+                  "rowSpan": 2,
+                  "content": "Full Booth",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.9971,
+                        7.6318,
+                        2.6166,
+                        7.6318,
+                        2.6166,
+                        8.2679,
+                        0.9971,
+                        8.2679
+                      ]
+                    }
+                  ],
+                  "spans": [
+                    {
+                      "offset": 723,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 13,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 2,
                   "content": "Full booth 50% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        7.6309,
-                        5.7443,
-                        7.6309,
-                        5.7443,
-                        8.2696,
-                        2.6212,
-                        8.2696
+                      "polygon": [
+                        2.6166,
+                        7.6318,
+                        5.7409,
+                        7.6318,
+                        5.7341,
+                        8.2679,
+                        2.6166,
+                        8.2679
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 736,
+                      "offset": 734,
                       "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 4,
+                  "rowIndex": 13,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 2,
                   "content": "$600",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        7.6309,
-                        7.486,
-                        7.6309,
-                        7.486,
-                        8.263,
-                        5.7443,
-                        8.2696
+                      "polygon": [
+                        5.7409,
+                        7.6318,
+                        7.4886,
+                        7.6318,
+                        7.4886,
+                        8.2679,
+                        5.7341,
+                        8.2679
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 792,
+                      "offset": 790,
                       "length": 4
                     }
                   ]
                 },
                 {
-                  "rowIndex": 5,
+                  "rowIndex": 15,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 2,
                   "content": "Half Booth",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9996,
-                        8.263,
-                        2.6212,
-                        8.2696,
-                        2.6212,
-                        8.9017,
-                        0.9996,
-                        8.9017
+                      "polygon": [
+                        0.9971,
+                        8.2679,
+                        2.6166,
+                        8.2679,
+                        2.6166,
+                        8.904,
+                        0.9971,
+                        8.8974
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 797,
+                      "offset": 795,
                       "length": 10
                     }
                   ]
                 },
                 {
-                  "rowIndex": 5,
+                  "rowIndex": 15,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 2,
                   "content": "Full booth 25% discount on program guide advertisements",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        2.6212,
-                        8.2696,
-                        5.7443,
-                        8.2696,
-                        5.7443,
-                        8.9017,
-                        2.6212,
-                        8.9017
+                      "polygon": [
+                        2.6166,
+                        8.2679,
+                        5.7341,
+                        8.2679,
+                        5.7341,
+                        8.904,
+                        2.6166,
+                        8.904
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 808,
+                      "offset": 806,
                       "length": 55
                     }
                   ]
                 },
                 {
-                  "rowIndex": 5,
+                  "rowIndex": 15,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
+                  "rowSpan": 2,
                   "content": "$350",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.7443,
-                        8.2696,
-                        7.486,
-                        8.263,
-                        7.486,
-                        8.9017,
-                        5.7443,
-                        8.9017
+                      "polygon": [
+                        5.7341,
+                        8.2679,
+                        7.4886,
+                        8.2679,
+                        7.4886,
+                        8.904,
+                        5.7341,
+                        8.904
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 864,
+                      "offset": 862,
                       "length": 4
                     }
                   ]
@@ -4645,7 +4651,7 @@
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
                     0.992,
                     4.6405,
                     7.4968,
@@ -4660,7 +4666,7 @@
               "spans": [
                 {
                   "offset": 408,
-                  "length": 460
+                  "length": 458
                 }
               ]
             }
@@ -4668,11 +4674,11 @@
           "styles": [],
           "documents": [
             {
-              "docType": "499584192:499584192",
+              "docType": "1310049402:1310049402",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     8.5,
@@ -4685,7 +4691,7 @@
                 },
                 {
                   "pageNumber": 2,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     8.5,
@@ -4705,76 +4711,22 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.835,
-                        5.97,
-                        6.285,
-                        5.97,
-                        6.285,
-                        6.115,
-                        5.835,
-                        6.115
+                      "polygon": [
+                        1167,
+                        1194,
+                        1257,
+                        1194,
+                        1257,
+                        1223,
+                        1167,
+                        1223
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 623,
-                      "length": 6
-                    }
-                  ]
-                },
-                "CompanyName": {
-                  "type": "string",
-                  "valueString": "Southridge Video",
-                  "content": "Southridge Video",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 2,
-                      "boundingBox": [
-                        2.19,
-                        2.77,
-                        3.35,
-                        2.77,
-                        3.35,
-                        2.915,
-                        2.19,
-                        2.915
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 912,
-                      "length": 16
-                    }
-                  ]
-                },
-                "Gold": {
-                  "type": "string",
-                  "valueString": "$1,500",
-                  "content": "$1,500",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.835,
-                        4.9,
-                        6.285,
-                        4.9,
-                        6.285,
-                        5.045,
-                        5.835,
-                        5.045
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 522,
+                      "offset": 593,
                       "length": 6
                     }
                   ]
@@ -4786,50 +4738,23 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.835,
-                        6.825,
-                        6.285,
-                        6.825,
-                        6.285,
-                        6.97,
-                        5.835,
-                        6.97
+                      "polygon": [
+                        1167,
+                        1365,
+                        1257,
+                        1365,
+                        1257,
+                        1394,
+                        1167,
+                        1394
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 718,
+                      "offset": 656,
                       "length": 6
-                    }
-                  ]
-                },
-                "Half": {
-                  "type": "string",
-                  "valueString": "$350",
-                  "content": "$350",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        5.835,
-                        8.305,
-                        6.16,
-                        8.305,
-                        6.16,
-                        8.45,
-                        5.835,
-                        8.45
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 864,
-                      "length": 4
                     }
                   ]
                 },
@@ -4840,22 +4765,49 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.835,
-                        7.67,
-                        6.16,
-                        7.67,
-                        6.16,
-                        7.815,
-                        5.835,
-                        7.815
+                      "polygon": [
+                        1167,
+                        1534,
+                        1232,
+                        1534,
+                        1232,
+                        1563,
+                        1167,
+                        1563
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 792,
+                      "offset": 790,
+                      "length": 4
+                    }
+                  ]
+                },
+                "Half": {
+                  "type": "string",
+                  "valueString": "$350",
+                  "content": "$350",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        1167,
+                        1661,
+                        1232,
+                        1661,
+                        1232,
+                        1690,
+                        1167,
+                        1690
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 862,
                       "length": 4
                     }
                   ]
@@ -4867,32 +4819,86 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 2,
-                      "boundingBox": [
-                        1.62,
-                        3.1,
-                        3.575,
-                        3.1,
-                        3.575,
-                        3.245,
-                        1.62,
-                        3.245
+                      "polygon": [
+                        324,
+                        620,
+                        715,
+                        620,
+                        715,
+                        649,
+                        324,
+                        649
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 938,
+                      "offset": 936,
                       "length": 25
+                    }
+                  ]
+                },
+                "CompanyName": {
+                  "type": "string",
+                  "valueString": "Southridge Video",
+                  "content": "Southridge Video",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 2,
+                      "polygon": [
+                        438,
+                        554,
+                        670,
+                        554,
+                        670,
+                        583,
+                        438,
+                        583
+                      ]
+                    }
+                  ],
+                  "confidence": 0.953,
+                  "spans": [
+                    {
+                      "offset": 910,
+                      "length": 16
+                    }
+                  ]
+                },
+                "Gold": {
+                  "type": "string",
+                  "valueString": "$1,500",
+                  "content": "$1,500",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        1167,
+                        980,
+                        1257,
+                        980,
+                        1257,
+                        1009,
+                        1167,
+                        1009
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 492,
+                      "length": 6
                     }
                   ]
                 }
               },
-              "confidence": 0.853,
+              "confidence": 0.952,
               "spans": [
                 {
                   "offset": 0,
-                  "length": 1009
+                  "length": 1007
                 }
               ]
             }
@@ -4901,33 +4907,33 @@
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/499584192?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1310049402?api-version=2022-06-30-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-aec57ca541365b48ade7d3de07fd8437-482d1030894ffa4c-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a43b928ed2a8f171526e147afb2adf97",
+        "traceparent": "00-eab2da8f5a92c49aacc0fb3a07ac4107-5de62d437462d71e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "162791d79b4dcc0413ca336a0a5dfc5e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "8b3e7eec-cbe6-4e2d-a466-ce63223801a3",
+        "apim-request-id": "4d5e7614-2a12-489b-b835-d4c401e8b62d",
         "Content-Length": "0",
-        "Date": "Wed, 26 Jan 2022 00:20:47 GMT",
+        "Date": "Fri, 20 May 2022 22:32:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "74"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "56"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
     "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "RandomSeed": "910632526"
+    "RandomSeed": "1784918978"
   }
 }

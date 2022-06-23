@@ -59,8 +59,9 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
-              Write-Host "git checkout $($repository.Commitish)"
-              git checkout $($repository.Commitish)  # this will use the default branch if repo.Commitish is empty
+              Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+              # This will use the default branch if repo.Commitish is empty
+              git -c advice.detachedHead=false checkout $($repository.Commitish)
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }

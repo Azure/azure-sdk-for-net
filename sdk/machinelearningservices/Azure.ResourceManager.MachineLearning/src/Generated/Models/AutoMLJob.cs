@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoMLJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of AutoMLJob. </summary>
-        /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
+        /// <param name="taskDetails">
+        /// [Required] This represents scenario which can be one of Tables/NLP/Image
+        /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskDetails"/> is null. </exception>
         public AutoMLJob(AutoMLVertical taskDetails)
         {
@@ -44,12 +48,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
+        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
+        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
         /// </param>
         /// <param name="services">
         /// List of JobEndpoints.
@@ -61,9 +69,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// This is optional value to provide, if not provided, AutoML will default this to Production AutoML curated environment version when running the job.
         /// </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
-        /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
+        /// <param name="outputs">
+        /// Mapping of output data bindings used in the job.
+        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>
+        /// <param name="taskDetails">
+        /// [Required] This represents scenario which can be one of Tables/NLP/Image
+        /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
+        /// </param>
         internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, string computeId, string displayName, string experimentName, IdentityConfiguration identity, bool? isArchived, JobType jobType, ScheduleBase schedule, IDictionary<string, JobService> services, JobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, JobOutput> outputs, ResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, computeId, displayName, experimentName, identity, isArchived, jobType, schedule, services, status)
         {
             EnvironmentId = environmentId;
@@ -81,11 +97,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
-        /// <summary> Mapping of output data bindings used in the job. </summary>
+        /// <summary>
+        /// Mapping of output data bindings used in the job.
+        /// Please note <see cref="JobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/> and <see cref="UriFolderJobOutput"/>.
+        /// </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> Compute Resource configuration for the job. </summary>
         public ResourceConfiguration Resources { get; set; }
-        /// <summary> [Required] This represents scenario which can be one of Tables/NLP/Image. </summary>
+        /// <summary>
+        /// [Required] This represents scenario which can be one of Tables/NLP/Image
+        /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
+        /// </summary>
         public AutoMLVertical TaskDetails { get; set; }
     }
 }

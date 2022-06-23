@@ -60,8 +60,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateCompliance(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateComplianceAsync(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> ImportDevices(Azure.WaitUntil waitUntil, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportDevicesAsync(Azure.WaitUntil waitUntil, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation ImportDevices(Azure.WaitUntil waitUntil, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportDevicesAsync(Azure.WaitUntil waitUntil, string action, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RetryDeployment(string groupId, string deploymentId, string action, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RetryDeploymentAsync(string groupId, string deploymentId, string action, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response StopDeployment(string groupId, string deploymentId, string action, Azure.RequestContext context = null) { throw null; }
@@ -73,8 +73,8 @@ namespace Azure.IoT.DeviceUpdate
         public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> DeleteUpdate(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteUpdateAsync(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation DeleteUpdate(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteUpdateAsync(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetFile(string provider, string name, string version, string fileId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetFileAsync(string provider, string name, string version, string fileId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetFiles(string provider, string name, string version, Azure.RequestContext context = null) { throw null; }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall FQDN tag resource. </param>
         /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
-        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags)
+        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The provisioning state of the Azure firewall FQDN tag resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The name of this FQDN Tag. </summary>

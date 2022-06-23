@@ -55,119 +55,125 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -199,119 +205,125 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -342,70 +354,71 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
         /// 
@@ -436,70 +449,71 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
         /// 
@@ -531,121 +545,127 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -677,121 +697,127 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -819,62 +845,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -902,62 +927,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -985,33 +1009,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ClassificationAssociateRequest</c>:
         /// <code>{
         ///   classification: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     entityGuid: string,
-        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     removePropagationsOnEntityDelete: boolean,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     entityGuid: string, # Optional. The GUID of the entity.
+        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///     validityPeriods: [
         ///       {
-        ///         endTime: string,
-        ///         startTime: string,
-        ///         timeZone: string
+        ///         endTime: string, # Optional. The end of the time boundary.
+        ///         startTime: string, # Optional. The start of the time boundary.
+        ///         timeZone: string, # Optional. The timezone of the time boundary.
         ///       }
-        ///     ],
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   entityGuids: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of time boundaries indicating validity periods.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
+        ///   entityGuids: [string], # Optional. The GUID of the entity.
         /// }
         /// </code>
         /// 
@@ -1039,33 +1060,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ClassificationAssociateRequest</c>:
         /// <code>{
         ///   classification: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     entityGuid: string,
-        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     removePropagationsOnEntityDelete: boolean,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     entityGuid: string, # Optional. The GUID of the entity.
+        ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///     validityPeriods: [
         ///       {
-        ///         endTime: string,
-        ///         startTime: string,
-        ///         timeZone: string
+        ///         endTime: string, # Optional. The end of the time boundary.
+        ///         startTime: string, # Optional. The start of the time boundary.
+        ///         timeZone: string, # Optional. The timezone of the time boundary.
         ///       }
-        ///     ],
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   entityGuids: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of time boundaries indicating validity periods.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
+        ///   entityGuids: [string], # Optional. The GUID of the entity.
         /// }
         /// </code>
         /// 
@@ -1096,68 +1114,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
         /// 
@@ -1188,68 +1207,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
         /// 
@@ -1285,62 +1305,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -1378,62 +1397,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -1464,62 +1482,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -1548,62 +1565,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -1633,30 +1649,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -1687,30 +1700,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -1740,16 +1750,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteClassificationAsync(string guid, string classificationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -1775,16 +1775,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteClassification(string guid, string classificationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -1810,21 +1800,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassifications</c>:
         /// <code>{
-        ///   list: [AnyObject],
-        ///   pageSize: number,
-        ///   sortBy: string,
-        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
-        ///   startIndex: number,
-        ///   totalCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   list: [AnyObject], # Optional. An array of objects.
+        ///   pageSize: number, # Optional. The size of the page.
+        ///   sortBy: string, # Optional. The sorted by field.
+        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;, # Optional. to specify whether the result should be sorted? If yes, whether asc or desc.
+        ///   startIndex: number, # Optional. The start index of the page.
+        ///   totalCount: number, # Optional. The total count of items.
         /// }
         /// </code>
         /// 
@@ -1853,21 +1840,18 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasClassifications</c>:
         /// <code>{
-        ///   list: [AnyObject],
-        ///   pageSize: number,
-        ///   sortBy: string,
-        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;,
-        ///   startIndex: number,
-        ///   totalCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   list: [AnyObject], # Optional. An array of objects.
+        ///   pageSize: number, # Optional. The size of the page.
+        ///   sortBy: string, # Optional. The sorted by field.
+        ///   sortType: &quot;NONE&quot; | &quot;ASC&quot; | &quot;DESC&quot;, # Optional. to specify whether the result should be sorted? If yes, whether asc or desc.
+        ///   startIndex: number, # Optional. The start index of the page.
+        ///   totalCount: number, # Optional. The total count of items.
         /// }
         /// </code>
         /// 
@@ -1897,30 +1881,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -1951,30 +1932,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -2005,30 +1983,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -2059,30 +2034,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -2122,68 +2094,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
         /// 
@@ -2222,68 +2195,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
         /// 
@@ -2323,119 +2297,125 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -2476,119 +2456,125 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///         entityGuid: string, # Optional. The GUID of the entity.
+        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///         validityPeriods: [
         ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
+        ///             endTime: string, # Optional. The end of the time boundary.
+        ///             startTime: string, # Optional. The start of the time boundary.
+        ///             timeZone: string, # Optional. The timezone of the time boundary.
         ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///         ], # Optional. An array of time boundaries indicating validity periods.
+        ///         source: string, # Optional. indicate the source who create the classification detail
+        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
+        ///     ], # Optional. An array of classifications.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
+        ///     customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///     guid: string, # Optional. The GUID of the entity.
+        ///     homeId: string, # Optional. The home ID of the entity.
+        ///     isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///     labels: [string], # Optional. labels
         ///     meanings: [
         ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
+        ///         confidence: number, # Optional. The confidence of the term assignment.
+        ///         createdBy: string, # Optional. The user who created the record.
+        ///         description: string, # Optional. The description of the term assignment.
+        ///         displayText: string, # Optional. The display text.
+        ///         expression: string, # Optional. The expression of the term assignment.
+        ///         relationGuid: string, # Optional. The GUID of the relationship.
+        ///         source: string, # Optional. The source of the term.
+        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///         steward: string, # Optional. The steward of the term.
+        ///         termGuid: string, # Optional. The GUID of the term.
         ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
+        ///     ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///     proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the entity.
+        ///     source: string, # Optional. indicate the source who create the classification detail
+        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -2626,62 +2612,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -2718,62 +2703,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>EntityMutationResponse</c>:
         /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
+        ///   guidAssignments: Dictionary&lt;string, string&gt;, # Optional. A map of GUID assignments with entities.
+        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
+        ///       ], # Optional. An array of classifications.
+        ///       displayText: string, # Optional. The display text.
+        ///       guid: string, # Optional. The GUID of the record.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
+        ///       meaningNames: [string], # Optional. An array of meanings.
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///       ], # Optional. An array of term assignment headers.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entity headers that partially updated.
         /// }
         /// </code>
         /// 
@@ -2803,16 +2787,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -2839,16 +2813,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -2876,30 +2840,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -2931,30 +2892,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -2986,30 +2944,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -3041,30 +2996,27 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ArrayOfAtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   entityGuid: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   removePropagationsOnEntityDelete: boolean,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   entityGuid: string, # Optional. The GUID of the entity.
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///   validityPeriods: [
         ///     {
-        ///       endTime: string,
-        ///       startTime: string,
-        ///       timeZone: string
+        ///       endTime: string, # Optional. The end of the time boundary.
+        ///       startTime: string, # Optional. The start of the time boundary.
+        ///       timeZone: string, # Optional. The timezone of the time boundary.
         ///     }
-        ///   ],
-        ///   source: string,
-        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of time boundaries indicating validity periods.
+        ///   source: string, # Optional. indicate the source who create the classification detail
+        ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         /// }
         /// </code>
         /// 
@@ -3093,16 +3045,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityHeaders</c>:
         /// <code>{
-        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
         /// }
         /// </code>
         /// 
@@ -3130,16 +3079,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasEntityHeaders</c>:
         /// <code>{
-        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   guidHeaderMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The description of the guid header map,
         /// }
         /// </code>
         /// 
@@ -3183,70 +3129,71 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
         /// 
@@ -3290,70 +3237,71 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///           entityGuid: string, # Optional. The GUID of the entity.
+        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///           validityPeriods: [
         ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
+        ///               endTime: string, # Optional. The end of the time boundary.
+        ///               startTime: string, # Optional. The start of the time boundary.
+        ///               timeZone: string, # Optional. The timezone of the time boundary.
         ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///           ], # Optional. An array of time boundaries indicating validity periods.
+        ///           source: string, # Optional. indicate the source who create the classification detail
+        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
+        ///       ], # Optional. An array of classifications.
+        ///       createTime: number, # Optional. The created time of the record.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       customAttributes: Dictionary&lt;string, string&gt;, # Optional. Custom Attribute
+        ///       guid: string, # Optional. The GUID of the entity.
+        ///       homeId: string, # Optional. The home ID of the entity.
+        ///       isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///       labels: [string], # Optional. labels
         ///       meanings: [
         ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
+        ///           confidence: number, # Optional. The confidence of the term assignment.
+        ///           createdBy: string, # Optional. The user who created the record.
+        ///           description: string, # Optional. The description of the term assignment.
+        ///           displayText: string, # Optional. The display text.
+        ///           expression: string, # Optional. The expression of the term assignment.
+        ///           relationGuid: string, # Optional. The GUID of the relationship.
+        ///           source: string, # Optional. The source of the term.
+        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///           steward: string, # Optional. The steward of the term.
+        ///           termGuid: string, # Optional. The GUID of the term.
         ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
+        ///       ], # Optional. An array of term assignment headers indicating the meanings of the entity.
+        ///       provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship.
+        ///       proxy: boolean, # Optional. Determines if there&apos;s a proxy.
+        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of relationship.
+        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       updateTime: number, # Optional. The update time of the record.
+        ///       updatedBy: string, # Optional. The user who updated the record.
+        ///       version: number, # Optional. The version of the entity.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of entities.
         /// }
         /// </code>
         /// 
@@ -3382,56 +3330,55 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityHeader</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   classificationNames: [string],
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   classificationNames: [string], # Optional. An array of classification names.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     }
-        ///   ],
-        ///   displayText: string,
-        ///   guid: string,
-        ///   meaningNames: [string],
+        ///   ], # Optional. An array of classifications.
+        ///   displayText: string, # Optional. The display text.
+        ///   guid: string, # Optional. The GUID of the record.
+        ///   isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///   labels: [string], # Optional. labels
+        ///   meaningNames: [string], # Optional. An array of meanings.
         ///   meanings: [
         ///     {
-        ///       confidence: number,
-        ///       createdBy: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       confidence: number, # Optional. The confidence of the term assignment.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       description: string, # Optional. The description of the term assignment.
+        ///       displayText: string, # Optional. The display text.
+        ///       expression: string, # Optional. The expression of the term assignment.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///       source: string, # Optional. The source of the term.
+        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///       steward: string, # Optional. The steward of the term.
+        ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
-        ///   ],
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of term assignment headers.
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         /// }
         /// </code>
         /// 
@@ -3460,56 +3407,55 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasEntityHeader</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   classificationNames: [string],
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   classificationNames: [string], # Optional. An array of classification names.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     }
-        ///   ],
-        ///   displayText: string,
-        ///   guid: string,
-        ///   meaningNames: [string],
+        ///   ], # Optional. An array of classifications.
+        ///   displayText: string, # Optional. The display text.
+        ///   guid: string, # Optional. The GUID of the record.
+        ///   isIncomplete: boolean, # Optional. Whether it is a shell entity
+        ///   labels: [string], # Optional. labels
+        ///   meaningNames: [string], # Optional. An array of meanings.
         ///   meanings: [
         ///     {
-        ///       confidence: number,
-        ///       createdBy: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       confidence: number, # Optional. The confidence of the term assignment.
+        ///       createdBy: string, # Optional. The user who created the record.
+        ///       description: string, # Optional. The description of the term assignment.
+        ///       displayText: string, # Optional. The display text.
+        ///       expression: string, # Optional. The expression of the term assignment.
+        ///       relationGuid: string, # Optional. The GUID of the relationship.
+        ///       source: string, # Optional. The source of the term.
+        ///       status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. The status of terms assignment.
+        ///       steward: string, # Optional. The steward of the term.
+        ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
-        ///   ],
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of term assignment headers.
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         /// }
         /// </code>
         /// 
@@ -3523,6 +3469,616 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove business metadata from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove business metadata from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add business metadata to an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, isOverwrite, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add business metadata to an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, isOverwrite, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete business metadata attributes from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete business metadata attributes from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add or update business metadata attributes. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add or update business metadata attributes. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSampleBusinessMetadataTemplateRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSampleBusinessMetadataTemplateRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BulkImportResponse</c>:
+        /// <code>{
+        ///   failedImportInfoList: [
+        ///     {
+        ///       childObjectName: string, # Optional. childObjectName
+        ///       importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;, # Optional. importStatus
+        ///       parentObjectName: string, # Optional. parentObjectName
+        ///       remarks: string, # Optional. remarks
+        ///     }
+        ///   ], # Optional. failed importInfoList
+        ///   successImportInfoList: [ImportInfo], # Optional. successful importInfoList
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>BulkImportResponse</c>:
+        /// <code>{
+        ///   failedImportInfoList: [
+        ///     {
+        ///       childObjectName: string, # Optional. childObjectName
+        ///       importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;, # Optional. importStatus
+        ///       parentObjectName: string, # Optional. parentObjectName
+        ///       remarks: string, # Optional. remarks
+        ///     }
+        ///   ], # Optional. failed importInfoList
+        ///   successImportInfoList: [ImportInfo], # Optional. successful importInfoList
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteLabels(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3961,6 +4517,224 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/header", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteBusinessMetadataRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataRequest(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            if (isOverwrite != null)
+            {
+                uri.AppendQuery("isOverwrite", isOverwrite.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSampleBusinessMetadataTemplateRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 

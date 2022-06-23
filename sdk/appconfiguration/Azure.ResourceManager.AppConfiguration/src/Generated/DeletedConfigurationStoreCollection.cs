@@ -66,11 +66,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual async Task<Response<DeletedConfigurationStoreResource>> GetAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual async Task<Response<DeletedConfigurationStoreResource>> GetAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Get");
@@ -97,11 +96,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStoreResource> Get(string location, string configStoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual Response<DeletedConfigurationStoreResource> Get(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Get");
@@ -212,11 +210,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string location, string configStoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");
@@ -241,11 +238,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="configStoreName"> The name of the configuration store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<bool> Exists(string location, string configStoreName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        public virtual Response<bool> Exists(AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreCollection.Exists");

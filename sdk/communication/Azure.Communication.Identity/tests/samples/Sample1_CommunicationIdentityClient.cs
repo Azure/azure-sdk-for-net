@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Identity.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -158,11 +159,15 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var teamsToken = generateTeamsToken().Result;
+            var options = CreateTeamsUserParams().Result;
+            var teamsUserAadToken = options.TeamsUserAadToken;
+            var clientId = options.ClientId;
+            var userObjectId = options.UserObjectId;
+
             var client = CreateClientWithConnectionString();
 
             #region Snippet:GetTokenForTeamsUser
-            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUser
@@ -176,11 +181,15 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var teamsToken = await generateTeamsToken();
+            var options = await CreateTeamsUserParams();
+            var teamsUserAadToken = options.TeamsUserAadToken;
+            var clientId = options.ClientId;
+            var userObjectId = options.UserObjectId;
+
             var client = CreateClientWithConnectionString();
 
             #region Snippet:GetTokenForTeamsUserAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUserAsync

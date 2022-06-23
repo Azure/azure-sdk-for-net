@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
-    public partial class AddressResponse : ProxyOnlyResource
+    public partial class AddressResponse : ResourceData
     {
         /// <summary> Initializes a new instance of AddressResponse. </summary>
         public AddressResponse()
@@ -26,17 +26,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serviceIPAddress"> Main public virtual IP. </param>
         /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="vipMappings"> Additional virtual IPs. </param>
-        internal AddressResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serviceIPAddress, string internalIPAddress, IList<string> outboundIPAddresses, IList<VirtualIPMapping> vipMappings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AddressResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceIPAddress, string internalIPAddress, IList<string> outboundIPAddresses, IList<VirtualIPMapping> vipMappings, string kind) : base(id, name, resourceType, systemData)
         {
             ServiceIPAddress = serviceIPAddress;
             InternalIPAddress = internalIPAddress;
             OutboundIPAddresses = outboundIPAddresses;
             VipMappings = vipMappings;
+            Kind = kind;
         }
 
         /// <summary> Main public virtual IP. </summary>
@@ -47,5 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<string> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
         public IList<VirtualIPMapping> VipMappings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

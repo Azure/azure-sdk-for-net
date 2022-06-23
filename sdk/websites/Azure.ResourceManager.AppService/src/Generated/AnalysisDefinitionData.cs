@@ -6,13 +6,12 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AnalysisDefinition data model. </summary>
-    public partial class AnalysisDefinitionData : ProxyOnlyResource
+    public partial class AnalysisDefinitionData : ResourceData
     {
         /// <summary> Initializes a new instance of AnalysisDefinitionData. </summary>
         public AnalysisDefinitionData()
@@ -24,14 +23,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="description"> Description of the Analysis. </param>
-        internal AnalysisDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string description) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AnalysisDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Description = description;
+            Kind = kind;
         }
 
         /// <summary> Description of the Analysis. </summary>
         public string Description { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -7,13 +7,12 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the StaticSiteUserProvidedFunctionAppARMResource data model. </summary>
-    public partial class StaticSiteUserProvidedFunctionAppARMResourceData : ProxyOnlyResource
+    public partial class StaticSiteUserProvidedFunctionAppARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppARMResourceData. </summary>
         public StaticSiteUserProvidedFunctionAppARMResourceData()
@@ -25,15 +24,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
-        internal StaticSiteUserProvidedFunctionAppARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteUserProvidedFunctionAppARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, string kind) : base(id, name, resourceType, systemData)
         {
             FunctionAppResourceId = functionAppResourceId;
             FunctionAppRegion = functionAppRegion;
             CreatedOn = createdOn;
+            Kind = kind;
         }
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
@@ -42,5 +42,7 @@ namespace Azure.ResourceManager.AppService
         public string FunctionAppRegion { get; set; }
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

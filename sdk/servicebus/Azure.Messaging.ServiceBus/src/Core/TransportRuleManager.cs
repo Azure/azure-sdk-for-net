@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public abstract Task AddRuleAsync(
+        public abstract Task CreateRuleAsync(
             RuleProperties properties,
             CancellationToken cancellationToken);
 
@@ -40,18 +40,18 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public abstract Task RemoveRuleAsync(
+        public abstract Task DeleteRuleAsync(
             string ruleName,
             CancellationToken cancellationToken);
 
         /// <summary>
         /// Get all rules associated with the subscription.
         /// </summary>
-        ///
+        /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
+        /// <param name="top">The number of rules to retrieve per service request.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>Returns a list of rules description</returns>
-        public abstract Task<List<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken);
+        public abstract Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken);
 
         /// <summary>
         /// Closes the connection to the transport rule manager instance.

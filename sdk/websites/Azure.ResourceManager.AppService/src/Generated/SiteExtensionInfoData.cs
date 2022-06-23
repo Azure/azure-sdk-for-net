@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the SiteExtensionInfo data model. </summary>
-    public partial class SiteExtensionInfoData : ProxyOnlyResource
+    public partial class SiteExtensionInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
         public SiteExtensionInfoData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="extensionId"> Site extension ID. </param>
         /// <param name="title"></param>
         /// <param name="extensionType"> Site extension type. </param>
@@ -48,7 +47,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="installedOn"> Installed timestamp. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, Uri extensionUri, Uri projectUri, Uri iconUri, Uri licenseUri, Uri feedUri, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedOn, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedOn, string provisioningState, string comment, string kind) : base(id, name, resourceType, systemData)
         {
             ExtensionId = extensionId;
             Title = title;
@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.AppService
             InstalledOn = installedOn;
             ProvisioningState = provisioningState;
             Comment = comment;
+            Kind = kind;
         }
 
         /// <summary> Site extension ID. </summary>
@@ -112,5 +113,7 @@ namespace Azure.ResourceManager.AppService
         public string ProvisioningState { get; set; }
         /// <summary> Site Extension comment. </summary>
         public string Comment { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

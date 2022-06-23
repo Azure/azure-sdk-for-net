@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location of the resource group to which the resource belongs. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The consistency policy for the Cosmos DB account. </summary>
@@ -93,7 +93,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        /// <summary>
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
+        /// </summary>
         public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         public IList<CorsPolicy> Cors { get; }

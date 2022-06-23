@@ -24,8 +24,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
-        /// <summary> Additional attributes of the entity. </summary>
+        public AzureLocation? Location { get; set; }
+        /// <summary>
+        /// Additional attributes of the entity.
+        /// Please note <see cref="PartialOnlineDeployment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="PartialKubernetesOnlineDeployment"/> and <see cref="PartialManagedOnlineDeployment"/>.
+        /// </summary>
         public PartialOnlineDeployment Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public PartialSku Sku { get; set; }

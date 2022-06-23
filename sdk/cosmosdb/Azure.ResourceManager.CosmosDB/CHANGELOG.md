@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- Base type of `ClusterResourceData ` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Type `ManagedCassandraARMResourceProperties` was removed.
+
 ### Bugs Fixed
 
 ### Other Changes

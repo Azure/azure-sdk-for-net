@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Tests
     public class VirtualMachineManagedIdentityTests : VirtualMachineTestBase
     {
         public VirtualMachineManagedIdentityTests(bool async)
-            : base(async) //, RecordedTestMode.Record)
+            : base(async)//, RecordedTestMode.Record)
         {
         }
 

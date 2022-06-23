@@ -1,14 +1,24 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.1 (2022-06-22)
 
 ### Features Added
 
-### Breaking Changes
+- Add OperationStatusResult to common type.
 
 ### Bugs Fixed
 
+- Fixed serialization of a resource which inherits from ResourceData/TrackedResourceData by making Tags and SystemData as optional properties.
+
 ### Other Changes
+
+- Hide EncryptionProperties, EncryptionStatus and KeyVaultProperties in common type.
+
+## 1.1.0 (2022-06-08)
+
+### Features Added
+
+- Add Update methods in resource classes.
 
 ## 1.0.0 (2022-04-07)
 This is the first stable release of the Azure Resources management core library. 
