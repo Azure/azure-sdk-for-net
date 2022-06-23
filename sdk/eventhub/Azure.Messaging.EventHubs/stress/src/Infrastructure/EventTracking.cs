@@ -123,7 +123,7 @@ public class EventTracking
     /// <param name="roleIndex"></param>
     /// <param name="partitionIds"></param>
     ///
-    /// <returns>The array of partitions that a given <see cref="PartitionPublisher"/> should send to.</returns>
+    /// <returns>The set of partitions that a given <see cref="PartitionPublisher"/> should send to.</returns>
     ///
     public static List<string> GetAssignedPartitions(int partitionCount, int roleIndex, string[] partitionIds, Role[] roles)
     {
