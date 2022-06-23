@@ -255,6 +255,8 @@ directive:
         $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
         $.ServiceAssociationLinkPropertiesFormat.properties.linkedResourceType['x-ms-format'] = 'resource-type';
         $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
+        $.SubnetPropertiesFormat.properties.privateEndpointNetworkPolicies['x-ms-client-name'] = 'VirtualNetworkPrivateEndpointNetworkPolicy';
+        $.SubnetPropertiesFormat.properties.privateLinkServiceNetworkPolicies['x-ms-client-name'] = 'VirtualNetworkPrivateLinkServiceNetworkPolicy';
   - from: endpointService.json
     where: $.definitions
     transform: >
@@ -305,7 +307,7 @@ directive:
   - from: loadBalancer.json
     where: $.definitions
     transform: >
-      $.TransportProtocol['x-ms-enum']['name'] = 'LoadBalancerTransportProtocol';
+      $.TransportProtocol['x-ms-enum']['name'] = 'LoadBalancingTransportProtocol';
 ```
 
 ### Tag: package-track2-preview

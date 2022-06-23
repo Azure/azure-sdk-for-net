@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> backendAddressPool = default;
             Optional<IList<WritableSubResource>> backendAddressPools = default;
             Optional<WritableSubResource> probe = default;
-            Optional<LoadBalancerTransportProtocol> protocol = default;
+            Optional<LoadBalancingTransportProtocol> protocol = default;
             Optional<LoadDistribution> loadDistribution = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protocol = new LoadBalancerTransportProtocol(property0.Value.GetString());
+                            protocol = new LoadBalancingTransportProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("loadDistribution"))

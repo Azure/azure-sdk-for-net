@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    VirtualNetworkPrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Completed, name, vnet).WaitForCompletionAsync();

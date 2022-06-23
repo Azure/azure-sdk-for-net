@@ -1503,7 +1503,7 @@ namespace Azure.ResourceManager.Network
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class InboundNatRuleResource : Azure.ResourceManager.ArmResource
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.Network
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class LoadBalancingRuleResource : Azure.ResourceManager.ArmResource
@@ -3461,9 +3461,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier NatGatewayId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkSecurityGroupData NetworkSecurityGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointData> PrivateEndpoints { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Purpose { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ResourceNavigationLink> ResourceNavigationLinks { get { throw null; } }
@@ -3471,6 +3469,8 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ServiceAssociationLink> ServiceAssociationLinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ServiceEndpointPolicyData> ServiceEndpointPolicies { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ServiceEndpointPropertiesFormat> ServiceEndpoints { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? VirtualNetworkPrivateEndpointNetworkPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? VirtualNetworkPrivateLinkServiceNetworkPolicy { get { throw null; } set { } }
     }
     public partial class SubnetResource : Azure.ResourceManager.ArmResource
     {
@@ -7300,7 +7300,7 @@ namespace Azure.ResourceManager.Network.Models
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
         public int? FrontendPortRangeStart { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.NetworkResourceData
@@ -7681,6 +7681,25 @@ namespace Azure.ResourceManager.Network.Models
         public LoadBalancerVipSwapRequestFrontendIPConfiguration() { }
         public string Id { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LoadBalancingTransportProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LoadBalancingTransportProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol All { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Udp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol left, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol left, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadDistribution : System.IEquatable<Azure.ResourceManager.Network.Models.LoadDistribution>
@@ -8990,7 +9009,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public TrafficAnalyticsConfigurationProperties() { }
         public bool? Enabled { get { throw null; } set { } }
-        public int? TrafficAnalyticsInterval { get { throw null; } set { } }
+        public int? TrafficAnalyticsIntervalInMinutes { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
         public string WorkspaceRegion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
@@ -9019,30 +9038,11 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> LocalAddressRanges { get { throw null; } }
         public System.Collections.Generic.IList<string> RemoteAddressRanges { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TransportProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.TransportProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TransportProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol All { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol Tcp { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol Udp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.TransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.TransportProtocol left, Azure.ResourceManager.Network.Models.TransportProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.TransportProtocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.TransportProtocol left, Azure.ResourceManager.Network.Models.TransportProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class TroubleshootingContent
     {
-        public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, string storagePath) { }
+        public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, System.Uri storageUri) { }
         public Azure.Core.ResourceIdentifier StorageId { get { throw null; } }
-        public string StoragePath { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class TroubleshootingDetails
