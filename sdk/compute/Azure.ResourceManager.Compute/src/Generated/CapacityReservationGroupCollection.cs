@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservationGroupResource> GetAllAsync(ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapacityReservationGroupResource> GetAllAsync(ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<CapacityReservationGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservationGroupResource> GetAll(ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapacityReservationGroupResource> GetAll(ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Page<CapacityReservationGroupResource> FirstPageFunc(int? pageSizeHint)
             {

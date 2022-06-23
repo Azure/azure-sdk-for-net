@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Compute
         public virtual Azure.Response<bool> Exists(string capacityReservationGroupName, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string capacityReservationGroupName, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroupResource> Get(string capacityReservationGroupName, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetAll(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetAllAsync(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetAll(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetAllAsync(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroupResource>> GetAsync(string capacityReservationGroupName, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.CapacityReservationGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CapacityReservationGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.CapacityReservationGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CapacityReservationGroupResource>.GetEnumerator() { throw null; }
@@ -479,8 +479,8 @@ namespace Azure.ResourceManager.Compute
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.CapacityReservationGroupResource GetCapacityReservationGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Compute.CapacityReservationGroupCollection GetCapacityReservationGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetCapacityReservationGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetCapacityReservationGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.CapacityReservationResource GetCapacityReservationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.CloudServiceResource> GetCloudService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.CloudServiceResource>> GetCloudServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -622,8 +622,8 @@ namespace Azure.ResourceManager.Compute
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.VirtualMachineResource> GetVirtualMachinesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string statusOnly = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.VirtualMachineResource> GetVirtualMachinesByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.VirtualMachineResource> GetVirtualMachinesByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionResource GetVirtualMachineScaleSetExtensionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetResource GetVirtualMachineScaleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1885,12 +1885,12 @@ namespace Azure.ResourceManager.Compute
         protected VirtualMachineScaleSetCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vmScaleSetName, Azure.ResourceManager.Compute.VirtualMachineScaleSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> Get(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> Get(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetAsync(string vmScaleSetName, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1989,8 +1989,8 @@ namespace Azure.ResourceManager.Compute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteInstancesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, string zone = null, string placementGroupId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, string zone = null, string placementGroupId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> Get(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetAsync(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource> Get(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetAsync(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet? expand = default(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView> GetInstanceView(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfo> GetOSUpgradeHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2266,15 +2266,10 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class AdditionalUnattendContent
     {
         public AdditionalUnattendContent() { }
-        public Azure.ResourceManager.Compute.Models.ComponentNames? ComponentName { get { throw null; } set { } }
+        public string ComponentName { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
-<<<<<<< HEAD
-        public Azure.ResourceManager.Compute.Models.PassNames? PassName { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.SettingNames? SettingName { get { throw null; } set { } }
-=======
         public string PassName { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SettingName? SettingName { get { throw null; } set { } }
->>>>>>> origin/main
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AggregatedReplicationState : System.IEquatable<Azure.ResourceManager.Compute.Models.AggregatedReplicationState>
@@ -2531,23 +2526,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.ResourceIdentifier SourceVaultId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate> VaultCertificates { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComponentNames : System.IEquatable<Azure.ResourceManager.Compute.Models.ComponentNames>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComponentNames(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComponentNames MicrosoftWindowsShellSetup { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ComponentNames other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComponentNames left, Azure.ResourceManager.Compute.Models.ComponentNames right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComponentNames (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComponentNames left, Azure.ResourceManager.Compute.Models.ComponentNames right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ComputePlan
     {
         public ComputePlan() { }
@@ -2671,7 +2649,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int CurrentValue { get { throw null; } }
         public long Limit { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UsageName Name { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.UsageUnit Unit { get { throw null; } }
+        public string Unit { get { throw null; } }
     }
     public partial class ComputeWriteableSubResourceData
     {
@@ -3205,38 +3183,38 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpandTypesForGetCapacityReservationGroup : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup>
+    public readonly partial struct ExpandTypeForGetCapacityReservationGroups : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExpandTypesForGetCapacityReservationGroup(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup VirtualMachineScaleSetVmsRef { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup VirtualMachinesRef { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup other) { throw null; }
+        public ExpandTypeForGetCapacityReservationGroups(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups VirtualMachineScaleSetVmsRef { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups VirtualMachinesRef { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetCapacityReservationGroup right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups left, Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups left, Azure.ResourceManager.Compute.Models.ExpandTypeForGetCapacityReservationGroups right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpandTypesForGetVmScaleSet : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet>
+    public readonly partial struct ExpandTypeForGetVmScaleSet : System.IEquatable<Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExpandTypesForGetVmScaleSet(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet UserData { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet other) { throw null; }
+        public ExpandTypeForGetVmScaleSet(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet UserData { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet left, Azure.ResourceManager.Compute.Models.ExpandTypesForGetVmScaleSet right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet left, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet left, Azure.ResourceManager.Compute.Models.ExpandTypeForGetVmScaleSet right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ExtendedLocation
@@ -3642,7 +3620,7 @@ namespace Azure.ResourceManager.Compute.Models
         InstanceView = 0,
         UserData = 1,
     }
-    public enum IntervalInMin
+    public enum IntervalInMins
     {
         ThreeMins = 0,
         FiveMins = 1,
@@ -4078,23 +4056,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PassNames : System.IEquatable<Azure.ResourceManager.Compute.Models.PassNames>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PassNames(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.PassNames OobeSystem { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.PassNames other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.PassNames left, Azure.ResourceManager.Compute.Models.PassNames right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.PassNames (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.PassNames left, Azure.ResourceManager.Compute.Models.PassNames right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PatchAssessmentState : System.IEquatable<Azure.ResourceManager.Compute.Models.PatchAssessmentState>
     {
         private readonly object _dummy;
@@ -4413,8 +4374,8 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RequestRateByIntervalContent : Azure.ResourceManager.Compute.Models.LogAnalyticsInputBase
     {
-        public RequestRateByIntervalContent(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMin intervalLength) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
-        public Azure.ResourceManager.Compute.Models.IntervalInMin IntervalLength { get { throw null; } }
+        public RequestRateByIntervalContent(System.Uri blobContainerSasUri, System.DateTimeOffset fromTime, System.DateTimeOffset toTime, Azure.ResourceManager.Compute.Models.IntervalInMins intervalLength) : base (default(System.Uri), default(System.DateTimeOffset), default(System.DateTimeOffset)) { }
+        public Azure.ResourceManager.Compute.Models.IntervalInMins IntervalLength { get { throw null; } }
     }
     public partial class ResourceInstanceViewStatus
     {
@@ -4816,7 +4777,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SharingProfile() { }
         public System.BinaryData CommunityGalleryInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SharingProfileGroup> Groups { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.GallerySharingPermissionType? Permissions { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.GallerySharingPermissionType? Permission { get { throw null; } set { } }
     }
     public partial class SharingProfileGroup
     {
@@ -5097,23 +5058,6 @@ namespace Azure.ResourceManager.Compute.Models
         internal UsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsageUnit : System.IEquatable<Azure.ResourceManager.Compute.Models.UsageUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsageUnit(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.UsageUnit Count { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.UsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.UsageUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class UserArtifactManage
     {

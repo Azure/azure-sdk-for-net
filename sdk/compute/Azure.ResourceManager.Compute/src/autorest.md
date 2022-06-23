@@ -26,6 +26,10 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+keep-plural-enums:
+- IntervalInMins
+- ExpandTypeForGetCapacityReservationGroups
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -248,6 +252,7 @@ directive:
       $.TargetRegion.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.SharingProfile.properties.permissions["x-ms-client-name"] = "permission";
   - from: gallery.json
     where: $.parameters
     transform: >
@@ -281,4 +286,13 @@ directive:
     where: $.definitions
     transform: >
       $.RunCommandDocumentBase.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+  - from: capacityReservation.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "ExpandTypeForGetCapacityReservationGroups";
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "ExpandTypeForGetCapacityReservationGroups";
+  - from: virtualMachineScaleSet.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "ExpandTypeForGetVMScaleSet";
 ```

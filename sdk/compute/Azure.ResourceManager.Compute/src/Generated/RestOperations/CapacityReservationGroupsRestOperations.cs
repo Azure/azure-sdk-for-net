@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationGroupListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationGroupListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationGroupListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationGroupListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationGroupListResult>> ListBySubscriptionAsync(string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationGroupListResult>> ListBySubscriptionAsync(string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationGroupListResult> ListBySubscription(string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationGroupListResult> ListBySubscription(string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationGroupListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationGroupListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationGroupListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapacityReservationGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CapacityReservationGroupListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapacityReservationGroupListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, ExpandTypesForGetCapacityReservationGroup? expand = null, CancellationToken cancellationToken = default)
+        public Response<CapacityReservationGroupListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, ExpandTypeForGetCapacityReservationGroups? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
