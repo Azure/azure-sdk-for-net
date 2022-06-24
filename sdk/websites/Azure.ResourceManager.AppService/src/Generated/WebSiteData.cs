@@ -52,9 +52,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="hyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
-        /// <param name="vnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
-        /// <param name="vnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
-        /// <param name="vnetContentShareEnabled"> To enable accessing content over virtual network. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="scmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
@@ -94,14 +91,13 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
-        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: &apos;Enabled&apos;, &apos;Disabled&apos; or an empty string. </param>
         /// <param name="storageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, bool? vnetRouteAllEnabled, bool? vnetImagePullEnabled, bool? vnetContentShareEnabled, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId) : base(id, name, resourceType, systemData, tags, location, kind)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId) : base(id, name, resourceType, systemData, tags, location, kind)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -118,9 +114,6 @@ namespace Azure.ResourceManager.AppService
             IsXenon = isXenon;
             HyperV = hyperV;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
-            VnetRouteAllEnabled = vnetRouteAllEnabled;
-            VnetImagePullEnabled = vnetImagePullEnabled;
-            VnetContentShareEnabled = vnetContentShareEnabled;
             SiteConfig = siteConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
             ScmSiteAlsoStopped = scmSiteAlsoStopped;
@@ -146,7 +139,6 @@ namespace Azure.ResourceManager.AppService
             HttpsOnly = httpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
-            PublicNetworkAccess = publicNetworkAccess;
             StorageAccountRequired = storageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
@@ -185,12 +177,6 @@ namespace Azure.ResourceManager.AppService
         public bool? HyperV { get; set; }
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
         public DateTimeOffset? LastModifiedTimeUtc { get; }
-        /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
-        public bool? VnetRouteAllEnabled { get; set; }
-        /// <summary> To enable pulling image over Virtual Network. </summary>
-        public bool? VnetImagePullEnabled { get; set; }
-        /// <summary> To enable accessing content over virtual network. </summary>
-        public bool? VnetContentShareEnabled { get; set; }
         /// <summary> Configuration of the app. </summary>
         public SiteConfigProperties SiteConfig { get; set; }
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
@@ -255,8 +241,6 @@ namespace Azure.ResourceManager.AppService
         public RedundancyMode? RedundancyMode { get; set; }
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         public Guid? InProgressOperationId { get; }
-        /// <summary> Property to allow or block all public traffic. Allowed Values: &apos;Enabled&apos;, &apos;Disabled&apos; or an empty string. </summary>
-        public string PublicNetworkAccess { get; set; }
         /// <summary> Checks if Customer provided storage account is required. </summary>
         public bool? StorageAccountRequired { get; set; }
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>

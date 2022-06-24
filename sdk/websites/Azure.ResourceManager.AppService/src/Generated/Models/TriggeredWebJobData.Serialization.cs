@@ -71,16 +71,6 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("using_sdk");
                 writer.WriteBooleanValue(UsingSdk.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess);
-            }
-            if (Optional.IsDefined(StorageAccountRequired))
-            {
-                writer.WritePropertyName("storageAccountRequired");
-                writer.WriteBooleanValue(StorageAccountRequired.Value);
-            }
             if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings");
@@ -116,8 +106,6 @@ namespace Azure.ResourceManager.AppService
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<bool> storageAccountRequired = default;
             Optional<IDictionary<string, BinaryData>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -235,21 +223,6 @@ namespace Azure.ResourceManager.AppService
                             usingSdk = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
-                        {
-                            publicNetworkAccess = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountRequired"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountRequired = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("settings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,7 +242,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TriggeredWebJobData(id, name, type, systemData, kind.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), publicNetworkAccess.Value, Optional.ToNullable(storageAccountRequired), Optional.ToDictionary(settings));
+            return new TriggeredWebJobData(id, name, type, systemData, kind.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
         }
     }
 }

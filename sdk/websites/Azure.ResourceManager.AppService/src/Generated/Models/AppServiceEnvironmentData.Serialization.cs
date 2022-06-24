@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradePreference))
-            {
-                writer.WritePropertyName("upgradePreference");
-                writer.WriteStringValue(UpgradePreference.Value.ToString());
-            }
             if (Optional.IsDefined(DedicatedHostCount))
             {
                 writer.WritePropertyName("dedicatedHostCount");
@@ -99,16 +94,6 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("zoneRedundant");
                 writer.WriteBooleanValue(ZoneRedundant.Value);
-            }
-            if (Optional.IsDefined(CustomDnsSuffixConfiguration))
-            {
-                writer.WritePropertyName("customDnsSuffixConfiguration");
-                writer.WriteObjectValue(CustomDnsSuffixConfiguration);
-            }
-            if (Optional.IsDefined(NetworkingConfiguration))
-            {
-                writer.WritePropertyName("networkingConfiguration");
-                writer.WriteObjectValue(NetworkingConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -137,12 +122,8 @@ namespace Azure.ResourceManager.AppService
             Optional<IList<NameValuePair>> clusterSettings = default;
             Optional<IList<string>> userWhitelistedIpRanges = default;
             Optional<bool> hasLinuxWorkers = default;
-            Optional<UpgradePreference> upgradePreference = default;
             Optional<int> dedicatedHostCount = default;
             Optional<bool> zoneRedundant = default;
-            Optional<CustomDnsSuffixConfigurationData> customDnsSuffixConfiguration = default;
-            Optional<AseV3NetworkingConfigurationData> networkingConfiguration = default;
-            Optional<UpgradeAvailability> upgradeAvailability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -334,16 +315,6 @@ namespace Azure.ResourceManager.AppService
                             hasLinuxWorkers = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("upgradePreference"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            upgradePreference = new UpgradePreference(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("dedicatedHostCount"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -364,41 +335,11 @@ namespace Azure.ResourceManager.AppService
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("customDnsSuffixConfiguration"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            customDnsSuffixConfiguration = CustomDnsSuffixConfigurationData.DeserializeCustomDnsSuffixConfigurationData(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkingConfiguration"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            networkingConfiguration = AseV3NetworkingConfigurationData.DeserializeAseV3NetworkingConfigurationData(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeAvailability"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            upgradeAvailability = new UpgradeAvailability(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new AppServiceEnvironmentData(id, name, type, systemData, tags, location, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(upgradePreference), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), customDnsSuffixConfiguration.Value, networkingConfiguration.Value, Optional.ToNullable(upgradeAvailability));
+            return new AppServiceEnvironmentData(id, name, type, systemData, tags, location, kind.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIpRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
         }
     }
 }

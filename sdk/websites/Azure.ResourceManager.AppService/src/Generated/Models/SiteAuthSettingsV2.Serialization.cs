@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class KubeEnvironmentPatch : IUtf8JsonSerializable
+    public partial class SiteAuthSettingsV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,50 +23,47 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalLoadBalancerEnabled))
+            if (Optional.IsDefined(Platform))
             {
-                writer.WritePropertyName("internalLoadBalancerEnabled");
-                writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
+                writer.WritePropertyName("platform");
+                writer.WriteObjectValue(Platform);
             }
-            if (Optional.IsDefined(StaticIP))
+            if (Optional.IsDefined(GlobalValidation))
             {
-                writer.WritePropertyName("staticIp");
-                writer.WriteStringValue(StaticIP);
+                writer.WritePropertyName("globalValidation");
+                writer.WriteObjectValue(GlobalValidation);
             }
-            if (Optional.IsDefined(ArcConfiguration))
+            if (Optional.IsDefined(IdentityProviders))
             {
-                writer.WritePropertyName("arcConfiguration");
-                writer.WriteObjectValue(ArcConfiguration);
+                writer.WritePropertyName("identityProviders");
+                writer.WriteObjectValue(IdentityProviders);
             }
-            if (Optional.IsDefined(AppLogsConfiguration))
+            if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("appLogsConfiguration");
-                writer.WriteObjectValue(AppLogsConfiguration);
+                writer.WritePropertyName("login");
+                writer.WriteObjectValue(Login);
             }
-            if (Optional.IsDefined(AksResourceId))
+            if (Optional.IsDefined(HttpSettings))
             {
-                writer.WritePropertyName("aksResourceID");
-                writer.WriteStringValue(AksResourceId);
+                writer.WritePropertyName("httpSettings");
+                writer.WriteObjectValue(HttpSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static KubeEnvironmentPatch DeserializeKubeEnvironmentPatch(JsonElement element)
+        internal static SiteAuthSettingsV2 DeserializeSiteAuthSettingsV2(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIp = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<string> aksResourceID = default;
+            Optional<AuthPlatform> platform = default;
+            Optional<GlobalValidation> globalValidation = default;
+            Optional<IdentityProviders> identityProviders = default;
+            Optional<LoginInformation> login = default;
+            Optional<HttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -103,71 +100,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("platform"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToKubeEnvironmentProvisioningState();
+                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("deploymentErrors"))
-                        {
-                            deploymentErrors = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("internalLoadBalancerEnabled"))
+                        if (property0.NameEquals("globalValidation"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            internalLoadBalancerEnabled = property0.Value.GetBoolean();
+                            globalValidation = GlobalValidation.DeserializeGlobalValidation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultDomain"))
-                        {
-                            defaultDomain = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("staticIp"))
-                        {
-                            staticIp = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("arcConfiguration"))
+                        if (property0.NameEquals("identityProviders"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
+                            identityProviders = IdentityProviders.DeserializeIdentityProviders(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("appLogsConfiguration"))
+                        if (property0.NameEquals("login"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
+                            login = LoginInformation.DeserializeLoginInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("aksResourceID"))
+                        if (property0.NameEquals("httpSettings"))
                         {
-                            aksResourceID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            httpSettings = HttpSettings.DeserializeHttpSettings(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KubeEnvironmentPatch(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new SiteAuthSettingsV2(id, name, type, systemData, kind.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value);
         }
     }
 }
