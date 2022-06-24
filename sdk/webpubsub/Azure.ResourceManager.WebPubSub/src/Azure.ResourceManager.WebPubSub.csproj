@@ -8,7 +8,4 @@
     </Description>
     <PackageTags>azure;management;webpubsub</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Update="Azure.ResourceManager" />
-  </ItemGroup>
 </Project>
