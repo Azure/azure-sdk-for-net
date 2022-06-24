@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultSku : IUtf8JsonSerializable
+    public partial class VaultSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultSku DeserializeKeyVaultSku(JsonElement element)
+        internal static VaultSku DeserializeVaultSku(JsonElement element)
         {
-            KeyVaultSkuFamily family = default;
-            KeyVaultSkuName name = default;
+            VaultSkuFamily family = default;
+            VaultSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"))
                 {
-                    family = new KeyVaultSkuFamily(property.Value.GetString());
+                    family = new VaultSkuFamily(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString().ToKeyVaultSkuName();
+                    name = property.Value.GetString().ToVaultSkuName();
                     continue;
                 }
             }
-            return new KeyVaultSku(family, name);
+            return new VaultSku(family, name);
         }
     }
 }

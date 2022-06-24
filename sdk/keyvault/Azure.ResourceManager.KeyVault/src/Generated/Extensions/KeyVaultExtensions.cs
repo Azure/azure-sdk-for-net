@@ -379,20 +379,20 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
-        #region KeyVaultPrivateEndpointConnectionResource
+        #region VaultPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VaultPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VaultPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VaultPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource" /> object. </returns>
-        public static KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VaultPrivateEndpointConnectionResource" /> object. </returns>
+        public static VaultPrivateEndpointConnectionResource GetVaultPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                KeyVaultPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new KeyVaultPrivateEndpointConnectionResource(client, id);
+                VaultPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new VaultPrivateEndpointConnectionResource(client, id);
             }
             );
         }

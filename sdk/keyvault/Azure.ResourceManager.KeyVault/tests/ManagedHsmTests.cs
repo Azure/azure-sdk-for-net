@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkRuleSet,
-                PublicNetworkAccess.Disabled,
+                ManagedHsmPublicNetworkAccess.Disabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.True(count == 1);
 
             // Update
-            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Enabled;
+            ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Enabled;
             ManagedHsmProperties.NetworkRuleSet.DefaultAction = "Allow";
             parameters = new ManagedHsmData(Location)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 true,
                 new List<string> { ObjectId },
                 ManagedHsmProperties.NetworkRuleSet,
-                PublicNetworkAccess.Enabled,
+                ManagedHsmPublicNetworkAccess.Enabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnableSoftDelete,
             List<string> expectedInitialAdminObjectIds,
             ManagedHsmNetworkRuleSet expectedNetworkAcls,
-            PublicNetworkAccess expectedPublicNetworkAccess,
+            ManagedHsmPublicNetworkAccess expectedPublicNetworkAccess,
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
         {

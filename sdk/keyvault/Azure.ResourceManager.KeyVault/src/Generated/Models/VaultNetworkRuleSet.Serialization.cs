@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static VaultNetworkRuleSet DeserializeVaultNetworkRuleSet(JsonElement element)
         {
-            Optional<NetworkRuleBypassOption> bypass = default;
+            Optional<VaultNetworkRuleBypassOption> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
             Optional<IList<VaultIPRule>> ipRules = default;
-            Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IList<VaultVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bypass = new NetworkRuleBypassOption(property.Value.GetString());
+                    bypass = new VaultNetworkRuleBypassOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultAction"))
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
+                    List<VaultVirtualNetworkRule> array = new List<VaultVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
+                        array.Add(VaultVirtualNetworkRule.DeserializeVaultVirtualNetworkRule(item));
                     }
                     virtualNetworkRules = array;
                     continue;
