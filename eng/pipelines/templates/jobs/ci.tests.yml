@@ -64,6 +64,9 @@ jobs:
         parameters:
           NuGetCacheKey: Test
       - script: >-
+          dotnet tool install --global dotnet-dump
+        displayName: "Install dotnet-dump"
+      - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           --blame-crash --blame-crash-dump-type full
