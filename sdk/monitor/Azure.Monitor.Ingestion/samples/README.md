@@ -10,7 +10,7 @@ description: Samples for the Azure Monitor Ingestion client library.
 ---
 
 # Azure.Monitor.Ingestion Samples
-* [LogData](./Sample1_LogData.md)
-* [LogData (Async)](./Sample1_LogDataAsync.md)
-* [VerifyLogs](./Sample2_VerifyLogs.md)
-* [VerifyLogs (Async)](./Sample2_VerifyLogsAsync.md)
+* [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample1_LogData.md)
+* [LogData (Async)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample1_LogDataAsync.md)
+* [VerifyLogs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample2_VerifyLogs.md)
+* [VerifyLogs (Async)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample2_VerifyLogsAsync.md)
