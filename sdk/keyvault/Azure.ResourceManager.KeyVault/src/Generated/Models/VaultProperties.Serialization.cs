@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static VaultProperties DeserializeVaultProperties(JsonElement element)
         {
             Guid tenantId = default;
-            KeyVaultSku sku = default;
+            VaultSku sku = default;
             Optional<IList<VaultAccessPolicy>> accessPolicies = default;
             Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = VaultSku.DeserializeVaultSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"))

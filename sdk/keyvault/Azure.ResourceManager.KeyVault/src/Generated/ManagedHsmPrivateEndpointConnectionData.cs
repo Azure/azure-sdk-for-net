@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Approval state of the private link connection. </summary>
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
-        public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> SKU details. </summary>
         public ManagedHsmSku Sku { get; set; }
     }

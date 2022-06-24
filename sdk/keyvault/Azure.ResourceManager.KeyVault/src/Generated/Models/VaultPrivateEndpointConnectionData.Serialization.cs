@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class VaultPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,16 +37,11 @@ namespace Azure.ResourceManager.KeyVault
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultPrivateEndpointConnectionData DeserializeKeyVaultPrivateEndpointConnectionData(JsonElement element)
+        internal static VaultPrivateEndpointConnectionData DeserializeVaultPrivateEndpointConnectionData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<AzureLocation> location = default;
@@ -56,8 +51,8 @@ namespace Azure.ResourceManager.KeyVault
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<VaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<VaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -146,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = KeyVaultPrivateLinkServiceConnectionState.DeserializeKeyVaultPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = VaultPrivateLinkServiceConnectionState.DeserializeVaultPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -156,14 +151,14 @@ namespace Azure.ResourceManager.KeyVault
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new VaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new VaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }
