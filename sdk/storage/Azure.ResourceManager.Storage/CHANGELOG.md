@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.10 (2022-06-24)
 
 ### Breaking Changes
 
@@ -10,10 +8,6 @@
 - Base type of `FileShareData` changed to `Azure.ResourceManager.Models.ResourceData`.
 - Base type of `ImmutabilityPolicyData` changed to `Azure.ResourceManager.Models.ResourceData`.
 - Type `AzureEntityResource` was removed.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.9 (2022-05-13)
 
