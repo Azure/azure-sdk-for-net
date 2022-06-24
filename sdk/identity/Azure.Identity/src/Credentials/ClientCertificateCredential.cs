@@ -159,7 +159,8 @@ namespace Azure.Identity
                          clientId,
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
-                         options);
+                         options,
+                         certCredOptions?.RegionalAuthority);
         }
 
         /// <summary>

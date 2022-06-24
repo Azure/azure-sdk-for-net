@@ -196,7 +196,7 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var _transport = Createx5cValidatingTransport(sendCertChain);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
@@ -216,6 +216,24 @@ namespace Azure.Identity.Tests
             var token = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthority()
+        {
+            RegionalAuthority?[] authorities = { null, RegionalAuthority.AutoDiscoverRegion, RegionalAuthority.USWest };
+
+            foreach (RegionalAuthority? regionalAuthority in authorities)
+            {
+                var expectedTenantId = Guid.NewGuid().ToString();
+                var expectedClientId = Guid.NewGuid().ToString();
+                var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+
+                var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem,
+                    new ClientCertificateCredentialOptions() { RegionalAuthority = regionalAuthority });
+
+                Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+            }
         }
     }
 }
