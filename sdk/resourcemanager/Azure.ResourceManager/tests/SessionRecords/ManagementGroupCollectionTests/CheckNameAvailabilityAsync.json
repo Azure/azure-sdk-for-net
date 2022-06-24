@@ -8,12 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "79",
         "Content-Type": "application/json",
-        "traceparent": "00-3e9816167993082cb4a44aeda0791a0c-eafb27cbbd1b6dc7-00",
-        "User-Agent": [
-          "azsdk-net-ResourceManager/1.0.0-alpha.20220111.1",
-          "(.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "c447a64eabd9b776fbb1c98687232b59",
+        "traceparent": "00-117018e1a76b439be77fbd64cc224373-cfb5b77e970d0b06-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "47cc64f4ba6b2d39a937acf718e7ffcb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,21 +20,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "1d84853e-0312-45c5-a05a-440d404ebfb2",
+        "client-request-id": "3c05f6b6-2660-465d-ba79-0ca1954d9685",
         "Content-Length": "22",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 11 Jan 2022 13:06:57 GMT",
+        "Date": "Tue, 21 Jun 2022 12:44:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "1d84853e-0312-45c5-a05a-440d404ebfb2",
+        "request-id": "3c05f6b6-2660-465d-ba79-0ca1954d9685",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ba-restapi": "1.0.3.2425",
+        "x-ba-restapi": "0.0.0.0",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1d84853e-0312-45c5-a05a-440d404ebfb2",
+        "x-ms-correlation-request-id": "3c05f6b6-2660-465d-ba79-0ca1954d9685",
         "x-ms-ratelimit-remaining-tenant-writes": "1199",
-        "x-ms-request-id": "southeastasia:1d84853e-0312-45c5-a05a-440d404ebfb2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220111T130657Z:1d84853e-0312-45c5-a05a-440d404ebfb2"
+        "x-ms-request-id": "southeastasia:3c05f6b6-2660-465d-ba79-0ca1954d9685",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T124459Z:3c05f6b6-2660-465d-ba79-0ca1954d9685"
       },
       "ResponseBody": {
         "nameAvailable": true
@@ -45,7 +42,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1569033708",
+    "RandomSeed": "887393487",
     "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

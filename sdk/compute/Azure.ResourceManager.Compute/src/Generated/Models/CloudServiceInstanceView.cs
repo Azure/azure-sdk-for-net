@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Instance view statuses. </summary>
         internal InstanceViewStatusesSummary RoleInstance { get; }
-        /// <summary> Gets the role instance statuses summary. </summary>
+        /// <summary> The summary. </summary>
         public IReadOnlyList<StatusCodeCount> RoleInstanceStatusesSummary
         {
             get => RoleInstance?.StatusesSummary;

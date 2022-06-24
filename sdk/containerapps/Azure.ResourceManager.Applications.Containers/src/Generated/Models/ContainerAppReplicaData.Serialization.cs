@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Applications.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<IList<ReplicaContainer>> containers = default;
             foreach (var property in element.EnumerateObject())
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.Applications.Containers
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Applications.Containers
                     continue;
                 }
             }
-            return new ContainerAppReplicaData(id, name, type, systemData, Optional.ToNullable(createdTime), Optional.ToList(containers));
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToList(containers));
         }
     }
 }

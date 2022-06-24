@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal MongoDBCollectionPropertiesResource(string id, IDictionary<string, string> shardKey, IList<MongoIndex> indexes, int? analyticalStorageTtl, string rid, float? ts, string etag) : base(id, shardKey, indexes, analyticalStorageTtl)
+        internal MongoDBCollectionPropertiesResource(string id, IDictionary<string, string> shardKey, IList<MongoIndex> indexes, int? analyticalStorageTtl, string rid, float? ts, ETag? etag) : base(id, shardKey, indexes, analyticalStorageTtl)
         {
             Rid = rid;
             Ts = ts;
@@ -44,6 +45,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

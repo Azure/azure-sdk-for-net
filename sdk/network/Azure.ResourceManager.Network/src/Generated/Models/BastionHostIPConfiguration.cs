@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> Reference of the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType)
+        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Reference of the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SlotType))
+            {
+                writer.WritePropertyName("slotType");
+                writer.WriteStringValue(SlotType.Value.ToString());
+            }
             if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService");
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
             Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,6 +62,16 @@ namespace Azure.ResourceManager.Compute.Models
                     loadBalancerConfigurations = array;
                     continue;
                 }
+                if (property.NameEquals("slotType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    slotType = new CloudServiceSlotType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("swappableCloudService"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -67,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
         }
     }
 }

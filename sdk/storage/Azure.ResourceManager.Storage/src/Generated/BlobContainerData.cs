@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the BlobContainer data model. </summary>
-    public partial class BlobContainerData : AzureEntityResource
+    public partial class BlobContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of BlobContainerData. </summary>
         public BlobContainerData()
@@ -27,7 +28,6 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource Etag. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
         /// <param name="deleted"> Indicates whether the blob container was deleted. </param>
         /// <param name="deletedOn"> Blob container deletion time. </param>
@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Resource Etag. </param>
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Version = version;
             Deleted = deleted;
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Storage
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             EnableNfsV3RootSquash = enableNfsV3RootSquash;
             EnableNfsV3AllSquash = enableNfsV3AllSquash;
+            Etag = etag;
         }
 
         /// <summary> The version of the deleted blob container. </summary>
@@ -108,5 +110,7 @@ namespace Azure.ResourceManager.Storage
         public bool? EnableNfsV3RootSquash { get; set; }
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
         public bool? EnableNfsV3AllSquash { get; set; }
+        /// <summary> Resource Etag. </summary>
+        public ETag? Etag { get; }
     }
 }

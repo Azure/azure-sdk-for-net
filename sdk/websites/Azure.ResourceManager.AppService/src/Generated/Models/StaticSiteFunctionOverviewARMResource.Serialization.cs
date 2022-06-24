@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> functionName = default;
-            Optional<TriggerTypes> triggerType = default;
+            Optional<TriggerType> triggerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -84,14 +89,14 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            triggerType = new TriggerTypes(property0.Value.GetString());
+                            triggerType = new TriggerType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData, kind.Value, functionName.Value, Optional.ToNullable(triggerType));
+            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData.Value, functionName.Value, Optional.ToNullable(triggerType), kind.Value);
         }
     }
 }

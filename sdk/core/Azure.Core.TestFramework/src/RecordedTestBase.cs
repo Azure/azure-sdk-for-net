@@ -200,8 +200,11 @@ namespace Azure.Core.TestFramework
                 clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
                 clientOptions.Retry.Mode = RetryMode.Fixed;
             }
-
-            clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+            // No need to set the transport if we are in Live mode
+            if (Mode != RecordedTestMode.Live)
+            {
+                clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+            }
 
             return clientOptions;
         }

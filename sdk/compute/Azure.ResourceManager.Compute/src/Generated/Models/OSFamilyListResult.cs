@@ -12,11 +12,11 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The OSFamilyListResult. </summary>
+    /// <summary> The list operation result. </summary>
     internal partial class OSFamilyListResult
     {
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSFamilyListResult(IEnumerable<CloudServiceOSFamilyData> value)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> The list of resources. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
         internal OSFamilyListResult(IReadOnlyList<CloudServiceOSFamilyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> The list of resources. </summary>
         public IReadOnlyList<CloudServiceOSFamilyData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </summary>
         public string NextLink { get; }
     }
 }

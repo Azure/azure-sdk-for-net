@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.EventHubs
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of EventHubClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventHubClusterResources and their operations over a EventHubClusterResource. </returns>
-        public virtual EventHubClusterCollection GetEventHubClusters()
+        /// <summary> Gets a collection of EventHubsClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventHubsClusterResources and their operations over a EventHubsClusterResource. </returns>
+        public virtual EventHubsClusterCollection GetEventHubsClusters()
         {
-            return GetCachedClient(Client => new EventHubClusterCollection(Client, Id));
+            return GetCachedClient(Client => new EventHubsClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of EventHubNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EventHubNamespaceResources and their operations over a EventHubNamespaceResource. </returns>
-        public virtual EventHubNamespaceCollection GetEventHubNamespaces()
+        /// <summary> Gets a collection of EventHubsNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventHubsNamespaceResources and their operations over a EventHubsNamespaceResource. </returns>
+        public virtual EventHubsNamespaceCollection GetEventHubsNamespaces()
         {
-            return GetCachedClient(Client => new EventHubNamespaceCollection(Client, Id));
+            return GetCachedClient(Client => new EventHubsNamespaceCollection(Client, Id));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
-    public partial class StaticSiteCustomDomainRequestPropertiesARMResource : ProxyOnlyResource
+    public partial class StaticSiteCustomDomainRequestPropertiesARMResource : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteCustomDomainRequestPropertiesARMResource. </summary>
         public StaticSiteCustomDomainRequestPropertiesARMResource()
@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="validationMethod"> Validation method for adding a custom domain. </param>
-        internal StaticSiteCustomDomainRequestPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string validationMethod) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteCustomDomainRequestPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string validationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             ValidationMethod = validationMethod;
+            Kind = kind;
         }
 
         /// <summary> Validation method for adding a custom domain. </summary>
         public string ValidationMethod { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

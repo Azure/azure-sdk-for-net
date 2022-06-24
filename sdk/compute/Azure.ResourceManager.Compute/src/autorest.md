@@ -10,11 +10,25 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d6cb29af754f48a08f94cb6113bb1f01a4e0eb9/specification/compute/resource-manager/readme.md
-tag: package-2022-03-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/e50265479cae5da79144cce18a80751214a4ceca/specification/compute/resource-manager/readme.md
+tag: package-2022-04-04
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: ./Generated
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- IntervalInMins
+- ExpandTypeForGetCapacityReservationGroups
 
 rename-rules:
   CPU: Cpu
@@ -86,22 +100,14 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.paths..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location';
-  - from: swagger-document
-    where: $..parameters[?(@.name === 'location')]
-    transform: $['x-ms-format'] = 'azure-location'
   - from: skus.json
     where: $.definitions
     transform: >
       $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
-      $.ResourceSku.properties.locations.items["x-ms-format"] = "azure-location";
       $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
       $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
-      $.ResourceSkuLocationInfo.properties.location["x-ms-format"] = "azure-location";
       $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
-      $.ResourceSkuRestrictionInfo.properties.locations.items["x-ms-format"] = "azure-location";
+# copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
     where: $.definitions
     transform: >
@@ -109,6 +115,60 @@ directive:
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.ExtendedLocationType["x-ms-enum"].name = "ExtendedLocationType";
+      $.SystemData = {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+            "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+            },
+            "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+            },
+            "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+            },
+            "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+            }
+          }
+        };
   - from: virtualMachine.json
     where: $.definitions
     transform: >
@@ -117,12 +177,13 @@ directive:
       $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
+      $.VirtualMachineInstanceView.properties.hyperVGeneration["x-ms-enum"].name = "HyperVGeneration";
   - from: virtualMachineImage.json
     where: $.definitions
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
       $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
-      $.VirtualMachineImageResource.properties.location["x-ms-format"] = "azure-location";
+      $.OSDiskImage.properties.operatingSystem["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: virtualMachineScaleSet.json
     where: $.definitions
     transform: >
@@ -131,17 +192,15 @@ directive:
       $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
+      $.VirtualMachineScaleSetOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: restorePoint.json
     where: $.definitions
     transform: >
       $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
-      $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
-      $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
   - from: restorePoint.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}"].get.parameters
     transform: >
@@ -157,6 +216,8 @@ directive:
       $.SshPublicKey["x-ms-client-name"] = "SshPublicKeyInfo";
       $.UpdateResource["x-ms-client-name"] = "ComputeUpdateResourceData";
       $.SubResourceWithColocationStatus["x-ms-client-name"] = "ComputeSubResourceDataWithColocationStatus";
+      $.OSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGeneration";
   - from: sshPublicKey.json
     where: $.definitions
     transform: >
@@ -179,6 +240,8 @@ directive:
       $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.DiskUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskAccess.json
     where: $.definitions
     transform: >
@@ -190,11 +253,14 @@ directive:
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
+      $.DiskRestorePointProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: snapshot.json
     where: $.definitions
     transform: >
       $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.SnapshotProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.SnapshotUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskRPCommon.json
     where: $.definitions
     transform: >
@@ -211,21 +277,15 @@ directive:
     transform: >
       $.CloudService.properties.properties["x-ms-client-flatten"] = true;
       $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
-      $.OSFamily.properties.location["x-ms-format"] = "azure-location";
       $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
       $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
       $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
-      $.OSVersion.properties.location["x-ms-format"] = "azure-location";
       $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-      $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
-      $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
@@ -240,6 +300,12 @@ directive:
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
       $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceData";
+      $.GalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.GalleryApplicationProperties.properties.supportedOSType["x-ms-enum"].name = "SupportedOperatingSystemType";
+      $.TargetRegion.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
+      $.SharingProfile.properties.permissions["x-ms-client-name"] = "permission";
   - from: gallery.json
     where: $.parameters
     transform: >
@@ -248,15 +314,15 @@ directive:
     where: $.definitions
     transform: >
       $.PirResource["x-ms-client-name"] = "PirResourceData";
-      $.PirResource.properties.location["x-ms-format"] = "azure-location";
       $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
+      $.SharedGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: communityGallery.json
     where: $.definitions
     transform: >
       $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
       $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
-      $.PirCommunityGalleryResource.properties.location["x-ms-format"] = "azure-location";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
+      $.CommunityGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties
     transform: >
@@ -265,4 +331,21 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
+  - from: image.json
+    where: $.definitions
+    transform: >
+      $.ImageOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+  - from: runCommand.json
+    where: $.definitions
+    transform: >
+      $.RunCommandDocumentBase.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
+  - from: capacityReservation.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
+  - from: virtualMachineScaleSet.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "VirtualMachineScaleSetGetExpand";
 ```
