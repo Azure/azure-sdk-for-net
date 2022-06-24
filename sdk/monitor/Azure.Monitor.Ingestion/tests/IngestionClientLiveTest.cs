@@ -28,6 +28,7 @@ namespace Azure.Monitor.Ingestion.Tests
             return new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.ClientSecretCredential);
         }
 
+        [LiveOnly]
         [Test]
         public async Task ValidInputFromObjectAsJson()
         {
