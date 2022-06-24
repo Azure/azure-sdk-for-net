@@ -12,6 +12,15 @@ require: https://github.com/Azure/azure-rest-api-specs/tree/cc8796418bed73e7e375
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
  
 
 rename-rules:
