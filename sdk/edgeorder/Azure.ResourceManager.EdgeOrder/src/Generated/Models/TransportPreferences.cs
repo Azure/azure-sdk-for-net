@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         /// <summary> Initializes a new instance of TransportPreferences. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
-        public TransportPreferences(TransportShipmentTypes preferredShipmentType)
+        public TransportPreferences(TransportShipmentType preferredShipmentType)
         {
             PreferredShipmentType = preferredShipmentType;
         }
 
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
-        public TransportShipmentTypes PreferredShipmentType { get; set; }
+        public TransportShipmentType PreferredShipmentType { get; set; }
     }
 }

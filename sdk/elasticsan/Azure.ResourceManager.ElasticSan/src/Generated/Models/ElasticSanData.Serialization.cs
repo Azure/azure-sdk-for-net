@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<SystemData> systemData = default;
             Optional<ElasticSanSku> sku = default;
             Optional<IList<string>> availabilityZones = default;
-            Optional<ProvisioningStates> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             Optional<long> baseSizeTiB = default;
             Optional<long> extendedCapacitySizeTiB = default;
             Optional<long> totalVolumeSizeGiB = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningStates(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("baseSizeTiB"))

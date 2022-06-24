@@ -246,6 +246,8 @@ directive:
     where: $.definitions
     transform: >
         $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
+        $.SubnetPropertiesFormat.properties.privateEndpointNetworkPolicies['x-ms-client-name'] = 'privateEndpointNetworkPolicy';
+        $.SubnetPropertiesFormat.properties.privateLinkServiceNetworkPolicies['x-ms-client-name'] = 'privateLinkServiceNetworkPolicy';
   - from: endpointService.json
     where: $.definitions
     transform: >

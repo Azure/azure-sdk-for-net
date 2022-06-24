@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.AppConfiguration.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class AppConfigurationClientBase : ManagementRecordedTestBase<AppConfigurationManagementTestEnvironment>
     {
         public ArmClient ArmClient { get; set; }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
             Optional<IList<Acl>> staticAcls = default;
             Optional<IList<IscsiLun>> luns = default;
             string targetIqn = default;
-            ProvisioningStates provisioningState = default;
+            ProvisioningState provisioningState = default;
             OperationalStatus status = default;
             Optional<IList<string>> endpoints = default;
             Optional<int> port = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = new ProvisioningStates(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))

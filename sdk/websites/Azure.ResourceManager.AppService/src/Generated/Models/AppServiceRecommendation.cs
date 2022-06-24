@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? creationOn, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? creationOn, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
         {
             CreationOn = creationOn;
             RecommendationId = recommendationId;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Level indicating how critical this recommendation can impact. </summary>
         public NotificationLevel? Level { get; set; }
         /// <summary> List of channels that this recommendation can apply. </summary>
-        public Channels? Channels { get; set; }
+        public Channel? Channels { get; set; }
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
         public IReadOnlyList<string> CategoryTags { get; }
         /// <summary> Name of action recommended by this object. </summary>
