@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="/Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
