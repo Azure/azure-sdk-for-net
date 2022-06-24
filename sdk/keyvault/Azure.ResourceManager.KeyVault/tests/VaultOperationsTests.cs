@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             //Update
             AccessPolicy.Permissions.Secrets.Clear();
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Get);
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Set);
-            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermission>).Reset();
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Get);
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Set);
+            (AccessPolicy.Permissions.Keys as ChangeTrackingList<IdentityAccessKeyPermission>).Reset();
 
             AccessPolicy.Permissions.Storage.Clear();
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.RegenerateKey);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.Get);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.RegenerateKey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);

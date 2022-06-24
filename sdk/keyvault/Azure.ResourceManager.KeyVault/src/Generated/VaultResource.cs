@@ -342,10 +342,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: PrivateLinkResources_ListByVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VaultPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VaultPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VaultPrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("VaultResource.GetPrivateLinkResources");
                 scope.Start();
@@ -369,10 +369,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: PrivateLinkResources_ListByVault
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VaultPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VaultPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
+            Page<VaultPrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("VaultResource.GetPrivateLinkResources");
                 scope.Start();

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class PrivateEndpointConnectionItemData
+    public partial class VaultPrivateEndpointConnectionItemData
     {
-        internal static PrivateEndpointConnectionItemData DeserializePrivateEndpointConnectionItemData(JsonElement element)
+        internal static VaultPrivateEndpointConnectionItemData DeserializeVaultPrivateEndpointConnectionItemData(JsonElement element)
         {
             Optional<string> id = default;
             Optional<ETag> etag = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new VaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

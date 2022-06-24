@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class VirtualNetworkRule : IUtf8JsonSerializable
+    public partial class VaultVirtualNetworkRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
+        internal static VaultVirtualNetworkRule DeserializeVaultVirtualNetworkRule(JsonElement element)
         {
             string id = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new VaultVirtualNetworkRule(id, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

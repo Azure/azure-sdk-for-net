@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             string objectId = "Your Object Id";
             IdentityAccessPermissions permissions = new IdentityAccessPermissions
             {
-                Keys = { new KeyPermission("all") },
-                Secrets = { new SecretPermission("all") },
-                Certificates = { new CertificatePermission("all") },
-                Storage = { new StoragePermission("all") },
+                Keys = { new IdentityAccessKeyPermission("all") },
+                Secrets = { new IdentityAccessSecretPermission("all") },
+                Certificates = { new IdentityAccessCertificatePermission("all") },
+                Storage = { new IdentityAccessStoragePermission("all") },
             };
             VaultAccessPolicy AccessPolicy = new VaultAccessPolicy(tenantIdGuid, objectId, permissions);
 

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class PrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class VaultPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
+        internal static VaultPrivateLinkResourceData DeserializeVaultPrivateLinkResourceData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new VaultPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

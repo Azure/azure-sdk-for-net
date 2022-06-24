@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<VaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, VaultNetworkRuleSet networkRuleSet, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
+        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<VaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, VaultNetworkRuleSet networkRuleSet, VaultProvisioningState? provisioningState, IReadOnlyList<VaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Provisioning state of the vault. </summary>
         public VaultProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of private endpoint connections associated with the key vault. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<VaultPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         public string PublicNetworkAccess { get; set; }
     }

@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource> GetKeyVaultPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource>> GetKeyVaultPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionCollection GetKeyVaultPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.PrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.PrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.KeyVault.Models.VaultPrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.KeyVault.Models.VaultPrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.VaultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.VaultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -271,73 +271,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         Add = 0,
         Replace = 1,
         Remove = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionsRequired : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ActionsRequired>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionsRequired(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.ActionsRequired None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.ActionsRequired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ActionsRequired left, Azure.ResourceManager.KeyVault.Models.ActionsRequired right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.ActionsRequired (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ActionsRequired left, Azure.ResourceManager.KeyVault.Models.ActionsRequired right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionsRequiredMessage(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CertificatePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.CertificatePermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CertificatePermission(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Create { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission DeleteIssuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission GetIssuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Import { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission ListIssuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission ManageContacts { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission ManageIssuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission SetIssuers { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.CertificatePermission Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.CertificatePermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.CertificatePermission left, Azure.ResourceManager.KeyVault.Models.CertificatePermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.CertificatePermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.CertificatePermission left, Azure.ResourceManager.KeyVault.Models.CertificatePermission right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DeletedManagedHsmProperties
     {
@@ -359,45 +292,134 @@ namespace Azure.ResourceManager.KeyVault.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } }
     }
-    public partial class IdentityAccessPermissions
-    {
-        public IdentityAccessPermissions() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.CertificatePermission> Certificates { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.KeyPermission> Keys { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.SecretPermission> Secrets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.StoragePermission> Storage { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.KeyPermission>
+    public readonly partial struct IdentityAccessCertificatePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public KeyPermission(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Create { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Decrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Encrypt { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Import { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Sign { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission UnwrapKey { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Update { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission Verify { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.KeyPermission WrapKey { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.KeyPermission other) { throw null; }
+        public IdentityAccessCertificatePermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Create { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission DeleteIssuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission GetIssuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Import { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission ListIssuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission ManageContacts { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission ManageIssuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission SetIssuers { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.KeyPermission left, Azure.ResourceManager.KeyVault.Models.KeyPermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.KeyPermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.KeyPermission left, Azure.ResourceManager.KeyVault.Models.KeyPermission right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityAccessKeyPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityAccessKeyPermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Create { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Decrypt { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Encrypt { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Import { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Sign { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission UnwrapKey { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Update { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission Verify { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission WrapKey { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IdentityAccessPermissions
+    {
+        public IdentityAccessPermissions() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessCertificatePermission> Certificates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessKeyPermission> Keys { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission> Secrets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission> Storage { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityAccessSecretPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityAccessSecretPermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission Set { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessSecretPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityAccessStoragePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityAccessStoragePermission(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission All { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Backup { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Delete { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission DeleteSas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Get { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission GetSas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission List { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission ListSas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Purge { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Recover { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission RegenerateKey { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Restore { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Set { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission SetSas { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission Update { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission left, Azure.ResourceManager.KeyVault.Models.IdentityAccessStoragePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -445,7 +467,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class KeyVaultPrivateLinkServiceConnectionState
     {
         public KeyVaultPrivateLinkServiceConnectionState() { }
-        public Azure.ResourceManager.KeyVault.Models.ActionsRequiredMessage? ActionsRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage? ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
@@ -477,6 +499,23 @@ namespace Azure.ResourceManager.KeyVault.Models
         Standard = 0,
         Premium = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedHsmActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedHsmActionsRequiredMessage(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum ManagedHsmCreateMode
     {
         Default = 0,
@@ -487,10 +526,28 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmIPRule(string addressRange) { }
         public string AddressRange { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedHsmNetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedHsmNetworkRuleBypassOption(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption AzureServices { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ManagedHsmNetworkRuleSet
     {
         public ManagedHsmNetworkRuleSet() { }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption? Bypass { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
@@ -513,7 +570,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class ManagedHsmPrivateLinkServiceConnectionState
     {
         public ManagedHsmPrivateLinkServiceConnectionState() { }
-        public Azure.ResourceManager.KeyVault.Models.ActionsRequired? ActionsRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmActionsRequiredMessage? ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
@@ -528,7 +585,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } }
@@ -556,6 +613,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState left, Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState left, Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedHsmPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedHsmPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ManagedHsmSku
@@ -614,116 +689,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkRuleAction left, Azure.ResourceManager.KeyVault.Models.NetworkRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkRuleBypassOption(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption AzureServices { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PrivateEndpointConnectionItemData
-    {
-        internal PrivateEndpointConnectionItemData() { }
-        public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class PrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public PrivateLinkResourceData() { }
-        public string GroupId { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess left, Azure.ResourceManager.KeyVault.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecretPermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.SecretPermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecretPermission(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.SecretPermission Set { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.SecretPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.SecretPermission left, Azure.ResourceManager.KeyVault.Models.SecretPermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.SecretPermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.SecretPermission left, Azure.ResourceManager.KeyVault.Models.SecretPermission right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StoragePermission : System.IEquatable<Azure.ResourceManager.KeyVault.Models.StoragePermission>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StoragePermission(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission All { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Backup { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Delete { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission DeleteSas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Get { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission GetSas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission List { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission ListSas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Purge { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Recover { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission RegenerateKey { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Restore { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Set { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission SetSas { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.StoragePermission Update { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.StoragePermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.StoragePermission left, Azure.ResourceManager.KeyVault.Models.StoragePermission right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.StoragePermission (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.StoragePermission left, Azure.ResourceManager.KeyVault.Models.StoragePermission right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class VaultAccessPolicy
     {
         public VaultAccessPolicy(System.Guid tenantId, string objectId, Azure.ResourceManager.KeyVault.Models.IdentityAccessPermissions permissions) { }
@@ -742,6 +707,23 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicy> accessPolicies) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VaultAccessPolicy> AccessPolicies { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VaultActionsRequiredMessage : System.IEquatable<Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VaultActionsRequiredMessage(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage left, Azure.ResourceManager.KeyVault.Models.VaultActionsRequiredMessage right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum VaultCreateMode
     {
@@ -773,13 +755,31 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.NameAvailabilityReason? Reason { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VaultNetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VaultNetworkRuleBypassOption(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption AzureServices { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class VaultNetworkRuleSet
     {
         public VaultNetworkRuleSet() { }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption? Bypass { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VaultIPRule> IPRules { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VaultVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
     public partial class VaultPatch
     {
@@ -809,6 +809,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         public int? SoftDeleteRetentionInDays { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
+    public partial class VaultPrivateEndpointConnectionItemData
+    {
+        internal VaultPrivateEndpointConnectionItemData() { }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class VaultPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    {
+        public VaultPrivateLinkResourceData() { }
+        public string GroupId { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class VaultProperties
     {
         public VaultProperties(System.Guid tenantId, Azure.ResourceManager.KeyVault.Models.KeyVaultSku sku) { }
@@ -822,7 +840,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? EnableSoftDelete { get { throw null; } set { } }
         public string HsmPoolResourceId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.PrivateEndpointConnectionItemData> PrivateEndpointConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KeyVault.Models.VaultPrivateEndpointConnectionItemData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultSku Sku { get { throw null; } set { } }
@@ -848,9 +866,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.VaultProvisioningState left, Azure.ResourceManager.KeyVault.Models.VaultProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VirtualNetworkRule
+    public partial class VaultVirtualNetworkRule
     {
-        public VirtualNetworkRule(string id) { }
+        public VaultVirtualNetworkRule(string id) { }
         public string Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
     }
