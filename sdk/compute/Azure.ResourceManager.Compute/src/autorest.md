@@ -30,6 +30,13 @@ keep-plural-enums:
 - IntervalInMins
 - ExpandTypeForGetCapacityReservationGroups
 
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -306,6 +313,7 @@ directive:
       $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
       $.SharingProfile.properties.permissions["x-ms-client-name"] = "permission";
+      $.UserArtifactManage["x-ms-client-name"] = "UserArtifactManagement";
   - from: gallery.json
     where: $.parameters
     transform: >
@@ -348,4 +356,8 @@ directive:
     where: $.paths
     transform: >
       $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "VirtualMachineScaleSetGetExpand";
+  - from: cloudService.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
 ```
