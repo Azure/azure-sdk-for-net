@@ -1,9 +1,10 @@
 namespace Azure.ResourceManager.Relay
 {
-    public partial class AuthorizationRuleData : Azure.ResourceManager.Relay.Models.ProxyResource
+    public partial class AuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public AuthorizationRuleData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.AccessRights> Rights { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.AccessRight> Rights { get { throw null; } }
     }
     public partial class HybridConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>, System.Collections.IEnumerable
     {
@@ -20,11 +21,12 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.HybridConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.HybridConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HybridConnectionData : Azure.ResourceManager.Relay.Models.ProxyResource
+    public partial class HybridConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public HybridConnectionData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? ListenerCount { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? RequiresClientAuthorization { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
@@ -261,10 +263,11 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RelayPrivateEndpointConnectionData : Azure.ResourceManager.Relay.Models.ProxyResource
+    public partial class RelayPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public RelayPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Relay.Models.ConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.EndPointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -327,12 +330,13 @@ namespace Azure.ResourceManager.Relay
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.WcfRelayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.WcfRelayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WcfRelayData : Azure.ResourceManager.Relay.Models.ProxyResource
+    public partial class WcfRelayData : Azure.ResourceManager.Models.ResourceData
     {
         public WcfRelayData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? IsDynamic { get { throw null; } }
         public int? ListenerCount { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.Relaytype? RelayType { get { throw null; } set { } }
         public bool? RequiresClientAuthorization { get { throw null; } set { } }
         public bool? RequiresTransportSecurity { get { throw null; } set { } }
@@ -369,22 +373,22 @@ namespace Azure.ResourceManager.Relay.Models
         public string SecondaryKey { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccessRights : System.IEquatable<Azure.ResourceManager.Relay.Models.AccessRights>
+    public readonly partial struct AccessRight : System.IEquatable<Azure.ResourceManager.Relay.Models.AccessRight>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AccessRights(string value) { throw null; }
-        public static Azure.ResourceManager.Relay.Models.AccessRights Listen { get { throw null; } }
-        public static Azure.ResourceManager.Relay.Models.AccessRights Manage { get { throw null; } }
-        public static Azure.ResourceManager.Relay.Models.AccessRights Send { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Relay.Models.AccessRights other) { throw null; }
+        public AccessRight(string value) { throw null; }
+        public static Azure.ResourceManager.Relay.Models.AccessRight Listen { get { throw null; } }
+        public static Azure.ResourceManager.Relay.Models.AccessRight Manage { get { throw null; } }
+        public static Azure.ResourceManager.Relay.Models.AccessRight Send { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Relay.Models.AccessRight other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Relay.Models.AccessRights left, Azure.ResourceManager.Relay.Models.AccessRights right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Relay.Models.AccessRights (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Relay.Models.AccessRights left, Azure.ResourceManager.Relay.Models.AccessRights right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Relay.Models.AccessRight left, Azure.ResourceManager.Relay.Models.AccessRight right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relay.Models.AccessRight (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Relay.Models.AccessRight left, Azure.ResourceManager.Relay.Models.AccessRight right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CheckNameAvailability
@@ -506,11 +510,6 @@ namespace Azure.ResourceManager.Relay.Models
         public static bool operator !=(Azure.ResourceManager.Relay.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.Relay.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
-    {
-        public ProxyResource() { }
-        public string Location { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Relay.Models.PublicNetworkAccess>
     {
@@ -536,7 +535,7 @@ namespace Azure.ResourceManager.Relay.Models
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.Relay.Models.KeyType KeyType { get { throw null; } }
     }
-    public partial class RelayNamespacePatch : Azure.ResourceManager.Relay.Models.ResourceNamespacePatch
+    public partial class RelayNamespacePatch : Azure.ResourceManager.Models.ResourceData
     {
         public RelayNamespacePatch() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -547,6 +546,7 @@ namespace Azure.ResourceManager.Relay.Models
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelaySku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class RelaySku
@@ -593,11 +593,6 @@ namespace Azure.ResourceManager.Relay.Models
     {
         NetTcp = 0,
         Http = 1,
-    }
-    public partial class ResourceNamespacePatch : Azure.ResourceManager.Models.ResourceData
-    {
-        public ResourceNamespacePatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UnavailableReason : System.IEquatable<Azure.ResourceManager.Relay.Models.UnavailableReason>
