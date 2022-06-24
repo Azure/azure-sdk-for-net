@@ -33,21 +33,22 @@ namespace Azure.Template
         }
 
         /// <summary> Initializes a new instance of ProductsClient. </summary>
+        /// <param name="endpoint"> Endpoint - server parameter. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public ProductsClient(TokenCredential credential) : this(credential, new Uri(""), new ProductsClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ProductsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ProductsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ProductsClient. </summary>
+        /// <param name="endpoint"> Endpoint - server parameter. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ProductsClient(TokenCredential credential, Uri endpoint, ProductsClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ProductsClient(Uri endpoint, TokenCredential credential, ProductsClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ProductsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

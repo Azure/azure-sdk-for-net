@@ -13,13 +13,13 @@ namespace Azure.Template
     /// <summary> Client options for ProductsClient. </summary>
     public partial class ProductsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V0000_00_00;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_06_20;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "0000-00-00". </summary>
-            V0000_00_00 = 1,
+            /// <summary> Service version "2022-06-20". </summary>
+            V2022_06_20 = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Template
         {
             Version = version switch
             {
-                ServiceVersion.V0000_00_00 => "0000-00-00",
+                ServiceVersion.V2022_06_20 => "2022-06-20",
                 _ => throw new NotSupportedException()
             };
         }
