@@ -35,6 +35,35 @@
   ],
   "tags": [],
   "paths": {
+    "/products": {
+      "put": {
+        "operationId": "Products_create",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/products/{id}": {
       "get": {
         "operationId": "Products_get",

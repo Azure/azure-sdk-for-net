@@ -57,6 +57,88 @@ namespace Azure.Template
             _endpoint = endpoint;
         }
 
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Create");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Create(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Create");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <param name="id"> The Integer to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
@@ -115,6 +197,21 @@ namespace Azure.Template
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/products", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
 
         internal HttpMessage CreateGetProductRequest(int id, RequestContext context)
