@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public VaultNetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<VaultIPRule>();
-            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
+            VirtualNetworkRules = new ChangeTrackingList<VaultVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of VaultNetworkRuleSet. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal VaultNetworkRuleSet(NetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<VaultIPRule> ipRules, IList<VirtualNetworkRule> virtualNetworkRules)
+        internal VaultNetworkRuleSet(VaultNetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<VaultIPRule> ipRules, IList<VaultVirtualNetworkRule> virtualNetworkRules)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
-        public NetworkRuleBypassOption? Bypass { get; set; }
+        public VaultNetworkRuleBypassOption? Bypass { get; set; }
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         public NetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
         public IList<VaultIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>
-        public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
+        public IList<VaultVirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }
