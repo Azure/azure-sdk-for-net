@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Resource location. </param>
         /// <param name="restorePointType"> The type of restore point. </param>
         /// <param name="earliestRestoreOn"> The earliest time to which this database can be restored. </param>
-        /// <param name="restorePointCreationOn"> The time the backup was taken. </param>
+        /// <param name="restorePointCreateOn"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreateOn, string restorePointLabel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;
             EarliestRestoreOn = earliestRestoreOn;
-            RestorePointCreationOn = restorePointCreationOn;
+            RestorePointCreateOn = restorePointCreateOn;
             RestorePointLabel = restorePointLabel;
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The earliest time to which this database can be restored. </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The time the backup was taken. </summary>
-        public DateTimeOffset? RestorePointCreationOn { get; }
+        public DateTimeOffset? RestorePointCreateOn { get; }
         /// <summary> The label of restore point for backup request by user. </summary>
         public string RestorePointLabel { get; }
     }

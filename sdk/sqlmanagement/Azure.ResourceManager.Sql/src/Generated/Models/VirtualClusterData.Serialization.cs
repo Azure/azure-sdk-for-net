@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<string> family = default;
             Optional<IReadOnlyList<string>> childResources = default;
             Optional<string> maintenanceConfigurationId = default;
@@ -116,7 +116,12 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("family"))

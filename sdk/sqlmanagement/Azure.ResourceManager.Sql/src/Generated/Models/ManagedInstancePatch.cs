@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The administrator login password (required for managed instance creation). </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> Subnet resource ID for the managed instance. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> The state of the managed instance. </summary>
         public string State { get; }
         /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         public string SourceManagedInstanceId { get; set; }
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
+        public DateTimeOffset? RestoreOn { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>

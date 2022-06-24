@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("collation");
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestoreOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestoreOn.Value, "O");
             }
             if (Optional.IsDefined(CatalogCollation))
             {

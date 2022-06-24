@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestoreOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestoreOn.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {

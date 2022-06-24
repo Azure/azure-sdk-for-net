@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sourceDatabaseId"> The resource identifier of the source database associated with create operation of this database. </param>
         /// <param name="status"> The status of the database. </param>
         /// <param name="databaseId"> The ID of the database. </param>
-        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="createOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="currentServiceObjectiveName"> The current service level objective name of the database. </param>
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
         /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
-        /// <param name="restorePointInOn"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the database was deleted. </param>
+        /// <param name="restoreOn"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="sourceDatabaseDeleteOn"> Specifies the time that the database was deleted. </param>
         /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// When source subscription belongs to a different tenant than target subscription, “x-ms-authorization-auxiliary” header must contain authentication token for the source tenant. For more details about “x-ms-authorization-auxiliary” header see https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant 
         /// </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? creationOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInOn, DateTimeOffset? sourceDatabaseDeletionOn, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, string sourceResourceId) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, string elasticPoolId, string sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? createOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restoreOn, DateTimeOffset? sourceDatabaseDeleteOn, string recoveryServicesRecoveryPointId, string longTermRetentionBackupResourceId, string recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, string sourceResourceId) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.Sql
             SourceDatabaseId = sourceDatabaseId;
             Status = status;
             DatabaseId = databaseId;
-            CreationOn = creationOn;
+            CreateOn = createOn;
             CurrentServiceObjectiveName = currentServiceObjectiveName;
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
             DefaultSecondaryLocation = defaultSecondaryLocation;
             FailoverGroupId = failoverGroupId;
-            RestorePointInOn = restorePointInOn;
-            SourceDatabaseDeletionOn = sourceDatabaseDeletionOn;
+            RestoreOn = restoreOn;
+            SourceDatabaseDeleteOn = sourceDatabaseDeleteOn;
             RecoveryServicesRecoveryPointId = recoveryServicesRecoveryPointId;
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
             RecoverableDatabaseId = recoverableDatabaseId;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreateOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
+        public DateTimeOffset? RestoreOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
-        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeleteOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
         public string RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>

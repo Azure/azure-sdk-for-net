@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
             Optional<string> syncDatabaseId = default;
             Optional<DateTimeOffset> lastAliveTime = default;
             Optional<SyncAgentState> state = default;
@@ -78,11 +77,6 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("syncDatabaseId"))
                         {
                             syncDatabaseId = property0.Value.GetString();
@@ -137,7 +131,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncAgentData(id, name, type, systemData.Value, name0.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
+            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreateOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
+        public DateTimeOffset? RestoreOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
-        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeleteOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
         public string RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>

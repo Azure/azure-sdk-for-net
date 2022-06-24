@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> If the service has different generations of hardware, for the same SKU, then that can be captured here. </summary>
         public string Family { get; set; }
         /// <summary> List of resources in this virtual cluster. </summary>

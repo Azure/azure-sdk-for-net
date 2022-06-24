@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Status of the database. </summary>
         public ManagedDatabaseStatus? Status { get; }
         /// <summary> Creation date of the database. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreateOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         public DateTimeOffset? EarliestRestorePoint { get; }
         /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
+        public DateTimeOffset? RestoreOn { get; set; }
         /// <summary> Geo paired region. </summary>
         public string DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>

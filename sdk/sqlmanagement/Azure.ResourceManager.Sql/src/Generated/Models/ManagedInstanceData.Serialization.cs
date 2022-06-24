@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestoreOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestoreOn.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> fullyQualifiedDomainName = default;
             Optional<string> administratorLogin = default;
             Optional<string> administratorLoginPassword = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<string> state = default;
             Optional<ManagedInstanceLicenseType> licenseType = default;
             Optional<int> vCores = default;
@@ -317,7 +317,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))

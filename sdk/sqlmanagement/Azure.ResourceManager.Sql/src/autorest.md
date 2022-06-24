@@ -183,4 +183,59 @@ directive:
       where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
       transform: >
           $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+    - from: swagger-document
+      where: $.definitions..restorePointInTime
+      transform: >
+          $['x-ms-client-name'] = 'RestoreOn';
+    - from: swagger-document
+      where: $.definitions..restorePointCreationDate
+      transform: >
+          $['x-ms-client-name'] = 'restorePointCreateOn';
+    - from: swagger-document
+      where: $.definitions..creationDate
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'createOn';
+    - from: swagger-document
+      where: $.definitions..deletionDate
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'deleteOn';
+    - from: swagger-document
+      where: $.definitions..backupExpirationTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'backupExpireOn';
+    - from: swagger-document
+      where: $.definitions..expiryTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'ExpireOn';
+    - from: swagger-document
+      where: $.definitions..databaseDeletionTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'databaseDeleteOn';
+    - from: swagger-document
+      where: $.definitions..sourceDatabaseDeletionDate
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'sourceDatabaseDeleteOn';
+    - from: swagger-document
+      where: $.definitions..estimatedCompletionTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'estimatedCompleteOn';
+    - from: swagger-document
+      where: $.definitions..subnetId
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: SyncAgents.json
+      where: $.definitions.SyncAgentProperties
+      transform: >
+          delete $.properties.name;
+    - from: dataMasking.json
+      where: $.definitions.DataMaskingRuleProperties
+      transform: >
+          delete $.properties.id;
 ```
