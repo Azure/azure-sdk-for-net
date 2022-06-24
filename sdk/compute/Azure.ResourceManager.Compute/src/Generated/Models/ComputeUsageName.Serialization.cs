@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UsageName
+    public partial class ComputeUsageName
     {
-        internal static UsageName DeserializeUsageName(JsonElement element)
+        internal static ComputeUsageName DeserializeComputeUsageName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UsageName(value.Value, localizedValue.Value);
+            return new ComputeUsageName(value.Value, localizedValue.Value);
         }
     }
 }

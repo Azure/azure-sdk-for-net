@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ApiError
+    public partial class ComputeApiError
     {
-        internal static ApiError DeserializeApiError(JsonElement element)
+        internal static ComputeApiError DeserializeComputeApiError(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiErrorBase>> details = default;
+            Optional<IReadOnlyList<ComputeApiErrorBase>> details = default;
             Optional<InnerError> innererror = default;
             Optional<string> code = default;
             Optional<string> target = default;
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiErrorBase> array = new List<ApiErrorBase>();
+                    List<ComputeApiErrorBase> array = new List<ComputeApiErrorBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiErrorBase.DeserializeApiErrorBase(item));
+                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item));
                     }
                     details = array;
                     continue;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ApiError(Optional.ToList(details), innererror.Value, code.Value, target.Value, message.Value);
+            return new ComputeApiError(Optional.ToList(details), innererror.Value, code.Value, target.Value, message.Value);
         }
     }
 }

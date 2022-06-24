@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Usage Names. </summary>
-    public partial class UsageName
+    public partial class ComputeUsageName
     {
-        /// <summary> Initializes a new instance of UsageName. </summary>
-        internal UsageName()
+        /// <summary> Initializes a new instance of ComputeUsageName. </summary>
+        internal ComputeUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageName. </summary>
+        /// <summary> Initializes a new instance of ComputeUsageName. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
-        internal UsageName(string value, string localizedValue)
+        internal ComputeUsageName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;

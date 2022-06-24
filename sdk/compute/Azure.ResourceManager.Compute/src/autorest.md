@@ -36,6 +36,7 @@ prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
 - DeleteOptions
+- ProtocolType
 
 rename-rules:
   CPU: Cpu
