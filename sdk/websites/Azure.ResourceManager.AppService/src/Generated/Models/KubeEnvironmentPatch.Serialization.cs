@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("appLogsConfiguration");
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
+            if (Optional.IsDefined(ContainerAppsConfiguration))
+            {
+                writer.WritePropertyName("containerAppsConfiguration");
+                writer.WriteObjectValue(ContainerAppsConfiguration);
+            }
             if (Optional.IsDefined(AksResourceId))
             {
                 writer.WritePropertyName("aksResourceID");
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> staticIp = default;
             Optional<ArcConfiguration> arcConfiguration = default;
             Optional<AppLogsConfiguration> appLogsConfiguration = default;
+            Optional<ContainerAppsConfiguration> containerAppsConfiguration = default;
             Optional<string> aksResourceID = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -158,6 +164,16 @@ namespace Azure.ResourceManager.AppService.Models
                             appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("containerAppsConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            containerAppsConfiguration = ContainerAppsConfiguration.DeserializeContainerAppsConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("aksResourceID"))
                         {
                             aksResourceID = property0.Value.GetString();
@@ -167,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new KubeEnvironmentPatch(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceID.Value);
+            return new KubeEnvironmentPatch(id, name, type, systemData, kind.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIp.Value, arcConfiguration.Value, appLogsConfiguration.Value, containerAppsConfiguration.Value, aksResourceID.Value);
         }
     }
 }
