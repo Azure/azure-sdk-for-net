@@ -7,11 +7,23 @@ azure-arm: true
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
+clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-clear-output-folder: true
-skip-csproj: true
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+  - DiffBackupIntervalInHours
 
 rename-rules:
   CPU: Cpu

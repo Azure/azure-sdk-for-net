@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataSettings"> Data inputs for AutoMLJob. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        internal TextClassificationMultilabel(LogVerbosity? logVerbosity, TaskType taskType, ClassificationMultilabelPrimaryMetrics? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
+        internal TextClassificationMultilabel(LogVerbosity? logVerbosity, TaskType taskType, ClassificationMultilabelPrimaryMetric? primaryMetric, NlpVerticalDataSettings dataSettings, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             DataSettings = dataSettings;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
         /// </summary>
-        public ClassificationMultilabelPrimaryMetrics? PrimaryMetric { get; }
+        public ClassificationMultilabelPrimaryMetric? PrimaryMetric { get; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public NlpVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

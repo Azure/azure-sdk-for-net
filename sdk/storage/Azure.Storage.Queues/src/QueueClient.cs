@@ -1961,7 +1961,13 @@ namespace Azure.Storage.Queues
 
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
+                        {
+                            ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+                            ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
+                            _ => throw new InvalidOperationException()
+                        };
+                        message = await new QueueClientSideEncryptor(encryptor)
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -3001,7 +3007,13 @@ namespace Azure.Storage.Queues
                     scope.Start();
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        IClientSideEncryptor encryptor = ClientConfiguration.ClientSideEncryption.EncryptionVersion switch
+                        {
+                            ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption),
+                            ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientConfiguration.ClientSideEncryption),
+                            _ => throw new InvalidOperationException()
+                        };
+                        message = await new QueueClientSideEncryptor(encryptor)
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
                     QueueMessage queueSendMessage = null;

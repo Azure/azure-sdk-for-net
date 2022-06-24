@@ -55,41 +55,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -120,41 +119,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -184,41 +182,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -248,41 +245,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="direction"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
         /// <code>{
-        ///   baseEntityGuid: string,
-        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
-        ///   lineageDepth: number,
-        ///   lineageWidth: number,
-        ///   includeParent: boolean,
-        ///   childrenCount: number,
-        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;,
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
         ///   parentRelations: [
         ///     {
-        ///       childEntityId: string,
-        ///       relationshipId: string,
-        ///       parentEntityId: string
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
         ///     }
-        ///   ],
+        ///   ], # Optional. An array of parentRelations relations.
         ///   relations: [
         ///     {
-        ///       fromEntityId: string,
-        ///       relationshipId: string,
-        ///       toEntityId: string
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. An array of lineage relations.
         /// }
         /// </code>
         /// 
@@ -297,6 +293,150 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns lineage info about entity.
+        /// 
+        /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
+        /// 
+        /// attr:[attrName]=[attrValue]
+        /// 
+        /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
+        /// <code>{
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
+        ///     }
+        ///   ], # Optional. An array of parentRelations relations.
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
+        ///     }
+        ///   ], # Optional. An array of lineage relations.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLineageByUniqueAttributeRequest(typeName, direction, depth, width, includeParent, getDerivedLineage, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns lineage info about entity.
+        /// 
+        /// In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format
+        /// 
+        /// attr:[attrName]=[attrValue]
+        /// 
+        /// NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="direction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasLineageInfo</c>:
+        /// <code>{
+        ///   baseEntityGuid: string, # Optional. The GUID of the base entity.
+        ///   guidEntityMap: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The GUID entity map.
+        ///   widthCounts: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. The entity count in specific direction.
+        ///   lineageDepth: number, # Optional. The depth of lineage.
+        ///   lineageWidth: number, # Optional. The width of lineage.
+        ///   includeParent: boolean, # Optional. True to return the parent of the base entity.
+        ///   childrenCount: number, # Optional. The number of children node.
+        ///   lineageDirection: &quot;INPUT&quot; | &quot;OUTPUT&quot; | &quot;BOTH&quot;, # Optional. The enum of lineage direction.
+        ///   parentRelations: [
+        ///     {
+        ///       childEntityId: string, # Optional. The GUID of child entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       parentEntityId: string, # Optional. The GUID of parent entity.
+        ///     }
+        ///   ], # Optional. An array of parentRelations relations.
+        ///   relations: [
+        ///     {
+        ///       fromEntityId: string, # Optional. The GUID of from-entity.
+        ///       relationshipId: string, # Optional. The GUID of relationship.
+        ///       toEntityId: string, # Optional. The GUID of to-entity.
+        ///     }
+        ///   ], # Optional. An array of lineage relations.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(direction, nameof(direction));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewLineages.GetLineageByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetLineageByUniqueAttributeRequest(typeName, direction, depth, width, includeParent, getDerivedLineage, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -363,6 +503,38 @@ namespace Azure.Analytics.Purview.Catalog
                 uri.AppendQuery("limit", limit.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetLineageByUniqueAttributeRequest(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/lineage/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendQuery("direction", direction, true);
+            if (depth != null)
+            {
+                uri.AppendQuery("depth", depth.Value, true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", width.Value, true);
+            }
+            if (includeParent != null)
+            {
+                uri.AppendQuery("includeParent", includeParent.Value, true);
+            }
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

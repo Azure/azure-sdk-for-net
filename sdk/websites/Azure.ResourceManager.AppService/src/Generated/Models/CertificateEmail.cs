@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL certificate email. </summary>
-    public partial class CertificateEmail : ProxyOnlyResource
+    public partial class CertificateEmail : ResourceData
     {
         /// <summary> Initializes a new instance of CertificateEmail. </summary>
         public CertificateEmail()
@@ -24,18 +24,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="emailId"> Email id. </param>
         /// <param name="timeStamp"> Time stamp. </param>
-        internal CertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string emailId, DateTimeOffset? timeStamp) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal CertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStamp, string kind) : base(id, name, resourceType, systemData)
         {
             EmailId = emailId;
             TimeStamp = timeStamp;
+            Kind = kind;
         }
 
         /// <summary> Email id. </summary>
         public string EmailId { get; set; }
         /// <summary> Time stamp. </summary>
         public DateTimeOffset? TimeStamp { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

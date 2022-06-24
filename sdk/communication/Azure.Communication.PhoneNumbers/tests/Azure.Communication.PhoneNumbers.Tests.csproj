@@ -21,6 +21,8 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\samples\Sample_SipRoutingClient.md" Link="samples\Sample_SipRoutingClient.md" />
+    <None Include="..\samples\Sample_SipRoutingClientAsync.md" Link="samples\Sample_SipRoutingClientAsync.md" />
     <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />

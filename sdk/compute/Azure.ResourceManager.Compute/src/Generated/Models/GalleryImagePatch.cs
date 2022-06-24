@@ -8,16 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
-    public partial class GalleryImagePatch : GalleryUpdateResourceDefinition
+    public partial class GalleryImagePatch : ResourceData
     {
         /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
         public GalleryImagePatch()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>
@@ -29,9 +31,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The release note uri. </summary>
         public Uri ReleaseNoteUri { get; set; }
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
-        public OperatingSystemStateTypes? OSState { get; set; }
+        public OperatingSystemStateType? OSState { get; set; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
@@ -56,8 +58,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryImagePropertiesProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> A list of gallery image features. </summary>
         public IList<GalleryImageFeature> Features { get; }
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        public ArchitectureType? Architecture { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

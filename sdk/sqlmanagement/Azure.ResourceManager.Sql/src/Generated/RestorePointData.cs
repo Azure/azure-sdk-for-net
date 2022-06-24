@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="earliestRestoreOn"> The earliest time to which this database can be restored. </param>
         /// <param name="restorePointCreationOn"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The type of restore point. </summary>
         public RestorePointType? RestorePointType { get; }
         /// <summary> The earliest time to which this database can be restored. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -16,16 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public ValidateContent(string name, ValidateResourceTypes validateResourceType, string location)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
 
             Name = name;
@@ -36,9 +33,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Resource name to verify. </summary>
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
-        public ValidateResourceTypes ValidateResourceType { get; }
+        public ValidateResourceType ValidateResourceType { get; }
         /// <summary> Expected location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
         public string ServerFarmId { get; set; }
         /// <summary> Name of the target SKU for the App Service plan. </summary>

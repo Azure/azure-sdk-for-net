@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("cookieBasedAffinity");
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (Optional.IsDefined(RequestTimeoutInSeconds))
             {
                 writer.WritePropertyName("requestTimeout");
-                writer.WriteNumberValue(RequestTimeout.Value);
+                writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(Probe))
             {

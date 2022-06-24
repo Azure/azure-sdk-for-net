@@ -9,3 +9,4 @@ extends:
     TimeoutInMinutes: 240
     Clouds: 'Public,Canary'
     SupportedClouds: 'Public,UsGov,China,Canary'
+    Location: 'westus3'
