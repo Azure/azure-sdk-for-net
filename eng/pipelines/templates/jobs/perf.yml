@@ -60,7 +60,7 @@ jobs:
       parameters:
         EnableNuGetCache: false
 
-    - template: ../../../common/TestResources/deploy-test-resources.yml
+    - template: /eng/common/TestResources/deploy-test-resources.yml
       parameters:
         ServiceDirectory: ${{ parameters.serviceDirectory }}
         Location: westus
