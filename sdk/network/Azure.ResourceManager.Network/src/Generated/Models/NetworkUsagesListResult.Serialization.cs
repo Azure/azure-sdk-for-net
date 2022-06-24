@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UsagesListResult
+    internal partial class NetworkUsagesListResult
     {
-        internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
+        internal static NetworkUsagesListResult DeserializeNetworkUsagesListResult(JsonElement element)
         {
             Optional<IReadOnlyList<NetworkUsage>> value = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new UsagesListResult(Optional.ToList(value), nextLink.Value);
+            return new NetworkUsagesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

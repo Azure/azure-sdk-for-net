@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class UsageName
+    public partial class NetworkUsageName
     {
-        internal static UsageName DeserializeUsageName(JsonElement element)
+        internal static NetworkUsageName DeserializeNetworkUsageName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new UsageName(value.Value, localizedValue.Value);
+            return new NetworkUsageName(value.Value, localizedValue.Value);
         }
     }
 }

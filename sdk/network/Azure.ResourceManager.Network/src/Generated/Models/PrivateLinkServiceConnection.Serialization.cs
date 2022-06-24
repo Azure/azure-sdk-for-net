@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> privateLinkServiceId = default;
+            Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
             Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
@@ -127,7 +127,12 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("privateLinkServiceId"))
                         {
-                            privateLinkServiceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateLinkServiceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("groupIds"))

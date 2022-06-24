@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     new PrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
-                        PrivateLinkServiceId = managedInstance.Data.Id.ToString(),
+                        PrivateLinkServiceId = managedInstance.Data.Id,
                         GroupIds = { "managedInstance" },
                     }
                 },

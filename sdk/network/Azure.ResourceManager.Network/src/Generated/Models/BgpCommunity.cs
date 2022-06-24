@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
-    public partial class BGPCommunity
+    public partial class BgpCommunity
     {
-        /// <summary> Initializes a new instance of BGPCommunity. </summary>
-        public BGPCommunity()
+        /// <summary> Initializes a new instance of BgpCommunity. </summary>
+        public BgpCommunity()
         {
             CommunityPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BGPCommunity. </summary>
+        /// <summary> Initializes a new instance of BgpCommunity. </summary>
         /// <param name="serviceSupportedRegion"> The region which the service support. e.g. For O365, region is Global. </param>
         /// <param name="communityName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="communityValue"> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </param>
         /// <param name="communityPrefixes"> The prefixes that the bgp community contains. </param>
         /// <param name="isAuthorizedToUse"> Customer is authorized to use bgp community or not. </param>
         /// <param name="serviceGroup"> The service group of the bgp community contains. </param>
-        internal BGPCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup)
+        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup)
         {
             ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;
