@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> storageId = default;
             Optional<bool> enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogFormatParameters> format = default;
+            Optional<FlowLogFormat> format = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
+                            format = FlowLogFormat.DeserializeFlowLogFormat(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("flowAnalyticsConfiguration"))

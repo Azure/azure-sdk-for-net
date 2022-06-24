@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BGPCommunity : IUtf8JsonSerializable
+    public partial class BgpCommunity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static BGPCommunity DeserializeBGPCommunity(JsonElement element)
+        internal static BgpCommunity DeserializeBgpCommunity(JsonElement element)
         {
             Optional<string> serviceSupportedRegion = default;
             Optional<string> communityName = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BGPCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
+            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
         }
     }
 }

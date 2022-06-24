@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The list usages operation response. </summary>
-    internal partial class UsagesListResult
+    internal partial class NetworkUsagesListResult
     {
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
-        internal UsagesListResult()
+        /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>
+        internal NetworkUsagesListResult()
         {
             Value = new ChangeTrackingList<NetworkUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>
         /// <param name="value"> The list network resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal UsagesListResult(IReadOnlyList<NetworkUsage> value, string nextLink)
+        internal NetworkUsagesListResult(IReadOnlyList<NetworkUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
