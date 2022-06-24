@@ -21,7 +21,7 @@ parameters:
     default: ' '
 
 extends:
-  template: ../../../eng/pipelines/templates/jobs/perf.yml
+  template: /eng/pipelines/templates/jobs/perf.yml
   parameters:
     serviceDirectory: storage/Azure.Storage.Files.Shares
     services: "^storage-file-share$"
