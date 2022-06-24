@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,22 +17,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string linkedResourceType, string link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id, name, resourceType)
+        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             LinkedResourceType = linkedResourceType;
             Link = link;
             ProvisioningState = provisioningState;
@@ -40,16 +41,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Resource type of the linked resource. </summary>
-        public string LinkedResourceType { get; set; }
+        public ResourceType? LinkedResourceType { get; set; }
         /// <summary> Link to the external resource. </summary>
-        public string Link { get; set; }
+        public ResourceIdentifier Link { get; set; }
         /// <summary> The provisioning state of the service association link resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> If true, the resource can be deleted. </summary>
         public bool? AllowDelete { get; set; }
         /// <summary> A list of locations. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
     }
 }

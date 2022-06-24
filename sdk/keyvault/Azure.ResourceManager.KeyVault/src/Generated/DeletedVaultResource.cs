@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
     public partial class DeletedVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedVaultResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string vaultName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}";
             return new ResourceIdentifier(resourceId);

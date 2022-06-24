@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Client options for ConversationAnalysisClient. </summary>
+    /// <summary> Client options for ConversationAuthoringClient. </summary>
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022_05_15_Preview". </summary>
-            V2022_05_15_Preview = 1,
+            /// <summary> Service version "2022-05-01". </summary>
+            V2022_05_01 = 1,
         }
     }
 }

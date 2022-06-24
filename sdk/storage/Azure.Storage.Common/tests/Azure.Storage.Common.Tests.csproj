@@ -18,9 +18,13 @@
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
+    <Compile Remove="AesGcmTests\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\AuthenticatedRegionCryptoStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\IAuthenticatedCryptographicTransform.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\TransformMode.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />

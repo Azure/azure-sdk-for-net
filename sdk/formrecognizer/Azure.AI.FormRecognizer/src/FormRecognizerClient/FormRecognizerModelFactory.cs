@@ -506,6 +506,32 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         #region generated methods
+        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <param name="houseNumber"> House or building number. </param>
+        /// <param name="poBox"> Post office box number. </param>
+        /// <param name="road"> Street name. </param>
+        /// <param name="city"> Name of city, town, village, etc. </param>
+        /// <param name="state"> First-level administrative division. </param>
+        /// <param name="postalCode"> Postal code used for mail sorting. </param>
+        /// <param name="countryRegion"> Country/region. </param>
+        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
+        internal static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
+        {
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress);
+        }
+
+        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
+        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.BoundingRegion"/> instance for mocking. </returns>
+        internal static BoundingRegion BoundingRegion(int pageNumber = default, IEnumerable<float> polygon = null)
+        {
+            polygon ??= new List<float>();
+
+            return new BoundingRegion(pageNumber, polygon?.ToList());
+        }
+
         /// <summary> Initializes new instance of CustomFormModelInfo class. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="status"> Status of the model. </param>
@@ -549,16 +575,56 @@ namespace Azure.AI.FormRecognizer.Models
             return new CurrencyValue(amount, currencySymbol);
         }
 
+        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <param name="content"> Table caption content. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table caption. </param>
+        /// <param name="spans"> Location of the table caption in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentCaption"/> instance for mocking. </returns>
+        internal static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <param name="content"> Table footnote content. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table footnote. </param>
+        /// <param name="spans"> Location of the table footnote in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFootnote"/> instance for mocking. </returns>
+        internal static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList());
+        }
+
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
-        /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
+        /// <param name="locale"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLanguage"/> instance for mocking. </returns>
-        internal static DocumentLanguage DocumentLanguage(string languageCode = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        internal static DocumentLanguage DocumentLanguage(string locale = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentLanguage(languageCode, spans?.ToList(), confidence);
+            return new DocumentLanguage(locale, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentParagraph. </summary>
+        /// <param name="role"> Semantic role of the paragraph. </param>
+        /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
+        /// <param name="spans"> Location of the paragraph in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentParagraph"/> instance for mocking. </returns>
+        internal static DocumentParagraph DocumentParagraph(ParagraphRole? role = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentSpan. </summary>
@@ -568,22 +634,6 @@ namespace Azure.AI.FormRecognizer.Models
         internal static DocumentSpan DocumentSpan(int offset = default, int length = default)
         {
             return new DocumentSpan(offset, length);
-        }
-
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
-        /// <param name="rowCount"> Number of rows in the table. </param>
-        /// <param name="columnCount"> Number of columns in the table. </param>
-        /// <param name="cells"> Cells contained within the table. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the table. </param>
-        /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentTable"/> instance for mocking. </returns>
-        internal static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
-        {
-            cells ??= new List<DocumentTableCell>();
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
@@ -627,22 +677,6 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentEntity. </summary>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subCategory"> Entity sub type. </param>
-        /// <param name="content"> Entity content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the entity. </param>
-        /// <param name="spans"> Location of the entity in the reading order concatenated content. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the entity. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentEntity"/> instance for mocking. </returns>
-        internal static DocumentEntity DocumentEntity(string category = null, string subCategory = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentEntity(category, subCategory, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
-        }
-
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
@@ -657,28 +691,6 @@ namespace Azure.AI.FormRecognizer.Models
             fields ??= new Dictionary<string, DocumentField>();
 
             return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
-        }
-
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
-        /// <param name="pageNumber"> 1-based page number in the input document. </param>
-        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
-        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="unit"> The unit used by the width, height, and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
-        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
-        /// <param name="words"> Extracted words from the page. </param>
-        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
-        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        internal static DocumentPage DocumentPage(int pageNumber = default, float angle = default, float width = default, float height = default, DocumentAnalysis.LengthUnit unit = default, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
-        {
-            spans ??= new List<DocumentSpan>();
-            words ??= new List<DocumentWord>();
-            selectionMarks ??= new List<DocumentSelectionMark>();
-            lines ??= new List<DocumentLine>();
-
-            // The length unit conversion is a workaround. We may need a proper conversion if we decide to expose this method.
-            return new DocumentPage(pageNumber, angle, width, height, new V3LengthUnit(unit.ToString()), spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentStyle. </summary>
@@ -753,6 +765,51 @@ namespace Azure.AI.FormRecognizer.Models
             properties ??= new Dictionary<string, DocumentFieldSchema>();
 
             return new DocumentFieldSchema(type, description, example, items, properties);
+        }
+
+        /// <summary> Initializes a new instance of DocumentLine. </summary>
+        /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
+        /// <param name="polygon"> Bounding polygon of the line. </param>
+        /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentLine"/> instance for mocking. </returns>
+        internal static DocumentLine DocumentLine(string content = null, IEnumerable<float> polygon = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            polygon ??= new List<float>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentLine(content, polygon?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <param name="rowCount"> Number of rows in the table. </param>
+        /// <param name="columnCount"> Number of columns in the table. </param>
+        /// <param name="cells"> Cells contained within the table. </param>
+        /// <param name="caption"> Caption associated with the table. </param>
+        /// <param name="footnotes"> Footnotes associated with the table. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the table. </param>
+        /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentTable"/> instance for mocking. </returns>
+        internal static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            cells ??= new List<DocumentTableCell>();
+            footnotes ??= new List<DocumentFootnote>();
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption, footnotes?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <param name="content"> Text content of the word. </param>
+        /// <param name="polygon"> Bounding polygon of the word. </param>
+        /// <param name="span"> Location of the word in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the word. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentWord"/> instance for mocking. </returns>
+        internal static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
+        {
+            polygon ??= new List<float>();
+
+            return new DocumentWord(content, polygon?.ToList(), span, confidence);
         }
 
         /// <summary> Initializes a new instance of DocTypeInfo. </summary>

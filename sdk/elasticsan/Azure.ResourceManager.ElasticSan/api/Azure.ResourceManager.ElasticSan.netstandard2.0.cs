@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ElasticSan
         public long? ElasticSanVolumeGroupCount { get { throw null; } }
         public long? ExtendedCapacitySizeTiB { get { throw null; } set { } }
         public long? ProvisionedMbps { get { throw null; } }
-        public Azure.ResourceManager.ElasticSan.Models.ProvisioningStates? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanSku Sku { get { throw null; } set { } }
         public long? TotalElasticSanVolumeSizeGiB { get { throw null; } }
         public long? TotalIops { get { throw null; } }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ElasticSan
         public ElasticSanVolumeGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.ElasticSan.Models.EncryptionType? Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.StorageTargetType? ProtocolType { get { throw null; } set { } }
-        public Azure.ResourceManager.ElasticSan.Models.ProvisioningStates? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
     public partial class ElasticSanVolumeGroupResource : Azure.ResourceManager.ArmResource
@@ -157,6 +157,23 @@ namespace Azure.ResourceManager.ElasticSan
 }
 namespace Azure.ResourceManager.ElasticSan.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Action : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.Action>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Action(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.Action Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.Action other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.Action left, Azure.ResourceManager.ElasticSan.Models.Action right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.Action (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.Action left, Azure.ResourceManager.ElasticSan.Models.Action right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ElasticSanElasticSanVolumeGroupPatch
     {
         public ElasticSanElasticSanVolumeGroupPatch() { }
@@ -263,7 +280,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class IscsiTargetInfo
     {
         internal IscsiTargetInfo() { }
-        public Azure.ResourceManager.ElasticSan.Models.ProvisioningStates? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.OperationalStatus? Status { get { throw null; } }
         public string TargetIqn { get { throw null; } }
         public string TargetPortalHostname { get { throw null; } }
@@ -294,27 +311,27 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningStates : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ProvisioningStates>
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningStates(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Creating { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Failed { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Invalid { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Pending { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningStates Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ProvisioningStates other) { throw null; }
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Invalid { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Pending { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ProvisioningStates left, Azure.ResourceManager.ElasticSan.Models.ProvisioningStates right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ProvisioningStates (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ProvisioningStates left, Azure.ResourceManager.ElasticSan.Models.ProvisioningStates right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ProvisioningState left, Azure.ResourceManager.ElasticSan.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ProvisioningState left, Azure.ResourceManager.ElasticSan.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResourceTypeSku
@@ -371,7 +388,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class VirtualNetworkRule
     {
         public VirtualNetworkRule(string virtualNetworkResourceId) { }
-        public string Action { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.Action? Action { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.VirtualNetworkRuleState? State { get { throw null; } }
         public string VirtualNetworkResourceId { get { throw null; } set { } }
     }

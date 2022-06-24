@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The MergeRequest. </summary>
+    /// <summary> The MergeContent. </summary>
     public partial class MergeContent
     {
         /// <summary> Initializes a new instance of MergeContent. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </param>
-        internal UpdateHistoryProperty(ImmutabilityPolicyUpdateType? update, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
+        internal UpdateHistoryProperty(ImmutabilityPolicyUpdateType? update, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
             Update = update;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Returns the Object ID of the user who updated the ImmutabilityPolicy. </summary>
         public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </summary>
         public string Upn { get; }
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -22,18 +23,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
-        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             VirtualNetworkTap = virtualNetworkTap;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The reference to the Virtual Network Tap resource. </summary>
         public VirtualNetworkTapData VirtualNetworkTap { get; set; }
         /// <summary> The provisioning state of the network interface tap configuration resource. </summary>

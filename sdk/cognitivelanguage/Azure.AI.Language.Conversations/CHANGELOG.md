@@ -1,18 +1,16 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.0 (2022-06-27)
 
 ### Features Added
-* Added Conversation issue summarization task (Long-running operation)
-* Added Conversation PII extraction task (Long-running operation)
+
+- Added `ConversationAuthoringClient` to manage authoring projects.
+- Added support for Azure Active Directory (AAD) authentication.
 
 ### Breaking Changes
-- Client now uses python dictionaries for method parameters and results instead of classes.
-- Many input and result parameter name changes in `analyze_conversation()` method
 
-### Bugs Fixed
-
-### Other Changes
+- `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
+- Removed all models. See README.md for samples to use this client library.
 
 ## 1.0.0-beta.3 (2022-04-20)
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element)
         {
-            Optional<IList<ActivatedResourceReference>> domains = default;
+            Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
             Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivatedResourceReference> array = new List<ActivatedResourceReference>();
+                    List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivatedResourceReference.DeserializeActivatedResourceReference(item));
+                        array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
                     }
                     domains = array;
                     continue;

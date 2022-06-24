@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of Forecasting. </summary>
         public Forecasting()
         {
-            AllowedModels = new ChangeTrackingList<ForecastingModels>();
-            BlockedModels = new ChangeTrackingList<ForecastingModels>();
+            AllowedModels = new ChangeTrackingList<ForecastingModel>();
+            BlockedModels = new ChangeTrackingList<ForecastingModel>();
             TaskType = TaskType.Forecasting;
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
-        internal Forecasting(LogVerbosity? logVerbosity, TaskType taskType, IList<ForecastingModels> allowedModels, IList<ForecastingModels> blockedModels, ForecastingSettings forecastingSettings, ForecastingPrimaryMetrics? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
+        internal Forecasting(LogVerbosity? logVerbosity, TaskType taskType, IList<ForecastingModel> allowedModels, IList<ForecastingModel> blockedModels, ForecastingSettings forecastingSettings, ForecastingPrimaryMetric? primaryMetric, TableVerticalDataSettings dataSettings, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, TrainingSettings trainingSettings) : base(logVerbosity, taskType)
         {
             AllowedModels = allowedModels;
             BlockedModels = blockedModels;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Allowed models for forecasting task. </summary>
-        public IList<ForecastingModels> AllowedModels { get; set; }
+        public IList<ForecastingModel> AllowedModels { get; set; }
         /// <summary> Blocked models for forecasting task. </summary>
-        public IList<ForecastingModels> BlockedModels { get; set; }
+        public IList<ForecastingModel> BlockedModels { get; set; }
         /// <summary> Forecasting task specific inputs. </summary>
         public ForecastingSettings ForecastingSettings { get; set; }
         /// <summary> Primary metric for forecasting task. </summary>
-        public ForecastingPrimaryMetrics? PrimaryMetric { get; set; }
+        public ForecastingPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Data inputs for AutoMLJob. </summary>
         public TableVerticalDataSettings DataSettings { get; set; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>

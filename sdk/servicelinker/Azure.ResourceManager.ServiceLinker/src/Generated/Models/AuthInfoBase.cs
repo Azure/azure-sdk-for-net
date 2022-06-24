@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The authentication info. </summary>
+    /// <summary>
+    /// The authentication info
+    /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+    /// </summary>
     public partial class AuthInfoBase
     {
         /// <summary> Initializes a new instance of AuthInfoBase. </summary>

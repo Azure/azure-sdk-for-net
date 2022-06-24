@@ -34,11 +34,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="appName">The app name of domain.</param>
         /// <param name="certName">The bound certificate name of
         /// domain.</param>
-        public CustomDomainProperties(string thumbprint = default(string), string appName = default(string), string certName = default(string))
+        /// <param name="provisioningState">Provisioning state of the Domain.
+        /// Possible values include: 'Creating', 'Updating', 'Succeeded',
+        /// 'Failed', 'Deleting'</param>
+        public CustomDomainProperties(string thumbprint = default(string), string appName = default(string), string certName = default(string), string provisioningState = default(string))
         {
             Thumbprint = thumbprint;
             AppName = appName;
             CertName = certName;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -64,6 +68,13 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "certName")]
         public string CertName { get; set; }
+
+        /// <summary>
+        /// Gets provisioning state of the Domain. Possible values include:
+        /// 'Creating', 'Updating', 'Succeeded', 'Failed', 'Deleting'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
 
     }
 }

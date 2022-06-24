@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         private const string PostValue = "POST";
         private const string OptionsValue = "OPTIONS";
         private const string PUTValue = "PUT";
+        private const string PatchValue = "PATCH";
 
         /// <summary> DELETE. </summary>
         public static CorsRuleAllowedMethodsItem Delete { get; } = new CorsRuleAllowedMethodsItem(DeleteValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.Storage.Models
         public static CorsRuleAllowedMethodsItem Options { get; } = new CorsRuleAllowedMethodsItem(OptionsValue);
         /// <summary> PUT. </summary>
         public static CorsRuleAllowedMethodsItem PUT { get; } = new CorsRuleAllowedMethodsItem(PUTValue);
+        /// <summary> PATCH. </summary>
+        public static CorsRuleAllowedMethodsItem Patch { get; } = new CorsRuleAllowedMethodsItem(PatchValue);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethodsItem"/> values are the same. </summary>
         public static bool operator ==(CorsRuleAllowedMethodsItem left, CorsRuleAllowedMethodsItem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethodsItem"/> values are not the same. </summary>

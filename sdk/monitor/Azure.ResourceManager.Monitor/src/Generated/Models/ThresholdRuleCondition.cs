@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of ThresholdRuleCondition. </summary>
         /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
-        /// <param name="dataSource"> the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource. </param>
+        /// <param name="dataSource">
+        /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
+        /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
+        /// </param>
         /// <param name="operator"> the operator used to compare the data and the threshold. </param>
         /// <param name="threshold"> the threshold value that activates the alert. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>

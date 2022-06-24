@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The InstanceSku. </summary>
+    /// <summary> The role instance SKU. </summary>
     public partial class InstanceSku
     {
         /// <summary> Initializes a new instance of InstanceSku. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT Rule resource. </param>
         /// <param name="vpnNatRuleType"> The type of NAT rule for VPN NAT. </param>
         /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
@@ -37,9 +38,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
         /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
         /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
-        internal VpnGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id, name, resourceType)
+        internal VpnGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             ProvisioningState = provisioningState;
             VpnNatRuleType = vpnNatRuleType;
             Mode = mode;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of NAT rule for VPN NAT. </summary>

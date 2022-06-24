@@ -47,23 +47,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HostPoolData : Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySet
+    public partial class HostPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IReadOnlyList<string> ApplicationGroupReferences { get { throw null; } }
         public bool? CloudPcResource { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType HostPoolType { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType LoadBalancerType { get { throw null; } set { } }
+        public string ManagedBy { get { throw null; } set { } }
         public int? MaxSessionLimit { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.MigrationRequestProperties MigrationRequest { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType PreferredAppGroupType { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationInfo RegistrationInfo { get { throw null; } set { } }
         public int? Ring { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
         public string SsoadfsAuthority { get { throw null; } set { } }
         public string SsoClientId { get { throw null; } set { } }
         public string SsoClientSecretKeyVaultPath { get { throw null; } set { } }
@@ -165,16 +171,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScalingPlanData : Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySet
+    public partial class ScalingPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ScalingPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string ExclusionTag { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingHostPoolReference> HostPoolReferences { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType? HostPoolType { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string ManagedBy { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule> Schedules { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
     public partial class ScalingPlanResource : Azure.ResourceManager.ArmResource
@@ -334,16 +346,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualApplicationGroupData : Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySet
+    public partial class VirtualApplicationGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualApplicationGroupData(Azure.Core.AzureLocation location, string hostPoolArmPath, Azure.ResourceManager.DesktopVirtualization.Models.ApplicationGroupType applicationGroupType) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.DesktopVirtualization.Models.ApplicationGroupType ApplicationGroupType { get { throw null; } set { } }
         public bool? CloudPcResource { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public string HostPoolArmPath { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.MigrationRequestProperties MigrationRequest { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
         public string WorkspaceArmPath { get { throw null; } }
     }
     public partial class VirtualApplicationGroupResource : Azure.ResourceManager.ArmResource
@@ -437,14 +455,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualWorkspaceData : Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySet
+    public partial class VirtualWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
         public bool? CloudPcResource { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string ManagedBy { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
+        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
     }
     public partial class VirtualWorkspaceResource : Azure.ResourceManager.ArmResource
     {
@@ -644,6 +668,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType left, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class Identity
+    {
+        public Identity() { }
+        public string PrincipalId { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType? ResourceIdentityType { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadBalancerType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType>
     {
@@ -807,15 +838,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType left, Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceModelWithAllowedPropertySet : Azure.ResourceManager.Models.TrackedResourceData
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType>
     {
-        public ResourceModelWithAllowedPropertySet(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string ManagedBy { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetSku Sku { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType left, Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType left, Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceModelWithAllowedPropertySetIdentity : Azure.ResourceManager.DesktopVirtualization.Models.Identity
+    {
+        public ResourceModelWithAllowedPropertySetIdentity() { }
     }
     public partial class ResourceModelWithAllowedPropertySetSku : Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku
     {

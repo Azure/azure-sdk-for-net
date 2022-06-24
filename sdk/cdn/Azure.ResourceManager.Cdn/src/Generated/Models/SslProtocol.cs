@@ -22,16 +22,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Tls10Value = "TLSv1";
-        private const string Tls11Value = "TLSv1.1";
-        private const string Tls12Value = "TLSv1.2";
-
-        /// <summary> TLSv1. </summary>
-        public static SslProtocol Tls10 { get; } = new SslProtocol(Tls10Value);
-        /// <summary> TLSv1.1. </summary>
-        public static SslProtocol Tls11 { get; } = new SslProtocol(Tls11Value);
-        /// <summary> TLSv1.2. </summary>
-        public static SslProtocol Tls12 { get; } = new SslProtocol(Tls12Value);
+        private const string Tls1_0Value = "TLSv1";
+        private const string Tls1_1Value = "TLSv1.1";
+        private const string Tls1_2Value = "TLSv1.2";
         /// <summary> Determines if two <see cref="SslProtocol"/> values are the same. </summary>
         public static bool operator ==(SslProtocol left, SslProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslProtocol"/> values are not the same. </summary>

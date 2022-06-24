@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public DisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.DisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class MigrationConfigPropertiesData : Azure.ResourceManager.Models.ResourceData
     {
         public MigrationConfigPropertiesData() { }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string MigrationState { get { throw null; } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public string PostMigrationName { get { throw null; } set { } }
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response CompleteMigration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CompleteMigrationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string configName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName configName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.MigrationConfigPropertiesResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -216,6 +218,7 @@ namespace Azure.ResourceManager.ServiceBus
         public NetworkRuleSetData() { }
         public Azure.ResourceManager.ServiceBus.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetIPRules> IPRules { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.PublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
@@ -235,7 +238,8 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusAuthorizationRuleData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRights> Rights { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.AccessRight> Rights { get { throw null; } }
     }
     public static partial class ServiceBusExtensions
     {
@@ -278,6 +282,7 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string AlternateName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
@@ -353,6 +358,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public ServiceBusPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.ServiceBus.Models.ConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -400,6 +406,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? EnablePartitioning { get { throw null; } set { } }
         public string ForwardDeadLetteredMessagesTo { get { throw null; } set { } }
         public string ForwardTo { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.TimeSpan? LockDuration { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
@@ -449,6 +456,7 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.FilterAction Action { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.CorrelationFilter CorrelationFilter { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.FilterType? FilterType { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.SqlFilter SqlFilter { get { throw null; } set { } }
     }
     public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource
@@ -496,6 +504,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string ForwardDeadLetteredMessagesTo { get { throw null; } set { } }
         public string ForwardTo { get { throw null; } set { } }
         public bool? IsClientAffine { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.TimeSpan? LockDuration { get { throw null; } set { } }
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public long? MessageCount { get { throw null; } }
@@ -547,6 +556,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? EnableBatchedOperations { get { throw null; } set { } }
         public bool? EnableExpress { get { throw null; } set { } }
         public bool? EnablePartitioning { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public long? MaxMessageSizeInKilobytes { get { throw null; } set { } }
         public int? MaxSizeInMegabytes { get { throw null; } set { } }
         public bool? RequiresDuplicateDetection { get { throw null; } set { } }
@@ -590,7 +600,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
     }
-    public enum AccessRights
+    public enum AccessRight
     {
         Manage = 0,
         Send = 1,
@@ -655,7 +665,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class EncryptionProperties
     {
         public EncryptionProperties() { }
-        public string KeySource { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.KeySource? KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
@@ -709,6 +719,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         SqlFilter = 0,
         CorrelationFilter = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeySource : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.KeySource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeySource(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.KeySource MicrosoftKeyVault { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.KeySource other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.KeySource left, Azure.ResourceManager.ServiceBus.Models.KeySource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.KeySource (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.KeySource left, Azure.ResourceManager.ServiceBus.Models.KeySource right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum KeyType
     {
@@ -838,6 +865,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ServiceBusNamespacePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string AlternateName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EncryptionProperties Encryption { get { throw null; } set { } }
@@ -849,7 +877,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class ServiceBusPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {

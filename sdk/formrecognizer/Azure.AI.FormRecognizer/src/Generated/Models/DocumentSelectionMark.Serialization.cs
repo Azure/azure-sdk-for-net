@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static DocumentSelectionMark DeserializeDocumentSelectionMark(JsonElement element)
         {
             V3SelectionMarkState state = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<IReadOnlyList<float>> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     state = new V3SelectionMarkState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("polygon"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         array.Add(item.GetSingle());
                     }
-                    boundingBox = array;
+                    polygon = array;
                     continue;
                 }
                 if (property.NameEquals("span"))
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentSelectionMark(state, Optional.ToList(boundingBox), span, confidence);
+            return new DocumentSelectionMark(state, Optional.ToList(polygon), span, confidence);
         }
     }
 }

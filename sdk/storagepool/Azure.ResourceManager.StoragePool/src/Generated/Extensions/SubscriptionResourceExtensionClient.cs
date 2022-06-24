@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<DiskPoolZoneInfo>> FirstPageFunc(int? pageSizeHint)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskPoolZoneInfo> GetDiskPoolZones(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<DiskPoolZoneInfo> GetDiskPoolZones(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<DiskPoolZoneInfo> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSkuInfo> GetResourceSkusAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceSkuInfo> GetResourceSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="location"> The location of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSkuInfo> GetResourceSkus(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceSkuInfo> GetResourceSkus(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ResourceSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
