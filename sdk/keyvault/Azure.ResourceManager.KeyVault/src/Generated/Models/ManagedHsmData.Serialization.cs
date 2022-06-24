@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value);
+            return new ManagedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value);
         }
     }
 }

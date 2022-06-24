@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VnetContent(id, name, type, systemData.Value, kind.Value, vnetResourceGroup.Value, vnetName.Value, vnetSubnetName.Value, subnetResourceId.Value);
+            return new VnetContent(id, name, type, systemData.Value, vnetResourceGroup.Value, vnetName.Value, vnetSubnetName.Value, subnetResourceId.Value, kind.Value);
         }
     }
 }

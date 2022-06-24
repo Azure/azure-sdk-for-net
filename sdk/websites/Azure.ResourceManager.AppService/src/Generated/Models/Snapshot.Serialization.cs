@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new Snapshot(id, name, type, systemData.Value, kind.Value, time.Value);
+            return new Snapshot(id, name, type, systemData.Value, time.Value, kind.Value);
         }
     }
 }

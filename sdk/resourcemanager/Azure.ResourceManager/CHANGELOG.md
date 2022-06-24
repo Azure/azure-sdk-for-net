@@ -10,6 +10,20 @@
 
 ### Other Changes
 
+## 1.1.1 (2022-06-22)
+
+### Features Added
+
+- Add OperationStatusResult to common type.
+
+### Bugs Fixed
+
+- Fixed serialization of a resource which inherits from ResourceData/TrackedResourceData by making Tags and SystemData as optional properties.
+
+### Other Changes
+
+- Hide EncryptionProperties, EncryptionStatus and KeyVaultProperties in common type.
+
 ## 1.1.0 (2022-06-08)
 
 ### Features Added

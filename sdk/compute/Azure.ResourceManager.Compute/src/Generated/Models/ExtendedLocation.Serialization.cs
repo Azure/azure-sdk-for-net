@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ExtendedLocationTypes> type = default;
+            Optional<ExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ExtendedLocationTypes(property.Value.GetString());
+                    type = new ExtendedLocationType(property.Value.GetString());
                     continue;
                 }
             }

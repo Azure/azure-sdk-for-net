@@ -15,12 +15,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.ResourceData
+    public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfidentialLedgerData() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public ConfidentialLedgerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.LedgerProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public static partial class ConfidentialLedgerExtensions
     {

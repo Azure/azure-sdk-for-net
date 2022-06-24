@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
             Optional<IList<VirtualMachineScaleSetUpdateIPConfiguration>> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<DeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new DeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }

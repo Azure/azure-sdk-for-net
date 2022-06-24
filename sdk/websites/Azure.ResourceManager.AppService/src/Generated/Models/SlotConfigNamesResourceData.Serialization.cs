@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, kind.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames));
+            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames), kind.Value);
         }
     }
 }

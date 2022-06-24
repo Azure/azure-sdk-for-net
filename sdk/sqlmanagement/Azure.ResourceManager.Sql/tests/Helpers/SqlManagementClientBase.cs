@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Tests
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Tests
             SubnetData subnetData = new SubnetData()
             {
                 AddressPrefix = "10.10.5.0/24",
-                PrivateEndpointNetworkPolicies = "Disabled"
+                PrivateEndpointNetworkPolicy = "Disabled"
             };
             var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     new PrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
-                        PrivateLinkServiceId = managedInstance.Data.Id.ToString(),
+                        PrivateLinkServiceId = managedInstance.Data.Id,
                         GroupIds = { "managedInstance" },
                     }
                 },

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> vendor = default;
             Optional<bool> promoCodeRequired = default;
             Optional<int> quota = default;
-            Optional<AppServicePlanRestrictions> webHostingPlanRestrictions = default;
+            Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
             Optional<Uri> privacyPolicyUrl = default;
             Optional<Uri> legalTermsUrl = default;
             Optional<string> marketplacePublisher = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            webHostingPlanRestrictions = property0.Value.GetString().ToAppServicePlanRestrictions();
+                            webHostingPlanRestrictions = property0.Value.GetString().ToAppServicePlanRestriction();
                             continue;
                         }
                         if (property0.NameEquals("privacyPolicyUrl"))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PremierAddOnOffer(id, name, type, systemData.Value, kind.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

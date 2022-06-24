@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<DateTimeOffset> nextResetTime = default;
-            Optional<ComputeModeOptions> computeMode = default;
+            Optional<ComputeModeOption> computeMode = default;
             Optional<string> siteMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeMode = property0.Value.GetString().ToComputeModeOptions();
+                            computeMode = property0.Value.GetString().ToComputeModeOption();
                             continue;
                         }
                         if (property0.NameEquals("siteMode"))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceUsage(id, name, type, systemData.Value, kind.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value);
+            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value, kind.Value);
         }
     }
 }

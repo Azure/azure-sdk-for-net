@@ -3504,7 +3504,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public ResponseBasedOriginErrorDetectionSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.HttpErrorRange> HttpErrorRanges { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorType? ResponseBasedDetectedErrorTypes { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorType? ResponseBasedDetectedErrorType { get { throw null; } set { } }
         public int? ResponseBasedFailoverThresholdPercentage { get { throw null; } set { } }
     }
     public partial class RouteCacheCompressionSettings
