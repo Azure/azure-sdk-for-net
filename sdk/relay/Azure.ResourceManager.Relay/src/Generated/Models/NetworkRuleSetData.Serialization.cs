@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NWRuleSetIPRules>> ipRules = default;
             foreach (var property in element.EnumerateObject())
@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Relay
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -107,7 +112,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new NetworkRuleSetData(id, name, type, systemData, Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
+            return new NetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
         }
     }
 }

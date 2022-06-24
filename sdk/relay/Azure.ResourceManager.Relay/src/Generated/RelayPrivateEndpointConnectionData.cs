@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary> A class representing the RelayPrivateEndpointConnection data model. </summary>
-    public partial class RelayPrivateEndpointConnectionData : ProxyResource
+    public partial class RelayPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionData. </summary>
         public RelayPrivateEndpointConnectionData()
@@ -25,15 +25,16 @@ namespace Azure.ResourceManager.Relay
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, WritableSubResource privateEndpoint, ConnectionState connectionState, EndPointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState connectionState, EndPointProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            Location = location;
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>
@@ -54,5 +55,7 @@ namespace Azure.ResourceManager.Relay
         public ConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
         public EndPointProvisioningState? ProvisioningState { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Relay.Models;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary> A class representing the WcfRelay data model. </summary>
-    public partial class WcfRelayData : ProxyResource
+    public partial class WcfRelayData : ResourceData
     {
         /// <summary> Initializes a new instance of WcfRelayData. </summary>
         public WcfRelayData()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.Relay
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="isDynamic"> Returns true if the relay is dynamic; otherwise, false. </param>
         /// <param name="createdOn"> The time the WCF relay was created. </param>
         /// <param name="updatedOn"> The time the namespace was updated. </param>
@@ -34,7 +33,8 @@ namespace Azure.ResourceManager.Relay
         /// <param name="requiresClientAuthorization"> Returns true if client authorization is needed for this relay; otherwise, false. </param>
         /// <param name="requiresTransportSecurity"> Returns true if transport security is needed for this relay; otherwise, false. </param>
         /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
-        internal WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, bool? isDynamic, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, Relaytype? relayType, bool? requiresClientAuthorization, bool? requiresTransportSecurity, string userMetadata) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDynamic, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, Relaytype? relayType, bool? requiresClientAuthorization, bool? requiresTransportSecurity, string userMetadata, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             IsDynamic = isDynamic;
             CreatedOn = createdOn;
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Relay
             RequiresClientAuthorization = requiresClientAuthorization;
             RequiresTransportSecurity = requiresTransportSecurity;
             UserMetadata = userMetadata;
+            Location = location;
         }
 
         /// <summary> Returns true if the relay is dynamic; otherwise, false. </summary>
@@ -62,5 +63,7 @@ namespace Azure.ResourceManager.Relay
         public bool? RequiresTransportSecurity { get; set; }
         /// <summary> The usermetadata is a placeholder to store user-defined string data for the WCF Relay endpoint. For example, it can be used to store descriptive data, such as list of teams and their contact information. Also, user-defined configuration settings can be stored. </summary>
         public string UserMetadata { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }
