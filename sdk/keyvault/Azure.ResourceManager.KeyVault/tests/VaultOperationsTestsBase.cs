@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
