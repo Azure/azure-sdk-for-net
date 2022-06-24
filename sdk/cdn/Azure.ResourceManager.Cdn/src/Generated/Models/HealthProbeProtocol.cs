@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Protocol to use for health probe. </summary>
-    public enum ProbeProtocol
+    public enum HealthProbeProtocol
     {
         /// <summary> NotSet. </summary>
         NotSet,

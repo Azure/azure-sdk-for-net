@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleOverride : IUtf8JsonSerializable
+    public partial class ManagedRuleOverrideSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
+        internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element)
         {
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> enabledState = default;
-            Optional<ActionType> action = default;
+            Optional<ManagedRuleSetupState> enabledState = default;
+            Optional<OverrideActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enabledState = new ManagedRuleEnabledState(property.Value.GetString());
+                    enabledState = new ManagedRuleSetupState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"))
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new ActionType(property.Value.GetString());
+                    action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action));
+            return new ManagedRuleOverrideSetting(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action));
         }
     }
 }
