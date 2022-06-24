@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
 
             // create key vault
             VaultCollection vaults = resourceGroup.GetVaults();
-            var vaultProperties = new VaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            var vaultProperties = new VaultProperties(new Guid(TestEnvironment.TenantId), new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
             vaultProperties.AccessPolicies.Clear();
             await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new VaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
             VaultResource vault = await vaults.GetAsync(vaultName);
