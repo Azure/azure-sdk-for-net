@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleGroupOverride : IUtf8JsonSerializable
+    public partial class ManagedRuleGroupOverrideSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element)
+        internal static ManagedRuleGroupOverrideSetting DeserializeManagedRuleGroupOverrideSetting(JsonElement element)
         {
             string ruleGroupName = default;
-            Optional<IList<ManagedRuleOverride>> rules = default;
+            Optional<IList<ManagedRuleOverrideSetting>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"))
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();
+                    List<ManagedRuleOverrideSetting> array = new List<ManagedRuleOverrideSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleOverride.DeserializeManagedRuleOverride(item));
+                        array.Add(ManagedRuleOverrideSetting.DeserializeManagedRuleOverrideSetting(item));
                     }
                     rules = array;
                     continue;
                 }
             }
-            return new ManagedRuleGroupOverride(ruleGroupName, Optional.ToList(rules));
+            return new ManagedRuleGroupOverrideSetting(ruleGroupName, Optional.ToList(rules));
         }
     }
 }

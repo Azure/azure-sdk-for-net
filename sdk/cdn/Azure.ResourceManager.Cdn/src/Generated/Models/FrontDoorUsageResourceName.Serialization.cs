@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnUsageResourceName
+    public partial class FrontDoorUsageResourceName
     {
-        internal static CdnUsageResourceName DeserializeCdnUsageResourceName(JsonElement element)
+        internal static FrontDoorUsageResourceName DeserializeFrontDoorUsageResourceName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CdnUsageResourceName(value.Value, localizedValue.Value);
+            return new FrontDoorUsageResourceName(value.Value, localizedValue.Value);
         }
     }
 }

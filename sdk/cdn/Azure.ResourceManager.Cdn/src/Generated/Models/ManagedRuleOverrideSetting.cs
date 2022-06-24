@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines a managed rule group override setting. </summary>
-    public partial class ManagedRuleOverride
+    public partial class ManagedRuleOverrideSetting
     {
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        public ManagedRuleOverride(string ruleId)
+        public ManagedRuleOverrideSetting(string ruleId)
         {
             if (ruleId == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, ActionType? action)
+        internal ManagedRuleOverrideSetting(string ruleId, ManagedRuleSetupState? enabledState, OverrideActionType? action)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Identifier for the managed rule. </summary>
         public string RuleId { get; set; }
         /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
-        public ManagedRuleEnabledState? EnabledState { get; set; }
+        public ManagedRuleSetupState? EnabledState { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
-        public ActionType? Action { get; set; }
+        public OverrideActionType? Action { get; set; }
     }
 }

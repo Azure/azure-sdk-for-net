@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class PolicySettings : IUtf8JsonSerializable
+    public partial class WafPolicySettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static PolicySettings DeserializePolicySettings(JsonElement element)
+        internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element)
         {
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new PolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUrl.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
+            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUrl.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
         }
     }
 }

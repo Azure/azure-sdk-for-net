@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The usage names. </summary>
-    public partial class CdnUsageResourceName
+    public partial class FrontDoorUsageResourceName
     {
-        /// <summary> Initializes a new instance of CdnUsageResourceName. </summary>
-        internal CdnUsageResourceName()
+        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
+        internal FrontDoorUsageResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnUsageResourceName. </summary>
+        /// <summary> Initializes a new instance of FrontDoorUsageResourceName. </summary>
         /// <param name="value"> A string describing the resource name. </param>
         /// <param name="localizedValue"> A localized string describing the resource name. </param>
-        internal CdnUsageResourceName(string value, string localizedValue)
+        internal FrontDoorUsageResourceName(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;

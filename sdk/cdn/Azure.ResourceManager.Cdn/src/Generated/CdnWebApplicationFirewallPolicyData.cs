@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, PolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             Sku = sku;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Describes  policySettings for policy. </summary>
-        public PolicySettings PolicySettings { get; set; }
+        public WafPolicySettings PolicySettings { get; set; }
         /// <summary> Describes rate limit rules inside the policy. </summary>
         internal RateLimitRuleList RateLimitSettings { get; set; }
         /// <summary> List of rules. </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Describes managed rules inside the policy. </summary>
         internal ManagedRuleSetList ManagedRules { get; set; }
         /// <summary> List of rule sets. </summary>
-        public IList<ManagedRuleSet> ManagedRuleSets
+        public IList<WafPolicyManagedRuleSet> ManagedRuleSets
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
         public IReadOnlyList<SubResource> EndpointLinks { get; }
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WebApplicationFirewallPolicyProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>
         public PolicyResourceState? ResourceState { get; }
     }

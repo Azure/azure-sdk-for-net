@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> TLS protocol version that will be used for Https. </summary>
-    public enum MinimumTlsVersion
+    public enum CdnMinimumTlsVersion
     {
         /// <summary> None. </summary>
         None,

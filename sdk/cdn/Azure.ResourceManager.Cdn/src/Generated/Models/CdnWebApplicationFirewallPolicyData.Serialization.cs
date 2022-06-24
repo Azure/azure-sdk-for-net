@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Cdn
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<PolicySettings> policySettings = default;
+            Optional<WafPolicySettings> policySettings = default;
             Optional<RateLimitRuleList> rateLimitRules = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
             Optional<IReadOnlyList<SubResource>> endpointLinks = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
             Optional<PolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policySettings = PolicySettings.DeserializePolicySettings(property0.Value);
+                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rateLimitRules"))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new WebApplicationFirewallPolicyProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
