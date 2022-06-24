@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
         /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
-        internal SupportedCapabilities(bool? acceleratedNetwork, ArchitectureTypes? architecture)
+        internal SupportedCapabilities(bool? acceleratedNetwork, ArchitectureType? architecture)
         {
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
         public bool? AcceleratedNetwork { get; set; }
         /// <summary> CPU architecture supported by an OS disk. </summary>
-        public ArchitectureTypes? Architecture { get; set; }
+        public ArchitectureType? Architecture { get; set; }
     }
 }

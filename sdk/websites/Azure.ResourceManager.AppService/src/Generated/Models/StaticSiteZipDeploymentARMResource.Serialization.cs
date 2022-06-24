@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteZipDeploymentARMResource(id, name, type, systemData.Value, kind.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value);
+            return new StaticSiteZipDeploymentARMResource(id, name, type, systemData.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value, kind.Value);
         }
     }
 }

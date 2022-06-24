@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MsDeployLog(id, name, type, systemData.Value, kind.Value, Optional.ToList(entries));
+            return new MsDeployLog(id, name, type, systemData.Value, Optional.ToList(entries), kind.Value);
         }
     }
 }

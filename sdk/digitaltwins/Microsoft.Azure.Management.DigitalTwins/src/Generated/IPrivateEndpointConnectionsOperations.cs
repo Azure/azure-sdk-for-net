@@ -120,6 +120,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// The name of the private endpoint connection.
         /// </param>
         /// <param name='properties'>
+        /// The connection properties.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -136,7 +137,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete private endpoint connection with the specified name.
         /// </summary>
@@ -178,6 +179,7 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// The name of the private endpoint connection.
         /// </param>
         /// <param name='properties'>
+        /// The connection properties.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -194,6 +196,6 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string privateEndpointConnectionName, ConnectionProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

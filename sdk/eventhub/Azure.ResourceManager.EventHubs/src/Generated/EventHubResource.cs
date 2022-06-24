@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
     /// A Class representing an EventHub along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetEventHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubNamespaceResource" /> using the GetEventHub method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHub method.
     /// </summary>
     public partial class EventHubResource : ArmResource
     {
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConsumerGroupResources in the EventHub. </summary>
-        /// <returns> An object representing collection of ConsumerGroupResources and their operations over a ConsumerGroupResource. </returns>
-        public virtual ConsumerGroupCollection GetConsumerGroups()
+        /// <summary> Gets a collection of EventHubsConsumerGroupResources in the EventHub. </summary>
+        /// <returns> An object representing collection of EventHubsConsumerGroupResources and their operations over a EventHubsConsumerGroupResource. </returns>
+        public virtual EventHubsConsumerGroupCollection GetEventHubsConsumerGroups()
         {
-            return GetCachedClient(Client => new ConsumerGroupCollection(Client, Id));
+            return GetCachedClient(Client => new EventHubsConsumerGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConsumerGroupResource>> GetConsumerGroupAsync(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsConsumerGroupResource>> GetEventHubsConsumerGroupAsync(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetConsumerGroups().GetAsync(consumerGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubsConsumerGroups().GetAsync(consumerGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="consumerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConsumerGroupResource> GetConsumerGroup(string consumerGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsConsumerGroupResource> GetEventHubsConsumerGroup(string consumerGroupName, CancellationToken cancellationToken = default)
         {
-            return GetConsumerGroups().Get(consumerGroupName, cancellationToken);
+            return GetEventHubsConsumerGroups().Get(consumerGroupName, cancellationToken);
         }
 
         /// <summary>

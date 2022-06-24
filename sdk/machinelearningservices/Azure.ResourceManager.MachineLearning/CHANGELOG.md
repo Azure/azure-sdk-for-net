@@ -6,6 +6,11 @@
 
 ### Breaking Changes
 
+- Base type of `MachineLearningComputeData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningWorkspaceData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningPrivateLinkResource` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes

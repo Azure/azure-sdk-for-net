@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new CsmPublishingCredentialsPoliciesEntityData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(allow));
+            return new CsmPublishingCredentialsPoliciesEntityData(id, name, type, systemData.Value, Optional.ToNullable(allow), kind.Value);
         }
     }
 }

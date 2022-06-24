@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> workerSizeId = default;
-            Optional<ComputeModeOptions> computeMode = default;
+            Optional<ComputeModeOption> computeMode = default;
             Optional<string> workerSize = default;
             Optional<int> workerCount = default;
             Optional<IReadOnlyList<string>> instanceNames = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeMode = property0.Value.GetString().ToComputeModeOptions();
+                            computeMode = property0.Value.GetString().ToComputeModeOption();
                             continue;
                         }
                         if (property0.NameEquals("workerSize"))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WorkerPoolResourceData(id, name, type, systemData.Value, kind.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames));
+            return new WorkerPoolResourceData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames), kind.Value);
         }
     }
 }

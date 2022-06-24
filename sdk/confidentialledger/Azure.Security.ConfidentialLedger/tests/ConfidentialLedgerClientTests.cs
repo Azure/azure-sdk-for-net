@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -28,7 +26,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                         Transport = new MockTransport(
                             req =>
                             {
-                                if (req.Uri.Host == "identity.accledger.azure.com")
+                                if (req.Uri.Host == "identity.confidential-ledger.core.azure.com")
                                 {
                                     var cert = new MockResponse(200);
                                     cert.SetContent(

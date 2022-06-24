@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The required set of inputs to validate a VNET. </summary>
-    public partial class VnetContent : ProxyOnlyResource
+    public partial class VnetContent : ResourceData
     {
         /// <summary> Initializes a new instance of VnetContent. </summary>
         public VnetContent()
@@ -23,17 +23,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="vnetResourceGroup"> The Resource Group of the VNET to be validated. </param>
         /// <param name="vnetName"> The name of the VNET to be validated. </param>
         /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
-        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal VnetContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, string subnetResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
             VnetSubnetName = vnetSubnetName;
             SubnetResourceId = subnetResourceId;
+            Kind = kind;
         }
 
         /// <summary> The Resource Group of the VNET to be validated. </summary>
@@ -44,5 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string VnetSubnetName { get; set; }
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
         public string SubnetResourceId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

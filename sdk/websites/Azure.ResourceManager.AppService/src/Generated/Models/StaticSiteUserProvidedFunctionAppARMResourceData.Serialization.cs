@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, systemData.Value, kind.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn));
+            return new StaticSiteUserProvidedFunctionAppARMResourceData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value);
         }
     }
 }

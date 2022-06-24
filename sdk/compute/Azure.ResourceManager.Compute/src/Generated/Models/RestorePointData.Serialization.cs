@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IList<WritableSubResource>> excludeDisks = default;
             Optional<RestorePointSourceMetadata> sourceMetadata = default;
             Optional<string> provisioningState = default;
-            Optional<ConsistencyModeTypes> consistencyMode = default;
+            Optional<ConsistencyModeType> consistencyMode = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<WritableSubResource> sourceRestorePoint = default;
             Optional<RestorePointInstanceView> instanceView = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            consistencyMode = new ConsistencyModeTypes(property0.Value.GetString());
+                            consistencyMode = new ConsistencyModeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"))

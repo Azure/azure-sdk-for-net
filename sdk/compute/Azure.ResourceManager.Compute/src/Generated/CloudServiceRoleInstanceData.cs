@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource Location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"></param>
+        /// <param name="sku"> The role instance SKU. </param>
         /// <param name="networkProfile"> Describes the network profile for the role instance. </param>
         /// <param name="instanceView"> The instance view of the role instance. </param>
         internal CloudServiceRoleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceNetworkProfile networkProfile, RoleInstanceView instanceView) : base(id, name, resourceType, systemData)
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute
         public AzureLocation? Location { get; }
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> Gets the sku. </summary>
+        /// <summary> The role instance SKU. </summary>
         public InstanceSku Sku { get; }
         /// <summary> Describes the network profile for the role instance. </summary>
         internal RoleInstanceNetworkProfile NetworkProfile { get; }
