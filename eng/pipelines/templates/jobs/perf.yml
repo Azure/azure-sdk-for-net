@@ -98,12 +98,12 @@ jobs:
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
       displayName: Print results.json
 
-    - template: /eng/common/TestResources/remove-test-resources.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.serviceDirectory }}
-        ResourceType: perf
-
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
         artifactName: results
+
+    - template: /eng/common/TestResources/remove-test-resources.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.serviceDirectory }}
+        ResourceType: perf
