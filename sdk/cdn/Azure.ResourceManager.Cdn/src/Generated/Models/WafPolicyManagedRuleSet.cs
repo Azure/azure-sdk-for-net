@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines a managed rule set. </summary>
-    public partial class ManagedRuleSet
+    public partial class WafPolicyManagedRuleSet
     {
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of WafPolicyManagedRuleSet. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
-        public ManagedRuleSet(string ruleSetType, string ruleSetVersion)
+        public WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion)
         {
             if (ruleSetType == null)
             {
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
+            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverrideSetting>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of WafPolicyManagedRuleSet. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="anomalyScore"> Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule overrides to apply to the rule set. </param>
-        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, int? anomalyScore, IList<ManagedRuleGroupOverride> ruleGroupOverrides)
+        internal WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion, int? anomalyScore, IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests. </summary>
         public int? AnomalyScore { get; set; }
         /// <summary> Defines the rule overrides to apply to the rule set. </summary>
-        public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
+        public IList<ManagedRuleGroupOverrideSetting> RuleGroupOverrides { get; }
     }
 }

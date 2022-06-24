@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);
+                Assert.AreEqual(tempUsage.Unit, FrontDoorUsageUnit.Count);
                 Assert.AreEqual(tempUsage.CurrentValue, 0);
             }
             Assert.AreEqual(count, 1);
