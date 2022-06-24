@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CosmosDBManagementClientBase : ManagementRecordedTestBase<CosmosDBManagementTestEnvironment>
     {
         protected const int MaxStalenessPrefix = 300;
