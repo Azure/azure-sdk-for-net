@@ -107,11 +107,19 @@ namespace Azure.ResourceManager.Tests
 
             var parameters3 = new ResourceGroupPatch
             {
+                Name = rgName,
+                Tags = {} // This does not touch the ChangeTrackingDictionary and no tags property will be sent in the patch request.
+            };
+            ResourceGroupResource rg3 = await rg2.UpdateAsync(parameters3);
+            Assert.AreEqual(rg1.Data.Tags, rg3.Data.Tags);
+
+            var parameters4 = new ResourceGroupPatch
+            {
                 Name = rgName
             };
-            parameters3.Tags.Clear();
-            ResourceGroupResource rg3 = await rg2.UpdateAsync(parameters3);
-            Assert.AreEqual(0, rg3.Data.Tags.Count);
+            parameters4.Tags.Clear();
+            ResourceGroupResource rg4 = await rg3.UpdateAsync(parameters4);
+            Assert.AreEqual(0, rg4.Data.Tags.Count);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
         }
