@@ -25,10 +25,7 @@ parameters:
     default: ''
 
 variables:
-  - name: NugetSecurityAnalysisWarningLevel
-    value: 'none'
-  - name: skipComponentGovernanceDetection
-    value: 'true'
+  - template: /eng/pipelines/templates/variables/globals.yml
   - name: Pool
     value: 'azsdk-pool-mms-ubuntu-2004-perf'
   - name: OSVmImage
