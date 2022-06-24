@@ -681,11 +681,12 @@
                   "properties": {}
                 },
                 "delegations": [
-                  {
-                    "name": "Microsoft.Sql/managedInstances",
-                    "type": "Microsoft.Sql/managedInstances",
-                    "properties": {
-                      "serviceName": "Microsoft.Sql/managedInstances"
+                    {
+                        "name": "Microsoft.Sql/managedInstances",
+                        "type": "Microsoft.Sql/managedInstances",
+                        "properties": {
+                            "serviceName": "Microsoft.Sql/managedInstances"
+                        }
                     }
                 ]
               }
