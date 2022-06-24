@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public AutoscaleNotification() { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
-        public string Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.OperationType Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WebhookNotification> Webhooks { get { throw null; } }
     }
     public partial class AutoscaleProfile
@@ -1551,6 +1551,23 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.OperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.OperationType Scale { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.OperationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.OperationType left, Azure.ResourceManager.Monitor.Models.OperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.OperationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.OperationType left, Azure.ResourceManager.Monitor.Models.OperationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.Monitor.Models.Operator>

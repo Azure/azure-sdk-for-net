@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}",
-                        PrivateLinkServiceId = vaultResource.Data.Id.ToString(),
+                        PrivateLinkServiceId = vaultResource.Data.Id,
 
                         RequestMessage = "SDK test",
                         GroupIds = { "vault" }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
