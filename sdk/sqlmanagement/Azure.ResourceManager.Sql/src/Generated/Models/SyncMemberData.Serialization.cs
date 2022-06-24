@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SyncMemberDbType> databaseType = default;
             Optional<string> syncAgentId = default;
             Optional<Guid> sqlServerDatabaseId = default;
-            Optional<string> syncMemberAzureDatabaseResourceId = default;
+            Optional<ResourceIdentifier> syncMemberAzureDatabaseResourceId = default;
             Optional<bool> usePrivateLinkConnection = default;
             Optional<string> privateEndpointName = default;
             Optional<string> serverName = default;
@@ -155,7 +155,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("syncMemberAzureDatabaseResourceId"))
                         {
-                            syncMemberAzureDatabaseResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            syncMemberAzureDatabaseResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("usePrivateLinkConnection"))

@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestoreOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestoreOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeleteOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeleteOn.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {

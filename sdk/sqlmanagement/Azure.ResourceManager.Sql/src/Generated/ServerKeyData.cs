@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverKeyType"> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
         /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="createOn"> The server key creation date. </param>
+        /// <param name="createdOn"> The server key creation date. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        internal ServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            CreateOn = createOn;
+            CreatedOn = createdOn;
             AutoRotationEnabled = autoRotationEnabled;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Thumbprint of the server key. </summary>
         public string Thumbprint { get; }
         /// <summary> The server key creation date. </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         public bool? AutoRotationEnabled { get; }
     }

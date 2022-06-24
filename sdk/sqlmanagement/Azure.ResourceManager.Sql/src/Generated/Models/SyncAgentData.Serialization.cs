@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> syncDatabaseId = default;
+            Optional<ResourceIdentifier> syncDatabaseId = default;
             Optional<DateTimeOffset> lastAliveTime = default;
             Optional<SyncAgentState> state = default;
             Optional<bool> isUpToDate = default;
@@ -79,7 +79,12 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("syncDatabaseId"))
                         {
-                            syncDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            syncDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastAliveTime"))

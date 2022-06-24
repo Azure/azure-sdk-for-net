@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The server name that the backup database belong to. </param>
         /// <param name="serverCreateOn"> The create time of the server. </param>
         /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeleteOn"> The delete time of the database. </param>
+        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
         /// <param name="backupOn"> The time the backup was taken. </param>
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeleteOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;
             DatabaseName = databaseName;
-            DatabaseDeleteOn = databaseDeleteOn;
+            DatabaseDeletedOn = databaseDeletedOn;
             BackupOn = backupOn;
             BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The name of the database the backup belong to. </summary>
         public string DatabaseName { get; }
         /// <summary> The delete time of the database. </summary>
-        public DateTimeOffset? DatabaseDeleteOn { get; }
+        public DateTimeOffset? DatabaseDeletedOn { get; }
         /// <summary> The time the backup was taken. </summary>
         public DateTimeOffset? BackupOn { get; }
         /// <summary> The time the long term retention backup will expire. </summary>

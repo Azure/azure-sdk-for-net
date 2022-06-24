@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="createOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deleteOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createOn, DateTimeOffset? deleteOn, DateTimeOffset? earliestRestoreOn, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DatabaseName = databaseName;
             MaxSizeBytes = maxSizeBytes;
-            CreateOn = createOn;
-            DeleteOn = deleteOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
             BackupStorageRedundancy = backupStorageRedundancy;
         }
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The max size of the database expressed in bytes. </summary>
         public long? MaxSizeBytes { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? DeleteOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The storage account type used to store backups for this database. </summary>

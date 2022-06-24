@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestoreOn))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestoreOn.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ManagedInstanceProxyOverride> proxyOverride = default;
             Optional<string> timezoneId = default;
             Optional<string> instancePoolId = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
@@ -422,7 +422,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

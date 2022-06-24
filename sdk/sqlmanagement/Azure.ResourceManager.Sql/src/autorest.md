@@ -21,6 +21,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*ResourceId': 'arm-id'
+  '*SubnetId': 'arm-id'
+  'subnetId': 'arm-id'
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
@@ -46,6 +49,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  RestorePointInOn: RestorePointInTime # workaround for not renaming RestorePointInTime automatically
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
@@ -183,24 +187,34 @@ directive:
       where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
       transform: >
           $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    - from: swagger-document
-      where: $.definitions..restorePointInTime
-      transform: >
-          $['x-ms-client-name'] = 'RestoreOn';
+    # - from: swagger-document
+    #   where: $.definitions..restorePointInTime
+    #   transform: >
+    #       $['x-ms-client-name'] = 'RestoreOn';
     - from: swagger-document
       where: $.definitions..restorePointCreationDate
       transform: >
-          $['x-ms-client-name'] = 'restorePointCreateOn';
+          $['x-ms-client-name'] = 'restorePointCreatedOn';
     - from: swagger-document
       where: $.definitions..creationDate
       transform: >
           if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'createOn';
+              $['x-ms-client-name'] = 'createdOn';
+    - from: swagger-document
+      where: $.definitions..creationTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'createdOn';
     - from: swagger-document
       where: $.definitions..deletionDate
       transform: >
           if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'deleteOn';
+              $['x-ms-client-name'] = 'deletedOn';
+    - from: swagger-document
+      where: $.definitions..deletionTime
+      transform: >
+          if ($.format === 'date-time')
+              $['x-ms-client-name'] = 'deletedOn';
     - from: swagger-document
       where: $.definitions..backupExpirationTime
       transform: >
@@ -215,21 +229,17 @@ directive:
       where: $.definitions..databaseDeletionTime
       transform: >
           if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'databaseDeleteOn';
+              $['x-ms-client-name'] = 'databaseDeletedOn';
     - from: swagger-document
       where: $.definitions..sourceDatabaseDeletionDate
       transform: >
           if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'sourceDatabaseDeleteOn';
+              $['x-ms-client-name'] = 'sourceDatabaseDeletedOn';
     - from: swagger-document
       where: $.definitions..estimatedCompletionTime
       transform: >
           if ($.format === 'date-time')
               $['x-ms-client-name'] = 'estimatedCompleteOn';
-    - from: swagger-document
-      where: $.definitions..subnetId
-      transform: >
-          $['x-ms-format'] = 'arm-id';
     - from: SyncAgents.json
       where: $.definitions.SyncAgentProperties
       transform: >
@@ -238,4 +248,32 @@ directive:
       where: $.definitions.DataMaskingRuleProperties
       transform: >
           delete $.properties.id;
+    - from: swagger-document
+      where: $.definitions..originalId
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: swagger-document
+      where: $.definitions..maintenanceConfigurationId 
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: swagger-document
+      where: $.definitions..sourceDatabaseId 
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: swagger-document
+      where: $.definitions..recoverableDatabaseId 
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: swagger-document
+      where: $.definitions..syncDatabaseId 
+      transform: >
+          $['x-ms-format'] = 'arm-id';
+    - from: swagger-document
+      where: $.definitions..partnerLocation 
+      transform: >
+          $['x-ms-format'] = 'azure-location';
+    - from: swagger-document
+      where: $.definitions..defaultSecondaryLocation 
+      transform: >
+          $['x-ms-format'] = 'azure-location';
 ```

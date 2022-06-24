@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="createOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deleteOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? createOn, DateTimeOffset? deleteOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData, tags, location)
         {
             DatabaseName = databaseName;
-            CreateOn = createOn;
-            DeleteOn = deleteOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
         }
 
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? DeleteOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
     }

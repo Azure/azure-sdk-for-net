@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> subnetId = default;
             Optional<string> family = default;
             Optional<IReadOnlyList<string>> childResources = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -146,7 +146,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
