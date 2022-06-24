@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api error. </summary>
-    public partial class ApiError
+    public partial class ComputeApiError
     {
-        /// <summary> Initializes a new instance of ApiError. </summary>
-        internal ApiError()
+        /// <summary> Initializes a new instance of ComputeApiError. </summary>
+        internal ComputeApiError()
         {
-            Details = new ChangeTrackingList<ApiErrorBase>();
+            Details = new ChangeTrackingList<ComputeApiErrorBase>();
         }
 
-        /// <summary> Initializes a new instance of ApiError. </summary>
+        /// <summary> Initializes a new instance of ComputeApiError. </summary>
         /// <param name="details"> The Api error details. </param>
         /// <param name="innererror"> The Api inner error. </param>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        internal ApiError(IReadOnlyList<ApiErrorBase> details, InnerError innererror, string code, string target, string message)
+        internal ComputeApiError(IReadOnlyList<ComputeApiErrorBase> details, InnerError innererror, string code, string target, string message)
         {
             Details = details;
             Innererror = innererror;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The Api error details. </summary>
-        public IReadOnlyList<ApiErrorBase> Details { get; }
+        public IReadOnlyList<ComputeApiErrorBase> Details { get; }
         /// <summary> The Api inner error. </summary>
         public InnerError Innererror { get; }
         /// <summary> The error code. </summary>
