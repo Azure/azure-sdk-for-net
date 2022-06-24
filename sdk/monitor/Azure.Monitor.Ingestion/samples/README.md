@@ -13,4 +13,4 @@ description: Samples for the Azure Monitor Ingestion client library.
 * [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample1_LogData.md)
 * [LogData (Async)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample1_LogDataAsync.md)
 * [VerifyLogs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample2_VerifyLogs.md)
-* [VerifyLogs (Async)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample2_VerifyLogsAsync.md)
+* [VerifyLogs (Async)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/samples/Sample2_VerifyLogsAsync.md) 
