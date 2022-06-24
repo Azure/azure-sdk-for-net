@@ -2,6 +2,7 @@ param baseName string = resourceGroup().name
 param location string = resourceGroup().location
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
+// cSpell:ignore dlake
   name: '${baseName}dlake'
   location: location
   kind: 'BlockBlobStorage'
