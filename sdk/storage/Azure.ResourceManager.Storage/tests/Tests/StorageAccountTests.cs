@@ -286,7 +286,8 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.Encryption = new Encryption()
             {
                 KeySource = KeySource.MicrosoftStorage,
-                Services = new EncryptionServices {
+                Services = new EncryptionServices
+                {
                     Blob = new EncryptionService { Enabled = true },
                     File = new EncryptionService { Enabled = true }
                 }
@@ -465,7 +466,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 Encryption = new Encryption()
                 {
                     KeySource = KeySource.MicrosoftStorage,
-                    Services = new EncryptionServices {
+                    Services = new EncryptionServices
+                    {
                         Blob = new EncryptionService { Enabled = true },
                         File = new EncryptionService { Enabled = true }
                     }
@@ -490,7 +492,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 Encryption = new Encryption()
                 {
                     KeySource = KeySource.MicrosoftStorage,
-                    Services = new EncryptionServices {
+                    Services = new EncryptionServices
+                    {
                         Blob = new EncryptionService { Enabled = true },
                         File = new EncryptionService { Enabled = true }
                     }
@@ -544,7 +547,8 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.Encryption = new Encryption()
             {
                 KeySource = KeySource.MicrosoftStorage,
-                Services = new EncryptionServices {
+                Services = new EncryptionServices
+                {
                     Blob = new EncryptionService { Enabled = true },
                     File = new EncryptionService { Enabled = true }
                 },
@@ -663,7 +667,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(accountData.NetworkRuleSet.IPRules);
             Assert.IsNotEmpty(accountData.NetworkRuleSet.IPRules);
             Assert.AreEqual("23.45.67.89", accountData.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IPRules[0].Action);
+            Assert.AreEqual(Models.Action.Allow, accountData.NetworkRuleSet.IPRules[0].Action);
 
             //update network rule
             StorageAccountPatch updateParameters = new StorageAccountPatch()
@@ -671,7 +675,9 @@ namespace Azure.ResourceManager.Storage.Tests
                 NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Deny)
                 {
                     Bypass = @"Logging, Metrics",
-                    IPRules = { new IPRule("23.45.67.90"),
+                    IPRules =
+                    {
+                        new IPRule("23.45.67.90"),
                         new IPRule("23.45.67.91")
                     }
                 }
@@ -687,14 +693,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(accountData.NetworkRuleSet.IPRules);
             Assert.IsNotEmpty(accountData.NetworkRuleSet.IPRules);
             Assert.AreEqual("23.45.67.90", accountData.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IPRules[0].Action);
+            Assert.AreEqual(Models.Action.Allow, accountData.NetworkRuleSet.IPRules[0].Action);
             Assert.AreEqual("23.45.67.91", accountData.NetworkRuleSet.IPRules[1].IPAddressOrRange);
-            Assert.AreEqual(DefaultAction.Allow.ToString(), accountData.NetworkRuleSet.IPRules[1].Action);
+            Assert.AreEqual(Models.Action.Allow, accountData.NetworkRuleSet.IPRules[1].Action);
 
             //update network rule to allow
             updateParameters = new StorageAccountPatch()
             {
-                NetworkRuleSet = new NetworkRuleSet(defaultAction: DefaultAction.Allow)
+                NetworkRuleSet = new NetworkRuleSet(DefaultAction.Allow)
             };
             StorageAccountResource account3 = await account2.UpdateAsync(updateParameters);
 
@@ -802,7 +808,8 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.Encryption = new Encryption()
             {
                 KeySource = KeySource.MicrosoftStorage,
-                Services = new EncryptionServices {
+                Services = new EncryptionServices
+                {
                     Blob = new EncryptionService { Enabled = true },
                     File = new EncryptionService { Enabled = true }
                 }
@@ -1540,7 +1547,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardLRS));
             parameters.NetworkRuleSet = new NetworkRuleSet(DefaultAction.Deny) { Bypass = @"Logging,AzureServices" };
-            parameters.NetworkRuleSet.IPRules.Add(new IPRule("23.45.67.90"));
+            parameters.NetworkRuleSet.IPRules.Add(new IPRule("23.45.67.90") { Action = Models.Action.Allow });
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
 
             //validate
@@ -1552,7 +1559,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.NetworkRuleSet.IPRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.IPRules);
             Assert.AreEqual("23.45.67.90", account.Data.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IPRules[0].Action);
+            Assert.AreEqual(Models.Action.Allow, account.Data.NetworkRuleSet.IPRules[0].Action);
 
             //update vnet
             StorageAccountPatch updateParameters = new StorageAccountPatch
@@ -1562,8 +1569,8 @@ namespace Azure.ResourceManager.Storage.Tests
                     Bypass = @"Logging, Metrics",
                     IPRules =
                     {
-                        new IPRule("23.45.67.91") { Action = "Allow" },
-                        new IPRule("23.45.67.92")
+                        new IPRule("23.45.67.91") { Action = Models.Action.Allow },
+                        new IPRule("23.45.67.92") { Action = Models.Action.Allow }
                     },
                     ResourceAccessRules =
                     {
@@ -1591,9 +1598,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.NetworkRuleSet.IPRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.IPRules);
             Assert.AreEqual("23.45.67.91", account.Data.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IPRules[0].Action);
+            Assert.AreEqual(Models.Action.Allow, account.Data.NetworkRuleSet.IPRules[0].Action);
             Assert.AreEqual("23.45.67.92", account.Data.NetworkRuleSet.IPRules[1].IPAddressOrRange);
-            Assert.AreEqual("Allow", account.Data.NetworkRuleSet.IPRules[1].Action);
+            Assert.AreEqual(Models.Action.Allow, account.Data.NetworkRuleSet.IPRules[1].Action);
             Assert.NotNull(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId.ToString());

@@ -16,6 +16,11 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(GroupCall))
             {
                 writer.WritePropertyName("groupCall");
@@ -66,16 +71,12 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("image");
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static MediaInput DeserializeMediaInput(JsonElement element)
         {
+            Optional<MediaInputType> kind = default;
             Optional<GroupCall> groupCall = default;
             Optional<GroupCall> room = default;
             Optional<TeamsMeeting> teamsMeeting = default;
@@ -86,9 +87,18 @@ namespace Azure.Communication.MediaComposition
             Optional<CommunicationCallIdentifierModel> dominantSpeaker = default;
             Optional<CommunicationCallIdentifierModel> screenShare = default;
             Optional<ImageInput> image = default;
-            Optional<MediaInputType> kind = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new MediaInputType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("groupCall"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,18 +199,8 @@ namespace Azure.Communication.MediaComposition
                     image = ImageInput.DeserializeImageInput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new MediaInputType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new MediaInput(groupCall.Value, room.Value, teamsMeeting.Value, rtmp.Value, srt.Value, participant.Value, activePresenter.Value, dominantSpeaker.Value, screenShare.Value, image.Value, Optional.ToNullable(kind));
+            return new MediaInput(Optional.ToNullable(kind), groupCall.Value, room.Value, teamsMeeting.Value, rtmp.Value, srt.Value, participant.Value, activePresenter.Value, dominantSpeaker.Value, screenShare.Value, image.Value);
         }
     }
 }

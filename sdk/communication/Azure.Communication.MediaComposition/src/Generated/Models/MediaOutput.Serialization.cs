@@ -15,6 +15,11 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(GroupCall))
             {
                 writer.WritePropertyName("groupCall");
@@ -40,24 +45,29 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("srt");
                 writer.WriteObjectValue(Srt);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
         internal static MediaOutput DeserializeMediaOutput(JsonElement element)
         {
+            Optional<MediaOutputType> kind = default;
             Optional<GroupCall> groupCall = default;
             Optional<GroupCall> room = default;
             Optional<TeamsMeeting> teamsMeeting = default;
             Optional<RtmpStream> rtmp = default;
             Optional<SrtStream> srt = default;
-            Optional<MediaOutputType> kind = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new MediaOutputType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("groupCall"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,18 +118,8 @@ namespace Azure.Communication.MediaComposition
                     srt = SrtStream.DeserializeSrtStream(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new MediaOutputType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new MediaOutput(groupCall.Value, room.Value, teamsMeeting.Value, rtmp.Value, srt.Value, Optional.ToNullable(kind));
+            return new MediaOutput(Optional.ToNullable(kind), groupCall.Value, room.Value, teamsMeeting.Value, rtmp.Value, srt.Value);
         }
     }
 }
