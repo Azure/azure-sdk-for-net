@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class VaultPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultPrivateLinkServiceConnectionState DeserializeKeyVaultPrivateLinkServiceConnectionState(JsonElement element)
+        internal static VaultPrivateLinkServiceConnectionState DeserializeVaultPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<VaultPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<ActionsRequiredMessage> actionsRequired = default;
+            Optional<VaultActionsRequiredMessage> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new KeyVaultPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new VaultPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new ActionsRequiredMessage(property.Value.GetString());
+                    actionsRequired = new VaultActionsRequiredMessage(property.Value.GetString());
                     continue;
                 }
             }
-            return new KeyVaultPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
+            return new VaultPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
         }
     }
 }

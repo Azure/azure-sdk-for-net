@@ -7,69 +7,45 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class VaultPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
-            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
-                writer.WritePropertyName("privateEndpoint");
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
-            }
-            if (Optional.IsDefined(ConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(ConnectionState);
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("requiredZoneNames");
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultPrivateEndpointConnectionData DeserializeKeyVaultPrivateEndpointConnectionData(JsonElement element)
+        internal static VaultPrivateLinkResourceData DeserializeVaultPrivateLinkResourceData(JsonElement element)
         {
-            Optional<ETag> etag = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -129,41 +105,46 @@ namespace Azure.ResourceManager.KeyVault
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("groupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            groupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("requiredMembers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = KeyVaultPrivateLinkServiceConnectionState.DeserializeKeyVaultPrivateLinkServiceConnectionState(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredMembers = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("requiredZoneNames"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredZoneNames = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new VaultPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

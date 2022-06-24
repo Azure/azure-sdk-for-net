@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
-    public partial class KeyVaultPrivateLinkServiceConnectionState
+    public partial class VaultPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
-        public KeyVaultPrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of VaultPrivateLinkServiceConnectionState. </summary>
+        public VaultPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of VaultPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, ActionsRequiredMessage? actionsRequired)
+        internal VaultPrivateLinkServiceConnectionState(VaultPrivateEndpointServiceConnectionStatus? status, string description, VaultActionsRequiredMessage? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </summary>
-        public KeyVaultPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public VaultPrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval or rejection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        public ActionsRequiredMessage? ActionsRequired { get; set; }
+        public VaultActionsRequiredMessage? ActionsRequired { get; set; }
     }
 }
