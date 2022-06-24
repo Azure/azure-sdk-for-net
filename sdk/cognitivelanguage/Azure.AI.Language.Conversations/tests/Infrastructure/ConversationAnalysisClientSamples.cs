@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -13,13 +14,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
         }
 
-        protected ConversationAnalysisProjectsClient ProjectsClient { get; private set; }
+        protected ConversationAuthoringClient ProjectsClient { get; private set; }
 
         public async override Task StartTestRecordingAsync()
         {
             await base.StartTestRecordingAsync();
 
-            ProjectsClient = CreateClient<ConversationAnalysisProjectsClient>(
+            ProjectsClient = CreateClient<ConversationAuthoringClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(

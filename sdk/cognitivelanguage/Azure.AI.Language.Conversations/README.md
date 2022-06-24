@@ -22,6 +22,8 @@ dotnet add package Azure.AI.Language.Conversations --prerelease
 - An [Azure subscription][azure_subscription]
 - An existing Azure Language Service Resource
 
+Though you can use this SDK to create and import conversation projects, [Language Studio][language_studio] is the preferred method for creating projects.
+
 ### Authenticate the client
 
 In order to interact with the Conversations service, you'll need to create an instance of the [`ConversationAnalysisClient`][conversationanalysis_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
@@ -34,6 +36,15 @@ Alternatively, use the [Azure CLI][azure_cli] command shown below to get the API
 
 ```powershell
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
+```
+
+#### Namespaces
+
+Start by importing the namespace for the [`ConversationAnalysisClient`][conversationanalysis_client_class] and related class:
+
+```C# Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.Conversations;
 ```
 
 #### Create a ConversationAnalysisClient
@@ -131,19 +142,17 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
     Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
     Console.WriteLine();
 
-    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
     {
-        continue;
-    }
-
-    foreach (JsonElement resolution in resolutions.EnumerateArray())
-    {
-        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+        foreach (JsonElement resolution in resolutions.EnumerateArray())
         {
-            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-            Console.WriteLine();
+            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            {
+                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine();
+            }
         }
     }
 }
@@ -389,6 +398,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
 
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs

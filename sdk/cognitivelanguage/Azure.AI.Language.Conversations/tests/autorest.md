@@ -25,7 +25,7 @@ modelerfour:
 
 Customizations that should eventually be added to central autorest configuration.
 
-### Model customizations
+### General customizations
 
 ``` yaml
 directive:
@@ -55,9 +55,10 @@ directive:
     $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
     $["x-ms-client-default"] = "Utf16CodeUnit";
 
-# Correct Endpoint parameter description to reference right domain suffix.
+# Fix Endpoint parameter description and format.
 - from: swagger-document
   where: $.parameters.Endpoint
-  transform: >
-    $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com)."
+  transform: |
+    $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com).";
+    $["format"] = "url";
 ```

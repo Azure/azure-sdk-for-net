@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the NetworkFeatures data model. </summary>
-    public partial class NetworkFeaturesData : ProxyOnlyResource
+    public partial class NetworkFeaturesData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkFeaturesData. </summary>
         public NetworkFeaturesData()
@@ -27,17 +27,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="virtualNetworkName"> The Virtual Network name. </param>
         /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
-        internal NetworkFeaturesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal NetworkFeaturesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, string kind) : base(id, name, resourceType, systemData)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
             HybridConnections = hybridConnections;
             HybridConnectionsV2 = hybridConnectionsV2;
+            Kind = kind;
         }
 
         /// <summary> The Virtual Network name. </summary>
@@ -48,5 +49,7 @@ namespace Azure.ResourceManager.AppService
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

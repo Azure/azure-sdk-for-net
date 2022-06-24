@@ -67,19 +67,17 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
     Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
     Console.WriteLine();
 
-    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
     {
-        continue;
-    }
-
-    foreach (JsonElement resolution in resolutions.EnumerateArray())
-    {
-        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+        foreach (JsonElement resolution in resolutions.EnumerateArray())
         {
-            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-            Console.WriteLine();
+            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            {
+                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine();
+            }
         }
     }
 }
@@ -87,31 +85,8 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 
 ## Asynchronous
 
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-string projectName = "Menu";
-string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
 Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 ```

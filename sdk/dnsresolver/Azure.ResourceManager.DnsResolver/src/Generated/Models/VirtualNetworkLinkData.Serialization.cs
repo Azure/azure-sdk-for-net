@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -43,11 +44,11 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -55,7 +56,12 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -75,6 +81,11 @@ namespace Azure.ResourceManager.DnsResolver
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -126,7 +137,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData, etag.Value, virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToNullable(etag), virtualNetwork, Optional.ToDictionary(metadata), Optional.ToNullable(provisioningState));
         }
     }
 }

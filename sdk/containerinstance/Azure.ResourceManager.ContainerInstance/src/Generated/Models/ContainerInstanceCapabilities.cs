@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The regional capabilities. </summary>
-    public partial class ContainerInstanceCapabilities : ResourceData
+    public partial class ContainerInstanceCapabilities
     {
         /// <summary> Initializes a new instance of ContainerInstanceCapabilities. </summary>
         internal ContainerInstanceCapabilities()
@@ -19,17 +18,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceCapabilities. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="ipAddressType"> The ip address type that this capability describes. </param>
         /// <param name="gpu"> The GPU sku that this capability describes. </param>
         /// <param name="capabilities"> The supported capabilities. </param>
-        internal ContainerInstanceCapabilities(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string osType, AzureLocation? location, string ipAddressType, string gpu, Capabilities capabilities) : base(id, name, resourceType, systemData)
+        internal ContainerInstanceCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, Capabilities capabilities)
         {
+            ResourceType = resourceType;
             OSType = osType;
             Location = location;
             IPAddressType = ipAddressType;
@@ -37,6 +34,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Capabilities = capabilities;
         }
 
+        /// <summary> The resource type that this capability describes. </summary>
+        public string ResourceType { get; }
         /// <summary> The OS type that this capability describes. </summary>
         public string OSType { get; }
         /// <summary> The resource location. </summary>

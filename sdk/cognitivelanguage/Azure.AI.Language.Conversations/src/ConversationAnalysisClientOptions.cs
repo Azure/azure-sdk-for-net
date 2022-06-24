@@ -9,7 +9,7 @@ namespace Azure.AI.Language.Conversations
     /// <summary>
     /// Client options for <see cref="ConversationAnalysisClient"/>.
     /// </summary>
-    [CodeGenModel("ConversationAnalysisProjectsClientOptions")]
+    [CodeGenModel("ConversationAuthoringClientOptions")]
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
         internal string Version { get; }

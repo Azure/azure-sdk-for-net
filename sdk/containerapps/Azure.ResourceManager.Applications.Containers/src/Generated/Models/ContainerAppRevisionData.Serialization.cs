@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Applications.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<string> fqdn = default;
             Optional<ContainerAppTemplate> template = default;
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Applications.Containers
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.Applications.Containers
                     continue;
                 }
             }
-            return new ContainerAppRevisionData(id, name, type, systemData, Optional.ToNullable(createdTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState));
+            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState));
         }
     }
 }

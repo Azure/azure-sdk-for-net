@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<ManagedHsmProvisioningState> provisioningState = default;
             Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
             Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new ManagedHsmPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scheduledPurgeDate"))
