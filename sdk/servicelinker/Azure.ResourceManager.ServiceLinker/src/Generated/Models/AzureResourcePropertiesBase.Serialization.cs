@@ -10,37 +10,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class TargetServiceBase : IUtf8JsonSerializable
+    public partial class AzureResourcePropertiesBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(TargetServiceType.ToString());
+            writer.WriteStringValue(AzureResourceType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static TargetServiceBase DeserializeTargetServiceBase(JsonElement element)
+        internal static AzureResourcePropertiesBase DeserializeAzureResourcePropertiesBase(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResource": return AzureResource.DeserializeAzureResource(element);
-                    case "ConfluentBootstrapServer": return ConfluentBootstrapServer.DeserializeConfluentBootstrapServer(element);
-                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistry.DeserializeConfluentSchemaRegistry(element);
+                    case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element);
                 }
             }
-            TargetServiceType type = default;
+            AzureResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new TargetServiceType(property.Value.GetString());
+                    type = new AzureResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new TargetServiceBase(type);
+            return new AzureResourcePropertiesBase(type);
         }
     }
 }

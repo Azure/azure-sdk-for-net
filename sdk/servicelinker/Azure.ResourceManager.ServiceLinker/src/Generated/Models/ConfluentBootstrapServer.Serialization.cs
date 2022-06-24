@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStringValue(Endpoint);
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ServiceType.ToString());
+            writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 

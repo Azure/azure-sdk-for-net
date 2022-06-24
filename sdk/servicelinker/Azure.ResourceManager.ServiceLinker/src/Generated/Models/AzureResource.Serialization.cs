@@ -20,31 +20,28 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ServiceType.ToString());
-            writer.WritePropertyName("resourceProperties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TypeResourcePropertiesType))
+            if (Optional.IsDefined(ResourceProperties))
             {
-                if (TypeResourcePropertiesType != null)
+                if (ResourceProperties != null)
                 {
-                    writer.WritePropertyName("type");
-                    writer.WriteStringValue(TypeResourcePropertiesType.Value.ToString());
+                    writer.WritePropertyName("resourceProperties");
+                    writer.WriteObjectValue(ResourceProperties);
                 }
                 else
                 {
-                    writer.WriteNull("type");
+                    writer.WriteNull("resourceProperties");
                 }
             }
-            writer.WriteEndObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
         internal static AzureResource DeserializeAzureResource(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
+            Optional<AzureResourcePropertiesBase> resourceProperties = default;
             TargetServiceType type = default;
-            Optional<AzureResourceType?> type0 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,35 +54,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceProperties = null;
+                        continue;
+                    }
+                    resourceProperties = AzureResourcePropertiesBase.DeserializeAzureResourcePropertiesBase(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = new TargetServiceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceProperties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("type"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                type0 = null;
-                                continue;
-                            }
-                            type0 = new AzureResourceType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new AzureResource(type, id.Value, Optional.ToNullable(type0));
+            return new AzureResource(type, id.Value, resourceProperties.Value);
         }
     }
 }

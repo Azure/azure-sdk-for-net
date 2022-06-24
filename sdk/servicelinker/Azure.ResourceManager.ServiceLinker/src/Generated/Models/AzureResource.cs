@@ -15,23 +15,31 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureResource. </summary>
         public AzureResource()
         {
-            ServiceType = TargetServiceType.AzureResource;
+            TargetServiceType = TargetServiceType.AzureResource;
         }
 
         /// <summary> Initializes a new instance of AzureResource. </summary>
-        /// <param name="serviceType"> The target service type. </param>
+        /// <param name="targetServiceType"> The target service type. </param>
         /// <param name="id"> The Id of azure resource. </param>
-        /// <param name="typeResourcePropertiesType"> The azure resource type. </param>
-        internal AzureResource(TargetServiceType serviceType, ResourceIdentifier id, AzureResourceType? typeResourcePropertiesType) : base(serviceType)
+        /// <param name="resourceProperties">
+        /// The azure resource connection related properties.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// </param>
+        internal AzureResource(TargetServiceType targetServiceType, ResourceIdentifier id, AzureResourcePropertiesBase resourceProperties) : base(targetServiceType)
         {
             Id = id;
-            TypeResourcePropertiesType = typeResourcePropertiesType;
-            ServiceType = serviceType;
+            ResourceProperties = resourceProperties;
+            TargetServiceType = targetServiceType;
         }
 
         /// <summary> The Id of azure resource. </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The azure resource type. </summary>
-        internal AzureResourceType? TypeResourcePropertiesType { get; set; }
+        /// <summary>
+        /// The azure resource connection related properties.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// </summary>
+        public AzureResourcePropertiesBase ResourceProperties { get; set; }
     }
 }

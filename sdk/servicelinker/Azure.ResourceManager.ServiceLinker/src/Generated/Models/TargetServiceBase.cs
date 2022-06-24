@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> Initializes a new instance of TargetServiceBase. </summary>
-        /// <param name="serviceType"> The target service type. </param>
-        internal TargetServiceBase(TargetServiceType serviceType)
+        /// <param name="targetServiceType"> The target service type. </param>
+        internal TargetServiceBase(TargetServiceType targetServiceType)
         {
-            ServiceType = serviceType;
+            TargetServiceType = targetServiceType;
         }
 
         /// <summary> The target service type. </summary>
-        internal TargetServiceType ServiceType { get; set; }
+        internal TargetServiceType TargetServiceType { get; set; }
     }
 }

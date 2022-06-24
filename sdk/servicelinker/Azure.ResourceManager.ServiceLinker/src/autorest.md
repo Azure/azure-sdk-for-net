@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ServiceLinker
 namespace: Azure.ResourceManager.ServiceLinker
-require: https://github.com/Azure/azure-rest-api-specs/blob/eb2b882ef0a4aa5956ca38cfa566fc4d7cfb3fb0/specification/servicelinker/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/42ca0236ef14093f5aff0694efa34d5594e814a0/specification/servicelinker/resource-manager/readme.md
 tag: package-2022-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -51,7 +51,8 @@ directive:
     transform: >
       $.SecretStore.properties.keyVaultId['x-ms-format'] = 'arm-id';
       $.AzureResource.properties.id['x-ms-format'] = 'arm-id';
-      $.AzureResource.properties.resourceProperties['x-ms-client-flatten'] = true;
+      $.TargetServiceBase.properties.type['x-ms-client-name'] = 'TargetServiceType';
+      $.AzureResourcePropertiesBase.properties.type['x-ms-client-name'] = 'AzureResourceType';
       $.LinkerProperties.properties.clientType['x-ms-enum']['name'] = 'ApplicationClientType';
       $.ValidateResult.properties.sourceId['x-ms-format'] = 'arm-id';
       $.ValidateResult.properties.targetId['x-ms-format'] = 'arm-id';
