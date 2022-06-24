@@ -37,12 +37,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry.</param>
         /// <param name="exportPolicy">The export policy for a container
         /// registry.</param>
-        public Policies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), ExportPolicy exportPolicy = default(ExportPolicy))
+        /// <param name="azureADAuthenticationAsArmPolicy">The policy for using
+        /// ARM audience token for a container registry.</param>
+        /// <param name="softDeletePolicy">The soft delete policy for a
+        /// container registry.</param>
+        public Policies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), ExportPolicy exportPolicy = default(ExportPolicy), AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy = default(AzureADAuthenticationAsArmPolicy), SoftDeletePolicy softDeletePolicy = default(SoftDeletePolicy))
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
             ExportPolicy = exportPolicy;
+            AzureADAuthenticationAsArmPolicy = azureADAuthenticationAsArmPolicy;
+            SoftDeletePolicy = softDeletePolicy;
             CustomInit();
         }
 
@@ -74,6 +80,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "exportPolicy")]
         public ExportPolicy ExportPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy for using ARM audience token for a
+        /// container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "azureADAuthenticationAsArmPolicy")]
+        public AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the soft delete policy for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "softDeletePolicy")]
+        public SoftDeletePolicy SoftDeletePolicy { get; set; }
 
     }
 }

@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             RegistryNameCheckRequest registryNameCheckRequest = new RegistryNameCheckRequest();
             if (name != null)
             {
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1010,7 +1010,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1226,7 +1226,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1450,7 +1450,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1663,7 +1663,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1884,7 +1884,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             RegenerateCredentialParameters regenerateCredentialParameters = new RegenerateCredentialParameters();
             regenerateCredentialParameters.Name = name;
             // Tracing
@@ -2381,7 +2381,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2597,7 +2597,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 registry.Validate();
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2835,7 +2835,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3040,7 +3040,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "registryUpdateParameters");
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3288,7 +3288,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "generateCredentialsParameters");
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "actions");
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             ScopeMap scopeMapCreateParameters = new ScopeMap();
             if (description != null || actions != null)
             {
@@ -949,7 +949,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1174,7 +1174,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2021-12-01-preview";
+            string apiVersion = "2022-02-01-preview";
             ScopeMapUpdateParameters scopeMapUpdateParameters = new ScopeMapUpdateParameters();
             if (description != null || actions != null)
             {

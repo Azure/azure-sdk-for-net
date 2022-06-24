@@ -20,23 +20,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("ContainerRegistry", "AgentPools", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "ConnectedRegistries", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "ExportPipelines", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "ImportPipelines", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Operations", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "PipelineRuns", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "PrivateEndpointConnections", "2021-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ConnectedRegistries", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ExportPipelines", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ImportPipelines", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Operations", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "PipelineRuns", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "PrivateEndpointConnections", "2022-02-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Replications", "2021-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Replications", "2022-02-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Runs", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "ScopeMaps", "2021-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ScopeMaps", "2022-02-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "TaskRuns", "2019-06-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Tasks", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Tokens", "2021-12-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Webhooks", "2021-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Tokens", "2022-02-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Webhooks", "2022-02-01-preview"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/containerregistry/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\git\\m4gap\\azure-sdk-for-net-ACR-API\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "42ca0236ef14093f5aff0694efa34d5594e814a0";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

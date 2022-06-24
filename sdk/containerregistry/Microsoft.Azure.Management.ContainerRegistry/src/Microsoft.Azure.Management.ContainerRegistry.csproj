@@ -6,14 +6,14 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>7.0.0-preview</Version>
+		<Version>8.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			1) Add support of preview features such as ExportPipelines, ImportPipelines, PipelineRuns, ConnectedRegistries, ScopeMaps and Tokens
-			5) Add virtualNetworkRules property in NetworkRuleSet model
-      ]]>
+			1) Add support of preview features such as SoftDelete and AzureADAuthenticateAsARM registry policies
+			2) NetworkRuleSet no longer has parameter virtualNetworkRules
+      		]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 

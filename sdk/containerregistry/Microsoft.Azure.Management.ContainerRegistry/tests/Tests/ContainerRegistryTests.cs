@@ -1028,5 +1028,31 @@ steps:
 
             }
         }
+        
+        [Fact]
+        public void ContainerRegistryAuthAsARMPolicyTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+
+                Assert.NotNull(registry.Policies.AzureADAuthenticationAsArmPolicy);
+                Assert.Equal(registry.Policies.AzureADAuthenticationAsArmPolicy.Status, AzureADAuthenticationAsArmPolicyStatus.Enabled);
+
+                Assert.NotNull(registryClient.Registries.Get(resourceGroup.Name, registry.Name));
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
     }
 }
