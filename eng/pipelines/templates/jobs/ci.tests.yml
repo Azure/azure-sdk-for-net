@@ -64,7 +64,7 @@ jobs:
         parameters:
           NuGetCacheKey: Test
       - script: >-
-          dotnet tool install --global dotnet-dump
+          dotnet tool install dotnet-dump --global
         displayName: "Install dotnet-dump"
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
