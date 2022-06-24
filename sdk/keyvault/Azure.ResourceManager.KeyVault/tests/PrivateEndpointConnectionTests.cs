@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}",
-                        PrivateLinkServiceId = vaultResource.Data.Id.ToString(),
+                        PrivateLinkServiceId = vaultResource.Data.Id,
 
                         RequestMessage = "SDK test",
                         GroupIds = { "vault" }

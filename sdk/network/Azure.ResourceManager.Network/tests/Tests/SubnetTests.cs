@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Tests
         private bool AreSubnetsEqual(SubnetData subnet1, SubnetData subnet2)
         {
             return subnet1.Id == subnet2.Id &&
-                   subnet1.Etag == subnet2.Etag &&
+                   subnet1.ETag == subnet2.ETag &&
                    subnet1.ProvisioningState == subnet2.ProvisioningState &&
                    subnet1.Name == subnet2.Name &&
                    subnet1.AddressPrefix == subnet2.AddressPrefix;
