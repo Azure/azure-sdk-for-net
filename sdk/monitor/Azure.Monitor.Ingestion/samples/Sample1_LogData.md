@@ -1,10 +1,10 @@
-# <scenario_list>
+# SetUp
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/README.md#getting-started) for details.
 
-## <scenario>
+## Upload custom logs
 
-You can create a client and call the client's `Upload` method. Please note that at this time the upload limit is 1 Mb. Any content uploaded larger than 1 Mb will throw an exception.
+You can create a client and call the client's `Upload` method. Take note of the data ingestion [limits](https://docs.microsoft.com/azure/azure-monitor/service-limits#custom-logs).
 
 ```C# Snippet:UploadCustomLogs
 var dataCollectionEndpoint = new Uri("...");
@@ -52,6 +52,4 @@ Response response = client.Upload(dataCollectionRuleImmutableId, streamName, Req
 ```
 
 To see the full example source files, see:
-* [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs))
-
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md> to write sample readme file. -->
+[LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).

@@ -1,14 +1,14 @@
-# <scenario_list>
+# SetUp
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/README.md#getting-started) for details.
 
-## <scenario>
+## Verify logs
 
-You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Please run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
+You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
 
 ```C# Snippet:VerifyLogs
 var workspaceId = "...";
-string tableName = "...";
+var tableName = "...";
 
 TokenCredential credential = new DefaultAzureCredential();
 
@@ -26,6 +26,4 @@ Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(cou
 ```
 
 To see the full example source files, see:
-* [Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs))
-
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md> to write sample readme file. -->
+[Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).

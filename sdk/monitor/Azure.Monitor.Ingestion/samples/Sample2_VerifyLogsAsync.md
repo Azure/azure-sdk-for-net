@@ -1,10 +1,10 @@
-# <scenario_list>
+# SetUp
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/README.md#getting-started) for details.
 
-## <scenario> asynchronously
+## Verify logs asynchronously
 
-You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Please run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
+You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
 
 ```C# Snippet:VerifyLogsAsync
 var workspaceId = "...";
@@ -26,6 +26,4 @@ Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(cou
 ```
 
 To see the full example source files, see:
-* [QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs))
-
-<!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorldAsync.md> to write sample readme file. -->
+[QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).

@@ -8,7 +8,7 @@ This library allows you to send data from virtually any source to supported buil
 
 **Resources:**
 * [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
-* [Package (NuGet)](https://www.nuget.org/packages/Azure.Monitor.Ingestion)
+* [Package (NuGet)](https://www.nuget.org) <!--- https://github.com/Azure/azure-sdk-for-net/issues/29477 -->
 * [Service documentation](https://docs.microsoft.com/azure/azure-monitor/overview)
 * [Change log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/CHANGELOG.md)
 
@@ -61,7 +61,7 @@ filter source data and perform any other calculations or conversions.
 
 For more details, refer to [Data collection rules in Azure Monitor][data_collection_rule].
 
-### Log Analytics Workspace Tables
+### Log Analytics workspace tables
 
 Custom logs can send data to any custom table that you create and to certain built-in tables in your Log Analytics 
 workspace. The target table must exist before you can send data to it. The following built-in tables are currently supported:
@@ -95,7 +95,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Upload custom logs
 
-You can create a client and call the client's `Upload` method. Please note that at this time the upload limit is 1 Mb. Any content uploaded larger than 1 Mb will throw an exception.
+You can create a client and call the client's `Upload` method. Take note of the data ingestion [limits](https://docs.microsoft.com/azure/azure-monitor/service-limits#custom-logs).
 
 ```C# Snippet:UploadCustomLogs
 var dataCollectionEndpoint = new Uri("...");
@@ -144,11 +144,11 @@ Response response = client.Upload(dataCollectionRuleImmutableId, streamName, Req
 
 ### Verify logs
 
-You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Please run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
+You can verify that your data has been uploaded correctly by using the [Azure.Monitor.Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/README.md#install-the-package) library. Run the [Upload custom logs](#upload-custom-logs) sample first before verifying the logs. 
 
 ```C# Snippet:VerifyLogs
 var workspaceId = "...";
-string tableName = "...";
+var tableName = "...";
 
 TokenCredential credential = new DefaultAzureCredential();
 
@@ -167,7 +167,7 @@ Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(cou
 
 ## Troubleshooting
 
-### Enabling Logging
+### Enabling logging
 
 Azure SDKs for .Net offer a consistent logging story to help aid in troubleshooting application errors and expedite
 their resolution. The logs produced will capture the flow of an application before reaching the terminal state to help
