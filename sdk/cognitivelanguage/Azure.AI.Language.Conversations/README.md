@@ -5,7 +5,7 @@ Conversational Language Understanding - aka CLU for short - is a cloud-based con
 - Conversation App: It's used in extracting intents and entities in conversations
 - Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
 
-[Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
+[Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs] | [Authoring REST API documentation][conversationanalysis_restdocs_authoring]
 
 ## Getting started
 
@@ -433,3 +433,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
 [conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://review.docs.microsoft.com/dotnet/api/azure.ai.language.conversations
+[conversationanalysis_restdocs]: https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime
+[conversationanalysis_restdocs_authoring]: https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime

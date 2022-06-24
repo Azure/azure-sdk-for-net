@@ -7,9 +7,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary>
-    /// The <see cref="ConversationAnalysisClient"/> allows you analyze conversations.
-    /// </summary>
+    /// <remarks>
+    /// See <see href="https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime"/> for more information about models you can pass to this client.
+    /// </remarks>
+    /// <seealso href="https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime"/>
     public partial class ConversationAnalysisClient
     {
         /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>

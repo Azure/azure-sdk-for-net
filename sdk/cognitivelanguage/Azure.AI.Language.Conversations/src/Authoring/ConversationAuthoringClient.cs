@@ -9,6 +9,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
+    /// <remarks>
+    /// See <see href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/> for more information about models you can pass to this client.
+    /// </remarks>
+    /// <seealso href="https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring"/>
     [CodeGenClient("ConversationalAnalysisAuthoringClient")]
     public partial class ConversationAuthoringClient
     {

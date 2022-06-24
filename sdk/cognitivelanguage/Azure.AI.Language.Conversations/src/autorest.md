@@ -149,6 +149,25 @@ directive:
     $.parameters.push(stringIndexTypeParam);
     $.parameters.push(apiVersionParam);
 
+# Update descriptions to include a link to the REST API documentation.
+- from: analyzeconversations.json
+  where: $.paths.*.*
+  transform: |
+    var operationId = $.operationId.substring("ConversationAnalysis_".length);
+    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    $["externalDocs"] = {
+        url: "https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/" + operationId.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase()
+    };
+
+- from: analyzeconversations-authoring.json
+  where: $.paths.*.*
+  transform: |
+    var operationId = $.operationId.substring("ConversationalAnalysisAuthoring_".length);
+    // BUGBUG: Will not work until https://github.com/Azure/autorest.csharp/issues/2384 is fixed.
+    $["externalDocs"] = {
+        url: "https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/" + operationId.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase()
+    };
+
 # Rename operations to be consistent. Do this after other operation transforms for ease.
 - rename-operation:
     from: ConversationalAnalysisAuthoring_Export
