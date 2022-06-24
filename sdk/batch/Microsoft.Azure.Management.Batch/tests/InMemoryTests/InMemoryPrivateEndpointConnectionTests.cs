@@ -106,14 +106,11 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            var result = await client.PrivateEndpointConnection.UpdateAsync(
+            PrivateEndpointConnection result = await client.PrivateEndpointConnection.UpdateAsync(
                 "rg",
                 "myaccount",
-                "privateEndpointName",
-                new PrivateEndpointConnection(
-                    privateLinkServiceConnectionState: new PrivateLinkServiceConnectionState(
-                        status: PrivateLinkServiceConnectionStatus.Pending,
-                        description: "It's pending")));
+                "privateEndpointName"
+            );
 
             // Validate result
             Assert.Equal(PrivateEndpointConnectionProvisioningState.Succeeded, result.ProvisioningState);
