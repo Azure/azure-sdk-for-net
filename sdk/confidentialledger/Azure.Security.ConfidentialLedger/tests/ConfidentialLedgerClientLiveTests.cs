@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
-    [LiveOnly]
+    // [LiveOnly]
     public class ConfidentialLedgerClientLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
         private TokenCredential Credential;
@@ -23,7 +23,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
         private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
 
-        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
+        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
@@ -33,17 +33,19 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public void Setup()
         {
             Credential = TestEnvironment.Credential;
-            IdentityClient = InstrumentClient(
-                new ConfidentialLedgerIdentityServiceClient(
+            IdentityClient = new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    InstrumentClientOptions(_options)));
+                    _options);
+
+            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, _options, IdentityClient);
 
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
                     Credential,
                     clientCertificate: null,
-                    options: InstrumentClientOptions(_options)));
+                    options: InstrumentClientOptions(_options),
+                    serviceCert));
         }
 
         public async Task GetUser(string objId)

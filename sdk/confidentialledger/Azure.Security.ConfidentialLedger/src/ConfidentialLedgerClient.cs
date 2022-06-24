@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options)
-            : this(ledgerUri, credential: credential, options: options, identityServiceClient: default)
+            : this(ledgerUri, credential: credential, options: options, identityServiceCert: default)
         { }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
@@ -26,10 +27,10 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="clientCertificate"> A <see cref="X509Certificate2"/> used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public ConfidentialLedgerClient(Uri ledgerUri, X509Certificate2 clientCertificate, ConfidentialLedgerClientOptions options = null)
-            : this(ledgerUri, clientCertificate: clientCertificate, options: options, identityServiceClient: null)
+            : this(ledgerUri, clientCertificate: clientCertificate, options: options, identityServiceCert: null)
         { }
 
-        internal ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerClientOptions options = null, ConfidentialLedgerIdentityServiceClient identityServiceClient = null)
+        internal ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential = null, X509Certificate2 clientCertificate = null, ConfidentialLedgerClientOptions options = null, X509Certificate2 identityServiceCert = null)
         {
             if (ledgerUri == null)
             {
@@ -43,7 +44,9 @@ namespace Azure.Security.ConfidentialLedger
                     throw new ArgumentNullException(nameof(credential));
             }
             var actualOptions = options ?? new ConfidentialLedgerClientOptions();
-            var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions, identityServiceClient);
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerUri, actualOptions);
+
+            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert);
             if (clientCertificate != null)
             {
                 transportOptions.ClientCertificates.Add(clientCertificate);
@@ -55,7 +58,7 @@ namespace Azure.Security.ConfidentialLedger
                 Array.Empty<HttpPipelinePolicy>(),
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
-                    new HttpPipelinePolicy[] {new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes)},
+                    new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
                 transportOptions,
                 new ResponseClassifier());
             _ledgerUri = ledgerUri;
@@ -63,7 +66,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>
-         /// <remarks>
+        /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         ///
         /// Request Body:
@@ -144,10 +147,9 @@ namespace Azure.Security.ConfidentialLedger
             return operation;
         }
 
-        internal static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(Uri ledgerUri, ConfidentialLedgerClientOptions options, ConfidentialLedgerIdentityServiceClient identityServiceClient = null)
+        internal static X509Certificate2 GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerClientOptions options, ConfidentialLedgerIdentityServiceClient client = null)
         {
-            var identityClient = identityServiceClient ??
-                new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.confidential-ledger.core.azure.com"), options);
+            var identityClient = client ?? new ConfidentialLedgerIdentityServiceClient(new Uri("https://identity.confidential-ledger.core.azure.com"), options);
 
             // Get the ledger's  TLS certificate for our ledger.
             var ledgerId = ledgerUri.Host.Substring(0, ledgerUri.Host.IndexOf('.'));
@@ -160,15 +162,18 @@ namespace Azure.Security.ConfidentialLedger
                 .GetString();
 
             // construct an X509Certificate2 with the ECC PEM value.
-            var ledgerTlsCert = GetCertFromPEM(eccPem);
+            return GetCertFromPEM(eccPem);
+        }
 
+        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)
+        {
             X509Chain certificateChain = new();
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
             certificateChain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
             certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
             certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
-            certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
             // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
             bool CertValidationCheck(X509Certificate2 cert)
@@ -178,7 +183,7 @@ namespace Azure.Security.ConfidentialLedger
                     return false;
 
                 var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
-                    .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
+                    .Any(x => x.Certificate.Thumbprint == identityServiceCert.Thumbprint);
                 return isCertSignedByTheTlsCert;
             }
 
