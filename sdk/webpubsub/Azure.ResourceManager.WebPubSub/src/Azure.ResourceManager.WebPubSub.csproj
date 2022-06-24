@@ -8,4 +8,7 @@
     </Description>
     <PackageTags>azure;management;webpubsub</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="Azure.ResourceManager"  OverrideVersion="1.1.1" />
+  </ItemGroup>
 </Project>
