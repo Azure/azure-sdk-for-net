@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("AllowVnetOutBound", listNsgResponse.First().Data.DefaultSecurityRules[3].Name);
             Assert.AreEqual("AllowInternetOutBound", listNsgResponse.First().Data.DefaultSecurityRules[4].Name);
             Assert.AreEqual("DenyAllOutBound", listNsgResponse.First().Data.DefaultSecurityRules[5].Name);
-            Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
+            Assert.AreEqual(getNsgResponse.Value.Data.ETag, listNsgResponse.First().Data.ETag);
 
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual("AllowVnetOutBound", listNsgResponse.First().Data.DefaultSecurityRules[3].Name);
             Assert.AreEqual("AllowInternetOutBound", listNsgResponse.First().Data.DefaultSecurityRules[4].Name);
             Assert.AreEqual("DenyAllOutBound", listNsgResponse.First().Data.DefaultSecurityRules[5].Name);
-            Assert.AreEqual(getNsgResponse.Value.Data.Etag, listNsgResponse.First().Data.Etag);
+            Assert.AreEqual(getNsgResponse.Value.Data.ETag, listNsgResponse.First().Data.ETag);
 
             // List NSG in a subscription
             AsyncPageable<NetworkSecurityGroupResource> listNsgSubsciptionResponseAP = subscription.GetNetworkSecurityGroupsAsync();

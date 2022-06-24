@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType HostPoolType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType LoadBalancerType { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string FriendlyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingHostPoolReference> HostPoolReferences { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType? HostPoolType { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public string HostPoolArmPath { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.MigrationRequestProperties MigrationRequest { get { throw null; } set { } }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string Description { get { throw null; } set { } }
         public Azure.ETag? Etag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public string ObjectId { get { throw null; } }
@@ -668,6 +668,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType left, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class Identity
+    {
+        public Identity() { }
+        public string PrincipalId { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType? ResourceIdentityType { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadBalancerType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.LoadBalancerType>
     {
@@ -830,6 +837,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType left, Azure.ResourceManager.DesktopVirtualization.Models.RemoteApplicationType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType left, Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType left, Azure.ResourceManager.DesktopVirtualization.Models.ResourceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceModelWithAllowedPropertySetIdentity : Azure.ResourceManager.DesktopVirtualization.Models.Identity
+    {
+        public ResourceModelWithAllowedPropertySetIdentity() { }
     }
     public partial class ResourceModelWithAllowedPropertySetSku : Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku
     {
