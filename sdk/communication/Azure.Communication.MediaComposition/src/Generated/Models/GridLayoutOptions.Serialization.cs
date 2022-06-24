@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,8 @@ namespace Azure.Communication.MediaComposition
             writer.WriteNumberValue(Rows);
             writer.WritePropertyName("columns");
             writer.WriteNumberValue(Columns);
-            if (Optional.IsCollectionDefined(InputIds))
-            {
-                writer.WritePropertyName("inputIds");
-                writer.WriteStartArray();
-                foreach (var item in InputIds)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
+            writer.WritePropertyName("inputIds");
+            writer.WriteObjectValue(InputIds);
             writer.WriteEndObject();
         }
 
@@ -42,7 +28,7 @@ namespace Azure.Communication.MediaComposition
         {
             int rows = default;
             int columns = default;
-            Optional<IList<IList<string>>> inputIds = default;
+            object inputIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"))
@@ -57,26 +43,11 @@ namespace Azure.Communication.MediaComposition
                 }
                 if (property.NameEquals("inputIds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
-                        {
-                            array0.Add(item0.GetString());
-                        }
-                        array.Add(array0);
-                    }
-                    inputIds = array;
+                    inputIds = property.Value.GetObject();
                     continue;
                 }
             }
-            return new GridLayoutOptions(rows, columns, Optional.ToList(inputIds));
+            return new GridLayoutOptions(rows, columns, inputIds);
         }
     }
 }

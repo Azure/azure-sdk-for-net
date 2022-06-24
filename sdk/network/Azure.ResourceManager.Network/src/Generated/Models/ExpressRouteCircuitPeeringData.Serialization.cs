@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("stats");
                 writer.WriteObjectValue(Stats);
             }
-            if (Optional.IsDefined(GatewayManagerETag))
+            if (Optional.IsDefined(GatewayManagerEtag))
             {
                 writer.WritePropertyName("gatewayManagerEtag");
-                writer.WriteStringValue(GatewayManagerETag);
+                writer.WriteStringValue(GatewayManagerEtag);
             }
             if (Optional.IsDefined(RouteFilter))
             {

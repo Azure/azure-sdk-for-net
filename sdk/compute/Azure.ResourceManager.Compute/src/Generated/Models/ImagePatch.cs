@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </summary>
-        public HyperVGeneration? HyperVGeneration { get; set; }
+        public HyperVGenerationType? HyperVGeneration { get; set; }
     }
 }

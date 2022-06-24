@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="addressPrefix"> The address prefix for the subnet. </param>
         /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
         /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id, name, resourceType)
+        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointPropertiesFormat> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<IPConfiguration> ipConfigurations, IReadOnlyList<IPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            Etag = etag;
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public ETag? Etag { get; }
         /// <summary> The address prefix for the subnet. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> List of address prefixes for the subnet. </summary>

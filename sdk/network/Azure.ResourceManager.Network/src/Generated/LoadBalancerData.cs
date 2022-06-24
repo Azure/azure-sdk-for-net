@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="sku"> The load balancer SKU. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfigurations"> Object representing the frontend IPs to be used for the load balancer. </param>
         /// <param name="backendAddressPools"> Collection of backend address pools used by a load balancer. </param>
         /// <param name="loadBalancingRules"> Object collection representing the load balancing rules Gets the provisioning. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRules"> The outbound rules. </param>
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? eTag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<InboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<InboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
-            ETag = eTag;
+            Etag = etag;
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPools = backendAddressPools;
             LoadBalancingRules = loadBalancingRules;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The load balancer SKU. </summary>
         public LoadBalancerSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public ETag? Etag { get; }
         /// <summary> Object representing the frontend IPs to be used for the load balancer. </summary>
         public IList<FrontendIPConfigurationData> FrontendIPConfigurations { get; }
         /// <summary> Collection of backend address pools used by a load balancer. </summary>

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<WritableSubResource> frontendIPConfiguration = default;
             Optional<NetworkInterfaceIPConfigurationData> backendIPConfiguration = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
+            Optional<TransportProtocol> protocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
             Optional<int> idleTimeoutInMinutes = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protocol = new LoadBalancingTransportProtocol(property0.Value.GetString());
+                            protocol = new TransportProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("frontendPort"))

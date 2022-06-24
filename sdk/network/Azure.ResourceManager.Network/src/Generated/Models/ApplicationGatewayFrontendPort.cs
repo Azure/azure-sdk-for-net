@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            Etag = etag;
             Port = port;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public ETag? Etag { get; }
         /// <summary> Frontend port. </summary>
         public int? Port { get; set; }
         /// <summary> The provisioning state of the frontend port resource. </summary>

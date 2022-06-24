@@ -62,7 +62,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "32",
         "Content-Type": "application/json",
         "traceparent": "00-7b555dfe7f93e04297fbb1c730a408e1-c3bd713707197e46-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",

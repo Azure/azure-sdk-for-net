@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
@@ -17,21 +16,8 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InputIds))
-            {
-                writer.WritePropertyName("inputIds");
-                writer.WriteStartArray();
-                foreach (var item in InputIds)
-                {
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
+            writer.WritePropertyName("inputIds");
+            writer.WriteObjectValue(InputIds);
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position");
@@ -40,12 +26,12 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width");
-                writer.WriteStringValue(Width);
+                writer.WriteObjectValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height");
-                writer.WriteStringValue(Height);
+                writer.WriteObjectValue(Height);
             }
             if (Optional.IsDefined(Rows))
             {
@@ -67,10 +53,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static InputGroup DeserializeInputGroup(JsonElement element)
         {
-            Optional<IList<IList<string>>> inputIds = default;
+            object inputIds = default;
             Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            Optional<object> width = default;
+            Optional<object> height = default;
             Optional<int> rows = default;
             Optional<int> columns = default;
             Optional<string> layer = default;
@@ -78,22 +64,7 @@ namespace Azure.Communication.MediaComposition
             {
                 if (property.NameEquals("inputIds"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
-                        {
-                            array0.Add(item0.GetString());
-                        }
-                        array.Add(array0);
-                    }
-                    inputIds = array;
+                    inputIds = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("position"))
@@ -108,12 +79,22 @@ namespace Azure.Communication.MediaComposition
                 }
                 if (property.NameEquals("width"))
                 {
-                    width = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    width = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("height"))
                 {
-                    height = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    height = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("rows"))
@@ -142,7 +123,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new InputGroup(Optional.ToList(inputIds), position.Value, width.Value, height.Value, Optional.ToNullable(rows), Optional.ToNullable(columns), layer.Value);
+            return new InputGroup(inputIds, position.Value, width.Value, height.Value, Optional.ToNullable(rows), Optional.ToNullable(columns), layer.Value);
         }
     }
 }

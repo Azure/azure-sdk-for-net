@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operation");
-            writer.WriteStringValue(Operation.ToString());
+            writer.WriteStringValue(Operation);
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email");
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleNotification DeserializeAutoscaleNotification(JsonElement element)
         {
-            OperationType operation = default;
+            string operation = default;
             Optional<EmailNotification> email = default;
             Optional<IList<WebhookNotification>> webhooks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operation"))
                 {
-                    operation = new OperationType(property.Value.GetString());
+                    operation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("email"))

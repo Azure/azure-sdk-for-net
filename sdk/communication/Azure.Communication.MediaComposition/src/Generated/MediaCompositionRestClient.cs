@@ -32,7 +32,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public MediaCompositionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-07-16-preview1")
+        public MediaCompositionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-06-26-preview1")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -55,7 +55,6 @@ namespace Azure.Communication.MediaComposition
             return message;
         }
 
-        /// <summary> Gets a media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -82,7 +81,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Gets a media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -149,7 +147,6 @@ namespace Azure.Communication.MediaComposition
             return message;
         }
 
-        /// <summary> Creates a new media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout"> Configure a layout. </param>
@@ -181,7 +178,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Creates a new media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout"> Configure a layout. </param>
@@ -253,7 +249,6 @@ namespace Azure.Communication.MediaComposition
             return message;
         }
 
-        /// <summary> Updates an existing media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout"> Configure a layout. </param>
@@ -285,7 +280,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Updates an existing media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout"> Configure a layout. </param>
@@ -332,7 +326,6 @@ namespace Azure.Communication.MediaComposition
             return message;
         }
 
-        /// <summary> Deletes a media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -354,7 +347,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Deletes a media composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -385,14 +377,13 @@ namespace Azure.Communication.MediaComposition
             uri.Reset(_endpoint);
             uri.AppendPath("/mediaCompositions/", false);
             uri.AppendPath(mediaCompositionId, true);
-            uri.AppendPath("/:start", false);
+            uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Starts the composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -419,7 +410,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Starts the composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -455,14 +445,13 @@ namespace Azure.Communication.MediaComposition
             uri.Reset(_endpoint);
             uri.AppendPath("/mediaCompositions/", false);
             uri.AppendPath(mediaCompositionId, true);
-            uri.AppendPath("/:stop", false);
+            uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Stops the composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
@@ -489,7 +478,6 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <summary> Stops the composition. </summary>
         /// <param name="mediaCompositionId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>

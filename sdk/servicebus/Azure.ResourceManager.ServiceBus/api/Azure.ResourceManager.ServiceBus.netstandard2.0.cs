@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class EncryptionProperties
     {
         public EncryptionProperties() { }
-        public Azure.ResourceManager.ServiceBus.Models.KeySource? KeySource { get { throw null; } set { } }
+        public string KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
@@ -719,23 +719,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         SqlFilter = 0,
         CorrelationFilter = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeySource : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.KeySource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeySource(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.KeySource MicrosoftKeyVault { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.KeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.KeySource left, Azure.ResourceManager.ServiceBus.Models.KeySource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.KeySource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.KeySource left, Azure.ResourceManager.ServiceBus.Models.KeySource right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum KeyType
     {

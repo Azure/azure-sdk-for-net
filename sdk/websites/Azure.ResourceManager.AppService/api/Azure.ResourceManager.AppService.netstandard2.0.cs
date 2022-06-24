@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService
         public string Reference { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ConfigReferenceSource? Source { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ResolveStatus? Status { get { throw null; } set { } }
         public string VaultName { get { throw null; } set { } }
     }
@@ -5145,23 +5145,6 @@ namespace Azure.ResourceManager.AppService.Models
         Optional = 1,
         OptionalInteractiveUser = 2,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClientCredentialMethod : System.IEquatable<Azure.ResourceManager.AppService.Models.ClientCredentialMethod>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ClientCredentialMethod(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ClientCredentialMethod ClientSecretPost { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.ClientCredentialMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.ClientCredentialMethod left, Azure.ResourceManager.AppService.Models.ClientCredentialMethod right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.ClientCredentialMethod (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.ClientCredentialMethod left, Azure.ResourceManager.AppService.Models.ClientCredentialMethod right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ClientRegistration
     {
         public ClientRegistration() { }
@@ -5194,23 +5177,6 @@ namespace Azure.ResourceManager.AppService.Models
         Shared = 0,
         Dedicated = 1,
         Dynamic = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConfigReferenceSource : System.IEquatable<Azure.ResourceManager.AppService.Models.ConfigReferenceSource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConfigReferenceSource(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ConfigReferenceSource KeyVault { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.ConfigReferenceSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.ConfigReferenceSource left, Azure.ResourceManager.AppService.Models.ConfigReferenceSource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.ConfigReferenceSource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.ConfigReferenceSource left, Azure.ResourceManager.AppService.Models.ConfigReferenceSource right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ConnectionStringDictionary : Azure.ResourceManager.Models.ResourceData
     {
@@ -6332,7 +6298,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public OpenIdConnectClientCredential() { }
         public string ClientSecretSettingName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ClientCredentialMethod? Method { get { throw null; } set { } }
+        public string Method { get { throw null; } set { } }
     }
     public partial class OpenIdConnectConfig
     {

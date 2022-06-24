@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 accountName = Recording.GenerateAssetName(prefix);
-                StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
+                StorageAccountCheckNameAvailabilityContent parameter = new StorageAccountCheckNameAvailabilityContent(accountName);
                 CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
                 if (result.NameAvailable == true)
                 {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ResourceType.ToString());
+            writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
     }

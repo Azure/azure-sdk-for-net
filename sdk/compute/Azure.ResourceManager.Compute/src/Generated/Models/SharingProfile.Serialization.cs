@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permission))
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions");
-                writer.WriteStringValue(Permission.Value.ToString());
+                writer.WriteStringValue(Permissions.Value.ToString());
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {

@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsEncryption
     {
         public EventHubsEncryption() { }
-        public Azure.ResourceManager.EventHubs.Models.KeySource? KeySource { get { throw null; } set { } }
+        public string KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
@@ -810,23 +810,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeySource : System.IEquatable<Azure.ResourceManager.EventHubs.Models.KeySource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeySource(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.KeySource MicrosoftKeyVault { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.KeySource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.KeySource left, Azure.ResourceManager.EventHubs.Models.KeySource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.KeySource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.KeySource left, Azure.ResourceManager.EventHubs.Models.KeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

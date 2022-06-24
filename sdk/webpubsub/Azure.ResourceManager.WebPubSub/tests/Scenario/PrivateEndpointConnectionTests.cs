@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                     new PrivateLinkServiceConnection()
                     {
                         Name = privateEndPointName,
-                        PrivateLinkServiceId = _webPubSub.Data.Id,
+                        PrivateLinkServiceId = _webPubSub.Data.Id.ToString(),
                         GroupIds = { "webpubsub" },
                     }
                 },

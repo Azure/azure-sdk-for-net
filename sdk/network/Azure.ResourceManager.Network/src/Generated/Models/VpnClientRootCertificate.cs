@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            Etag = etag;
             PublicCertData = publicCertData;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public ETag? Etag { get; }
         /// <summary> The certificate public data. </summary>
         public string PublicCertData { get; set; }
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>

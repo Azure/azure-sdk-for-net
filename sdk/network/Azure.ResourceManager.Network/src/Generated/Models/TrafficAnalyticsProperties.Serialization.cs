@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrafficAnalyticsConfiguration))
+            if (Optional.IsDefined(NetworkWatcherFlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration");
-                writer.WriteObjectValue(TrafficAnalyticsConfiguration);
+                writer.WriteObjectValue(NetworkWatcherFlowAnalyticsConfiguration);
             }
             writer.WriteEndObject();
         }

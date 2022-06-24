@@ -506,8 +506,8 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource>> GetEncryptionScopeAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.EncryptionScopeCollection GetEncryptionScopes() { throw null; }
         public virtual Azure.ResourceManager.Storage.FileServiceResource GetFileService() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult> GetKeys(Azure.ResourceManager.Storage.Models.ListKeyExpand? expand = default(Azure.ResourceManager.Storage.Models.ListKeyExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>> GetKeysAsync(Azure.ResourceManager.Storage.Models.ListKeyExpand? expand = default(Azure.ResourceManager.Storage.Models.ListKeyExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.LocalUserResource> GetLocalUser(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.LocalUserResource>> GetLocalUserAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.LocalUserCollection GetLocalUsers() { throw null; }
@@ -541,8 +541,8 @@ namespace Azure.ResourceManager.Storage
     }
     public static partial class StorageExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Storage.Models.CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Storage.Models.CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Storage.BlobContainerResource GetBlobContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.BlobServiceResource GetBlobServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -759,23 +759,6 @@ namespace Azure.ResourceManager.Storage.Models
     {
         Available = 0,
         Unavailable = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Action : System.IEquatable<Azure.ResourceManager.Storage.Models.Action>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Action(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.Action Allow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.Action other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.Action left, Azure.ResourceManager.Storage.Models.Action right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.Action (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.Action left, Azure.ResourceManager.Storage.Models.Action right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ActiveDirectoryProperties
     {
@@ -1356,7 +1339,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class IPRule
     {
         public IPRule(string ipAddressOrRange) { }
-        public Azure.ResourceManager.Storage.Models.Action? Action { get { throw null; } set { } }
+        public string Action { get { throw null; } set { } }
         public string IPAddressOrRange { get { throw null; } set { } }
     }
     public partial class KeyCreationTime
@@ -1605,23 +1588,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ListContainersInclude left, Azure.ResourceManager.Storage.Models.ListContainersInclude right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ListContainersInclude (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ListContainersInclude left, Azure.ResourceManager.Storage.Models.ListContainersInclude right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ListKeyExpand : System.IEquatable<Azure.ResourceManager.Storage.Models.ListKeyExpand>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ListKeyExpand(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.ListKeyExpand Kerb { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.ListKeyExpand other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.ListKeyExpand left, Azure.ResourceManager.Storage.Models.ListKeyExpand right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.ListKeyExpand (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.ListKeyExpand left, Azure.ResourceManager.Storage.Models.ListKeyExpand right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ListServiceSasResponse
@@ -2166,6 +2132,12 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator !=(Azure.ResourceManager.Storage.Models.State left, Azure.ResourceManager.Storage.Models.State right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StorageAccountCheckNameAvailabilityContent
+    {
+        public StorageAccountCheckNameAvailabilityContent(string name) { }
+        public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+    }
     public partial class StorageAccountCreateOrUpdateContent
     {
         public StorageAccountCreateOrUpdateContent(Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind kind, Azure.Core.AzureLocation location) { }
@@ -2234,12 +2206,6 @@ namespace Azure.ResourceManager.Storage.Models
         public string Queue { get { throw null; } }
         public string Table { get { throw null; } }
         public string Web { get { throw null; } }
-    }
-    public partial class StorageAccountNameAvailabilityContent
-    {
-        public StorageAccountNameAvailabilityContent(string name) { }
-        public string Name { get { throw null; } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
     }
     public partial class StorageAccountPatch
     {
@@ -2470,7 +2436,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class VirtualNetworkRule
     {
         public VirtualNetworkRule(string virtualNetworkResourceId) { }
-        public Azure.ResourceManager.Storage.Models.Action? Action { get { throw null; } set { } }
+        public string Action { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.State? State { get { throw null; } set { } }
         public string VirtualNetworkResourceId { get { throw null; } set { } }
     }

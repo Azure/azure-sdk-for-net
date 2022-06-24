@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("databaseAccountOfferType");
-            writer.WriteStringValue(DatabaseAccountOfferType.ToString());
+            writer.WriteStringValue(DatabaseAccountOfferType);
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<SystemData> systemData = default;
             Optional<ConsistencyPolicy> consistencyPolicy = default;
             IList<DatabaseAccountLocation> locations = default;
-            DatabaseAccountOfferType databaseAccountOfferType = default;
+            string databaseAccountOfferType = default;
             Optional<IList<IPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         if (property0.NameEquals("databaseAccountOfferType"))
                         {
-                            databaseAccountOfferType = new DatabaseAccountOfferType(property0.Value.GetString());
+                            databaseAccountOfferType = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("ipRules"))

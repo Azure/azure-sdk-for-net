@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("enabled");
             writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("drainTimeoutInSec");
-            writer.WriteNumberValue(DrainTimeoutInSeconds);
+            writer.WriteNumberValue(DrainTimeoutInSec);
             writer.WriteEndObject();
         }
 

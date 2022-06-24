@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName");
-                writer.WriteStringValue(PassName.Value.ToString());
+                writer.WriteStringValue(PassName);
             }
             if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName");
-                writer.WriteStringValue(ComponentName.Value.ToString());
+                writer.WriteStringValue(ComponentName);
             }
             if (Optional.IsDefined(SettingName))
             {
@@ -40,30 +40,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element)
         {
-            Optional<PassName> passName = default;
-            Optional<ComponentName> componentName = default;
+            Optional<string> passName = default;
+            Optional<string> componentName = default;
             Optional<SettingName> settingName = default;
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    passName = new PassName(property.Value.GetString());
+                    passName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("componentName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    componentName = new ComponentName(property.Value.GetString());
+                    componentName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("settingName"))
@@ -82,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value);
+            return new AdditionalUnattendContent(passName.Value, componentName.Value, Optional.ToNullable(settingName), content.Value);
         }
     }
 }

@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("workspaceResourceId");
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
+            if (Optional.IsDefined(TrafficAnalyticsInterval))
             {
                 writer.WritePropertyName("trafficAnalyticsInterval");
-                writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);
+                writer.WriteNumberValue(TrafficAnalyticsInterval.Value);
             }
             writer.WriteEndObject();
         }

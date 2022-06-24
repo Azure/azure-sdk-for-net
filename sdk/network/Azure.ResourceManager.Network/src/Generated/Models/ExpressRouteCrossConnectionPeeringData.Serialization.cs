@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("microsoftPeeringConfig");
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (Optional.IsDefined(GatewayManagerETag))
+            if (Optional.IsDefined(GatewayManagerEtag))
             {
                 writer.WritePropertyName("gatewayManagerEtag");
-                writer.WriteStringValue(GatewayManagerETag);
+                writer.WriteStringValue(GatewayManagerEtag);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {

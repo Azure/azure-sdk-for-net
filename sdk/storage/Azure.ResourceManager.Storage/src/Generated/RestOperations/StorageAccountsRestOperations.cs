@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, StorageAccountNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, StorageAccountCheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand)
+        internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -588,10 +588,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
-            }
+            uri.AppendQuery("$expand", "kerb", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -602,17 +599,16 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName, expand);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -632,17 +628,16 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public Response<StorageAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName, expand);
+            using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

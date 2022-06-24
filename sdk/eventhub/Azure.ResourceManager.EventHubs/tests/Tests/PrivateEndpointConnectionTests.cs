@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");

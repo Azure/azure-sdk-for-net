@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
-        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
-        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration)
+        /// <param name="networkWatcherFlowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration)
         {
-            TrafficAnalyticsConfiguration = trafficAnalyticsConfiguration;
+            NetworkWatcherFlowAnalyticsConfiguration = networkWatcherFlowAnalyticsConfiguration;
         }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration { get; set; }
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get; set; }
     }
 }

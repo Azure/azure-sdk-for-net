@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Network.Tests
                         Name = probeName,
                         Protocol = ApplicationGatewayProtocol.Http,
                         Path = "/path/path.htm",
-                        IntervalInSeconds = 17,
-                        TimeoutInSeconds = 17,
+                        Interval = 17,
+                        Timeout = 17,
                         UnhealthyThreshold = 5,
                         PickHostNameFromBackendHttpSettings = true,
                         Match = new ApplicationGatewayProbeHealthResponseMatch
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeoutInSeconds = 69,
+                        RequestTimeout = 69,
                         Probe = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeoutInSeconds = 20,
+                        RequestTimeout = 20,
                     }
                 },
                 HttpListeners = {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
                     Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled);
-                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds);
+                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec);
                 }
                 else
                 {

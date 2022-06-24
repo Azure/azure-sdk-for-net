@@ -69,9 +69,9 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class GridLayoutOptions
     {
-        public GridLayoutOptions(int rows, int columns) { }
+        public GridLayoutOptions(int rows, int columns, object inputIds) { }
         public int Columns { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
+        public object InputIds { get { throw null; } set { } }
         public int Rows { get { throw null; } set { } }
     }
     public partial class GroupCall
@@ -81,14 +81,14 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class InputGroup
     {
-        public InputGroup() { }
+        public InputGroup(object inputIds) { }
         public int? Columns { get { throw null; } set { } }
-        public string Height { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
+        public object Height { get { throw null; } set { } }
+        public object InputIds { get { throw null; } set { } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
         public int? Rows { get { throw null; } set { } }
-        public string Width { get { throw null; } set { } }
+        public object Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LayerVisibility : System.IEquatable<Azure.Communication.MediaComposition.LayerVisibility>
@@ -160,10 +160,10 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class MediaCompositionClientOptions : Azure.Core.ClientOptions
     {
-        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_07_16_Preview1) { }
+        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_06_26_Preview) { }
         public enum ServiceVersion
         {
-            V2022_07_16_Preview1 = 1,
+            V2022_06_26_Preview = 1,
         }
     }
     public partial class MediaInput

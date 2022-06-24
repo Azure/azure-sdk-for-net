@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal NetworkUsage(NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name)
+        internal NetworkUsage(UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             if (name == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal NetworkUsage(ResourceIdentifier id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name)
+        internal NetworkUsage(ResourceIdentifier id, UsageUnit unit, long currentValue, long limit, UsageName name)
         {
             Id = id;
             Unit = unit;
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource identifier. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
-        public NetworkUsageUnit Unit { get; }
+        public UsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>
         public long CurrentValue { get; }
         /// <summary> The limit of usage. </summary>
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public NetworkUsageName Name { get; }
+        public UsageName Name { get; }
     }
 }

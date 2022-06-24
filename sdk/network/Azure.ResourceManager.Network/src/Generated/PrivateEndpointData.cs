@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The ID of the subnet from which the private IP will be allocated. </param>
         /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint resource. </param>
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? eTag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, resourceType, location, tags)
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
-            ETag = eTag;
+            Etag = etag;
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the load balancer. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; }
+        public ETag? Etag { get; }
         /// <summary> The ID of the subnet from which the private IP will be allocated. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> An array of references to the network interfaces created for this private endpoint. </summary>

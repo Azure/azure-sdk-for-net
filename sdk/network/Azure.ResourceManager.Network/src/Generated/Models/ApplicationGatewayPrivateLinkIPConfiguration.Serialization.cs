@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet");
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(IsPrimary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary");
-                writer.WriteBooleanValue(IsPrimary.Value);
+                writer.WriteBooleanValue(Primary.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

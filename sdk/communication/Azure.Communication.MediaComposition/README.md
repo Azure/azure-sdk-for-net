@@ -48,13 +48,23 @@ var client = new MediaCompositionClient(endpoint, tokenCredential);
 ### Creating the media composition
 
 ```C# Snippet:CreateMediaComposition
-var gridLayoutOptions = new GridLayoutOptions(2, 2);
-gridLayoutOptions.InputIds.Add(new List<string> { "jill", "jack" });
-gridLayoutOptions.InputIds.Add(new List<string> { "jane", "jerry" });
 var layout = new MediaCompositionLayout()
 {
     Resolution = new(1920, 1080),
-    Grid = gridLayoutOptions
+    Grid = new(
+        rows: 2,
+        columns: 2,
+        new List<List<string>>
+        {
+            new List<string>
+            {
+                "jill", "jack"
+            },
+            new List<string>
+            {
+                "jane", "jerry"
+            }
+        })
 };
 
 var inputs = new Dictionary<string, MediaInput>()
@@ -107,17 +117,17 @@ var outputs = new Dictionary<string, MediaOutput>()
         "acsGroupCall",
         new()
         {
-            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d193")
+            GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d191")
         }
     }
 };
-var response = await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
+await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
 ```
 
 ### Getting an existing media composition
 
 ```C# Snippet:GetMediaComposition
-var gridMediaCompositionResponse = await mediaCompositionClient.GetAsync(mediaCompositionId);
+var gridMediaComposition = await mediaCompositionClient.GetAsync(mediaCompositionId);
 ```
 
 ### Updating an existing media composition
@@ -133,7 +143,7 @@ var layout = new MediaCompositionLayout()
         SupportAspectRatio = 3 / 2
     }
 };
-var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
+await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
 ```
 
 ### Starting the media composition to start streaming

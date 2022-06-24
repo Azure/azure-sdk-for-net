@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"></param>
         /// <param name="sku"></param>
         /// <param name="plan"></param>
-        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource, string managedBy, string kind, ETag? etag, ResourceModelWithAllowedPropertySetIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? cloudPcResource, string managedBy, string kind, ETag? etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         public ETag? Etag { get; }
         /// <summary> Gets or sets the identity. </summary>
-        public ResourceModelWithAllowedPropertySetIdentity Identity { get; set; }
+        public SystemAssignedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets the sku. </summary>
         public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>

@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDiskImage"> Contains the os disk image information. </param>
         /// <param name="dataDiskImages"> The list of data disk images information. </param>
         /// <param name="automaticOSUpgradeProperties"> Describes automatic OS upgrade properties on the image. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture) : base(id, name, location, tags, extendedLocation)
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationType? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
-        public HyperVGeneration? HyperVGeneration { get; set; }
+        /// <summary> Specifies the HyperVGeneration Type. </summary>
+        public HyperVGenerationType? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; set; }
         /// <summary> VM disk types which are disallowed. </summary>

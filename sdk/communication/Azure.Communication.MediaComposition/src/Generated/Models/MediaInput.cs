@@ -18,7 +18,6 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of MediaInput. </summary>
-        /// <param name="kind"> Kind of media input. </param>
         /// <param name="groupCall"> Group call to be used as an input or output. </param>
         /// <param name="room"> Group call to be used as an input or output. </param>
         /// <param name="teamsMeeting"> A Teams meeting to be used as an input or output. </param>
@@ -29,9 +28,9 @@ namespace Azure.Communication.MediaComposition
         /// <param name="dominantSpeaker"> Identifies a teams meeting or group call defined in inputs. </param>
         /// <param name="screenShare"> Identifies a teams meeting or group call defined in inputs. </param>
         /// <param name="image"> An image input. </param>
-        internal MediaInput(MediaInputType? kind, GroupCall groupCall, GroupCall room, TeamsMeeting teamsMeeting, RtmpStream rtmp, SrtStream srt, ParticipantInput participant, CommunicationCallIdentifierModel activePresenter, CommunicationCallIdentifierModel dominantSpeaker, CommunicationCallIdentifierModel screenShare, ImageInput image)
+        /// <param name="kind"> Kind of media input. </param>
+        internal MediaInput(GroupCall groupCall, GroupCall room, TeamsMeeting teamsMeeting, RtmpStream rtmp, SrtStream srt, ParticipantInput participant, CommunicationCallIdentifierModel activePresenter, CommunicationCallIdentifierModel dominantSpeaker, CommunicationCallIdentifierModel screenShare, ImageInput image, MediaInputType? kind)
         {
-            Kind = kind;
             GroupCall = groupCall;
             Room = room;
             TeamsMeeting = teamsMeeting;
@@ -42,10 +41,9 @@ namespace Azure.Communication.MediaComposition
             DominantSpeaker = dominantSpeaker;
             ScreenShare = screenShare;
             Image = image;
+            Kind = kind;
         }
 
-        /// <summary> Kind of media input. </summary>
-        public MediaInputType? Kind { get; set; }
         /// <summary> Group call to be used as an input or output. </summary>
         public GroupCall GroupCall { get; set; }
         /// <summary> Group call to be used as an input or output. </summary>
@@ -66,5 +64,7 @@ namespace Azure.Communication.MediaComposition
         public CommunicationCallIdentifierModel ScreenShare { get; set; }
         /// <summary> An image input. </summary>
         public ImageInput Image { get; set; }
+        /// <summary> Kind of media input. </summary>
+        public MediaInputType? Kind { get; set; }
     }
 }

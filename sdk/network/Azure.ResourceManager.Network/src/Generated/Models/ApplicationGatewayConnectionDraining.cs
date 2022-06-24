@@ -12,16 +12,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of ApplicationGatewayConnectionDraining. </summary>
         /// <param name="enabled"> Whether connection draining is enabled or not. </param>
-        /// <param name="drainTimeoutInSeconds"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
-        public ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSeconds)
+        /// <param name="drainTimeoutInSec"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
+        public ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSec)
         {
             Enabled = enabled;
-            DrainTimeoutInSeconds = drainTimeoutInSeconds;
+            DrainTimeoutInSec = drainTimeoutInSec;
         }
 
         /// <summary> Whether connection draining is enabled or not. </summary>
         public bool Enabled { get; set; }
         /// <summary> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </summary>
-        public int DrainTimeoutInSeconds { get; set; }
+        public int DrainTimeoutInSec { get; set; }
     }
 }
