@@ -68,7 +68,9 @@ public class EventTracking
     /// <param name="indexNumber">The producer assigned index number for this event.</param>
     /// <param name="partition">The partition, if any, that this event was intended to be sent to.</param>
     ///
-    public static void AugmentEvent(EventData eventData, int indexNumber, string partition=null)
+    public static void AugmentEvent(EventData eventData,
+                                    int indexNumber,
+                                    string partition=null)
     {
         eventData.Properties.Add(IndexNumberPropertyName, indexNumber);
         eventData.Properties.Add(PublishTimePropertyName, DateTimeOffset.UtcNow);
@@ -93,9 +95,10 @@ public class EventTracking
     /// <param name="args">The <see cref="ProcessEventArgs"/> received from the processor client to be used for processing.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     ///
-    public async void ProcessEventAsync(ProcessEventArgs args, Metrics metrics)
+    public async void ProcessEventAsync(ProcessEventArgs args,
+                                        Metrics metrics)
     {
-        var indexNumber = _checkEvent(args.Data, args.Partition.PartitionId, metrics);
+        var indexNumber = CheckEvent(args.Data, args.Partition.PartitionId, metrics);
 
         if (indexNumber % 100 == 0)
         {
@@ -111,7 +114,7 @@ public class EventTracking
     /// <param name="partitionEvent">The <see cref="PartitionEvent"/> received from the consumer client to be used for processing.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     ///
-    public void ConsumeEvent(PartitionEvent partitionEvent, Metrics metrics) => _checkEvent(partitionEvent.Data, partitionEvent.Partition.PartitionId, metrics);
+    public void ConsumeEvent(PartitionEvent partitionEvent, Metrics metrics) => CheckEvent(partitionEvent.Data, partitionEvent.Partition.PartitionId, metrics);
 
     /// <summary>
     ///   Gets the assigned partitions for the <see cref="PartitionPublisher"/>. This allows each partition publisher instance to publish
@@ -125,12 +128,15 @@ public class EventTracking
     ///
     /// <returns>The set of partitions that a given <see cref="PartitionPublisher"/> should send to.</returns>
     ///
-    public static List<string> GetAssignedPartitions(int partitionCount, int roleIndex, string[] partitionIds, Role[] roles)
+    public static List<string> GetAssignedPartitions(int partitionCount,
+                                                     int roleIndex,
+                                                     string[] partitionIds,
+                                                     Role[] roles)
     {
         var roleList = new List<Role>(roles);
 
         var numPublishers = roleList.Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
-        var thisPublisherIndex = (roleList.GetRange(0,roleIndex)).Where(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher)).Count();
+        var thisPublisherIndex = (roleList.GetRange(0,roleIndex)).Count(role => (role == Role.Publisher || role == Role.BufferedPublisher || role == Role.PartitionPublisher));
 
         var baseNum = partitionCount/numPublishers;
         var remainder = partitionCount % numPublishers;
@@ -176,13 +182,15 @@ public class EventTracking
     ///   processor or consumer has received for each partition it is reading or processing from.
     /// </remarks>
     ///
-    private int CheckEvent(EventData eventData, string partitionReceivedFrom, Metrics metrics)
+    private int CheckEvent(EventData eventData,
+                           string partitionReceivedFrom,
+                           Metrics metrics)
     {
         // Id Checks
         var hasId = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
         var eventId = eventIdProperty?.ToString();
 
-        if (!hasID)
+        if (!hasId)
         {
             metrics.Client.GetMetric(Metrics.UnknownEventsProcessed).TrackValue(1);
             return -1;

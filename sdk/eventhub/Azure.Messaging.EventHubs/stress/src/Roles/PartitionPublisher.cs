@@ -67,7 +67,7 @@ internal class PartitionPublisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
         var producersRunning = new List<Task>();
 

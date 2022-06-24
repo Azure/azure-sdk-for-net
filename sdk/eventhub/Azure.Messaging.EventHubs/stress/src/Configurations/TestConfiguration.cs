@@ -47,29 +47,6 @@ public class TestConfiguration
     public int DurationInHours = 150;
 
     /// <summary>
-    ///   Gets the partition count of the Event Hub being used for this test run.
-    /// </summary>
-    ///
-    /// <returns>The number of partitions in the Event Hub associated with this test.</returns>
-    ///
-    public async Task<int> GetEventHubPartitionCountAsync()
-    {
-        int partitionCount;
-
-        if (string.IsNullOrEmpty(EventHubsConnectionString) || string.IsNullOrEmpty(EventHub))
-        {
-            return 0;
-        }
-
-        await using (var producerClient = new EventHubProducerClient(EventHubsConnectionString, EventHub))
-        {
-            partitionCount = (await producerClient.GetEventHubPropertiesAsync().ConfigureAwait(false)).PartitionIds.Length;
-        }
-
-        return partitionCount;
-    }
-
-    /// <summary>
     ///   Gets the list of partitions from the Event Hub being used for this test run.
     /// </summary>
     ///

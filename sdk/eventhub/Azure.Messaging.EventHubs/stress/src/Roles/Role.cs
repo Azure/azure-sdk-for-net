@@ -6,6 +6,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 /// <summary>
 ///   The set of roles that can be run by any test scenario.
 /// </summary>
+///
 public enum Role
 {
     Publisher,

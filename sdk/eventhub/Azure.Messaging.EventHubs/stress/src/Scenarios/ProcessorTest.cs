@@ -62,7 +62,8 @@ public class ProcessorTest
     ///
     public async Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var partitionCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
+        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionCount = partitionIds.Length;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
 
         var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
@@ -90,35 +91,35 @@ public class ProcessorTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunRoleAsync(Role role, int roleIndex, CancellationToken cancellationToken)
+    private async Task RunRoleAsync(Role role,
+                                   int roleIndex,
+                                   CancellationToken cancellationToken)
     {
+        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionCount = partitionIds.Length;
         switch (role)
         {
             case Role.Processor:
                 var processorConfiguration = new ProcessorConfiguration();
-                var partitionCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
                 var processor = new Processor(_testConfiguration, processorConfiguration, _metrics, partitionCount);
                 _identifier = processor.Identifier;
 
                 _metrics.Client.TrackEvent("Starting to process events");
-                await processor.StartAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken).ConfigureAwait(false);
+                await processor.RunAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken).ConfigureAwait(false);
                 _metrics.Client.TrackEvent("Stopping processing events");
                 break;
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
-                var partitionsCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
-                var partitionIds = await _testConfiguration.GetEventHubPartitionKeysAsync().ConfigureAwait(false);
-                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
-
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, partitions);
+                var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, roleIndex, partitionIds, _roles);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, assignedPartitions);
                 _metrics.Client.TrackEvent("Starting to publish events");
-                await partitionPublisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                await partitionPublisher.RunAsync(cancellationToken).ConfigureAwait(false);
                 _metrics.Client.TrackEvent("Stopping publishing events.");
                 break;
 
             default:
-                break;
+                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
 

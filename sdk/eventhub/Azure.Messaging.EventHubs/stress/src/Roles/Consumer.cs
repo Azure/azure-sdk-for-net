@@ -57,11 +57,11 @@ internal class Consumer
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
         var eventTracking = new EventTracking();
         var consumerTasks = new Dictionary<string, Task>();
-        var partitionIds = await _testConfiguration.GetEventHubPartitionKeysAsync();
+        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync();
 
         foreach (var partitionId in partitionIds)
         {
@@ -94,7 +94,7 @@ internal class Consumer
                     MaximumWaitTime = _consumerConfiguration.MaximumWaitTime
                 };
 
-                await foreach (var receivedEvent in consumerClient.ReadEventsFromPartitionAsync(partitionId, eventPosition, options))
+                await foreach (var receivedEvent in consumerClient.ReadEventsFromPartitionAsync(partitionId, eventPosition, options, cancellationToken))
                 {
                     if (receivedEvent.Data != null)
                     {
@@ -116,7 +116,7 @@ internal class Consumer
             }
             catch (Exception ex)
             {
-                _metrics.Client.GetMetric(Metrics.ProcessorRestarted).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.ConsumerRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
             finally

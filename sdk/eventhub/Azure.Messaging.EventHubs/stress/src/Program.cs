@@ -74,9 +74,9 @@ public class Program
 
         try
         {
-            foreach (TestScenario t in testsToRun)
+            foreach (TestScenario testScenario in testsToRun)
             {
-                var testName = TestScenarioToString(t);
+                var testName = testScenario.ToString();
                 metrics.Client.Context.GlobalProperties["TestName"] = testName;
                 var eventHubName = string.Empty;
                 var storageBlob = string.Empty;
@@ -84,7 +84,7 @@ public class Program
 
                 metrics.Client.TrackEvent("Starting a test run.");
 
-                switch (t)
+                switch (testScenario)
                 {
                     case TestScenario.BufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
@@ -172,24 +172,6 @@ public class Program
             await Task.Delay(60000).ConfigureAwait(false);
         }
     }
-
-    /// <summary>
-    ///   Converts a <see cref="TestScenario"/> value to a string.
-    /// </summary>
-    ///
-    /// <param name="testScenario">The <see cref="TestScenario"/> instance to convert.</param>
-    ///
-    /// <returns>The string version of the <see cref="TestScenario"/> input.</returns>
-    ///
-    public static string TestScenarioToString(TestScenario testScenario) => testScenario switch
-    {
-        TestScenario.BufferedProducerTest => "BufferedProducerTest",
-        TestScenario.BurstBufferedProducerTest => "BurstBufferedProducerTest",
-        TestScenario.EventProducerTest => "EventProducerTest",
-        TestScenario.ProcessorTest => "ProcessorTest",
-        TestScenario.ConsumerTest => "ConsumerTest",
-        _ => string.Empty,
-    };
 
     /// <summary>
     ///   Converts a string into a <see cref="TestScenario"/> value.

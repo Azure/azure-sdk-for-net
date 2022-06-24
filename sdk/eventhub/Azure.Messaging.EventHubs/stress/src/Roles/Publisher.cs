@@ -57,7 +57,7 @@ internal class Publisher
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
         var sendTasks = new List<Task>();
 
@@ -157,7 +157,7 @@ internal class Publisher
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
     private async Task PerformSendAsync(EventHubProducerClient producer,
-                                    CancellationToken cancellationToken)
+                                        CancellationToken cancellationToken)
     {
         // Create the batch and generate a set of random events, keeping only those that were able to fit into the batch.
         // Because there is a side-effect of TryAdd in the statement, ensure that ToList is called to materialize the set

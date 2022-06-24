@@ -6,6 +6,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 /// <summary>
 ///   The set of test scenarios that can be run.
 /// </summary>
+///
 public enum TestScenario
 {
     BufferedProducerTest,

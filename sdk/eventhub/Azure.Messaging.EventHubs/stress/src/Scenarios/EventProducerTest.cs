@@ -34,7 +34,9 @@ public class EventProducerTest
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public EventProducerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
+    public EventProducerTest(TestConfiguration testConfiguration,
+                             Metrics metrics,
+                             string jobIndex = default)
     {
         _testConfiguration = testConfiguration;
         _jobIndex = jobIndex;
@@ -76,24 +78,25 @@ public class EventProducerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunRoleAsync(Role role, CancellationToken cancellationToken)
+    private async Task RunRoleAsync(Role role,
+                                   CancellationToken cancellationToken)
     {
         switch (role)
         {
             case Role.Publisher:
                 var publisherConfiguration = new PublisherConfiguration();
                 var publisher = new Publisher(publisherConfiguration, _testConfiguration, _metrics);
-                await publisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                await publisher.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             case Role.BufferedPublisher:
                 var buffpublisherConfiguration = new BufferedPublisherConfiguration();
                 var buffpublisher = new BufferedPublisher(_testConfiguration, buffpublisherConfiguration, _metrics);
-                await buffpublisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                await buffpublisher.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             default:
-                break;
+                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
 }

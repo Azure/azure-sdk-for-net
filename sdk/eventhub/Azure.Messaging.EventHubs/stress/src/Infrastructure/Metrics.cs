@@ -206,6 +206,12 @@ public class Metrics
     public const string UnknownEventsProcessed = "UnknownEventsProcessed";
 
     /// <summary>
+    ///   This is the metric name used when the consumer needs to be restarted.
+    /// </summary>
+    ///
+    public const string ConsumerRestarted = "ConsumerRestarted";
+
+    /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.
     /// </summary>
     ///

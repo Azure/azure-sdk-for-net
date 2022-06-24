@@ -37,7 +37,9 @@ public class ConsumerTest
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public ConsumerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
+    public ConsumerTest(TestConfiguration testConfiguration,
+                        Metrics metrics,
+                        string jobIndex = default)
     {
         _testConfiguration = testConfiguration;
         _jobIndex = jobIndex;
@@ -78,29 +80,30 @@ public class ConsumerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunRoleAsync(Role role, int roleIndex, CancellationToken cancellationToken)
+    private async Task RunRoleAsync(Role role,
+                                   int roleIndex,
+                                   CancellationToken cancellationToken)
     {
-        //GetEventHubPartitionKeysAsync
         switch (role)
         {
             case Role.Consumer:
                 var consumerConfiguration = new ConsumerConfiguration();
                 var consumer = new Consumer(_testConfiguration, consumerConfiguration, _metrics);
-                await consumer.StartAsync(cancellationToken).ConfigureAwait(false);
+                await consumer.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
-                var partitionsCount = await _testConfiguration.GetEventHubPartitionCountAsync().ConfigureAwait(false);
-                var partitionIds = await _testConfiguration.GetEventHubPartitionKeysAsync().ConfigureAwait(false);
+                var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
+                var partitionsCount = partitionIds.Length;
                 var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
 
                 var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, partitions);
-                await partitionPublisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                await partitionPublisher.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             default:
-                break;
+                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
 }

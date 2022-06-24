@@ -66,9 +66,9 @@ internal class Processor
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task StartAsync(Func<ProcessEventArgs, Task> processEventHandler,
-                            Func<ProcessErrorEventArgs, Task> processErrorHandler,
-                            CancellationToken cancellationToken)
+    public async Task RunAsync(Func<ProcessEventArgs, Task> processEventHandler,
+                               Func<ProcessErrorEventArgs, Task> processErrorHandler,
+                               CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

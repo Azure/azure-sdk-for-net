@@ -35,7 +35,9 @@ public class BurstBufferedProducerTest
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public BurstBufferedProducerTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
+    public BurstBufferedProducerTest(TestConfiguration testConfiguration,
+                                     Metrics metrics,
+                                     string jobIndex = default)
     {
         _testConfiguration = testConfiguration;
         _jobIndex = jobIndex;
@@ -76,18 +78,19 @@ public class BurstBufferedProducerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunRoleAsync(Role role, CancellationToken cancellationToken)
+    private async Task RunRoleAsync(Role role,
+                                   CancellationToken cancellationToken)
     {
         switch (role)
         {
             case Role.BufferedPublisher:
                 var publisherConfiguration = new BufferedPublisherConfiguration();
                 var publisher = new BufferedPublisher(_testConfiguration, publisherConfiguration, _metrics);
-                await publisher.StartAsync(cancellationToken).ConfigureAwait(false);
+                await publisher.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
             default:
-                break;
+                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
 }
