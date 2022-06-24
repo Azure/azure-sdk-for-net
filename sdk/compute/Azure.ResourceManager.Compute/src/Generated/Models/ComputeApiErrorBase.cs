@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api error base. </summary>
-    public partial class ApiErrorBase
+    public partial class ComputeApiErrorBase
     {
-        /// <summary> Initializes a new instance of ApiErrorBase. </summary>
-        internal ApiErrorBase()
+        /// <summary> Initializes a new instance of ComputeApiErrorBase. </summary>
+        internal ComputeApiErrorBase()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiErrorBase. </summary>
+        /// <summary> Initializes a new instance of ComputeApiErrorBase. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        internal ApiErrorBase(string code, string target, string message)
+        internal ComputeApiErrorBase(string code, string target, string message)
         {
             Code = code;
             Target = target;

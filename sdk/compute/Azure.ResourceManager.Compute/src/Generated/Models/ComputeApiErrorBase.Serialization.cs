@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ApiErrorBase
+    public partial class ComputeApiErrorBase
     {
-        internal static ApiErrorBase DeserializeApiErrorBase(JsonElement element)
+        internal static ComputeApiErrorBase DeserializeComputeApiErrorBase(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> target = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ApiErrorBase(code.Value, target.Value, message.Value);
+            return new ComputeApiErrorBase(code.Value, target.Value, message.Value);
         }
     }
 }

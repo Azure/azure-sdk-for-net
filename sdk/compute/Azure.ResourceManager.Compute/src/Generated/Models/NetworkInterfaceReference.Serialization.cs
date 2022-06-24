@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
-            Optional<DeleteOption> deleteOption = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOption(property0.Value.GetString());
+                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }

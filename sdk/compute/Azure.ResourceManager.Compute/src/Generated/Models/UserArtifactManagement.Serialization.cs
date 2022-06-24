@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UserArtifactManage : IUtf8JsonSerializable
+    public partial class UserArtifactManagement : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static UserArtifactManage DeserializeUserArtifactManage(JsonElement element)
+        internal static UserArtifactManagement DeserializeUserArtifactManagement(JsonElement element)
         {
             string install = default;
             string @remove = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UserArtifactManage(install, @remove, update.Value);
+            return new UserArtifactManagement(install, @remove, update.Value);
         }
     }
 }
