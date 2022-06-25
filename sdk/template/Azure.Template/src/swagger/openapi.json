@@ -16,15 +16,15 @@
     "hostTemplate": "{Endpoint}",
     "useSchemePrefix": false,
     "parameters": [
-      {
-        "name": "Endpoint",
-        "in": "path",
-        "required": true,
-        "type": "string",
-        "format": "url",
-        "x-ms-skip-url-encoding": true,
-        "x-ms-parameter-location": "client"
-      }
+        {
+            "name": "Endpoint",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "url",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        }
     ]
   },
   "produces": [
@@ -35,6 +35,42 @@
   ],
   "tags": [],
   "paths": {
+    "/api/hubs/:send": {
+      "post": {
+        "operationId": "WebPubSubService_sendToAll",
+        "parameters": [
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "message",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
     "/api/hubs/groups/{group}/connections/{connectionId}": {
       "put": {
         "operationId": "WebPubSubService_addConnectionToGroup",

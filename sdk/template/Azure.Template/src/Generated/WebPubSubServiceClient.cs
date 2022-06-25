@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -55,6 +56,50 @@ namespace Azure.Template
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+        }
+
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="excluded"> The ArrayOfPost0ItemsItem to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> SendToAllAsync(RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToAllRequest(content, excluded, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="excluded"> The ArrayOfPost0ItemsItem to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response SendToAll(RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendToAllRequest(content, excluded, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <param name="group"> The String to use. </param>
@@ -299,6 +344,25 @@ namespace Azure.Template
             }
         }
 
+        internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/api/hubs/:send", false);
+            if (excluded != null)
+            {
+                uri.AppendQueryDelimited("excluded", excluded, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -383,6 +447,8 @@ namespace Azure.Template
             return message;
         }
 
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;

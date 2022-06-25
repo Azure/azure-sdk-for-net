@@ -16,6 +16,8 @@ namespace Azure.Template
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromGroup(string userId, string group, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromGroupAsync(string userId, string group, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> excluded = null, Azure.RequestContext context = null) { throw null; }
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
