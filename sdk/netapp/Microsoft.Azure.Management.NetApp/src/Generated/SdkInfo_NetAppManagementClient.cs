@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.NetApp
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\audunn\\Source\\repos\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "ebcfe555e400370ec1d77d5487cbb419ad0af634";
+      public static readonly String GithubCommidId = "74ed6778513041716e8cf8c72e3f06c1371a3e18";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

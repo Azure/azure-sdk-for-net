@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp/locations/westus2/quotaLimits/totalVolumesPerSubscription?api-version=2021-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlhNzViZGEtODgyZS00NGQ1LTg0MzEtNjM0MjEyMDQxMzJhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0QXBwL2xvY2F0aW9ucy93ZXN0dXMyL3F1b3RhTGltaXRzL3RvdGFsVm9sdW1lc1BlclN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDIxLTEwLTAx",
+      "RequestUri": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp/locations/westus2/quotaLimits/totalVolumesPerSubscription?api-version=2022-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlhNzViZGEtODgyZS00NGQ1LTg0MzEtNjM0MjEyMDQxMzJhL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0QXBwL2xvY2F0aW9ucy93ZXN0dXMyL3F1b3RhTGltaXRzL3RvdGFsVm9sdW1lc1BlclN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDIyLTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "871200bf-6694-4ef3-af63-6f0771e8083e"
+          "270dc116-fb1c-4f02-b424-672a1d9abb91"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.56803",
+          "FxVersion/4.700.22.26002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043",
-          "Microsoft.Azure.Management.NetApp.AzureNetAppFilesManagementClient/1.15.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.NetApp.AzureNetAppFilesManagementClient/1.16.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6abef612-999b-4aa9-8a16-5159f7330578"
+          "ff2b4980-9136-4130-aab3-2e042de00997"
         ],
         "Server": [
           "Microsoft-IIS/10.0"
@@ -36,13 +36,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11988"
         ],
         "x-ms-correlation-request-id": [
-          "db35d1c8-083b-40a5-87aa-94b0c00a9609"
+          "09545e50-3da8-474d-b525-3ce03d0ad115"
         ],
         "x-ms-routing-request-id": [
-          "FRANCESOUTH:20220214T101827Z:db35d1c8-083b-40a5-87aa-94b0c00a9609"
+          "UAECENTRAL:20220623T112104Z:09545e50-3da8-474d-b525-3ce03d0ad115"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 14 Feb 2022 10:18:26 GMT"
+          "Thu, 23 Jun 2022 11:21:04 GMT"
         ],
         "Content-Length": [
           "281"

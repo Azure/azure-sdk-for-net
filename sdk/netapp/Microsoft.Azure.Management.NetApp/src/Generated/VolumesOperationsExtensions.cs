@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.NetApp
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -578,7 +580,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='volumeName'>
             /// The name of the volume
             /// </param>
-            public static ListReplications ListReplicationsMethod(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
+            public static IEnumerable<Replication> ListReplicationsMethod(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName)
             {
                 return operations.ListReplicationsMethodAsync(resourceGroupName, accountName, poolName, volumeName).GetAwaiter().GetResult();
             }
@@ -607,7 +609,7 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListReplications> ListReplicationsMethodAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Replication>> ListReplicationsMethodAsync(this IVolumesOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListReplicationsMethodWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, null, cancellationToken).ConfigureAwait(false))
                 {

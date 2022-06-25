@@ -120,8 +120,7 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.DeleteAccount(netAppMgmtClient, accountName: ResourceUtils.volumeBackupAccountName1);
             }
         }
-
-        //[Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
+        
         [Fact]
         public void CreateVolumeWithBackupPolicy()
         {            
@@ -158,7 +157,7 @@ namespace NetApp.Tests.ResourceTests
                 // Now try and modify the backuppolicy
                 var patchBackupPolicy = new BackupPolicyPatch()
                 {
-                    DailyBackupsToKeep = 1
+                    DailyBackupsToKeep = 2
                 };
 
                 var resultbackupPolicy = netAppMgmtClient.BackupPolicies.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1, patchBackupPolicy);
@@ -253,7 +252,7 @@ namespace NetApp.Tests.ResourceTests
                 // Now try and modify it                
                 var patchBackupPolicy = new BackupPolicyPatch()
                 {                    
-                     DailyBackupsToKeep = 1                    
+                     DailyBackupsToKeep = 2                    
                 };
 
                 var resultbackupPolicy = netAppMgmtClient.BackupPolicies.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1, patchBackupPolicy);

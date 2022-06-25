@@ -20,7 +20,7 @@
 		 - Added EncryptionKeySource to hold allowed values for Volumes.EncryptionKeySource property.
 		 - Added Encrypted property to Volumes and VolumeGroupVolumeProperties, Specifies if the volume is encrypted or not Only available on volumes created or updated after 2022-01-01.
 		 - Added Zones to Volumes to display Availability Zone for Volumes.
-		 - Added support for VolumeQuotaRule		 
+		 - Added support for VolumeQuotaRules
 		           					
         Breaking changes:
           - Removed unsued property Tags from VolumeGroup, VolumeGroupDetails as that is a proxy resource and not supported by the service

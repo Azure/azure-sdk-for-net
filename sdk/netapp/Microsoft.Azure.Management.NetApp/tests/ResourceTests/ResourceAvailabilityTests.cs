@@ -14,8 +14,8 @@ using System.Linq;
 namespace NetApp.Tests.ResourceTests
 {
     public class ResourceAvailabilityTests : TestBase
-    {
-        [Fact(Skip ="Manifest not released yet")]
+    {        
+        [Fact]
         public void CheckQuotaAvailability()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -40,8 +40,8 @@ namespace NetApp.Tests.ResourceTests
                 Assert.NotNull(getQuotaLimit);
             }
         }
-
-        [Fact(Skip = "Service side bug not released yet")]
+     
+        [Fact]
         public void ListQuotaLimits()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

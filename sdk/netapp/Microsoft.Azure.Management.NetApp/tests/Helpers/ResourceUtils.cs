@@ -39,14 +39,15 @@ namespace NetApp.Tests.Helpers
         public const string remotePoolName1 = poolName1Repl + remoteSuffix;
         public const string poolName2 = "sdk-net-tests-pool-211";
         public const string volumeName1 = "sdk-net-tests-vol-2105";
+        public const string volumeQuotaRule1 = "volumeQuotaRule1";
 
         //Backup
-        //public const string backupLocation = "eastus2euap"; //"westusstage";        
-        //public const string backupVnet = "sdknettestqa2vnet464euap";
-        public const string backupLocation = "southcentralusstage";
-        public const string backupVnet = "sdknettestqa2vnet464southcentralus";
-        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-214v";
-        public const string backupPoolName1 = "sdk-net-tests-pool-206";
+        public const string backupLocation = "eastus2euap"; //"westusstage";        
+        public const string backupVnet = "sdknettestqa2vnet464euap";
+        //public const string backupLocation = "southcentralusstage";
+        //public const string backupVnet = "sdknettestqa2vnet464southcentralus";
+        public const string volumeBackupAccountName1 = "sdk-net-tests-acc-215v";
+        public const string backupPoolName1 = "sdk-net-tests-pool-207";
         public const string backupVolumeName1 = "sdk-net-tests-vol-2112";
         public const string backupName1 = backupVolumeName1 + "-b1";
         public const string backupName2 = backupVolumeName1 + "-b2";
@@ -323,8 +324,9 @@ namespace NetApp.Tests.Helpers
                 {
                     Rules = new List<ExportPolicyRule>()
                     {
-                        new ExportPolicyRule { Nfsv3 = false, Nfsv41 = true, RuleIndex = 1, AllowedClients = "0.0.0.0/0" },
-                        new ExportPolicyRule { Nfsv3 = false, Nfsv41 = true, RuleIndex = 2, AllowedClients = "0.0.0.0/0"}
+                        new ExportPolicyRule { Nfsv3 = false, Nfsv41 = true, RuleIndex = 1, AllowedClients = "0.0.0.0/0", UnixReadOnly = false, UnixReadWrite = true,
+                            Kerberos5ReadOnly = false, Kerberos5iReadOnly = false, Kerberos5iReadWrite = false, Kerberos5pReadOnly = false,
+                            Kerberos5pReadWrite = false, Kerberos5ReadWrite = false }                        
                     }
                 };
             }
@@ -373,8 +375,7 @@ namespace NetApp.Tests.Helpers
             };
             var volumeGroup = new VolumeGroupDetails()
             {
-                Location = location,
-                Tags = tags,
+                Location = location,                
                 GroupMetaData = new VolumeGroupMetaData()
                 {
                     ApplicationType = ApplicationType.SAPHANA,

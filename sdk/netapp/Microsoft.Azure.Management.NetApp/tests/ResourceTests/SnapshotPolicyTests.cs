@@ -29,7 +29,7 @@ namespace NetApp.Tests.ResourceTests
                 //create account
                 ResourceUtils.CreateAccount(netAppMgmtClient);
                 var snapshotPolicy = CreatePolicy(ResourceUtils.location, ResourceUtils.snapshotPolicyName1);
-
+                
                 // create the snapshotPolicy
                 //ResourceUtils.CreateSnapshot(netAppMgmtClient);                
                 var snapshotsBefore = netAppMgmtClient.SnapshotPolicies.Create(snapshotPolicy, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);

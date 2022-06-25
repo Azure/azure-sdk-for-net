@@ -510,6 +510,11 @@ namespace NetApp.Tests.ResourceTests
 
                 WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
 
+
+                ///List replications
+                var replicationsList = netAppMgmtClient.Volumes.ListReplicationsMethod(ResourceUtils.repResourceGroup, ResourceUtils.accountName1Repl, ResourceUtils.poolName1Repl, ResourceUtils.volumeName1ReplSource);
+                Assert.Single(replicationsList);
+
                 netAppMgmtClient.Volumes.BreakReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.volumeName1ReplDest);
 
                 WaitForReplicationStatus(netAppMgmtClient, "Broken");
@@ -718,7 +723,7 @@ namespace NetApp.Tests.ResourceTests
         //    using (MockContext context = MockContext.Start(this.GetType()))
         //    {
         //        var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                
+
         //        //get list of volumes                
         //        var volumesPage = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
         //        // Get all resources by polling on next page link
@@ -734,13 +739,47 @@ namespace NetApp.Tests.ResourceTests
         //        ResourceUtils.DeleteAccount(netAppMgmtClient);
         //    }
         //}
+        
+        [Fact(Skip = "Manifest not released yet")]        
+        public void ResetCifsPasswordOnNFSVolume()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // create a volume, get all and check
+                var resource = ResourceUtils.CreateVolume(netAppMgmtClient);
+                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());
+                // check DP properties exist but unassigned because
+                // dataprotection volume was not created
+                Assert.Null(resource.VolumeType);
+                Assert.Null(resource.DataProtection);
+
+                var volumesBefore = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                Assert.Single(volumesBefore);
+
+                //Try to resertCifs on an NFS volume, VolumeResetCifsPasswordNFSProtocolNotValid is expected
+                var assertException = Assert.Throws<CloudException>(() => netAppMgmtClient.Volumes.ResetCifsPassword(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1));
+                string exceptionCode = "VolumeResetCifsPasswordNFSProtocolNotValid";
+                Assert.Equal(exceptionCode, assertException.Body.Details[0]?.Code);
+
+                // delete the volume and check again
+                netAppMgmtClient.Volumes.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                var volumesAfter = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                Assert.Empty(volumesAfter);
+
+                // cleanup
+                ResourceUtils.DeletePool(netAppMgmtClient);
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
+            }
+        }
 
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
-
     }
 }
 

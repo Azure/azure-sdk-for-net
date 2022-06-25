@@ -228,7 +228,7 @@ namespace NetApp.Tests.ResourceTests
                 // create the pool  
                 var pool = ResourceUtils.CreatePool(netAppMgmtClient);
                 Assert.Equal("Premium", pool.ServiceLevel);
-                Assert.Null(pool.Tags);
+                Assert.NotNull(pool.Tags);
                 
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag1", "Value1");

@@ -23,7 +23,7 @@ namespace NetApp.Tests.ResourceTests
     public class AnfBackupTests : TestBase
     {
         private const int delay = 5000;
-        //[Fact(Skip = "Backup service side bug (Networking) causes this to fail, re-enable when fixed")]
+        
         [Fact]
         public void CreateDeleteBackup()
         {
@@ -49,6 +49,7 @@ namespace NetApp.Tests.ResourceTests
                 // Create volume 
                 var createVolume = ResourceUtils.CreateVolume(netAppMgmtClient, location: ResourceUtils.backupLocation, accountName: ResourceUtils.volumeBackupAccountName1, poolName: ResourceUtils.backupPoolName1, volumeName: ResourceUtils.backupVolumeName1, vnet: ResourceUtils.backupVnet, volumeOnly: true);
                 Assert.NotNull(createVolume);
+                
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
                     Thread.Sleep(delay);
@@ -97,6 +98,15 @@ namespace NetApp.Tests.ResourceTests
                 {
                     Thread.Sleep(delay);
                 }
+
+                //Update backup
+                var backupPatch = new BackupPatch()
+                {
+                    Label = "updated-sdkTestBackup1"
+                };
+                var updatedBackup = netAppMgmtClient.Backups.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPoolName1, ResourceUtils.backupVolumeName1, ResourceUtils.backupName1, backupPatch);
+                Assert.Equal(backupPatch.Label, updatedBackup.Label);
+
                 //create second backup
                 var backup2 = new Backup()
                 {
