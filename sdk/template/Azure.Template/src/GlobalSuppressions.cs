@@ -10,3 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "<Pending>", Scope = "module")]
 [assembly: SuppressMessage("Usage", "AZC0007:DO provide constructor overloads that allow specifying additional options.", Justification = "<Pending>", Scope = "module")]
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "module")]

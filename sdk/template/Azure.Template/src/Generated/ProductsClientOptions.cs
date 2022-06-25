@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Template
 {
-    /// <summary> Client options for MultiClientService library clients. </summary>
-    public partial class MultiClientServiceClientOptions : ClientOptions
+    /// <summary> Client options for ProductsClient. </summary>
+    public partial class ProductsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_06_25;
 
@@ -24,8 +24,8 @@ namespace Azure.Template
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of MultiClientServiceClientOptions. </summary>
-        public MultiClientServiceClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of ProductsClientOptions. </summary>
+        public ProductsClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

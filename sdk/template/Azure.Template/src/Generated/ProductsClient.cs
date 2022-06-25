@@ -35,7 +35,7 @@ namespace Azure.Template
         /// <summary> Initializes a new instance of ProductsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public ProductsClient(TokenCredential credential) : this(credential, new Uri(""), new MultiClientServiceClientOptions())
+        public ProductsClient(TokenCredential credential) : this(credential, new Uri(""), new ProductsClientOptions())
         {
         }
 
@@ -44,11 +44,11 @@ namespace Azure.Template
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ProductsClient(TokenCredential credential, Uri endpoint, MultiClientServiceClientOptions options)
+        public ProductsClient(TokenCredential credential, Uri endpoint, ProductsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new MultiClientServiceClientOptions();
+            options ??= new ProductsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -116,6 +116,66 @@ namespace Azure.Template
             }
         }
 
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetSpecialProductAsync(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetSpecialProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSpecialProductRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetSpecialProduct(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetSpecialProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSpecialProductRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetProductRequest(int id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -124,6 +184,20 @@ namespace Azure.Template
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/products/", false);
+            uri.AppendPath(id, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSpecialProductRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/specialProducts/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

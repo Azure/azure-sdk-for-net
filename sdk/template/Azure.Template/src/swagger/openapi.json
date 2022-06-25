@@ -50,7 +50,7 @@
     },
     "/specialProducts/{id}": {
       "get": {
-        "operationId": "SpecialProducts_get",
+        "operationId": "Products_getSpecialProduct",
         "parameters": [
           {
             "name": "id",
