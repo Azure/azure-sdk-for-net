@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    /// <summary> The Products service client. </summary>
-    public partial class ProductsClient
+    /// <summary> The SpecialProducts service client. </summary>
+    public partial class SpecialProductsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -27,24 +27,24 @@ namespace Azure.Template
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ProductsClient for mocking. </summary>
-        protected ProductsClient()
+        /// <summary> Initializes a new instance of SpecialProductsClient for mocking. </summary>
+        protected SpecialProductsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductsClient. </summary>
+        /// <summary> Initializes a new instance of SpecialProductsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public ProductsClient(TokenCredential credential) : this(credential, new Uri(""), new MultiClientServiceClientOptions())
+        public SpecialProductsClient(TokenCredential credential) : this(credential, new Uri(""), new MultiClientServiceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ProductsClient. </summary>
+        /// <summary> Initializes a new instance of SpecialProductsClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
-        public ProductsClient(TokenCredential credential, Uri endpoint, MultiClientServiceClientOptions options)
+        public SpecialProductsClient(TokenCredential credential, Uri endpoint, MultiClientServiceClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -70,13 +70,13 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetProductAsync(int id, RequestContext context = null)
+        public virtual async Task<Response> GetSpecialProductAsync(int id, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            using var scope = ClientDiagnostics.CreateScope("SpecialProductsClient.GetSpecialProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProductRequest(id, context);
+                using HttpMessage message = CreateGetSpecialProductRequest(id, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -100,13 +100,13 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetProduct(int id, RequestContext context = null)
+        public virtual Response GetSpecialProduct(int id, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            using var scope = ClientDiagnostics.CreateScope("SpecialProductsClient.GetSpecialProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProductRequest(id, context);
+                using HttpMessage message = CreateGetSpecialProductRequest(id, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -116,14 +116,14 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateGetProductRequest(int id, RequestContext context)
+        internal HttpMessage CreateGetSpecialProductRequest(int id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/products/", false);
+            uri.AppendPath("/specialProducts/", false);
             uri.AppendPath(id, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

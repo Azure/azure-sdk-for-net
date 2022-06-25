@@ -11,4 +11,6 @@ input-file:
 namespace: Azure.Template
 security: AADToken
 security-scopes: https://vault.azure.net/.default
+
+single-top-level-client: true
 ```

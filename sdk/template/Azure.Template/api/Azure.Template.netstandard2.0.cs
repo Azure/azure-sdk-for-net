@@ -1,28 +1,29 @@
 namespace Azure.Template
 {
+    public partial class MultiClientServiceClientOptions : Azure.Core.ClientOptions
+    {
+        public MultiClientServiceClientOptions(Azure.Template.MultiClientServiceClientOptions.ServiceVersion version = Azure.Template.MultiClientServiceClientOptions.ServiceVersion.V2022_06_25) { }
+        public enum ServiceVersion
+        {
+            V2022_06_25 = 1,
+        }
+    }
     public partial class ProductsClient
     {
         protected ProductsClient() { }
-        public ProductsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ProductsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.ProductsClientOptions options) { }
+        public ProductsClient(Azure.Core.TokenCredential credential) { }
+        public ProductsClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Template.MultiClientServiceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Delete(int id, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(int id, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetProduct(int id, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetProductAsync(int id, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetProducts(Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetProductsAsync(Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response Update(int id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(int id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class ProductsClientOptions : Azure.Core.ClientOptions
+    public partial class SpecialProductsClient
     {
-        public ProductsClientOptions(Azure.Template.ProductsClientOptions.ServiceVersion version = Azure.Template.ProductsClientOptions.ServiceVersion.V2022_06_20) { }
-        public enum ServiceVersion
-        {
-            V2022_06_20 = 1,
-        }
+        protected SpecialProductsClient() { }
+        public SpecialProductsClient(Azure.Core.TokenCredential credential) { }
+        public SpecialProductsClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Template.MultiClientServiceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetSpecialProduct(int id, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSpecialProductAsync(int id, Azure.RequestContext context = null) { throw null; }
     }
 }

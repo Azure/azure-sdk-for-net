@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Crud Operations Service",
-    "version": "2022-06-20",
+    "title": "Multi Client Service",
+    "version": "2022-06-25",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -12,21 +12,6 @@
   "schemes": [
     "https"
   ],
-  "x-ms-parameterized-host": {
-    "hostTemplate": "{Endpoint}",
-    "useSchemePrefix": false,
-    "parameters": [
-      {
-        "name": "Endpoint",
-        "in": "path",
-        "required": true,
-        "type": "string",
-        "format": "url",
-        "x-ms-skip-url-encoding": true,
-        "x-ms-parameter-location": "client"
-      }
-    ]
-  },
   "produces": [
     "application/json"
   ],
@@ -35,75 +20,24 @@
   ],
   "tags": [],
   "paths": {
-    "/{id}": {
+    "/products/{id}": {
       "get": {
         "operationId": "Products_get",
-        "description": "Gets an instance of the resource.",
         "parameters": [
           {
-            "$ref": "#/parameters/Product"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "patch": {
-        "operationId": "Products_update",
-        "description": "Updates an existing instance of the resource.",
-        "parameters": [
-          {
-            "$ref": "#/parameters/Product"
-          },
-          {
-            "name": "properties",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {},
-              "description": "The template for adding optional properties.",
-              "x-cadl-name": "OptionalProperties<UpdateableProperties<Product>>"
-            }
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
           "200": {
-            "description": "Ok",
+            "description": "The request has succeeded.",
             "schema": {
               "$ref": "#/definitions/Product"
             }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "operationId": "Products_delete",
-        "description": "Deletes an existing instance of the resource.",
-        "parameters": [
-          {
-            "$ref": "#/parameters/Product"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Resource deleted successfully."
           },
           "default": {
             "description": "An unexpected error response",
@@ -114,50 +48,23 @@
         }
       }
     },
-    "/": {
-      "post": {
-        "operationId": "Products_create",
-        "description": "Creates a new instance of the resource.",
+    "/specialProducts/{id}": {
+      "get": {
+        "operationId": "SpecialProducts_get",
         "parameters": [
           {
-            "name": "resource",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
           "200": {
-            "description": "Ok",
+            "description": "The request has succeeded.",
             "schema": {
               "$ref": "#/definitions/Product"
-            }
-          },
-          "201": {
-            "description": "Resource create operation completed successfully.",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "Products_list",
-        "description": "Lists all instances of the resource.",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Paged response",
-            "schema": {
-              "$ref": "#/definitions/Rest.Resource.Page_Product"
             }
           },
           "default": {
@@ -198,37 +105,7 @@
       "required": [
         "id"
       ]
-    },
-    "Rest.Resource.Page_Product": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Product"
-          },
-          "x-cadl-name": "Product[]",
-          "description": "The items on this page"
-        },
-        "nextLink": {
-          "type": "string",
-          "description": "The link to the next page of items"
-        }
-      },
-      "description": "Paged response",
-      "required": [
-        "value"
-      ]
     }
   },
-  "parameters": {
-    "Product": {
-      "name": "id",
-      "in": "path",
-      "required": true,
-      "type": "integer",
-      "format": "int32",
-      "x-ms-parameter-location": "method"
-    }
-  }
+  "parameters": {}
 }
