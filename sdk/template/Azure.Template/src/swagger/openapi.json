@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Multi Client Service",
-    "version": "2022-06-25",
+    "title": "WebPubSub Service",
+    "version": "2021-10-01",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -12,6 +12,21 @@
   "schemes": [
     "https"
   ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{Endpoint}",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "name": "Endpoint",
+        "in": "path",
+        "required": true,
+        "type": "string",
+        "format": "url",
+        "x-ms-skip-url-encoding": true,
+        "x-ms-parameter-location": "client"
+      }
+    ]
+  },
   "produces": [
     "application/json"
   ],
@@ -20,57 +35,156 @@
   ],
   "tags": [],
   "paths": {
-    "/products/{id}": {
-      "get": {
-        "operationId": "Products_get",
+    "/api/hubs/groups/{group}/connections/{connectionId}": {
+      "put": {
+        "operationId": "WebPubSubService_addConnectionToGroup",
         "parameters": [
           {
-            "name": "id",
+            "name": "group",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
+            "description": "Ok"
           },
           "default": {
             "description": "An unexpected error response",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "WebPubSubService_removeConnectionFromGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
             }
           }
         }
       }
     },
-    "/specialProducts/{id}": {
-      "get": {
-        "operationId": "Products_getSpecialProduct",
+    "/api/hubs/permissions/{permission}/connections/{connectionId}": {
+      "head": {
+        "operationId": "WebPubSubService_checkPermission",
         "parameters": [
           {
-            "name": "id",
+            "name": "permission",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "targetName",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "default": {
             "description": "An unexpected error response",
             "schema": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/users/{userId}/groups/{group}": {
+      "put": {
+        "operationId": "WebPubSubService_addUserToGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "WebPubSubService_removeUserFromGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
             }
           }
         }
@@ -78,32 +192,23 @@
     }
   },
   "definitions": {
-    "Error": {
+    "ErrorDetail": {
       "type": "object",
       "properties": {
         "code": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "message": {
+          "type": "string"
+        },
+        "target": {
           "type": "string"
         }
       },
       "required": [
         "code",
-        "message"
-      ]
-    },
-    "Product": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "required": [
-        "id"
+        "message",
+        "target"
       ]
     }
   },
