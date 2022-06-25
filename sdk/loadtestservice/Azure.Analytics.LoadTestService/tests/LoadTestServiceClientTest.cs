@@ -14,7 +14,7 @@ namespace Azure.Analytics.LoadTestService.Tests
 {
     public class LoadTestServiceClientTest: RecordedTestBase<LoadTestServiceClientTestEnvironment>
     {
-        public LoadTestServiceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public LoadTestServiceClientTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -27,17 +27,17 @@ namespace Azure.Analytics.LoadTestService.Tests
                 InstrumentClientOptions(new AzureLoadTestingClientOptions())
             ));
         }
-        [RecordedTest]
+        [Test]
         public void TestOperation()
         {
             Assert.IsTrue(true);
         }
-        [RecordedTest]
-        public void GetTest()
+        [Test]
+        public async Task GetTest()
         {
             TestClient client = CreateClient();
             string test_id = "a011890b-12cd-004d-015d-12aed8880000";
-            var response =  client.GetLoadTest(test_id);
+            var response = await client.GetLoadTestAsync(test_id);
             Assert.IsNotNull(response);
         }
 

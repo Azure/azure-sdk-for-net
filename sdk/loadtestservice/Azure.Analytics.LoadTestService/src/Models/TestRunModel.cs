@@ -46,7 +46,7 @@ namespace Azure.Analytics.LoadTestService
         /// <summary></summary>
         public string lastModifiedBy { get; set; }
         /// <summary></summary>
-        public string portalUrl { get; set; }
+        public Uri portalUrl { get; set; }
         /// <summary></summary>
         public SecretData secrets { get; set; }
         /// <summary></summary>
@@ -76,7 +76,7 @@ namespace Azure.Analytics.LoadTestService
     public class ResultUrl
     {
         /// <summary></summary>
-        public string url { get; set; }
+        public Uri url { get; set; }
         /// <summary></summary>
         public string fileId { get; set; }
         /// <summary></summary>
@@ -92,7 +92,7 @@ namespace Azure.Analytics.LoadTestService
     public class LogsUrl
     {
         /// <summary></summary>
-        public string url { get; set; }
+        public Uri url { get; set; }
         /// <summary></summary>
         public string fileId { get; set; }
         /// <summary></summary>
