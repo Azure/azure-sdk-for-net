@@ -57,6 +57,177 @@ namespace Azure.Template
             _endpoint = endpoint;
         }
 
+        /// <summary> Gets an instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetProductAsync(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProductRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets an instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetProduct(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetProductRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates an existing instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> UpdateAsync(int id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Update");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateRequest(id, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Updates an existing instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Product</c>:
+        /// <code>{
+        ///   id: number, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response Update(int id, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Update");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateRequest(id, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual async Task<Response> DeleteAsync(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(id, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing instance of the resource. </summary>
+        /// <param name="id"> The Integer to use. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual Response Delete(int id, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(id, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a new instance of the resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -98,6 +269,7 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Creates a new instance of the resource. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -139,27 +311,32 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="id"> The Integer to use. </param>
+        /// <summary> Lists all instances of the resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>Product</c>:
+        /// Schema for <c>RestResourcePageProduct</c>:
         /// <code>{
-        ///   id: number, # Required.
+        ///   value: [
+        ///     {
+        ///       id: number, # Required.
+        ///     }
+        ///   ], # Required. The items on this page
+        ///   nextLink: string, # Optional. The link to the next page of items
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetProductAsync(int id, RequestContext context = null)
+        public virtual async Task<Response> GetProductsAsync(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProducts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProductRequest(id, context);
+                using HttpMessage message = CreateGetProductsRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -169,27 +346,32 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="id"> The Integer to use. </param>
+        /// <summary> Lists all instances of the resource. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>Product</c>:
+        /// Schema for <c>RestResourcePageProduct</c>:
         /// <code>{
-        ///   id: number, # Required.
+        ///   value: [
+        ///     {
+        ///       id: number, # Required.
+        ///     }
+        ///   ], # Required. The items on this page
+        ///   nextLink: string, # Optional. The link to the next page of items
         /// }
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetProduct(int id, RequestContext context = null)
+        public virtual Response GetProducts(RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProduct");
+            using var scope = ClientDiagnostics.CreateScope("ProductsClient.GetProducts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetProductRequest(id, context);
+                using HttpMessage message = CreateGetProductsRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -199,21 +381,6 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/products", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGetProductRequest(int id, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -221,8 +388,66 @@ namespace Azure.Template
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/products/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(id, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateRequest(int id, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(id, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(int id, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(id, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetProductsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -230,5 +455,7 @@ namespace Azure.Template
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }

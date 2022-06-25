@@ -35,22 +35,18 @@
   ],
   "tags": [],
   "paths": {
-    "/products": {
-      "put": {
-        "operationId": "Products_create",
+    "/{id}": {
+      "get": {
+        "operationId": "Products_get",
+        "description": "Gets an instance of the resource.",
         "parameters": [
           {
-            "name": "product",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
+            "$ref": "#/parameters/Product"
           }
         ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
+            "description": "Ok",
             "schema": {
               "$ref": "#/definitions/Product"
             }
@@ -62,25 +58,106 @@
             }
           }
         }
-      }
-    },
-    "/products/{id}": {
-      "get": {
-        "operationId": "Products_get",
+      },
+      "patch": {
+        "operationId": "Products_update",
+        "description": "Updates an existing instance of the resource.",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "$ref": "#/parameters/Product"
+          },
+          {
+            "name": "properties",
+            "in": "body",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "description": "The template for adding optional properties.",
+              "x-cadl-name": "OptionalProperties<UpdateableProperties<Product>>"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
+            "description": "Ok",
             "schema": {
               "$ref": "#/definitions/Product"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Products_delete",
+        "description": "Deletes an existing instance of the resource.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Product"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource deleted successfully."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "post": {
+        "operationId": "Products_create",
+        "description": "Creates a new instance of the resource.",
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "201": {
+            "description": "Resource create operation completed successfully.",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "Products_list",
+        "description": "Lists all instances of the resource.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Paged response",
+            "schema": {
+              "$ref": "#/definitions/Rest.Resource.Page_Product"
             }
           },
           "default": {
@@ -121,7 +198,37 @@
       "required": [
         "id"
       ]
+    },
+    "Rest.Resource.Page_Product": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          },
+          "x-cadl-name": "Product[]",
+          "description": "The items on this page"
+        },
+        "nextLink": {
+          "type": "string",
+          "description": "The link to the next page of items"
+        }
+      },
+      "description": "Paged response",
+      "required": [
+        "value"
+      ]
     }
   },
-  "parameters": {}
+  "parameters": {
+    "Product": {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int32",
+      "x-ms-parameter-location": "method"
+    }
+  }
 }
