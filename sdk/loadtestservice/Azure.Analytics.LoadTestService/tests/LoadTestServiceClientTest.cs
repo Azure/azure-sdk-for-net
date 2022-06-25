@@ -14,7 +14,7 @@ namespace Azure.Analytics.LoadTestService.Tests
 {
     public class LoadTestServiceClientTest: RecordedTestBase<LoadTestServiceClientTestEnvironment>
     {
-        public LoadTestServiceClientTest(bool isAsync) : base(isAsync)
+        public LoadTestServiceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
