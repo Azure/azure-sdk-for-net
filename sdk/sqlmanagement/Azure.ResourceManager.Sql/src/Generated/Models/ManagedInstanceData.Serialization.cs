@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
             Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<bool> zoneRedundant = default;
-            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<string> keyId = default;
             Optional<ManagedInstanceExternalAdministrator> administrators = default;
             Optional<ServicePrincipal> servicePrincipal = default;
@@ -482,7 +482,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentityId"))
                         {
-                            primaryUserAssignedIdentityId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyId"))

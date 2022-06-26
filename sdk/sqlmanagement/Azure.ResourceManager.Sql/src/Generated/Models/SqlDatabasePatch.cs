@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
         public SampleSchemaName? SampleName { get; set; }
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
-        public string ElasticPoolId { get; set; }
+        public ResourceIdentifier ElasticPoolId { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>

@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Sql
     public partial class JobAgentData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public JobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string DatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
     }
@@ -1377,7 +1377,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? ManagedInstanceCreateMode { get { throw null; } set { } }
         public string MinimalTlsVersion { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? ProxyOverride { get { throw null; } set { } }
@@ -3351,7 +3351,7 @@ namespace Azure.ResourceManager.Sql
         public System.Guid? DatabaseId { get { throw null; } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public string ElasticPoolId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ElasticPoolId { get { throw null; } set { } }
         public string FailoverGroupId { get { throw null; } }
         public System.Guid? FederatedClientId { get { throw null; } set { } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
@@ -3815,7 +3815,7 @@ namespace Azure.ResourceManager.Sql
         public string KeyId { get { throw null; } set { } }
         public string Kind { get { throw null; } }
         public string MinimalTlsVersion { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ServerPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get { throw null; } set { } }
@@ -5902,7 +5902,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedServerCreateMode? ManagedInstanceCreateMode { get { throw null; } set { } }
         public string MinimalTlsVersion { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstancePecProperty> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? ProxyOverride { get { throw null; } set { } }
@@ -7018,8 +7018,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ServicePrincipal
     {
         public ServicePrincipal() { }
-        public string ClientId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
+        public System.Guid? ClientId { get { throw null; } }
+        public System.Guid? PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServicePrincipalType? PrincipalType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
     }
@@ -7090,7 +7090,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.Guid? DatabaseId { get { throw null; } }
         public Azure.Core.AzureLocation? DefaultSecondaryLocation { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public string ElasticPoolId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ElasticPoolId { get { throw null; } set { } }
         public string FailoverGroupId { get { throw null; } }
         public System.Guid? FederatedClientId { get { throw null; } set { } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
@@ -7179,7 +7179,7 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string KeyId { get { throw null; } set { } }
         public string MinimalTlsVersion { get { throw null; } set { } }
-        public string PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ServerPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get { throw null; } set { } }

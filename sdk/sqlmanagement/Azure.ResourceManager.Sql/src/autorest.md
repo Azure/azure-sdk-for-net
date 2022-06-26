@@ -24,6 +24,8 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   '*SubnetId': 'arm-id'
   'subnetId': 'arm-id'
+  'primaryUserAssignedIdentityId': 'arm-id'
+  'elasticPoolId': 'arm-id'
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
@@ -276,4 +278,13 @@ directive:
       where: $.definitions..defaultSecondaryLocation 
       transform: >
           $['x-ms-format'] = 'azure-location';
+    - from: JobAgents.json
+      where: $.definitions.JobAgentProperties
+      transform: >
+          $.properties.databaseId['x-ms-format'] = 'arm-id';
+    - from: ManagedInstances.json
+      where: $.definitions
+      transform: >
+          $.ServicePrincipal.properties.principalId['format'] = 'uuid';
+          $.ServicePrincipal.properties.clientId['format'] = 'uuid';
 ```

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not the multi-az is enabled. </summary>
         public bool? ZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
-        public string PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         public string KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the server. </summary>

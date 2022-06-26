@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
             Optional<SampleSchemaName> sampleName = default;
-            Optional<string> elasticPoolId = default;
+            Optional<ResourceIdentifier> elasticPoolId = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
             Optional<DatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
@@ -347,7 +347,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("elasticPoolId"))
                         {
-                            elasticPoolId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            elasticPoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseId"))
