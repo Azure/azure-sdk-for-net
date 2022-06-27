@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Monitoring
         private readonly HttpPipeline _pipeline;
         internal MonitoringRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of MonitoringClient for mocking. </summary>
         protected MonitoringClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Monitoring
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new MonitoringRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new MonitoringRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of MonitoringClient. </summary>
@@ -60,6 +62,7 @@ namespace Azure.Analytics.Synapse.Monitoring
             RestClient = new MonitoringRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Get list of spark applications for the workspace. </summary>

@@ -23,6 +23,8 @@ namespace Azure.AI.AnomalyDetector
         private readonly HttpPipeline _pipeline;
         internal AnomalyDetectorRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of AnomalyDetectorClient for mocking. </summary>
         protected AnomalyDetectorClient()
         {
@@ -49,7 +51,7 @@ namespace Azure.AI.AnomalyDetector
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
@@ -72,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             options ??= new AnomalyDetectorClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
@@ -86,6 +88,7 @@ namespace Azure.AI.AnomalyDetector
             RestClient = new AnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> This operation generates a model with an entire series, each point is detected with the same model. With this method, points before and after a certain point are used to determine whether it is an anomaly. The entire detection can give user an overall status of the time series. </summary>

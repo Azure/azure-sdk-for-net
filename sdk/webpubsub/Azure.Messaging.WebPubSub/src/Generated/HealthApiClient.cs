@@ -17,8 +17,10 @@ namespace Azure.Messaging.WebPubSub
     internal partial class HealthApiClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> HTTP or HTTPS endpoint for the Web PubSub service instance. </summary>
+        public string Endpoint { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -49,14 +51,12 @@ namespace Azure.Messaging.WebPubSub
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
+            Endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -74,9 +74,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -99,7 +97,7 @@ namespace Azure.Messaging.WebPubSub
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw(Endpoint, false);
             uri.AppendPath("/api/health", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

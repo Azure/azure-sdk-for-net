@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of ReservationResponseData. </summary>
         internal ReservationResponseData()
         {
+            Kind = "Microsoft.Compute";
         }
 
         /// <summary> Initializes a new instance of ReservationResponseData. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
-        internal ReservationResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationsProperties properties, ReservationsKind? kind) : base(id, name, resourceType, systemData)
+        internal ReservationResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationsProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Version = version;
@@ -53,6 +54,6 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> The properties associated to this reservation. </summary>
         public ReservationsProperties Properties { get; }
         /// <summary> Resource Provider type to be reserved. </summary>
-        public ReservationsKind? Kind { get; }
+        public string Kind { get; }
     }
 }

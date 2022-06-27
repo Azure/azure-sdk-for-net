@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal LinkConnectionRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of LinkConnectionClient for mocking. </summary>
         protected LinkConnectionClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new LinkConnectionRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new LinkConnectionRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of LinkConnectionClient. </summary>
@@ -59,6 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new LinkConnectionRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Creates or updates a link connection. </summary>

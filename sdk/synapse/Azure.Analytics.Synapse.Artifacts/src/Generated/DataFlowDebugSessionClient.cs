@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal DataFlowDebugSessionRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of DataFlowDebugSessionClient for mocking. </summary>
         protected DataFlowDebugSessionClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new DataFlowDebugSessionRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new DataFlowDebugSessionRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionClient. </summary>
@@ -59,6 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new DataFlowDebugSessionRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Add a data flow into debug session. </summary>

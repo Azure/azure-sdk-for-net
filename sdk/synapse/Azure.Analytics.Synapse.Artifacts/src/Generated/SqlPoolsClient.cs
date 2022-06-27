@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal SqlPoolsRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of SqlPoolsClient for mocking. </summary>
         protected SqlPoolsClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SqlPoolsRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new SqlPoolsRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of SqlPoolsClient. </summary>
@@ -59,6 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new SqlPoolsRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> List Sql Pools. </summary>

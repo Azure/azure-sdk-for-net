@@ -21,6 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal NotebookOperationResultRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of NotebookOperationResultClient for mocking. </summary>
         protected NotebookOperationResultClient()
         {
@@ -45,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new NotebookOperationResultRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new NotebookOperationResultRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of NotebookOperationResultClient. </summary>
@@ -58,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new NotebookOperationResultRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Get notebook operation result. </summary>

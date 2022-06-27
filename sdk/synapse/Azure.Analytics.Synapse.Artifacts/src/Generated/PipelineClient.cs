@@ -23,6 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal PipelineRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of PipelineClient for mocking. </summary>
         protected PipelineClient()
         {
@@ -47,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PipelineRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new PipelineRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of PipelineClient. </summary>
@@ -60,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new PipelineRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Gets a pipeline. </summary>

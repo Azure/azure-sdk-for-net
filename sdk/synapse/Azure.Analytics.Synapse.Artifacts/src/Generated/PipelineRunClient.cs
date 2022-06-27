@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly HttpPipeline _pipeline;
         internal PipelineRunRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of PipelineRunClient for mocking. </summary>
         protected PipelineRunClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new PipelineRunRestClient(_clientDiagnostics, _pipeline, endpoint);
+            RestClient = new PipelineRunRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of PipelineRunClient. </summary>
@@ -59,6 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             RestClient = new PipelineRunRestClient(clientDiagnostics, pipeline, endpoint);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>

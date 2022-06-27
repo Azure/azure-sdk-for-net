@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         private readonly HttpPipeline _pipeline;
         internal ManagedPrivateEndpointsRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient for mocking. </summary>
         protected ManagedPrivateEndpointsClient()
         {
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>
@@ -60,6 +62,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             RestClient = new ManagedPrivateEndpointsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>

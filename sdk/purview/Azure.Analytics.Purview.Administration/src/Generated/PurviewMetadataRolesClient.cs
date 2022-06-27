@@ -21,7 +21,9 @@ namespace Azure.Analytics.Purview.Administration
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
+
+        /// <summary> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </summary>
+        public Uri Endpoint { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -35,9 +37,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
             return GetMetadataRolesImplementationAsync("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -61,9 +61,7 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> Lists roles for Purview Account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
             return GetMetadataRolesImplementation("PurviewMetadataRolesClient.GetMetadataRoles", context);
@@ -92,7 +90,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.Reset(Endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataRoles", false);
             uri.AppendQuery("api-version", "2021-07-01", true);
@@ -107,7 +105,7 @@ namespace Azure.Analytics.Purview.Administration
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
+            uri.Reset(Endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;

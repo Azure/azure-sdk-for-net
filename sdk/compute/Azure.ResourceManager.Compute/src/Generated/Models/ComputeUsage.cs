@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            Unit = UsageUnit.Count;
+            Unit = "Count";
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal ComputeUsage(UsageUnit unit, int currentValue, long limit, UsageName name)
+        internal ComputeUsage(string unit, int currentValue, long limit, UsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> An enum describing the unit of usage measurement. </summary>
-        public UsageUnit Unit { get; }
+        public string Unit { get; }
         /// <summary> The current usage of the resource. </summary>
         public int CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>

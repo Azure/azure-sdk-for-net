@@ -22,6 +22,8 @@ namespace Azure.Analytics.Synapse.Spark
         private readonly HttpPipeline _pipeline;
         internal SparkBatchRestClient RestClient { get; }
 
+        public Uri Endpoint { get; }
+
         /// <summary> Initializes a new instance of SparkBatchClient for mocking. </summary>
         protected SparkBatchClient()
         {
@@ -56,7 +58,7 @@ namespace Azure.Analytics.Synapse.Spark
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
+            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion); Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of SparkBatchClient. </summary>
@@ -71,6 +73,7 @@ namespace Azure.Analytics.Synapse.Spark
             RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            Endpoint = endpoint;
         }
 
         /// <summary> List all spark batch jobs which are running under a particular spark pool. </summary>
