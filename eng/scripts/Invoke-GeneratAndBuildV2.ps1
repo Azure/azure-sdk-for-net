@@ -12,6 +12,7 @@ $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
+$autorestConfig = $inputJson.autorestConfig
 
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 
