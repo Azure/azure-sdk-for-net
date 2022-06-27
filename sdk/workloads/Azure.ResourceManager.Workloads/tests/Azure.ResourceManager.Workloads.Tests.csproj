@@ -2,4 +2,12 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Workloads.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestData\PhpWorkloads\PutPhpWorkload - Copy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\PhpWorkloads\PutPhpWorkload.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
