@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal GremlinGraphPropertiesResource(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? ts, ETag? etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
+        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal GremlinGraphPropertiesResource(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, string rid, float? ts, ETag? eTag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy)
         {
             Rid = rid;
             Ts = ts;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }
