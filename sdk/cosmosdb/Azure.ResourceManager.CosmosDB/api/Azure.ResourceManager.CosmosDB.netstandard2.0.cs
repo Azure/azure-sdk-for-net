@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraClusterPublicStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.ConnectionError> ConnectionErrors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CosmosDB.Models.CassandraClusterPublicStatusDataCentersItem> DataCenters { get { throw null; } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.CosmosDB.Models.ManagedCassandraReaperStatus ReaperStatus { get { throw null; } }
     }
     public partial class CassandraClusterPublicStatusDataCentersItem
@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraKeyspacePropertiesResource : Azure.ResourceManager.CosmosDB.Models.CassandraKeyspaceResource
     {
         public CassandraKeyspacePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CassandraTablePropertiesResource : Azure.ResourceManager.CosmosDB.Models.CassandraTableResource
     {
         public CassandraTablePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -1689,7 +1689,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosTablePropertiesResource : Azure.ResourceManager.CosmosDB.Models.TableResource
     {
         public CosmosTablePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -1937,7 +1937,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinDatabasePropertiesResource : Azure.ResourceManager.CosmosDB.Models.GremlinDatabaseResource
     {
         public GremlinDatabasePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinGraphPropertiesResource : Azure.ResourceManager.CosmosDB.Models.GremlinGraphResource
     {
         public GremlinGraphPropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2132,7 +2132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBCollectionPropertiesResource : Azure.ResourceManager.CosmosDB.Models.MongoDBCollectionResource
     {
         public MongoDBCollectionPropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MongoDBDatabasePropertiesResource : Azure.ResourceManager.CosmosDB.Models.MongoDBDatabaseResource
     {
         public MongoDBDatabasePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2406,7 +2406,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class RestorableSqlContainerPropertiesResourceContainer : Azure.ResourceManager.CosmosDB.Models.SqlContainerResource
     {
         public RestorableSqlContainerPropertiesResourceContainer(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public string Self { get { throw null; } }
         public float? Ts { get { throw null; } }
@@ -2430,7 +2430,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public RestorableSqlDatabasePropertiesResourceDatabase(string id) : base (default(string)) { }
         public string Colls { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public string Self { get { throw null; } }
         public float? Ts { get { throw null; } }
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlContainerPropertiesResource : Azure.ResourceManager.CosmosDB.Models.SqlContainerResource
     {
         public SqlContainerPropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2558,7 +2558,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public SqlDatabasePropertiesResource(string id) : base (default(string)) { }
         public string Colls { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
         public string Users { get { throw null; } set { } }
@@ -2592,7 +2592,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlStoredProcedurePropertiesResource : Azure.ResourceManager.CosmosDB.Models.SqlStoredProcedureResource
     {
         public SqlStoredProcedurePropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2611,7 +2611,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlTriggerPropertiesResource : Azure.ResourceManager.CosmosDB.Models.SqlTriggerResource
     {
         public SqlTriggerPropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2632,7 +2632,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlUserDefinedFunctionPropertiesResource : Azure.ResourceManager.CosmosDB.Models.SqlUserDefinedFunctionResource
     {
         public SqlUserDefinedFunctionPropertiesResource(string id) : base (default(string)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }
@@ -2656,7 +2656,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ThroughputSettingsPropertiesResource : Azure.ResourceManager.CosmosDB.Models.ThroughputSettingsResource
     {
         public ThroughputSettingsPropertiesResource() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Rid { get { throw null; } }
         public float? Ts { get { throw null; } }
     }

@@ -14,6 +14,13 @@
 - Type `GalleryUpdateResourceData` was removed.
 - Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
 - Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ApiError` renamed to `ComputeApiError`.
+- Type `ApiErrorBase` renamed to `ComputeApiErrorBase`.
+- Type `DeleteOption` renamed to `ComputeDeleteOption`.
+- Type `UsageName` renamed to `ComputeUsageName`.
+- Type `UsageUnit` renamed to `ComputeUsageUnit`.
+- Type `UserArtifactManage` renamed to `UserArtifactManagement`.
+- Method `CloudServiceCollection.CreateOrUpdate` and `CloudServiceCollection.CreateOrUpdateAsync` now required the parameter `data`.
 
 ### Bugs Fixed
 

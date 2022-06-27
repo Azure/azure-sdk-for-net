@@ -165,5 +165,25 @@ namespace Azure.AI.Language.Conversations.Tests
             // assert - inent target kind
             Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
         }
+
+        [RecordedTest]
+        public async Task SupportsAadAuthentication()
+        {
+            ConversationAnalysisClient client = CreateClient<ConversationAnalysisClient>(
+                TestEnvironment.Endpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(
+                    new ConversationAnalysisClientOptions(ServiceVersion)));
+
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+
+            Response response = await client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.That(conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
+        }
     }
 }

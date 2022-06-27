@@ -48,8 +48,15 @@ function Update-PSModulePath()
 }
 
 # If we want to use another default repository other then PSGallery we can update the default parameters
-function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $DefaultPSRepositoryUrl)
+function Install-ModuleIfNotInstalled()
 {
+  [CmdletBinding(SupportsShouldProcess = $true)]
+  param(
+    [string]$moduleName,
+    [string]$version,
+    [string]$repositoryUrl = $DefaultPSRepositoryUrl
+  )
+
   # Check installed modules
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {

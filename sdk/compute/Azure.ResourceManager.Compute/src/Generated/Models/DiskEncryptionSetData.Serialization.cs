@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> provisioningState = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Optional<ApiError> autoKeyRotationError = default;
+            Optional<ComputeApiError> autoKeyRotationError = default;
             Optional<string> federatedClientId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoKeyRotationError = ApiError.DeserializeApiError(property0.Value);
+                            autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("federatedClientId"))
