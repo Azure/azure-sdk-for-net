@@ -458,6 +458,63 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
+        ///
+        /// This will create an instance that uses the same diagnostics as another
+        /// client. This client will be used within another API call of the parent
+        /// client (namely Rename). This is in the case that the new child client
+        /// has different credentials than the parent client.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        internal DataLakePathClient(
+            Uri pathUri,
+            ClientDiagnostics diagnostics,
+            DataLakeClientOptions options)
+        {
+            Argument.AssertNotNull(pathUri, nameof(pathUri));
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
+            options ??= new DataLakeClientOptions();
+            _uri = pathUri;
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _clientOptions = options;
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
+
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
+
+            uriBuilder.DirectoryOrFilePath = null;
+
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _clientConfiguration);
+
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
+            _pathRestClient = dfsPathRestClient;
+                _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
         /// </summary>
         /// <param name="pathUri">
         /// A <see cref="Uri"/> referencing the path that includes the
@@ -2254,6 +2311,7 @@ namespace Azure.Storage.Files.DataLake
                             // There's a SAS in the query
                             destPathClient = new DataLakePathClient(
                                 destUriBuilder.ToUri(),
+                                ClientConfiguration.ClientDiagnostics,
                                 Options);
                         }
                     }

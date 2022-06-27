@@ -175,7 +175,7 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </param>
         public ShareClient(Uri shareUri, ShareClientOptions options = default)
-            : this(shareUri, (HttpPipelinePolicy)null, options, null)
+            : this(shareUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -221,7 +221,7 @@ namespace Azure.Storage.Files.Shares
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public ShareClient(Uri shareUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy<ShareUriBuilder>(shareUri), options, null)
+            : this(shareUri, credential.AsPolicy<ShareUriBuilder>(shareUri), options, sasCredential: credential)
         {
         }
 
@@ -256,6 +256,42 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
+                clientDiagnostics: new StorageClientDiagnostics(options),
+                version: options.Version);
+            _shareRestClient = BuildShareRestClient(shareUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="shareUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the share.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared access signature used to sign requests.
+        /// </param>
+        internal ShareClient(
+            Uri shareUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(shareUri, nameof(shareUri));
+            options ??= new ShareClientOptions();
+            _uri = shareUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
             _shareRestClient = BuildShareRestClient(shareUri);

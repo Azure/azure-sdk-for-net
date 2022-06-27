@@ -59,6 +59,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual FileRestClient FileRestClient => _fileRestClient;
 
         /// <summary>
+        /// <see cref="ShareClientOptions"/>.
+        /// </summary>
+        private readonly ShareClientOptions _clientOptions;
+
+        /// <summary>
+        /// <see cref="ShareClientOptions"/>.
+        /// </summary>
+        internal virtual ShareClientOptions Options => _clientOptions;
+
+        /// <summary>
         /// The Storage account name corresponding to the file client.
         /// </summary>
         private string _accountName;
@@ -206,6 +216,7 @@ namespace Azure.Storage.Files.Shares
                     DirectoryOrFilePath = filePath
                 };
             _uri = uriBuilder.ToUri();
+            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
@@ -332,6 +343,7 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
+            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
@@ -369,10 +381,50 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
+            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
+                version: options.Version);
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        ///
+        /// This will create an instance that uses the same diagnostics as another
+        /// client. This client will be used within another API call of the parent
+        /// client (namely Rename). This is in the case that the new child client
+        /// has different credentials than the parent client.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            ClientDiagnostics diagnostics,
+            ShareClientOptions options)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientOptions = options;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
                 version: options.Version);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
@@ -6300,12 +6352,9 @@ namespace Azure.Storage.Files.Shares
                     ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
                     UriBuilder sourceUriBuilder = new UriBuilder(Uri);
                     // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
-                    if (shareUriBuilder.Sas == null && _clientConfiguration.SasCredential != null)
+                    if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
                     {
-                        // TODO: implement a way for SasQueryParameters to take in a string
-                        // without reordering the SAS given. or give a way to append the
-                        // AzureSasCredential without manipulating the SAS
-                        sourceUriBuilder.Query += Constants.QueryDelimiter + _clientConfiguration.SasCredential.Signature;
+                        sourceUriBuilder.Query += Constants.QueryDelimiter + ClientConfiguration.SasCredential.Signature;
                     }
 
                     // Build destination URI
@@ -6317,19 +6366,38 @@ namespace Azure.Storage.Files.Shares
 
                     // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
                     // especially SAS, to be encoded.
+                    ShareFileClient destFileClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
                     {
                         destUriBuilder.DirectoryOrFilePath = split[0];
                         destUriBuilder.Query = split[1];
+                        // If the destination already has a SAS, then let's not further add to the Uri if it contains
+                        // AzureSasCredential on the source.
+                        var paramsMap = new UriQueryParamsCollection(split[1]);
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+                        {
+                            destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+                        }
+                        else
+                        {
+                            // There's a SAS in the query
+                            destFileClient = new ShareFileClient(
+                                destUriBuilder.ToUri(),
+                                ClientConfiguration.ClientDiagnostics,
+                                Options);
+                        }
                     }
                     else
                     {
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destFileClient = new ShareFileClient(
+                            destUriBuilder.ToUri(),
+                            ClientConfiguration);
                     }
 
                     // Build destFileClient
-                    ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
+                    //ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
 
                     ResponseWithHeaders<FileRenameHeaders> response;
 
@@ -6350,7 +6418,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
-                            renameSource: shareUriBuilder.ToUri().AbsoluteUri,
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -6366,7 +6434,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destFileClient.FileRestClient.Rename(
-                            renameSource: Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
