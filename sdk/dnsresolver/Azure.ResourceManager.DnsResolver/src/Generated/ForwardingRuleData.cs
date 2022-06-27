@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the forwarding rule. </param>
+        /// <param name="eTag"> ETag of the forwarding rule. </param>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
         /// <param name="forwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, ForwardingRuleState? forwardingRuleState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = eTag;
             DomainName = domainName;
             TargetDnsServers = targetDnsServers;
             Metadata = metadata;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> ETag of the forwarding rule. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The domain name for the forwarding rule. </summary>
         public string DomainName { get; set; }
         /// <summary> DNS servers to forward the DNS query to. </summary>

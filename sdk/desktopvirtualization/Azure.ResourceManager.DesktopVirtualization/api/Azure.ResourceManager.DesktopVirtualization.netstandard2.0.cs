@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public bool? CloudPcResource { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType HostPoolType { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         public ScalingPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Description { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string ExclusionTag { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingHostPoolReference> HostPoolReferences { get { throw null; } }
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public Azure.ResourceManager.DesktopVirtualization.Models.ApplicationGroupType ApplicationGroupType { get { throw null; } set { } }
         public bool? CloudPcResource { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public string HostPoolArmPath { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
         public bool? CloudPcResource { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.ResourceModelWithAllowedPropertySetIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }

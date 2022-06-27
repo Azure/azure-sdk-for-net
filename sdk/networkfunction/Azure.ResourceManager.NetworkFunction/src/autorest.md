@@ -18,7 +18,7 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -43,6 +43,8 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
+
 directive:
   - remove-operation: NetworkFunction_ListOperations
   - from: swagger-document

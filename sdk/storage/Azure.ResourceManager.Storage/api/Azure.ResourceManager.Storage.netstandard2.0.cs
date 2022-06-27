@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage
         public bool? DenyEncryptionScopeOverride { get { throw null; } set { } }
         public bool? EnableNfsV3AllSquash { get { throw null; } set { } }
         public bool? EnableNfsV3RootSquash { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyProperties ImmutabilityPolicy { get { throw null; } }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Storage
         public bool? Deleted { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.EnabledProtocol? EnabledProtocols { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseDuration? LeaseDuration { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseState? LeaseState { get { throw null; } }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Storage
         public ImmutabilityPolicyData() { }
         public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
         public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
     }
@@ -1281,7 +1281,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal ImmutabilityPolicyProperties() { }
         public bool? AllowProtectedAppendWrites { get { throw null; } }
         public bool? AllowProtectedAppendWritesAll { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.UpdateHistoryProperty> UpdateHistory { get { throw null; } }

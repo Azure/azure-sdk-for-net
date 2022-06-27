@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        internal ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Resource Etag. </param>
+        internal ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
             AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Storage
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The &apos;allowProtectedAppendWrites&apos; and &apos;allowProtectedAppendWritesAll&apos; properties are mutually exclusive. </summary>
         public bool? AllowProtectedAppendWritesAll { get; set; }
         /// <summary> Resource Etag. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }
