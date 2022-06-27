@@ -6,11 +6,12 @@ steps:
         $fileFullName = $dumpFile.FullName
         $fileName = $dumpFile.Name
         Move-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
+        Write-Host "##vso[task.setvariable variable=uploadDump]true"
       }
       [System.IO.Compression.ZipFile]::CreateFromDirectory("$(Build.ArtifactStagingDirectory)/dumps","$(Build.ArtifactStagingDirectory)/dumps.zip")
     condition: always()
     displayName: Copy dumps to staging directory
   - publish: $(Build.ArtifactStagingDirectory)/dumps.zip
-    condition: always()
+    condition: eq(variables['uploadDump'], 'true')
     displayName: Upload any dumps
-    artifact: "Crash Dump - $(OSName) $(TestTargetFramework) - $(System.JobName)-$(System.JobAttempt)"
+    artifact: "Crash Dump - $(System.JobName) - $(System.JobAttempt)"
