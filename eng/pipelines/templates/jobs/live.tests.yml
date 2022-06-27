@@ -122,6 +122,7 @@ jobs:
           --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
+          --blame-crash-dump-type full
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:Project=${{ parameters.Project }}
@@ -150,6 +151,23 @@ jobs:
           testRunTitle: "${{ parameters.ServiceDirectory }} ${{ parameters.CloudConfig.Cloud }} $(Agent.JobName)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+
+      - pwsh: |
+          $dump = Get-ChildItem -Path $(Build.SourcesDirectory) -Include *.dmp -Recurse |Select -First 1
+          if ($dump)
+          {
+            Write-Host "##vso[task.setvariable variable=uploadDump]true"
+            Write-Host "##vso[task.setvariable variable=dumpPath]$dump"
+          }
+        condition: failed()
+        displayName: Search for crash dump
+
+      - task: PublishPipelineArtifact@1
+        condition: eq(variables['uploadDump'], 'true')
+        displayName: Upload crash dump
+        inputs:
+          targetPath: $(dumpPath)
+          artifactName: "Crash Dump - $(OSName) $(TestTargetFramework)"
 
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))

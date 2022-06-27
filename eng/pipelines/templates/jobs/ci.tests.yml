@@ -64,12 +64,9 @@ jobs:
         parameters:
           NuGetCacheKey: Test
       - script: >-
-          dotnet tool install dotnet-dump --global
-        displayName: "Install dotnet-dump"
-      - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
-          --blame-crash --blame-crash-dump-type full
+          --blame-crash-dump-type full
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
@@ -87,6 +84,21 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - pwsh: |
+          $dump = Get-ChildItem -Path $(Build.SourcesDirectory) -Include *.dmp -Recurse |Select -First 1
+          if ($dump)
+          {
+            Write-Host "##vso[task.setvariable variable=uploadDump]true"
+            Write-Host "##vso[task.setvariable variable=dumpPath]$dump"
+          }
+        condition: failed()
+        displayName: Search for crash dump
+      - task: PublishPipelineArtifact@1
+        condition: eq(variables['uploadDump'], 'true')
+        displayName: Upload crash dump
+        inputs:
+          targetPath: $(dumpPath)
+          artifactName: "Crash Dump - $(OSName) $(TestTargetFramework)"
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
