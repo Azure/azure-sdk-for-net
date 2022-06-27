@@ -33,12 +33,26 @@
   "consumes": [
     "application/json"
   ],
-  "tags": [],
+  "tags": [
+    {
+      "name": "webpubsub"
+    }
+  ],
   "paths": {
-    "/api/hubs/:send": {
+    "/api/hubs/{hub}/:send": {
       "post": {
+        "tags": [
+          "webpubsub"
+        ],
         "operationId": "WebPubSubService_sendToAll",
+        "summary": "Broadcast content inside request body to all the connected client connections.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "excluded",
             "in": "query",
@@ -71,10 +85,20 @@
         }
       }
     },
-    "/api/hubs/groups/{group}/connections/{connectionId}": {
+    "/api/hubs/{hub}/groups/{group}/connections/{connectionId}": {
       "put": {
+        "tags": [
+          "webpubsub"
+        ],
         "operationId": "WebPubSubService_addConnectionToGroup",
+        "summary": "Add a connection to the target group.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "group",
             "in": "path",
@@ -101,8 +125,18 @@
         }
       },
       "delete": {
+        "tags": [
+          "webpubsub"
+        ],
         "operationId": "WebPubSubService_removeConnectionFromGroup",
+        "summary": "Remove a connection from the target group.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "group",
             "in": "path",
@@ -129,10 +163,20 @@
         }
       }
     },
-    "/api/hubs/permissions/{permission}/connections/{connectionId}": {
+    "/api/hubs/{hub}/permissions/{permission}/connections/{connectionId}": {
       "head": {
+        "tags": [
+          "webpubsub"
+        ],
         "operationId": "WebPubSubService_checkPermission",
+        "summary": "Check if a connection has permission to the specified action.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "permission",
             "in": "path",
@@ -168,10 +212,20 @@
         }
       }
     },
-    "/api/hubs/users/{userId}/groups/{group}": {
+    "/api/hubs/{hub}/users/{userId}/groups/{group}": {
       "put": {
+        "tags": [
+          "webpubsub"
+        ],
         "operationId": "WebPubSubService_addUserToGroup",
+        "summary": "Add a user to the target group.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "group",
             "in": "path",
@@ -199,7 +253,14 @@
       },
       "delete": {
         "operationId": "WebPubSubService_removeUserFromGroup",
+        "summary": "Remove a user from the target group.",
         "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "group",
             "in": "path",

@@ -58,19 +58,23 @@ namespace Azure.Template
             _endpoint = endpoint;
         }
 
+        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="excluded"> The ArrayOfPost0ItemsItem to use. </param>
+        /// <param name="excluded"> The ArrayOfPost1ItemsItem to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> SendToAllAsync(RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SendToAllAsync(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToAllRequest(content, excluded, context);
+                using HttpMessage message = CreateSendToAllRequest(hub, content, excluded, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -80,19 +84,23 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="excluded"> The ArrayOfPost0ItemsItem to use. </param>
+        /// <param name="excluded"> The ArrayOfPost1ItemsItem to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response SendToAll(RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SendToAll(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToAllRequest(content, excluded, context);
+                using HttpMessage message = CreateSendToAllRequest(hub, content, excluded, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -102,13 +110,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Add a connection to the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddConnectionToGroupAsync(string hub, string group, string connectionId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -116,7 +127,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
+                using HttpMessage message = CreateAddConnectionToGroupRequest(hub, group, connectionId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -126,13 +137,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Add a connection to the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddConnectionToGroup(string hub, string group, string connectionId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -140,7 +154,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddConnectionToGroupRequest(group, connectionId, context);
+                using HttpMessage message = CreateAddConnectionToGroupRequest(hub, group, connectionId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -150,13 +164,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Remove a connection from the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string hub, string group, string connectionId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -164,7 +181,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
+                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(hub, group, connectionId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -174,13 +191,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Remove a connection from the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RemoveConnectionFromGroup(string hub, string group, string connectionId, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -188,7 +208,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(group, connectionId, context);
+                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(hub, group, connectionId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -198,14 +218,17 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="permission"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CheckPermissionAsync(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -213,7 +236,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
+                using HttpMessage message = CreateCheckPermissionRequest(hub, permission, connectionId, targetName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -223,14 +246,17 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Check if a connection has permission to the specified action. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="permission"> The String to use. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response CheckPermission(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
@@ -238,7 +264,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPermissionRequest(permission, connectionId, targetName, context);
+                using HttpMessage message = CreateCheckPermissionRequest(hub, permission, connectionId, targetName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -248,13 +274,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="userId"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> AddUserToGroupAsync(string userId, string group, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddUserToGroupAsync(string hub, string userId, string group, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
 
@@ -262,7 +291,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
+                using HttpMessage message = CreateAddUserToGroupRequest(hub, userId, group, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -272,13 +301,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="userId"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response AddUserToGroup(string userId, string group, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddUserToGroup(string hub, string userId, string group, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
 
@@ -286,7 +318,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
+                using HttpMessage message = CreateAddUserToGroupRequest(hub, userId, group, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -296,13 +328,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="userId"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string userId, string group, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RemoveUserFromGroupAsync(string hub, string userId, string group, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
 
@@ -310,7 +345,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(hub, userId, group, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -320,13 +355,16 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="hub"> The String to use. </param>
         /// <param name="userId"> The String to use. </param>
         /// <param name="group"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response RemoveUserFromGroup(string userId, string group, RequestContext context = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RemoveUserFromGroup(string hub, string userId, string group, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(group, nameof(group));
 
@@ -334,7 +372,7 @@ namespace Azure.Template
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(hub, userId, group, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -344,14 +382,16 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
+        internal HttpMessage CreateSendToAllRequest(string hub, RequestContent content, IEnumerable<string> excluded, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/:send", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/:send", false);
             if (excluded != null)
             {
                 uri.AppendQueryDelimited("excluded", excluded, ",", true);
@@ -363,14 +403,16 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestContext context)
+        internal HttpMessage CreateAddConnectionToGroupRequest(string hub, string group, string connectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/groups/", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
@@ -379,14 +421,16 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestContext context)
+        internal HttpMessage CreateRemoveConnectionFromGroupRequest(string hub, string group, string connectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/groups/", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
@@ -395,14 +439,16 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
+        internal HttpMessage CreateCheckPermissionRequest(string hub, string permission, string connectionId, string targetName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/permissions/", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/permissions/", false);
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
@@ -415,14 +461,16 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateAddUserToGroupRequest(string userId, string group, RequestContext context)
+        internal HttpMessage CreateAddUserToGroupRequest(string hub, string userId, string group, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/users/", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
@@ -431,14 +479,16 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateRemoveUserFromGroupRequest(string userId, string group, RequestContext context)
+        internal HttpMessage CreateRemoveUserFromGroupRequest(string hub, string userId, string group, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/users/", false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
