@@ -27,6 +27,7 @@ pr:
     - mgmt.proj
     - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
+    - eng/pipelines/templates/jobs/ci.mgmt.yml
     - eng/mgmt
     - sdk/mgmtcommon
     - sdk/advisor/Microsoft.Azure.Management.Advisor
