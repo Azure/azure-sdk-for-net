@@ -6,9 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-91a8111a9a2111f3c63b471a0a17f33d-1d491b6ec9441e4b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3bd6fc092c093bfd0a93d352e1747c3e",
+        "Connection": "keep-alive",
+        "traceparent": "00-24c988ac67e22440875528cd6496fbbc-3f1c6b9cf43cb447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b36321a5eb7f575158533695d89cb93a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Jun 2022 12:36:54 GMT",
+        "Date": "Thu, 23 Jun 2022 03:31:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1ad187de-3ff7-4e59-9a46-af639e5ccdcf",
+        "x-ms-correlation-request-id": "7c5b3e88-1315-4d85-808e-dc2acbf1185e",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "1ad187de-3ff7-4e59-9a46-af639e5ccdcf",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T123655Z:1ad187de-3ff7-4e59-9a46-af639e5ccdcf"
+        "x-ms-request-id": "7c5b3e88-1315-4d85-808e-dc2acbf1185e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033108Z:7c5b3e88-1315-4d85-808e-dc2acbf1185e"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -57,8 +58,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1731545691",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "244462709",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

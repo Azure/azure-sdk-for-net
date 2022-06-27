@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/f82d2422-e5d1-2c3b-a266-e3f94ae3b24d?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/479f2fa2-6e81-e4c1-b7fa-92d99e282197?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c47f47479fc9dfd09ab64c4f5bcf53d2",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b2a041b770e56ff0566991615ce4db3d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,27 +16,27 @@
         "Cache-Control": "no-cache",
         "Content-Length": "129",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Jun 2022 12:38:51 GMT",
+        "Date": "Thu, 23 Jun 2022 03:33:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e36c70ed-c3ac-4a93-8457-dca7a4559606",
+        "x-ms-correlation-request-id": "68f37550-afe2-4ec1-a4d8-b934485b4ff9",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "e36c70ed-c3ac-4a93-8457-dca7a4559606",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T123852Z:e36c70ed-c3ac-4a93-8457-dca7a4559606"
+        "x-ms-request-id": "68f37550-afe2-4ec1-a4d8-b934485b4ff9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033311Z:68f37550-afe2-4ec1-a4d8-b934485b4ff9"
       },
       "ResponseBody": {
         "error": {
           "code": "SubscriptionNotFound",
-          "message": "The subscription \u0027f82d2422-e5d1-2c3b-a266-e3f94ae3b24d\u0027 could not be found."
+          "message": "The subscription \u0027479f2fa2-6e81-e4c1-b7fa-92d99e282197\u0027 could not be found."
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "616410519",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "1562128283",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

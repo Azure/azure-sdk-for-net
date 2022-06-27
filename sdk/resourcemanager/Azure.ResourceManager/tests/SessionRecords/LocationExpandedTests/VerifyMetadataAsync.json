@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a9e51ad7d4431840ddc68555902deaae-06a10f047aa21f13-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e294bad53155cc936cd11ca885811387",
+        "traceparent": "00-0363427440c50d49beda5db6618228da-6e170224fd137447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a9de78e2fd17a641394304a91aa98cd3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Jun 2022 12:42:59 GMT",
+        "Date": "Thu, 23 Jun 2022 03:37:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3f2e4559-5687-4a0e-bd03-6b13ac3093da",
-        "x-ms-ratelimit-remaining-subscription-reads": "11768",
-        "x-ms-request-id": "3f2e4559-5687-4a0e-bd03-6b13ac3093da",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T124259Z:3f2e4559-5687-4a0e-bd03-6b13ac3093da"
+        "x-ms-correlation-request-id": "54de7e78-75e6-4bb6-a5ae-7f71012198e2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "54de7e78-75e6-4bb6-a5ae-7f71012198e2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033722Z:54de7e78-75e6-4bb6-a5ae-7f71012198e2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -61,9 +61,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-317f870249886539686146d14d898b0f-c1c0daddf466a7f8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "97b0c655bf1d4370c218692d030c164a",
+        "traceparent": "00-3a41a9108c6f224eba893c767790103a-01f79540b2ae5041-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "43f5f7438481912c67844c2721076748",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -72,15 +72,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "30202",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Jun 2022 12:42:59 GMT",
+        "Date": "Thu, 23 Jun 2022 03:37:22 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "74249193-ddda-45e6-aad4-5428738e6651",
-        "x-ms-ratelimit-remaining-subscription-reads": "11767",
-        "x-ms-request-id": "74249193-ddda-45e6-aad4-5428738e6651",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T124300Z:74249193-ddda-45e6-aad4-5428738e6651"
+        "x-ms-correlation-request-id": "3d8e1c23-eac9-4a72-bafa-f6ff36227966",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "3d8e1c23-eac9-4a72-bafa-f6ff36227966",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033723Z:3d8e1c23-eac9-4a72-bafa-f6ff36227966"
       },
       "ResponseBody": {
         "value": [
@@ -1402,8 +1402,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "993281997",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "1871861894",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

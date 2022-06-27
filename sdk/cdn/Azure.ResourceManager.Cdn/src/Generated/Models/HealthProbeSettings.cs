@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="probeRequestType"> The type of health probe request that is made. </param>
         /// <param name="probeProtocol"> Protocol to use for health probe. </param>
         /// <param name="probeIntervalInSeconds"> The number of seconds between health probes.Default is 240sec. </param>
-        internal HealthProbeSettings(string probePath, HealthProbeRequestType? probeRequestType, ProbeProtocol? probeProtocol, int? probeIntervalInSeconds)
+        internal HealthProbeSettings(string probePath, HealthProbeRequestType? probeRequestType, HealthProbeProtocol? probeProtocol, int? probeIntervalInSeconds)
         {
             ProbePath = probePath;
             ProbeRequestType = probeRequestType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The type of health probe request that is made. </summary>
         public HealthProbeRequestType? ProbeRequestType { get; set; }
         /// <summary> Protocol to use for health probe. </summary>
-        public ProbeProtocol? ProbeProtocol { get; set; }
+        public HealthProbeProtocol? ProbeProtocol { get; set; }
         /// <summary> The number of seconds between health probes.Default is 240sec. </summary>
         public int? ProbeIntervalInSeconds { get; set; }
     }

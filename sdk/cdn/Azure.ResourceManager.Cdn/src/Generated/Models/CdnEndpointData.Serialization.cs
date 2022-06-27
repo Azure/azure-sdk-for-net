@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
             Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
             Optional<EndpointResourceState> resourceState = default;
-            Optional<EndpointProvisioningState> provisioningState = default;
+            Optional<CdnEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new EndpointProvisioningState(property0.Value.GetString());
+                            provisioningState = new CdnEndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
