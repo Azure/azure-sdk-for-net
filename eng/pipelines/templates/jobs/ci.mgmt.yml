@@ -116,4 +116,4 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/credscan.yml
         parameters:
           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          ServiceDirectory: ${{ parameters.Scope }}
