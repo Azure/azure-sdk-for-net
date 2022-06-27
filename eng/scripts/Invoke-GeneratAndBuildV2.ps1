@@ -8,6 +8,7 @@ param (
 
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
+$swaggerDir = Resolve-Path $swaggerDir
 $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
@@ -25,17 +26,29 @@ foreach ( $relateReadmeFile in $readmeFiles ) {
 
     
     $readme = ""
-    if ($commitid -ne "") {
-    if ($repoHttpsUrl -ne "") {
-        $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
-    } else {
-        $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
-    }
-    } else {
+    # if ($commitid -ne "") {
+    #     if ($repoHttpsUrl -ne "") {
+    #         $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+    #     } else {
+    #         $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+    #     }
+    # } else {
+    #     $readme = (Join-Path $swaggerDir $readmeFile)
+    # }
+    if ( $swaggerDir -ne "") {
         $readme = (Join-Path $swaggerDir $readmeFile)
+    } elseif ( $commitid -ne "") {
+        if ($repoHttpsUrl -ne "") {
+            $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+        } else {
+            $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+        }
+    } else {
+        Write-Error "No readme File path provided."
+        exit 1
     }
 
-    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -generatedSDKPackages $generatedSDKPackages
+    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfig" -generatedSDKPackages $generatedSDKPackages
 }
 
 $outputJson = [PSCustomObject]@{

@@ -14,6 +14,7 @@ $readmeFile = $readmeFile -replace "\\", "/"
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $serviceType = $inputJson.serviceType
+$autorestConfig = $inputJson.autorestConfig
 
 Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
 
@@ -35,7 +36,7 @@ if ($commitid -ne "") {
 # $generatedSDKPackages = @()
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 # $generatedSDKPackages = New-Object 'System.Collections.ArrayList[System.Object]'
-Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -generatedSDKPackages $generatedSDKPackages
+Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfig" -generatedSDKPackages $generatedSDKPackages
 $outputJson = [PSCustomObject]@{
   packages = $generatedSDKPackages
 }
