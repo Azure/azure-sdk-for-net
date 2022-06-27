@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> documentEndpoint = default;
-            Optional<string> databaseAccountOfferType = default;
+            Optional<DatabaseAccountOfferType> databaseAccountOfferType = default;
             Optional<IList<IPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
@@ -332,7 +332,12 @@ namespace Azure.ResourceManager.CosmosDB
                         }
                         if (property0.NameEquals("databaseAccountOfferType"))
                         {
-                            databaseAccountOfferType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            databaseAccountOfferType = new DatabaseAccountOfferType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipRules"))
@@ -689,7 +694,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new DatabaseAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, databaseAccountOfferType.Value, Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, instanceId.Value, Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
+            return new DatabaseAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, instanceId.Value, Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
         }
     }
 }
