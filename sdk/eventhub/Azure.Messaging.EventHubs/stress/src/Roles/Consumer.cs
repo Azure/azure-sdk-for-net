@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using System.Collections.Concurrent;
+using System.Security.Cryptography;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -32,6 +33,12 @@ internal class Consumer
     /// <summary> The last received sequence value for each partition.</summary>
     private ConcurrentDictionary<string, int> _lastReceivedSequence = new ConcurrentDictionary<string, int>();
 
+    /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
+    private ConcurrentDictionary<string, byte> _readEvents { get; }
+
+    /// <summary>Holds the last read sequence value for each partition this instance has read from so far.</summary>
+    private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; }
+
     /// <summary>
     ///   Initializes a new <see cref="Consumer" \> instance.
     /// </summary>
@@ -42,11 +49,15 @@ internal class Consumer
     ///
     public Consumer(TestConfiguration testConfiguration,
                      ConsumerConfiguration consumerConfiguration,
-                     Metrics metrics)
+                     Metrics metrics,
+                     ConcurrentDictionary<string, byte> readEvents,
+                     ConcurrentDictionary<string, int> lastReadPartitionSequence)
     {
         _testConfiguration = testConfiguration;
         _consumerConfiguration = consumerConfiguration;
         _metrics = metrics;
+        _readEvents = readEvents;
+        _lastReadPartitionSequence = lastReadPartitionSequence;
     }
 
     /// <summary>
@@ -59,13 +70,12 @@ internal class Consumer
     ///
     public async Task RunAsync(CancellationToken cancellationToken)
     {
-        var eventTracking = new EventTracking();
         var consumerTasks = new Dictionary<string, Task>();
         var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync();
 
         foreach (var partitionId in partitionIds)
         {
-            consumerTasks[partitionId] = ConsumePartitionAsync(partitionId, eventTracking, cancellationToken);
+            consumerTasks[partitionId] = ConsumePartitionAsync(partitionId, cancellationToken);
         }
 
         await Task.WhenAll(consumerTasks.Values).ConfigureAwait(false);
@@ -79,8 +89,11 @@ internal class Consumer
     /// <param name="eventTracking">The <see cref="EventTracking"/> instance used to validate events.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task ConsumePartitionAsync(string partitionId, EventTracking eventTracking, CancellationToken cancellationToken)
+    private async Task ConsumePartitionAsync(string partitionId,
+                                             CancellationToken cancellationToken)
     {
+        using var sha256Hash = SHA256.Create();
+
         while (!cancellationToken.IsCancellationRequested)
         {
             var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub);
@@ -98,7 +111,7 @@ internal class Consumer
                 {
                     if (receivedEvent.Data != null)
                     {
-                        eventTracking.ConsumeEvent(receivedEvent, _metrics);
+                        EventTracking.ConsumeEvent(receivedEvent, _metrics, sha256Hash, _lastReadPartitionSequence, _readEvents);
                         _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
                     }
                 }

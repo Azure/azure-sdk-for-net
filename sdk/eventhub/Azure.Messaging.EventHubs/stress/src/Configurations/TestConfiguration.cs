@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
+using System.Security.Cryptography;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -45,6 +46,8 @@ public class TestConfiguration
     /// </summary>
     ///
     public int DurationInHours = 150;
+
+    public SHA256 Sha256Hash = default;
 
     /// <summary>
     ///   Gets the list of partitions from the Event Hub being used for this test run.

@@ -19,14 +19,8 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   duplicated, or have corrupted bodies.
 /// </summary>
 ///
-public class EventTracking
+public static class EventTracking
 {
-    /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
-    private ConcurrentDictionary<string, byte> ReadEvents { get; } = new ConcurrentDictionary<string, byte>();
-
-    /// <summary>Holds the last read sequence value for each partition this instance has read from so far.</summary>
-    private ConcurrentDictionary<string, int> LastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
-
     /// <summary>
     ///   The name of the <see cref="EventData"/> property that holds the producer-assigned index number.
     /// </summary>
@@ -95,10 +89,13 @@ public class EventTracking
     /// <param name="args">The <see cref="ProcessEventArgs"/> received from the processor client to be used for processing.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     ///
-    public async void ProcessEventAsync(ProcessEventArgs args,
-                                        Metrics metrics)
+    public static async void ProcessEventAsync(ProcessEventArgs args,
+                                               SHA256 sha256Hash,
+                                               Metrics metrics,
+                                               ConcurrentDictionary<string, int> lastReadPartitionSequence,
+                                               ConcurrentDictionary<string, byte> readEvents)
     {
-        var indexNumber = CheckEvent(args.Data, args.Partition.PartitionId, metrics);
+        var indexNumber = CheckEvent(args.Data, sha256Hash, args.Partition.PartitionId, metrics, lastReadPartitionSequence, readEvents);
 
         if (indexNumber % 100 == 0)
         {
@@ -114,7 +111,11 @@ public class EventTracking
     /// <param name="partitionEvent">The <see cref="PartitionEvent"/> received from the consumer client to be used for processing.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
     ///
-    public void ConsumeEvent(PartitionEvent partitionEvent, Metrics metrics) => CheckEvent(partitionEvent.Data, partitionEvent.Partition.PartitionId, metrics);
+    public static void ConsumeEvent(PartitionEvent partitionEvent,
+                                    Metrics metrics,
+                                    SHA256 sha256Hash,
+                                    ConcurrentDictionary<string, int> lastReadPartitionSequence,
+                                    ConcurrentDictionary<string, byte> readEvents) => CheckEvent(partitionEvent.Data, sha256Hash, partitionEvent.Partition.PartitionId, metrics, lastReadPartitionSequence, readEvents);
 
     /// <summary>
     ///   Gets the assigned partitions for the <see cref="PartitionPublisher"/>. This allows each partition publisher instance to publish
@@ -182,9 +183,12 @@ public class EventTracking
     ///   processor or consumer has received for each partition it is reading or processing from.
     /// </remarks>
     ///
-    private int CheckEvent(EventData eventData,
+    private static int CheckEvent(EventData eventData,
+                           SHA256 sha256Hash,
                            string partitionReceivedFrom,
-                           Metrics metrics)
+                           Metrics metrics,
+                           ConcurrentDictionary<string, int> lastReadPartitionSequence,
+                           ConcurrentDictionary<string, byte> readEvents)
     {
         // Id Checks
         var hasId = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
@@ -196,7 +200,7 @@ public class EventTracking
             return -1;
         }
 
-        if (ReadEvents.ContainsKey(eventId))
+        if (readEvents.ContainsKey(eventId))
         {
             metrics.Client.GetMetric(Metrics.DuplicateEventsDiscarded).TrackValue(1);
             return -1;
@@ -215,7 +219,7 @@ public class EventTracking
         var hasIndex = eventData.Properties.TryGetValue(IndexNumberPropertyName, out var IndexProperty);
         int.TryParse(IndexProperty.ToString(), out var indexNumber);
 
-        var seenEventFromThisPartition = LastReadPartitionSequence.TryGetValue(partitionReceivedFrom, out var lastReadFromPartition);
+        var seenEventFromThisPartition = lastReadPartitionSequence.TryGetValue(partitionReceivedFrom, out var lastReadFromPartition);
 
         if (seenEventFromThisPartition && lastReadFromPartition >= indexNumber)
         {
@@ -227,27 +231,24 @@ public class EventTracking
             metrics.Client.TrackEvent(Metrics.MissingOrOutOfOrderEvent, eventProperties);
         }
 
-        LastReadPartitionSequence.AddOrUpdate(partitionReceivedFrom, _ => indexNumber, (k,v) => Math.Max(v, indexNumber));
+        lastReadPartitionSequence.AddOrUpdate(partitionReceivedFrom, _ => indexNumber, (k,v) => Math.Max(v, indexNumber));
 
         // Hashed event body checks
-        using (SHA256 sha256Hash = SHA256.Create())
-        {
-            eventData.Properties.TryGetValue(EventBodyHashPropertyName, out var expected);
-            var expectedEventBodyHash = expected.ToString();
-            var receivedEventBodyHash = sha256Hash.ComputeHash(eventData.EventBody.ToArray()).ToString();
+        eventData.Properties.TryGetValue(EventBodyHashPropertyName, out var expected);
+        var expectedEventBodyHash = expected.ToString();
+        var receivedEventBodyHash = sha256Hash.ComputeHash(eventData.EventBody.ToArray()).ToString();
 
-            if (expectedEventBodyHash != receivedEventBodyHash)
-            {
-                var eventProperties = new Dictionary<string,string>();
-                eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
-                eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
-                metrics.Client.TrackEvent(Metrics.InvalidBodies, eventProperties);
-                return -1;
-            }
+        if (expectedEventBodyHash != receivedEventBodyHash)
+        {
+            var eventProperties = new Dictionary<string,string>();
+            eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
+            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
+            metrics.Client.TrackEvent(Metrics.InvalidBodies, eventProperties);
+            return -1;
         }
 
         // Finished Checks - mark as read
-        ReadEvents.TryAdd(eventId, 0);
+        readEvents.TryAdd(eventId, 0);
 
         return indexNumber;
     }

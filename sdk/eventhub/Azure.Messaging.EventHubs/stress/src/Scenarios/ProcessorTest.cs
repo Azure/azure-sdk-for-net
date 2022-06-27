@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -32,8 +34,11 @@ public class ProcessorTest
     /// <summary>The number of current handler calls happening within the same partition.</summary>
     private int[] _partitionHandlerCalls;
 
-    /// <sumarry>The <see cref="EventTracking" instance used to validate events upon reading them.</summary>
-    private EventTracking _eventProcessing = new EventTracking();
+    /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
+    private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
+
+    /// <summary>Holds the last read sequence value for each partition this instance has read from so far.</summary>
+    private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     private static Role[] _roles = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
@@ -133,6 +138,7 @@ public class ProcessorTest
     private Task ProcessEventHandler(ProcessEventArgs args)
     {
         var partitionIndex = int.Parse(args.Partition.PartitionId);
+        using var sha256Hash = SHA256.Create();
 
         try
         {
@@ -156,7 +162,7 @@ public class ProcessorTest
             {
                 _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
 
-                _eventProcessing.ProcessEventAsync(args, _metrics);
+                EventTracking.ProcessEventAsync(args, sha256Hash, _metrics, _lastReadPartitionSequence, _readEvents);
 
                 _metrics.Client.GetMetric(Metrics.EventsProcessed).TrackValue(1);
             }

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Collections.Concurrent;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -23,11 +25,14 @@ public class ConsumerTest
     /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
     private Metrics _metrics;
 
-    /// <sumarry>The <see cref="EventTracking" instance used to validate events upon reading them.</summary>
-    private EventTracking _eventProcessing = new EventTracking();
-
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     private static Role[] _roles = {Role.PartitionPublisher, Role.Consumer};
+
+    /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
+    private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
+
+    /// <summary>Holds the last read sequence value for each partition this instance has read from so far.</summary>
+    private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary>
     ///  Initializes a new <see cref="ConsumerTest"/> instance.
@@ -88,7 +93,7 @@ public class ConsumerTest
         {
             case Role.Consumer:
                 var consumerConfiguration = new ConsumerConfiguration();
-                var consumer = new Consumer(_testConfiguration, consumerConfiguration, _metrics);
+                var consumer = new Consumer(_testConfiguration, consumerConfiguration, _metrics, _readEvents, _lastReadPartitionSequence);
                 await consumer.RunAsync(cancellationToken).ConfigureAwait(false);
                 break;
 
