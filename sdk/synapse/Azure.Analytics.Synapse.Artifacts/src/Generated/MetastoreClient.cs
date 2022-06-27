@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new MetastoreRestClient(_clientDiagnostics, _pipeline, endpoint); Endpoint = endpoint;
+            RestClient = new MetastoreRestClient(_clientDiagnostics, _pipeline, endpoint);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of MetastoreClient. </summary>

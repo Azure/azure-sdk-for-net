@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version); Endpoint = endpoint;
+            RestClient = new ManagedPrivateEndpointsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointsClient. </summary>

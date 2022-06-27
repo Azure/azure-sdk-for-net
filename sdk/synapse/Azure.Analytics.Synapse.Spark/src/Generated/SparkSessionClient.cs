@@ -58,7 +58,8 @@ namespace Azure.Analytics.Synapse.Spark
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkSessionRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion); Endpoint = endpoint;
+            RestClient = new SparkSessionRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of SparkSessionClient. </summary>

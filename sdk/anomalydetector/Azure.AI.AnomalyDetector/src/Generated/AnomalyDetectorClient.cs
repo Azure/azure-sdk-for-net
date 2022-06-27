@@ -51,7 +51,8 @@ namespace Azure.AI.AnomalyDetector
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://cognitiveservices.azure.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion); Endpoint = endpoint;
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
@@ -74,7 +75,8 @@ namespace Azure.AI.AnomalyDetector
             options ??= new AnomalyDetectorClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "Ocp-Apim-Subscription-Key"));
-            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion); Endpoint = endpoint;
+            RestClient = new AnomalyDetectorRestClient(_clientDiagnostics, _pipeline, endpoint, apiVersion);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>

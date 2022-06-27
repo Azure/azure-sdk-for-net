@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.Monitoring
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new MonitoringRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version); Endpoint = endpoint;
+            RestClient = new MonitoringRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of MonitoringClient. </summary>
