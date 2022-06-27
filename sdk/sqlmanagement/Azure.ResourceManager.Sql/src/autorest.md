@@ -51,7 +51,6 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-  RestorePointInOn: RestorePointInTime # workaround for not renaming RestorePointInTime automatically
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}

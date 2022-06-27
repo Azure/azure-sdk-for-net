@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.Core.ResourceIdentifier LongTermRetentionBackupResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
         public string RestorableDroppedDatabaseId { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
+        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? Status { get { throw null; } }
         public string StorageContainerSasToken { get { throw null; } set { } }
@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ManagedInstanceProxyOverride? ProxyOverride { get { throw null; } set { } }
         public bool? PublicDataEndpointEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
+        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServicePrincipal ServicePrincipal { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public string SourceManagedInstanceId { get { throw null; } set { } }
@@ -3373,7 +3373,7 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
         public string RequestedServiceObjectiveName { get { throw null; } }
         public string RestorableDroppedDatabaseId { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
+        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public System.DateTimeOffset? ResumedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecondaryType? SecondaryType { get { throw null; } set { } }

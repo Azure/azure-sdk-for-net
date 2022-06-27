@@ -70,8 +70,6 @@ namespace Azure.ResourceManager.Sql.Models
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>

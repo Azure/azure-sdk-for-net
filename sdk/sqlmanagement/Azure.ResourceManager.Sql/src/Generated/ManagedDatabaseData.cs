@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="status"> Status of the database. </param>
         /// <param name="createdOn"> Creation date of the database. </param>
         /// <param name="earliestRestorePoint"> Earliest restore point in time for point in time restore. </param>
-        /// <param name="restorePointInOn"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="restorePointInTime"> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="defaultSecondaryLocation"> Geo paired region. </param>
         /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
         /// <param name="createMode"> Managed database create mode. PointInTimeRestore: Create a database by restoring a point in time backup of an existing database. SourceDatabaseName, SourceManagedInstanceName and PointInTime must be specified. RestoreExternalBackup: Create a database by restoring from external backup files. Collation, StorageContainerUri and StorageContainerSasToken must be specified. Recovery: Creates a database by restoring a geo-replicated backup. RecoverableDatabaseId must be specified as the recoverable database resource ID to restore. RestoreLongTermRetentionBackup: Create a database by restoring from a long term retention backup (longTermRetentionBackupResourceId required). </param>
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="longTermRetentionBackupResourceId"> The name of the Long Term Retention backup to be used for restore of this managed database. </param>
         /// <param name="autoCompleteRestore"> Whether to auto complete restore of this managed database. </param>
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInOn, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, string restorableDroppedDatabaseId, string storageContainerSasToken, string failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? autoCompleteRestore, string lastBackupName) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
             CreatedOn = createdOn;
             EarliestRestorePoint = earliestRestorePoint;
-            RestorePointInOn = restorePointInOn;
+            RestorePointInTime = restorePointInTime;
             DefaultSecondaryLocation = defaultSecondaryLocation;
             CatalogCollation = catalogCollation;
             CreateMode = createMode;
@@ -75,8 +75,6 @@ namespace Azure.ResourceManager.Sql
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Earliest restore point in time for point in time restore. </summary>
         public DateTimeOffset? EarliestRestorePoint { get; }
-        /// <summary> Conditional. If createMode is PointInTimeRestore, this value is required. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Geo paired region. </summary>
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Collation of the metadata catalog. </summary>

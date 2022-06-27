@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {

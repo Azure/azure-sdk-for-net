@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="requestedServiceObjectiveName"> The requested service level objective name of the database. </param>
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
         /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
-        /// <param name="restorePointInOn"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="sourceDatabaseDeletedOn"> Specifies the time that the database was deleted. </param>
         /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// 
         /// When source subscription belongs to a different tenant than target subscription, “x-ms-authorization-auxiliary” header must contain authentication token for the source tenant. For more details about “x-ms-authorization-auxiliary” header see https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant 
         /// </param>
-        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInOn, DateTimeOffset? sourceDatabaseDeletedOn, string recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, ResourceIdentifier sourceResourceId) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, CreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, DatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, string recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, string restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, ResourceIdentifier sourceResourceId) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql
             RequestedServiceObjectiveName = requestedServiceObjectiveName;
             DefaultSecondaryLocation = defaultSecondaryLocation;
             FailoverGroupId = failoverGroupId;
-            RestorePointInOn = restorePointInOn;
+            RestorePointInTime = restorePointInTime;
             SourceDatabaseDeletedOn = sourceDatabaseDeletedOn;
             RecoveryServicesRecoveryPointId = recoveryServicesRecoveryPointId;
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
@@ -229,8 +229,6 @@ namespace Azure.ResourceManager.Sql
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>

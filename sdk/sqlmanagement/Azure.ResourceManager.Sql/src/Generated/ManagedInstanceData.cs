@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="dnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
         /// <param name="publicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
         /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
-        /// <param name="restorePointInOn"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
+        /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
         /// <param name="timezoneId">
         /// Id of the timezone. Allowed values are timezones supported by Windows.
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the server. </param>
         /// <param name="servicePrincipal"> The managed instance&apos;s service principal. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInOn, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, bool? zoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators, ServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, BackupStorageRedundancy? currentBackupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy, bool? zoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators, ServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
             DnsZonePartner = dnsZonePartner;
             PublicDataEndpointEnabled = publicDataEndpointEnabled;
             SourceManagedInstanceId = sourceManagedInstanceId;
-            RestorePointInOn = restorePointInOn;
+            RestorePointInTime = restorePointInTime;
             ProxyOverride = proxyOverride;
             TimezoneId = timezoneId;
             InstancePoolId = instancePoolId;
@@ -149,8 +149,6 @@ namespace Azure.ResourceManager.Sql
         public bool? PublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         public string SourceManagedInstanceId { get; set; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
