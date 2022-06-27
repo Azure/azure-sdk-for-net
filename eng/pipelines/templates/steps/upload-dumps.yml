@@ -8,8 +8,8 @@ steps:
         Move-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
       }
       [System.IO.Compression.ZipFile]::CreateFromDirectory("$(Build.ArtifactStagingDirectory)/dumps","$(Build.ArtifactStagingDirectory)/dumps.zip")
-      condition: always()
-      displayName: Copy dumps to staging directory
+    condition: always()
+    displayName: Copy dumps to staging directory
   - publish: $(Build.ArtifactStagingDirectory)/dumps.zip
     condition: always()
     displayName: Upload crash dump
