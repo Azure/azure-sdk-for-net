@@ -1,16 +1,16 @@
 steps:
   - pwsh: |
-      $dump = Get-ChildItem -Path $(Build.SourcesDirectory) -Include *.dmp -Recurse |Select -First 1
-      if ($dump)
+      New-Item $(Build.ArtifactStagingDirectory)/dumps -ItemType directory
+      foreach($dumpFile in (Get-ChildItem -Path . -Recurse -Filter *.dmp -File))
       {
-        Write-Host "##vso[task.setvariable variable=uploadDump]true"
-        Write-Host "##vso[task.setvariable variable=dumpPath]$dump"
+        $fileFullName = $dumpFile.FullName
+        $fileName = $dumpFile.Name
+        Move-Item -Path $fileFullName -Destination $(Build.ArtifactStagingDirectory)/dumps/$fileName -ErrorAction SilentlyContinue
       }
-      condition: failed()
-      displayName: Search for crash dump
-  - task: PublishPipelineArtifact@1
-      condition: eq(variables['uploadDump'], 'true')
-      displayName: Upload crash dump
-      inputs:
-      targetPath: $(dumpPath)
-      artifactName: "Crash Dump - $(OSName) $(TestTargetFramework) - $(System.JobId)"
+      [System.IO.Compression.ZipFile]::CreateFromDirectory("$(Build.ArtifactStagingDirectory)/dumps","$(Build.ArtifactStagingDirectory)/dumps.zip")
+      condition: always()
+      displayName: Copy dumps to staging directory
+  - publish: $(Build.ArtifactStagingDirectory)/dumps.zip
+    condition: always()
+    displayName: Upload crash dump
+    artifact: "Crash Dump - $(OSName) $(TestTargetFramework) - $(System.JobName)-$(System.JobAttempt)"
