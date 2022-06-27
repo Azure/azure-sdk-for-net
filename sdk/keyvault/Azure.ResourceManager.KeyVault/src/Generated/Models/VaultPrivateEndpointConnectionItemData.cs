@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of VaultPrivateEndpointConnectionItemData. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal VaultPrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, VaultPrivateLinkServiceConnectionState connectionState, VaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal VaultPrivateEndpointConnectionItemData(string id, ETag? eTag, SubResource privateEndpoint, VaultPrivateLinkServiceConnectionState connectionState, VaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             Id = id;
-            Etag = etag;
+            ETag = eTag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Id of private endpoint connection. </summary>
         public string Id { get; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>

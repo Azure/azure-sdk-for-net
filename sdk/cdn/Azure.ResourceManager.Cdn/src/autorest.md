@@ -25,7 +25,7 @@ operation-id-mappings:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -60,6 +60,7 @@ rename-rules:
   PUT: Put
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
+  Etag: ETag
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
