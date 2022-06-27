@@ -42,6 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
+            // TODO: Check if service.name as unknown_service should be sent.
             if (serviceName != null && serviceNamespace != null)
             {
                 RoleName = string.Concat(serviceNamespace, "/", serviceName);
