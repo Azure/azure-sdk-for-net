@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Tests
         private void CompareSecurityRule(SecurityRuleData rule1, SecurityRuleData rule2)
         {
             Assert.AreEqual(rule1.Name, rule2.Name);
-            Assert.AreEqual(rule1.Etag, rule2.Etag);
+            Assert.AreEqual(rule1.ETag, rule2.ETag);
             Assert.AreEqual(rule1.Access, rule2.Access);
             Assert.AreEqual(rule1.Description, rule2.Description);
             Assert.AreEqual(rule1.DestinationAddressPrefix, rule2.DestinationAddressPrefix);

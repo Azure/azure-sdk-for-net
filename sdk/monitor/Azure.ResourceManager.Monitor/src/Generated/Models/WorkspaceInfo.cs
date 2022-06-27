@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -16,16 +17,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="location"/> or <paramref name="customerId"/> is null. </exception>
-        public WorkspaceInfo(string id, string location, string customerId)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="customerId"/> is null. </exception>
+        public WorkspaceInfo(string id, AzureLocation location, string customerId)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
             if (customerId == null)
             {
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Azure Resource Manager identifier of the Log Analytics Workspace. </summary>
         public string Id { get; set; }
         /// <summary> Location of the Log Analytics workspace. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
         /// <summary> Log Analytics workspace identifier. </summary>
         public string CustomerId { get; set; }
     }

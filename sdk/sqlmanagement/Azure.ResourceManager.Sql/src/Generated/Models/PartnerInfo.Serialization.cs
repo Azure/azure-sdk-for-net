@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static PartnerInfo DeserializePartnerInfo(JsonElement element)
         {
             string id = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +34,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationRole"))
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new PartnerInfo(id, location.Value, Optional.ToNullable(replicationRole));
+            return new PartnerInfo(id, Optional.ToNullable(location), Optional.ToNullable(replicationRole));
         }
     }
 }

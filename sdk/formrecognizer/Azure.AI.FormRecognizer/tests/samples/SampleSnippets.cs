@@ -5,16 +5,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
+    [LiveOnly]
     public partial class Snippets : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public void CreateDocumentAnalysisClient()
         {
             #region Snippet:CreateDocumentAnalysisClient
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateDocumentAnalysisClientTokenCredential()
         {
             #region Snippet:CreateDocumentAnalysisClientTokenCredential
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateDocumentModelAdministrationClient()
         {
             #region Snippet:CreateDocumentModelAdministrationClient
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #endregion
         }
 
-        [Test]
+        [RecordedTest]
         public void CreateDocumentAnalysisClients()
         {
             #region Snippet:CreateDocumentAnalysisClients

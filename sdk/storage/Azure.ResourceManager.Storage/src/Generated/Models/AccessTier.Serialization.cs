@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             AccessTier.Hot => "Hot",
             AccessTier.Cool => "Cool",
+            AccessTier.Premium => "Premium",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessTier value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             if (string.Equals(value, "Hot", StringComparison.InvariantCultureIgnoreCase)) return AccessTier.Hot;
             if (string.Equals(value, "Cool", StringComparison.InvariantCultureIgnoreCase)) return AccessTier.Cool;
+            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return AccessTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessTier value.");
         }
     }

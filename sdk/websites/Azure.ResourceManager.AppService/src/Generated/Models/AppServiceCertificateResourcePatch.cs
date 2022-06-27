@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
-    public partial class AppServiceCertificateResourcePatch : ProxyOnlyResource
+    public partial class AppServiceCertificateResourcePatch : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceCertificateResourcePatch. </summary>
         public AppServiceCertificateResourcePatch()
@@ -23,15 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        internal AppServiceCertificateResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceCertificateResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind) : base(id, name, resourceType, systemData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             ProvisioningState = provisioningState;
+            Kind = kind;
         }
 
         /// <summary> Key Vault resource Id. </summary>
@@ -40,5 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
         public KeyVaultSecretStatus? ProvisioningState { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

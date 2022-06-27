@@ -24,7 +24,7 @@ using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(alwaysRunLocally: true)]
     public class WebJobsServiceBusTestBase
     {
         // surrounding with % indicates that this is used as a pointer to an app setting rather than
@@ -55,7 +55,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         protected const int SBTimeoutMills = 120 * 1000;
         protected const int DrainWaitTimeoutMills = 120 * 1000;
-        protected const int DrainSleepMills = 5 * 1000;
         internal const int MaxAutoRenewDurationMin = 5;
         protected static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
 
@@ -197,6 +196,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -217,6 +217,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // evenly distribute the messages across sessions
                     message.SessionId = sessionIds[sessionCounter++ % sessionIds.Length];
+                    message.ReplyToSessionId = message.SessionId;
                 }
 
                 if (!batch.TryAddMessage(message))
@@ -248,6 +249,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -260,6 +262,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -279,6 +282,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     sbOptions.MaxAutoLockRenewalDuration = TimeSpan.Zero;
                     sbOptions.MaxConcurrentCalls = 1;
                 }));
+
+        protected static class DrainModeHelper
+        {
+            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
+            {
+                // Wait until the drain operation begins, signalled by the cancellation token
+                int elapsedTimeMills = 0;
+                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await Task.Delay(elapsedTimeMills += 500, cancellationToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+            }
+        }
+
         private class ServiceBusEndToEndTestService : IHostedService
         {
             private readonly IHost _host;

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes the public IP Sku. </summary>
+    /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
     public partial class PublicIPAddressSku
     {
         /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>

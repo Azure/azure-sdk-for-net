@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,15 +24,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service connection resource. </param>
         /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal PrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, NetworkProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType)
+        internal PrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             ProvisioningState = provisioningState;
             PrivateLinkServiceId = privateLinkServiceId;
             GroupIds = groupIds;
@@ -40,11 +41,11 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the private link service connection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource id of private link service. </summary>
-        public string PrivateLinkServiceId { get; set; }
+        public ResourceIdentifier PrivateLinkServiceId { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(ImmutableSubscriptionId))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal static RemotePrivateEndpoint DeserializeRemotePrivateEndpoint(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> immutableSubscriptionId = default;
             Optional<string> immutableResourceId = default;
             Optional<string> vnetTrafficTag = default;
@@ -104,7 +104,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("immutableSubscriptionId"))
@@ -183,7 +188,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new RemotePrivateEndpoint(id.Value, location.Value, immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails));
+            return new RemotePrivateEndpoint(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails));
         }
     }
 }

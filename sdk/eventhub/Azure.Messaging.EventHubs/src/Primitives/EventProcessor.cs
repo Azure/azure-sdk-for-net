@@ -581,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             // If there were no events in the batch and empty batches should not be emitted,
             // take no further action.
 
-            if (((eventBatch == null) || (eventBatch.Count <= 0)) && (!dispatchEmptyBatches))
+            if ((eventBatch == null) || ((eventBatch.Count <= 0) && (!dispatchEmptyBatches)))
             {
                 return;
             }
@@ -614,14 +614,24 @@ namespace Azure.Messaging.EventHubs.Primitives
             // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
             // code.
 
+            var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+            var watch = ValueStopwatch.StartNew();
+
             try
             {
+                Logger.EventProcessorProcessingHandlerStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, eventBatch.Count);
                 await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
+                Logger.EventProcessorProcessingHandlerError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
                 diagnosticScope.Failed(ex);
+
                 throw new DeveloperCodeException(ex);
+            }
+            finally
+            {
+                Logger.EventProcessorProcessingHandlerComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, watch.GetElapsedTime().TotalSeconds);
             }
         }
 

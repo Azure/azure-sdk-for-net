@@ -44,13 +44,16 @@ namespace Azure.Storage.Blobs.Tests
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, key, cancellationToken) =>
                     {
                         await Task.Delay(optionalDelay);
-                        return Xor(userKeyBytes, key.ToArray());
+                        // TODO develop transformative function that can work with different size keys. no-op is fine for now
+                        //return Xor(userKeyBytes, key.ToArray());
+                        return key.ToArray();
                     });
                 keyMock.Setup(k => k.UnwrapKeyAsync(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), expectedCancellationToken ?? It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, wrappedKey, cancellationToken) =>
                     {
                         await Task.Delay(optionalDelay);
-                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                        //return Xor(userKeyBytes, wrappedKey.ToArray());
+                        return wrappedKey.ToArray();
                     });
             }
             else
@@ -59,13 +62,15 @@ namespace Azure.Storage.Blobs.Tests
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, key, cancellationToken) =>
                     {
                         Thread.Sleep(optionalDelay);
-                        return Xor(userKeyBytes, key.ToArray());
+                        //return Xor(userKeyBytes, key.ToArray());
+                        return key.ToArray();
                     });
                 keyMock.Setup(k => k.UnwrapKey(s_algorithmName, It.IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) =>
                     {
                         Thread.Sleep(optionalDelay);
-                        return Xor(userKeyBytes, wrappedKey.ToArray());
+                        //return Xor(userKeyBytes, wrappedKey.ToArray());
+                        return wrappedKey.ToArray();
                     });
             }
 

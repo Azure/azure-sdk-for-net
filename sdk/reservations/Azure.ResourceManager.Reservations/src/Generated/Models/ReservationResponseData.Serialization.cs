@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.Reservations
         internal static ReservationResponseData DeserializeReservationResponseData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;
             Optional<ReservationsProperties> properties = default;
-            Optional<string> kind = default;
+            Optional<ReservationsKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Reservations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -70,7 +69,12 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("kind"))
                 {
-                    kind = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kind = new ReservationsKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -90,11 +94,16 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new ReservationResponseData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, kind.Value);
+            return new ReservationResponseData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, Optional.ToNullable(kind));
         }
     }
 }

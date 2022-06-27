@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,6 +21,40 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(ArcInstanceResourceGroup))
+            {
+                writer.WritePropertyName("arcInstanceResourceGroup");
+                writer.WriteStringValue(ArcInstanceResourceGroup);
+            }
+            if (Optional.IsDefined(ArcApplicationClientId))
+            {
+                writer.WritePropertyName("arcApplicationClientId");
+                writer.WriteStringValue(ArcApplicationClientId.Value);
+            }
+            if (Optional.IsDefined(ArcApplicationTenantId))
+            {
+                writer.WritePropertyName("arcApplicationTenantId");
+                writer.WriteStringValue(ArcApplicationTenantId.Value);
+            }
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("arcServicePrincipalObjectId");
+                writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
+            }
+            if (Optional.IsDefined(ArcApplicationObjectId))
+            {
+                writer.WritePropertyName("arcApplicationObjectId");
+                writer.WriteStringValue(ArcApplicationObjectId.Value);
+            }
+            if (Optional.IsDefined(ConnectivityProperties))
+            {
+                writer.WritePropertyName("connectivityProperties");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectivityProperties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectivityProperties.ToString()).RootElement);
+#endif
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -29,11 +64,16 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> arcInstanceResourceGroup = default;
+            Optional<Guid> arcApplicationClientId = default;
+            Optional<Guid> arcApplicationTenantId = default;
+            Optional<Guid> arcServicePrincipalObjectId = default;
+            Optional<Guid> arcApplicationObjectId = default;
             Optional<ArcSettingAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeState>> perNodeDetails = default;
+            Optional<BinaryData> connectivityProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -53,6 +93,11 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -80,6 +125,46 @@ namespace Azure.ResourceManager.Hci
                             arcInstanceResourceGroup = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("arcApplicationClientId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationClientId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("arcApplicationTenantId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationTenantId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("arcServicePrincipalObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcServicePrincipalObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("arcApplicationObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("aggregateState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -105,11 +190,21 @@ namespace Azure.ResourceManager.Hci
                             perNodeDetails = array;
                             continue;
                         }
+                        if (property0.NameEquals("connectivityProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            connectivityProperties = BinaryData.FromString(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ArcSettingData(id, name, type, systemData, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails));
+            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value);
         }
     }
 }

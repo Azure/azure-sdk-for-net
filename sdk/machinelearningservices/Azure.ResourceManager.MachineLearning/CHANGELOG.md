@@ -1,5 +1,20 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Base type of `MachineLearningComputeData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningWorkspaceData` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+- Base type of `MachineLearningPrivateLinkResource` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.1 (2022-05-25)
 
 ### General New Features

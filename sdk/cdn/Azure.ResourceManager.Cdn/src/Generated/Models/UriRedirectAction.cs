@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriRedirectAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of UriRedirectAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UriRedirectAction(UriRedirectActionDefinition parameters)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public UriRedirectAction(UriRedirectActionProperties properties)
         {
-            if (parameters == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.UriRedirect;
         }
 
         /// <summary> Initializes a new instance of UriRedirectAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UriRedirectAction(DeliveryRuleActionType name, UriRedirectActionDefinition parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal UriRedirectAction(DeliveryRuleActionType name, UriRedirectActionProperties properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UriRedirectActionDefinition Parameters { get; set; }
+        public UriRedirectActionProperties Properties { get; set; }
     }
 }

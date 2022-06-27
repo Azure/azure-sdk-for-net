@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayIPConfiguration DeserializeApplicationGatewayIPConfiguration(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -49,7 +50,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), etag.Value, subnet, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState));
         }
     }
 }

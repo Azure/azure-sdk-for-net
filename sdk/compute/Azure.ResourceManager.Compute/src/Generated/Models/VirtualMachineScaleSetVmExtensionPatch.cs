@@ -7,11 +7,12 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVmExtensionPatch : ComputeSubResourceData
+    public partial class VirtualMachineScaleSetVmExtensionPatch : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionPatch. </summary>
         public VirtualMachineScaleSetVmExtensionPatch()
@@ -19,9 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionPatch. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> The name of the extension. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
@@ -31,10 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, string resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures) : base(id)
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, BinaryData protectedSettingsFromKeyVault) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            ResourceType = resourceType;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             ExtensionType = extensionType;
@@ -44,12 +45,9 @@ namespace Azure.ResourceManager.Compute.Models
             Settings = settings;
             ProtectedSettings = protectedSettings;
             SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
         }
 
-        /// <summary> The name of the extension. </summary>
-        public string Name { get; }
-        /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
@@ -68,5 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         public BinaryData ProtectedSettings { get; set; }
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
+        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
+        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
     }
 }

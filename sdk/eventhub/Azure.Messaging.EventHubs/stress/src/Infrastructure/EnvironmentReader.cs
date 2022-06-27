@@ -63,7 +63,7 @@ internal static class EnvironmentReader
             try
             {
                 var parsedKey = line.Slice(firstCharacterPos, separator).Trim().ToString();
-                var parsedValue = line.Slice(separator + 1).Trim().ToString();
+                var parsedValue = line.Slice(separator + 1).Trim().Trim('"').ToString();
 
                 if (environment.ContainsKey(parsedKey))
                 {

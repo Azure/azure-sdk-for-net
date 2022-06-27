@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Network
 
         internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> backendAddressPool = default;
             Optional<IList<WritableSubResource>> backendAddressPools = default;
             Optional<WritableSubResource> probe = default;
-            Optional<TransportProtocol> protocol = default;
+            Optional<LoadBalancingTransportProtocol> protocol = default;
             Optional<LoadDistribution> loadDistribution = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
@@ -122,7 +123,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -211,7 +217,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protocol = new TransportProtocol(property0.Value.GetString());
+                            protocol = new LoadBalancingTransportProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("loadDistribution"))
@@ -298,7 +304,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
         }
     }
 }

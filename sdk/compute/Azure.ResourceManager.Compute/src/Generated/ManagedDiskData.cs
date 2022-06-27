@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public ManagedDiskData(AzureLocation location) : base(location)
         {
-            ManagedByExtended = new ChangeTrackingList<string>();
+            ManagedByExtended = new ChangeTrackingList<ResourceIdentifier>();
             Zones = new ChangeTrackingList<string>();
             ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> A relative URI containing the ID of the VM that has the disk attached. </param>
         /// <param name="managedByExtended"> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </param>
-        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
         /// <param name="zones"> The Logical zone list for Disk. </param>
         /// <param name="extendedLocation"> The extended location where the disk will be created. Extended location cannot be changed. </param>
         /// <param name="timeCreated"> The time when the disk was created. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </param>
         /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
         /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
-        /// <param name="encryptionSettingGroup"> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
         /// <param name="provisioningState"> The disk provisioning state. </param>
         /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
         /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingGroup encryptionSettingGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Compute
             DiskSizeGB = diskSizeGB;
             DiskSizeBytes = diskSizeBytes;
             UniqueId = uniqueId;
-            EncryptionSettingGroup = encryptionSettingGroup;
+            EncryptionSettingsGroup = encryptionSettingsGroup;
             ProvisioningState = provisioningState;
             DiskIopsReadWrite = diskIopsReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
@@ -100,13 +101,14 @@ namespace Azure.ResourceManager.Compute
             SecurityProfile = securityProfile;
             CompletionPercent = completionPercent;
             PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
         }
 
         /// <summary> A relative URI containing the ID of the VM that has the disk attached. </summary>
-        public string ManagedBy { get; }
+        public ResourceIdentifier ManagedBy { get; }
         /// <summary> List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares should be set to a value greater than one for disks to allow attaching them to multiple VMs. </summary>
-        public IReadOnlyList<string> ManagedByExtended { get; }
-        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </summary>
+        public IReadOnlyList<ResourceIdentifier> ManagedByExtended { get; }
+        /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
         public DiskSku Sku { get; set; }
         /// <summary> The Logical zone list for Disk. </summary>
         public IList<string> Zones { get; }
@@ -115,27 +117,15 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The time when the disk was created. </summary>
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes? OSType { get; set; }
+        public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer}. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
-        internal SupportedCapabilities SupportedCapabilities { get; set; }
-        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
-        public bool? AcceleratedNetwork
-        {
-            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
-            set
-            {
-                if (SupportedCapabilities is null)
-                    SupportedCapabilities = new SupportedCapabilities();
-                SupportedCapabilities.AcceleratedNetwork = value;
-            }
-        }
-
+        public SupportedCapabilities SupportedCapabilities { get; set; }
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
-        public CreationData CreationData { get; set; }
+        public DiskCreationData CreationData { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> The size of the disk in bytes. This field is read only. </summary>
@@ -143,7 +133,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Unique Guid identifying the resource. </summary>
         public string UniqueId { get; }
         /// <summary> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingGroup EncryptionSettingGroup { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
         /// <summary> The disk provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
@@ -186,5 +176,7 @@ namespace Azure.ResourceManager.Compute
         public float? CompletionPercent { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
+        public DataAccessAuthMode? DataAccessAuthMode { get; set; }
     }
 }

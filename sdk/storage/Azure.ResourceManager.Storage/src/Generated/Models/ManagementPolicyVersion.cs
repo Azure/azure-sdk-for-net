@@ -27,39 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The function to tier blob version to cool storage. Support blob version currently at Hot tier. </summary>
-        internal DateAfterCreation TierToCool { get; set; }
-        /// <summary> Value indicating the age in days after creation. </summary>
-        public float? TierToCoolDaysAfterCreationGreaterThan
-        {
-            get => TierToCool is null ? default(float?) : TierToCool.DaysAfterCreationGreaterThan;
-            set
-            {
-                TierToCool = value.HasValue ? new DateAfterCreation(value.Value) : null;
-            }
-        }
-
+        public DateAfterCreation TierToCool { get; set; }
         /// <summary> The function to tier blob version to archive storage. Support blob version currently at Hot or Cool tier. </summary>
-        internal DateAfterCreation TierToArchive { get; set; }
-        /// <summary> Value indicating the age in days after creation. </summary>
-        public float? TierToArchiveDaysAfterCreationGreaterThan
-        {
-            get => TierToArchive is null ? default(float?) : TierToArchive.DaysAfterCreationGreaterThan;
-            set
-            {
-                TierToArchive = value.HasValue ? new DateAfterCreation(value.Value) : null;
-            }
-        }
-
+        public DateAfterCreation TierToArchive { get; set; }
         /// <summary> The function to delete the blob version. </summary>
-        internal DateAfterCreation Delete { get; set; }
-        /// <summary> Value indicating the age in days after creation. </summary>
-        public float? DeleteDaysAfterCreationGreaterThan
-        {
-            get => Delete is null ? default(float?) : Delete.DaysAfterCreationGreaterThan;
-            set
-            {
-                Delete = value.HasValue ? new DateAfterCreation(value.Value) : null;
-            }
-        }
+        public DateAfterCreation Delete { get; set; }
     }
 }

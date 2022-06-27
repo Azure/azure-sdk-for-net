@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
-                        Protocol = TransportProtocol.Tcp,
+                        Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 80,
                         BackendPort = 80,
                         EnableFloatingIP = false,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
-                        Protocol = TransportProtocol.Tcp,
+                        Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3389,
                         BackendPort = 3389,
                         IdleTimeoutInMinutes = 15,
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Tests
                             Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
                             resourceGroupName, lbName, "FrontendIPConfigurations", frontendIpConfigName)
                         },
-                        Protocol = TransportProtocol.Tcp,
+                        Protocol = LoadBalancingTransportProtocol.Tcp,
                         FrontendPort = 3390,
                         BackendPort = 3389,
                         IdleTimeoutInMinutes = 15,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Assert.NotNull(ipconfig.PublicIPAddress);
                 Assert.NotNull(ipconfig.PublicIPAddress.Id);
                 Assert.NotNull(ipconfig.PublicIPAddress.Name);
-                Assert.NotNull(ipconfig.PublicIPAddress.Etag);
+                Assert.NotNull(ipconfig.PublicIPAddress.ETag);
                 Assert.AreEqual(ipconfig.Id, ipconfig.PublicIPAddress.IPConfiguration.Id);
             }
 

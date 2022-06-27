@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `KeyVaultResourceData` was removed.
+- Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ManagedHsmTrackedResourceData` was removed.
+- Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes
@@ -138,7 +146,7 @@ SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync(
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
 VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
+VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard)));
 
 ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
 VaultResource vault = lro.Value;
@@ -158,6 +166,6 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+VaultProperties properties = new VaultProperties(Guid.NewGuid(), new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
 VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```
