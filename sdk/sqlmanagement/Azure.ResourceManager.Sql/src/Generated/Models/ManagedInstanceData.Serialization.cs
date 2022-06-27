@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.Sql
             Optional<string> dnsZone = default;
             Optional<string> dnsZonePartner = default;
             Optional<bool> publicDataEndpointEnabled = default;
-            Optional<string> sourceManagedInstanceId = default;
+            Optional<ResourceIdentifier> sourceManagedInstanceId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<ManagedInstanceProxyOverride> proxyOverride = default;
             Optional<string> timezoneId = default;
-            Optional<string> instancePoolId = default;
+            Optional<ResourceIdentifier> instancePoolId = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
@@ -387,7 +387,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("sourceManagedInstanceId"))
                         {
-                            sourceManagedInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))
@@ -417,7 +422,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("instancePoolId"))
                         {
-                            instancePoolId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            instancePoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))

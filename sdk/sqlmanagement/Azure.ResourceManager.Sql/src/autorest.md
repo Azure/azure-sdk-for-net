@@ -26,6 +26,18 @@ format-by-name-rules:
   'subnetId': 'arm-id'
   'primaryUserAssignedIdentityId': 'arm-id'
   'elasticPoolId': 'arm-id'
+  'recoverableDatabaseId': 'arm-id'
+  'sourceDatabaseId': 'arm-id'
+  'syncDatabaseId': 'arm-id'
+  'maintenanceConfigurationId': 'arm-id'
+  'originalId': 'arm-id'
+  '*ManagedInstanceId': 'arm-id'
+  'instancePoolId': 'arm-id'
+  'recoveryServicesRecoveryPointId': 'arm-id'
+  'syncAgentId': 'arm-id'
+  'oldServerDnsAliasId': 'arm-id'
+  'partnerLocation': 'azure-location'
+  'defaultSecondaryLocation': 'azure-location'
 
 keep-plural-enums:
   - DiffBackupIntervalInHours
@@ -188,10 +200,6 @@ directive:
       where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
       transform: >
           $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    # - from: swagger-document
-    #   where: $.definitions..restorePointInTime
-    #   transform: >
-    #       $['x-ms-client-name'] = 'RestoreOn';
     - from: swagger-document
       where: $.definitions..restorePointCreationDate
       transform: >
@@ -249,41 +257,21 @@ directive:
       where: $.definitions.DataMaskingRuleProperties
       transform: >
           delete $.properties.id;
-    - from: swagger-document
-      where: $.definitions..originalId
-      transform: >
-          $['x-ms-format'] = 'arm-id';
-    - from: swagger-document
-      where: $.definitions..maintenanceConfigurationId 
-      transform: >
-          $['x-ms-format'] = 'arm-id';
-    - from: swagger-document
-      where: $.definitions..sourceDatabaseId 
-      transform: >
-          $['x-ms-format'] = 'arm-id';
-    - from: swagger-document
-      where: $.definitions..recoverableDatabaseId 
-      transform: >
-          $['x-ms-format'] = 'arm-id';
-    - from: swagger-document
-      where: $.definitions..syncDatabaseId 
-      transform: >
-          $['x-ms-format'] = 'arm-id';
-    - from: swagger-document
-      where: $.definitions..partnerLocation 
-      transform: >
-          $['x-ms-format'] = 'azure-location';
-    - from: swagger-document
-      where: $.definitions..defaultSecondaryLocation 
-      transform: >
-          $['x-ms-format'] = 'azure-location';
     - from: JobAgents.json
       where: $.definitions.JobAgentProperties
       transform: >
           $.properties.databaseId['x-ms-format'] = 'arm-id';
+    - from: ServerTrustGroups.json
+      where: $.definitions.ServerInfo
+      transform: >
+          $.properties.serverId['x-ms-format'] = 'arm-id';
     - from: ManagedInstances.json
       where: $.definitions
       transform: >
           $.ServicePrincipal.properties.principalId['format'] = 'uuid';
           $.ServicePrincipal.properties.clientId['format'] = 'uuid';
-```
+    - from: swagger-document
+      where: $.definitions..restorableDroppedDatabaseId
+      transform: >
+          $['x-ms-format'] = 'arm-id'
+      reason: Only update the format of properties named 'restorableDroppedDatabaseId'. There is also a path parameter with the same name and should remain a string.

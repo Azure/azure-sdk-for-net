@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.Sql
         public string LastBackupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LongTermRetentionBackupResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
-        public string RestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RestorableDroppedDatabaseId { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? Status { get { throw null; } }
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Sql
         public string DnsZonePartner { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string InstancePoolId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }
         public string KeyId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Sql
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServicePrincipal ServicePrincipal { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
-        public string SourceManagedInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
         public int? StorageSizeInGB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -3369,10 +3369,10 @@ namespace Azure.ResourceManager.Sql
         public System.DateTimeOffset? PausedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
-        public string RecoveryServicesRecoveryPointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
         public string RequestedServiceObjectiveName { get { throw null; } }
-        public string RestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RestorableDroppedDatabaseId { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public System.DateTimeOffset? ResumedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }
@@ -4179,7 +4179,7 @@ namespace Azure.ResourceManager.Sql
         public string PrivateEndpointName { get { throw null; } }
         public string ServerName { get { throw null; } set { } }
         public System.Guid? SqlServerDatabaseId { get { throw null; } set { } }
-        public string SyncAgentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SyncAgentId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SyncDirection? SyncDirection { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SyncMemberAzureDatabaseResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SyncMemberState? SyncState { get { throw null; } }
@@ -5745,7 +5745,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string LastBackupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LongTermRetentionBackupResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
-        public string RestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RestorableDroppedDatabaseId { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceDatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedDatabaseStatus? Status { get { throw null; } }
@@ -5881,8 +5881,8 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstancePairInfo
     {
         public ManagedInstancePairInfo() { }
-        public string PartnerManagedInstanceId { get { throw null; } set { } }
-        public string PrimaryManagedInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PartnerManagedInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrimaryManagedInstanceId { get { throw null; } set { } }
     }
     public partial class ManagedInstancePatch
     {
@@ -5896,7 +5896,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string DnsZonePartner { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string InstancePoolId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InstancePoolId { get { throw null; } set { } }
         public string KeyId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
@@ -5911,7 +5911,7 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServicePrincipal ServicePrincipal { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
-        public string SourceManagedInstanceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceManagedInstanceId { get { throw null; } set { } }
         public string State { get { throw null; } }
         public int? StorageSizeInGB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -6864,8 +6864,8 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ServerDnsAliasAcquisition
     {
-        public ServerDnsAliasAcquisition(string oldServerDnsAliasId) { }
-        public string OldServerDnsAliasId { get { throw null; } }
+        public ServerDnsAliasAcquisition(Azure.Core.ResourceIdentifier oldServerDnsAliasId) { }
+        public Azure.Core.ResourceIdentifier OldServerDnsAliasId { get { throw null; } }
     }
     public partial class ServerExternalAdministrator
     {
@@ -6879,8 +6879,8 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class ServerInfo
     {
-        public ServerInfo(string serverId) { }
-        public string ServerId { get { throw null; } set { } }
+        public ServerInfo(Azure.Core.ResourceIdentifier serverId) { }
+        public Azure.Core.ResourceIdentifier ServerId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServerKeyType : System.IEquatable<Azure.ResourceManager.Sql.Models.ServerKeyType>
@@ -7106,10 +7106,10 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? PausedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
-        public string RecoveryServicesRecoveryPointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? RequestedBackupStorageRedundancy { get { throw null; } set { } }
         public string RequestedServiceObjectiveName { get { throw null; } }
-        public string RestorableDroppedDatabaseId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RestorableDroppedDatabaseId { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public System.DateTimeOffset? ResumedOn { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }

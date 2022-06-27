@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ManagedDatabaseCreateMode> createMode = default;
             Optional<Uri> storageContainerUri = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<string> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
             Optional<string> failoverGroupId = default;
             Optional<ResourceIdentifier> recoverableDatabaseId = default;
@@ -276,7 +276,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"))
                         {
-                            restorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageContainerSasToken"))

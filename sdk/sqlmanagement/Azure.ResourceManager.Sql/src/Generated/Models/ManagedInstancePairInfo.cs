@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
@@ -18,15 +20,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
         /// <param name="primaryManagedInstanceId"> Id of Primary Managed Instance in pair. </param>
         /// <param name="partnerManagedInstanceId"> Id of Partner Managed Instance in pair. </param>
-        internal ManagedInstancePairInfo(string primaryManagedInstanceId, string partnerManagedInstanceId)
+        internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId)
         {
             PrimaryManagedInstanceId = primaryManagedInstanceId;
             PartnerManagedInstanceId = partnerManagedInstanceId;
         }
 
         /// <summary> Id of Primary Managed Instance in pair. </summary>
-        public string PrimaryManagedInstanceId { get; set; }
+        public ResourceIdentifier PrimaryManagedInstanceId { get; set; }
         /// <summary> Id of Partner Managed Instance in pair. </summary>
-        public string PartnerManagedInstanceId { get; set; }
+        public ResourceIdentifier PartnerManagedInstanceId { get; set; }
     }
 }

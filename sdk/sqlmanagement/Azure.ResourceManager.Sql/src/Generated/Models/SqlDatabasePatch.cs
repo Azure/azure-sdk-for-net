@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Specifies the time that the database was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
-        public string RecoveryServicesRecoveryPointId { get; set; }
+        public ResourceIdentifier RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
         public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The resource identifier of the restorable dropped database associated with create operation of this database. </summary>
-        public string RestorableDroppedDatabaseId { get; set; }
+        public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> Collation of the metadata catalog. </summary>
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>

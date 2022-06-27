@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.Sql
             Optional<string> failoverGroupId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
-            Optional<string> recoveryServicesRecoveryPointId = default;
+            Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
             Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
             Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Optional<string> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<bool> zoneRedundant = default;
             Optional<DatabaseLicenseType> licenseType = default;
@@ -442,7 +442,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("recoveryServicesRecoveryPointId"))
                         {
-                            recoveryServicesRecoveryPointId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            recoveryServicesRecoveryPointId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("longTermRetentionBackupResourceId"))
@@ -467,7 +472,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"))
                         {
-                            restorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("catalogCollation"))

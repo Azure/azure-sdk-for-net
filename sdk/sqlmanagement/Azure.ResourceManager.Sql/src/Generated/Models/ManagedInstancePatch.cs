@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         public bool? PublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
-        public string SourceManagedInstanceId { get; set; }
+        public ResourceIdentifier SourceManagedInstanceId { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         public string TimezoneId { get; set; }
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
-        public string InstancePoolId { get; set; }
+        public ResourceIdentifier InstancePoolId { get; set; }
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> List of private endpoint connections on a managed instance. </summary>
