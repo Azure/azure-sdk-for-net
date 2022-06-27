@@ -122,7 +122,7 @@ jobs:
           --filter "TestCategory!=Manually"
           --logger "trx"
           --logger:"console;verbosity=normal"
-          --blame-crash-dump-type full
+          --blame-crash-dump-type full --blame-hang-dump-type full
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:Project=${{ parameters.Project }}
