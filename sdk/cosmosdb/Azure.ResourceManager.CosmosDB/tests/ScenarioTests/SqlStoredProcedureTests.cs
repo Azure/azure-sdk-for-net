@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
+            IgnoreTestInNonWindowsAgent();
+
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);

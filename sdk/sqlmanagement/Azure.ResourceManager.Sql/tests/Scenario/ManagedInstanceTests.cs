@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Re-record before GA")]
         public async Task ManagedInstanceApiTests()
         {
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately
