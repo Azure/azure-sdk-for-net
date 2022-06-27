@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="toTime"> To time of the query. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMin intervalLength) : base(blobContainerSasUri, fromTime, toTime)
+        public RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime)
         {
             if (blobContainerSasUri == null)
             {
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Interval value in minutes used to create LogAnalytics call rate logs. </summary>
-        public IntervalInMin IntervalLength { get; }
+        public IntervalInMins IntervalLength { get; }
     }
 }

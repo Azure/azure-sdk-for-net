@@ -703,13 +703,6 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType"
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -794,5 +787,8 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

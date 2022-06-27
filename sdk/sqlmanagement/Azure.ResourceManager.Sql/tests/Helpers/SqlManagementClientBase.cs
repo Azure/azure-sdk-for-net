@@ -16,7 +16,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     [ClientTestFixture]
     [NonParallelizable]
     public abstract class SqlManagementClientBase : ManagementRecordedTestBase<SqlManagementTestEnvironment>
@@ -27,7 +26,9 @@ namespace Azure.ResourceManager.Sql.Tests
             : base(isAsync)
         {
         }
-
+        public SqlManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
         [SetUp]
         public virtual void TestSetup()
         {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Tests
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql/managedInstances"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     new PrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
-                        PrivateLinkServiceId = managedInstance.Data.Id.ToString(),
+                        PrivateLinkServiceId = managedInstance.Data.Id,
                         GroupIds = { "managedInstance" },
                     }
                 },

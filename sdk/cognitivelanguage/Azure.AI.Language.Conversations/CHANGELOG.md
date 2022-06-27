@@ -1,6 +1,11 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2022-06-27)
+
+### Features Added
+
+- Added `ConversationAuthoringClient` to manage authoring projects.
+- Added support for Azure Active Directory (AAD) authentication.
 
 ### Breaking Changes
 
