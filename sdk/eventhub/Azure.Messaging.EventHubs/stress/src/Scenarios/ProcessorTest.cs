@@ -78,12 +78,12 @@ public class ProcessorTest
         {
             foreach (Role role in _roles)
             {
-                testRunTasks.Add(RunRoleAsync(role, roleIndex, cancellationToken));
+                testRunTasks.Add(RunRoleAsync(role, roleIndex, partitionIds, cancellationToken));
             }
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, cancellationToken));
+            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, partitionIds, cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -96,11 +96,11 @@ public class ProcessorTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task RunRoleAsync(Role role,
+    private Task RunRoleAsync(Role role,
                                    int roleIndex,
+                                   string[] partitionIds,
                                    CancellationToken cancellationToken)
     {
-        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
         var partitionCount = partitionIds.Length;
         switch (role)
         {
@@ -108,20 +108,15 @@ public class ProcessorTest
                 var processorConfiguration = new ProcessorConfiguration();
                 var processor = new Processor(_testConfiguration, processorConfiguration, _metrics, partitionCount);
                 _identifier = processor.Identifier;
-
                 _metrics.Client.TrackEvent("Starting to process events");
-                await processor.RunAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken).ConfigureAwait(false);
-                _metrics.Client.TrackEvent("Stopping processing events");
-                break;
+                return Task.Run(() => processor.RunAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken));
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
                 var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, roleIndex, partitionIds, _roles);
                 var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, assignedPartitions);
                 _metrics.Client.TrackEvent("Starting to publish events");
-                await partitionPublisher.RunAsync(cancellationToken).ConfigureAwait(false);
-                _metrics.Client.TrackEvent("Stopping publishing events.");
-                break;
+                return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");

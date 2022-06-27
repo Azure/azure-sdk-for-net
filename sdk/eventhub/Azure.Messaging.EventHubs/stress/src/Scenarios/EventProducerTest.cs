@@ -78,7 +78,7 @@ public class EventProducerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task RunRoleAsync(Role role,
+    private Task RunRoleAsync(Role role,
                                    CancellationToken cancellationToken)
     {
         switch (role)
@@ -86,15 +86,12 @@ public class EventProducerTest
             case Role.Publisher:
                 var publisherConfiguration = new PublisherConfiguration();
                 var publisher = new Publisher(publisherConfiguration, _testConfiguration, _metrics);
-                await publisher.RunAsync(cancellationToken).ConfigureAwait(false);
-                break;
+                return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             case Role.BufferedPublisher:
                 var buffpublisherConfiguration = new BufferedPublisherConfiguration();
                 var buffpublisher = new BufferedPublisher(_testConfiguration, buffpublisherConfiguration, _metrics);
-                await buffpublisher.RunAsync(cancellationToken).ConfigureAwait(false);
-                break;
-
+                return Task.Run(() => buffpublisher.RunAsync(cancellationToken));
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }

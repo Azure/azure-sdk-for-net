@@ -78,7 +78,7 @@ public class BurstBufferedProducerTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task RunRoleAsync(Role role,
+    private Task RunRoleAsync(Role role,
                                    CancellationToken cancellationToken)
     {
         switch (role)
@@ -86,8 +86,7 @@ public class BurstBufferedProducerTest
             case Role.BufferedPublisher:
                 var publisherConfiguration = new BufferedPublisherConfiguration();
                 var publisher = new BufferedPublisher(_testConfiguration, publisherConfiguration, _metrics);
-                await publisher.RunAsync(cancellationToken).ConfigureAwait(false);
-                break;
+                return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");

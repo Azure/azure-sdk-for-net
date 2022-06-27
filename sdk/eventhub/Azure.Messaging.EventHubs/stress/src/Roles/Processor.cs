@@ -123,6 +123,7 @@ internal class Processor
                 {
                     if (processor != null)
                     {
+                        _metrics.Client.TrackEvent("Stopping processing events");
                         await processor.StopProcessingAsync(cancellationSource.Token).ConfigureAwait(false);
                     }
                 }

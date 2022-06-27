@@ -143,6 +143,7 @@ internal class Publisher
             }
             finally
             {
+                _metrics.Client.TrackEvent("Stopping publishing events.");
                 await producer.CloseAsync();
             }
         }

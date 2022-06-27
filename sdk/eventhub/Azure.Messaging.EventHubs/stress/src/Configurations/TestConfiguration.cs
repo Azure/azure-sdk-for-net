@@ -45,7 +45,7 @@ public class TestConfiguration
     ///   The number of hours to run a test scenario for.
     /// </summary>
     ///
-    public int DurationInHours = 150;
+    public int DurationInHours = 1;
 
     public SHA256 Sha256Hash = default;
 
