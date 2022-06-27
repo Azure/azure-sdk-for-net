@@ -10,7 +10,7 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAnalysisClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationAnalysisClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAnalysisClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(
-                    new ConversationAnalysisClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)));
 
             ConversationalTask conversationalTask = new(
                 new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
