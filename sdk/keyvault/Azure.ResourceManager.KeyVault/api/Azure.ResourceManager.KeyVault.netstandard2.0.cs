@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
     public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ManagedHsmPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         public VaultPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.KeyVault.Models.VaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal VaultPrivateEndpointConnectionItemData() { }
         public Azure.ResourceManager.KeyVault.Models.VaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }

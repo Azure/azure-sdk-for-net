@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Resource properties. </summary>
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The kind of the resource. </summary>
         public KnownDataCollectionRuleResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }

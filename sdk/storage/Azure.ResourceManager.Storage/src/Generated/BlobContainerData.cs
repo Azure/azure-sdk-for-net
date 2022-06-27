@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Resource Etag. </param>
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Version = version;
             Deleted = deleted;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             EnableNfsV3RootSquash = enableNfsV3RootSquash;
             EnableNfsV3AllSquash = enableNfsV3AllSquash;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> The version of the deleted blob container. </summary>
@@ -111,6 +111,6 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
         public bool? EnableNfsV3AllSquash { get; set; }
         /// <summary> Resource Etag. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }
