@@ -16,23 +16,23 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     /// <summary>
     /// Error response containing message and code.
     /// </summary>
-    public partial class ErrorMesssage
+    public partial class ErrorMessage
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorMesssage class.
+        /// Initializes a new instance of the ErrorMessage class.
         /// </summary>
-        public ErrorMesssage()
+        public ErrorMessage()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorMesssage class.
+        /// Initializes a new instance of the ErrorMessage class.
         /// </summary>
         /// <param name="code">standard error code</param>
         /// <param name="message">standard error description</param>
         /// <param name="details">detailed summary of error</param>
-        public ErrorMesssage(string code = default(string), string message = default(string), string details = default(string))
+        public ErrorMessage(string code = default(string), string message = default(string), string details = default(string))
         {
             Code = code;
             Message = message;
