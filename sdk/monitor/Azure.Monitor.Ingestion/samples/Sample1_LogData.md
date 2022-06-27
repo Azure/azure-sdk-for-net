@@ -51,5 +51,4 @@ BinaryData data = BinaryData.FromObjectAsJson(
 Response response = client.Upload(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data));
 ```
 
-To see the full example source files, see:
-[LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).
+To see the full example source files, see [LogData](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).

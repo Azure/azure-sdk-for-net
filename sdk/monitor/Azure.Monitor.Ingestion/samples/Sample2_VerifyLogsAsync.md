@@ -25,5 +25,4 @@ Response<LogsBatchQueryResultCollection> queryResponse = await logsQueryClient.Q
 Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
-To see the full example source files, see:
-[QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).
+To see the full example source files, see [QueryAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).

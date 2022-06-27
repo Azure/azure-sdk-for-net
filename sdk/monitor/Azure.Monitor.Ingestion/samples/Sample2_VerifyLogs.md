@@ -25,5 +25,4 @@ Response<LogsBatchQueryResultCollection> queryResponse = logsQueryClient.QueryBa
 Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
-To see the full example source files, see:
-[Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).
+To see the full example source files, see [Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQuery.cs).

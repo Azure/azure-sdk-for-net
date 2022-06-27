@@ -51,5 +51,4 @@ BinaryData data = BinaryData.FromObjectAsJson(
 Response response = await client.UploadAsync(dataCollectionRuleImmutableId, streamName, RequestContent.Create(data)).ConfigureAwait(false);
 ```
 
-To see the full example source files, see:
-[LogDataAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).
+To see the full example source files, see [LogDataAsync](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/tests/Samples/LogDataAndQueryAsync.cs).

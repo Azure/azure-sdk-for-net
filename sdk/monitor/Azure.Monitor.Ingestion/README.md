@@ -1,15 +1,13 @@
 # Azure Monitor Ingestion client library for .NET
 
-This section should give out brief introduction of the client library.
-
-The Azure Monitor Ingestion client library is used to send custom logs to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/overview).
+The Azure Monitor Ingestion client library is used to send custom logs to [Azure Monitor][azure_monitor_overview].
 
 This library allows you to send data from virtually any source to supported built-in tables or to custom tables that you create in Log Analytics workspace. You can even extend the schema of built-in tables with custom columns.
 
 **Resources:**
 * [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/src)
 * [Package (NuGet)](https://www.nuget.org) <!--- https://github.com/Azure/azure-sdk-for-net/issues/29477 -->
-* [Service documentation](https://docs.microsoft.com/azure/azure-monitor/overview)
+* * [Service documentation][azure_monitor_overview]
 * [Change log](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Ingestion/CHANGELOG.md)
 
 ## Getting started
@@ -197,6 +195,5 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 [logging]: https://docs.microsoft.com/dotnet/core/extensions/logging
 [data_collection_endpoint]: https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-endpoint-overview
 [data_collection_rule]: https://docs.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview
-[logging]: https://docs.microsoft.com/dotnet/core/extensions/logging
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)
