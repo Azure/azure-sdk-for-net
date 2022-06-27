@@ -955,7 +955,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default,
             //    };
             //}
-            Response<BlobDownloadStreamingResult> response = await DirectCalledDownloadStreamingInternal(
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1202,7 +1202,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default
             //    };
             //}
-            return DirectCalledDownloadStreamingInternal(
+            return DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default
             //    };
             //}
-            return await DirectCalledDownloadStreamingInternal(
+            return await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1400,9 +1400,9 @@ namespace Azure.Storage.Blobs.Specialized
         //}
 
         /// <summary>
+        /// Internal advanced download implementations should call into
+        /// <see cref="DownloadStreamingInternal"/> instead.
         /// Implementation for public DownloadStreaming/DownloadContent methods to call into.
-        /// Internal advanced download implementations should call directly into
-        /// <see cref="DownloadStreamingInternal"/>.
         /// </summary>
         /// <param name="range"></param>
         /// <param name="conditions"></param>
@@ -1412,7 +1412,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private async Task<Response<BlobDownloadStreamingResult>> DirectCalledDownloadStreamingInternal(
+        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
             bool rangeGetContentHash,
@@ -2101,7 +2101,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobDownloadStreamingResult> response = await DirectCalledDownloadStreamingInternal(
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash: default,
