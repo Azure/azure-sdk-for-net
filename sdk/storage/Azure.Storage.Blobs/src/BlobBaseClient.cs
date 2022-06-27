@@ -3038,7 +3038,9 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
                     }
 
-                    LazyLoadingReadOnlyStream<BlobProperties>.PredictEncryptedRangeAdjustment rangeAdjustmentFunc = r => BlobClientSideDecryptor.GetEncryptedBlobRange(r, encryptionData);
+                    LazyLoadingReadOnlyStream<BlobProperties>.PredictEncryptedRangeAdjustment rangeAdjustmentFunc = UsingClientSideEncryption
+                        ? r => BlobClientSideDecryptor.GetEncryptedBlobRange(r, encryptionData)
+                        : LazyLoadingReadOnlyStream<BlobProperties>.NoRangeAdjustment;
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         //DownloadTransactionalHashingOptions hashingOptions,
