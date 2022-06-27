@@ -13,5 +13,5 @@ steps:
     displayName: Copy dumps to staging directory
   - publish: $(Build.ArtifactStagingDirectory)/dumps.zip
     condition: eq(variables['uploadDump'], 'true')
-    displayName: Upload any dumps
+    displayName: Upload dumps
     artifact: "Crash Dump - $(System.JobName) - $(System.JobAttempt)"

@@ -99,6 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected async Task<object> CallAsync(Type funcType, string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
         {
+            Environment.FailFast("test");
             var instance = Activator.CreateInstance(funcType);
             using var jobHost = CreateHost(funcType, configure, instance);
 
