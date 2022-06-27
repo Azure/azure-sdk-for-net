@@ -220,7 +220,7 @@ namespace Azure.Template
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
         /// <param name="hub"> The String to use. </param>
-        /// <param name="permission"> The String to use. </param>
+        /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -248,7 +248,7 @@ namespace Azure.Template
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
         /// <param name="hub"> The String to use. </param>
-        /// <param name="permission"> The String to use. </param>
+        /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>

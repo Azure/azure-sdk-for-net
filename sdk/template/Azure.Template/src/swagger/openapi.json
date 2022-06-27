@@ -74,7 +74,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Accepted"
+            "description": "The request has been received but not yet acted upon."
           },
           "default": {
             "description": "An unexpected error response",
@@ -114,7 +114,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok"
+            "description": "Http response with status code"
           },
           "default": {
             "description": "An unexpected error response",
@@ -152,7 +152,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "There is no content to send for this request, but the headers may be useful. "
           },
           "default": {
             "description": "An unexpected error response",
@@ -181,7 +181,15 @@
             "name": "permission",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "sendToGroup",
+              "joinLeaveGroup"
+            ],
+            "x-ms-enum": {
+              "name": "WebPubSubPermission",
+              "modelAsString": false
+            }
           },
           {
             "name": "connectionId",
@@ -198,10 +206,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok"
+            "description": "Http response with status code"
           },
           "404": {
-            "description": "Not Found"
+            "description": "The server can not find the requested resource."
           },
           "default": {
             "description": "An unexpected error response",
@@ -241,7 +249,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok"
+            "description": "Http response with status code"
           },
           "default": {
             "description": "An unexpected error response",
@@ -276,7 +284,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok"
+            "description": "Http response with status code"
           },
           "default": {
             "description": "An unexpected error response",
@@ -307,6 +315,17 @@
         "message",
         "target"
       ]
+    },
+    "WebPubSubPermission": {
+      "type": "string",
+      "enum": [
+        "sendToGroup",
+        "joinLeaveGroup"
+      ],
+      "x-ms-enum": {
+        "name": "WebPubSubPermission",
+        "modelAsString": false
+      }
     }
   },
   "parameters": {}
