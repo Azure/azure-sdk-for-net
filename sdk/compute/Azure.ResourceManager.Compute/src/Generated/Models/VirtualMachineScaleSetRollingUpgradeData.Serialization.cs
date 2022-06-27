@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute
             Optional<RollingUpgradePolicy> policy = default;
             Optional<RollingUpgradeRunningStatus> runningStatus = default;
             Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ApiError> error = default;
+            Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ApiError.DeserializeApiError(property0.Value);
+                            error = ComputeApiError.DeserializeComputeApiError(property0.Value);
                             continue;
                         }
                     }

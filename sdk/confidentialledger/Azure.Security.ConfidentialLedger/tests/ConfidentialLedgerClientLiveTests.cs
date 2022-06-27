@@ -33,17 +33,19 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public void Setup()
         {
             Credential = TestEnvironment.Credential;
-            IdentityClient = InstrumentClient(
-                new ConfidentialLedgerIdentityServiceClient(
+            IdentityClient = new ConfidentialLedgerIdentityServiceClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    InstrumentClientOptions(_options)));
+                    _options);
+
+            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, _options, IdentityClient);
 
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
                     Credential,
                     clientCertificate: null,
-                    options: InstrumentClientOptions(_options)));
+                    options: InstrumentClientOptions(_options),
+                    serviceCert));
         }
 
         public async Task GetUser(string objId)
