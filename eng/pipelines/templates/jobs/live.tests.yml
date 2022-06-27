@@ -152,22 +152,7 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
 
-      - pwsh: |
-          $dump = Get-ChildItem -Path $(Build.SourcesDirectory) -Include *.dmp -Recurse |Select -First 1
-          if ($dump)
-          {
-            Write-Host "##vso[task.setvariable variable=uploadDump]true"
-            Write-Host "##vso[task.setvariable variable=dumpPath]$dump"
-          }
-        condition: failed()
-        displayName: Search for crash dump
-
-      - task: PublishPipelineArtifact@1
-        condition: eq(variables['uploadDump'], 'true')
-        displayName: Upload crash dump
-        inputs:
-          targetPath: $(dumpPath)
-          artifactName: "Crash Dump - $(OSName) $(TestTargetFramework)"
+      - template: /eng/pipelines/templates/steps/upload-dumps.yml
 
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
