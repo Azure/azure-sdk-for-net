@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "607",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-a6bda4b78028b14462adbae404e15c2b-b47f53a4970373da-00",
+        "traceparent": "00-caaf529975ba579ce0d060c227fba250-e85b24b68472f6e5-00",
         "User-Agent": "azsdk-net-Analytics.LoadTestService/1.0.0-alpha.20220627.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5922ef34a0052e88023cc79c958da59e",
+        "x-ms-client-request-id": "d1fcc9862b26b1189c761fe9320fe732",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -40,11 +40,11 @@
         "Connection": "keep-alive",
         "Content-Length": "723",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 27 Jun 2022 11:05:06 GMT",
-        "mise-correlation-id": "eacc2c41-27bd-4948-9b8c-055760edc69c",
+        "Date": "Mon, 27 Jun 2022 11:27:56 GMT",
+        "mise-correlation-id": "42bd0286-0371-4150-9c5d-51ed4e4a390d",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "50161a3f-5cdf-4b90-9fff-6be6b872f773"
+        "x-ms-correlation-request-id": "5feff9df-d478-45ce-b547-f50dd112208a"
       },
       "ResponseBody": {
         "testId": "a011890b-12cd-000a-0150-12aed8880000",
@@ -77,6 +77,6 @@
   ],
   "Variables": {
     "LoadTestService_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
-    "RandomSeed": "1762709220"
+    "RandomSeed": "1529124851"
   }
 }
