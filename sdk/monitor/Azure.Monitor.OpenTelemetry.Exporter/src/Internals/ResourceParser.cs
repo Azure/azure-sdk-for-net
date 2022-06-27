@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 else if (attribute.Key == SemanticConventions.AttributeServiceNamespace && attribute.Value is string)
                 {
-                    serviceNamespace = attribute.Value.ToString();
+                    serviceNamespace = "[" + attribute.Value.ToString() + "]";
                 }
                 else if (attribute.Key == SemanticConventions.AttributeServiceInstance && attribute.Value is string)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (serviceName != null && serviceNamespace != null)
             {
-                RoleName = string.Concat(serviceNamespace, ".", serviceName);
+                RoleName = string.Concat(serviceNamespace, "/", serviceName);
             }
             else
             {
