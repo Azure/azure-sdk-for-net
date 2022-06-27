@@ -12,5 +12,5 @@ steps:
     displayName: Copy dumps to staging directory
   - publish: $(Build.ArtifactStagingDirectory)/dumps.zip
     condition: always()
-    displayName: Upload crash dump
+    displayName: Upload any dumps
     artifact: "Crash Dump - $(OSName) $(TestTargetFramework) - $(System.JobName)-$(System.JobAttempt)"
