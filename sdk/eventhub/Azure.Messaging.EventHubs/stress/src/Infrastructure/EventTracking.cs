@@ -210,13 +210,29 @@ public static class EventTracking
         var hasPartition = eventData.Properties.TryGetValue(PartitionPropertyName, out var partitionProperty);
         var publisherSetPartitionProperty = partitionProperty?.ToString();;
 
-        if (partitionReceivedFrom != publisherSetPartitionProperty)
+        if (partitionReceivedFrom != publisherSetPartitionProperty || !hasPartition)
         {
-            metrics.Client.GetMetric(Metrics.EventReceivedFromWrongPartition).TrackValue(1); //want an event here? or exception? This doesn't give much info
+            metrics.Client.GetMetric(Metrics.EventReceivedFromWrongPartition).TrackValue(1);
+
+            var eventProperties = new Dictionary<string,string>();
+            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
+            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
+            eventProperties.Add(Metrics.PartitionId, partitionReceivedFrom.ToString());
+            eventProperties.Add(Metrics.IntendedPartitionId, publisherSetPartitionProperty?.ToString());
+            metrics.Client.TrackEvent(Metrics.EventReceivedFromWrongPartition, eventProperties);
         }
 
         // Index Value checks
         var hasIndex = eventData.Properties.TryGetValue(IndexNumberPropertyName, out var IndexProperty);
+
+        if (!hasIndex)
+        {
+            var eventProperties = new Dictionary<string,string>();
+            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
+            eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
+            metrics.Client.TrackEvent(Metrics.UnknownEventsProcessed, eventProperties);
+            return -1;
+        }
         int.TryParse(IndexProperty.ToString(), out var indexNumber);
 
         var seenEventFromThisPartition = lastReadPartitionSequence.TryGetValue(partitionReceivedFrom, out var lastReadFromPartition);
@@ -226,6 +242,7 @@ public static class EventTracking
             metrics.Client.GetMetric(Metrics.MissingOrOutOfOrderEvent).TrackValue(1);
 
             var eventProperties = new Dictionary<string,string>();
+            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
             metrics.Client.TrackEvent(Metrics.MissingOrOutOfOrderEvent, eventProperties);
@@ -241,6 +258,7 @@ public static class EventTracking
         if (expectedEventBodyHash != receivedEventBodyHash)
         {
             var eventProperties = new Dictionary<string,string>();
+            eventProperties.Add(Metrics.PublisherAssignedId, eventId.ToString());
             eventProperties.Add(Metrics.PublisherAssignedIndex, indexNumber.ToString());
             eventProperties.Add(Metrics.EventBody, eventData.EventBody.ToString());
             metrics.Client.TrackEvent(Metrics.InvalidBodies, eventProperties);

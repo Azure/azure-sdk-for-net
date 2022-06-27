@@ -175,6 +175,13 @@ public class Metrics
     public const string PublisherAssignedIndex = "PublisherAssignedIndex";
 
     /// <summary>
+    ///   This is the property name used to send information about the publisher assigned Id to Application Insights for further
+    ///   investigation.
+    /// </summary>
+    ///
+    public const string PublisherAssignedId = "PublisherAssignedId";
+
+    /// <summary>
     ///   This is the metric name used by the processor when a received event was received from the partition that it was not intended
     ///   to be sent to.
     /// </summary>
@@ -210,6 +217,19 @@ public class Metrics
     /// </summary>
     ///
     public const string ConsumerRestarted = "ConsumerRestarted";
+
+    /// <summary>
+    ///   This is the event name used by the processor or consumer when an event without a valid index has been processed.
+    /// </summary>
+    ///
+    public const string EventWithInvalidIndex = "EventWithInvalidIndex";
+
+    /// <summary>
+    ///   This is the property name used to tell what partition an event was supposed to be sent to when it received from
+    ///   a different partition.
+    /// </summary>
+    ///
+    public const string IntendedPartitionId = "IntendedPartitionId";
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.
