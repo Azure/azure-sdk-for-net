@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _userMetadata;
 
         /// <summary>
-        /// Initializes a new instance of SubscriptionProperties class with the specified name and topic name.
+        /// Initializes a new instance of <see cref="SubscriptionProperties"/> with the specified name and topic name.
         /// </summary>
         /// <param name="topicName">Name of the topic relative to the namespace base address.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>

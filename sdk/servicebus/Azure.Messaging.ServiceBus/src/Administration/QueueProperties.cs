@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _userMetadata;
 
         /// <summary>
-        /// Initializes a new instance of QueueProperties class with the specified relative name.
+        /// Initializes a new instance of <see cref="QueueProperties"/> with the specified relative name.
         /// </summary>
         /// <param name="name">Name of the queue relative to the namespace base address.</param>
         internal QueueProperties(string name)
@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of QueueProperties from the provided options.
+        /// Initializes a new instance of <see cref="QueueProperties"/> from the provided options.
         /// </summary>
         /// <param name="options">Options used to create the properties instance.</param>
         internal QueueProperties(CreateQueueOptions options)

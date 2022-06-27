@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <remarks>Works with any claim (Send/Listen/Manage).</remarks>
         /// <returns><see cref="NamespaceProperties"/> containing namespace information.</returns>
         ///
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The queue name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The queue name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -332,7 +332,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -395,7 +395,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -461,7 +461,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic, subscription, or rule name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic, subscription, or rule name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic, subscription, or rule name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -533,7 +533,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The queue name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The queue name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -599,7 +599,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -667,7 +667,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -739,7 +739,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic, subscription, or rule name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic, subscription, or rule name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic, subscription, or rule name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -814,7 +814,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The queue name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The queue name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -880,7 +880,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -948,7 +948,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1017,7 +1017,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         ///
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1076,7 +1076,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         ///
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1138,7 +1138,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1211,7 +1211,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1283,7 +1283,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the queues runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         ///
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1341,7 +1341,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>An <see cref="AsyncPageable{T}"/> describing the topics runtime properties.</returns>
         /// <remarks>Maximum value allowed is 100 per page.</remarks>
         ///
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1403,7 +1403,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1478,7 +1478,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The queue name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The queue name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The queue name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1535,7 +1535,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="QueueProperties"/> of the newly created queue.</returns>
         ///
         /// <exception cref="ArgumentNullException">The <paramref name="options"/> instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1618,7 +1618,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1676,7 +1676,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="TopicProperties"/> of the newly created topic.</returns>
         ///
         /// <exception cref="ArgumentNullException">The <paramref name="options"/> instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1763,7 +1763,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1824,7 +1824,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="SubscriptionProperties"/> of the newly created subscription.</returns>
         ///
         /// <exception cref="ArgumentNullException">The <paramref name="options"/> instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1884,7 +1884,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="SubscriptionProperties"/> of the newly created subscription.</returns>
         ///
         /// <exception cref="ArgumentNullException">The <paramref name="options"/> instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -1970,7 +1970,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name, subscription name, or <paramref name="options"/> instance is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2061,7 +2061,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="QueueProperties"/> of the updated queue.</returns>
         ///
         /// <exception cref="ArgumentNullException">The queue properties instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2143,7 +2143,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="TopicProperties"/> of the updated topic.</returns>
         ///
         /// <exception cref="ArgumentNullException">The topic properties instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2223,7 +2223,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <returns>The <see cref="SubscriptionProperties"/> of the updated subscription.</returns>
         ///
         /// <exception cref="ArgumentNullException">The subscription properties instance is null.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2309,7 +2309,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name, subscription name, or rule properties instance is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2399,7 +2399,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The queue name is null or empty..</exception>
         /// <exception cref="ArgumentOutOfRangeException">The queue name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The queue name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2467,7 +2467,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic name is null or empty..</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2538,7 +2538,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty..</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
@@ -2612,7 +2612,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="ArgumentNullException">The topic or subscription name is null or empty..</exception>
         /// <exception cref="ArgumentOutOfRangeException">The topic or subscription name name exceeds the maximum allowed length.</exception>
         /// <exception cref="ArgumentException">The topic or subscription name is otherwise invalid.</exception>
-        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation.
+        /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
         /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>

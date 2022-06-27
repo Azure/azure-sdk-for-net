@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _userMetadata;
 
         /// <summary>
-        /// Initializes a new instance of TopicProperties class with the specified relative name.
+        /// Initializes a new instance of <see cref="TopicProperties"/> with the specified relative name.
         /// </summary>
         /// <param name="name">Name of the topic relative to the namespace base address.</param>
         internal TopicProperties(string name)
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of TopicProperties from the provided options.
+        /// Initializes a new instance of <see cref="TopicProperties"/> from the provided options.
         /// </summary>
         /// <param name="options">Options used to create the properties instance.</param>
         internal TopicProperties(CreateTopicOptions options)
