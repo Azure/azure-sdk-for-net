@@ -11,6 +11,7 @@
 
 - `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
 - Removed all models. See README.md for samples to use this client library.
+- Renamed `ConversationAnalysisClientOptions` to `ConversationsClientOptions`.
 
 ## 1.0.0-beta.3 (2022-04-20)
 
