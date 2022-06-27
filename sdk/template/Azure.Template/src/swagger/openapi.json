@@ -63,6 +63,12 @@
             }
           },
           {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "message",
             "in": "body",
             "required": true,
@@ -110,6 +116,12 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -146,6 +158,12 @@
           {
             "name": "connectionId",
             "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
             "required": true,
             "type": "string"
           }
@@ -202,6 +220,12 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -245,6 +269,12 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -278,6 +308,12 @@
           {
             "name": "userId",
             "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
             "required": true,
             "type": "string"
           }

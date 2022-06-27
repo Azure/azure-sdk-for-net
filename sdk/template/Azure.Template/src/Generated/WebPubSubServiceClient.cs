@@ -21,6 +21,7 @@ namespace Azure.Template
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -56,6 +57,7 @@ namespace Azure.Template
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
@@ -396,6 +398,7 @@ namespace Azure.Template
             {
                 uri.AppendQueryDelimited("excluded", excluded, ",", true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -416,6 +419,7 @@ namespace Azure.Template
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -434,6 +438,7 @@ namespace Azure.Template
             uri.AppendPath(group, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -456,6 +461,7 @@ namespace Azure.Template
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -474,6 +480,7 @@ namespace Azure.Template
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -492,6 +499,7 @@ namespace Azure.Template
             uri.AppendPath(userId, true);
             uri.AppendPath("/groups/", false);
             uri.AppendPath(group, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
