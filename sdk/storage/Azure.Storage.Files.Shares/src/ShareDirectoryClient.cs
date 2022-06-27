@@ -2528,8 +2528,8 @@ namespace Azure.Storage.Files.Shares
 
                     ShareExtensions.AssertValidFilePermissionAndKey(options?.FilePermission, options?.SmbProperties?.FilePermissionKey);
 
-                    // TODO: this seems weird to do, probably should build a way to append to the query.. without altering it somehow
-                    // in the case that the customer wants the query to be in a certain order
+                    // TODO: Change this so that the ShareUriBuilder can accept a string for the SAS
+                    // Or have an extension UriBuilder which can parse out the SAS.
                     ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
                     UriBuilder sourceUriBuilder = new UriBuilder(Uri);
                     // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
@@ -2545,8 +2545,9 @@ namespace Azure.Storage.Files.Shares
                         Query = null
                     };
 
-                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
-                    // especially SAS, to be encoded.
+                    // ShareUriBuider will encode the DirectoryOrFilePath.
+                    // We don't want the query parameters, especially SAS, to be encoded.
+                    // We also have to build the destination client depending on if a SAS was passed with the destination.
                     ShareDirectoryClient destDirectoryClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
@@ -2558,11 +2559,13 @@ namespace Azure.Storage.Files.Shares
                         var paramsMap = new UriQueryParamsCollection(split[1]);
                         if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
                         {
+                            // No SAS in the destination, use the source credentials to build the destination path
                             destDirectoryClient = new ShareDirectoryClient(destUriBuilder.ToUri(), ClientConfiguration);
                         }
                         else
                         {
-                            // There's a SAS in the query
+                            // There's a SAS in the destination path
+                            // Create the destination path with the destination SAS
                             destDirectoryClient = new ShareDirectoryClient(
                                 destUriBuilder.ToUri(),
                                 ClientConfiguration.ClientDiagnostics,
@@ -2571,6 +2574,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
+                        // No SAS in the destination, use the source credentials to build the destination path
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
                         destDirectoryClient = new ShareDirectoryClient(
                             destUriBuilder.ToUri(),

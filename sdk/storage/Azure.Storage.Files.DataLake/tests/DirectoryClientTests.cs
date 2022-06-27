@@ -14,7 +14,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Files.DataLake.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
-using Microsoft.Diagnostics.Symbols;
 using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;

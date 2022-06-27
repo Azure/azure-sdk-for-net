@@ -6364,8 +6364,9 @@ namespace Azure.Storage.Files.Shares
                         Query = null
                     };
 
-                    // ShareUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
-                    // especially SAS, to be encoded.
+                    // ShareUriBuider will encode the DirectoryOrFilePath.
+                    // We don't want the query parameters, especially SAS, to be encoded.
+                    // We also have to build the destination client depending on if a SAS was passed with the destination.
                     ShareFileClient destFileClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
@@ -6377,11 +6378,13 @@ namespace Azure.Storage.Files.Shares
                         var paramsMap = new UriQueryParamsCollection(split[1]);
                         if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
                         {
+                            // No SAS in the destination, use the source credentials to build the destination path
                             destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
                         }
                         else
                         {
-                            // There's a SAS in the query
+                            // There's a SAS in the destination path
+                            // Create the destination path with the destination SAS
                             destFileClient = new ShareFileClient(
                                 destUriBuilder.ToUri(),
                                 ClientConfiguration.ClientDiagnostics,
@@ -6390,14 +6393,12 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
+                        // No SAS in the destination, use the source credentials to build the destination path
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
                         destFileClient = new ShareFileClient(
                             destUriBuilder.ToUri(),
                             ClientConfiguration);
                     }
-
-                    // Build destFileClient
-                    //ShareFileClient destFileClient = new ShareFileClient(destUriBuilder.ToUri(), ClientConfiguration);
 
                     ResponseWithHeaders<FileRenameHeaders> response;
 

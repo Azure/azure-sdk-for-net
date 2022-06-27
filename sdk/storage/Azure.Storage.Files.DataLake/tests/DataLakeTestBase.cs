@@ -279,13 +279,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = fileSystemName,
                 IsDirectory = isDirectory,
                 Path = path,
-                Protocol = SasProtocol.Https,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
             builder.SetPermissions(
-                DataLakeSasPermissions.All);
+                DataLakeSasPermissions.Read |
+                DataLakeSasPermissions.Add |
+                DataLakeSasPermissions.Create |
+                DataLakeSasPermissions.Delete |
+                DataLakeSasPermissions.Write);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? Tenants.GetNewHnsSharedKeyCredentials());
         }
 
