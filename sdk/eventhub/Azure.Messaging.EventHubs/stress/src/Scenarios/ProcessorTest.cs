@@ -97,9 +97,9 @@ public class ProcessorTest
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private Task RunRoleAsync(Role role,
-                                   int roleIndex,
-                                   string[] partitionIds,
-                                   CancellationToken cancellationToken)
+                              int roleIndex,
+                              string[] partitionIds,
+                              CancellationToken cancellationToken)
     {
         var partitionCount = partitionIds.Length;
         switch (role)
@@ -122,7 +122,7 @@ public class ProcessorTest
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
-
+ 
     /// <summary>
     ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessEventAsync" />
     ///   event handler.
