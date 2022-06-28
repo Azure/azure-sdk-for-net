@@ -136,6 +136,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private Uri ServiceEndpoint { get; }
 
         /// <summary>
+        ///   TODO.
+        /// </summary>
+        private Uri CustomConnectionEndpoint { get; }
+
+        /// <summary>
         ///   The provider to use for obtaining a token for authorization with the Service Bus service.
         /// </summary>
         private CbsTokenProvider TokenProvider { get; }
@@ -173,6 +178,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
+        /// <param name="connectionEndpoint">TODO</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
@@ -181,6 +187,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
+            Uri connectionEndpoint,
             ServiceBusTokenCredential credential,
             ServiceBusTransportType transport,
             IWebProxy proxy,
@@ -200,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout, metrics);
+            Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, connectionEndpoint, Transport, Proxy, Id, timeout, metrics);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
 
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(
@@ -434,6 +441,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="amqpVersion">The version of AMQP to use for the connection.</param>
         /// <param name="serviceEndpoint">The endpoint for the Service Bus service to which the scope is associated.</param>
+        /// <param name="connectionEndpoint">TODO</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
@@ -443,19 +451,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         protected virtual async Task<AmqpConnection> CreateAndOpenConnectionAsync(
             Version amqpVersion,
             Uri serviceEndpoint,
+            Uri connectionEndpoint,
             ServiceBusTransportType transportType,
             IWebProxy proxy,
             string scopeIdentifier,
             TimeSpan timeout,
             ServiceBusTransportMetrics metrics)
         {
-            var hostName = serviceEndpoint.Host;
+            var serviceHostName = serviceEndpoint.Host;
+            var connectionHostName = connectionEndpoint.Host;
             AmqpSettings amqpSettings = CreateAmpqSettings(AmqpVersion);
-            AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(hostName, scopeIdentifier);
+            AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(serviceHostName, scopeIdentifier);
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
-                ? CreateTransportSettingsForWebSockets(hostName, proxy)
-                : CreateTransportSettingsforTcp(hostName, serviceEndpoint.Port);
+                ? CreateTransportSettingsForWebSockets(connectionHostName, proxy)
+                : CreateTransportSettingsforTcp(connectionHostName, connectionEndpoint.Port);
 
             // Create and open the connection, respecting the timeout constraint
             // that was received.
