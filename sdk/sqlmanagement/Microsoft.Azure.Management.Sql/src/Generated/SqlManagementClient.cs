@@ -683,6 +683,21 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IDatabaseAdvancedThreatProtectionSettingsOperations DatabaseAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IServerAdvancedThreatProtectionSettingsOperations ServerAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedServerDnsAliasesOperations.
+        /// </summary>
+        public virtual IManagedServerDnsAliasesOperations ManagedServerDnsAliases { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -1045,6 +1060,9 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
+            DatabaseAdvancedThreatProtectionSettings = new DatabaseAdvancedThreatProtectionSettingsOperations(this);
+            ServerAdvancedThreatProtectionSettings = new ServerAdvancedThreatProtectionSettingsOperations(this);
+            ManagedServerDnsAliases = new ManagedServerDnsAliasesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
