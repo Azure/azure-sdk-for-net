@@ -50,6 +50,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override Uri ServiceEndpoint { get; }
 
         /// <summary>
+        ///   The endpoint for the Service Bus service to be used when establising the connection.
+        /// </summary>
+        ///
+        public Uri ConnectionEndpoint { get; }
+
+        /// <summary>
         ///   Gets the credential to use for authorization with the Service Bus service.
         /// </summary>
         ///
@@ -95,6 +101,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 Host = host
             }.Uri;
 
+            ConnectionEndpoint = (options.CustomEndpointAddress == null) ? ServiceEndpoint : new UriBuilder
+            {
+                Scheme = ServiceEndpoint.Scheme,
+                Host = options.CustomEndpointAddress.Host
+            }.Uri;
+
             Credential = credential;
             if (options.EnableTransportMetrics)
             {
@@ -102,6 +114,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             ConnectionScope = new AmqpConnectionScope(
                 ServiceEndpoint,
+                options.CustomEndpointAddress,
                 credential,
                 options.TransportType,
                 options.WebProxy,
