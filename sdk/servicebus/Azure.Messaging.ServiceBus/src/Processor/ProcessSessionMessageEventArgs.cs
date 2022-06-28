@@ -50,6 +50,16 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
+        /// The path of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string EntityPath => _sessionReceiver.EntityPath;
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the message was received from.
+        /// </summary>
+        public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
