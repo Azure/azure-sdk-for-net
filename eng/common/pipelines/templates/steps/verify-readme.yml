@@ -22,7 +22,7 @@ steps:
   inputs:
     filePath: "eng/common/scripts/Verify-Readme.ps1"
     arguments: >
-      -DocWardenVersion '${{ parameters.DocWardenVersion }}''
+      -DocWardenVersion '${{ parameters.DocWardenVersion }}'
       -ScanPaths '${{ coalesce(parameters.ScanPath, parameters.ScanPaths) }}'
       -RepoRoot ${{ parameters.RepoRoot }}
       -SettingsPath ${{ parameters.SettingsPath }}
