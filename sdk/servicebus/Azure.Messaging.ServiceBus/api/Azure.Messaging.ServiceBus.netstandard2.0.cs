@@ -383,6 +383,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusRuleManager : System.IAsyncDisposable
     {
         protected ServiceBusRuleManager() { }
+        public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual string SubscriptionPath { get { throw null; } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
