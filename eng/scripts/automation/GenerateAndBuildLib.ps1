@@ -59,6 +59,7 @@ function CreateOrUpdateAutorestConfigFile() {
             # clear
             $fileContent = $fileContent -notmatch $requirRex
             $fileContent = $fileContent -notmatch "- .*.md"
+            $fileContent = $fileContent -notmatch "csharp: true"
             $fileContent = $fileContent -notmatch $inputfileRex
             $fileContent = $fileContent -notmatch "- .*.json"
 
