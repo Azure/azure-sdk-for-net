@@ -8,7 +8,7 @@
         "appLocation": "eastus",
         "adminUserProfile": {
             "userName": "azureuser",
-            "sshPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQA98BAAABdQC9a1cDFh/+UeeccSh8VhdxrmyTNc07t6YEh+dwRwqPdbvNwN9kPmGwGOkCtUaAmGbQgVLW3VkGs5Kc0va7s7uHuqy3D8KnXSTlCduOD0vEiCKm2DFU0abEmu8vGBlyyj7T+phoDYWZcm+EwiIokR3EAtlMvNPIbRFu7nlfsOF7A0Y7h6Huk1NjNxRwuFEIR+4qFnzIi/krYNbAfZlK3vxyLH2eKdsfVgf5/FXYjR8VGHtZ5FPPyU14X0nyfN6x3oLj4swDBIAU1UJdsniTKuG0x5IsqAdzh35MYL3+L8wn+TvnJ5xsdfNXSCHYvXowXnhMQMpfKuOX4r85IwxhGuMnlSR9"
+            "sshPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/LBjDiutHYYebcz91nDpabVKb+ypB8ARjrfWrNxd4cVThYsgN+BD3wfRtQcJKzvHEc0fdyrnJEgRgG08Ys8irB5Hr3OJHb+mvoGAy4cRl6m1R7YdYe5PBbFN9P39uvZjae9xf8Kv3PLkpVNQVRykmG+yeBNxOyQmeuCedx9DWt1mSDfgdLvYYTE0NFhVYq9Z39DRG+x0UFxvMzCDs1/VjdAAyPgNrA+MQvoKToHqXWweOdG1zoGpJJy6o8an6zdLpKEDadtZpuu6I6KloWHYaNrdJhZ2bjST+HcOxYrqVoLA08zriD0JoKj5Ww68sveWBifNidRcAo6ssS6nspZbo5JhrxJrTqSaocwowX13f93s3byAOjW4iUQ5WDJhA6bs3GnCpyB0zy5n/AT3aZBcCbW/I7b9gOf6OAxdhZIw8GXZ42RxxOhQ8GRz9CVaT8kI4e+bawZHUDlxfTscL8m/BksXyER4Yga88Lx4LCdC1r1FPPc1TNlCYl4Y1Fb43DgU="
         },
         "webNodesProfile": {
             "autoScaleMinCount": 1,

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 var resourceJson = File.ReadAllText(
                     Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
-                var json = JsonDocument.Parse(resourceJson).RootElement;
+                JsonElement json = JsonDocument.Parse(resourceJson).RootElement;
 
                 var resourceData = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(json);
 
@@ -77,13 +77,9 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.AreEqual(rgName, getResource.Value.Data.Name);
 
                 // Update
-                var tagsToUpdate = new Dictionary<string, string>()
-                {
-                    ["Test"] = "passed"
-                };
-                var updatePayloadJ = JObject.FromObject(getResource.Value.Data);
-                updatePayloadJ.Merge(tagsToUpdate);
-                PhpWorkloadResourceData updatePayload = updatePayloadJ.ToObject<PhpWorkloadResourceData>();
+                var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
+                JsonElement patchElement = JsonDocument.Parse(patchJson).RootElement;
+                var updatePayload = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(patchElement);
                 ArmOperation<PhpWorkloadResource> updatedResource =
                     await rg.GetPhpWorkloadResources().CreateOrUpdateAsync(
                         WaitUntil.Completed,
