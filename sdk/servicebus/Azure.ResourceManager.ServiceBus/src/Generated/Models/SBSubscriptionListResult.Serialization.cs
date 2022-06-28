@@ -12,11 +12,11 @@ using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    internal partial class ServiceBusTopicListResult
+    internal partial class SBSubscriptionListResult
     {
-        internal static ServiceBusTopicListResult DeserializeServiceBusTopicListResult(JsonElement element)
+        internal static SBSubscriptionListResult DeserializeSBSubscriptionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceBusTopicData>> value = default;
+            Optional<IReadOnlyList<ServiceBusSubscriptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceBusTopicData> array = new List<ServiceBusTopicData>();
+                    List<ServiceBusSubscriptionData> array = new List<ServiceBusSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusTopicData.DeserializeServiceBusTopicData(item));
+                        array.Add(ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusTopicListResult(Optional.ToList(value), nextLink.Value);
+            return new SBSubscriptionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,9 +12,9 @@ using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    internal partial class ServiceBusAuthorizationRuleListResult
+    internal partial class SBAuthorizationRuleListResult
     {
-        internal static ServiceBusAuthorizationRuleListResult DeserializeServiceBusAuthorizationRuleListResult(JsonElement element)
+        internal static SBAuthorizationRuleListResult DeserializeSBAuthorizationRuleListResult(JsonElement element)
         {
             Optional<IReadOnlyList<ServiceBusAuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value);
+            return new SBAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

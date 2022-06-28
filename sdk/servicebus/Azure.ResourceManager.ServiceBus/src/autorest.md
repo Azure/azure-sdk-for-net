@@ -53,57 +53,6 @@ rename-rules:
   URI: Uri
 
 directive:
-    - from: namespace-preview.json
-      where: $.definitions.Encryption
-      transform: $['x-ms-client-flatten'] = false
-    - from: namespace-preview.json
-      where: $.definitions.Identity
-      transform: $['x-ms-client-flatten'] = false
-    - from: namespace-preview.json
-      where: $.definitions.userAssignedIdentityProperties
-      transform: $['x-ms-client-flatten'] = false
-    - rename-model:
-        from: SBNamespace
-        to: ServiceBusNamespace
-    - rename-model:
-        from: SBTopic
-        to: ServiceBusTopic
-    - rename-model:
-        from: SBQueue
-        to: ServiceBusQueue
-    - rename-model:
-        from: SBQueue
-        to: ServiceBusQueue
-    - rename-model:
-        from: SBSubscription
-        to: ServiceBusSubscription
-    - rename-model:
-        from: SBAuthorizationRuleListResult
-        to: ServiceBusAuthorizationRuleListResult
-    - rename-model:
-        from: SBClientAffineProperties
-        to: ServiceBusClientAffineProperties
-    - rename-model:
-        from: SBNamespaceListResult
-        to: ServiceBusNamespaceListResult
-    - rename-model:
-        from: SBNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateParameters
-    - rename-model:
-        from: SBQueueListResult
-        to: ServiceBusQueueListResult
-    - rename-model:
-        from: SBSku
-        to: Sku
-    - rename-model:
-        from: SBSubscriptionListResult
-        to: ServiceBusSubscriptionListResult
-    - rename-model:
-        from: SBTopicListResult
-        to: ServiceBusTopicListResult
-    - rename-model:
-        from: Rule
-        to: ServiceBusRule
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules'].get.operationId
       transform: return "NamespaceAuthorizationRules_List"
@@ -167,9 +116,6 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
       transform: return "DisasterRecoveryAuthorizationRules_ListKeys"
-    - rename-model:
-        from: Action
-        to: FilterAction
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.parameters[5]
       transform: $['description'] = 'Parameters supplied to update Status of PrivateEndpoint Connection to namespace resource.'
@@ -179,15 +125,6 @@ directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}'].put.responses.201
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
-    - rename-model:
-        from: ServiceBusNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateContent
-    - from: swagger-document
-      where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
-      transform: $['x-ms-client-name'] = 'iPRules'
-    - from: swagger-document
-      where: $.definitions.NetworkRuleSetIPRules.properties.ipMask
-      transform: $['x-ms-client-name'] = 'iPMask'
     - from: DisasterRecoveryConfig.json
       where: $.definitions
       transform: >
@@ -219,6 +156,9 @@ directive:
     - from: namespace-preview.json
       where: $.definitions
       transform: >
+        $.SBNamespace['x-ms-client-name'] = 'ServiceBusNamespace';
+        $.SBSku['x-ms-client-name'] = 'Sku';
+        $.SBNamespaceUpdateParameters['x-ms-client-name'] = 'ServiceBusNamespaceUpdateParameters';
         $.Encryption['x-ms-client-name'] = 'ServiceBusEncryption';
         $.Encryption.properties.keySource['x-ms-enum'].name = 'ServiceBusEncryptionKeySource';
         $.ConnectionState['x-ms-client-name'] = 'ServiceBusPrivateLinkServiceConnectionState';
@@ -233,5 +173,20 @@ directive:
     - from: Rules.json
       where: $.definitions
       transform: >
+        $.Rule['x-ms-client-name'] = 'ServiceBusRule';
+        $.Action['x-ms-client-name'] = 'FilterAction';
         $.CorrelationFilter.properties.to['x-ms-client-name'] = 'sendTo';
+    - from: topics.json
+      where: $.definitions
+      transform: >
+        $.SBTopic['x-ms-client-name'] = 'ServiceBusTopic';
+    - from: Queue.json
+      where: $.definitions
+      transform: >
+        $.SBQueue['x-ms-client-name'] = 'ServiceBusQueue';
+    - from: subscriptions.json
+      where: $.definitions
+      transform: >
+        $.SBSubscription['x-ms-client-name'] = 'ServiceBusSubscription';
+        $.SBClientAffineProperties['x-ms-client-name'] = 'ServiceBusClientAffineProperties';
 ```

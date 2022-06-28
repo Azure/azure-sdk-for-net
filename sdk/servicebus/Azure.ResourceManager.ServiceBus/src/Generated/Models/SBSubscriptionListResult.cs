@@ -12,18 +12,18 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> The response to the List Subscriptions operation. </summary>
-    internal partial class ServiceBusSubscriptionListResult
+    internal partial class SBSubscriptionListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionListResult. </summary>
-        internal ServiceBusSubscriptionListResult()
+        /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>
+        internal SBSubscriptionListResult()
         {
             Value = new ChangeTrackingList<ServiceBusSubscriptionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of SBSubscriptionListResult. </summary>
         /// <param name="value"> Result of the List Subscriptions operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of subscriptions. </param>
-        internal ServiceBusSubscriptionListResult(IReadOnlyList<ServiceBusSubscriptionData> value, string nextLink)
+        internal SBSubscriptionListResult(IReadOnlyList<ServiceBusSubscriptionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

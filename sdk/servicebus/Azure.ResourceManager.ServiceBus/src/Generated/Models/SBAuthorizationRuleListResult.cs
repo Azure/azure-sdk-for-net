@@ -12,18 +12,18 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> The response to the List Namespace operation. </summary>
-    internal partial class ServiceBusAuthorizationRuleListResult
+    internal partial class SBAuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleListResult. </summary>
-        internal ServiceBusAuthorizationRuleListResult()
+        /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>
+        internal SBAuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<ServiceBusAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>
         /// <param name="value"> Result of the List Authorization Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Authorization Rules. </param>
-        internal ServiceBusAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink)
+        internal SBAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

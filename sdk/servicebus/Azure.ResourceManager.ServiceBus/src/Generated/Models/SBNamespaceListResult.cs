@@ -12,18 +12,18 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> The response of the List Namespace operation. </summary>
-    internal partial class ServiceBusNamespaceListResult
+    internal partial class SBNamespaceListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusNamespaceListResult. </summary>
-        internal ServiceBusNamespaceListResult()
+        /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>
+        internal SBNamespaceListResult()
         {
             Value = new ChangeTrackingList<ServiceBusNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>
         /// <param name="value"> Result of the List Namespace operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Namespaces. </param>
-        internal ServiceBusNamespaceListResult(IReadOnlyList<ServiceBusNamespaceData> value, string nextLink)
+        internal SBNamespaceListResult(IReadOnlyList<ServiceBusNamespaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

@@ -12,18 +12,18 @@ using Azure.ResourceManager.ServiceBus;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> The response to the List Topics operation. </summary>
-    internal partial class ServiceBusTopicListResult
+    internal partial class SBTopicListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusTopicListResult. </summary>
-        internal ServiceBusTopicListResult()
+        /// <summary> Initializes a new instance of SBTopicListResult. </summary>
+        internal SBTopicListResult()
         {
             Value = new ChangeTrackingList<ServiceBusTopicData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicListResult. </summary>
+        /// <summary> Initializes a new instance of SBTopicListResult. </summary>
         /// <param name="value"> Result of the List Topics operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of topics. </param>
-        internal ServiceBusTopicListResult(IReadOnlyList<ServiceBusTopicData> value, string nextLink)
+        internal SBTopicListResult(IReadOnlyList<ServiceBusTopicData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
