@@ -1,7 +1,7 @@
 name: Core Feature Request
 description: Create a feature request for Azure.Core
 title: "[Core] "
-labels: ["Azure.Core", "feature-request"]
+labels: ["Azure.Core", "Client", "feature-request"]
 assignees: ["christothes","annelo-msft","JoshLove-msft", "jsquire"]
 
 body:
