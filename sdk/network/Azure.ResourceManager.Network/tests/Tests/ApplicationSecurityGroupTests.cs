@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Tests
         private void ValidateCommon(ApplicationSecurityGroupData data, string name)
         {
             Assert.AreEqual(name, data.Name);
-            Assert.AreEqual(TestEnvironment.Location, data.Location);
+            Assert.AreEqual(TestEnvironment.Location, data.Location.ToString());
         }
     }
 }

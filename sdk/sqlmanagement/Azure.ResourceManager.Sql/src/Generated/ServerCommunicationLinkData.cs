@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="kind"> Communication link kind.  This property is used for Azure Portal metadata. </param>
         /// <param name="state"> The state. </param>
         /// <param name="partnerServer"> The name of the partner server. </param>
-        internal ServerCommunicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string kind, string state, string partnerServer) : base(id, name, resourceType, systemData)
+        internal ServerCommunicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string state, string partnerServer) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Communication link location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Communication link kind.  This property is used for Azure Portal metadata. </summary>
         public string Kind { get; }
         /// <summary> The state. </summary>

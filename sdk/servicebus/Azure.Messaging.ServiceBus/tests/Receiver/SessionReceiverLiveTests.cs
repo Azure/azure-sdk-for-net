@@ -698,6 +698,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var sessionId = receiver.SessionId;
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
 
+                Assert.IsTrue(receiver.IsClosed);
+
                 Assert.That(async () => await receiver.ReceiveMessageAsync(),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.SessionLockLost));
@@ -1015,6 +1017,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var end = DateTime.UtcNow;
                 Assert.NotNull(msg);
                 Assert.Less(end - start, TimeSpan.FromSeconds(10));
+            }
+        }
+
+        [Test]
+        public async Task LinkCloseCausesIsClosedToBeTrue()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId");
+                Assert.IsFalse(receiver.IsClosed);
+
+                SimulateNetworkFailure(client);
+                Assert.IsTrue(receiver.IsClosed);
             }
         }
     }

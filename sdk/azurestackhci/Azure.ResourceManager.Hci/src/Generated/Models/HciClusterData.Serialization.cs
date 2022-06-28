@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Hci
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -46,6 +49,16 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("aadTenantId");
                 writer.WriteStringValue(AadTenantId.Value);
             }
+            if (Optional.IsDefined(AadApplicationObjectId))
+            {
+                writer.WritePropertyName("aadApplicationObjectId");
+                writer.WriteStringValue(AadApplicationObjectId.Value);
+            }
+            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("aadServicePrincipalObjectId");
+                writer.WriteStringValue(AadServicePrincipalObjectId.Value);
+            }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties");
@@ -57,18 +70,20 @@ namespace Azure.ResourceManager.Hci
 
         internal static HciClusterData DeserializeHciClusterData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<HciClusterStatus> status = default;
             Optional<Guid> cloudId = default;
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
+            Optional<Guid> aadApplicationObjectId = default;
+            Optional<Guid> aadServicePrincipalObjectId = default;
             Optional<ClusterDesiredProperties> desiredProperties = default;
             Optional<ClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
@@ -76,10 +91,16 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> registrationTimestamp = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
+            Optional<string> serviceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -90,7 +111,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -105,11 +126,16 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -177,6 +203,26 @@ namespace Azure.ResourceManager.Hci
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("aadApplicationObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadApplicationObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("aadServicePrincipalObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadServicePrincipalObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("desiredProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -242,11 +288,16 @@ namespace Azure.ResourceManager.Hci
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("serviceEndpoint"))
+                        {
+                            serviceEndpoint = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp));
+            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
         }
     }
 }

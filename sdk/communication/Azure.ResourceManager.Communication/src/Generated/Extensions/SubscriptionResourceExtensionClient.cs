@@ -20,8 +20,10 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _communicationServiceClientDiagnostics;
-        private CommunicationServiceRestOperations _communicationServiceRestClient;
+        private ClientDiagnostics _communicationServiceResourceCommunicationServicesClientDiagnostics;
+        private CommunicationServicesRestOperations _communicationServiceResourceCommunicationServicesRestClient;
+        private ClientDiagnostics _emailServiceResourceEmailServicesClientDiagnostics;
+        private EmailServicesRestOperations _emailServiceResourceEmailServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -35,8 +37,10 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, Diagnostics);
-        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
+        private ClientDiagnostics CommunicationServiceResourceCommunicationServicesClientDiagnostics => _communicationServiceResourceCommunicationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, Diagnostics);
+        private CommunicationServicesRestOperations CommunicationServiceResourceCommunicationServicesRestClient => _communicationServiceResourceCommunicationServicesRestClient ??= new CommunicationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
+        private ClientDiagnostics EmailServiceResourceEmailServicesClientDiagnostics => _emailServiceResourceEmailServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", EmailServiceResource.ResourceType.Namespace, Diagnostics);
+        private EmailServicesRestOperations EmailServiceResourceEmailServicesRestClient => _emailServiceResourceEmailServicesRestClient ??= new EmailServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EmailServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -47,17 +51,17 @@ namespace Azure.ResourceManager.Communication
         /// <summary>
         /// Checks that the CommunicationService name is valid and is not already in use.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
-        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// Operation Id: CommunicationServices_CheckNameAvailability
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
+            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = await CommunicationServiceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await CommunicationServiceResourceCommunicationServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -70,17 +74,17 @@ namespace Azure.ResourceManager.Communication
         /// <summary>
         /// Checks that the CommunicationService name is valid and is not already in use.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/checkNameAvailability
-        /// Operation Id: CommunicationService_CheckNameAvailability
+        /// Operation Id: CommunicationServices_CheckNameAvailability
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckCommunicationNameAvailability(NameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationServiceNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
+            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
-                var response = CommunicationServiceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = CommunicationServiceResourceCommunicationServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -93,19 +97,19 @@ namespace Azure.ResourceManager.Communication
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
-        /// Operation Id: CommunicationService_ListBySubscription
+        /// Operation Id: CommunicationServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServicesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CommunicationServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServices");
+                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = await CommunicationServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -116,11 +120,11 @@ namespace Azure.ResourceManager.Communication
             }
             async Task<Page<CommunicationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServices");
+                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = await CommunicationServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -135,19 +139,19 @@ namespace Azure.ResourceManager.Communication
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/communicationServices
-        /// Operation Id: CommunicationService_ListBySubscription
+        /// Operation Id: CommunicationServices_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunicationServiceResource> GetCommunicationServices(CancellationToken cancellationToken = default)
+        public virtual Pageable<CommunicationServiceResource> GetCommunicationServiceResources(CancellationToken cancellationToken = default)
         {
             Page<CommunicationServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServices");
+                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = CommunicationServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -158,11 +162,11 @@ namespace Azure.ResourceManager.Communication
             }
             Page<CommunicationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServices");
+                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = CommunicationServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -172,6 +176,144 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/emailServices
+        /// Operation Id: EmailServices_ListBySubscription
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<EmailServiceResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
+                scope.Start();
+                try
+                {
+                    var response = await EmailServiceResourceEmailServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<EmailServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
+                scope.Start();
+                try
+                {
+                    var response = await EmailServiceResourceEmailServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Handles requests to list all resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/emailServices
+        /// Operation Id: EmailServices_ListBySubscription
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EmailServiceResource> GetEmailServiceResources(CancellationToken cancellationToken = default)
+        {
+            Page<EmailServiceResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
+                scope.Start();
+                try
+                {
+                    var response = EmailServiceResourceEmailServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<EmailServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
+                scope.Start();
+                try
+                {
+                    var response = EmailServiceResourceEmailServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get a list of domains that are fully verified in Exchange Online.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/listVerifiedExchangeOnlineDomains
+        /// Operation Id: EmailServices_ListVerifiedExchangeOnlineDomains
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices");
+                scope.Start();
+                try
+                {
+                    var response = await EmailServiceResourceEmailServicesRestClient.ListVerifiedExchangeOnlineDomainsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Get a list of domains that are fully verified in Exchange Online.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Communication/listVerifiedExchangeOnlineDomains
+        /// Operation Id: EmailServices_ListVerifiedExchangeOnlineDomains
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
+        {
+            Page<string> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices");
+                scope.Start();
+                try
+                {
+                    var response = EmailServiceResourceEmailServicesRestClient.ListVerifiedExchangeOnlineDomains(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

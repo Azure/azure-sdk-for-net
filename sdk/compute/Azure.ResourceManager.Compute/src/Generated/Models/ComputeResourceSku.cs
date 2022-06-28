@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
         internal ComputeResourceSku()
         {
-            Locations = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            LocationInfo = new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
             ApiVersions = new ChangeTrackingList<string>();
             Costs = new ChangeTrackingList<ResourceSkuCosts>();
             Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ComputeResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public ComputeResourceSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
-        public IReadOnlyList<ResourceSkuLocationInfo> LocationInfo { get; }
+        public IReadOnlyList<ComputeResourceSkuLocationInfo> LocationInfo { get; }
         /// <summary> The api versions that support this SKU. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Metadata for retrieving price info. </summary>

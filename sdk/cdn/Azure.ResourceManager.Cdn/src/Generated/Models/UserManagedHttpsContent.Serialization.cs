@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UserManagedHttpsContent DeserializeUserManagedHttpsContent(JsonElement element)
         {
-            KeyVaultCertificateSourceDefinition certificateSourceParameters = default;
+            KeyVaultCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
-            ProtocolType protocolType = default;
-            Optional<MinimumTlsVersion> minimumTlsVersion = default;
+            SecureDeliveryProtocolType protocolType = default;
+            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"))
                 {
-                    certificateSourceParameters = KeyVaultCertificateSourceDefinition.DeserializeKeyVaultCertificateSourceDefinition(property.Value);
+                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("protocolType"))
                 {
-                    protocolType = new ProtocolType(property.Value.GetString());
+                    protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minimumTlsVersion"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    minimumTlsVersion = property.Value.GetString().ToMinimumTlsVersion();
+                    minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
                     continue;
                 }
             }

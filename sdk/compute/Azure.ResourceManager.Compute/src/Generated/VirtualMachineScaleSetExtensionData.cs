@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures) : base(id)
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures, BinaryData protectedSettingsFromKeyVault) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Compute
             ProvisioningState = provisioningState;
             ProvisionAfterExtensions = provisionAfterExtensions;
             SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -79,5 +81,7 @@ namespace Azure.ResourceManager.Compute
         public IList<string> ProvisionAfterExtensions { get; }
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
+        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
+        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
     }
 }

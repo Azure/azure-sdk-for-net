@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceLinker.Tests
 {
-    public class ServiceLinkerTestBase : ManagementRecordedTestBase<servicelinkerManagementTestEnvironment>
+    public class ServiceLinkerTestBase : ManagementRecordedTestBase<ServicelinkerManagementTestEnvironment>
     {
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }

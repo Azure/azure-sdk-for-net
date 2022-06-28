@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string environmentName, string name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
             uri.AppendPath(environmentName, true);
             uri.AppendPath("/daprComponents/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(componentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DaprComponentData> Get(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DaprComponentData> Get(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string name, DaprComponentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName, DaprComponentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
             uri.AppendPath(environmentName, true);
             uri.AppendPath("/daprComponents/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(componentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -234,20 +234,20 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DaprComponentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string name, DaprComponentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DaprComponentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string environmentName, string componentName, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, componentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,20 +267,20 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DaprComponentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string name, DaprComponentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DaprComponentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string environmentName, string componentName, DaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, environmentName, componentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string environmentName, string name)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
             uri.AppendPath(environmentName, true);
             uri.AppendPath("/daprComponents/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(componentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -322,18 +322,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -349,18 +349,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string environmentName, string name)
+        internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
             uri.AppendPath(environmentName, true);
             uri.AppendPath("/daprComponents/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(componentName, true);
             uri.AppendPath("/listSecrets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -399,18 +399,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DaprSecretsCollection>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DaprSecretsCollection>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -430,18 +430,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DaprSecretsCollection> ListSecrets(string subscriptionId, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DaprSecretsCollection> ListSecrets(string subscriptionId, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, environmentName, name);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, environmentName, componentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

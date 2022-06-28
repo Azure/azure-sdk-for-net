@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Applications.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SourceControlOperationState> operationState = default;
             Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
@@ -63,11 +63,16 @@ namespace Azure.ResourceManager.Applications.Containers
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.Applications.Containers
                     continue;
                 }
             }
-            return new SourceControlData(id, name, type, systemData, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, githubActionConfiguration.Value);
+            return new SourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, githubActionConfiguration.Value);
         }
     }
 }

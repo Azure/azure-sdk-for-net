@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriRewriteAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of UriRewriteAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UriRewriteAction(UriRewriteActionDefinition parameters)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public UriRewriteAction(UriRewriteActionProperties properties)
         {
-            if (parameters == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.UriRewrite;
         }
 
         /// <summary> Initializes a new instance of UriRewriteAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UriRewriteAction(DeliveryRuleActionType name, UriRewriteActionDefinition parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal UriRewriteAction(DeliveryRuleActionType name, UriRewriteActionProperties properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UriRewriteActionDefinition Parameters { get; set; }
+        public UriRewriteActionProperties Properties { get; set; }
     }
 }

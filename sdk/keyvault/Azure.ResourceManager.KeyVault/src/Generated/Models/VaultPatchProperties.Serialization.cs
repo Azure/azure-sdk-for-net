@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

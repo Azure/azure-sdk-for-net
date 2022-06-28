@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="links"> List of hop links. </param>
         /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHop(string connectivityHopType, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
+        internal ConnectivityHop(string connectivityHopType, string id, string address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
         {
             ConnectivityHopType = connectivityHopType;
             Id = id;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The IP address of the hop. </summary>
         public string Address { get; }
         /// <summary> The ID of the resource corresponding to this hop. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> List of next hop identifiers. </summary>
         public IReadOnlyList<string> NextHopIds { get; }
         /// <summary> List of previous hop identifiers. </summary>

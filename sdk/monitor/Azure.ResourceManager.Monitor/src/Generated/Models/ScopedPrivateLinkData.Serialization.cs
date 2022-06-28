@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> linkedResourceId = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -49,11 +49,16 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ScopedPrivateLinkData(id, name, type, systemData, linkedResourceId.Value, provisioningState.Value);
+            return new ScopedPrivateLinkData(id, name, type, systemData.Value, linkedResourceId.Value, provisioningState.Value);
         }
     }
 }

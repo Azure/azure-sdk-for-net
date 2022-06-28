@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Applications.Containers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> componentType = default;
             Optional<string> version = default;
             Optional<bool> ignoreErrors = default;
@@ -101,11 +101,16 @@ namespace Azure.ResourceManager.Applications.Containers
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -192,7 +197,7 @@ namespace Azure.ResourceManager.Applications.Containers
                     continue;
                 }
             }
-            return new DaprComponentData(id, name, type, systemData, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), Optional.ToList(metadata), Optional.ToList(scopes));
+            return new DaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), Optional.ToList(metadata), Optional.ToList(scopes));
         }
     }
 }

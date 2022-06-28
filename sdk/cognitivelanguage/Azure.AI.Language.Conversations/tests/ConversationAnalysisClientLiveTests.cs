@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAnalysisClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationAnalysisClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAnalysisClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -19,23 +18,28 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Conversation, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Setup", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("Send", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            var conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
             Assert.IsNotNull(conversationPrediction);
 
             // assert - not empty
@@ -46,34 +50,39 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_Conversation()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("EmailIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("EmailIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as ConversationTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as ConversationTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.Conversation, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.Conversation, topIntent.TargetProjectKind);
 
             // assert entities and intents
             Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
@@ -81,72 +90,100 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29136")]
         public async Task AnalyzeConversation_Orchestration_Luis()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Reserve a table for 2 at the Italian restaurant", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Reserve a table for 2 at the Italian restaurant")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("RestaurantIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("RestaurantIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as LuisTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as LuisTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.Luis, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.Luis, topIntent.TargetProjectKind);
         }
 
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_QuestionAnswering()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("How are you?", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "How are you?")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("ChitChat-QnA", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("ChitChat-QnA", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.QuestionAnswering, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
+        }
 
-            // assert - top intent answers
-            Assert.IsNotEmpty(topIntent.Result.Answers);
+        [RecordedTest]
+        public async Task SupportsAadAuthentication()
+        {
+            ConversationAnalysisClient client = CreateClient<ConversationAnalysisClient>(
+                TestEnvironment.Endpoint,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(
+                    new ConversationsClientOptions(ServiceVersion)));
+
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+
+            Response response = await client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
+
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
+            Assert.That(conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
     }
 }

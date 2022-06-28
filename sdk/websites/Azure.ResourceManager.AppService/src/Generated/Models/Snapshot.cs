@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A snapshot of an app. </summary>
-    public partial class Snapshot : ProxyOnlyResource
+    public partial class Snapshot : ResourceData
     {
         /// <summary> Initializes a new instance of Snapshot. </summary>
         public Snapshot()
@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="time"> The time the snapshot was taken. </param>
-        internal Snapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string time) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal Snapshot(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string time, string kind) : base(id, name, resourceType, systemData)
         {
             Time = time;
+            Kind = kind;
         }
 
         /// <summary> The time the snapshot was taken. </summary>
         public string Time { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

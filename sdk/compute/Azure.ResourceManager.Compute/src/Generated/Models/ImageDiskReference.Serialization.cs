@@ -15,8 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(SharedGalleryImageId))
+            {
+                writer.WritePropertyName("sharedGalleryImageId");
+                writer.WriteStringValue(SharedGalleryImageId);
+            }
+            if (Optional.IsDefined(CommunityGalleryImageId))
+            {
+                writer.WritePropertyName("communityGalleryImageId");
+                writer.WriteStringValue(CommunityGalleryImageId);
+            }
             if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun");
@@ -27,13 +40,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element)
         {
-            string id = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> sharedGalleryImageId = default;
+            Optional<string> communityGalleryImageId = default;
             Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sharedGalleryImageId"))
+                {
+                    sharedGalleryImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("communityGalleryImageId"))
+                {
+                    communityGalleryImageId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lun"))
@@ -47,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageDiskReference(id, Optional.ToNullable(lun));
+            return new ImageDiskReference(id.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value, Optional.ToNullable(lun));
         }
     }
 }

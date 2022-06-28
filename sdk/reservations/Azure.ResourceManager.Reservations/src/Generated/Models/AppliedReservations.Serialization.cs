@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<AppliedReservationList> reservationOrderIds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,11 +34,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new AppliedReservations(id, name, type, systemData, reservationOrderIds.Value);
+            return new AppliedReservations(id, name, type, systemData.Value, reservationOrderIds.Value);
         }
     }
 }

@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://emailsdktestingacs.communication.azure.com/emails:send?api-version=2021-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "215",
+        "Content-Type": "application/json",
+        "repeatability-first-sent": "Sanitized",
+        "repeatability-request-id": "Sanitized",
+        "traceparent": "00-5b8f4d7cb31dd441164304a16967db43-7027cdda4941a351-00",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20220523.1 (.NET 6.0.5; Microsoft Windows 10.0.25120)",
+        "x-ms-client-request-id": "3e27cdc7e0b20935729bd4f09be2b561",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 23 May 2022 18:55:44 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sender": "DoNotReply@c9d0862a-c699-4a7b-b840-5e091ce5d628.azurecomm.net",
+        "content": {
+          "subject": "subject",
+          "plainText": "Test"
+        },
+        "recipients": {
+          "to": [
+            {
+              "email": "ACSFunctionalTest@outlook.com",
+              "displayName": "ToAddress"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview",
+        "Content-Length": "0",
+        "Date": "Mon, 23 May 2022 18:55:44 GMT",
+        "Operation-Location": "https://emailsdktestingacs.communication.azure.com/emails/be9eba90-a270-4e8d-9ab6-c7e6bece54e3/status",
+        "Repeatability-Result": "accepted",
+        "X-Azure-Ref": "0sNiLYgAAAAAxNhEkHk8nQI0xoPoHYA3vV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-request-id": "be9eba90-a270-4e8d-9ab6-c7e6bece54e3"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_MANAGED_FROM_EMAIL_ADDRESS": "DoNotReply@c9d0862a-c699-4a7b-b840-5e091ce5d628.azurecomm.net",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://emailsdktestingacs.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1043740220",
+    "TO_EMAIL_ADDRESS": "ACSFunctionalTest@outlook.com"
+  }
+}

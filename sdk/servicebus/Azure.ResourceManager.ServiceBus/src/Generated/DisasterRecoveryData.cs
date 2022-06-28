@@ -29,17 +29,19 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
-        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningStateDisasterRecovery? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal DisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, RoleDisasterRecovery? role, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             PartnerNamespace = partnerNamespace;
             AlternateName = alternateName;
             Role = role;
+            Location = location;
         }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
-        public ProvisioningStateDisasterRecovery? ProvisioningState { get; }
+        public DisasterRecoveryProvisioningState? ProvisioningState { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
         public long? PendingReplicationOperationsCount { get; }
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
@@ -48,5 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string AlternateName { get; set; }
         /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
         public RoleDisasterRecovery? Role { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

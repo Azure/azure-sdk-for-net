@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerConnectionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerConnectionPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string connectionPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, ConnectionPolicyName connectionPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}";
             return new ResourceIdentifier(resourceId);

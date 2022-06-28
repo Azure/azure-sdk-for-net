@@ -125,6 +125,81 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProcessEventBatchAsyncLogsWhenBatchesAreDispatched()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) };
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            mockLogger
+                .Verify(logger => logger.EventProcessorProcessingHandlerStart(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<string>(),
+                    eventBatch.Length),
+                Times.Once);
+
+            mockLogger
+                .Verify(logger => logger.EventProcessorProcessingHandlerComplete(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<string>(),
+                    It.IsAny<double>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessEventBatchAsyncLogsErrorsWhenBatchesAreDispatched()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedException = new MissingFieldException("This should be logged!");
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockProcessor
+                .Protected()
+                .Setup("OnProcessingEventBatchAsync", EmptyBatch, partition, cancellationSource.Token)
+                .Throws(expectedException);
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, EmptyBatch, true, cancellationSource.Token).IgnoreExceptions();
+
+            mockLogger
+                .Verify(logger => logger.EventProcessorProcessingHandlerError(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<string>(),
+                    expectedException.Message),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void ProcessEventBatchAsyncWrapsErrors()
         {
             using var cancellationSource = new CancellationTokenSource();

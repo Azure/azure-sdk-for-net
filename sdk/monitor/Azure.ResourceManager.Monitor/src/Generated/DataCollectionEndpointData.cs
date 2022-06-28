@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Resource properties. </summary>
@@ -43,6 +44,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The kind of the resource. </summary>
         public KnownDataCollectionEndpointResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
     }
 }

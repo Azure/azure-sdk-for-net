@@ -35,10 +35,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SharedGalleryImageId))
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId");
-                writer.WriteStringValue(SharedGalleryImageId);
+                writer.WriteStringValue(SharedGalleryImageUniqueId);
+            }
+            if (Optional.IsDefined(CommunityGalleryImageId))
+            {
+                writer.WritePropertyName("communityGalleryImageId");
+                writer.WriteStringValue(CommunityGalleryImageId);
             }
             if (Optional.IsDefined(Id))
             {
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> version = default;
             Optional<string> exactVersion = default;
             Optional<string> sharedGalleryImageId = default;
+            Optional<string> communityGalleryImageId = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,6 +95,11 @@ namespace Azure.ResourceManager.Compute.Models
                     sharedGalleryImageId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("communityGalleryImageId"))
+                {
+                    communityGalleryImageId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value);
+            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value);
         }
     }
 }

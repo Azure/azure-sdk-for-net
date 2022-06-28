@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureResource. </summary>
         /// <param name="serviceType"> The target service type. </param>
         /// <param name="id"> The Id of azure resource. </param>
-        /// <param name="resourceProperties"> The azure resource connection related properties. </param>
+        /// <param name="resourceProperties">
+        /// The azure resource connection related properties.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// </param>
         internal AzureResource(TargetServiceType serviceType, string id, AzureResourcePropertiesBase resourceProperties) : base(serviceType)
         {
             Id = id;
@@ -29,7 +33,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> The Id of azure resource. </summary>
         public string Id { get; set; }
-        /// <summary> The azure resource connection related properties. </summary>
+        /// <summary>
+        /// The azure resource connection related properties.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
+        /// </summary>
         public AzureResourcePropertiesBase ResourceProperties { get; set; }
     }
 }

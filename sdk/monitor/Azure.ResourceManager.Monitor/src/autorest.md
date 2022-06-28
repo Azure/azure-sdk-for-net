@@ -8,20 +8,48 @@ azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/monitor/resource-manager/readme.md
-
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
+  flatten-payloads: false
   lenient-model-deduplication: true
-  naming:
-    override:
-      metricResourceUri: metricResourceId
-      targetResourceUri: targetResourceId
 
-mgmt-debug:
-  show-request-path: true
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag
 
 directive:
+  - from: autoscale_API.json
+    where: $.definitions.MetricTrigger.properties.metricResourceUri
+    transform: $["x-ms-client-name"] = "metricResourceId"
+  - from: autoscale_API.json
+    where: $.definitions.AutoscaleSetting.properties.targetResourceUri
+    transform: $["x-ms-client-name"] = "targetResourceId"
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
     transform: >

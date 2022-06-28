@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Properties of the access policy. </summary>
         internal VaultAccessPolicyProperties Properties { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
-        public IList<AccessPolicyEntry> AccessPolicies
+        public IList<VaultAccessPolicy> AccessPolicies
         {
             get => Properties is null ? default : Properties.AccessPolicies;
             set => Properties = new VaultAccessPolicyProperties(value);
