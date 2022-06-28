@@ -8,11 +8,14 @@ using System.Linq;
 using System.Threading;
 
 using Azure.Core.Pipeline;
-using Xunit;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 using Azure.Core.TestFramework;
+
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -117,6 +120,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Single(transmitter._storage.GetBlobs());
             transmitter._storage.TryGetBlob(out var blob);
             blob.TryRead(out var content);
+
+            Assert.NotNull(content);
+
             var failedData = System.Text.Encoding.UTF8.GetString(content);
 
             string[] items = failedData.Split('\n');
