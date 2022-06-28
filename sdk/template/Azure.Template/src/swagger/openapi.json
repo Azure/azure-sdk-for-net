@@ -100,16 +100,16 @@
         "summary": "Add a connection to the target group.",
         "parameters": [
           {
-            "$ref": "#/parameters/GlobalParams.hub"
+            "$ref": "#/parameters/CommonParams.hub"
           },
           {
-            "$ref": "#/parameters/GlobalParams.api-version"
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "$ref": "#/parameters/ConnectionParms.group"
+            "$ref": "#/parameters/ConnectionParams.group"
           },
           {
-            "$ref": "#/parameters/ConnectionParms.connectionId"
+            "$ref": "#/parameters/ConnectionParams.connectionId"
           }
         ],
         "responses": {
@@ -132,16 +132,16 @@
         "summary": "Remove a connection from the target group.",
         "parameters": [
           {
-            "$ref": "#/parameters/GlobalParams.hub"
+            "$ref": "#/parameters/CommonParams.hub"
           },
           {
-            "$ref": "#/parameters/GlobalParams.api-version"
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "$ref": "#/parameters/ConnectionParms.group"
+            "$ref": "#/parameters/ConnectionParams.group"
           },
           {
-            "$ref": "#/parameters/ConnectionParms.connectionId"
+            "$ref": "#/parameters/ConnectionParams.connectionId"
           }
         ],
         "responses": {
@@ -341,31 +341,35 @@
     }
   },
   "parameters": {
-    "ConnectionParms.connectionId": {
-      "name": "connectionId",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "ConnectionParms.group": {
-      "name": "group",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "GlobalParams.api-version": {
+    "CommonParams.api-version": {
       "name": "api-version",
       "in": "query",
       "required": true,
       "type": "string",
       "x-ms-parameter-location": "method"
     },
-    "GlobalParams.hub": {
+    "CommonParams.hub": {
       "name": "hub",
       "in": "path",
       "required": true,
+      "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "ConnectionParams.connectionId": {
+      "name": "connectionId",
+      "in": "path",
+      "required": true,
+      "minLength": 1,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "ConnectionParams.group": {
+      "name": "group",
+      "in": "path",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 1024,
       "type": "string",
       "x-ms-parameter-location": "method"
     }
