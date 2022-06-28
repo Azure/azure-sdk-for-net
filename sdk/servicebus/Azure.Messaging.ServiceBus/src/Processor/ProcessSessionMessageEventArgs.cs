@@ -50,12 +50,12 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
-        /// The entity path corresponding to the entity that the message was received from.
+        /// The path of the Service Bus entity that the message was received from.
         /// </summary>
         public string EntityPath => _sessionReceiver.EntityPath;
 
         /// <summary>
-        /// The fully qualified namespace of the Service Bus namespace that the message was received from.
+        /// The fully qualified Service Bus namespace that the message was received from.
         /// </summary>
         public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
 
