@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Client secret information for factory&apos;s bring your own app repository configuration. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of GitHubClientSecret. </summary>
         /// <param name="byoaSecretAkvUri"> Bring your own app client secret AKV URL. </param>
         /// <param name="byoaSecretName"> Bring your own app client secret name in AKV. </param>
-        internal GitHubClientSecret(string byoaSecretAkvUri, string byoaSecretName)
+        internal GitHubClientSecret(Uri byoaSecretAkvUri, string byoaSecretName)
         {
             ByoaSecretAkvUri = byoaSecretAkvUri;
             ByoaSecretName = byoaSecretName;
         }
 
         /// <summary> Bring your own app client secret AKV URL. </summary>
-        public string ByoaSecretAkvUri { get; set; }
+        public Uri ByoaSecretAkvUri { get; set; }
         /// <summary> Bring your own app client secret name in AKV. </summary>
         public string ByoaSecretName { get; set; }
     }

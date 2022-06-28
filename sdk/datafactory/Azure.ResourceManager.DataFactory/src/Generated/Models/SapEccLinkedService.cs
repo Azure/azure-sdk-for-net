@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SapEccLinkedService. </summary>
         /// <param name="uri"> The URL of SAP ECC OData API. For example, &apos;[https://hostname:port/sap/opu/odata/sap/servicename/]&apos;. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public SapEccLinkedService(string uri)
+        public SapEccLinkedService(Uri uri)
         {
             if (uri == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Either encryptedCredential or username/password must be provided. Type: string (or Expression with resultType string). </param>
-        internal SapEccLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, string uri, string username, SecretBase password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapEccLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, Uri uri, string username, SecretBase password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             Username = username;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of SAP ECC OData API. For example, &apos;[https://hostname:port/sap/opu/odata/sap/servicename/]&apos;. Type: string (or Expression with resultType string). </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The username for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public string Username { get; set; }
         /// <summary>

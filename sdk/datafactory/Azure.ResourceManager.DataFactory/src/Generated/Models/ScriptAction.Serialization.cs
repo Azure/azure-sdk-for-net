@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri");
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("roles");
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Roles);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
             string name = default;
-            string uri = default;
+            Uri uri = default;
             BinaryData roles = default;
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("uri"))
                 {
-                    uri = property.Value.GetString();
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roles"))

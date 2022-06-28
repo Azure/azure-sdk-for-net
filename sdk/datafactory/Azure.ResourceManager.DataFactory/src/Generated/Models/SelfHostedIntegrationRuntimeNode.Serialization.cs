@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Optional<string> nodeName = default;
             Optional<string> machineName = default;
-            Optional<string> hostServiceUri = default;
+            Optional<Uri> hostServiceUri = default;
             Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<string> versionStatus = default;
@@ -50,7 +50,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("hostServiceUri"))
                 {
-                    hostServiceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hostServiceUri = null;
+                        continue;
+                    }
+                    hostServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
