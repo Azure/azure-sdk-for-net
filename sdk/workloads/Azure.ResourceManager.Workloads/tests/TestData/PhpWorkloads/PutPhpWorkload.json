@@ -3,71 +3,73 @@
         "name": "Maximal"
     },
     "kind": "WordPress",
-    "location":  "eastus2",
-    "appLocation": "eastus",
-    "adminUserProfile": {
-        "userName": "azureuser",
-        "sshPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQA98BAAABdQC9a1cDFh/+UeeccSh8VhdxrmyTNc07t6YEh+dwRwqPdbvNwN9kPmGwGOkCtUaAmGbQgVLW3VkGs5Kc0va7s7uHuqy3D8KnXSTlCduOD0vEiCKm2DFU0abEmu8vGBlyyj7T+phoDYWZcm+EwiIokR3EAtlMvNPIbRFu7nlfsOF7A0Y7h6Huk1NjNxRwuFEIR+4qFnzIi/krYNbAfZlK3vxyLH2eKdsfVgf5/FXYjR8VGHtZ5FPPyU14X0nyfN6x3oLj4swDBIAU1UJdsniTKuG0x5IsqAdzh35MYL3+L8wn+TvnJ5xsdfNXSCHYvXowXnhMQMpfKuOX4r85IwxhGuMnlSR9"
-    },
-    "webNodesProfile": {
-        "autoScaleMinCount": 1,
-        "autoScaleMaxCount": 4,
-        "name": "default",
-        "nodeSku": "Standard_F2s_v2",
-        "osImage": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "18.04-LTS",
-            "version": "latest"
+    "location": "eastus2",
+    "properties": {
+        "appLocation": "eastus",
+        "adminUserProfile": {
+            "userName": "azureuser",
+            "sshPublicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQA98BAAABdQC9a1cDFh/+UeeccSh8VhdxrmyTNc07t6YEh+dwRwqPdbvNwN9kPmGwGOkCtUaAmGbQgVLW3VkGs5Kc0va7s7uHuqy3D8KnXSTlCduOD0vEiCKm2DFU0abEmu8vGBlyyj7T+phoDYWZcm+EwiIokR3EAtlMvNPIbRFu7nlfsOF7A0Y7h6Huk1NjNxRwuFEIR+4qFnzIi/krYNbAfZlK3vxyLH2eKdsfVgf5/FXYjR8VGHtZ5FPPyU14X0nyfN6x3oLj4swDBIAU1UJdsniTKuG0x5IsqAdzh35MYL3+L8wn+TvnJ5xsdfNXSCHYvXowXnhMQMpfKuOX4r85IwxhGuMnlSR9"
         },
-        "osDisk": {
+        "webNodesProfile": {
+            "autoScaleMinCount": 1,
+            "autoScaleMaxCount": 4,
+            "name": "default",
+            "nodeSku": "Standard_F2s_v2",
+            "osImage": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            },
+            "osDisk": {
+                "storageType": "Premium_LRS",
+                "sizeInGB": 127
+            }
+        },
+        "controllerProfile": {
+            "name": "controller-vm",
+            "nodeSku": "Standard_DS11-1_v2",
+            "osImage": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            },
+            "osDisk": {
+                "storageType": "Standard_LRS",
+                "sizeInGB": 127
+            }
+        },
+        "networkProfile": {
+            "loadBalancerType": "LoadBalancer",
+            "loadBalancerSku": "Standard",
+            "azureFrontDoorEnabled": "Disabled"
+        },
+        "databaseProfile": {
+            "type": "MySql",
+            "sku": "Standard_D2ds_v4",
+            "tier": "GeneralPurpose",
+            "haEnabled": "Enabled",
+            "storageInGB": 1024,
+            "storageIops": 2000,
+            "backupRetentionDays": 0
+        },
+        "fileshareProfile": {
+            "shareType": "AzureFiles",
             "storageType": "Premium_LRS",
-            "sizeInGB": 127
-        }
-    },
-    "controllerProfile": {
-        "name": "controller-vm",
-        "nodeSku": "Standard_DS11-1_v2",
-        "osImage": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "18.04-LTS",
-            "version": "latest"
+            "shareSizeInGB": 4096
         },
-        "osDisk": {
-            "storageType": "Standard_LRS",
-            "sizeInGB": 127
+        "phpProfile": {
+            "version": "7.4"
+        },
+        "cacheProfile": {
+            "name": "cache-extra-large",
+            "skuName": "Premium",
+            "family": "P",
+            "capacity": 1
+        },
+        "backupProfile": {
+            "backupEnabled": "Disabled"
         }
-    },
-    "networkProfile": {
-        "loadBalancerType": "LoadBalancer",
-        "loadBalancerSku": "Standard",
-        "azureFrontDoorEnabled": "Disabled"
-    },
-    "databaseProfile": {
-        "type": "MySql",
-        "sku": "Standard_D2ds_v4",
-        "tier": "GeneralPurpose",
-        "haEnabled": "Enabled",
-        "storageInGB": 1024,
-        "storageIops": 2000,
-        "backupRetentionDays": 0
-    },
-    "fileshareProfile": {
-        "shareType": "AzureFiles",
-        "storageType": "Premium_LRS",
-        "shareSizeInGB": 4096
-    },
-    "phpProfile": {
-        "version": "7.4"
-    },
-    "cacheProfile": {
-        "name": "cache-extra-large",
-        "skuName": "Premium",
-        "family": "P",
-        "capacity": 1
-    },
-    "backupProfile": {
-        "backupEnabled": "Disabled"
     }
 }

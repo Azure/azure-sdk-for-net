@@ -50,12 +50,11 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 var resourceData = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(json);
 
-                resourceData.ManagedResourceGroupConfiguration = new Models.ManagedRGConfiguration()
+                resourceData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration()
                 {
                     Name = rgName + "-mrg"
                 };
 
-                resourceData.DatabaseProfile.DatabaseType = DatabaseType.MySql;
                 resourceData.DatabaseProfile.ServerName = rgName;
                 resourceData.CacheProfile.Name = rgName;
 
