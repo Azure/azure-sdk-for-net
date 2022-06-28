@@ -2,14 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Azure.Storage.Sas;
-using Castle.Core.Internal;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -95,7 +91,7 @@ namespace Azure.Storage.Test.Shared
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Version, Version);
             }
 
-            if (!_rawServices.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(_rawServices))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, _rawServices);
             }
@@ -104,7 +100,7 @@ namespace Azure.Storage.Test.Shared
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, Services.ToString());
             }
 
-            if (!_rawResourceTypes.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(_rawResourceTypes))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, _rawResourceTypes);
             }
