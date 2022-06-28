@@ -2,36 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Specifies configuration of options for building the <see cref="HttpPipeline"/>
     /// </summary>
-    public class HttpPipelineBuildOptions
+    public class HttpPipelineOptions
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="HttpPipelineBuildOptions"/>.
+        /// Initializes a new instance of <see cref="HttpPipelineOptions"/>.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
-        /// <param name="perCallPolicies">Client provided per-call policies.</param>
-        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
-        /// <param name="responseClassifier">The client provided response classifier.</param>
-        /// <param name="requestFailedDetailsParser"></param>
-        public HttpPipelineBuildOptions(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier? responseClassifier, RequestFailedDetailsParser? requestFailedDetailsParser = null)
+        public HttpPipelineOptions(ClientOptions options)
         {
             ClientOptions = options;
-            PerCallPolicies = perCallPolicies;
-            PerRetryPolicies = perRetryPolicies;
-            ResponseClassifier = responseClassifier;
-            RequestFailedDetailsParser = requestFailedDetailsParser ?? new DefaultRequestFailedDetailsParser();
+            PerCallPolicies = Array.Empty<HttpPipelinePolicy>();
+            PerRetryPolicies = Array.Empty<HttpPipelinePolicy>();
+            RequestFailedDetailsParser = new DefaultRequestFailedDetailsParser();
         }
 
         /// <summary>
         /// The customer provided client options object.
         /// </summary>
-        public ClientOptions ClientOptions { get; set; }
+        public ClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Client provided per-call policies.

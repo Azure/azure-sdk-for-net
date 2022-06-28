@@ -218,12 +218,13 @@ namespace Azure.Data.Tables
                 // This is for SAS key generation.
                 _tableSharedKeyCredential = credential;
             }
-            var pipelineOptions = new HttpPipelineBuildOptions(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { policy },
-                new ResponseClassifier(),
-                new TablesRequestFailedDetailsParser());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = perCallPolicies,
+                PerRetryPolicies = new[] { policy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -258,12 +259,13 @@ namespace Azure.Data.Tables
             var endpointString = _endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
-            var pipelineOptions = new HttpPipelineBuildOptions(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
-                new ResponseClassifier(),
-                new TablesRequestFailedDetailsParser());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = perCallPolicies,
+                PerRetryPolicies = new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -291,12 +293,13 @@ namespace Azure.Data.Tables
                 _ => policy
             };
 
-            var pipelineOptions = new HttpPipelineBuildOptions(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { authPolicy },
-                new ResponseClassifier(),
-                new TablesRequestFailedDetailsParser());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = perCallPolicies,
+                PerRetryPolicies = new[] { authPolicy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;

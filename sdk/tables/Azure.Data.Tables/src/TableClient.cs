@@ -214,7 +214,13 @@ namespace Azure.Data.Tables
                 _tableSharedKeyCredential = credential;
             }
 
-            var pipelineOptions = new HttpPipelineBuildOptions(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier(), new TablesRequestFailedDetailsParser());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = perCallPolicies,
+                PerRetryPolicies = new HttpPipelinePolicy[] { policy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -258,12 +264,13 @@ namespace Azure.Data.Tables
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            var pipelineOptions = new HttpPipelineBuildOptions(
-                options,
-                perCallPolicies,
-                new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
-                new ResponseClassifier(),
-                new TablesRequestFailedDetailsParser());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = perCallPolicies,
+                PerRetryPolicies = new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;

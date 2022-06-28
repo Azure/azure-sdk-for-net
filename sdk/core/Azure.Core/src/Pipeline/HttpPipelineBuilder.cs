@@ -38,7 +38,7 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
         {
-            var result = BuildInternal(new HttpPipelineBuildOptions(options, perCallPolicies, perRetryPolicies, responseClassifier), null);
+            var result = BuildInternal(new HttpPipelineOptions(options){ PerCallPolicies = perCallPolicies, PerRetryPolicies = perRetryPolicies, ResponseClassifier = responseClassifier}, null);
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Core.Pipeline
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
-            var result = BuildInternal(new HttpPipelineBuildOptions(options, perCallPolicies, perRetryPolicies, responseClassifier), transportOptions);
+            var result = BuildInternal(new HttpPipelineOptions(options){ PerCallPolicies = perCallPolicies, PerRetryPolicies = perRetryPolicies, ResponseClassifier = responseClassifier}, transportOptions);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="options">The configuration options used to build the <see cref="HttpPipeline"/></param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
-        public static HttpPipeline Build(HttpPipelineBuildOptions options)
+        public static HttpPipeline Build(HttpPipelineOptions options)
         {
             var result = BuildInternal(options, null);
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
@@ -75,7 +75,7 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The configuration options used to build the <see cref="DisposableHttpPipeline"/></param>
         /// <param name="transportOptions">The customer provided transport options which will be applied to the default transport. Note: If a custom transport has been supplied via the <paramref name="options"/>, these <paramref name="transportOptions"/> will be ignored.</param>
         /// <returns>A new instance of <see cref="DisposableHttpPipeline"/></returns>
-        public static DisposableHttpPipeline Build(HttpPipelineBuildOptions options, HttpPipelineTransportOptions transportOptions)
+        public static DisposableHttpPipeline Build(HttpPipelineOptions options, HttpPipelineTransportOptions transportOptions)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
             var result = BuildInternal(options, transportOptions);
@@ -83,7 +83,7 @@ namespace Azure.Core.Pipeline
         }
 
         internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned) BuildInternal(
-            HttpPipelineBuildOptions buildOptions,
+            HttpPipelineOptions buildOptions,
             HttpPipelineTransportOptions? defaultTransportOptions)
         {
             Argument.AssertNotNull(buildOptions.PerCallPolicies, nameof(buildOptions.PerCallPolicies));
