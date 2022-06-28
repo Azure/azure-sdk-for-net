@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
             Optional<NatGatewayData> natGateway = default;
             Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
             Optional<PublicIPAddressData> linkedPublicIPAddress = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<IPAddressDeleteOption> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new IPAddressDeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }

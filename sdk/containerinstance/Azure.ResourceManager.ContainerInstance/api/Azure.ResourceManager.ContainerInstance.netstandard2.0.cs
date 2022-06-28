@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ContainerInstance
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ContainerGroupData : Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPatch
+    public partial class ContainerGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes osType) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType osType) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.LogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.DnsConfiguration DnsConfig { get { throw null; } set { } }
@@ -27,12 +27,13 @@ namespace Azure.ResourceManager.ContainerInstance
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPropertiesInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.IPAddress IPAddress { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType OSType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? RestartPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> SubnetIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceVolume> Volumes { get { throw null; } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class ContainerGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -482,21 +483,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperatingSystemTypes : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes>
+    public readonly partial struct OperatingSystemType : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OperatingSystemTypes(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes Linux { get { throw null; } }
-        public static Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes other) { throw null; }
+        public OperatingSystemType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType Linux { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes left, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes left, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType left, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType left, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class Port

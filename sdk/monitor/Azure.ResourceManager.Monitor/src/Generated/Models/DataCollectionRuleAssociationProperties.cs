@@ -8,12 +8,11 @@
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Resource properties. </summary>
-    public partial class DataCollectionRuleAssociationProperties : DataCollectionRuleAssociationData
+    public partial class DataCollectionRuleAssociationProperties : ResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProperties. </summary>
         public DataCollectionRuleAssociationProperties()
@@ -26,9 +25,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? etag) : base(id, name, resourceType, systemData, properties, etag)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        internal DataCollectionRuleAssociationProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Resource properties. </summary>
+        public DataCollectionRuleAssociationProperties Properties { get; set; }
+        /// <summary> Resource entity tag (ETag). </summary>
+        public ETag? ETag { get; }
     }
 }

@@ -9,12 +9,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Resource properties. </summary>
-    public partial class DataCollectionEndpointProperties : DataCollectionEndpointData
+    public partial class DataCollectionEndpointProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointProperties. </summary>
         /// <param name="location"> The location. </param>
@@ -31,9 +30,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionEndpointProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, ETag? etag) : base(id, name, resourceType, systemData, tags, location, properties, kind, etag)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        internal DataCollectionEndpointProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointProperties properties, KnownDataCollectionEndpointResourceKind? kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
+            Kind = kind;
+            ETag = eTag;
         }
+
+        /// <summary> Resource properties. </summary>
+        public DataCollectionEndpointProperties Properties { get; set; }
+        /// <summary> The kind of the resource. </summary>
+        public KnownDataCollectionEndpointResourceKind? Kind { get; set; }
+        /// <summary> Resource entity tag (ETag). </summary>
+        public ETag? ETag { get; }
     }
 }

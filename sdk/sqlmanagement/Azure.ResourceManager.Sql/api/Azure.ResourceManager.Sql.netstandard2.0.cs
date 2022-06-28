@@ -2314,18 +2314,16 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RestorableDroppedDatabaseData() { }
+        public RestorableDroppedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Sql.Models.BackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
         public System.DateTimeOffset? CreationOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public long? MaxSizeBytes { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class RestorableDroppedDatabaseResource : Azure.ResourceManager.ArmResource
     {
@@ -4633,12 +4631,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public CheckNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType ResourceType { get { throw null; } }
     }
     public enum CheckNameAvailabilityReason
     {
         Invalid = 0,
         AlreadyExists = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CheckNameAvailabilityResourceType : System.IEquatable<Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CheckNameAvailabilityResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType MicrosoftSqlServers { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType left, Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType left, Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CheckNameAvailabilityResponse
     {

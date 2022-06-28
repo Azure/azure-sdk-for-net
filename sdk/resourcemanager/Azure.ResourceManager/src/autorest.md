@@ -10,8 +10,7 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-mgmt-debug:
-  show-request-path: true
+
 batch:
   - tag: package-common-type-2022-04
   - tag: package-resources-2022-04
@@ -230,6 +229,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
 
 rename-rules:
   CPU: Cpu
@@ -701,13 +703,6 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType"
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -792,5 +787,8 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

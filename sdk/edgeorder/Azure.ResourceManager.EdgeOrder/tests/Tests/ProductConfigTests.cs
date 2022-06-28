@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         {
             IList<FilterableProperty> filterableProperty = new List<FilterableProperty>()
             {
-                new FilterableProperty(SupportedFilterTypes.ShipToCountries, new List<string>() { "US" })
+                new FilterableProperty(SupportedFilterType.ShipToCountries, new List<string>() { "US" })
             };
             IDictionary<string, IList<FilterableProperty>> filterableProperties =
                 new Dictionary<string, IList<FilterableProperty>>() { { "azurestackedge", filterableProperty } };
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         public async Task TestListConfigurations()
         {
             ConfigurationFilters configurationFilters = new(GetHierarchyInformation());
-            configurationFilters.FilterableProperty.Add(new FilterableProperty(SupportedFilterTypes.ShipToCountries,
+            configurationFilters.FilterableProperty.Add(new FilterableProperty(SupportedFilterType.ShipToCountries,
                 new List<string>() { "US" }));
             ConfigurationsContent configurationsRequest = new(
                 new List<ConfigurationFilters>() { configurationFilters });

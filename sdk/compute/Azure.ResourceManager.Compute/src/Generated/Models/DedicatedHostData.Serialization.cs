@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> autoReplaceOnFailure = default;
             Optional<string> hostId = default;
             Optional<IReadOnlyList<SubResource>> virtualMachines = default;
-            Optional<DedicatedHostLicenseTypes> licenseType = default;
+            Optional<DedicatedHostLicenseType> licenseType = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
             Optional<DedicatedHostInstanceView> instanceView = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            licenseType = property0.Value.GetString().ToDedicatedHostLicenseTypes();
+                            licenseType = property0.Value.GetString().ToDedicatedHostLicenseType();
                             continue;
                         }
                         if (property0.NameEquals("provisioningTime"))

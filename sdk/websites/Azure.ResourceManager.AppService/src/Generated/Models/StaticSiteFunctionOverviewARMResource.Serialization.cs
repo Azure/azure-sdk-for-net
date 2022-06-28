@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> functionName = default;
-            Optional<TriggerTypes> triggerType = default;
+            Optional<TriggerType> triggerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            triggerType = new TriggerTypes(property0.Value.GetString());
+                            triggerType = new TriggerType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData.Value, kind.Value, functionName.Value, Optional.ToNullable(triggerType));
+            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData.Value, functionName.Value, Optional.ToNullable(triggerType), kind.Value);
         }
     }
 }

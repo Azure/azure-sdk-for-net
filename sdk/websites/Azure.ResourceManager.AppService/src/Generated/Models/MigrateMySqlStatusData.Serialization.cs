@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new MigrateMySqlStatusData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled));
+            return new MigrateMySqlStatusData(id, name, type, systemData.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled), kind.Value);
         }
     }
 }

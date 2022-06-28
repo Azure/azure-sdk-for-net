@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TroubleshootingContent. </summary>
         /// <param name="targetResourceId"> The target resource to troubleshoot. </param>
         /// <param name="storageId"> The ID for the storage account to save the troubleshoot result. </param>
-        /// <param name="storagePath"> The path to the blob to save the troubleshoot result in. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storagePath"/> is null. </exception>
-        public TroubleshootingContent(ResourceIdentifier targetResourceId, string storageId, string storagePath)
+        /// <param name="storageUri"> The path to the blob to save the troubleshoot result in. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storageUri"/> is null. </exception>
+        public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
         {
             if (targetResourceId == null)
             {
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new ArgumentNullException(nameof(storageId));
             }
-            if (storagePath == null)
+            if (storageUri == null)
             {
-                throw new ArgumentNullException(nameof(storagePath));
+                throw new ArgumentNullException(nameof(storageUri));
             }
 
             TargetResourceId = targetResourceId;
             StorageId = storageId;
-            StoragePath = storagePath;
+            StorageUri = storageUri;
         }
 
         /// <summary> The target resource to troubleshoot. </summary>
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The ID for the storage account to save the troubleshoot result. </summary>
-        public string StorageId { get; }
+        public ResourceIdentifier StorageId { get; }
         /// <summary> The path to the blob to save the troubleshoot result in. </summary>
-        public string StoragePath { get; }
+        public Uri StorageUri { get; }
     }
 }
