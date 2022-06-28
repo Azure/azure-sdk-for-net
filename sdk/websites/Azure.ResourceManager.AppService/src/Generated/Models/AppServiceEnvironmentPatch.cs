@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -43,9 +44,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, UpgradePreference? upgradePreference, int? dedicatedHostCount, bool? zoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, UpgradeAvailability? upgradeAvailability, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -61,8 +67,13 @@ namespace Azure.ResourceManager.AppService.Models
             ClusterSettings = clusterSettings;
             UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
+            UpgradePreference = upgradePreference;
             DedicatedHostCount = dedicatedHostCount;
             ZoneRedundant = zoneRedundant;
+            CustomDnsSuffixConfiguration = customDnsSuffixConfiguration;
+            NetworkingConfiguration = networkingConfiguration;
+            UpgradeAvailability = upgradeAvailability;
+            Kind = kind;
         }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
@@ -96,9 +107,19 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
         public bool? HasLinuxWorkers { get; }
+        /// <summary> Upgrade Preference. </summary>
+        public UpgradePreference? UpgradePreference { get; set; }
         /// <summary> Dedicated Host Count. </summary>
         public int? DedicatedHostCount { get; set; }
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
+        public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get; set; }
+        /// <summary> Full view of networking configuration for an ASE. </summary>
+        public AseV3NetworkingConfigurationData NetworkingConfiguration { get; set; }
+        /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
+        public UpgradeAvailability? UpgradeAvailability { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

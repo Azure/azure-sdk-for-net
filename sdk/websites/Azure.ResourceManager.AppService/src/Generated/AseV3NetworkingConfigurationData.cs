@@ -33,13 +33,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="externalInboundIPAddresses"></param>
         /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections) : base(id, name, resourceType, systemData, kind)
+        /// <param name="ftpEnabled"> Property to enable and disable FTP on ASEV3. </param>
+        /// <param name="remoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
+        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> windowsOutboundIPAddresses, IReadOnlyList<string> linuxOutboundIPAddresses, IReadOnlyList<string> externalInboundIPAddresses, IReadOnlyList<string> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? ftpEnabled, bool? remoteDebugEnabled, string inboundIPAddressOverride, string kind) : base(id, name, resourceType, systemData)
         {
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
             ExternalInboundIPAddresses = externalInboundIPAddresses;
             InternalInboundIPAddresses = internalInboundIPAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
+            FtpEnabled = ftpEnabled;
+            RemoteDebugEnabled = remoteDebugEnabled;
+            InboundIPAddressOverride = inboundIPAddressOverride;
+            Kind = kind;
         }
 
         /// <summary> Gets the windows outbound ip addresses. </summary>
@@ -52,5 +60,13 @@ namespace Azure.ResourceManager.AppService
         public IReadOnlyList<string> InternalInboundIPAddresses { get; }
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
         public bool? AllowNewPrivateEndpointConnections { get; set; }
+        /// <summary> Property to enable and disable FTP on ASEV3. </summary>
+        public bool? FtpEnabled { get; set; }
+        /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
+        public bool? RemoteDebugEnabled { get; set; }
+        /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
+        public string InboundIPAddressOverride { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<RemotePrivateEndpointConnection> properties = default;
             Optional<SkuDescription> sku = default;
             Optional<string> status = default;
-            Optional<ResponseError> error = default;
+            Optional<ErrorEntity> error = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IReadOnlyList<string>> zones = default;
             ResourceIdentifier id = default;
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = ErrorEntity.DeserializeErrorEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

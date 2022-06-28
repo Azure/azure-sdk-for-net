@@ -6,39 +6,29 @@
 #nullable disable
 
 using System;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Certificate order action. </summary>
-    public partial class CertificateOrderAction : ProxyOnlyResource
+    public partial class CertificateOrderAction
     {
         /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
-        public CertificateOrderAction()
+        internal CertificateOrderAction()
         {
         }
 
         /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, kind)
+        internal CertificateOrderAction(CertificateOrderActionType? actionType, DateTimeOffset? createdOn)
         {
             ActionType = actionType;
             CreatedOn = createdOn;
-            Kind = kind;
         }
 
         /// <summary> Action type. </summary>
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Kind of resource. </summary>
-        public string Kind { get; set; }
     }
 }
