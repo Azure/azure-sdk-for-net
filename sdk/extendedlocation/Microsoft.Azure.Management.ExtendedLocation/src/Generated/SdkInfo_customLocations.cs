@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.ExtendedLocation
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "ac155b972d0619a6e5bf665a863fb05ee7eeb30f";
-      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
-npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead."
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
