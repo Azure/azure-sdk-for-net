@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmNetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<ManagedHsmIPRule>();
-            VirtualNetworkRules = new ChangeTrackingList<WritableSubResource>();
+            VirtualNetworkRules = new ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<WritableSubResource> virtualNetworkRules)
+        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -41,6 +40,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The list of IP address rules. </summary>
         public IList<ManagedHsmIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>
-        public IList<WritableSubResource> VirtualNetworkRules { get; }
+        public IList<ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }
