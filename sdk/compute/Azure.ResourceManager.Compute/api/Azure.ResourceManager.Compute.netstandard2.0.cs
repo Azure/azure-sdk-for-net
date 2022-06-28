@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.CloudServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.CloudServiceResource>, System.Collections.IEnumerable
     {
         protected CloudServiceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.CloudServiceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cloudServiceName, Azure.ResourceManager.Compute.CloudServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Compute.CloudServiceResource> Get(string cloudServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Compute
     {
         public DiskEncryptionSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ApiError AutoKeyRotationError { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError AutoKeyRotationError { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? EncryptionType { get { throw null; } set { } }
         public string FederatedClientId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -2036,7 +2036,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo Progress { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeRunningStatus RunningStatus { get { throw null; } }
@@ -2291,22 +2291,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.AggregatedReplicationState left, Azure.ResourceManager.Compute.Models.AggregatedReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApiError
-    {
-        internal ApiError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ApiErrorBase> Details { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.InnerError Innererror { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
-    public partial class ApiErrorBase
-    {
-        internal ApiErrorBase() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.Compute.Models.ArchitectureType>
     {
@@ -2354,7 +2338,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal AvailablePatchSummary() { }
         public string AssessmentActivityId { get { throw null; } }
         public int? CriticalAndSecurityPatchCount { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public int? OtherPatchCount { get { throw null; } }
         public bool? RebootPending { get { throw null; } }
@@ -2580,6 +2564,40 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ComponentName left, Azure.ResourceManager.Compute.Models.ComponentName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ComputeApiError
+    {
+        internal ComputeApiError() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeApiErrorBase> Details { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.InnerError Innererror { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+    }
+    public partial class ComputeApiErrorBase
+    {
+        internal ComputeApiErrorBase() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComputeDeleteOption : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeDeleteOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComputeDeleteOption(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComputeDeleteOption Delete { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeDeleteOption Detach { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeDeleteOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeDeleteOption left, Azure.ResourceManager.Compute.Models.ComputeDeleteOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeDeleteOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeDeleteOption left, Azure.ResourceManager.Compute.Models.ComputeDeleteOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ComputePlan
     {
         public ComputePlan() { }
@@ -2702,8 +2720,31 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeUsage() { }
         public int CurrentValue { get { throw null; } }
         public long Limit { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.UsageName Name { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.UsageUnit Unit { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeUsageName Name { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeUsageUnit Unit { get { throw null; } }
+    }
+    public partial class ComputeUsageName
+    {
+        internal ComputeUsageName() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComputeUsageUnit : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeUsageUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComputeUsageUnit(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComputeUsageUnit Count { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeUsageUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeUsageUnit left, Azure.ResourceManager.Compute.Models.ComputeUsageUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeUsageUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeUsageUnit left, Azure.ResourceManager.Compute.Models.ComputeUsageUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ComputeWriteableSubResourceData
     {
@@ -2863,24 +2904,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachines { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeleteOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DeleteOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeleteOption(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DeleteOption Delete { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DeleteOption Detach { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.DeleteOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.DeleteOption left, Azure.ResourceManager.Compute.Models.DeleteOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.DeleteOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.DeleteOption left, Azure.ResourceManager.Compute.Models.DeleteOption right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiffDiskOption : System.IEquatable<Azure.ResourceManager.Compute.Models.DiffDiskOption>
@@ -3283,7 +3306,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryApplicationVersionPublishingProfile(Azure.ResourceManager.Compute.Models.UserArtifactSource source) { }
         public System.Collections.Generic.IDictionary<string, string> AdvancedSettings { get { throw null; } }
         public bool? EnableHealthCheck { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.UserArtifactManage ManageActions { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.UserArtifactManagement ManageActions { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserArtifactSettings Settings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.UserArtifactSource Source { get { throw null; } set { } }
     }
@@ -3679,7 +3702,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class LastPatchInstallationSummary
     {
         internal LastPatchInstallationSummary() { }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public int? ExcludedPatchCount { get { throw null; } }
         public int? FailedPatchCount { get { throw null; } }
         public string InstallationActivityId { get { throw null; } }
@@ -3891,7 +3914,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class NetworkInterfaceReference : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public NetworkInterfaceReference() { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
     }
     public partial class NetworkProfile
@@ -4575,7 +4598,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal RollbackStatusInfo() { }
         public int? FailedRolledbackInstanceCount { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ApiError RollbackError { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError RollbackError { get { throw null; } }
         public int? SuccessfullyRolledbackInstanceCount { get { throw null; } }
     }
     public enum RollingUpgradeActionType
@@ -5037,7 +5060,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UpgradeOperationHistoricalStatusInfoProperties
     {
         internal UpgradeOperationHistoricalStatusInfoProperties() { }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo Progress { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollbackStatusInfo RollbackInfo { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.UpgradeOperationHistoryStatus RunningStatus { get { throw null; } }
@@ -5071,32 +5094,9 @@ namespace Azure.ResourceManager.Compute.Models
         Completed = 2,
         Faulted = 3,
     }
-    public partial class UsageName
+    public partial class UserArtifactManagement
     {
-        internal UsageName() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsageUnit : System.IEquatable<Azure.ResourceManager.Compute.Models.UsageUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsageUnit(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.UsageUnit Count { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.UsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.UsageUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.UsageUnit left, Azure.ResourceManager.Compute.Models.UsageUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UserArtifactManage
-    {
-        public UserArtifactManage(string install, string remove) { }
+        public UserArtifactManagement(string install, string remove) { }
         public string Install { get { throw null; } set { } }
         public string Remove { get { throw null; } set { } }
         public string Update { get { throw null; } set { } }
@@ -5138,7 +5138,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string AssessmentActivityId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineSoftwarePatchProperties> AvailablePatches { get { throw null; } }
         public int? CriticalAndSecurityPatchCount { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public int? OtherPatchCount { get { throw null; } }
         public bool? RebootPending { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -5244,7 +5244,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineInstallPatchesResult
     {
         internal VirtualMachineInstallPatchesResult() { }
-        public Azure.ResourceManager.Compute.Models.ApiError Error { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public int? ExcludedPatchCount { get { throw null; } }
         public int? FailedPatchCount { get { throw null; } }
         public string InstallationActivityId { get { throw null; } }
@@ -5286,7 +5286,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineNetworkInterfaceConfiguration
     {
         public VirtualMachineNetworkInterfaceConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
@@ -5371,7 +5371,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachinePublicIPAddressConfiguration
     {
         public VirtualMachinePublicIPAddressConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public string DnsDomainNameLabel { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineIPTag> IPTags { get { throw null; } }
@@ -5510,7 +5510,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public VirtualMachineScaleSetNetworkConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
@@ -5573,7 +5573,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
         public VirtualMachineScaleSetPublicIPAddressConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public string DnsDomainNameLabel { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetIPTag> IPTags { get { throw null; } }
@@ -5649,7 +5649,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public VirtualMachineScaleSetUpdateNetworkConfiguration() { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableFpga { get { throw null; } set { } }
@@ -5688,7 +5688,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
     {
         public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration() { }
-        public Azure.ResourceManager.Compute.Models.DeleteOption? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public string DnsDomainNameLabel { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }

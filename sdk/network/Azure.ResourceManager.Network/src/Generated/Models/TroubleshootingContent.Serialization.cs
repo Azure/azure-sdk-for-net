@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("storageId");
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("storagePath");
-            writer.WriteStringValue(StoragePath);
+            writer.WriteStringValue(StorageUri.AbsoluteUri);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

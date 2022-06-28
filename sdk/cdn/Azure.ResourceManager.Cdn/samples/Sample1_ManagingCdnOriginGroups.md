@@ -100,7 +100,7 @@ CdnOriginGroupPatch input = new CdnOriginGroupPatch()
     {
         ProbePath = "/healthz",
         ProbeRequestType = HealthProbeRequestType.Head,
-        ProbeProtocol = ProbeProtocol.Https,
+        ProbeProtocol = HealthProbeProtocol.Https,
         ProbeIntervalInSeconds = 60
     }
 };

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public async Task KeyVaultManagementVaultCreateWithoutAccessPolicies()
         {
             IgnoreTestInLiveMode();
-            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
             VaultCreateOrUpdateContent content = new VaultCreateOrUpdateContent(Location, vaultProperties);
             ArmOperation<VaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
             VaultData createdVault = rawVault.Value.Data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             //Update
             AccessPolicy.Permissions.Secrets.Clear();
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Get);
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Set);
-            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermission>).Reset();
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Get);
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Set);
+            (AccessPolicy.Permissions.Keys as ChangeTrackingList<IdentityAccessKeyPermission>).Reset();
 
             AccessPolicy.Permissions.Storage.Clear();
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.RegenerateKey);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.Get);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.RegenerateKey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
-            createdVault.Properties.Sku.Name = KeyVaultSkuName.Premium;
+            createdVault.Properties.Sku.Name = VaultSkuName.Premium;
 
             parameters = new VaultCreateOrUpdateContent(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Premium,
+                VaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Premium,
+                VaultSkuName.Premium,
                 true,
                 true,
                 true,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             AzureLocation expectedLocation,
             string expectedSkuFamily,
-            KeyVaultSkuName expectedSku,
+            VaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             AzureLocation expectedLocation,
             string expectedSkuFamily,
-            KeyVaultSkuName expectedSku,
+            VaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,

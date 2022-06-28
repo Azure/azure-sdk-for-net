@@ -9,10 +9,10 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.TestFramework;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CommunicationManagementClientLiveTestBase : ManagementRecordedTestBase<CommunicationManagementTestEnvironment>
     {
         public string ResourceGroupPrefix { get; private set; }
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Communication.Tests
         protected CommunicationManagementClientLiveTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreTestInLiveMode();
             Init();
         }
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Communication.Tests
         protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
         {
+            IgnoreTestInLiveMode();
             Init();
         }
 
@@ -70,6 +72,14 @@ namespace Azure.ResourceManager.Communication.Tests
             };
             var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
             return domainLro.Value;
+        }
+
+        private void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
     }
 }

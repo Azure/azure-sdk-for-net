@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
                 {
                     ProbePath = "/healthz",
                     ProbeRequestType = HealthProbeRequestType.Head,
-                    ProbeProtocol = ProbeProtocol.Https,
+                    ProbeProtocol = HealthProbeProtocol.Https,
                     ProbeIntervalInSeconds = 60
                 }
             };
