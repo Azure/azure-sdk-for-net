@@ -467,8 +467,8 @@ namespace Azure.Core
     }
     public static partial class MultipartResponse
     {
-        public static Azure.Response[] Parse(Azure.Response response, bool expectBoundariesWithCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectBoundariesWithCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Azure.Response[] Parse(Azure.Response response, bool expectCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class Request : System.IDisposable
     {
@@ -943,13 +943,13 @@ namespace Azure.Core.Pipeline
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.Pipeline.HttpPipelineBuildOptions options) { throw null; }
-        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.Pipeline.HttpPipelineBuildOptions options, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options) { throw null; }
+        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { throw null; }
     }
-    public partial class HttpPipelineBuildOptions
+    public partial class HttpPipelineOptions
     {
-        public HttpPipelineBuildOptions(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier, Azure.Core.RequestFailedDetailsParser? requestFailedDetailsParser = null) { }
-        public Azure.Core.ClientOptions ClientOptions { get { throw null; } set { } }
+        public HttpPipelineOptions(Azure.Core.ClientOptions options) { }
+        public Azure.Core.ClientOptions ClientOptions { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy[] PerCallPolicies { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelinePolicy[] PerRetryPolicies { get { throw null; } set { } }
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
