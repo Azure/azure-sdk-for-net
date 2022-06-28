@@ -5,12 +5,11 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Reflection;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class RequestContentTests
+    public class GZipUtf8JsonRequestContentTests
     {
         [Test]
         public void GZipRequestContent_DirectWrite()
