@@ -88,7 +88,7 @@ namespace Azure.Data.Tables
                         throw ex;
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

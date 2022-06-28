@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Core
 {
     /// <summary>
-    ///
+    /// Controls how error response content should be parsed.
     /// </summary>
     public abstract class RequestFailedDetailsParser
     {
