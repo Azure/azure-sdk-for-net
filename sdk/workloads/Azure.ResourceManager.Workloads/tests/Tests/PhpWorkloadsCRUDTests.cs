@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 resourceData.CacheProfile.Name = rgName;
 
                 // Create
-
                 ArmOperation<PhpWorkloadResource> createdResource =
                     await rg.GetPhpWorkloadResources().CreateOrUpdateAsync(
                         WaitUntil.Completed,
