@@ -279,6 +279,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = fileSystemName,
                 IsDirectory = isDirectory,
                 Path = path,
+                Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)

@@ -295,31 +295,6 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        internal ShareFileClient(
-            Uri fileUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options)
-            : this(fileUri: fileUri, authentication: authentication, options: options, storageSharedKeyCredential:null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="fileUri">
-        /// A <see cref="Uri"/> referencing the file that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// file.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
