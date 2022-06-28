@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 param (
-  [string]$inputJsonFile="C:\dev\azure-sdk-for-net\eng\scripts\input.json",
-  [string]$outputJsonFile="output.json"
+  [string]$inputJsonFile,
+  [string]$outputJsonFile
 )
 
 . (Join-Path $PSScriptRoot automation GenerateAndBuildLib.ps1)
@@ -30,45 +30,20 @@ if ($autorestConfig -ne "") {
     $yml = ConvertFrom-YAML $autorestConfigYaml
     $requires = $yml["require"]
     if ($requires.Count -gt 0) {
-        # foreach ($require in $requires) {
-        #     if ( $swaggerDir -ne "") {
-        #         $require = (Join-Path $swaggerDir $require)
-        #     } elseif ( $commitid -ne "") {
-        #         if ($repoHttpsUrl -ne "") {
-        #             $require = "$repoHttpsUrl/blob/$commitid/$readmeFile"
-        #         } else {
-        #             $require = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
-        #         }
-        #     } else {
-        #         Write-Error "No readme File path provided."
-        #         exit 1
-        #     }
-        # }
         $readmeFiles = $requires
     }
 }
 
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 
-#foreach ( $relateReadmeFile in $readmeFiles ) {
 for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
-    #$readmeFile = $relateReadmeFile -replace "\\", "/"
-    $readmeFile = $readmeFiles[$i]
+    $readmeFile = $readmeFiles[$i] -replace "\\", "/"
     $sdkPath =  (Join-Path $PSScriptRoot .. ..)
     $sdkPath = Resolve-Path $sdkPath
     $sdkPath = $sdkPath -replace "\\", "/"
 
     
     $readme = ""
-    # if ($commitid -ne "") {
-    #     if ($repoHttpsUrl -ne "") {
-    #         $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
-    #     } else {
-    #         $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
-    #     }
-    # } else {
-    #     $readme = (Join-Path $swaggerDir $readmeFile)
-    # }
     if ( $swaggerDir -ne "") {
         $readme = (Join-Path $swaggerDir $readmeFile)
     } elseif ( $commitid -ne "") {

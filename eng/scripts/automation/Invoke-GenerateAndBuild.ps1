@@ -16,6 +16,27 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $serviceType = $inputJson.serviceType
 $autorestConfig = $inputJson.autorestConfig
 
+$autorestConfig = $inputJson.autorestConfig
+
+$autorestConfigYaml = ""
+if ($autorestConfig -ne "") {
+    $autorestConfig | Set-Content "config.md"
+    $autorestConfigYaml = Get-Content -Path .\config.md
+    $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
+    if ( $range.count -gt 1) {
+        $startNum = $range[0];
+        $lines = $range[1] - $range[0] - 1
+        $autorestConfigYaml = ($autorestConfigYaml | Select -Skip $startNum | Select -First $lines) |Out-String
+    }
+    Install-Module -Name powershell-yaml -Force -Verbose -Scope CurrentUser
+    Import-Module powershell-yaml
+    $yml = ConvertFrom-YAML $autorestConfigYaml
+    $requires = $yml["require"]
+    if ($requires.Count -gt 0) {
+        $readmeFile = $requires[0]
+    }
+}
+
 Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
 
 # $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
@@ -33,10 +54,9 @@ if ($commitid -ne "") {
 } else {
   $readme = (Join-Path $swaggerDir $readmeFile)
 }
-# $generatedSDKPackages = @()
+
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
-# $generatedSDKPackages = New-Object 'System.Collections.ArrayList[System.Object]'
-Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfig" -generatedSDKPackages $generatedSDKPackages
+Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -generatedSDKPackages $generatedSDKPackages
 $outputJson = [PSCustomObject]@{
   packages = $generatedSDKPackages
 }

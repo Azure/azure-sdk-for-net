@@ -43,50 +43,6 @@ function Get-SwaggerInfo()
     exit 1
 }
 
-function Update-AutorestConfigFile() {
-    param (
-        [string]$autorestFilePath,
-        [string]$inputfile = "",
-        [string]$readme = ""
-    )
-    if (Test-Path -Path $autorestFilePath) {
-        if (($readme -ne "") -or ($inputfile -ne "")) {
-            $requirRex = "require*:*";
-            $inputfileRex = "input-file*:*"
-            # clear
-            (Get-Content $autorestFilePath) -notmatch $requirRex |Out-File $autorestFilePath
-            (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
-            (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
-            (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
-
-            $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
-            $configline = ""
-            if ($readme -ne "") {
-                Write-Host "Updating autorest.md file to config required readme file."
-                $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
-                $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
-            } elseif ($inputfile -ne "") {
-                Write-Host "Updating autorest.md file to update input-file."
-                if ($inputfile.StartsWith('-')) {
-                    $configline = "input-file:" + [Environment]::NewLine + "$inputfile"
-                } else {
-                    $configline = "input-file:"  + "$inputfile"
-                }
-            }
-            $fileContent = Get-Content -Path $autorestFilePath
-            $fileContent[$startNum - 1] += ([Environment]::NewLine + $configline)
-            $fileContent | Set-Content $autorestFilePath
-            if ( !$? ) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
-            }
-        }  
-    } else {
-        Write-Error "autorest.md doesn't exist."
-        exit 1
-    }
-}
-
 function CreateOrUpdateAutorestConfigFile() {
     param (
         [string]$autorestFilePath,
@@ -105,17 +61,11 @@ function CreateOrUpdateAutorestConfigFile() {
             $fileContent = $fileContent -notmatch "- .*.md"
             $fileContent = $fileContent -notmatch $inputfileRex
             $fileContent = $fileContent -notmatch "- .*.json"
-            # (Get-Content $autorestFilePath) -notmatch $requirRex |Out-File $autorestFilePath
-            # (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
-            # (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
-            # (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
 
             $startNum = ($fileContent | Select-String -Pattern '```').LineNumber[0]
-            # $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
             $configline = ""
             if ($readme -ne "") {
                 Write-Host "Updating autorest.md file to config required readme file."
-                # $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
                 $requirefile = $readme
                 $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
             } elseif ($inputfile -ne "") {
@@ -149,20 +99,6 @@ function CreateOrUpdateAutorestConfigFile() {
             Import-Module powershell-yaml
             $yml = ConvertFrom-YAML $autorestConfigYaml
 
-            if ($yml["output-folder"]) {
-
-            }
-
-            # Foreach ( $key in $yml.keys) {
-            #     $match = (Get-Content $autorestFilePath | Select-String -Pattern $key).LineNumber
-            #     if ($match.count -gt 0) {
-            #         $fileContent[$match[0] - 1] = $key + ":" + $yml[$key];
-            #     } else {
-            #         $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
-            #         $fileContent = Get-Content -Path $autorestFilePath
-            #         $fileContent[$startNum - 1] += ([Environment]::NewLine + $key + ":" + $yml[$key])
-            #     }
-            # }
             $fileContent = Get-Content -Path $autorestFilePath
             Foreach ( $key in $yml.keys) {
                 if ( ($key -eq "output-folder") -or ($key -eq "require")) {
@@ -251,7 +187,6 @@ function New-DataPlanePackageFolder() {
     Write-Host "Path exists!"
     # update the input-file url if needed.
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    # Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
@@ -299,7 +234,6 @@ function New-DataPlanePackageFolder() {
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
     Write-Host "Updating configuration file: $file"
-    # Update-AutorestConfigFile -autorestFilePath $file -readme $readme
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Pop-Location
     # dotnet sln
