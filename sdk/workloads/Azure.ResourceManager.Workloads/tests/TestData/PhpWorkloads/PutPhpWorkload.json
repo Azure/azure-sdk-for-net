@@ -3,7 +3,7 @@
         "name": "Maximal"
     },
     "kind": "WordPress",
-    "location":  "eastus",
+    "location":  "eastus2",
     "appLocation": "eastus",
     "adminUserProfile": {
         "userName": "azureuser",
@@ -21,7 +21,7 @@
             "version": "latest"
         },
         "osDisk": {
-            "storageType": "PremiumLrs",
+            "storageType": "Premium_Lrs",
             "sizeInGB": 127
         }
     },
@@ -35,7 +35,7 @@
             "version": "latest"
         },
         "osDisk": {
-            "storageType": "StandardLrs",
+            "storageType": "Standard_Lrs",
             "sizeInGB": 127
         }
     },
@@ -55,7 +55,7 @@
     },
     "fileshareProfile": {
         "shareType": "AzureFiles",
-        "storageType": "PremiumLrs",
+        "storageType": "Premium_Lrs",
         "shareSizeInGB": 4096
     },
     "phpProfile": {

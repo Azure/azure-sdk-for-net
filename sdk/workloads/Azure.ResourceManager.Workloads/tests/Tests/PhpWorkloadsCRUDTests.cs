@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Workloads.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -40,8 +41,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                     TestResourceNamePrefix,
                     Core.AzureLocation.EastUS);
 
-                var resourceName = Recording.GenerateAssetName(TestResourceNamePrefix);
-                string mrgName = Recording.GenerateAssetName(TestResourceNamePrefix + "mrg-");
+                var rgName = rg.Data.Name;
 
                 var resourceJson = File.ReadAllText(
                     Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
@@ -50,29 +50,30 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 resourceData.ManagedResourceGroupConfiguration = new Models.ManagedRGConfiguration()
                 {
-                    Name = mrgName
+                    Name = rgName + "-mrg"
                 };
 
-                resourceData.DatabaseProfile.ServerName = Recording.GenerateAssetName(TestResourceNamePrefix);
-                resourceData.CacheProfile.Name = Recording.GenerateAssetName(TestResourceNamePrefix);
+                resourceData.DatabaseProfile.DatabaseType = DatabaseType.MySql;
+                resourceData.DatabaseProfile.ServerName = rgName;
+                resourceData.CacheProfile.Name = rgName;
 
                 // Create
 
                 ArmOperation<PhpWorkloadResource> createdResource =
                     await rg.GetPhpWorkloadResources().CreateOrUpdateAsync(
                         WaitUntil.Completed,
-                        resourceName,
+                        rgName,
                         resourceData);
 
                 Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
                     Models.PhpWorkloadProvisioningState.Succeeded);
 
-                Assert.AreEqual(resourceName, createdResource.Value.Data.Name);
+                Assert.AreEqual(rgName, createdResource.Value.Data.Name);
 
                 // Read
-                Response<PhpWorkloadResource> getResource = await rg.GetPhpWorkloadResourceAsync(resourceName);
+                Response<PhpWorkloadResource> getResource = await rg.GetPhpWorkloadResourceAsync(rgName);
                 Assert.IsNotNull(getResource);
-                Assert.AreEqual(resourceName, getResource.Value.Data.Name);
+                Assert.AreEqual(rgName, getResource.Value.Data.Name);
 
                 // Update
                 var tagsToUpdate = new Dictionary<string, string>()
@@ -85,35 +86,35 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 ArmOperation<PhpWorkloadResource> updatedResource =
                     await rg.GetPhpWorkloadResources().CreateOrUpdateAsync(
                         WaitUntil.Completed,
-                        resourceName,
+                        rgName,
                         updatePayload);
 
                 Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
                     Models.PhpWorkloadProvisioningState.Succeeded);
 
-                Assert.AreEqual(resourceName, createdResource.Value.Data.Name);
+                Assert.AreEqual(rgName, createdResource.Value.Data.Name);
                 Assert.AreEqual(updatePayload.Tags.Count, updatedResource.Value.Data.Tags.Count);
                 Assert.IsFalse(updatedResource.Value.Data.Tags.Except(updatePayload.Tags).Any());
 
                 // Delete
-                getResource = await rg.GetPhpWorkloadResourceAsync(resourceName);
+                getResource = await rg.GetPhpWorkloadResourceAsync(rgName);
                 Assert.IsNotNull(getResource?.Value?.Data?.Name);
-                Assert.AreEqual(resourceName, getResource?.Value.Data.Name);
+                Assert.AreEqual(rgName, getResource?.Value.Data.Name);
                 await getResource.Value.DeleteAsync(WaitUntil.Completed);
 
                 try
                 {
                     Response<PhpWorkloadResource> getDeletedResoure =
-                        await rg.GetPhpWorkloadResourceAsync(resourceName);
+                        await rg.GetPhpWorkloadResourceAsync(rgName);
                 }
                 catch (RequestFailedException ex) when (ex.Status == 404)
                 {
-                    Console.WriteLine($"PHP Workload {resourceName} does not exist.");
+                    Console.WriteLine($"PHP Workload {rgName} does not exist.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                TestContext.Progress.WriteLine(ex.Message);
                 throw;
             }
         }
