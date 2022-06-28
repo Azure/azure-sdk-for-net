@@ -63,6 +63,7 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
 function DeployStressTests(
     [string]$searchDirectory = '.',
     [hashtable]$filters = @{},
+    # Default to playground environment
     [string]$environment = 'pg',
     [string]$repository = '',
     [switch]$pushImages,
