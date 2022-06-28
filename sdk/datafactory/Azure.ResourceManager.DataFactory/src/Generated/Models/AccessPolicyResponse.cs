@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Get Data Plane read only token response definition. </summary>
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> The user access policy. </param>
         /// <param name="accessToken"> Data Plane read only access token. </param>
         /// <param name="dataPlaneUri"> Data Plane service base URL. </param>
-        internal AccessPolicyResponse(UserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
+        internal AccessPolicyResponse(UserAccessPolicy policy, string accessToken, string dataPlaneUri)
         {
             Policy = policy;
             AccessToken = accessToken;
@@ -33,6 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Data Plane read only access token. </summary>
         public string AccessToken { get; }
         /// <summary> Data Plane service base URL. </summary>
-        public Uri DataPlaneUri { get; }
+        public string DataPlaneUri { get; }
     }
 }

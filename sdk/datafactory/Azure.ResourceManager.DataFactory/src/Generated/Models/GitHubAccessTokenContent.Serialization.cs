@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(GitHubClientSecret);
             }
             writer.WritePropertyName("gitHubAccessTokenBaseUrl");
-            writer.WriteStringValue(GitHubAccessTokenBaseUri.AbsoluteUri);
+            writer.WriteStringValue(GitHubAccessTokenBaseUri);
             writer.WriteEndObject();
         }
     }

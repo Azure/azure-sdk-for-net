@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static CassandraSource DeserializeCassandraSource(JsonElement element)
         {
             Optional<BinaryData> query = default;
-            Optional<CassandraSourceReadConsistencyLevels> consistencyLevel = default;
+            Optional<CassandraSourceReadConsistencyLevel> consistencyLevel = default;
             Optional<BinaryData> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    consistencyLevel = new CassandraSourceReadConsistencyLevels(property.Value.GetString());
+                    consistencyLevel = new CassandraSourceReadConsistencyLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the PrivateEndpointConnectionResource data model. </summary>
-    public partial class PrivateEndpointConnectionResourceData : SubResource
+    public partial class PrivateEndpointConnectionResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionResourceData. </summary>
         public PrivateEndpointConnectionResourceData()
@@ -24,14 +25,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal PrivateEndpointConnectionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, RemotePrivateEndpointConnection properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal PrivateEndpointConnectionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RemotePrivateEndpointConnection properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Core resource properties. </summary>
         public RemotePrivateEndpointConnection Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

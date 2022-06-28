@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the Factory data model. </summary>
-    public partial class FactoryData : DataFactoryResourceData
+    public partial class FactoryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FactoryData. </summary>
         /// <param name="location"> The location. </param>
@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="identity"> Managed service identity of the factory. </param>
         /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
         /// <param name="createOn"> Time the factory was created in ISO8601 format. </param>
@@ -45,8 +44,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="globalParameters"> List of parameters for factory. </param>
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string eTag, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location, eTag)
+        internal FactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, string eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.DataFactory
             GlobalParameters = globalParameters;
             Encryption = encryption;
             PublicNetworkAccess = publicNetworkAccess;
+            ETag = eTag;
             AdditionalProperties = additionalProperties;
         }
 
@@ -94,6 +95,8 @@ namespace Azure.ResourceManager.DataFactory
         public EncryptionConfiguration Encryption { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public string ETag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

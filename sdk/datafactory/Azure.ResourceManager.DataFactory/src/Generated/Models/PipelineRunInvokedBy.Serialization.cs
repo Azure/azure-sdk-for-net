@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,15 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PipelineRunInvokedBy DeserializePipelineRunInvokedBy(JsonElement element)
         {
+            Optional<string> name = default;
+            Optional<string> id = default;
             Optional<string> invokedByType = default;
             Optional<string> pipelineName = default;
             Optional<string> pipelineRunId = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("invokedByType"))
                 {
                     invokedByType = property.Value.GetString();
@@ -39,28 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     pipelineRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
             }
-            return new PipelineRunInvokedBy(id, name, type, systemData, invokedByType.Value, pipelineName.Value, pipelineRunId.Value);
+            return new PipelineRunInvokedBy(name.Value, id.Value, invokedByType.Value, pipelineName.Value, pipelineRunId.Value);
         }
     }
 }

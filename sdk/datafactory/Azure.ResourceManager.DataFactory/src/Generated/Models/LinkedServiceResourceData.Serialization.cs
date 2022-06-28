@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +26,11 @@ namespace Azure.ResourceManager.DataFactory
         internal static LinkedServiceResourceData DeserializeLinkedServiceResourceData(JsonElement element)
         {
             LinkedService properties = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -39,7 +40,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -59,11 +65,16 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new LinkedServiceResourceData(id, name, type, systemData, etag.Value, properties);
+            return new LinkedServiceResourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }

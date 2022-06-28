@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(FactoryRepoConfigurationType);
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static FactoryVstsConfiguration DeserializeFactoryVstsConfiguration(JsonElement element)
         {
             string projectName = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
@@ -59,7 +60,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, projectName, tenantId.Value);
+            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, projectName, Optional.ToNullable(tenantId));
         }
     }
 }

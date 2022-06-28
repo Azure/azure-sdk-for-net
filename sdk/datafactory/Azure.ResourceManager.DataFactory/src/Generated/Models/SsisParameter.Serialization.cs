@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,6 +14,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SsisParameter DeserializeSsisParameter(JsonElement element)
         {
+            Optional<long> id = default;
+            Optional<string> name = default;
             Optional<string> description = default;
             Optional<string> dataType = default;
             Optional<bool> required = default;
@@ -25,12 +26,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> valueType = default;
             Optional<bool> valueSet = default;
             Optional<string> variable = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("description"))
                 {
                     description = property.Value.GetString();
@@ -96,28 +108,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
             }
-            return new SsisParameter(id, name, type, systemData, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value);
+            return new SsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value);
         }
     }
 }

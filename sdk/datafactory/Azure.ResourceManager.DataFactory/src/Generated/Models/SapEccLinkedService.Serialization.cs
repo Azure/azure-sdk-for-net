@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("url");
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username");
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Uri url = default;
+            string url = default;
             Optional<string> username = default;
             Optional<SecretBase> password = default;
             Optional<string> encryptedCredential = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"))
                         {
-                            url = new Uri(property0.Value.GetString());
+                            url = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("username"))

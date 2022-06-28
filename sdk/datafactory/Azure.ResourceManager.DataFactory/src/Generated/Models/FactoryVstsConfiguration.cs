@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="projectName"> VSTS project name. </param>
         /// <param name="tenantId"> VSTS tenant id. </param>
-        internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, string projectName, string tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, string projectName, Guid? tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
             ProjectName = projectName;
             TenantId = tenantId;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> VSTS project name. </summary>
         public string ProjectName { get; set; }
         /// <summary> VSTS tenant id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

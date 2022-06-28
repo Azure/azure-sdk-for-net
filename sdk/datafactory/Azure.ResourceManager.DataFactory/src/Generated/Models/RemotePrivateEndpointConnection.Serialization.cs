@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static RemotePrivateEndpointConnection DeserializeRemotePrivateEndpointConnection(JsonElement element)
         {
             Optional<string> provisioningState = default;
-            Optional<Resources.Models.SubResource> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<Resources.Models.SubResource>(property.Value.ToString());
+                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"))

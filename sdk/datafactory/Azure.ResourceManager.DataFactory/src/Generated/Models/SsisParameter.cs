@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Ssis parameter. </summary>
-    public partial class SsisParameter : ResourceData
+    public partial class SsisParameter
     {
         /// <summary> Initializes a new instance of SsisParameter. </summary>
         internal SsisParameter()
@@ -19,10 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisParameter. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Parameter id. </param>
+        /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
         /// <param name="dataType"> Parameter type. </param>
         /// <param name="required"> Whether parameter is required. </param>
@@ -33,8 +28,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="valueType"> Parameter value type. </param>
         /// <param name="valueSet"> Parameter value set. </param>
         /// <param name="variable"> Parameter reference variable. </param>
-        internal SsisParameter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string dataType, bool? required, bool? sensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable) : base(id, name, resourceType, systemData)
+        internal SsisParameter(long? id, string name, string description, string dataType, bool? required, bool? sensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable)
         {
+            Id = id;
+            Name = name;
             Description = description;
             DataType = dataType;
             Required = required;
@@ -47,6 +44,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Variable = variable;
         }
 
+        /// <summary> Parameter id. </summary>
+        public long? Id { get; }
+        /// <summary> Parameter name. </summary>
+        public string Name { get; }
         /// <summary> Parameter description. </summary>
         public string Description { get; }
         /// <summary> Parameter type. </summary>

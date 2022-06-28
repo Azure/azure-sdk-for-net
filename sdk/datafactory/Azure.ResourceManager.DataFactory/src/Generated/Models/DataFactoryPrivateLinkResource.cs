@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class DataFactoryPrivateLinkResource : SubResource
+    public partial class DataFactoryPrivateLinkResource : ResourceData
     {
         /// <summary> Initializes a new instance of DataFactoryPrivateLinkResource. </summary>
         public DataFactoryPrivateLinkResource()
@@ -23,14 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, DataFactoryPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateLinkResourceProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Core resource properties. </summary>
         public DataFactoryPrivateLinkResourceProperties Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

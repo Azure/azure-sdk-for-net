@@ -13,6 +13,10 @@ output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
  
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
 
 rename-rules:
   CPU: Cpu

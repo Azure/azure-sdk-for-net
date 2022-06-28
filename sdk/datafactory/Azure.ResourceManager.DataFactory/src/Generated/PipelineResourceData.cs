@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the PipelineResource data model. </summary>
-    public partial class PipelineResourceData : SubResource
+    public partial class PipelineResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PipelineResourceData. </summary>
         public PipelineResourceData()
@@ -32,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="description"> The description of the pipeline. </param>
         /// <param name="activities">
         /// List of activities in pipeline.
@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
         /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
         /// <param name="policy"> Pipeline Policy. </param>
+        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, etag)
+        internal PipelineResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<Activity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, ETag? etag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Activities = activities;
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.DataFactory
             RunDimensions = runDimensions;
             Folder = folder;
             Policy = policy;
+            Etag = etag;
             AdditionalProperties = additionalProperties;
         }
 
@@ -107,6 +109,8 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

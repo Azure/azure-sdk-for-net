@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the ManagedVirtualNetworkResource data model. </summary>
-    public partial class ManagedVirtualNetworkResourceData : SubResource
+    public partial class ManagedVirtualNetworkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedVirtualNetworkResourceData. </summary>
         /// <param name="properties"> Managed Virtual Network properties. </param>
@@ -33,14 +34,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Managed Virtual Network properties. </param>
-        internal ManagedVirtualNetworkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, ManagedVirtualNetwork properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal ManagedVirtualNetworkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedVirtualNetwork properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Managed Virtual Network properties. </summary>
         public ManagedVirtualNetwork Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

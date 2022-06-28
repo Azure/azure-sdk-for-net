@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
         /// <param name="vNetProperties"> VNet properties for managed integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeComputeProperties(string location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The node size requirement to managed integration runtime. </summary>
         public string NodeSize { get; set; }
         /// <summary> The required number of nodes for managed integration runtime. </summary>

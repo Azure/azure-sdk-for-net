@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the GlobalParameterResource data model. </summary>
-    public partial class GlobalParameterResourceData : SubResource
+    public partial class GlobalParameterResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of GlobalParameterResourceData. </summary>
         /// <param name="properties"> Properties of the global parameter. </param>
@@ -34,14 +35,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Properties of the global parameter. </param>
-        internal GlobalParameterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, GlobalParameterSpecification> properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal GlobalParameterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, GlobalParameterSpecification> properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Properties of the global parameter. </summary>
         public IDictionary<string, GlobalParameterSpecification> Properties { get; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

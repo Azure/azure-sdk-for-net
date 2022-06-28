@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
-    public partial class PrivateEndpointConnectionResourceCreateOrUpdateContent : SubResource
+    public partial class PrivateEndpointConnectionResourceCreateOrUpdateContent : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionResourceCreateOrUpdateContent. </summary>
         public PrivateEndpointConnectionResourceCreateOrUpdateContent()
@@ -23,14 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal PrivateEndpointConnectionResourceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, PrivateLinkConnectionApprovalRequest properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal PrivateEndpointConnectionResourceCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionApprovalRequest properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Core resource properties. </summary>
         public PrivateLinkConnectionApprovalRequest Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

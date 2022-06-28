@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Provides entity name and id that started the pipeline run. </summary>
-    public partial class PipelineRunInvokedBy : ResourceData
+    public partial class PipelineRunInvokedBy
     {
         /// <summary> Initializes a new instance of PipelineRunInvokedBy. </summary>
         internal PipelineRunInvokedBy()
@@ -19,20 +16,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineRunInvokedBy. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="name"> Name of the entity that started the pipeline run. </param>
+        /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>
         /// <param name="pipelineName"> The name of the pipeline that triggered the run, if any. </param>
         /// <param name="pipelineRunId"> The run id of the pipeline that triggered the run, if any. </param>
-        internal PipelineRunInvokedBy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string invokedByType, string pipelineName, string pipelineRunId) : base(id, name, resourceType, systemData)
+        internal PipelineRunInvokedBy(string name, string id, string invokedByType, string pipelineName, string pipelineRunId)
         {
+            Name = name;
+            Id = id;
             InvokedByType = invokedByType;
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;
         }
 
+        /// <summary> Name of the entity that started the pipeline run. </summary>
+        public string Name { get; }
+        /// <summary> The ID of the entity that started the run. </summary>
+        public string Id { get; }
         /// <summary> The type of the entity that started the run. </summary>
         public string InvokedByType { get; }
         /// <summary> The name of the pipeline that triggered the run, if any. </summary>

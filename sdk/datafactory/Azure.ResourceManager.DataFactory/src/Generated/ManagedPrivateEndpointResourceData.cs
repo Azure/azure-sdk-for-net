@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the ManagedPrivateEndpointResource data model. </summary>
-    public partial class ManagedPrivateEndpointResourceData : SubResource
+    public partial class ManagedPrivateEndpointResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpointResourceData. </summary>
         /// <param name="properties"> Managed private endpoint properties. </param>
@@ -33,14 +34,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
-        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, ManagedPrivateEndpoint properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary> Managed private endpoint properties. </summary>
         public ManagedPrivateEndpoint Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }

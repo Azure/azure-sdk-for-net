@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary> A class representing the DataFlowResource data model. </summary>
-    public partial class DataFlowResourceData : SubResource
+    public partial class DataFlowResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DataFlowResourceData. </summary>
         /// <param name="properties">
@@ -37,15 +38,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
         /// <param name="properties">
         /// Data flow properties.
         /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </param>
-        internal DataFlowResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, DataFlow properties) : base(id, name, resourceType, systemData, etag)
+        /// <param name="etag"> Etag identifies change in the resource. </param>
+        internal DataFlowResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFlow properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Etag = etag;
         }
 
         /// <summary>
@@ -54,5 +56,7 @@ namespace Azure.ResourceManager.DataFactory
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </summary>
         public DataFlow Properties { get; set; }
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? Etag { get; }
     }
 }
