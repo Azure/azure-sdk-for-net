@@ -12,8 +12,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="OpenTelemetry" />
-    <!--<PackageReference Include="OpenTelemetry.Contrib.Extensions.PersistentStorage" />-->
-    <ProjectReference Include="C:\Users\vibankwa\source\repos\opentelemetry-dotnet-contrib\src\OpenTelemetry.Extensions.PersistentStorage\OpenTelemetry.Extensions.PersistentStorage.csproj" />
+    <PackageReference Include="OpenTelemetry.Extensions.PersistentStorage" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

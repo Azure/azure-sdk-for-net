@@ -24,6 +24,8 @@
 
 ### Other Changes
 
+* [Update persistent storage package dependency]()
+
 ## 1.0.0-beta.3 (2021-10-04)
 
 * [Update SdkVersion to include pre-release part](https://github.com/Azure/azure-sdk-for-net/pull/24290)

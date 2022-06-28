@@ -14,8 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
-    <ProjectReference Include="C:\Users\vibankwa\source\repos\opentelemetry-dotnet-contrib\src\OpenTelemetry.Extensions.PersistentStorage\OpenTelemetry.Extensions.PersistentStorage.csproj" />
-    <ProjectReference Include="C:\Users\vibankwa\source\repos\opentelemetry-dotnet-contrib\src\OpenTelemetry.Extensions.PersistentStorage.Abstractions\OpenTelemetry.Extensions.PersistentStorage.Abstractions.csproj" />
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.0" />
     <PackageReference Include="OpenTelemetry.Exporter.InMemory" />
   </ItemGroup>
