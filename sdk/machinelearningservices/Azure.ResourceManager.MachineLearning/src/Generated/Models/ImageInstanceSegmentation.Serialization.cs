@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element)
         {
-            Optional<InstanceSegmentationPrimaryMetrics> primaryMetric = default;
+            Optional<InstanceSegmentationPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;
             ImageVerticalDataSettings dataSettings = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryMetric = new InstanceSegmentationPrimaryMetrics(property.Value.GetString());
+                    primaryMetric = new InstanceSegmentationPrimaryMetric(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("modelSettings"))

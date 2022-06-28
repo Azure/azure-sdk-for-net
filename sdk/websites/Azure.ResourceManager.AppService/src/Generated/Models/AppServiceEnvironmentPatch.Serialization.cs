@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
             Optional<VirtualNetworkProfile> virtualNetwork = default;
@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }

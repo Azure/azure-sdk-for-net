@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceDomain data model. </summary>
-    public partial class AppServiceDomainData : AppServiceResource
+    public partial class AppServiceDomainData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
         /// <param name="location"> The location. </param>
@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="contactAdmin"> Administrative contact. </param>
         /// <param name="contactBilling"> Billing contact. </param>
         /// <param name="contactRegistrant"> Registrant contact. </param>
@@ -78,6 +77,7 @@ namespace Azure.ResourceManager.AppService
             DnsZoneId = dnsZoneId;
             TargetDnsType = targetDnsType;
             AuthCode = authCode;
+            Kind = kind;
         }
 
         /// <summary> Administrative contact. </summary>
@@ -123,5 +123,7 @@ namespace Azure.ResourceManager.AppService
         public DnsType? TargetDnsType { get; set; }
         /// <summary> Gets or sets the auth code. </summary>
         public string AuthCode { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -15,6 +15,14 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -35,12 +43,10 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
+
 directive:
   - remove-operation: NetworkFunction_ListOperations
-  - from: swagger-document
-    where: $.definitions..etag
-    transform: >
-      $['x-ms-format'] = 'etag';
   - from: swagger-document
     where: $.definitions
     transform: >

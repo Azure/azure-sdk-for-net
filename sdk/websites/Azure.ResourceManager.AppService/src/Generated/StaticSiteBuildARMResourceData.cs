@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the StaticSiteBuildARMResource data model. </summary>
-    public partial class StaticSiteBuildARMResourceData : ProxyOnlyResource
+    public partial class StaticSiteBuildARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
         public StaticSiteBuildARMResourceData()
@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="buildId"> An identifier for the static site build. </param>
         /// <param name="sourceBranch"> The source branch. </param>
         /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>

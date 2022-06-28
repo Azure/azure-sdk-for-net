@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
-    public partial class AppServiceEnvironmentPatch : ProxyOnlyResource
+    public partial class AppServiceEnvironmentPatch : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
         public AppServiceEnvironmentPatch()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>

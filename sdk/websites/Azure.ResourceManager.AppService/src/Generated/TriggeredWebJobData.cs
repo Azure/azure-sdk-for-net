@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the TriggeredWebJob data model. </summary>
-    public partial class TriggeredWebJobData : ProxyOnlyResource
+    public partial class TriggeredWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
         public TriggeredWebJobData()
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="latestRun"> Latest job run information. </param>
         /// <param name="historyUri"> History URL. </param>
         /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.AppService
             PublicNetworkAccess = publicNetworkAccess;
             StorageAccountRequired = storageAccountRequired;
             Settings = settings;
+            Kind = kind;
         }
 
         /// <summary> Latest job run information. </summary>
@@ -80,5 +80,7 @@ namespace Azure.ResourceManager.AppService
         public bool? StorageAccountRequired { get; set; }
         /// <summary> Job settings. </summary>
         public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

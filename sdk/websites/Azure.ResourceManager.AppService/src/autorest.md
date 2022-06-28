@@ -15,6 +15,7 @@ tag: package-2022-03
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
+  flatten-payloads: false
   lenient-model-deduplication: true
   naming:
     override:
@@ -35,8 +36,6 @@ modelerfour:
       Status: OperationStatus
       DetectorResponse: AppServiceDetector
       DetectorDefinitionResource: DetectorDefinition
-    
-output-folder: ./Generated
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -104,6 +103,16 @@ override-operation-name:
 
 no-property-type-replacement:
 - ApiManagementConfig
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- StackPreferredOS
 
 rename-rules:
   CPU: Cpu

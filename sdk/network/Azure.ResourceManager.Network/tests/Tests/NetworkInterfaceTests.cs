@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkInterfaceIPConfigurationResource> listNicIPConfigurationsAP = networkInterfaceOperations.GetNetworkInterfaceIPConfigurations().GetAllAsync();
             List<NetworkInterfaceIPConfigurationResource> listNicIPConfigurations = await listNicIPConfigurationsAP.ToEnumerableAsync();
             Assert.AreEqual(ipConfigName, listNicIPConfigurations.First().Data.Name);
-            Assert.NotNull(listNicIPConfigurations.First().Data.Etag);
+            Assert.NotNull(listNicIPConfigurations.First().Data.ETag);
 
             // Verify Get IpConfiguration in NetworkInterface
             // TODO: Update after ADO 5975
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
-            Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.ETag, getListNicResponse.First().Data.ETag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].ETag, getListNicResponse.First().Data.IPConfigurations[0].ETag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
-            Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].Etag, getListNicResponse.First().Data.IPConfigurations[1].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.ETag, getListNicResponse.First().Data.ETag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].ETag, getListNicResponse.First().Data.IPConfigurations[0].ETag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].ETag, getListNicResponse.First().Data.IPConfigurations[1].ETag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.Network.Tests
             AsyncPageable<NetworkInterfaceResource> getListNicResponseAP = networkInterfaceCollection.GetAllAsync();
             List<NetworkInterfaceResource> getListNicResponse = await getListNicResponseAP.ToEnumerableAsync();
             Assert.AreEqual(getNicResponse.Value.Data.Name, getListNicResponse.First().Data.Name);
-            Assert.AreEqual(getNicResponse.Value.Data.Etag, getListNicResponse.First().Data.Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].Etag, getListNicResponse.First().Data.IPConfigurations[0].Etag);
-            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].Etag, getListNicResponse.First().Data.IPConfigurations[1].Etag);
+            Assert.AreEqual(getNicResponse.Value.Data.ETag, getListNicResponse.First().Data.ETag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[0].ETag, getListNicResponse.First().Data.IPConfigurations[0].ETag);
+            Assert.AreEqual(getNicResponse.Value.Data.IPConfigurations[1].ETag, getListNicResponse.First().Data.IPConfigurations[1].ETag);
 
             // Get all Nics in subscription
             AsyncPageable<NetworkInterfaceResource> listNicSubscriptionAP = _subscription.GetNetworkInterfacesAsync();

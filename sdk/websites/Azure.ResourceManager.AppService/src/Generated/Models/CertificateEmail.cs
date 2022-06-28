@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             EmailId = emailId;
             TimeStamp = timeStamp;
+            Kind = kind;
         }
 
         /// <summary> Email id. </summary>

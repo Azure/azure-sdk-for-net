@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service plan. </summary>
-    public partial class AppServicePlanPatch : ProxyOnlyResource
+    public partial class AppServicePlanPatch : ResourceData
     {
         /// <summary> Initializes a new instance of AppServicePlanPatch. </summary>
         public AppServicePlanPatch()
@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
         /// <param name="status"> App Service plan status. </param>
         /// <param name="subscription"> App Service plan subscription. </param>
@@ -79,12 +78,13 @@ namespace Azure.ResourceManager.AppService.Models
             ProvisioningState = provisioningState;
             KubeEnvironmentProfile = kubeEnvironmentProfile;
             ZoneRedundant = zoneRedundant;
+            Kind = kind;
         }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
-        public StatusOptions? Status { get; }
+        public StatusOption? Status { get; }
         /// <summary> App Service plan subscription. </summary>
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
@@ -133,5 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

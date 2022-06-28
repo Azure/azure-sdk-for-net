@@ -15,8 +15,16 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
 override-operation-name:
   CheckNameAvailability: CheckLedgerNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -44,9 +52,7 @@ directive:
   - from: confidentialledger.json
     where: $.definitions
     transform: >
-      $.ResourceLocation.properties.location['x-ms-format'] = 'azure-location';
       $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
-      $.AADBasedSecurityPrincipal.properties.tenantId['format'] = 'uuid';
   - from: types.json
     where: $.definitions
     transform: >

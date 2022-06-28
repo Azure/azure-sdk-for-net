@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Tags associated with resource. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Azure resource manager plan. </summary>

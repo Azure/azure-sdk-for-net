@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="platform"> The configuration settings of the platform of App Service Authentication/Authorization. </param>
         /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </param>
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
@@ -37,6 +36,7 @@ namespace Azure.ResourceManager.AppService
             IdentityProviders = identityProviders;
             Login = login;
             HttpSettings = httpSettings;
+            Kind = kind;
         }
 
         /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
@@ -49,5 +49,7 @@ namespace Azure.ResourceManager.AppService
         public LoginInformation Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
         public HttpSettings HttpSettings { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

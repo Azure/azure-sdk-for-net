@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator @operator)
+        /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
+        public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            SocketAddressOperator = socketAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            SocketAddressOperator = socketAddressOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public SocketAddressMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public SocketAddressOperator Operator { get; set; }
+        public SocketAddressOperator SocketAddressOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

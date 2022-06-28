@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator @operator)
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
+        public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            RequestSchemeOperator = requestSchemeOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
         }
 
         /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator @operator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues)
+        internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public RequestSchemeMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public RequestSchemeOperator Operator { get; set; }
+        public RequestSchemeOperator RequestSchemeOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> List of transforms. </summary>

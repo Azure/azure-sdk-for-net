@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> ruleSetName = default;
             Optional<int> order = default;
             Optional<IList<DeliveryRuleCondition>> conditions = default;
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -177,7 +182,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorRuleData(id, name, type, systemData, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

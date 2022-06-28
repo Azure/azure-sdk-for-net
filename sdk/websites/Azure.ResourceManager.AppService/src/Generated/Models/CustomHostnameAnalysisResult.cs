@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Custom domain analysis. </summary>
-    public partial class CustomHostnameAnalysisResult : ProxyOnlyResource
+    public partial class CustomHostnameAnalysisResult : ResourceData
     {
         /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
         public CustomHostnameAnalysisResult()
@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
         /// <param name="customDomainVerificationFailureInfo"> Raw failure information if DNS verification fails. </param>
@@ -54,6 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             ARecords = aRecords;
             AlternateCNameRecords = alternateCNameRecords;
             AlternateTxtRecords = alternateTxtRecords;
+            Kind = kind;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -78,5 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<string> AlternateCNameRecords { get; }
         /// <summary> Alternate TXT records controller can see for this hostname. </summary>
         public IList<string> AlternateTxtRecords { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

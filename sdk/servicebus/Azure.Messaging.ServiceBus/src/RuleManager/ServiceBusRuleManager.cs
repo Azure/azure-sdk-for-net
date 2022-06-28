@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Administration;
@@ -63,6 +64,13 @@ namespace Azure.Messaging.ServiceBus
         internal readonly TransportRuleManager InnerRuleManager;
 
         /// <summary>
+        /// Responsible for creating entity scopes.
+        /// </summary>
+        private readonly EntityScopeFactory _scopeFactory;
+
+        private const int MaxRulesPerRequest = 100;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusRuleManager"/> class.
         /// </summary>
         ///
@@ -85,6 +93,7 @@ namespace Azure.Messaging.ServiceBus
                 subscriptionPath: SubscriptionPath,
                 retryPolicy: connection.RetryOptions.ToRetryPolicy(),
                 identifier: Identifier);
+            _scopeFactory = new EntityScopeFactory(subscriptionPath, _connection.FullyQualifiedNamespace);
         }
 
         /// <summary>
@@ -142,15 +151,21 @@ namespace Azure.Messaging.ServiceBus
             EntityNameFormatter.CheckValidRuleName(options.Name);
             ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
 
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.CreateRuleActivityName,
+                DiagnosticScope.ActivityKind.Client);
+            scope.Start();
+
             try
             {
-                await InnerRuleManager.AddRuleAsync(
+                await InnerRuleManager.CreateRuleAsync(
                     new RuleProperties(options),
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 ServiceBusEventSource.Log.CreateRuleException(Identifier, exception.ToString(), options.Name);
+                scope.Failed(exception);
                 throw;
             }
 
@@ -175,15 +190,21 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
 
+            using DiagnosticScope scope = _scopeFactory.CreateScope(
+                DiagnosticProperty.DeleteRuleActivityName,
+                DiagnosticScope.ActivityKind.Client);
+            scope.Start();
+
             try
             {
-                await InnerRuleManager.RemoveRuleAsync(
+                await InnerRuleManager.DeleteRuleAsync(
                     ruleName,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
                 ServiceBusEventSource.Log.DeleteRuleException(Identifier, exception.ToString(), ruleName);
+                scope.Failed(exception);
                 throw;
             }
 
@@ -206,24 +227,33 @@ namespace Azure.Messaging.ServiceBus
             while (!cancellationToken.IsCancellationRequested)
             {
                 List<RuleProperties> ruleProperties;
-                try
+                using (DiagnosticScope scope = _scopeFactory.CreateScope(
+                    DiagnosticProperty.GetRulesActivityName,
+                    DiagnosticScope.ActivityKind.Client))
                 {
-                    ruleProperties = await InnerRuleManager.GetRulesAsync(skip, cancellationToken).ConfigureAwait(false);
+                    scope.Start();
+                    try
+                    {
+                        ruleProperties = await InnerRuleManager.GetRulesAsync(skip, MaxRulesPerRequest, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception exception)
+                    {
+                        ServiceBusEventSource.Log.GetRulesException(Identifier, exception.ToString());
+                        scope.Failed(exception);
+                        throw;
+                    }
                 }
-                catch (Exception exception)
-                {
-                    ServiceBusEventSource.Log.GetRulesException(Identifier, exception.ToString());
-                    throw;
-                }
+
                 skip += ruleProperties.Count;
-                if (ruleProperties.Count == 0)
-                {
-                    break;
-                }
 
                 foreach (var rule in ruleProperties)
                 {
                     yield return rule;
+                }
+
+                if (ruleProperties.Count < MaxRulesPerRequest)
+                {
+                    break;
                 }
             }
 

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "273",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-52e0c97538c0e3514bc76985f7714002-0ead33469d6b897c-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220610.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "52bf40d46608c78b2042810f43f6a934",
+        "traceparent": "00-3e748aa91b963775926ad470855af704-439bf21ca8ec8ccc-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "444f37c5e5258f9549370ce34cdafd09",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "97067e7f-bae6-4826-af60-6fd4765d369b",
+        "apim-request-id": "aa28273d-24b3-41fd-ad83-6d5d961ff349",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Fri, 10 Jun 2022 22:53:53 GMT",
+        "Date": "Tue, 14 Jun 2022 20:30:58 GMT",
         "Pragma": "no-cache",
-        "request-id": "97067e7f-bae6-4826-af60-6fd4765d369b",
+        "request-id": "aa28273d-24b3-41fd-ad83-6d5d961ff349",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "150"
+        "x-envoy-upstream-service-time": "171"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -120,8 +120,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-06-11",
-                            "value": "2022-06-11"
+                            "timex": "2022-06-15",
+                            "value": "2022-06-15"
                           }
                         ],
                         "extraInformation": [
@@ -154,6 +154,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "2105049769"
+    "RandomSeed": "723783239"
   }
 }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> message = default;
             Optional<bool> failed = default;
             Optional<IList<VnetValidationTestFailure>> failedTests = default;
@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VnetValidationFailureDetails(id, name, type, systemData, kind.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings));
+            return new VnetValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings), kind.Value);
         }
     }
 }

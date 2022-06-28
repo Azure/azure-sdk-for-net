@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AseV3NetworkingConfiguration data model. </summary>
-    public partial class AseV3NetworkingConfigurationData : ProxyOnlyResource
+    public partial class AseV3NetworkingConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
         public AseV3NetworkingConfigurationData()
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="windowsOutboundIPAddresses"></param>
         /// <param name="linuxOutboundIPAddresses"></param>
         /// <param name="externalInboundIPAddresses"></param>

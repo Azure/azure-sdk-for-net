@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<TriggeredJobRun> latestRun = default;
             Optional<Uri> historyUrl = default;
             Optional<Uri> schedulerLogsUrl = default;
@@ -143,6 +143,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }

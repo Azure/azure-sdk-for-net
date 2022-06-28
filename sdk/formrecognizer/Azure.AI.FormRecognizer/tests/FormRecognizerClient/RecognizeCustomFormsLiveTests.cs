@@ -32,7 +32,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);

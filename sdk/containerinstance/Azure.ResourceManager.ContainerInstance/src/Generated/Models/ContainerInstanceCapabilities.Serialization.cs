@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,17 +14,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceCapabilities DeserializeContainerInstanceCapabilities(JsonElement element)
         {
+            Optional<string> resourceType = default;
             Optional<string> osType = default;
             Optional<AzureLocation> location = default;
             Optional<string> ipAddressType = default;
             Optional<string> gpu = default;
             Optional<Capabilities> capabilities = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("resourceType"))
+                {
+                    resourceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("osType"))
                 {
                     osType = property.Value.GetString();
@@ -61,28 +62,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     capabilities = Capabilities.DeserializeCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
             }
-            return new ContainerInstanceCapabilities(id, name, type, systemData, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
+            return new ContainerInstanceCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
         }
     }
 }

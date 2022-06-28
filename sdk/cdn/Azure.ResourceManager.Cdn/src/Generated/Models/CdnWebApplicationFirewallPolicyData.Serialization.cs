@@ -20,21 +20,24 @@ namespace Azure.ResourceManager.Cdn
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -67,18 +70,18 @@ namespace Azure.ResourceManager.Cdn
         {
             Optional<ETag> etag = default;
             CdnSku sku = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<PolicySettings> policySettings = default;
+            Optional<SystemData> systemData = default;
+            Optional<WafPolicySettings> policySettings = default;
             Optional<RateLimitRuleList> rateLimitRules = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
             Optional<IReadOnlyList<SubResource>> endpointLinks = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
             Optional<PolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -99,6 +102,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -129,6 +137,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -148,7 +161,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policySettings = PolicySettings.DeserializePolicySettings(property0.Value);
+                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rateLimitRules"))
@@ -203,7 +216,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new WebApplicationFirewallPolicyProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -220,7 +233,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData, tags, location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
         }
     }
 }

@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> workerTierName = default;
-            Optional<StatusOptions> status = default;
+            Optional<StatusOption> status = default;
             Optional<string> subscription = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<int> maximumNumberOfWorkers = default;
@@ -157,6 +157,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -181,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStatusOptions();
+                            status = property0.Value.GetString().ToStatusOption();
                             continue;
                         }
                         if (property0.NameEquals("subscription"))

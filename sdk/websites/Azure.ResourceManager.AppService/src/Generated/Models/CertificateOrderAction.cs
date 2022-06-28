@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             ActionType = actionType;
             CreatedOn = createdOn;
+            Kind = kind;
         }
 
         /// <summary> Action type. </summary>
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

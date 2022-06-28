@@ -137,19 +137,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
                     Console.WriteLine();
 
-                    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+                    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
                     {
-                        continue;
-                    }
-
-                    foreach (JsonElement resolution in resolutions.EnumerateArray())
-                    {
-                        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                        foreach (JsonElement resolution in resolutions.EnumerateArray())
                         {
-                            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-                            Console.WriteLine();
+                            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                            {
+                                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                                Console.WriteLine();
+                            }
                         }
                     }
                 }
@@ -215,13 +213,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
-            string projectName = "DomainOrchestrator";
-            string deploymentName = "production";
-#if !SNIPPET
-            projectName = TestEnvironment.OrchestrationProjectName;
-            deploymentName = TestEnvironment.OrchestrationDeploymentName;
-#endif
+            string projectName = TestEnvironment.OrchestrationProjectName;
+            string deploymentName = TestEnvironment.OrchestrationDeploymentName;
 
             var data = new
             {
@@ -245,6 +238,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 kind = "Conversation",
             };
 
+            #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
@@ -331,19 +325,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
                     Console.WriteLine();
 
-                    if (!entity.TryGetProperty("resolutions", out JsonElement resolutions))
+                    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
                     {
-                        continue;
-                    }
-
-                    foreach (JsonElement resolution in resolutions.EnumerateArray())
-                    {
-                        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                        foreach (JsonElement resolution in resolutions.EnumerateArray())
                         {
-                            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
-                            Console.WriteLine();
+                            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                            {
+                                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                                Console.WriteLine();
+                            }
                         }
                     }
                 }

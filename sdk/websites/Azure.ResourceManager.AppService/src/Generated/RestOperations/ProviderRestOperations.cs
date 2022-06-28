@@ -188,8 +188,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationAsync(string location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var message = CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -214,8 +212,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocation(string location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var message = CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -261,8 +257,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationAsync(string location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var message = CreateGetWebAppStacksForLocationRequest(location, stackOSType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -287,8 +281,6 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WebAppStackCollection> GetWebAppStacksForLocation(string location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var message = CreateGetWebAppStacksForLocationRequest(location, stackOSType);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -646,7 +638,6 @@ namespace Azure.ResourceManager.AppService
         public async Task<Response<FunctionAppStackCollection>> GetFunctionAppStacksForLocationNextPageAsync(string nextLink, string location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             using var message = CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -674,7 +665,6 @@ namespace Azure.ResourceManager.AppService
         public Response<FunctionAppStackCollection> GetFunctionAppStacksForLocationNextPage(string nextLink, string location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             using var message = CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
             _pipeline.Send(message, cancellationToken);
@@ -716,7 +706,6 @@ namespace Azure.ResourceManager.AppService
         public async Task<Response<WebAppStackCollection>> GetWebAppStacksForLocationNextPageAsync(string nextLink, string location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             using var message = CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -744,7 +733,6 @@ namespace Azure.ResourceManager.AppService
         public Response<WebAppStackCollection> GetWebAppStacksForLocationNextPage(string nextLink, string location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             using var message = CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
             _pipeline.Send(message, cancellationToken);

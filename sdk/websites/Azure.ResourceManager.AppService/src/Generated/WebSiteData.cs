@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the WebSite data model. </summary>
-    public partial class WebSiteData : AppServiceResource
+    public partial class WebSiteData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WebSiteData. </summary>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="state"> Current state of the app. </param>
@@ -150,6 +149,7 @@ namespace Azure.ResourceManager.AppService
             StorageAccountRequired = storageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
+            Kind = kind;
         }
 
         /// <summary> Managed service identity. </summary>
@@ -266,5 +266,7 @@ namespace Azure.ResourceManager.AppService
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
         public string VirtualNetworkSubnetId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocationReplicaCount"> The number of replicas of the Image Version to be created per extended location. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, StorageAccountType? storageAccountType, EncryptionImages encryption)
+        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption)
         {
             Name = name;
             ExtendedLocation = extendedLocation;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The number of replicas of the Image Version to be created per extended location. This property is updatable. </summary>
         public int? ExtendedLocationReplicaCount { get; set; }
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public ImageStorageAccountType? StorageAccountType { get; set; }
         /// <summary> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </summary>
         public EncryptionImages Encryption { get; set; }
     }

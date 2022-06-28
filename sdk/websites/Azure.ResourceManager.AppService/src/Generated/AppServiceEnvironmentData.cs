@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceEnvironment data model. </summary>
-    public partial class AppServiceEnvironmentData : AppServiceResource
+    public partial class AppServiceEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>

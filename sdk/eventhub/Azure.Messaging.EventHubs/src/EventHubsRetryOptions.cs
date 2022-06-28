@@ -29,6 +29,8 @@ namespace Azure.Messaging.EventHubs
         ///   The approach to use for calculating retry delays.
         /// </summary>
         ///
+        /// <value>The default retry mode is <see cref="EventHubsRetryMode.Exponential"/>.</value>
+        ///
         public EventHubsRetryMode Mode { get; set; } = EventHubsRetryMode.Exponential;
 
         /// <summary>

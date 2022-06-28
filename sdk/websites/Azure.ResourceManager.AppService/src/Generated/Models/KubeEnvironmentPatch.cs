@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a KubeEnvironment when patching. </summary>
-    public partial class KubeEnvironmentPatch : ProxyOnlyResource
+    public partial class KubeEnvironmentPatch : ResourceData
     {
         /// <summary> Initializes a new instance of KubeEnvironmentPatch. </summary>
         public KubeEnvironmentPatch()
@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="internalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
@@ -52,6 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
             AppLogsConfiguration = appLogsConfiguration;
             ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceId = aksResourceId;
+            Kind = kind;
         }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
@@ -80,5 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
         public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
         public string AksResourceId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the KubeEnvironment data model. </summary>
-    public partial class KubeEnvironmentData : AppServiceResource
+    public partial class KubeEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
@@ -61,6 +60,7 @@ namespace Azure.ResourceManager.AppService
             AppLogsConfiguration = appLogsConfiguration;
             ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceId = aksResourceId;
+            Kind = kind;
         }
 
         /// <summary> Extended Location. </summary>
@@ -93,5 +93,7 @@ namespace Azure.ResourceManager.AppService
         public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
         public string AksResourceId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

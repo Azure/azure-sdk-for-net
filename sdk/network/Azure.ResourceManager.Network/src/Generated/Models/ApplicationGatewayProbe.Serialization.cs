@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("path");
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Interval))
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("interval");
-                writer.WriteNumberValue(Interval.Value);
+                writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout");
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(UnhealthyThreshold))
             {
