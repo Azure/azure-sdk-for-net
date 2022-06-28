@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        internal PersistentBlobProvider _storage;
+        internal PersistentBlobProvider _blobProvider;
         private readonly string _instrumentationKey;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    _storage = new FileBlobProvider(options.StorageDirectory);
+                    _blobProvider = new FileBlobProvider(options.StorageDirectory);
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 result = IsSuccess(httpMessage);
 
-                if (result == ExportResult.Failure && _storage != null)
+                if (result == ExportResult.Failure && _blobProvider != null)
                 {
                     result = HandleFailures(httpMessage);
                 }
@@ -109,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 try
                 {
                     // TODO: Do we need more lease time?
-                    if (_storage.TryGetBlob(out var blob) && blob.TryLease(1000))
+                    if (_blobProvider.TryGetBlob(out var blob) && blob.TryLease(1000))
                     {
                         blob.TryRead(out var data);
                         using var httpMessage = async ?
@@ -164,7 +164,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                result = _blobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
             }
             else
             {
@@ -179,7 +179,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (content != null)
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            result = _storage.SaveTelemetry(content, retryInterval);
+                            result = _blobProvider.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
@@ -189,7 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        result = _storage.SaveTelemetry(content, retryInterval);
+                        result = _blobProvider.SaveTelemetry(content, retryInterval);
                         break;
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
@@ -197,7 +197,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
                         content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                        result = _blobProvider.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;
@@ -244,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                             blob.TryDelete();
-                            _storage.SaveTelemetry(content, retryInterval);
+                            _blobProvider.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
