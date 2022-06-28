@@ -24,7 +24,6 @@ pr:
     - sdk/eventhub/ci.mgmt.yml
     - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.ResourceManager.EventHubs
-    - sdk/resources/
     - sdk/resourcemanager/
     - sdk/network/
     - sdk/storage/
