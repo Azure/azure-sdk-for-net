@@ -76,8 +76,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceClassAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeviceClassAsync("<deviceClassId>");
         /// 
@@ -147,8 +146,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceClass with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDeviceClass("<deviceClassId>");
         /// 
@@ -218,8 +216,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeviceAsync("<deviceId>");
         /// 
@@ -331,8 +328,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDevice with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDevice("<deviceId>");
         /// 
@@ -445,8 +441,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceModuleAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeviceModuleAsync("<deviceId>", "<moduleId>");
         /// 
@@ -560,8 +555,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceModule with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDeviceModule("<deviceId>", "<moduleId>");
         /// 
@@ -671,8 +665,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdateComplianceAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetUpdateComplianceAsync();
         /// 
@@ -733,8 +726,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdateCompliance and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetUpdateCompliance();
         /// 
@@ -798,8 +790,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceTagAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeviceTagAsync("<tagName>");
         /// 
@@ -861,8 +852,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceTag with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDeviceTag("<tagName>");
         /// 
@@ -924,8 +914,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroupAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetGroupAsync("<groupId>");
         /// 
@@ -997,8 +986,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroup with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetGroup("<groupId>");
         /// 
@@ -1071,8 +1059,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateGroupAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     groupId = "<GroupId>",
@@ -1094,8 +1081,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateGroupAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     groupId = "<GroupId>",
@@ -1192,8 +1178,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateGroup with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     groupId = "<GroupId>",
@@ -1215,8 +1200,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateGroup with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     groupId = "<GroupId>",
@@ -1312,8 +1296,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteGroupAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.DeleteGroupAsync("<groupId>");
         /// Console.WriteLine(response.Status);
@@ -1366,8 +1349,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteGroup with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.DeleteGroup("<groupId>");
         /// Console.WriteLine(response.Status);
@@ -1420,8 +1402,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroupUpdateComplianceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetGroupUpdateComplianceAsync("<groupId>");
         /// 
@@ -1487,8 +1468,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroupUpdateCompliance with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetGroupUpdateCompliance("<groupId>");
         /// 
@@ -1555,8 +1535,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeploymentAsync("<groupId>", "<deploymentId>");
         /// 
@@ -1634,8 +1613,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDeployment("<groupId>", "<deploymentId>");
         /// 
@@ -1714,8 +1692,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateDeploymentAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deploymentId = "<DeploymentId>",
@@ -1741,8 +1718,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateDeploymentAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deploymentId = "<DeploymentId>",
@@ -1849,8 +1825,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateDeployment with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deploymentId = "<DeploymentId>",
@@ -1876,8 +1851,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CreateOrUpdateDeployment with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deploymentId = "<DeploymentId>",
@@ -1983,8 +1957,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteDeploymentAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.DeleteDeploymentAsync("<groupId>", "<deploymentId>");
         /// Console.WriteLine(response.Status);
@@ -2039,8 +2012,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteDeployment with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.DeleteDeployment("<groupId>", "<deploymentId>");
         /// Console.WriteLine(response.Status);
@@ -2095,8 +2067,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetDeploymentStatusAsync("<groupId>", "<deploymentId>");
         /// 
@@ -2168,8 +2139,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetDeploymentStatus("<groupId>", "<deploymentId>");
         /// 
@@ -2241,8 +2211,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>");
         /// 
@@ -2255,8 +2224,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>", null);
         /// 
@@ -2347,8 +2315,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperation with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetOperation("<operationId>");
         /// 
@@ -2361,8 +2328,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperation with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetOperation("<operationId>", null);
         /// 
@@ -2453,8 +2419,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CollectLogsAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deviceList = new[] {
@@ -2472,8 +2437,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CollectLogsAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     operationId = "<LogCollectionOperationId>",
@@ -2577,8 +2541,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CollectLogs with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     deviceList = new[] {
@@ -2596,8 +2559,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call CollectLogs with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = new {
         ///     operationId = "<LogCollectionOperationId>",
@@ -2700,8 +2662,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperationAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetLogCollectionOperationAsync("<operationId>");
         /// 
@@ -2777,8 +2738,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperation with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetLogCollectionOperation("<operationId>");
         /// 
@@ -2854,8 +2814,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperationDetailedStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.GetLogCollectionOperationDetailedStatusAsync("<operationId>");
         /// 
@@ -2939,8 +2898,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperationDetailedStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.GetLogCollectionOperationDetailedStatus("<operationId>");
         /// 
@@ -3026,8 +2984,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call StopDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.StopDeploymentAsync("<groupId>", "<deploymentId>", "<action>");
         /// 
@@ -3107,8 +3064,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call StopDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.StopDeployment("<groupId>", "<deploymentId>", "<action>");
         /// 
@@ -3188,8 +3144,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call RetryDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = await client.RetryDeploymentAsync("<groupId>", "<deploymentId>", "<action>");
         /// 
@@ -3269,8 +3224,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call RetryDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// Response response = client.RetryDeployment("<groupId>", "<deploymentId>", "<action>");
         /// 
@@ -3345,8 +3299,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceClassesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeviceClassesAsync())
         /// {
@@ -3424,8 +3377,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceClasses and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeviceClasses())
         /// {
@@ -3506,8 +3458,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetInstallableUpdatesForDeviceClassesAsync("<deviceClassId>"))
         /// {
@@ -3584,8 +3535,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetInstallableUpdatesForDeviceClasses with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetInstallableUpdatesForDeviceClasses("<deviceClassId>"))
         /// {
@@ -3660,8 +3610,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDevicesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDevicesAsync())
         /// {
@@ -3676,8 +3625,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDevicesAsync("<filter>"))
         /// {
@@ -3798,8 +3746,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDevices and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDevices())
         /// {
@@ -3814,8 +3761,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDevices with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDevices("<filter>"))
         /// {
@@ -3935,8 +3881,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceTagsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeviceTagsAsync())
         /// {
@@ -4006,8 +3951,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeviceTags and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeviceTags())
         /// {
@@ -4077,8 +4021,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroupsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetGroupsAsync())
         /// {
@@ -4158,8 +4101,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetGroups and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetGroups())
         /// {
@@ -4243,8 +4185,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>"))
         /// {
@@ -4258,8 +4199,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetBestUpdatesForGroupsAsync("<groupId>", "<filter>"))
         /// {
@@ -4341,8 +4281,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetBestUpdatesForGroups with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetBestUpdatesForGroups("<groupId>"))
         /// {
@@ -4356,8 +4295,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetBestUpdatesForGroups with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetBestUpdatesForGroups("<groupId>", "<filter>"))
         /// {
@@ -4439,8 +4377,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentsForGroupsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsForGroupsAsync("<groupId>"))
         /// {
@@ -4456,8 +4393,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentsForGroupsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsForGroupsAsync("<groupId>", "<filter>"))
         /// {
@@ -4547,8 +4483,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentsForGroups with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeploymentsForGroups("<groupId>"))
         /// {
@@ -4564,8 +4499,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentsForGroups with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeploymentsForGroups("<groupId>", "<filter>"))
         /// {
@@ -4656,8 +4590,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentDevicesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>"))
         /// {
@@ -4671,8 +4604,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentDevicesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetDeploymentDevicesAsync("<groupId>", "<deploymentId>", "<filter>"))
         /// {
@@ -4756,8 +4688,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentDevices with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeploymentDevices("<groupId>", "<deploymentId>"))
         /// {
@@ -4771,8 +4702,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetDeploymentDevices with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetDeploymentDevices("<groupId>", "<deploymentId>", "<filter>"))
         /// {
@@ -4853,8 +4783,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetOperationsAsync())
         /// {
@@ -4868,8 +4797,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetOperationsAsync("<filter>", 1234))
         /// {
@@ -4969,8 +4897,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperations and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetOperations())
         /// {
@@ -4984,8 +4911,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetOperations("<filter>", 1234))
         /// {
@@ -5083,8 +5009,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperationsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetLogCollectionOperationsAsync())
         /// {
@@ -5168,8 +5093,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetLogCollectionOperations and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetLogCollectionOperations())
         /// {
@@ -5257,8 +5181,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call ImportDevicesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = "<Devices>";
         /// 
@@ -5317,8 +5240,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call ImportDevices with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var client = new DeviceManagementClient("<https://my-account-name.azure.com>", "<instanceId>", credential);
         /// 
         /// var data = "<Devices>";
         /// 

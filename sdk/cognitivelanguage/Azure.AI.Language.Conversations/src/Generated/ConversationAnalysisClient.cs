@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call AnalyzeConversationAsync with required request content and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call AnalyzeConversation with required request content and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call JobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Conversations
         /// ]]></code>
         /// This sample shows how to call JobStatusAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -323,7 +323,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call JobStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -342,7 +342,7 @@ namespace Azure.AI.Language.Conversations
         /// ]]></code>
         /// This sample shows how to call JobStatus with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -474,7 +474,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call SubmitJobAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -502,7 +502,7 @@ namespace Azure.AI.Language.Conversations
         /// ]]></code>
         /// This sample shows how to call SubmitJobAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -599,7 +599,7 @@ namespace Azure.AI.Language.Conversations
         /// <example>
         /// This sample shows how to call SubmitJob with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
@@ -627,7 +627,7 @@ namespace Azure.AI.Language.Conversations
         /// ]]></code>
         /// This sample shows how to call SubmitJob with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 

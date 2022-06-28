@@ -71,7 +71,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetProjectDetails with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -241,7 +241,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -339,7 +339,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -354,7 +354,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -451,7 +451,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -549,7 +549,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeleteStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -648,7 +648,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -750,7 +750,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetExportStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -852,7 +852,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -952,7 +952,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetImportStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1053,7 +1053,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1155,7 +1155,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeployStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1256,7 +1256,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateSynonymsAsync with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1267,7 +1267,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1342,7 +1342,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateSynonyms with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1353,7 +1353,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call UpdateSynonyms with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1428,7 +1428,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1528,7 +1528,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1628,7 +1628,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1728,7 +1728,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1828,7 +1828,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call AddFeedbackAsync with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1839,7 +1839,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call AddFeedbackAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1916,7 +1916,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call AddFeedback with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -1927,7 +1927,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call AddFeedback with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2003,7 +2003,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetProjectsAsync and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2015,7 +2015,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2103,7 +2103,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetProjects and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2115,7 +2115,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2206,7 +2206,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2218,7 +2218,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2297,7 +2297,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetDeployments with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2309,7 +2309,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2388,7 +2388,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2400,7 +2400,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2477,7 +2477,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetSynonyms with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2489,7 +2489,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2566,7 +2566,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetSourcesAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2578,7 +2578,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2665,7 +2665,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetSources with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2677,7 +2677,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetSources with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2765,7 +2765,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetQnasAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2777,7 +2777,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2913,7 +2913,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call GetQnas with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -2925,7 +2925,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call GetQnas with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3058,7 +3058,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call DeleteProjectAsync with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3115,7 +3115,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call DeleteProject with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3174,7 +3174,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call ExportAsync with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3191,7 +3191,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call ExportAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3295,7 +3295,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call Export with required parameters and parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3312,7 +3312,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call Export with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3417,7 +3417,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call ImportAsync with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3430,7 +3430,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call ImportAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3632,7 +3632,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call Import with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3645,7 +3645,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// ]]></code>
         /// This sample shows how to call Import with all parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3845,7 +3845,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call DeployProjectAsync with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3904,7 +3904,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call DeployProject with required parameters.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -3963,7 +3963,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateSourcesAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -4049,7 +4049,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateSources with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -4135,7 +4135,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateQnasAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
@@ -4269,7 +4269,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <example>
         /// This sample shows how to call UpdateQnas with required parameters and request content.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
+        /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 

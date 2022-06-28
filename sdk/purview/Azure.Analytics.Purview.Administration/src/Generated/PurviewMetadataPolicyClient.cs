@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {};
         /// 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {
         ///     name = "<MetadataPolicyName>",
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {};
         /// 
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// var data = new {
         ///     name = "<MetadataPolicyName>",
@@ -442,7 +442,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// Response response = await client.GetMetadataPolicyAsync("<policyId>");
         /// 
@@ -542,7 +542,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// Response response = client.GetMetadataPolicy("<policyId>");
         /// 
@@ -639,7 +639,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// await foreach (var data in client.GetMetadataPoliciesAsync())
         /// {
@@ -747,7 +747,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new PurviewMetadataPolicyClient(endpoint, credential);
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
         /// foreach (var data in client.GetMetadataPolicies())
         /// {

@@ -68,8 +68,7 @@ namespace Azure.Template
         /// This sample shows how to call GetSecretAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new TemplateClient(endpoint, credential);
+        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
         /// 
         /// Response response = await client.GetSecretAsync("<secretName>");
         /// 
@@ -122,8 +121,7 @@ namespace Azure.Template
         /// This sample shows how to call GetSecret with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new TemplateClient(endpoint, credential);
+        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
         /// 
         /// Response response = client.GetSecret("<secretName>");
         /// 

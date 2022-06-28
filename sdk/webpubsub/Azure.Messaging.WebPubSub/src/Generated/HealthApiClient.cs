@@ -58,9 +58,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GetServiceStatusAsync.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new HealthApiClient(endpoint, credential);
+        /// var client = new HealthApiClient("<https://my-account-name.azure.com>");
         /// 
         /// Response response = await client.GetServiceStatusAsync();
         /// Console.WriteLine(response.Status);
@@ -87,9 +85,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GetServiceStatus.
         /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
-        /// var client = new HealthApiClient(endpoint, credential);
+        /// var client = new HealthApiClient("<https://my-account-name.azure.com>");
         /// 
         /// Response response = client.GetServiceStatus();
         /// Console.WriteLine(response.Status);
