@@ -136,11 +136,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private Uri ServiceEndpoint { get; }
 
         /// <summary>
-        ///   TODO.
-        /// </summary>
-        private Uri CustomConnectionEndpoint { get; }
-
-        /// <summary>
         ///   The provider to use for obtaining a token for authorization with the Service Bus service.
         /// </summary>
         private CbsTokenProvider TokenProvider { get; }
