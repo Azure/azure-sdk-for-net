@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                     Name = rgName + "-mrg"
                 };
 
-                resourceData.DatabaseProfile.ServerName = rgName;
+                resourceData.DatabaseProfile.ServerName = rgName.ToLower();
                 resourceData.CacheProfile.Name = rgName;
 
                 // Create
