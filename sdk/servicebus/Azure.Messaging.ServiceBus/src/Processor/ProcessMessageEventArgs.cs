@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath => _receiver.EntityPath;
 
         /// <summary>
-        /// The fully qualified namespace of the Service Bus namespace that the message was received from.
+        /// The fully qualified Service Bus namespace that the message was received from.
         /// </summary>
         public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
 
