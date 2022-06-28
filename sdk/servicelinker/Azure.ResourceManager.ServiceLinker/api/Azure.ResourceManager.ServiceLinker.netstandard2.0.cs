@@ -105,10 +105,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.AuthType left, Azure.ResourceManager.ServiceLinker.Models.AuthType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourcePropertiesBase
+    {
+        public AzureKeyVaultProperties() { }
+        public bool? ConnectAsKubernetesCsiDriver { get { throw null; } set { } }
+    }
     public partial class AzureResource : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase
     {
         public AzureResource() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.AzureResourcePropertiesBase ResourceProperties { get { throw null; } set { } }
+    }
+    public partial class AzureResourcePropertiesBase
+    {
+        public AzureResourcePropertiesBase() { }
     }
     public partial class ConfluentBootstrapServer : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase
     {

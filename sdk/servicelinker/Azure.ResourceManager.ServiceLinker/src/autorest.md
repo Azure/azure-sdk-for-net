@@ -18,7 +18,7 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -44,6 +44,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   VNet: Vnet
+  Etag: ETag
 
 directive:
   - from: servicelinker.json
