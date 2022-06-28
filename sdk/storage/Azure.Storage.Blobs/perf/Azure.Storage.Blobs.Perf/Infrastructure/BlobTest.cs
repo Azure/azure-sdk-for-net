@@ -7,6 +7,8 @@ using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf
 {
+    test compile error
+
     public abstract class BlobTest<TOptions> : ContainerTest<TOptions> where TOptions : SizeOptions
     {
         protected string BlobName { get; } = $"Azure.Storage.Blobs.Perf.BlobTest-{Guid.NewGuid()}";
