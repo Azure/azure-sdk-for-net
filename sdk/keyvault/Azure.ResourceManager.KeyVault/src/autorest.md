@@ -28,6 +28,9 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+no-property-type-replacement:
+- ManagedHsmVirtualNetworkRule
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
