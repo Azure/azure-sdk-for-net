@@ -21,6 +21,9 @@ list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
 
+no-property-type-replacement:
+- ManagedHsmVirtualNetworkRule
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
