@@ -14,7 +14,7 @@ parameters:
   default: '$(Build.SourcesDirectory)/eng/.docsettings.yml'
 - name: DocWardenVersion
   type: string
-  default: '0.7.2'
+  default: ''
 
 steps:
 - task: PowerShell@2
@@ -22,9 +22,8 @@ steps:
   inputs:
     filePath: "eng/common/scripts/Verify-Readme.ps1"
     arguments: >
-      -DocWardenVersion ${{ parameters.DocWardenVersion }}
-      -ScanPath ${{ parameters.ScanPath }}
-      -ScanPaths '${{ parameters.ScanPaths }}'
+      -DocWardenVersion '${{ parameters.DocWardenVersion }}''
+      -ScanPaths '${{ coalesce(parameters.ScanPath, parameters.ScanPaths) }}'
       -RepoRoot ${{ parameters.RepoRoot }}
       -SettingsPath ${{ parameters.SettingsPath }}
     pwsh: true

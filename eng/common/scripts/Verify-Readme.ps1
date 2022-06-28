@@ -4,13 +4,12 @@ param (
   [Parameter(Mandatory = $false)]
   [string]$DocWardenVersion,
   [string]$RepoRoot,
-  [string]$ScanPath,
-  [AllowEmptyCollection()]
-  [array] $ScanPaths,
+  [string]$ScanPaths,
   [Parameter(Mandatory = $true)]
   [string]$SettingsPath
 )
 . (Join-Path $PSScriptRoot common.ps1)
+$DefaultDocWardenVersion = "0.7.2"
 $script:FoundError = $false
 
 function Test-Readme-Files {
@@ -41,8 +40,7 @@ function Test-Readme-Files {
 
 # Verify all of the inputs before running anything
 if ([String]::IsNullOrWhiteSpace($DocWardenVersion)) {
-  LogError "DocWardenVersion cannot be null or empty"
-  $script:FoundError = $true
+  $DocWardenVersion = $DefaultDocWardenVersion
 }
 
 # verify the doc settings file exists
@@ -52,12 +50,15 @@ if (!(Test-Path -Path $SettingsPath -PathType leaf)) {
 }
 
 # Verify that either ScanPath or ScanPaths were set but not both or neither
-if (![String]::IsNullOrWhiteSpace($ScanPath) -and $ScanPaths.Count -gt 0) {
-  LogError "Only ScanPath or ScanPaths can be set but not both."
-  $script:FoundError = $true
-} elseif ([String]::IsNullOrWhiteSpace($ScanPath) -and $ScanPaths.Count -eq 0) {
-  LogError "ScanPath or ScanPaths, one or the other, must be set."
-  $script:FoundError = $true
+if ([String]::IsNullOrWhiteSpace($ScanPaths)) {
+  LogError "ScanPaths cannot be empty."
+} else {
+  foreach ($path in $ScanPaths.Split(',')) {
+    if (!(Test-Path -Path $path -PathType Container)) {
+      LogError "path, $path, doesn't exist or isn't a directory"
+      $script:FoundError = $true
+    }
+  }
 }
 
 # Exit out now if there were any argument issues
@@ -73,16 +74,8 @@ Write-Host "SettingsPath=$SettingsPath"
 if ($RepoRoot) {
   Write-Host "RepoRoot=$RepoRoot"
 }
-if (![String]::IsNullOrWhiteSpace($ScanPath)) {
-  Write-Host "ScanPath=$ScanPath"
-}
-if ($ScanPaths.Count -gt 0) {
-  Write-Host "ScanPaths="
-  foreach ($path in $ScanPaths) {
-    Write-Host "  $path"
-  }
-}
 
+Write-Host "ScanPath=$ScanPaths"
 
 Write-Host "Installing setup tools and DocWarden"
 Write-Host "pip install setuptools wheel --quiet"
@@ -99,12 +92,8 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Finally, do the scanning
-if ($ScanPaths.Count -gt 0) {
-  foreach ($path in $ScanPaths) {
-    Test-Readme-Files $SettingsPath $path $RepoRoot
-  }
-} else {
-  Test-Readme-Files $SettingsPath $ScanPath $RepoRoot
+foreach ($path in $ScanPaths.Split(',')) {
+  Test-Readme-Files $SettingsPath $path $RepoRoot
 }
 
 if ($script:FoundError) {
