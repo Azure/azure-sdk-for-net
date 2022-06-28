@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Azure.Storage.Sas;
-using Castle.Core.Internal;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -114,7 +114,7 @@ namespace Azure.Storage.Test.Shared
         internal static void ValidateAndRawTypes(string rawString,
             List<char> validCharacters)
         {
-            if (rawString.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(rawString))
             {
                 throw new ArgumentException($"{rawString} is empty or null, pass valid type");
             }
@@ -166,11 +166,11 @@ namespace Azure.Storage.Test.Shared
             string stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 // Use Permissions if the CustomPermissions is not used
-                CustomSignedPermissions.IsNullOrEmpty() ? Permissions : CustomSignedPermissions,
+                string.IsNullOrEmpty(CustomSignedPermissions) ? Permissions : CustomSignedPermissions,
                 // Use Services if the services is not used
-                CustomSignedServices.IsNullOrEmpty() ? Services.ToString() : CustomSignedServices,
+                string.IsNullOrEmpty(CustomSignedServices) ? Services.ToPermissionsString() : CustomSignedServices,
                 // Use ResourceTypes if the CustomResourceTypes is not used
-                CustomResourceTypes.IsNullOrEmpty() ? ResourceTypes.ToString() : CustomResourceTypes,
+                string.IsNullOrEmpty(CustomResourceTypes) ? ResourceTypes.ToPermissionsString() : CustomResourceTypes,
                 startTime,
                 expiryTime,
                 IPRange.ToString(),
@@ -182,15 +182,15 @@ namespace Azure.Storage.Test.Shared
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
             TestSasQueryParameters sasQueryParameters = new TestSasQueryParameters(
                 Version,
-                CustomSignedServices.IsNullOrEmpty() ? Services.ToString() : CustomSignedServices,
-                CustomResourceTypes.IsNullOrEmpty() ? ResourceTypes.ToString() : CustomResourceTypes,
+                string.IsNullOrEmpty(CustomSignedServices) ? Services.ToPermissionsString() : CustomSignedServices,
+                string.IsNullOrEmpty(CustomResourceTypes) ? ResourceTypes.ToPermissionsString() : CustomResourceTypes,
                 Protocol,
                 StartsOn,
                 ExpiresOn,
                 IPRange,
                 identifier: null,
                 resource: null,
-                CustomSignedPermissions.IsNullOrEmpty() ? Permissions : CustomSignedPermissions,
+                string.IsNullOrEmpty(CustomSignedPermissions) ? Permissions : CustomSignedPermissions,
                 signature,
                 encryptionScope: EncryptionScope);
             return sasQueryParameters;
