@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.5 (2022-06-28)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Prepended RP name `WebPubSub` to Private Endpoint related classes.
+- Changed `Location` property/parameter type from `string` to `AzureLocation`.
+- Changed `TenantId` property type from `string` to `Guid`.
 
-### Other Changes
+### Features Added
+
+- Added `Update` methods for Resource classes.
 
 ## 1.0.0-beta.4 (2022-04-08)
 
