@@ -13,13 +13,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters. </summary>
         public AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters()
         {
-            UdfType = "Scalar";
             BindingType = "Microsoft.MachineLearning/WebService";
         }
 
         /// <summary> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </summary>
         public string ExecuteEndpoint { get; set; }
         /// <summary> The function type. </summary>
-        public string UdfType { get; set; }
+        public UdfType? UdfType { get; set; }
     }
 }

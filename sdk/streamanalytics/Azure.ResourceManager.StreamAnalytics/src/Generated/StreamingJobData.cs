@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="transformation"> Indicates the query and the number of streaming units to use for the streaming job. The name property of the transformation is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual transformation. </param>
         /// <param name="outputs"> A list of one or more outputs for the streaming job. The name property for each output is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual output. </param>
         /// <param name="functions"> A list of one or more functions for the streaming job. The name property for each function is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual transformation. </param>
-        /// <param name="etag"> The current entity tag for the streaming job. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
+        /// <param name="eTag"> The current entity tag for the streaming job. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="jobStorageAccount"> The properties that are associated with an Azure Storage account with MSI. </param>
         /// <param name="contentStoragePolicy"> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </param>
         /// <param name="externals"> The storage account where the custom code artifacts are located. </param>
         /// <param name="cluster"> The cluster which streaming jobs will run on. </param>
-        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedIdentity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, ExternalStorageAccount externals, WritableSubResource cluster) : base(id, name, resourceType, systemData, tags, location)
+        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedIdentity identity, StreamAnalyticsSku sku, string jobId, string provisioningState, string jobState, JobType? jobType, OutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, OutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, string dataLocale, CompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? eTag, JobStorageAccount jobStorageAccount, ContentStoragePolicy? contentStoragePolicy, ExternalStorageAccount externals, WritableSubResource cluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Transformation = transformation;
             Outputs = outputs;
             Functions = functions;
-            Etag = etag;
+            ETag = eTag;
             JobStorageAccount = jobStorageAccount;
             ContentStoragePolicy = contentStoragePolicy;
             Externals = externals;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> A list of one or more functions for the streaming job. The name property for each function is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual transformation. </summary>
         public IList<StreamingJobFunctionData> Functions { get; }
         /// <summary> The current entity tag for the streaming job. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The properties that are associated with an Azure Storage account with MSI. </summary>
         public JobStorageAccount JobStorageAccount { get; set; }
         /// <summary> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </summary>

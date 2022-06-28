@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType");
-                writer.WriteStringValue(UdfType);
+                writer.WriteStringValue(UdfType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

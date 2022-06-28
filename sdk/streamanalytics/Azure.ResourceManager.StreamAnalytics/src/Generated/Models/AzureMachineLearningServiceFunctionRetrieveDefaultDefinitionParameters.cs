@@ -13,13 +13,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters. </summary>
         public AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters()
         {
-            UdfType = "Scalar";
             BindingType = "Microsoft.MachineLearningServices";
         }
 
         /// <summary> The Request-Response execute endpoint of the Azure Machine Learning web service. </summary>
         public string ExecuteEndpoint { get; set; }
         /// <summary> The function type. </summary>
-        public string UdfType { get; set; }
+        public UdfType? UdfType { get; set; }
     }
 }

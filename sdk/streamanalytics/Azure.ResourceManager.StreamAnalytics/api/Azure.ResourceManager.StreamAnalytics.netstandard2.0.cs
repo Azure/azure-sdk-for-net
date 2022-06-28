@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamAnalyticsClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public StreamAnalyticsClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.ClusterProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.ClusterSku Sku { get { throw null; } set { } }
     }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamAnalyticsPrivateEndpointData : Azure.ResourceManager.Models.ResourceData
     {
         public StreamAnalyticsPrivateEndpointData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.PrivateEndpointProperties Properties { get { throw null; } set { } }
     }
     public partial class StreamAnalyticsPrivateEndpointResource : Azure.ResourceManager.ArmResource
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public Azure.ResourceManager.StreamAnalytics.Models.ContentStoragePolicy? ContentStoragePolicy { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DataLocale { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? EventsLateArrivalMaxDelayInSeconds { get { throw null; } set { } }
         public int? EventsOutOfOrderMaxDelayInSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy? EventsOutOfOrderPolicy { get { throw null; } set { } }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public StreamingJobOutputData() { }
         public Azure.ResourceManager.StreamAnalytics.Models.OutputDataSource Datasource { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.DiagnosticCondition> DiagnosticsConditions { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.LastOutputEventTimestamp> LastOutputEventTimestamps { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.Serialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamingJobTransformationData : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSubResource
     {
         public StreamingJobTransformationData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Query { get { throw null; } set { } }
         public int? StreamingUnits { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> ValidStreamingUnits { get { throw null; } }
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public FunctionProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.FunctionBinding Binding { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.FunctionInput> Inputs { get { throw null; } }
         public string OutputDataType { get { throw null; } set { } }
     }
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public InputProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.CompressionType? CompressionType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.DiagnosticCondition> DiagnosticsConditions { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PartitionKey { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.Serialization Serialization { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.InputWatermarkMode? WatermarkMode { get { throw null; } set { } }

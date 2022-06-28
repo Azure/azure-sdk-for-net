@@ -13,13 +13,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of CSharpFunctionRetrieveDefaultDefinitionParameters. </summary>
         public CSharpFunctionRetrieveDefaultDefinitionParameters()
         {
-            UdfType = "Scalar";
             BindingType = "Microsoft.StreamAnalytics/CLRUdf";
         }
 
         /// <summary> The CSharp code containing a single function definition. </summary>
         public string Script { get; set; }
         /// <summary> The function type. </summary>
-        public string UdfType { get; set; }
+        public UdfType? UdfType { get; set; }
     }
 }

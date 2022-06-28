@@ -13,13 +13,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of JavaScriptFunctionRetrieveDefaultDefinitionParameters. </summary>
         public JavaScriptFunctionRetrieveDefaultDefinitionParameters()
         {
-            UdfType = "Scalar";
             BindingType = "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
         /// <summary> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </summary>
         public string Script { get; set; }
         /// <summary> The function type. </summary>
-        public string UdfType { get; set; }
+        public UdfType? UdfType { get; set; }
     }
 }
