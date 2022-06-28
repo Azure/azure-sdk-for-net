@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuRestrictionInfo
+    public partial class ComputeResourceSkuRestrictionInfo
     {
-        internal static ResourceSkuRestrictionInfo DeserializeResourceSkuRestrictionInfo(JsonElement element)
+        internal static ComputeResourceSkuRestrictionInfo DeserializeComputeResourceSkuRestrictionInfo(JsonElement element)
         {
             Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> zones = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones));
+            return new ComputeResourceSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones));
         }
     }
 }

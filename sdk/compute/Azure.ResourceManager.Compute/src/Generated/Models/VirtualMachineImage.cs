@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDiskImage"> Contains the os disk image information. </param>
         /// <param name="dataDiskImages"> The list of data disk images information. </param>
         /// <param name="automaticOSUpgradeProperties"> Describes automatic OS upgrade properties on the image. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
+        /// <summary> Specifies the HyperVGeneration Type. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; set; }

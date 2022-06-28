@@ -97,33 +97,44 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
 
+rename-mapping:
+  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
+  ResourceSku: ComputeResourceSku
+  ResourceSkuCapacity: ComputeResourceSkuCapacity
+  ResourceSkuLocationInfo: ComputeResourceSkuLocationInfo
+  ResourceSkuRestrictions: ComputeResourceSkuRestrictions
+  ResourceSkuRestrictionInfo: ComputeResourceSkuRestrictionInfo
+  SubResource: ComputeWriteableSubResourceData
+  SubResourceReadOnly: ComputeSubResourceData
+  HyperVGenerationType: HyperVGeneration
+  HyperVGenerationTypes: HyperVGeneration
+  VirtualMachineExtension.properties.type: ExtensionType
+  VirtualMachineExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
+  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
+  OperatingSystemTypes: SupportedOperatingSystemType
+  VirtualMachineImageResource: VirtualMachineImageBase
+  RestorePointCollectionSourceProperties: RestorePointCollectionSource
+  RestorePointExpandOptions: RestorePointExpand
+  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
+  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
+  UpdateResource: ComputeUpdateResourceData
+  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
+  SshPublicKey: SshPublicKeyInfo
+  SshPublicKeyResource: SshPublicKey
+  LogAnalyticsOperationResult: LogAnalytics
+  PrivateLinkResource: ComputePrivateLinkResourceData
+
 directive:
-# transform enum values
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
-    transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[2]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: skus.json
-    where: $.definitions
-    transform: >
-      $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
-      $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
-      $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
-      $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
     where: $.definitions
     transform: >
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
-      $.ExtendedLocationType["x-ms-enum"].name = "ExtendedLocationType";
       $.SystemData = {
         "description": "Metadata pertaining to creation and last modification of the resource.",
         "type": "object",
@@ -181,60 +192,27 @@ directive:
     where: $.definitions
     transform: >
       $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
-      $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
-      $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
-      $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
-      $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
-      $.VirtualMachineInstanceView.properties.hyperVGeneration["x-ms-enum"].name = "HyperVGeneration";
   - from: virtualMachineImage.json
     where: $.definitions
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
-      $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
-      $.OSDiskImage.properties.operatingSystem["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: virtualMachineScaleSet.json
     where: $.definitions
     transform: >
-      $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
       $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
-      $.VirtualMachineScaleSetOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: restorePoint.json
     where: $.definitions
     transform: >
-      $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
-  - from: restorePoint.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}"].get.parameters
-    transform: >
-      $[4]["x-ms-enum"].name = "RestorePointExpand";
-  - from: restorePoint.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}"].get.parameters
-    transform: >
-      $[3]["x-ms-enum"].name = "RestorePointCollectionExpand";
-  - from: computeRPCommon.json
-    where: $.definitions
-    transform: >
-      $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
-      $.SshPublicKey["x-ms-client-name"] = "SshPublicKeyInfo";
-      $.UpdateResource["x-ms-client-name"] = "ComputeUpdateResourceData";
-      $.SubResourceWithColocationStatus["x-ms-client-name"] = "ComputeSubResourceDataWithColocationStatus";
-      $.OSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-      $.HyperVGenerationType["x-ms-enum"].name = "HyperVGeneration";
   - from: sshPublicKey.json
     where: $.definitions
     transform: >
-      $.SshPublicKeyResource["x-ms-client-name"] = "SshPublicKey";
       $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
-  - from: logAnalytic.json
-    where: $.definitions
-    transform: >
-      $.LogAnalyticsOperationResult["x-ms-client-name"] = "LogAnalytics";
   - from: diskRPCommon.json
     where: $.definitions
     transform: >
@@ -253,7 +231,6 @@ directive:
   - from: diskAccess.json
     where: $.definitions
     transform: >
-      $.PrivateLinkResource["x-ms-client-name"] = "ComputePrivateLinkResourceData";
       $.PrivateLinkResourceProperties.properties.groupId["x-ms-format"] = "arm-id";
   - from: diskRestorePoint.json
     where: $.definitions
