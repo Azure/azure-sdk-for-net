@@ -53,16 +53,6 @@ namespace Azure.Storage.Files.Shares
         internal virtual DirectoryRestClient DirectoryRestClient => _directoryRestClient;
 
         /// <summary>
-        /// <see cref="ShareClientOptions"/>.
-        /// </summary>
-        private readonly ShareClientOptions _clientOptions;
-
-        /// <summary>
-        /// <see cref="ShareClientOptions"/>.
-        /// </summary>
-        internal virtual ShareClientOptions Options => _clientOptions;
-
-        /// <summary>
         /// The Storage account name corresponding to the directory client.
         /// </summary>
         private string _accountName;
@@ -202,12 +192,11 @@ namespace Azure.Storage.Files.Shares
                     DirectoryOrFilePath = directoryPath
                 };
             _uri = uriBuilder.ToUri();
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(_uri);
         }
 
@@ -307,12 +296,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
             _uri = directoryUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -345,12 +333,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
             _uri = directoryUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -384,12 +371,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(directoryUri, nameof(directoryUri));
             options ??= new ShareClientOptions();
             _uri = directoryUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(),
                 sharedKeyCredential: default,
                 clientDiagnostics: diagnostics,
-                version: options.Version);
+                clientOptions: options);
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -420,7 +406,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -2569,7 +2555,7 @@ namespace Azure.Storage.Files.Shares
                             destDirectoryClient = new ShareDirectoryClient(
                                 destUriBuilder.ToUri(),
                                 ClientConfiguration.ClientDiagnostics,
-                                Options);
+                                ClientConfiguration.ClientOptions);
                         }
                     }
                     else

@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 _uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString());
         #endregion ctors
 
         /// <summary>

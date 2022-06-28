@@ -59,16 +59,6 @@ namespace Azure.Storage.Files.Shares
         internal virtual FileRestClient FileRestClient => _fileRestClient;
 
         /// <summary>
-        /// <see cref="ShareClientOptions"/>.
-        /// </summary>
-        private readonly ShareClientOptions _clientOptions;
-
-        /// <summary>
-        /// <see cref="ShareClientOptions"/>.
-        /// </summary>
-        internal virtual ShareClientOptions Options => _clientOptions;
-
-        /// <summary>
         /// The Storage account name corresponding to the file client.
         /// </summary>
         private string _accountName;
@@ -216,12 +206,11 @@ namespace Azure.Storage.Files.Shares
                     DirectoryOrFilePath = filePath
                 };
             _uri = uriBuilder.ToUri();
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(_uri);
         }
 
@@ -343,12 +332,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -381,12 +369,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -420,12 +407,11 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
-            _clientOptions = options;
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(),
                 sharedKeyCredential: default,
                 clientDiagnostics: diagnostics,
-                version: options.Version);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -454,7 +440,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -6388,7 +6374,7 @@ namespace Azure.Storage.Files.Shares
                             destFileClient = new ShareFileClient(
                                 destUriBuilder.ToUri(),
                                 ClientConfiguration.ClientDiagnostics,
-                                Options);
+                                ClientConfiguration.ClientOptions);
                         }
                     }
                     else

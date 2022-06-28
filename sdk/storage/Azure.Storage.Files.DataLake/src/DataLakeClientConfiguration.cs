@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.DataLake
 {
     internal class DataLakeClientConfiguration : StorageClientConfiguration
     {
-        public DataLakeClientOptions.ServiceVersion Version { get; internal set; }
+        public DataLakeClientOptions ClientOptions { get; internal set; }
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
@@ -17,9 +17,9 @@ namespace Azure.Storage.Files.DataLake
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
-            DataLakeClientOptions.ServiceVersion version,
+            DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, version, customerProvidedKey)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, customerProvidedKey)
         {
         }
 
@@ -27,9 +27,9 @@ namespace Azure.Storage.Files.DataLake
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            DataLakeClientOptions.ServiceVersion version,
+            DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : this(pipeline, default, sasCredential, clientDiagnostics, version, customerProvidedKey)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, customerProvidedKey)
         {
         }
 
@@ -38,11 +38,11 @@ namespace Azure.Storage.Files.DataLake
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            DataLakeClientOptions.ServiceVersion version,
+            DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
             : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
         {
-            Version = version;
+            ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.DataLake
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
                 sasCredential: originalClientConfiguration.SasCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
-                version: originalClientConfiguration.Version,
+                clientOptions: originalClientConfiguration.ClientOptions,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
     }
 }

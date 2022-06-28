@@ -8,14 +8,14 @@ namespace Azure.Storage.Files.Shares
 {
     internal class ShareClientConfiguration : StorageClientConfiguration
     {
-        public ShareClientOptions.ServiceVersion Version { get; internal set; }
+        public ShareClientOptions ClientOptions { get; internal set; }
 
         public ShareClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
-            ShareClientOptions.ServiceVersion version)
-            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, version)
+            ShareClientOptions clientOptions)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions)
         {
         }
 
@@ -23,8 +23,8 @@ namespace Azure.Storage.Files.Shares
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            ShareClientOptions.ServiceVersion version)
-            : this(pipeline, default, sasCredential, clientDiagnostics, version)
+            ShareClientOptions clientOptions)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions)
         {
         }
 
@@ -33,10 +33,10 @@ namespace Azure.Storage.Files.Shares
             StorageSharedKeyCredential sharedKeyCredential,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
-            ShareClientOptions.ServiceVersion version)
+            ShareClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
         {
-            Version = version;
+            ClientOptions = clientOptions;
         }
     }
 }
