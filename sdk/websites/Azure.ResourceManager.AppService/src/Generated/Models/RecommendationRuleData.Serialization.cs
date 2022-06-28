@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> description = default;
             Optional<string> actionName = default;
             Optional<NotificationLevel> level = default;
-            Optional<Channels> channels = default;
+            Optional<Channel> channels = default;
             Optional<IReadOnlyList<string>> categoryTags = default;
             Optional<bool> isDynamic = default;
             Optional<string> extensionName = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            channels = property0.Value.GetString().ToChannels();
+                            channels = property0.Value.GetString().ToChannel();
                             continue;
                         }
                         if (property0.NameEquals("categoryTags"))

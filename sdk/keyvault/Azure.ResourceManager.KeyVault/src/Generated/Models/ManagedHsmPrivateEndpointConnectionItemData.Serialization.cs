@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Optional<SubResource> privateEndpoint = default;
             Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new ManagedHsmPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

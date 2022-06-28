@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedGalleryImageList>> ListAsync(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryImageList>> ListAsync(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedGalleryImageList> List(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryImageList> List(string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedGalleryImageList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SharedGalleryImageList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedGalleryImageList> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public Response<SharedGalleryImageList> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
             Optional<Uri> privacyStatementUri = default;
             Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<OperatingSystemTypes> supportedOSType = default;
+            Optional<SupportedOperatingSystemType> supportedOSType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportedOSType = property0.Value.GetString().ToOperatingSystemTypes();
+                            supportedOSType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                     }

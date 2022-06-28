@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="availablePatches"> The list of patches that have been detected as available for installation. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal VirtualMachineAssessPatchesResult(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches, ApiError error)
+        internal VirtualMachineAssessPatchesResult(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches, ComputeApiError error)
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The list of patches that have been detected as available for installation. </summary>
         public IReadOnlyList<VirtualMachineSoftwarePatchProperties> AvailablePatches { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

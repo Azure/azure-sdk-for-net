@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfiguration"> A reference to frontend IP addresses. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
         /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        internal InboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, TransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal InboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource frontendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = eTag;
             FrontendIPConfiguration = frontendIPConfiguration;
             Protocol = protocol;
             FrontendPortRangeStart = frontendPortRangeStart;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the transport protocol used by the inbound NAT pool. </summary>
-        public TransportProtocol? Protocol { get; set; }
+        public LoadBalancingTransportProtocol? Protocol { get; set; }
         /// <summary> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </summary>
         public int? FrontendPortRangeStart { get; set; }
         /// <summary> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </summary>

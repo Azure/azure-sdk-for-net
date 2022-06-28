@@ -17,10 +17,31 @@ modelerfour:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+rename-rules:
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag
 
 directive:
   - from: autoscale_API.json
