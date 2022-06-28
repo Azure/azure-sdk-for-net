@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<Resources.Models.SubResource> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<Resources.Models.SubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))

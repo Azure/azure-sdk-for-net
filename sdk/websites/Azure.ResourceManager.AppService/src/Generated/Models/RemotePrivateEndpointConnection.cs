@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
-        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provisioningState, Resources.Models.SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, resourceType, systemData, kind)
+        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<string> ipAddresses) : base(id, name, resourceType, systemData, kind)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
-        internal Resources.Models.SubResource PrivateEndpoint { get; set; }
+        internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {

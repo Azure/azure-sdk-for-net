@@ -237,43 +237,6 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteCustomDomainOverviewARMResources().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteLinkedBackendResources in the StaticSiteARMResource. </summary>
-        /// <returns> An object representing collection of StaticSiteLinkedBackendResources and their operations over a StaticSiteLinkedBackendResource. </returns>
-        public virtual StaticSiteLinkedBackendCollection GetStaticSiteLinkedBackends()
-        {
-            return GetCachedClient(Client => new StaticSiteLinkedBackendCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site by name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}
-        /// Operation Id: StaticSites_GetLinkedBackend
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteLinkedBackendResource>> GetStaticSiteLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return await GetStaticSiteLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site by name
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}
-        /// Operation Id: StaticSites_GetLinkedBackend
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StaticSiteLinkedBackendResource> GetStaticSiteLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return GetStaticSiteLinkedBackends().Get(linkedBackendName, cancellationToken);
-        }
-
         /// <summary>
         /// Description for Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}

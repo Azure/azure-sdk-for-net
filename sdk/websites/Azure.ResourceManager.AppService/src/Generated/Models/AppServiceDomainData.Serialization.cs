@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> readyForDnsRecordManagement = default;
             Optional<IReadOnlyList<HostName>> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<ResourceNotRenewableReason>> domainNotRenewableReasons = default;
+            Optional<IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>> domainNotRenewableReasons = default;
             Optional<DnsType> dnsType = default;
             Optional<string> dnsZoneId = default;
             Optional<DnsType> targetDnsType = default;
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ResourceNotRenewableReason> array = new List<ResourceNotRenewableReason>();
+                            List<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> array = new List<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceNotRenewableReason(item.GetString()));
+                                array.Add(new AppServiceDomainPropertiesDomainNotRenewableReasonsItem(item.GetString()));
                             }
                             domainNotRenewableReasons = array;
                             continue;

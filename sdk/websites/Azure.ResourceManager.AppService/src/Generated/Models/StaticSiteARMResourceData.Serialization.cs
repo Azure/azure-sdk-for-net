@@ -84,21 +84,6 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("templateProperties");
                 writer.WriteObjectValue(TemplateProperties);
             }
-            if (Optional.IsDefined(Provider))
-            {
-                writer.WritePropertyName("provider");
-                writer.WriteStringValue(Provider);
-            }
-            if (Optional.IsDefined(EnterpriseGradeCdnStatus))
-            {
-                writer.WritePropertyName("enterpriseGradeCdnStatus");
-                writer.WriteStringValue(EnterpriseGradeCdnStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteStringValue(PublicNetworkAccess);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -127,10 +112,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> contentDistributionEndpoint = default;
             Optional<string> keyVaultReferenceIdentity = default;
             Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
-            Optional<IReadOnlyList<StaticSiteLinkedBackend>> linkedBackends = default;
             Optional<string> provider = default;
-            Optional<EnterpriseGradeCdnStatus> enterpriseGradeCdnStatus = default;
-            Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -332,46 +314,16 @@ namespace Azure.ResourceManager.AppService
                             userProvidedFunctionApps = array;
                             continue;
                         }
-                        if (property0.NameEquals("linkedBackends"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<StaticSiteLinkedBackend> array = new List<StaticSiteLinkedBackend>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(StaticSiteLinkedBackend.DeserializeStaticSiteLinkedBackend(item));
-                            }
-                            linkedBackends = array;
-                            continue;
-                        }
                         if (property0.NameEquals("provider"))
                         {
                             provider = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enterpriseGradeCdnStatus"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            enterpriseGradeCdnStatus = new EnterpriseGradeCdnStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"))
-                        {
-                            publicNetworkAccess = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StaticSiteARMResourceData(id, name, type, systemData, tags, location, kind.Value, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), Optional.ToList(linkedBackends), provider.Value, Optional.ToNullable(enterpriseGradeCdnStatus), publicNetworkAccess.Value);
+            return new StaticSiteARMResourceData(id, name, type, systemData, tags, location, kind.Value, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value);
         }
     }
 }

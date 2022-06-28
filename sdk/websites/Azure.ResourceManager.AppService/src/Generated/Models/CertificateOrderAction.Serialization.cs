@@ -8,39 +8,96 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CertificateOrderAction
+    public partial class CertificateOrderAction : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind);
+            }
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+        }
+
         internal static CertificateOrderAction DeserializeCertificateOrderAction(JsonElement element)
         {
+            Optional<string> kind = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<CertificateOrderActionType> actionType = default;
             Optional<DateTimeOffset> createdAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("kind"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    actionType = property.Value.GetString().ToCertificateOrderActionType();
+                    kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
+                if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdAt = property.Value.GetDateTimeOffset("O");
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("actionType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            actionType = property0.Value.GetString().ToCertificateOrderActionType();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdAt"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createdAt = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new CertificateOrderAction(Optional.ToNullable(actionType), Optional.ToNullable(createdAt));
+            return new CertificateOrderAction(id, name, type, systemData, kind.Value, Optional.ToNullable(actionType), Optional.ToNullable(createdAt));
         }
     }
 }

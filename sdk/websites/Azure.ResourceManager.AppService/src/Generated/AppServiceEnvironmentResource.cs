@@ -142,13 +142,6 @@ namespace Azure.ResourceManager.AppService
             return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a CustomDnsSuffixConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
-        /// <returns> Returns a <see cref="CustomDnsSuffixConfigurationResource" /> object. </returns>
-        public virtual CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfiguration()
-        {
-            return new CustomDnsSuffixConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/configurations/customdnssuffix"));
-        }
-
         /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfiguration()
@@ -750,102 +743,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Send a test notification that an upgrade is available for this App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/testUpgradeAvailableNotification
-        /// Operation Id: AppServiceEnvironments_TestUpgradeAvailableNotification
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> TestUpgradeAvailableNotificationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.TestUpgradeAvailableNotification");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceEnvironmentRestClient.TestUpgradeAvailableNotificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Send a test notification that an upgrade is available for this App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/testUpgradeAvailableNotification
-        /// Operation Id: AppServiceEnvironments_TestUpgradeAvailableNotification
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response TestUpgradeAvailableNotification(CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.TestUpgradeAvailableNotification");
-            scope.Start();
-            try
-            {
-                var response = _appServiceEnvironmentRestClient.TestUpgradeAvailableNotification(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Initiate an upgrade of an App Service Environment if one is available.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/upgrade
-        /// Operation Id: AppServiceEnvironments_Upgrade
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> UpgradeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Upgrade");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceEnvironmentRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Initiate an upgrade of an App Service Environment if one is available.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/upgrade
-        /// Operation Id: AppServiceEnvironments_Upgrade
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Upgrade(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Upgrade");
-            scope.Start();
-            try
-            {
-                var response = _appServiceEnvironmentRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(_appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2021-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -2013,90 +2013,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetAuthSettingsV2WithoutSecretsRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/config/authsettingsV2", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2WithoutSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetAuthSettingsV2WithoutSecretsRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteAuthSettingsV2Data value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2WithoutSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetAuthSettingsV2WithoutSecretsRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteAuthSettingsV2Data value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data)
+        internal HttpMessage CreateUpdateAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -2115,7 +2032,7 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
             request0.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2125,26 +2042,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> UpdateAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, siteAuthSettingsV2);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2156,26 +2073,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> UpdateAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, siteAuthSettingsV2);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2211,7 +2128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2223,9 +2140,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2240,7 +2157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2252,9 +2169,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4954,161 +4871,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListProductionSiteDeploymentStatusesRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/deploymentStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmDeploymentStatusCollection>> ListProductionSiteDeploymentStatusesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateListProductionSiteDeploymentStatusesRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmDeploymentStatusCollection> ListProductionSiteDeploymentStatuses(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateListProductionSiteDeploymentStatusesRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetProductionSiteDeploymentStatusRequest(string subscriptionId, string resourceGroupName, string name, string deploymentStatusId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/deploymentStatus/", false);
-            uri.AppendPath(deploymentStatusId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the deployment status for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetProductionSiteDeploymentStatusAsync(string subscriptionId, string resourceGroupName, string name, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
-
-            using var message = CreateGetProductionSiteDeploymentStatusRequest(subscriptionId, resourceGroupName, name, deploymentStatusId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the deployment status for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetProductionSiteDeploymentStatus(string subscriptionId, string resourceGroupName, string name, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
-
-            using var message = CreateGetProductionSiteDeploymentStatusRequest(subscriptionId, resourceGroupName, name, deploymentStatusId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListDeploymentsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -6275,160 +6037,6 @@ namespace Azure.ResourceManager.AppService
                         MsDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = MsDeployLog.DeserializeMsDeployLog(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetOneDeployStatusRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/extensions/onedeploy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of web app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryData>> GetOneDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetOneDeployStatusRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BinaryData value = default;
-                        value = await BinaryData.FromStreamAsync(message.Response.ContentStream).ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Invoke onedeploy status API /api/deployments and gets the deployment status for the site. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of web app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryData> GetOneDeployStatus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetOneDeployStatusRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BinaryData value = default;
-                        value = BinaryData.FromStream(message.Response.ContentStream);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateOneDeployOperationRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/extensions/onedeploy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Description for Invoke the OneDeploy publish web app extension. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of web app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BinaryData>> CreateOneDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateCreateOneDeployOperationRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BinaryData value = default;
-                        value = await BinaryData.FromStreamAsync(message.Response.ContentStream).ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Invoke the OneDeploy publish web app extension. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of web app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BinaryData> CreateOneDeployOperation(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateCreateOneDeployOperationRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BinaryData value = default;
-                        value = BinaryData.FromStream(message.Response.ContentStream);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16365,96 +15973,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetAuthSettingsV2WithoutSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/slots/", false);
-            uri.AppendPath(slot, true);
-            uri.AppendPath("/config/authsettingsV2", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2WithoutSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateGetAuthSettingsV2WithoutSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteAuthSettingsV2Data value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the settings for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2WithoutSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateGetAuthSettingsV2WithoutSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SiteAuthSettingsV2Data value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data)
+        internal HttpMessage CreateUpdateAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
             var request0 = message.Request;
@@ -16475,7 +15994,7 @@ namespace Azure.ResourceManager.AppService
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
+            content0.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
             request0.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -16486,27 +16005,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> UpdateAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, data);
+            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, siteAuthSettingsV2);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16519,27 +16038,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> UpdateAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, data);
+            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, siteAuthSettingsV2);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16578,7 +16097,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16591,9 +16110,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16609,7 +16128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16622,9 +16141,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19334,173 +18853,6 @@ namespace Azure.ResourceManager.AppService
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListSlotSiteDeploymentStatusesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/slots/", false);
-            uri.AppendPath(slot, true);
-            uri.AppendPath("/deploymentStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmDeploymentStatusCollection>> ListSlotSiteDeploymentStatusesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateListSlotSiteDeploymentStatusesSlotRequest(subscriptionId, resourceGroupName, name, slot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmDeploymentStatusCollection> ListSlotSiteDeploymentStatusesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateListSlotSiteDeploymentStatusesSlotRequest(subscriptionId, resourceGroupName, name, slot);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetSlotSiteDeploymentStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string deploymentStatusId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/slots/", false);
-            uri.AppendPath(slot, true);
-            uri.AppendPath("/deploymentStatus/", false);
-            uri.AppendPath(deploymentStatusId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the deployment status for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetSlotSiteDeploymentStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
-
-            using var message = CreateGetSlotSiteDeploymentStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, deploymentStatusId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the deployment status for an app (or deployment slot, if specified). </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetSlotSiteDeploymentStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
-
-            using var message = CreateGetSlotSiteDeploymentStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, deploymentStatusId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -35055,82 +34407,6 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListProductionSiteDeploymentStatusesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmDeploymentStatusCollection>> ListProductionSiteDeploymentStatusesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateListProductionSiteDeploymentStatusesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmDeploymentStatusCollection> ListProductionSiteDeploymentStatusesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateListProductionSiteDeploymentStatusesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListDeploymentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -37006,86 +36282,6 @@ namespace Azure.ResourceManager.AppService
                         ContinuousWebJobCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ContinuousWebJobCollection.DeserializeContinuousWebJobCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListSlotSiteDeploymentStatusesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CsmDeploymentStatusCollection>> ListSlotSiteDeploymentStatusesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateListSlotSiteDeploymentStatusesSlotNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, slot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List deployment statuses for an app (or deployment slot, if specified). </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the deployment status for the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CsmDeploymentStatusCollection> ListSlotSiteDeploymentStatusesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var message = CreateListSlotSiteDeploymentStatusesSlotNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, slot);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CsmDeploymentStatusCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmDeploymentStatusCollection.DeserializeCsmDeploymentStatusCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
