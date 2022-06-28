@@ -216,11 +216,12 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = perCallPolicies,
-                PerRetryPolicies = new HttpPipelinePolicy[] { policy },
+                PerRetryPolicies = { policy },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -266,11 +267,12 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = perCallPolicies,
-                PerRetryPolicies = new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;

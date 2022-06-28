@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -220,11 +221,11 @@ namespace Azure.Data.Tables
             }
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = perCallPolicies,
-                PerRetryPolicies = new[] { policy },
+                PerRetryPolicies = { policy },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -261,11 +262,11 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = perCallPolicies,
-                PerRetryPolicies = new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
@@ -295,11 +296,11 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = perCallPolicies,
-                PerRetryPolicies = new[] { authPolicy },
+                PerRetryPolicies = { authPolicy },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;

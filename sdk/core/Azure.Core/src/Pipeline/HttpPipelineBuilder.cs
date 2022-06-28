@@ -38,7 +38,11 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
         {
-            var result = BuildInternal(new HttpPipelineOptions(options){ PerCallPolicies = perCallPolicies, PerRetryPolicies = perRetryPolicies, ResponseClassifier = responseClassifier}, null);
+            var pipelineOptions = new HttpPipelineOptions(options) { ResponseClassifier = responseClassifier };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
+            var result = BuildInternal(pipelineOptions, null);
+
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
         }
 
@@ -54,7 +58,11 @@ namespace Azure.Core.Pipeline
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
-            var result = BuildInternal(new HttpPipelineOptions(options){ PerCallPolicies = perCallPolicies, PerRetryPolicies = perRetryPolicies, ResponseClassifier = responseClassifier}, transportOptions);
+
+            var pipelineOptions = new HttpPipelineOptions(options) { ResponseClassifier = responseClassifier };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
+            var result = BuildInternal(pipelineOptions, transportOptions);
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
         }
 
@@ -91,8 +99,8 @@ namespace Azure.Core.Pipeline
 
             var policies = new List<HttpPipelinePolicy>(8 +
                                                         (buildOptions.ClientOptions.Policies?.Count ?? 0) +
-                                                        buildOptions.PerCallPolicies.Length +
-                                                        buildOptions.PerRetryPolicies.Length);
+                                                        buildOptions.PerCallPolicies.Count +
+                                                        buildOptions.PerRetryPolicies.Count);
 
             void AddCustomerPolicies(HttpPipelinePosition position)
             {
@@ -131,7 +139,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(ReadClientRequestIdPolicy.Shared);
 
-            AddNonNullPolicies(buildOptions.PerCallPolicies);
+            AddNonNullPolicies(buildOptions.PerCallPolicies.ToArray());
 
             AddCustomerPolicies(HttpPipelinePosition.PerCall);
 
@@ -149,7 +157,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(RedirectPolicy.Shared);
 
-            AddNonNullPolicies(buildOptions.PerRetryPolicies);
+            AddNonNullPolicies(buildOptions.PerRetryPolicies.ToArray());
 
             AddCustomerPolicies(HttpPipelinePosition.PerRetry);
 

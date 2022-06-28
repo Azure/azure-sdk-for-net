@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
@@ -19,8 +20,8 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(options, nameof(options));
 
             ClientOptions = options;
-            PerCallPolicies = Array.Empty<HttpPipelinePolicy>();
-            PerRetryPolicies = Array.Empty<HttpPipelinePolicy>();
+            PerCallPolicies = new List<HttpPipelinePolicy>();
+            PerRetryPolicies = new List<HttpPipelinePolicy>();
             RequestFailedDetailsParser = new DefaultRequestFailedDetailsParser();
         }
 
@@ -32,12 +33,12 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Client provided per-call policies.
         /// </summary>
-        public HttpPipelinePolicy[] PerCallPolicies { get; set; }
+        public IList<HttpPipelinePolicy> PerCallPolicies { get; }
 
         /// <summary>
         /// Client provided per-retry policies.
         /// </summary>
-        public HttpPipelinePolicy[] PerRetryPolicies { get; set; }
+        public IList<HttpPipelinePolicy> PerRetryPolicies { get; }
 
         /// <summary>
         /// The client provided response classifier.

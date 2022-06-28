@@ -950,8 +950,8 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipelineOptions(Azure.Core.ClientOptions options) { }
         public Azure.Core.ClientOptions ClientOptions { get { throw null; } }
-        public Azure.Core.Pipeline.HttpPipelinePolicy[] PerCallPolicies { get { throw null; } set { } }
-        public Azure.Core.Pipeline.HttpPipelinePolicy[] PerRetryPolicies { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.Pipeline.HttpPipelinePolicy> PerCallPolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.Pipeline.HttpPipelinePolicy> PerRetryPolicies { get { throw null; } }
         public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
