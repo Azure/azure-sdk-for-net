@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    ///
+    /// The default <see cref="RequestFailedDetailsParser"/>.
     /// </summary>
     internal class DefaultRequestFailedDetailsParser : RequestFailedDetailsParser
     {
