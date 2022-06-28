@@ -101,8 +101,8 @@ namespace Azure
         /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
-        /// <param name="innerException">An optional inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
-        public RequestFailedException(Response response, Exception? innerException = null)
+        /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
+        public RequestFailedException(Response response, Exception? innerException)
             : this(response.Status, GetRequestFailedExceptionContent(response), innerException)
         {
         }

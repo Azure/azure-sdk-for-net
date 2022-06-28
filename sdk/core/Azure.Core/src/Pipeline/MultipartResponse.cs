@@ -40,7 +40,7 @@ namespace Azure.Core
         /// Parse a multipart/mixed response body into several responses.
         /// </summary>
         /// <param name="response">The response containing multi-part content.</param>
-        /// <param name="expectCRLF">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
+        /// <param name="expectCrLf">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be cancelled.
@@ -48,15 +48,15 @@ namespace Azure.Core
         /// <returns>The parsed <see cref="Response"/>s.</returns>
         public static Response[] Parse(
             Response response,
-            bool expectCRLF,
+            bool expectCrLf,
             CancellationToken cancellationToken) =>
-                ParseAsync(response, expectCRLF, false, cancellationToken).EnsureCompleted();
+                ParseAsync(response, expectCrLf, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Parse a multipart/mixed response body into several responses.
         /// </summary>
         /// <param name="response">The response containing multi-part content.</param>
-        /// <param name="expectCRLF">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
+        /// <param name="expectCrLf">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be cancelled.
@@ -64,9 +64,9 @@ namespace Azure.Core
         /// <returns>The parsed <see cref="Response"/>s.</returns>
         public static async Task<Response[]> ParseAsync(
             Response response,
-            bool expectCRLF,
+            bool expectCrLf,
             CancellationToken cancellationToken) =>
-                await ParseAsync(response, expectCRLF, true, cancellationToken).ConfigureAwait(false);
+                await ParseAsync(response, expectCrLf, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Parse a multipart/mixed response body into several responses.

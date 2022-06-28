@@ -203,7 +203,7 @@ namespace Azure
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException = null) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
@@ -467,8 +467,8 @@ namespace Azure.Core
     }
     public static partial class MultipartResponse
     {
-        public static Azure.Response[] Parse(Azure.Response response, bool expectCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCRLF, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class Request : System.IDisposable
     {
