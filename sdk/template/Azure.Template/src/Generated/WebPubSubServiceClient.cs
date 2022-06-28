@@ -63,7 +63,7 @@ namespace Azure.Template
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="hub"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="excluded"> The ArrayOfPost1ItemsItem to use. </param>
+        /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
@@ -89,7 +89,7 @@ namespace Azure.Template
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="hub"> The String to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="excluded"> The ArrayOfPost1ItemsItem to use. </param>
+        /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
@@ -394,11 +394,11 @@ namespace Azure.Template
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(hub, true);
             uri.AppendPath("/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (excluded != null)
             {
                 uri.AppendQueryDelimited("excluded", excluded, ",", true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -457,11 +457,11 @@ namespace Azure.Template
             uri.AppendPath(permission, true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (targetName != null)
             {
                 uri.AppendQuery("targetName", targetName, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

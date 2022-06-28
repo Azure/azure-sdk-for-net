@@ -48,10 +48,10 @@
         "summary": "Broadcast content inside request body to all the connected client connections.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.hub"
+          },
+          {
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
             "name": "excluded",
@@ -61,12 +61,6 @@
             "items": {
               "type": "string"
             }
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
           },
           {
             "name": "message",
@@ -106,10 +100,10 @@
             "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "$ref": "#/parameters/ConnectionParams.group"
+            "$ref": "#/parameters/GroupId"
           },
           {
-            "$ref": "#/parameters/ConnectionParams.connectionId"
+            "$ref": "#/parameters/ConnectionId"
           }
         ],
         "responses": {
@@ -138,10 +132,10 @@
             "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "$ref": "#/parameters/ConnectionParams.group"
+            "$ref": "#/parameters/GroupId"
           },
           {
-            "$ref": "#/parameters/ConnectionParams.connectionId"
+            "$ref": "#/parameters/ConnectionId"
           }
         ],
         "responses": {
@@ -166,10 +160,10 @@
         "summary": "Check if a connection has permission to the specified action.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.hub"
+          },
+          {
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
             "name": "permission",
@@ -195,12 +189,6 @@
             "name": "targetName",
             "in": "query",
             "required": false,
-            "type": "string"
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
             "type": "string"
           }
         ],
@@ -229,28 +217,16 @@
         "summary": "Add a user to the target group.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.hub"
           },
           {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/UserParams.userId"
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GroupId"
           }
         ],
         "responses": {
@@ -270,28 +246,16 @@
         "summary": "Remove a user from the target group.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.hub"
           },
           {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/CommonParams.api-version"
           },
           {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/UserParams.userId"
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GroupId"
           }
         ],
         "responses": {
@@ -356,7 +320,7 @@
       "type": "string",
       "x-ms-parameter-location": "method"
     },
-    "ConnectionParams.connectionId": {
+    "ConnectionId": {
       "name": "connectionId",
       "in": "path",
       "required": true,
@@ -364,12 +328,20 @@
       "type": "string",
       "x-ms-parameter-location": "method"
     },
-    "ConnectionParams.group": {
+    "GroupId": {
       "name": "group",
       "in": "path",
       "required": true,
       "minLength": 1,
       "maxLength": 1024,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "UserParams.userId": {
+      "name": "userId",
+      "in": "path",
+      "required": true,
+      "minLength": 1,
       "type": "string",
       "x-ms-parameter-location": "method"
     }
