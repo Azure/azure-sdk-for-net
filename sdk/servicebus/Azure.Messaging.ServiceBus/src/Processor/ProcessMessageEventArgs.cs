@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The entity path corresponding to the entity that the message was received from.
+        /// The path of the Service Bus entity that the message was received from.
         /// </summary>
         public string EntityPath => _receiver.EntityPath;
 
