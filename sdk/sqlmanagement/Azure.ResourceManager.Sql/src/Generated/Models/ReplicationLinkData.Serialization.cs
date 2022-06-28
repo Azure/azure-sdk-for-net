@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> partnerServer = default;
             Optional<string> partnerDatabase = default;
-            Optional<string> partnerLocation = default;
+            Optional<AzureLocation> partnerLocation = default;
             Optional<ReplicationRole> role = default;
             Optional<ReplicationRole> partnerRole = default;
             Optional<string> replicationMode = default;
@@ -89,7 +89,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("partnerLocation"))
                         {
-                            partnerLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            partnerLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("role"))
@@ -171,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, partnerLocation.Value, Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
+            return new ReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType));
         }
     }
 }

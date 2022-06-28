@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the managed hsm pool. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> List of private endpoint connections associated with the managed hsm pool. </summary>
         public IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ManagedHsmPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The scheduled purge date in UTC. </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }
     }

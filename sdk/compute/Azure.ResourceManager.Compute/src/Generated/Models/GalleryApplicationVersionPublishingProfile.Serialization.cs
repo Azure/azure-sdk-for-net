@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
             UserArtifactSource source = default;
-            Optional<UserArtifactManage> manageActions = default;
+            Optional<UserArtifactManagement> manageActions = default;
             Optional<UserArtifactSettings> settings = default;
             Optional<IDictionary<string, string>> advancedSettings = default;
             Optional<bool> enableHealthCheck = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    manageActions = UserArtifactManage.DeserializeUserArtifactManage(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("settings"))

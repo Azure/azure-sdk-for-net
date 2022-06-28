@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         public AzureTrafficCollectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.CollectorPolicyData> CollectorPolicies { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } }
     }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         public CollectorPolicyData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> EmissionPolicies { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
     }
