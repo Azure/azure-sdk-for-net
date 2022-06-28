@@ -2,7 +2,7 @@ name: Core Feature Request
 description: Create a feature request for Azure.Core
 title: "[Core] "
 labels: ["Azure.Core", "feature-request"]
-assignees: ["christothes","annelo-msft","JoshLove-msft"]
+assignees: ["christothes","annelo-msft","JoshLove-msft", "jsquire"]
 
 body:
   - type: dropdown
@@ -43,6 +43,16 @@ body:
         ```
     validations:
       required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: What is the priority of this feature with respect to your intended use?
+      options:
+        - "P0 (blocking)"
+        - "P1 (needed-urgent)"
+        - "P2 (needed)"
+        - "P3 (nice-to-have)"
   - type: textarea
     id: constraints
     attributes:
