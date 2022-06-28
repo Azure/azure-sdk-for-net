@@ -95,7 +95,7 @@ function CreateOrUpdateAutorestConfigFile() {
         [string]$autorestConfigYaml = ""
     )
 
-    if (Test-Path -Path $autorestFilePath) {
+    if ((Test-Path -Path $autorestFilePath) -and (![String]::IsNullOrWhiteSpace((Get-Content -Path $autorestFilePath)))) {
         if (($readme -ne "") -or ($inputfile -ne "")) {
             $requirRex = "require*:*";
             $inputfileRex = "input-file*:*"
@@ -103,14 +103,20 @@ function CreateOrUpdateAutorestConfigFile() {
             # clear
             $fileContent = $fileContent -notmatch $requirRex
             $fileContent = $fileContent -notmatch "- .*.md"
-            $fileContent = $fileContent -notmatch $inputfileRex |Out-File $autorestFilePath
-            $fileContent = $fileContent -notmatch "- .*.json" |Out-File $autorestFilePath
+            $fileContent = $fileContent -notmatch $inputfileRex
+            $fileContent = $fileContent -notmatch "- .*.json"
+            # (Get-Content $autorestFilePath) -notmatch $requirRex |Out-File $autorestFilePath
+            # (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
+            # (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
+            # (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
 
             $startNum = ($fileContent | Select-String -Pattern '```').LineNumber[0]
+            # $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
             $configline = ""
             if ($readme -ne "") {
                 Write-Host "Updating autorest.md file to config required readme file."
-                $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+                # $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+                $requirefile = $readme
                 $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
             } elseif ($inputfile -ne "") {
                 Write-Host "Updating autorest.md file to update input-file."
@@ -177,6 +183,7 @@ function CreateOrUpdateAutorestConfigFile() {
         Write-Host "autorest.md does not exist. start to create one."
         if ( $autorestConfigYaml -ne "") {
             Write-Host "Create autorest.md with configuration."
+            $autorestConfigYaml = "# Azure.IoT.DeviceUpdate" + [Environment]::NewLine + '``` yaml' +  [Environment]::NewLine + $autorestConfigYaml + '```' + [Environment]::NewLine;
             $autorestConfigYaml | Out-File $autorestFilePath
         } else {
             Write-Error "autorest.md does not exist, and no autorest configuration to create one."
@@ -472,25 +479,10 @@ function Invoke-GenerateAndBuildSDK () {
         Remove-Item $newpackageoutput
     } else {
         Write-Host "Generate data-plane SDK client library."
-        # npx autorest --version=3.7.3 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
-        # $serviceSDKDirectory = (Join-Path $sdkPath sdk $service)
-        # $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
-        # $folders |ForEach-Object {
-        #     $folder=$_.Name
-        #     New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
-        #     $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
-        #     $packagesToGen = $packagesToGen + @($newpackageoutputJson)
-        #     if ( !$? ) {
-        #         Write-Error "Failed to create sdk project folder. exit code: $?"
-        #         exit 1
-        #     }
-        #     Remove-Item $newpackageoutput
-        # }
-
         $namespace = ""
         $service = ""
-        # support single package
         if ( $autorestConfigYaml -ne "") {
+            # support single package
             $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
             if ( $range.count -gt 1) {
                 $startNum = $range[0];
@@ -509,6 +501,28 @@ function Invoke-GenerateAndBuildSDK () {
             }
 
             New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
+            if ( !$? ) {
+                Write-Error "Failed to create sdk project folder. exit code: $?"
+                exit 1
+            }
+            $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
+            $packagesToGen = $packagesToGen + @($newpackageoutputJson)
+            Remove-Item $newpackageoutput
+        } else {
+            npx autorest --version=3.7.3 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
+            $serviceSDKDirectory = (Join-Path $sdkPath sdk $service)
+            $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
+            $folders |ForEach-Object {
+                $folder=$_.Name
+                New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                if ( !$? ) {
+                    Write-Error "Failed to create sdk project folder. exit code: $?"
+                    exit 1
+                }
+                $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
+                $packagesToGen = $packagesToGen + @($newpackageoutputJson)
+                Remove-Item $newpackageoutput
+            }
         }
     }
 
