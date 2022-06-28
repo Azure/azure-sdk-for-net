@@ -49,11 +49,14 @@ if (!(Test-Path -Path $SettingsPath -PathType leaf)) {
   $script:FoundError = $true
 }
 
+$scanPathsArray = @()
+
 # Verify that either ScanPath or ScanPaths were set but not both or neither
 if ([String]::IsNullOrWhiteSpace($ScanPaths)) {
   LogError "ScanPaths cannot be empty."
 } else {
-  foreach ($path in $ScanPaths.Split(',')) {
+  $scanPathsArray = $ScanPaths.Split(',')
+  foreach ($path in $scanPathsArray) {
     if (!(Test-Path -Path $path -PathType Container)) {
       LogError "path, $path, doesn't exist or isn't a directory"
       $script:FoundError = $true
@@ -92,7 +95,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Finally, do the scanning
-foreach ($path in $ScanPaths.Split(',')) {
+foreach ($path in $scanPathsArray) {
   Test-Readme-Files $SettingsPath $path $RepoRoot
 }
 
