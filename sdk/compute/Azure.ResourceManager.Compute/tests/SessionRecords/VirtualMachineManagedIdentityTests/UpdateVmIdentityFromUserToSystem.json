@@ -9624,7 +9624,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "180",
+        "Content-Length": "169",
         "Content-Type": "application/json",
         "traceparent": "00-740e963c5335d8862bb643ebefa3b29d-230e481e1fcaed4e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -9647,7 +9647,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,
@@ -9856,7 +9855,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "280",
+        "Content-Length": "269",
         "Content-Type": "application/json",
         "traceparent": "00-f4089b55a3a5f91cbc3ecf63c62dc87a-838047a6b1844f65-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -9876,7 +9875,6 @@
             }
           ]
         },
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,
@@ -10268,7 +10266,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "31",
+        "Content-Length": "20",
         "Content-Type": "application/json",
         "traceparent": "00-0d59ef6010a15e629d4a1deb04985c03-e54ed2b80bf51d15-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.22621)",
@@ -10276,7 +10274,6 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "tags": {},
         "location": "eastus"
       },
       "StatusCode": 201,

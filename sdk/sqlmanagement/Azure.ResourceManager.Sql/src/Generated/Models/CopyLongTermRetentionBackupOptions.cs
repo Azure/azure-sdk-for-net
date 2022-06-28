@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The resource group that owns the target server. </summary>
         public string TargetResourceGroup { get; set; }
         /// <summary> The resource Id of the target server that owns the database. </summary>
-        public string TargetServerResourceId { get; set; }
+        public ResourceIdentifier TargetServerResourceId { get; set; }
         /// <summary> The fully qualified domain name of the target server. </summary>
         public string TargetServerFullyQualifiedDomainName { get; set; }
         /// <summary> The name of the database owns the copied backup. </summary>

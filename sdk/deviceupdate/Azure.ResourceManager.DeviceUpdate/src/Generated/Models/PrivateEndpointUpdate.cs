@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Private endpoint update details. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Remote endpoint resource ID. </summary>
         public string Id { get; set; }
         /// <summary> ARM location of the remote private endpoint. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Original subscription ID needed by Microsoft.Network. </summary>
         public string ImmutableSubscriptionId { get; set; }
         /// <summary> Original resource ID needed by Microsoft.Network. </summary>

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             // Need to create a NotificationHub first
-            var parameter = new LinkNotificationHubContent(Environment.GetEnvironmentVariable("Hub_Id"), Environment.GetEnvironmentVariable("Connect_String"));
+            var parameter = new LinkNotificationHubContent(((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsResourceId, ((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsConnectionString);
             var hub = await communication.LinkNotificationHubAsync(parameter);
             Assert.NotNull(hub.Value.ResourceId);
         }

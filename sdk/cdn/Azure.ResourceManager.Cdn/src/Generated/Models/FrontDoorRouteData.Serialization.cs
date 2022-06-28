@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> endpointName = default;
-            Optional<IList<ActivatedResourceReference>> customDomains = default;
+            Optional<IList<FrontDoorActivatedResourceInfo>> customDomains = default;
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
             Optional<IList<WritableSubResource>> ruleSets = default;
@@ -146,6 +146,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -170,10 +175,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ActivatedResourceReference> array = new List<ActivatedResourceReference>();
+                            List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ActivatedResourceReference.DeserializeActivatedResourceReference(item));
+                                array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
                             }
                             customDomains = array;
                             continue;
@@ -312,7 +317,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorRouteData(id, name, type, systemData, endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
+            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus));
         }
     }
 }

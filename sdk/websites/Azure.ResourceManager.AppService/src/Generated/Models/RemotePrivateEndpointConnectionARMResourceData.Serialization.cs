@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData, kind.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses));
+            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses), kind.Value);
         }
     }
 }

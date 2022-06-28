@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -34,13 +35,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal RestorableSqlContainerPropertiesResourceContainer(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? ts, string etag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
+        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal RestorableSqlContainerPropertiesResourceContainer(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string self, string rid, float? ts, ETag? eTag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
         {
             Self = self;
             Rid = rid;
             Ts = ts;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> A system generated property that specifies the addressable path of the container resource. </summary>
@@ -50,6 +51,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
     }
 }

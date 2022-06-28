@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the WebSiteInstanceStatus data model. </summary>
-    public partial class WebSiteInstanceStatusData : ProxyOnlyResource
+    public partial class WebSiteInstanceStatusData : ResourceData
     {
         /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
         public WebSiteInstanceStatusData()
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="state"></param>
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
         /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, Uri healthCheckUri, IDictionary<string, ContainerInfo> containers, string kind) : base(id, name, resourceType, systemData)
         {
             State = state;
             StatusUri = statusUri;
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.AppService
             ConsoleUri = consoleUri;
             HealthCheckUri = healthCheckUri;
             Containers = containers;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the state. </summary>
@@ -56,5 +57,7 @@ namespace Azure.ResourceManager.AppService
         public Uri HealthCheckUri { get; set; }
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         public IDictionary<string, ContainerInfo> Containers { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

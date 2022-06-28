@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
         /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. &lt;br&gt;&lt;br&gt; Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set. </param>
-        internal SecurityProfile(UefiSettings uefiSettings, bool? encryptionAtHost, SecurityTypes? securityType)
+        internal SecurityProfile(UefiSettings uefiSettings, bool? encryptionAtHost, SecurityType? securityType)
         {
             UefiSettings = uefiSettings;
             EncryptionAtHost = encryptionAtHost;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. &lt;br&gt;&lt;br&gt; Default: The Encryption at host will be disabled unless this property is set to true for the resource. </summary>
         public bool? EncryptionAtHost { get; set; }
         /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set. </summary>
-        public SecurityTypes? SecurityType { get; set; }
+        public SecurityType? SecurityType { get; set; }
     }
 }

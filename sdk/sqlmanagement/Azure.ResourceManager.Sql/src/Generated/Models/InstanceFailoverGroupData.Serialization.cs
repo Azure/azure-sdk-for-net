@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
             Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
             Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -166,7 +171,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new InstanceFailoverGroupData(id, name, type, systemData, readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs));
+            return new InstanceFailoverGroupData(id, name, type, systemData.Value, readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs));
         }
     }
 }

@@ -18,6 +18,7 @@
         1. GalleryRP API calls updated to version 2022-01-03.
         2. Added Settings and AdvancedSettings to the gallery application version.
         3. Added PrivacyStatement and Uri to the community gallery image.
+        4. DiskRP API calls version 2022-03-02
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

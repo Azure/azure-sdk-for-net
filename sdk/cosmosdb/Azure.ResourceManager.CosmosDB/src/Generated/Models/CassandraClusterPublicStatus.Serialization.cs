@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
         {
-            Optional<string> eTag = default;
+            Optional<ETag> eTag = default;
             Optional<ManagedCassandraReaperStatus> reaperStatus = default;
             Optional<IReadOnlyList<ConnectionError>> connectionErrors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
@@ -23,7 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("eTag"))
                 {
-                    eTag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reaperStatus"))
@@ -67,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterPublicStatus(eTag.Value, reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(dataCenters));
+            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(dataCenters));
         }
     }
 }

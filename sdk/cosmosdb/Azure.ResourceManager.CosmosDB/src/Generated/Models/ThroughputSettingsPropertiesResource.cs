@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The ThroughputSettingsPropertiesResource. </summary>
@@ -22,12 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ThroughputSettingsPropertiesResource(int? throughput, AutoscaleSettingsResource autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? ts, string etag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
+        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ThroughputSettingsPropertiesResource(int? throughput, AutoscaleSettingsResource autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? ts, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
         {
             Rid = rid;
             Ts = ts;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         public float? Ts { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
     }
 }
