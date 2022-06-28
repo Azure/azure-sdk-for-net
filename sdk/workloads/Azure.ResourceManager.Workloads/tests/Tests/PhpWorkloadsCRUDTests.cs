@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Workloads.Models;
@@ -45,8 +46,9 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 var resourceJson = File.ReadAllText(
                     Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
-                PhpWorkloadResourceData resourceData =
-                    JsonConvert.DeserializeObject<PhpWorkloadResourceData>(resourceJson);
+                var json = JsonDocument.Parse(resourceJson).RootElement;
+
+                var resourceData = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(json);
 
                 resourceData.ManagedResourceGroupConfiguration = new Models.ManagedRGConfiguration()
                 {

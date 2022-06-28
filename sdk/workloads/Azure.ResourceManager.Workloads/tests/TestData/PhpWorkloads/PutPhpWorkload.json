@@ -21,7 +21,7 @@
             "version": "latest"
         },
         "osDisk": {
-            "storageType": "Premium_Lrs",
+            "storageType": "Premium_LRS",
             "sizeInGB": 127
         }
     },
@@ -35,7 +35,7 @@
             "version": "latest"
         },
         "osDisk": {
-            "storageType": "Standard_Lrs",
+            "storageType": "Standard_LRS",
             "sizeInGB": 127
         }
     },
@@ -55,7 +55,7 @@
     },
     "fileshareProfile": {
         "shareType": "AzureFiles",
-        "storageType": "Premium_Lrs",
+        "storageType": "Premium_LRS",
         "shareSizeInGB": 4096
     },
     "phpProfile": {
