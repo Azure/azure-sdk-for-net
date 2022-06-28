@@ -2521,7 +2521,7 @@ namespace Azure.Storage.Files.Shares
                     // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
                     if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
                     {
-                        sourceUriBuilder.Query += Constants.QueryDelimiter + ClientConfiguration.SasCredential.Signature;
+                        sourceUriBuilder.Query += ClientConfiguration.SasCredential.Signature;
                     }
 
                     // Build destination URI
