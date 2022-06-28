@@ -9,6 +9,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 input-file:
 - $(this-folder)/swagger/openapi.json
 namespace: Azure.Template
-security: AADToken
-security-scopes: https://vault.azure.net/.default
+credential-types: AzureKeyCredential
+credential-header-name: Ocp-Apim-Subscription-Key
 ```

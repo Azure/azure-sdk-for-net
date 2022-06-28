@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,8 +16,6 @@ namespace Azure.Template
     /// <summary> The WebPubSubService service client. </summary>
     public partial class WebPubSubServiceClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -36,90 +33,30 @@ namespace Azure.Template
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> Endpoint - server parameter. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public WebPubSubServiceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new WebPubSubServiceClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public WebPubSubServiceClient(Uri endpoint) : this(endpoint, new WebPubSubServiceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="endpoint"> Endpoint - server parameter. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public WebPubSubServiceClient(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public WebPubSubServiceClient(Uri endpoint, WebPubSubServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new WebPubSubServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
-        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SendToAllAsync(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendToAllRequest(hub, content, excluded, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SendToAll(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSendToAllRequest(hub, content, excluded, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Add a connection to the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="hub"> The String to use. </param>
+        /// <param name="group"> The String to use. </param>
+        /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -146,9 +83,9 @@ namespace Azure.Template
         }
 
         /// <summary> Add a connection to the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="hub"> The String to use. </param>
+        /// <param name="group"> The String to use. </param>
+        /// <param name="connectionId"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,262 +111,6 @@ namespace Azure.Template
             }
         }
 
-        /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveConnectionFromGroupAsync(string hub, string group, string connectionId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(hub, group, connectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="connectionId"> Target connection Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveConnectionFromGroup(string hub, string group, string connectionId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveConnectionFromGroupRequest(hub, group, connectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="targetName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CheckPermissionAsync(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
-            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckPermissionRequest(hub, permission, connectionId, targetName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="targetName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CheckPermission(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
-            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCheckPermissionRequest(hub, permission, connectionId, targetName, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddUserToGroupAsync(string hub, string userId, string group, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAddUserToGroupRequest(hub, userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a user to the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response AddUserToGroup(string hub, string userId, string group, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAddUserToGroupRequest(hub, userId, group, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveUserFromGroupAsync(string hub, string userId, string group, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(hub, userId, group, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a user from the target group. </summary>
-        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveUserFromGroup(string hub, string userId, string group, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(group, nameof(group));
-
-            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRemoveUserFromGroupRequest(hub, userId, group, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateSendToAllRequest(string hub, RequestContent content, IEnumerable<string> excluded, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/:send", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateAddConnectionToGroupRequest(string hub, string group, string connectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -449,93 +130,7 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateRemoveConnectionFromGroupRequest(string hub, string group, string connectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCheckPermissionRequest(string hub, string permission, string connectionId, string targetName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (targetName != null)
-            {
-                uri.AppendQuery("targetName", targetName, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateAddUserToGroupRequest(string hub, string userId, string group, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateRemoveUserFromGroupRequest(string hub, string userId, string group, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier200404;
-        private static ResponseClassifier ResponseClassifier200404 => _responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
     }
 }
