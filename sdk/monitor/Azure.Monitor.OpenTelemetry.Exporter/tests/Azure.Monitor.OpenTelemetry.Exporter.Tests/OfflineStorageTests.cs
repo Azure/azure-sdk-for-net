@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
-            Assert.Empty(transmitter._blobProvider.GetBlobs());
+            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
-            Assert.Single(transmitter._blobProvider.GetBlobs());
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
-            Assert.Single(transmitter._blobProvider.GetBlobs());
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
         [Fact]
@@ -117,8 +117,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
-            Assert.Single(transmitter._blobProvider.GetBlobs());
-            transmitter._blobProvider.TryGetBlob(out var blob);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+            transmitter._fileBlobProvider.TryGetBlob(out var blob);
             blob.TryRead(out var content);
 
             Assert.NotNull(content);
@@ -145,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
-            Assert.Single(transmitter._blobProvider.GetBlobs());
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
             // reset server logic to return 200
             mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
@@ -155,7 +155,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             // Blob will be deleted on successful transmission
-            Assert.Empty(transmitter._blobProvider.GetBlobs());
+            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
         private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
@@ -168,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage with mock
-            transmitter._blobProvider = new MockFileProvider();
+            transmitter._fileBlobProvider = new MockFileProvider();
 
             return transmitter;
         }
