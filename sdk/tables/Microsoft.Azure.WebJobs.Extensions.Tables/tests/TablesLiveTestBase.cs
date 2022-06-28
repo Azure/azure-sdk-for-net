@@ -99,8 +99,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
         protected async Task<object> CallAsync(Type funcType, string methodName = null, object arguments = null, Action<HostBuilder> configure = null)
         {
+            Environment.FailFast("test dumps");
             var instance = Activator.CreateInstance(funcType);
-            using var jobHost = CreateHost(funcType, configure, instance);
+            using var host = CreateHost(funcType, configure, instance);
 
             MethodInfo methodInfo;
             if (methodName != null)
@@ -113,12 +114,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     .Single(mi => !mi.IsSpecialName);
             }
 
-            await jobHost.CallAsync(methodInfo, arguments);
+            await host.GetJobHost().CallAsync(methodInfo, arguments);
 
             return instance;
         }
 
-        private JobHost CreateHost(Type programType, Action<HostBuilder> configure = null, object instance = null)
+        private IHost CreateHost(Type programType, Action<HostBuilder> configure = null, object instance = null)
         {
             var hostBuilder = new HostBuilder();
             hostBuilder.ConfigureDefaultTestHost(builder =>
@@ -137,11 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }, programType);
 
             (configure ?? DefaultConfigure).Invoke(hostBuilder);
-            var host = hostBuilder
-                .Build();
-            var jobHost = host.Services.GetService<IJobHost>() as JobHost;
-
-            return jobHost;
+            return hostBuilder.Build();
         }
 
         private class FakeActivator : IJobActivator
