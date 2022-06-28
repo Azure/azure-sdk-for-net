@@ -67,11 +67,18 @@ function DeployStressTests(
     [string]$repository = '',
     [switch]$pushImages,
     [string]$clusterGroup = '',
-    [string]$deployId = 'local',
+    [string]$deployId = '',
     [switch]$login,
     [string]$subscription = '',
     [switch]$CI,
-    [string]$Namespace
+    [string]$Namespace,
+    [ValidateScript({
+        if (!(Test-Path $_)) {
+            throw "LocalAddonsPath $LocalAddonsPath does not exist"
+        }
+        return $true
+    })]
+    [System.IO.FileInfo]$LocalAddonsPath
 ) {
     if ($environment -eq 'test') {
         if ($clusterGroup -or $subscription) {
@@ -94,10 +101,21 @@ function DeployStressTests(
         Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }
 
-    RunOrExitOnFailure helm repo add stress-test-charts https://stresstestcharts.blob.core.windows.net/helm/
+    $chartRepoName = 'stress-test-charts'
+    if ($LocalAddonsPath) {
+        $absAddonsPath = Resolve-Path $LocalAddonsPath
+        if (!(helm plugin list | Select-String 'file')) {
+            RunOrExitOnFailure helm plugin add (Join-Path $absAddonsPath file-plugin)
+        }
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
+    } else {
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+    }
+
     Run helm repo update
     if ($LASTEXITCODE) { return $LASTEXITCODE }
 
+    $deployer = if ($deployId) { $deployId } else { GetUsername }
     $pkgs = FindStressPackages -directory $searchDirectory -filters $filters -CI:$CI -namespaceOverride $Namespace
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
@@ -105,15 +123,15 @@ function DeployStressTests(
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
         DeployStressPackage `
             -pkg $pkg `
-            -deployId $deployId `
+            -deployId $deployer `
             -environment $environment `
             -repositoryBase $repository `
             -pushImages:$pushImages `
             -login:$login
     }
 
-    Write-Host "Releases deployed by $deployId"
-    Run helm list --all-namespaces -l deployId=$deployId
+    Write-Host "Releases deployed by $deployer"
+    Run helm list --all-namespaces -l deployId=$deployer
 
     if ($FailedCommands) {
         Write-Warning "The following commands failed:"

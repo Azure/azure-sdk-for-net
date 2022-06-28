@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class MachineLearningPrivateLinkResource : ResourceData
+    public partial class MachineLearningPrivateLinkResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
-        public MachineLearningPrivateLinkResource()
+        /// <param name="location"> The location. </param>
+        public MachineLearningPrivateLinkResource(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
@@ -27,18 +27,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal MachineLearningPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal MachineLearningPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            Location = location;
-            Tags = tags;
             Sku = sku;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -47,10 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Specifies the location of the resource. </summary>
-        public string Location { get; set; }
-        /// <summary> Contains resource tags defined as key/value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
         /// <summary> The private link resource group id. </summary>

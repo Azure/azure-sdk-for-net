@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
-using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using NUnit.Framework;
 using Azure.Core;
@@ -12,7 +9,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static DeviceUpdateAccountData CreateAccountData() => new DeviceUpdateAccountData(AzureLocation.WestUS2);
+        public static DeviceUpdateAccountData CreateAccountData()
+        {
+            var account = new DeviceUpdateAccountData(AzureLocation.WestUS2)
+            {
+                Sku = DeviceUpdateSku.Standard
+            };
+            return account;
+        }
 
         public static DeviceUpdateInstanceData CreateInstanceData() => new DeviceUpdateInstanceData(AzureLocation.WestUS2);
 
@@ -51,8 +55,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             for (int i = 0; i < model.Data.IotHubs.Count; ++i)
             {
                 Assert.AreEqual(model.Data.IotHubs[i].ResourceId, getResult.Data.IotHubs[i].ResourceId);
-                Assert.AreEqual(model.Data.IotHubs[i].IoTHubConnectionString, getResult.Data.IotHubs[i].IoTHubConnectionString);
-                Assert.AreEqual(model.Data.IotHubs[i].EventHubConnectionString, getResult.Data.IotHubs[i].EventHubConnectionString);
             }
             Assert.AreEqual(model.Data.EnableDiagnostics, getResult.Data.EnableDiagnostics);
             Assert.AreEqual(model.Data.AccountName, getResult.Data.AccountName);
@@ -68,7 +70,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
 
         public static void AssertAccountUpdate(DeviceUpdateAccountResource updatedAccount, DeviceUpdateAccountPatch updateParameters)
         {
-            Assert.AreEqual(updatedAccount.Data.Location.ToString(), updateParameters.Location);
+            Assert.AreEqual(updatedAccount.Data.Location, updateParameters.Location);
             if (updatedAccount.Data.Identity != null || updateParameters.Identity != null)
             {
                 Assert.NotNull(updatedAccount.Data.Identity);

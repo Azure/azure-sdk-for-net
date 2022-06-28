@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> privateBlob = default;
             Optional<string> certPassword = default;
             foreach (var property in element.EnumerateObject())
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new TdeCertificate(id, name, type, systemData, privateBlob.Value, certPassword.Value);
+            return new TdeCertificate(id, name, type, systemData.Value, privateBlob.Value, certPassword.Value);
         }
     }
 }

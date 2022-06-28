@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             }
         };
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             },
             LoadBalancingSettings = new LoadBalancingSettings
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             CacheConfiguration = new CacheConfiguration()
             {
                 QueryStringCachingBehavior = RuleQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
-                QueryParameters = "a=test",
+                QueryParameters = "a=test,b=test",
                 IsCompressionEnabled = RuleIsCompressionEnabled.Enabled,
                 CacheBehavior = RuleCacheBehavior.HonorOrigin
             }
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.NotNull(model.Data.ValidationProperties);
                 Assert.NotNull(getResult.Data.ValidationProperties);
                 Assert.AreEqual(model.Data.ValidationProperties.ValidationToken, getResult.Data.ValidationProperties.ValidationToken);
-                Assert.AreEqual(model.Data.ValidationProperties.ExpirationDate, getResult.Data.ValidationProperties.ExpirationDate);
+                Assert.AreEqual(model.Data.ValidationProperties.ExpiresOn, getResult.Data.ValidationProperties.ExpiresOn);
             }
         }
 
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
+            Assert.AreEqual(model.Data.ETag, getResult.Data.ETag);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);

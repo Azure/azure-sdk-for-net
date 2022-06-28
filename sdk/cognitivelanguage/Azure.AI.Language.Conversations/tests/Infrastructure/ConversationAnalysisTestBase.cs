@@ -10,16 +10,16 @@ namespace Azure.AI.Language.Conversations.Tests
     /// Base class for live client tests using different service versions.
     /// </summary>
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
-    [ClientTestFixture(ConversationAnalysisClientOptions.ServiceVersion.V2022_05_15_Preview)]
+    [ClientTestFixture(ConversationsClientOptions.ServiceVersion.V2022_05_01)]
     public abstract class ConversationAnalysisTestBase<TClient> : RecordedTestBase<ConversationAnalysisTestEnvironment> where TClient : class
     {
-        protected ConversationAnalysisTestBase(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+        protected ConversationAnalysisTestBase(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
             : base(isAsync, mode)
         {
             // TODO: Compare bodies again when https://github.com/Azure/azure-sdk-for-net/issues/22219 is resolved.
             CompareBodies = false;
 
-            SanitizedHeaders.Add(ConversationAnalysisClient.GetAuthorizationHeader());
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             ServiceVersion = serviceVersion;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests
         /// <summary>
         /// Gets the service version used for this instance of the test fixture.
         /// </summary>
-        protected ConversationAnalysisClientOptions.ServiceVersion ServiceVersion { get; }
+        protected ConversationsClientOptions.ServiceVersion ServiceVersion { get; }
 
         /// <summary>
         /// Creates the <see cref="Client"/> once tests begin.
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new ConversationAnalysisClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)));
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IList<IPAddressGroup>> ipAddressGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new EdgeNode(id, name, type, systemData, Optional.ToList(ipAddressGroups));
+            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups));
         }
     }
 }

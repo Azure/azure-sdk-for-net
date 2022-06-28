@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultPatchProperties. </summary>
         public VaultPatchProperties()
         {
-            AccessPolicies = new ChangeTrackingList<AccessPolicyEntry>();
+            AccessPolicies = new ChangeTrackingList<VaultAccessPolicy>();
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> SKU details. </summary>
-        public KeyVaultSku Sku { get; set; }
+        public VaultSku Sku { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
-        public IList<AccessPolicyEntry> AccessPolicies { get; }
+        public IList<VaultAccessPolicy> AccessPolicies { get; }
         /// <summary> Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault. </summary>
         public bool? EnabledForDeployment { get; set; }
         /// <summary> Property to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys. </summary>
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> softDelete data retention days. It accepts &gt;=7 and &lt;=90. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }
         /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public VaultPatchMode? CreateMode { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> A collection of rules governing the accessibility of the vault from specific network locations. </summary>
-        public NetworkRuleSet NetworkAcls { get; set; }
+        public VaultNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         public string PublicNetworkAccess { get; set; }
     }

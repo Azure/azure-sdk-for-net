@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <param name="sweepSettings"> Model sweeping and hyperparameter sweeping related settings. </param>
-        internal ImageClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetrics? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
+        internal ImageClassification(LogVerbosity? logVerbosity, TaskType taskType, ClassificationPrimaryMetric? primaryMetric, ImageModelSettingsClassification modelSettings, IList<ImageModelDistributionSettingsClassification> searchSpace, ImageVerticalDataSettings dataSettings, ImageLimitSettings limitSettings, ImageSweepSettings sweepSettings) : base(logVerbosity, taskType)
         {
             PrimaryMetric = primaryMetric;
             ModelSettings = modelSettings;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Primary metric to optimize for this task. </summary>
-        public ClassificationPrimaryMetrics? PrimaryMetric { get; set; }
+        public ClassificationPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Settings used for training the model. </summary>
         public ImageModelSettingsClassification ModelSettings { get; set; }
         /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>

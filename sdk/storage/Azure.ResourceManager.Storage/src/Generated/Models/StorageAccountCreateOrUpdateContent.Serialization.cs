@@ -156,6 +156,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("immutableStorageWithVersioning");
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
+            if (Optional.IsDefined(DnsEndpointType))
+            {
+                writer.WritePropertyName("dnsEndpointType");
+                writer.WriteStringValue(DnsEndpointType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

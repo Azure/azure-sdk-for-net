@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, or StandardSSD_ZRS. </summary>
+    /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
     public partial class DiskSku
     {
         /// <summary> Initializes a new instance of DiskSku. </summary>
@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskSku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
-        internal DiskSku(DiskStorageAccountTypes? name, string tier)
+        internal DiskSku(DiskStorageAccountType? name, string tier)
         {
             Name = name;
             Tier = tier;
         }
 
         /// <summary> The sku name. </summary>
-        public DiskStorageAccountTypes? Name { get; set; }
+        public DiskStorageAccountType? Name { get; set; }
         /// <summary> The sku tier. </summary>
         public string Tier { get; }
     }

@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class AzureFileProperties
     {
@@ -644,6 +644,23 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClientCredentialMethod : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClientCredentialMethod(string value) { throw null; }
+        public static Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod ClientSecretPost { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod left, Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod left, Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ClientRegistration
     {
@@ -1062,7 +1079,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     {
         public OpenIdConnectClientCredential() { }
         public string ClientSecretSettingName { get { throw null; } set { } }
-        public string Method { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.ClientCredentialMethod? Method { get { throw null; } set { } }
     }
     public partial class OpenIdConnectConfig
     {
