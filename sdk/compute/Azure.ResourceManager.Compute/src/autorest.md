@@ -127,6 +127,26 @@ rename-mapping:
   SshPublicKeyResource: SshPublicKey
   LogAnalyticsOperationResult: LogAnalytics
   PrivateLinkResource: ComputePrivateLinkResourceData
+  Disk: ManagedDisk
+  Encryption: DiskEncryption
+  CreationData: DiskCreationData
+  Architecture: ArchitectureType
+  OSFamily: CloudServiceOSFamily
+  OSVersion: CloudServiceOSVersion
+  UpdateDomain: UpdateDomainIdentifier
+  Extension: CloudServiceExtension
+  RoleInstance: CloudServiceRoleInstance
+  UpdateResourceDefinition: GalleryUpdateResourceData
+  StorageAccountType: ImageStorageAccountType
+  SharingProfile.permissions: permission
+  UserArtifactManage: UserArtifactManagement
+  GalleryExpandParams: GalleryExpand
+  PirResource: PirResourceData
+  PirSharedGalleryResource: PirSharedGalleryResourceData
+  PirCommunityGalleryResource: PirCommunityGalleryResourceData
+  PirCommunityGalleryResource.type: ResourceType
+  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
+  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -221,13 +241,10 @@ directive:
   - from: disk.json
     where: $.definitions
     transform: >
-      $.Disk["x-ms-client-name"] = "ManagedDisk";
       $.Disk.properties.managedBy["x-ms-format"] = "arm-id";
       $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
-      $.DiskProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-      $.DiskUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskAccess.json
     where: $.definitions
     transform: >
@@ -238,77 +255,41 @@ directive:
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
-      $.DiskRestorePointProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: snapshot.json
     where: $.definitions
     transform: >
       $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
-      $.SnapshotProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-      $.SnapshotUpdateProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: diskRPCommon.json
     where: $.definitions
     transform: >
-      $.Encryption["x-ms-client-name"] = "DiskEncryption";
       $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
-      $.CreationData["x-ms-client-name"] = "DiskCreationData";
       $.CreationData.properties.storageAccountId["x-ms-format"] = "arm-id";
       $.CreationData.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId["x-ms-format"] = "arm-id";
       $.ImageDiskReference.properties.id["x-ms-format"] = "arm-id";
-      $.SupportedCapabilities.properties.architecture["x-ms-enum"].name = "ArchitectureTypes";
   - from: cloudService.json
     where: $.definitions
     transform: >
       $.CloudService.properties.properties["x-ms-client-flatten"] = true;
-      $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
       $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
-      $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
       $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
-      $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
-      $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
-      $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
-  - from: galleryRPCommon.json
-    where: $.definitions
-    transform: >
-      $.Architecture["x-ms-enum"].name = "ArchitectureTypes";
   - from: gallery.json
     where: $.definitions
     transform: >
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
-      $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceData";
-      $.GalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-      $.GalleryApplicationProperties.properties.supportedOSType["x-ms-enum"].name = "SupportedOperatingSystemType";
-      $.TargetRegion.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
-      $.GalleryArtifactPublishingProfileBase.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
-      $.GalleryTargetExtendedLocation.properties.storageAccountType["x-ms-enum"].name = "ImageStorageAccountType";
-      $.SharingProfile.properties.permissions["x-ms-client-name"] = "permission";
-      $.UserArtifactManage["x-ms-client-name"] = "UserArtifactManagement";
-  - from: gallery.json
-    where: $.parameters
-    transform: >
-      $.GalleryODataExpandQueryParameter["x-ms-enum"].name = "GalleryExpand";
-  - from: sharedGallery.json
-    where: $.definitions
-    transform: >
-      $.PirResource["x-ms-client-name"] = "PirResourceData";
-      $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
-      $.SharedGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: communityGallery.json
     where: $.definitions
     transform: >
-      $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
-      $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
-      $.CommunityGalleryImageProperties.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
   - from: cloudService.json
     where: $.definitions.LoadBalancerConfigurationProperties
     transform: >
@@ -317,23 +298,6 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
-  - from: image.json
-    where: $.definitions
-    transform: >
-      $.ImageOSDisk.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-  - from: runCommand.json
-    where: $.definitions
-    transform: >
-      $.RunCommandDocumentBase.properties.osType["x-ms-enum"].name = "SupportedOperatingSystemType";
-  - from: capacityReservation.json
-    where: $.paths
-    transform: >
-      $["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[2]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
-      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]["x-ms-enum"].name = "CapacityReservationGroupGetExpand";
-  - from: virtualMachineScaleSet.json
-    where: $.paths
-    transform: >
-      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]["x-ms-enum"].name = "VirtualMachineScaleSetGetExpand";
   - from: cloudService.json
     where: $.paths
     transform: >
