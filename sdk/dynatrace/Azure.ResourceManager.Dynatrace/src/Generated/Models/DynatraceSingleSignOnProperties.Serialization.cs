@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element)
         {
-            Optional<SingleSignOnStates> singleSignOnState = default;
+            Optional<SingleSignOnState> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    singleSignOnState = new SingleSignOnStates(property.Value.GetString());
+                    singleSignOnState = new SingleSignOnState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAppId"))

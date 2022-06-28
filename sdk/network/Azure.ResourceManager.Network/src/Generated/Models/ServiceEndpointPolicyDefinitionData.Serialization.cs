@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<string> description = default;
             Optional<string> service = default;
-            Optional<IList<string>> serviceResources = default;
+            Optional<IList<ResourceIdentifier>> serviceResources = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new ResourceIdentifier(item.GetString()));
                             }
                             serviceResources = array;
                             continue;

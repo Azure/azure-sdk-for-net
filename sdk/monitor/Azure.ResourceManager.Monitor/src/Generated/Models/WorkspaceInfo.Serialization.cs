@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static WorkspaceInfo DeserializeWorkspaceInfo(JsonElement element)
         {
             string id = default;
-            string location = default;
+            AzureLocation location = default;
             string customerId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

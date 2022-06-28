@@ -211,7 +211,7 @@ If the number of processors configured to us the same Event Hub, consumer group,
 
 The most frequent causes of this behavior are:
 
-**Exceptions being thrown in the event processing handler:**
+#### Exceptions being thrown in the event processing handler:
 
 It is very important that an application's handler code guards against exceptions; the event processor does not have enough understanding of the application and its state to know how an exception should be handled.  Any exception thrown in a handler will go uncaught by the processor and will **NOT** be directed to the error handler.  
 
@@ -219,7 +219,7 @@ Behavior is not guaranteed but, for most hosts, this will fault the task respons
 
 It is strongly recommended that all handlers be wrapped in a `try/catch` block and that exceptions are not permitted to bubble.
 
-**Too many partitions are owned:**
+#### Too many partitions are owned:
 
 The event processor works in a concurrent and highly asynchronous manner.  Each partition owned by the processor is hosted by a dedicated background task.  The processor infrastructure also relies on a background task to perform health checks, error recovery, and load balancing activities.  Each of these tasks relies on continuations for asynchronous operations being scheduled in a timely manner in order to make forward progress.
 
@@ -231,7 +231,7 @@ Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
-**"Soft Delete" is enabled for a Blob Storage checkpoint store:**
+#### "Soft Delete" is enabled for a Blob Storage checkpoint store:
 
 To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" feature can cause large delays when attempting to read the contents of a container.   It is strongly recommended that "soft delete" be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage].
 
@@ -326,7 +326,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Instructions on how to reproduce the issue locally.  Ideally, a small self-contained project that can reproduce the error is available.
 
-- Logs for the period of at least +/- 10 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
+- Logs for the period of at least +/- 5 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
 
 - How many partitions does the Event Hub have?
 
@@ -356,6 +356,8 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 88 (Buffered Producer Publish Start)
   - 89 (Buffered Producer Publish Complete)
   - 90 (Buffered Producer Publish Error)
+  - 126 (Buffered Producer Idle Start)
+  - 127 (Buffered Producer Idle Complete)
 
 ### Event processor issues
 
@@ -383,6 +385,9 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 45 (EventProcessorClaimOwnershipError)
   - 103 (EventProcessorLoadBalancingCycleSlowWarning)
   - 104 (EventProcessorHighPartitionOwnershipWarning)
+  - 123 (EventProcessorProcessingHandlerStart)
+  - 124 (EventProcessorProcessingHandlerComplete)
+  - 125 (EventProcessorProcessingHandlerError)
   
 ### Consuming issues
 

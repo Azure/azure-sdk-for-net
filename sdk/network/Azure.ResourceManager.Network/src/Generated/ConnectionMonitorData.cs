@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="location"> Connection monitor location. </param>
         /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="source"> Describes the source of connection monitor. </param>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = eTag;
             Location = location;
             Tags = tags;
             Source = source;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Connection monitor location. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Connection monitor tags. </summary>

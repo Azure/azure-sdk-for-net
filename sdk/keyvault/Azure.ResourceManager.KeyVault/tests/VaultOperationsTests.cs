@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public async Task KeyVaultManagementVaultCreateWithoutAccessPolicies()
         {
             IgnoreTestInLiveMode();
-            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
             VaultCreateOrUpdateContent content = new VaultCreateOrUpdateContent(Location, vaultProperties);
             ArmOperation<VaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
             VaultData createdVault = rawVault.Value.Data;
@@ -60,28 +60,28 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
                 true, // enableSoftDelete defaults to true
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             //Update
             AccessPolicy.Permissions.Secrets.Clear();
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Get);
-            AccessPolicy.Permissions.Secrets.Add(SecretPermission.Set);
-            (AccessPolicy.Permissions.Keys as ChangeTrackingList<KeyPermission>).Reset();
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Get);
+            AccessPolicy.Permissions.Secrets.Add(IdentityAccessSecretPermission.Set);
+            (AccessPolicy.Permissions.Keys as ChangeTrackingList<IdentityAccessKeyPermission>).Reset();
 
             AccessPolicy.Permissions.Storage.Clear();
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.RegenerateKey);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.Get);
+            AccessPolicy.Permissions.Storage.Add(IdentityAccessStoragePermission.RegenerateKey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
-            createdVault.Properties.Sku.Name = KeyVaultSkuName.Premium;
+            createdVault.Properties.Sku.Name = VaultSkuName.Premium;
 
             parameters = new VaultCreateOrUpdateContent(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Premium,
+                VaultSkuName.Premium,
                 true,
                 true,
                 true,
                 true,
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             Response<VaultResource> rawRetrievedVault = await VaultCollection.GetAsync(VaultName);
@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Premium,
+                VaultSkuName.Premium,
                 true,
                 true,
                 true,
                 true,
                 new[] { AccessPolicy },
-                VaultProperties.NetworkAcls,
+                VaultProperties.NetworkRuleSet,
                 Tags);
 
             // Delete
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 TenantIdGuid,
                 Location,
                 "A",
-                KeyVaultSkuName.Standard,
+                VaultSkuName.Standard,
                 true,
                 true,
                 true,
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             AzureLocation expectedLocation,
             string expectedSkuFamily,
-            KeyVaultSkuName expectedSku,
+            VaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyEntry[] expectedPolicies,
+            VaultAccessPolicy[] expectedPolicies,
             Dictionary<string, string> expectedTags)
         {
             Assert.NotNull(vaultData);
@@ -361,13 +361,13 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Guid expectedTenantId,
             AzureLocation expectedLocation,
             string expectedSkuFamily,
-            KeyVaultSkuName expectedSku,
+            VaultSkuName expectedSku,
             bool expectedEnabledForDeployment,
             bool expectedEnabledForTemplateDeployment,
             bool expectedEnabledForDiskEncryption,
             bool? expectedEnableSoftDelete,
-            AccessPolicyEntry[] expectedPolicies,
-            NetworkRuleSet networkRuleSet,
+            VaultAccessPolicy[] expectedPolicies,
+            VaultNetworkRuleSet networkRuleSet,
             Dictionary<string, string> expectedTags)
         {
             ValidateVault(
@@ -386,12 +386,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 expectedPolicies,
                 expectedTags);
 
-            Assert.NotNull(vaultData.Properties.NetworkAcls);
-            Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkAcls.DefaultAction);
-            Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkAcls.Bypass);
-            Assert.True(vaultData.Properties.NetworkAcls.IPRules != null && vaultData.Properties.NetworkAcls.IPRules.Count == 2);
-            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkAcls.IPRules[0].AddressRange);
-            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkAcls.IPRules[1].AddressRange);
+            Assert.NotNull(vaultData.Properties.NetworkRuleSet);
+            Assert.AreEqual(networkRuleSet.DefaultAction, vaultData.Properties.NetworkRuleSet.DefaultAction);
+            Assert.AreEqual(networkRuleSet.Bypass, vaultData.Properties.NetworkRuleSet.Bypass);
+            Assert.True(vaultData.Properties.NetworkRuleSet.IPRules != null && vaultData.Properties.NetworkRuleSet.IPRules.Count == 2);
+            Assert.AreEqual(networkRuleSet.IPRules[0].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[0].AddressRange);
+            Assert.AreEqual(networkRuleSet.IPRules[1].AddressRange, vaultData.Properties.NetworkRuleSet.IPRules[1].AddressRange);
         }
     }
 }

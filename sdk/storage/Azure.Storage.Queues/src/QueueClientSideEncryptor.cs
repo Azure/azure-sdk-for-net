@@ -13,9 +13,9 @@ namespace Azure.Storage.Queues
 {
     internal class QueueClientSideEncryptor
     {
-        private readonly ClientSideEncryptor _encryptor;
+        private readonly IClientSideEncryptor _encryptor;
 
-        public QueueClientSideEncryptor(ClientSideEncryptor encryptor)
+        public QueueClientSideEncryptor(IClientSideEncryptor encryptor)
         {
             _encryptor = encryptor;
         }

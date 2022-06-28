@@ -6,14 +6,14 @@
 ################
 
 # Git Hub integration and bot rules
-/.github/                                       @jsquire
+/.github/                                       @jsquire @ronniegeraghty
 
 #########
 # SDK
 #########
 
 # Catch all
-/sdk/                                           
+/sdk/                                           @pallavit @jsquire
 
 # ######## Core Libraries ########
 

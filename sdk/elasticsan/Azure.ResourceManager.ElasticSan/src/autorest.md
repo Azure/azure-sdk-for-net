@@ -6,15 +6,23 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-library-name: elasticsan
-namespace: Azure.ResourceManager.elasticsan
+library-name: ElasticSan
+namespace: Azure.ResourceManager.ElasticSan
 require: https://github.com/Azure/azure-rest-api-specs/blob/50ed15bd61ac79f2368d769df0c207a00b9e099f/specification/elasticsan/resource-manager/readme.md
 tag: package-2021-11-20-preview
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -45,6 +53,5 @@ directive:
       $.Sku.properties.name['x-ms-enum']['name'] = 'ElasticSanSkuName';
       $.Sku.properties.tier['x-ms-enum']['name'] = 'ElasticSanTier';
       $.VirtualNetworkRule.properties.state['x-ms-enum']['name'] = 'VirtualNetworkRuleState';
-      $.SkuLocationInfo.properties.location['x-ms-format'] = 'azure-location';
 
 ```

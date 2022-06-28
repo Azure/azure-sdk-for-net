@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType");
-                writer.WriteStringValue(LinkedResourceType);
+                writer.WriteStringValue(LinkedResourceType.Value);
             }
             if (Optional.IsDefined(Link))
             {
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<string> linkedResourceType = default;
-            Optional<string> link = default;
+            Optional<ResourceType> linkedResourceType = default;
+            Optional<ResourceIdentifier> link = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> allowDelete = default;
             Optional<IList<AzureLocation>> locations = default;
@@ -117,12 +117,22 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("linkedResourceType"))
                         {
-                            linkedResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("link"))
                         {
-                            link = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            link = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -164,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), linkedResourceType.Value, link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
+            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
         }
     }
 }

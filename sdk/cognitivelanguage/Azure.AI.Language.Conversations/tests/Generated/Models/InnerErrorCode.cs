@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> Human-readable error code. </summary>
-    public readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
+    internal readonly partial struct InnerErrorCode : IEquatable<InnerErrorCode>
     {
         private readonly string _value;
 
