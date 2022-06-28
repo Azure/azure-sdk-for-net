@@ -18,6 +18,8 @@ namespace Azure.AI.Language.Conversations
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader0 = "Ocp-Apim-Subscription-Key";
+        private readonly AzureKeyCredential _keyCredential0;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -31,32 +33,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ConversationAnalysisClient for mocking. </summary>
         protected ConversationAnalysisClient()
         {
-        }
-
-        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationAnalysisClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationAnalysisClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ConversationAnalysisClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
@@ -86,7 +62,7 @@ namespace Azure.AI.Language.Conversations
         ///     deploymentName: string, # Required. The name of the deployment to use.
         ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
         ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
+        ///     stringIndexType: &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
         ///   }, # Required. Input parameters necessary for a Conversation task.
@@ -157,7 +133,7 @@ namespace Azure.AI.Language.Conversations
         ///     deploymentName: string, # Required. The name of the deployment to use.
         ///     verbose: boolean, # Optional. If true, the service will return more detailed information in the response.
         ///     isLoggingEnabled: boolean, # Optional. If true, the service will keep the query for further review.
-        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
+        ///     stringIndexType: &quot;Utf16CodeUnit&quot;, # Optional. Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16.
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
         ///   }, # Required. Input parameters necessary for a Conversation task.

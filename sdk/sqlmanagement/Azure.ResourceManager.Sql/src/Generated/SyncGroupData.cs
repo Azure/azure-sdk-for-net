@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Interval = interval;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Conflict resolution policy of the sync group. </summary>
         public SyncConflictResolutionPolicy? ConflictResolutionPolicy { get; set; }
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> User name for the sync group hub database credential. </summary>
         public string HubDatabaseUserName { get; set; }
         /// <summary> Password for the sync group hub database credential. </summary>

@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
             Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
 
         private void VerifyEqualGremlinGraphs(GremlinGraphResource expectedValue, GremlinGraphResource actualValue)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
             Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
 
             Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);
             Assert.AreEqual(expectedValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Resource.ConflictResolutionPolicy.ConflictResolutionPath);

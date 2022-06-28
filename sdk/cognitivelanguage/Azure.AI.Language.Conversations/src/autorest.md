@@ -7,12 +7,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: Conversations
 license-header: MICROSOFT_MIT_NO_VERSION
 
-batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
-  clear-output-folder: true
-
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
-  namespace: Azure.AI.Language.Conversations.Authoring
+input-file:
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/725f4ca360426a32d20e81eb945065e62c285d6a/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzeconversations-authoring.json
+clear-output-folder: true
 
 data-plane: true
 model-namespace: false
