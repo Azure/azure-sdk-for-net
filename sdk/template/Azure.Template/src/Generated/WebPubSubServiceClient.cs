@@ -61,12 +61,14 @@ namespace Azure.Template
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SendToAllAsync(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -87,12 +89,14 @@ namespace Azure.Template
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="excluded"> The ArrayOfPost2ItemsItem to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response SendToAll(string hub, RequestContent content, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -113,12 +117,14 @@ namespace Azure.Template
         }
 
         /// <summary> Add a connection to the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddConnectionToGroupAsync(string hub, string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -140,12 +146,14 @@ namespace Azure.Template
         }
 
         /// <summary> Add a connection to the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response AddConnectionToGroup(string hub, string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -167,12 +175,14 @@ namespace Azure.Template
         }
 
         /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string hub, string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -194,12 +204,14 @@ namespace Azure.Template
         }
 
         /// <summary> Remove a connection from the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="connectionId"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="connectionId"> Target connection Id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveConnectionFromGroup(string hub, string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -221,13 +233,15 @@ namespace Azure.Template
         }
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CheckPermissionAsync(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -249,13 +263,15 @@ namespace Azure.Template
         }
 
         /// <summary> Check if a connection has permission to the specified action. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="permission"> The WebPubSubPermission to use. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
         /// <param name="connectionId"> The String to use. </param>
         /// <param name="targetName"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response CheckPermission(string hub, string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -277,12 +293,14 @@ namespace Azure.Template
         }
 
         /// <summary> Add a user to the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddUserToGroupAsync(string hub, string userId, string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -304,12 +322,14 @@ namespace Azure.Template
         }
 
         /// <summary> Add a user to the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response AddUserToGroup(string hub, string userId, string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -331,12 +351,14 @@ namespace Azure.Template
         }
 
         /// <summary> Remove a user from the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RemoveUserFromGroupAsync(string hub, string userId, string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));
@@ -358,12 +380,14 @@ namespace Azure.Template
         }
 
         /// <summary> Remove a user from the target group. </summary>
-        /// <param name="hub"> The String to use. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The String to use. </param>
-        /// <param name="group"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hub"/>, <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response RemoveUserFromGroup(string hub, string userId, string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(hub, nameof(hub));

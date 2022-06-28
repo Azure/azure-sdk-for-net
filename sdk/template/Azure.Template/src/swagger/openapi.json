@@ -309,6 +309,7 @@
       "name": "api-version",
       "in": "query",
       "required": true,
+      "description": "The version of the REST APIs.",
       "type": "string",
       "x-ms-parameter-location": "method"
     },
@@ -316,6 +317,7 @@
       "name": "hub",
       "in": "path",
       "required": true,
+      "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
       "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
       "type": "string",
       "x-ms-parameter-location": "method"
@@ -324,6 +326,7 @@
       "name": "connectionId",
       "in": "path",
       "required": true,
+      "description": "Target connection Id",
       "minLength": 1,
       "type": "string",
       "x-ms-parameter-location": "method"
@@ -332,6 +335,7 @@
       "name": "group",
       "in": "path",
       "required": true,
+      "description": "Target group name, which length should be greater than 0 and less than 1025.",
       "minLength": 1,
       "maxLength": 1024,
       "type": "string",
