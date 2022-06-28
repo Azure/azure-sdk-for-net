@@ -12,6 +12,10 @@
 
 - Added `Update` methods for Resource classes.
 
+### Bugs Fixed
+
+- Fixed serialization/deserialization bugs of `Tags` and `SystemData` properties for models inherited from ResourceData/TrackedResourceData.
+
 ## 1.0.0-beta.4 (2022-04-08)
 
 ### Breaking Changes
