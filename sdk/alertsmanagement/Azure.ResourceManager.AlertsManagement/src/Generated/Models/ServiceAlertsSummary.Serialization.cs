@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("smartGroupsCount");
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
-            if (Optional.IsDefined(Groupedby))
+            if (Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby");
-                writer.WriteStringValue(Groupedby);
+                writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {

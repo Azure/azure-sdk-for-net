@@ -102,6 +102,8 @@ directive:
       $.alertModificationItem['x-ms-client-name'] = 'ServiceAlertModificationItemData';
       $.alertsSummary.properties.properties['x-ms-client-flatten'] = true;
       $.alertsSummary['x-ms-client-name'] = 'ServiceAlertsSummary';
+      $.alertsSummaryGroup.properties.groupedby['x-ms-client-name'] = 'GroupedBy';
+      $.alertsSummaryGroupItem.properties.groupedby['x-ms-client-name'] = 'GroupedBy';
       $.alertsSummaryGroupItem['x-ms-client-name'] = 'ServiceAlertsSummaryGroupItemData';
       $.alertsMetaData['x-ms-client-name'] = 'ServiceAlertsMetaData';
       $.alertsMetaDataProperties.properties.metadataIdentifier['x-ms-enum']['name'] = 'ServiceAlertMetadataIdentifier';

@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("count");
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Groupedby))
+            if (Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby");
-                writer.WriteStringValue(Groupedby);
+                writer.WriteStringValue(GroupedBy);
             }
             if (Optional.IsCollectionDefined(Values))
             {

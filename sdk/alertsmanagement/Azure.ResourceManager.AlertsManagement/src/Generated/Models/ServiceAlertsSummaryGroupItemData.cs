@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertsSummaryGroupItemData. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
-        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
-        internal ServiceAlertsSummaryGroupItemData(string name, long? count, string groupedby, IList<ServiceAlertsSummaryGroupItemData> values)
+        internal ServiceAlertsSummaryGroupItemData(string name, long? count, string groupedBy, IList<ServiceAlertsSummaryGroupItemData> values)
         {
             Name = name;
             Count = count;
-            Groupedby = groupedby;
+            GroupedBy = groupedBy;
             Values = values;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Count of the aggregated field. </summary>
         public long? Count { get; set; }
         /// <summary> Name of the field aggregated. </summary>
-        public string Groupedby { get; set; }
+        public string GroupedBy { get; set; }
         /// <summary> List of the items. </summary>
         public IList<ServiceAlertsSummaryGroupItemData> Values { get; }
     }

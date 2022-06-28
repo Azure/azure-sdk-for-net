@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="total"> Total count of the result set. </param>
         /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
-        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
-        internal ServiceAlertsSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedby, IList<ServiceAlertsSummaryGroupItemData> values) : base(id, name, resourceType, systemData)
+        internal ServiceAlertsSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertsSummaryGroupItemData> values) : base(id, name, resourceType, systemData)
         {
             Total = total;
             SmartGroupsCount = smartGroupsCount;
-            Groupedby = groupedby;
+            GroupedBy = groupedBy;
             Values = values;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Total count of the smart groups. </summary>
         public long? SmartGroupsCount { get; set; }
         /// <summary> Name of the field aggregated. </summary>
-        public string Groupedby { get; set; }
+        public string GroupedBy { get; set; }
         /// <summary> List of the items. </summary>
         public IList<ServiceAlertsSummaryGroupItemData> Values { get; }
     }

@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public partial class ServiceAlertsSummary : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceAlertsSummary() { }
-        public string Groupedby { get { throw null; } set { } }
+        public string GroupedBy { get { throw null; } set { } }
         public long? SmartGroupsCount { get { throw null; } set { } }
         public long? Total { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertsSummaryGroupItemData> Values { get { throw null; } }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         public ServiceAlertsSummaryGroupItemData() { }
         public long? Count { get { throw null; } set { } }
-        public string Groupedby { get { throw null; } set { } }
+        public string GroupedBy { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertsSummaryGroupItemData> Values { get { throw null; } }
     }
