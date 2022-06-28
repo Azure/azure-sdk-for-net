@@ -27,7 +27,6 @@
     <PackageReference Update="Microsoft.ServiceFabric" Version="6.4.624" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
 
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
 
@@ -92,13 +91,14 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.10.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.8.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
+    <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.10.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.1.1" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
@@ -106,7 +106,6 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
-		<PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
@@ -124,15 +123,15 @@
     <PackageReference Update="Apache.Avro" Version="1.11.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
+    <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
     <PackageReference Update="Microsoft.Azure.SignalR" Version="1.16.1" />
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.16.1" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.16.1" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.33" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
-			<PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
@@ -155,7 +154,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220602.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220628.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -167,7 +166,6 @@
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
-			<PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" PrivateAssets="all"/>
   </ItemGroup>
 
   <!--
@@ -198,7 +196,6 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.1.25" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
-    <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
@@ -215,7 +212,7 @@
     <PackageReference Update="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.Storage" Version="13.0.0" />
-		<PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
+    <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Storage.File" Version="11.2.2" />
@@ -236,7 +233,6 @@
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
-		<PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
     <PackageReference Update="Moq" Version="4.10.1" />
     <PackageReference Update="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
