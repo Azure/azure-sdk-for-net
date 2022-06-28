@@ -250,11 +250,10 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        /// <summary> A sub-ledger id may optionally be specified. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="gzipContent">Indicates whether the request content should be sent with GZip encoding</param>
-        /// <param name="subLedgerId"> The sub-ledger id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -267,13 +266,13 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> PostLedgerEntryAsync(RequestContent content, bool gzipContent = true, string subLedgerId = null, RequestContext context = null)
+        public virtual async Task<Response> GetCollectionsAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCollections");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostLedgerEntryRequest(content, subLedgerId, context, gzipContent);
+                using HttpMessage message = CreateGetCollectionsRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1161,7 +1160,7 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string subLedgerId, RequestContext context, bool gzipContent)
+        internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string collectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1177,16 +1176,7 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            if (gzipContent)
-            {
-                request.Headers.Add("Content-Encoding", "gzip");
-                GZipUtf8JsonRequestContent gzContent = new(content);
-                request.Content = gzContent;
-            }
-            else
-            {
-                request.Content = content;
-            }
+            request.Content = content;
             return message;
         }
 

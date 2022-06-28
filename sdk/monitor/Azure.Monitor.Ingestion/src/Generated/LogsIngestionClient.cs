@@ -114,29 +114,6 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/dataCollectionRules/", false);
-            uri.AppendPath(ruleId, true);
-            uri.AppendPath("/streams/", false);
-            uri.AppendPath(streamName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            if (contentEncoding != null)
-            {
-                request.Headers.Add("Content-Encoding", contentEncoding);
-            }
-            request.Content = content;
-            return message;
-        }
-
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

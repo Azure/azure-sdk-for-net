@@ -22,5 +22,36 @@ namespace Azure.Monitor.Ingestion
         protected LogsIngestionClient()
         {
         }
+
+        internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataCollectionRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            if (contentEncoding != null)
+            {
+                request.Headers.Add("Content-Encoding", contentEncoding);
+            }
+            if (contentEncoding == "gzip")
+            {
+                GZipUtf8JsonRequestContent gzContent = new(content);
+                request.Content = gzContent;
+            }
+            else
+            {
+                request.Content = content;
+            }
+            return message;
+        }
     }
 }
