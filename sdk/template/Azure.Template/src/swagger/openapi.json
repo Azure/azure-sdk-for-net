@@ -100,28 +100,16 @@
         "summary": "Add a connection to the target group.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GlobalParams.hub"
           },
           {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GlobalParams.api-version"
           },
           {
-            "name": "connectionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ConnectionParms.group"
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ConnectionParms.connectionId"
           }
         ],
         "responses": {
@@ -144,28 +132,16 @@
         "summary": "Remove a connection from the target group.",
         "parameters": [
           {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GlobalParams.hub"
           },
           {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GlobalParams.api-version"
           },
           {
-            "name": "connectionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ConnectionParms.group"
           },
           {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/ConnectionParms.connectionId"
           }
         ],
         "responses": {
@@ -364,5 +340,34 @@
       }
     }
   },
-  "parameters": {}
+  "parameters": {
+    "ConnectionParms.connectionId": {
+      "name": "connectionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "ConnectionParms.group": {
+      "name": "group",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "GlobalParams.api-version": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "GlobalParams.hub": {
+      "name": "hub",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  }
 }
