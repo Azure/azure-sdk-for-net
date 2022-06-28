@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AlertsManagement
     {
         private ClientDiagnostics _alertProcessingRuleClientDiagnostics;
         private AlertProcessingRulesRestOperations _alertProcessingRuleRestClient;
-        private ClientDiagnostics _alertClientDiagnostics;
-        private AlertsRestOperations _alertRestClient;
+        private ClientDiagnostics _serviceAlertAlertsClientDiagnostics;
+        private AlertsRestOperations _serviceAlertAlertsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AlertsManagement
 
         private ClientDiagnostics AlertProcessingRuleClientDiagnostics => _alertProcessingRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", AlertProcessingRuleResource.ResourceType.Namespace, Diagnostics);
         private AlertProcessingRulesRestOperations AlertProcessingRuleRestClient => _alertProcessingRuleRestClient ??= new AlertProcessingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AlertProcessingRuleResource.ResourceType));
-        private ClientDiagnostics AlertClientDiagnostics => _alertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", AlertResource.ResourceType.Namespace, Diagnostics);
-        private AlertsRestOperations AlertRestClient => _alertRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AlertResource.ResourceType));
+        private ClientDiagnostics ServiceAlertAlertsClientDiagnostics => _serviceAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
+        private AlertsRestOperations ServiceAlertAlertsRestClient => _serviceAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceAlertResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.AlertsManagement
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AlertResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AlertResources and their operations over a AlertResource. </returns>
-        public virtual AlertCollection GetAlerts()
+        /// <summary> Gets a collection of ServiceAlertResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
+        public virtual ServiceAlertCollection GetServiceAlerts()
         {
-            return GetCachedClient(Client => new AlertCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceAlertCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SmartGroupResources in the SubscriptionResource. </summary>
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertsSummary>> GetSummaryAlertAsync(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRange? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertsSummary>> GetSummaryAlertAsync(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            using var scope = AlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
             scope.Start();
             try
             {
-                var response = await AlertRestClient.GetSummaryAsync(Id.SubscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceAlertAlertsRestClient.GetSummaryAsync(Id.SubscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertsSummary> GetSummaryAlert(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRange? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertsSummary> GetSummaryAlert(AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            using var scope = AlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSummaryAlert");
             scope.Start();
             try
             {
-                var response = AlertRestClient.GetSummary(Id.SubscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
+                var response = ServiceAlertAlertsRestClient.GetSummary(Id.SubscriptionId, groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
                 return response;
             }
             catch (Exception e)

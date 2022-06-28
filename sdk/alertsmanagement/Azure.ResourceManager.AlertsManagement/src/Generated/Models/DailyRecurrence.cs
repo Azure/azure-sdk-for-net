@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Daily recurrence object. </summary>
-    public partial class DailyRecurrence : Recurrence
+    public partial class DailyRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of DailyRecurrence. </summary>
         public DailyRecurrence()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Initializes a new instance of DailyRecurrence. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startTime"> Start time for recurrence. </param>
-        /// <param name="endTime"> End time for recurrence. </param>
-        internal DailyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime) : base(recurrenceType, startTime, endTime)
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
+        internal DailyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(recurrenceType, startOn, endOn)
         {
             RecurrenceType = recurrenceType;
         }

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static RemoveAllActionGroups DeserializeRemoveAllActionGroups(JsonElement element)
         {
-            ActionType actionType = default;
+            AlertProcessingRuleActionType actionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"))
                 {
-                    actionType = new ActionType(property.Value.GetString());
+                    actionType = new AlertProcessingRuleActionType(property.Value.GetString());
                     continue;
                 }
             }

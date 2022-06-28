@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AlertsManagement
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _alertClientDiagnostics;
-        private AlertsRestOperations _alertRestClient;
+        private ClientDiagnostics _serviceAlertAlertsClientDiagnostics;
+        private AlertsRestOperations _serviceAlertAlertsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AlertsManagement
         {
         }
 
-        private ClientDiagnostics AlertClientDiagnostics => _alertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", AlertResource.ResourceType.Namespace, Diagnostics);
-        private AlertsRestOperations AlertRestClient => _alertRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AlertResource.ResourceType));
+        private ClientDiagnostics ServiceAlertAlertsClientDiagnostics => _serviceAlertAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
+        private AlertsRestOperations ServiceAlertAlertsRestClient => _serviceAlertAlertsRestClient ??= new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceAlertResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertsMetaData>> MetaDataAlertAsync(Identifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertsMetaData>> MetaDataAlertAsync(InformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = AlertClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
             scope.Start();
             try
             {
-                var response = await AlertRestClient.MetaDataAsync(identifier, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceAlertAlertsRestClient.MetaDataAsync(identifier, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertsMetaData> MetaDataAlert(Identifier identifier, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertsMetaData> MetaDataAlert(InformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using var scope = AlertClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
+            using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("TenantResourceExtensionClient.MetaDataAlert");
             scope.Start();
             try
             {
-                var response = AlertRestClient.MetaData(identifier, cancellationToken);
+                var response = ServiceAlertAlertsRestClient.MetaData(identifier, cancellationToken);
                 return response;
             }
             catch (Exception e)

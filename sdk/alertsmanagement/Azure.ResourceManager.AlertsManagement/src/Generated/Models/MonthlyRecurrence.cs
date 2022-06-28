@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Monthly recurrence object. </summary>
-    public partial class MonthlyRecurrence : Recurrence
+    public partial class MonthlyRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of MonthlyRecurrence. </summary>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Initializes a new instance of MonthlyRecurrence. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startTime"> Start time for recurrence. </param>
-        /// <param name="endTime"> End time for recurrence. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
-        internal MonthlyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IList<int> daysOfMonth) : base(recurrenceType, startTime, endTime)
+        internal MonthlyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<int> daysOfMonth) : base(recurrenceType, startOn, endOn)
         {
             DaysOfMonth = daysOfMonth;
             RecurrenceType = recurrenceType;

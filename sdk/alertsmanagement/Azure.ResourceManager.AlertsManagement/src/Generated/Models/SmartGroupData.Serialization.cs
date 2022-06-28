@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.AlertsManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<long> alertsCount = default;
-            Optional<State> smartGroupState = default;
-            Optional<Severity> severity = default;
+            Optional<SmartGroupState> smartGroupState = default;
+            Optional<ServiceAlertSeverity> severity = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<string> lastModifiedUserName = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AlertsManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            smartGroupState = new State(property0.Value.GetString());
+                            smartGroupState = new SmartGroupState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("severity"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            severity = new Severity(property0.Value.GetString());
+                            severity = new ServiceAlertSeverity(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTime"))

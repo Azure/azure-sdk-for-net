@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="alertsCount"> Total number of alerts in smart group. </param>
         /// <param name="smartGroupState"> Smart group state. </param>
         /// <param name="severity"> Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group. </param>
-        /// <param name="startOn"> Creation time of smart group. Date-Time in ISO-8601 format. </param>
+        /// <param name="startedOn"> Creation time of smart group. Date-Time in ISO-8601 format. </param>
         /// <param name="lastModifiedOn"> Last updated time of smart group. Date-Time in ISO-8601 format. </param>
-        /// <param name="lastModifiedUserName"> Last modified by user name. </param>
+        /// <param name="lastModifiedBy"> Last modified by user name. </param>
         /// <param name="resources"> Summary of target resources in the smart group. </param>
         /// <param name="resourceTypes"> Summary of target resource types in the smart group. </param>
         /// <param name="resourceGroups"> Summary of target resource groups in the smart group. </param>
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="alertStates"> Summary of alertStates in the smart group. </param>
         /// <param name="alertSeverities"> Summary of alertSeverities in the smart group. </param>
         /// <param name="nextLink"> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </param>
-        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, State? smartGroupState, Severity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedUserName, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink) : base(id, name, resourceType, systemData)
+        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startedOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink) : base(id, name, resourceType, systemData)
         {
             AlertsCount = alertsCount;
             SmartGroupState = smartGroupState;
             Severity = severity;
-            StartOn = startOn;
+            StartedOn = startedOn;
             LastModifiedOn = lastModifiedOn;
-            LastModifiedUserName = lastModifiedUserName;
+            LastModifiedBy = lastModifiedBy;
             Resources = resources;
             ResourceTypes = resourceTypes;
             ResourceGroups = resourceGroups;
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <summary> Total number of alerts in smart group. </summary>
         public long? AlertsCount { get; set; }
         /// <summary> Smart group state. </summary>
-        public State? SmartGroupState { get; }
+        public SmartGroupState? SmartGroupState { get; }
         /// <summary> Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group. </summary>
-        public Severity? Severity { get; }
+        public ServiceAlertSeverity? Severity { get; }
         /// <summary> Creation time of smart group. Date-Time in ISO-8601 format. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> Last updated time of smart group. Date-Time in ISO-8601 format. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Last modified by user name. </summary>
-        public string LastModifiedUserName { get; }
+        public string LastModifiedBy { get; }
         /// <summary> Summary of target resources in the smart group. </summary>
         public IList<SmartGroupAggregatedProperty> Resources { get; }
         /// <summary> Summary of target resource types in the smart group. </summary>

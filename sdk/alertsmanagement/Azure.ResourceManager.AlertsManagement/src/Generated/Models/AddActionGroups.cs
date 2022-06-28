@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Add action groups to alert processing rule. </summary>
-    public partial class AddActionGroups : Action
+    public partial class AddActionGroups : AlertProcessingRuleAction
     {
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             ActionGroupIds = actionGroupIds.ToList();
-            ActionType = ActionType.AddActionGroups;
+            ActionType = AlertProcessingRuleActionType.AddActionGroups;
         }
 
         /// <summary> Initializes a new instance of AddActionGroups. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
-        internal AddActionGroups(ActionType actionType, IList<string> actionGroupIds) : base(actionType)
+        internal AddActionGroups(AlertProcessingRuleActionType actionType, IList<string> actionGroupIds) : base(actionType)
         {
             ActionGroupIds = actionGroupIds;
             ActionType = actionType;

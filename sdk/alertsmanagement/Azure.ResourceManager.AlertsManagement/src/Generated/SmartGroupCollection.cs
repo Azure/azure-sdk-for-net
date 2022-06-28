@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SmartGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Page<SmartGroupResource> FirstPageFunc(int? pageSizeHint)
             {

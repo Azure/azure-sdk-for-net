@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AlertsMetaData>> MetaDataAlertAsync(this TenantResource tenantResource, Identifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertsMetaData>> MetaDataAlertAsync(this TenantResource tenantResource, InformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(tenantResource).MetaDataAlertAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AlertsMetaData> MetaDataAlert(this TenantResource tenantResource, Identifier identifier, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertsMetaData> MetaDataAlert(this TenantResource tenantResource, InformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).MetaDataAlert(identifier, cancellationToken);
         }
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.AlertsManagement
             );
         }
 
-        /// <summary> Gets a collection of AlertResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ServiceAlertResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AlertResources and their operations over a AlertResource. </returns>
-        public static AlertCollection GetAlerts(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
+        public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetAlerts();
+            return GetExtensionClient(subscriptionResource).GetServiceAlerts();
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertResource>> GetAlertAsync(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAlerts().GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetServiceAlerts().GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertResource> GetAlert(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, string alertId, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAlerts().Get(alertId, cancellationToken);
+            return subscriptionResource.GetServiceAlerts().Get(alertId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SmartGroupResources in the SubscriptionResource. </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AlertsSummary>> GetSummaryAlertAsync(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRange? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertsSummary>> GetSummaryAlertAsync(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetSummaryAlertAsync(groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken).ConfigureAwait(false);
         }
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AlertsSummary> GetSummaryAlert(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRange? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertsSummary> GetSummaryAlert(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSummaryAlert(groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
         }
@@ -285,20 +285,20 @@ namespace Azure.ResourceManager.AlertsManagement
         }
         #endregion
 
-        #region AlertResource
+        #region ServiceAlertResource
         /// <summary>
-        /// Gets an object representing an <see cref="AlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertResource.CreateResourceIdentifier" /> to create an <see cref="AlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertResource" /> object. </returns>
-        public static AlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
+        public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AlertResource.ValidateResourceId(id);
-                return new AlertResource(client, id);
+                ServiceAlertResource.ValidateResourceId(id);
+                return new ServiceAlertResource(client, id);
             }
             );
         }

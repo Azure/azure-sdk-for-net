@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Weekly recurrence object. </summary>
-    public partial class WeeklyRecurrence : Recurrence
+    public partial class WeeklyRecurrence : AlertProcessingRuleRecurrence
     {
         /// <summary> Initializes a new instance of WeeklyRecurrence. </summary>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> Initializes a new instance of WeeklyRecurrence. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startTime"> Start time for recurrence. </param>
-        /// <param name="endTime"> End time for recurrence. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
-        internal WeeklyRecurrence(RecurrenceType recurrenceType, string startTime, string endTime, IList<DaysOfWeek> daysOfWeek) : base(recurrenceType, startTime, endTime)
+        internal WeeklyRecurrence(RecurrenceType recurrenceType, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DaysOfWeek> daysOfWeek) : base(recurrenceType, startOn, endOn)
         {
             DaysOfWeek = daysOfWeek;
             RecurrenceType = recurrenceType;

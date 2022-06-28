@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -25,15 +26,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType");
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -42,8 +43,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             IList<int> daysOfMonth = default;
             RecurrenceType recurrenceType = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfMonth"))
@@ -63,16 +64,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new MonthlyRecurrence(recurrenceType, startTime.Value, endTime.Value, daysOfMonth);
+            return new MonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfMonth);
         }
     }
 }

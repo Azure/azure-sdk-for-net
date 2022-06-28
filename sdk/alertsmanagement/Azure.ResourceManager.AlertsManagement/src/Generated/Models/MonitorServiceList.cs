@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Monitor service details. </summary>
-    public partial class MonitorServiceList : AlertsMetaDataProperties
+    public partial class MonitorServiceList : ServiceAlertsMetaDataProperties
     {
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
         /// <param name="data"> Array of operations. </param>
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             Data = data.ToList();
-            MetadataIdentifier = MetadataIdentifier.MonitorServiceList;
+            MetadataIdentifier = ServiceAlertMetadataIdentifier.MonitorServiceList;
         }
 
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="data"> Array of operations. </param>
-        internal MonitorServiceList(MetadataIdentifier metadataIdentifier, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier)
+        internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier)
         {
             Data = data;
             MetadataIdentifier = metadataIdentifier;

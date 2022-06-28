@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Tags to be updated. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates if the given alert processing rule is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

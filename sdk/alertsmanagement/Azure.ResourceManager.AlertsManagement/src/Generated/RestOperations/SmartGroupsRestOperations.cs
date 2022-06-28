@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string targetResource, string targetResourceGroup, string targetResourceType, MonitorService? monitorService, MonitorCondition? monitorCondition, Severity? severity, AlertState? smartGroupState, TimeRange? timeRange, long? pageCount, SmartGroupsSortByField? sortBy, SortOrder? sortOrder)
+        internal HttpMessage CreateGetAllRequest(string subscriptionId, string targetResource, string targetResourceGroup, string targetResourceType, MonitorService? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, AlertState? smartGroupState, TimeRangeFilter? timeRange, long? pageCount, SmartGroupsSortByField? sortBy, SortOrder? sortOrder)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SmartGroupsList>> GetAllAsync(string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SmartGroupsList>> GetAllAsync(string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SmartGroupsList> GetAll(string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public Response<SmartGroupsList> GetAll(string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string subscriptionId, string targetResource, string targetResourceGroup, string targetResourceType, MonitorService? monitorService, MonitorCondition? monitorCondition, Severity? severity, AlertState? smartGroupState, TimeRange? timeRange, long? pageCount, SmartGroupsSortByField? sortBy, SortOrder? sortOrder)
+        internal HttpMessage CreateGetAllNextPageRequest(string nextLink, string subscriptionId, string targetResource, string targetResourceGroup, string targetResourceType, MonitorService? monitorService, MonitorCondition? monitorCondition, ServiceAlertSeverity? severity, AlertState? smartGroupState, TimeRangeFilter? timeRange, long? pageCount, SmartGroupsSortByField? sortBy, SortOrder? sortOrder)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SmartGroupsList>> GetAllNextPageAsync(string nextLink, string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SmartGroupsList>> GetAllNextPageAsync(string nextLink, string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SmartGroupsList> GetAllNextPage(string nextLink, string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, Severity? severity = null, AlertState? smartGroupState = null, TimeRange? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
+        public Response<SmartGroupsList> GetAllNextPage(string nextLink, string subscriptionId, string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorService? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, AlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, SortOrder? sortOrder = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
