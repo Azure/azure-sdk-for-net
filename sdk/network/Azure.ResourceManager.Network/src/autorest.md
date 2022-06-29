@@ -23,9 +23,47 @@ rename-mapping:
   ConnectionMonitorResult: ConnectionMonitor
   PacketCapture: PacketCaptureInput
   PacketCaptureResult: PacketCapture
-
-
-debug: true
+  IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
+  VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType   # VirtualNetworkGatewayNatRuleProperties is flatten in VirtualNetworkGatewayNatRule
+  SubResource: NetworkSubResource
+  ProvisioningState: NetworkProvisioningState
+  IpAllocation.properties.type: IPAllocationType
+  VirtualWAN.properties.type: VirtualWanType
+  VpnGatewayNatRule.properties.type: VpnNatRuleType
+  Topology: NetworkTopology
+  TopologyResource: TopologyResourceInfo
+  TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
+  TroubleshootingParameters.properties.storagePath: storageUri
+  ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
+  FlowLogFormatParameters: FlowLogFormat
+  TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
+  UsageName: NetworkUsageName
+  UsagesListResult: NetworkUsagesListResult
+  Delegation: ServiceDelegation
+  Subnet.properties.privateEndpointNetworkPolicies: PrivateEndpointNetworkPolicy
+  Subnet.properties.privateLinkServiceNetworkPolicies: PrivateLinkServiceNetworkPolicy
+  AzureFirewallApplicationRuleCollection: AzureFirewallApplicationRuleCollectionData
+  AzureFirewallNatRuleCollection: AzureFirewallNatRuleCollectionData
+  AzureFirewallNetworkRuleCollection: AzureFirewallNetworkRuleCollectionData
+  FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
+  FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
+  FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
+  ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
+  ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
+  ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
+  ApplicationGatewayProbe.properties.interval: IntervalInSeconds
+  ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
+  PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState: connectionState
+  DeleteOptions: IPAddressDeleteOption
+  TransportProtocol: LoadBalancingTransportProtocol
+  UsageUnit: NetworkUsageUnit
+  Direction: TrafficDirection
+  Origin: IssueOrigin
+  Severity: IssueSeverity
+  Protocol: NetworkWatcherProtocol
+  Access: NetworkAccess
+  Resource: NetworkTrackedResourceData
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -87,19 +125,13 @@ directive:
     where: $.definitions
     transform: >
       $.BgpPeerStatus.properties.connectedDuration['x-ms-format'] = 'duration-constant';
-      $.IPConfigurationBgpPeeringAddress.properties.ipconfigurationId['x-ms-client-name'] = 'IPConfigurationId';
-      $.VirtualNetworkGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
       $.VirtualNetworkGatewayPropertiesFormat.properties.vNetExtendedLocationResourceId['x-ms-format'] = 'arm-id';
   - from: network.json
     where: $.definitions
     transform: >
-      $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
       $.Resource.properties.id['x-ms-format'] = 'arm-id';
       $.Resource.properties.type['x-ms-format'] = 'resource-type';
-      $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
-      $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
-      $.Access['x-ms-enum'].name = 'NetworkAccess';
   - from: network.json
     where: $.definitions
     transform: >
@@ -172,15 +204,9 @@ directive:
         delete $.properties.type;
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
-  - from: ipAllocation.json
-    where: $.definitions
-    transform: >
-      $.IpAllocationPropertiesFormat.properties.type['x-ms-client-name'] = 'IPAllocationType';
   - from: virtualWan.json
     where: $.definitions
     transform: >
-      $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
-      $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
       $.VirtualWanVpnProfileParameters.properties.vpnServerConfigurationResourceId['x-ms-format'] = 'arm-id';
   - from: virtualWan.json
     where: $.definitions.VpnServerConfigurationProperties.properties.name
@@ -212,8 +238,6 @@ directive:
       $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
       $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
-      $.Topology['x-ms-client-name'] = 'NetworkTopology';
-      $.TopologyResource['x-ms-client-name'] = 'TopologyResourceInfo';
       $.PacketCaptureResult.properties.type = {
         'readOnly': true,
         'type': 'string',
@@ -221,38 +245,23 @@ directive:
       };
       $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
       $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
-      $.TrafficAnalyticsConfigurationProperties.properties.trafficAnalyticsInterval['x-ms-client-name'] = 'TrafficAnalyticsIntervalInMinutes';
       $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
       $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
       $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
-      $.Direction['x-ms-enum'].name = 'TrafficDirection';
-      $.ConnectivityIssue.properties.origin['x-ms-enum'].name = 'IssueOrigin';
-      $.ConnectivityIssue.properties.severity['x-ms-enum'].name = 'IssueSeverity';
-      $.ConnectivityParameters.properties.protocol['x-ms-enum'].name = 'NetworkWatcherProtocol';
       $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
       $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
       $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
       $.FlowLogPropertiesFormat.properties.storageId['x-ms-format'] = 'arm-id';
-      $.TroubleshootingProperties.properties.storagePath['x-ms-client-name'] = 'storageUri';
-      $.ProtocolConfiguration.properties.HTTPConfiguration['x-ms-client-name'] = 'HttpProtocolConfiguration';
-      $.FlowLogFormatParameters['x-ms-client-name'] = 'FlowLogFormat';
-      $.TrafficAnalyticsProperties.properties.networkWatcherFlowAnalyticsConfiguration['x-ms-client-name'] = 'TrafficAnalyticsConfiguration';
   - from: usage.json
     where: $.definitions
     transform: >
       $.Usage.properties.id['x-ms-format'] = 'arm-id';
-      $.UsageName['x-ms-client-name'] = 'NetworkUsageName';
-      $.UsagesListResult['x-ms-client-name'] = 'NetworkUsagesListResult';
-      $.Usage.properties.unit['x-ms-enum']['name'] = 'NetworkUsageUnit';
   - from: virtualNetwork.json
     where: $.definitions
     transform: >
-        $.Delegation['x-ms-client-name'] = 'ServiceDelegation';
         $.ServiceAssociationLinkPropertiesFormat.properties.linkedResourceType['x-ms-format'] = 'resource-type';
         $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
-        $.SubnetPropertiesFormat.properties.privateEndpointNetworkPolicies['x-ms-client-name'] = 'PrivateEndpointNetworkPolicy';
-        $.SubnetPropertiesFormat.properties.privateLinkServiceNetworkPolicies['x-ms-client-name'] = 'PrivateLinkServiceNetworkPolicy';
   - from: endpointService.json
     where: $.definitions
     transform: >
@@ -265,45 +274,16 @@ directive:
           'x-ms-format': 'arm-id'
       };
     reason: id should be read-only.
-  - from: azureFirewall.json
-    where: $.definitions
-    transform: >
-      $.AzureFirewallApplicationRuleCollection['x-ms-client-name'] = 'AzureFirewallApplicationRuleCollectionData';
-      $.AzureFirewallNatRuleCollection['x-ms-client-name'] = 'AzureFirewallNatRuleCollectionData';
-      $.AzureFirewallNetworkRuleCollection['x-ms-client-name'] = 'AzureFirewallNetworkRuleCollectionData';
-  - from: firewallPolicy.json
-    where: $.definitions
-    transform: >
-      $.FirewallPolicyRuleCollection['x-ms-client-name'] = 'FirewallPolicyRuleCollectionInfo';
-      $.FirewallPolicyNatRuleCollection['x-ms-client-name'] = 'FirewallPolicyNatRuleCollectionInfo';
-      $.FirewallPolicyFilterRuleCollection['x-ms-client-name'] = 'FirewallPolicyFilterRuleCollectionInfo';
 # shorten 'privateLinkServiceConnectionState' property name
-  - from: applicationGateway.json
-    where: $.definitions
-    transform: >
-      $.ApplicationGatewayPrivateEndpointConnectionProperties.properties.privateLinkServiceConnectionState['x-ms-client-name'] = 'connectionState';
-      $.ApplicationGatewayBackendHttpSettingsPropertiesFormat.properties.requestTimeout['x-ms-client-name'] = 'RequestTimeoutInSeconds';
-      $.ApplicationGatewayConnectionDraining.properties.drainTimeoutInSec['x-ms-client-name'] = 'DrainTimeoutInSeconds';
-      $.ApplicationGatewayProbePropertiesFormat.properties.interval['x-ms-client-name'] = 'IntervalInSeconds';
-      $.ApplicationGatewayProbePropertiesFormat.properties.timeout['x-ms-client-name'] = 'TimeoutInSeconds';
-      $.ApplicationGatewayPrivateLinkIpConfigurationProperties.properties.primary['x-ms-client-name'] = 'IsPrimary';
   - from: privateEndpoint.json
     where: $.definitions
     transform: >
-      $.PrivateLinkServiceConnectionProperties.properties.privateLinkServiceConnectionState['x-ms-client-name'] = 'connectionState';
       $.PrivateLinkServiceConnectionProperties.properties.privateLinkServiceId['x-ms-format'] = 'arm-id';
   - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
       $.ServiceEndpointPolicyDefinitionPropertiesFormat.properties.serviceResources.items['x-ms-format'] = 'arm-id';
-  - from: publicIpAddress.json
-    where: $.definitions
-    transform: >
-      $.PublicIPAddressPropertiesFormat.properties.deleteOption['x-ms-enum']['name'] = 'IPAddressDeleteOption';
-  - from: loadBalancer.json
-    where: $.definitions
-    transform: >
-      $.TransportProtocol['x-ms-enum']['name'] = 'LoadBalancingTransportProtocol';
+
 ```
 
 ### Tag: package-track2-preview
