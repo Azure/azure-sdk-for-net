@@ -76,21 +76,17 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.AreEqual(rgName, getResource.Value.Data.Name);
 
                 // Update - TODO shig: Figure out a way how to do patch.
-                //var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
-                //JsonElement patchElement = JsonDocument.Parse(patchJson).RootElement;
-                //var updatePayload = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(patchElement);
-                //ArmOperation<PhpWorkloadResource> updatedResource =
-                //    await rg.GetPhpWorkloadResources().CreateOrUpdateAsync(
-                //        WaitUntil.Completed,
-                //        rgName,
-                //        updatePayload);
+                var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
+                JsonElement patchElement = JsonDocument.Parse(patchJson).RootElement;
+                PhpWorkloadResourcePatch updatePayload = JsonConvert.DeserializeObject<PhpWorkloadResourcePatch>(patchJson);
 
-                //Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
-                //    Models.PhpWorkloadProvisioningState.Succeeded);
+                Response<PhpWorkloadResource> updateResponse = await getResource.Value.UpdateAsync(updatePayload);
+                Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
+                    Models.PhpWorkloadProvisioningState.Succeeded);
 
-                //Assert.AreEqual(rgName, createdResource.Value.Data.Name);
-                //Assert.AreEqual(updatePayload.Tags.Count, updatedResource.Value.Data.Tags.Count);
-                //Assert.IsFalse(updatedResource.Value.Data.Tags.Except(updatePayload.Tags).Any());
+                Assert.AreEqual(rgName, createdResource.Value.Data.Name);
+                Assert.AreEqual(updatePayload.Tags.Count, updateResponse.Value.Data.Tags.Count);
+                Assert.IsFalse(updateResponse.Value.Data.Tags.Except(updatePayload.Tags).Any());
 
                 // Delete
                 getResource = await rg.GetPhpWorkloadResourceAsync(rgName);
