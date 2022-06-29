@@ -54,6 +54,7 @@ public class TestParameters : IDisposable
     ///
     public SHA256 Sha256Hash = SHA256.Create();
 
+    /// <summary>If the <see cref="TestParameters"/> instance has been disposed.</summary>
     private bool _disposed = false;
 
     /// <summary>
@@ -80,6 +81,7 @@ public class TestParameters : IDisposable
         if (!_disposed)
         {
             Sha256Hash.Dispose();
+            _disposed = true;
         }
     }
 }
