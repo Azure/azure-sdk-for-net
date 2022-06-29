@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Blobs.Perf.Infrastructure;
 using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf
@@ -12,8 +13,11 @@ namespace Azure.Storage.Blobs.Perf
 
         public ServiceTest(TOptions options) : base(options)
         {
+            BlobClientOptions clientOptions = options is IBlobClientOptionsOptions clientOptionsOptions
+                ? clientOptionsOptions.ClientOptions
+                : default;
             BlobServiceClient = new BlobServiceClient(
-                PerfTestEnvironment.Instance.BlobStorageConnectionString, ConfigureClientOptions(new BlobClientOptions()));
+                PerfTestEnvironment.Instance.BlobStorageConnectionString, ConfigureClientOptions(clientOptions));
 
             StorageSharedKeyCredential = new StorageSharedKeyCredential(
                 PerfTestEnvironment.Instance.BlobStorageAccountName, PerfTestEnvironment.Instance.BlobStorageAccountKey);

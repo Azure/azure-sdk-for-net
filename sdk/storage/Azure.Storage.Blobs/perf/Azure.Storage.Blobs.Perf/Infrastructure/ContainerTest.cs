@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Perf.Infrastructure;
 using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf
