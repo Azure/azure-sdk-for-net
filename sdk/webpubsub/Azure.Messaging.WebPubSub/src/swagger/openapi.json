@@ -310,6 +310,110 @@
         }
       }
     },
+    "/api/hubs/{hub}/connections/{connectionId}/:send": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_sendToConnection",
+        "summary": "Send content inside request body to the specific connection.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "Target connection Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "body",
+            "required": true,
+            "description": "The payload body.",
+            "schema": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The request has been received but not yet acted upon."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/groups/{group}": {
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_groupExists",
+        "summary": "Check if there are any client connections inside the given group",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "minLength": 1,
+            "maxLength": 1024,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "404": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
     "/api/hubs/{hub}/groups/{group}/:closeConnections": {
       "post": {
         "tags": [
@@ -363,6 +467,62 @@
         "responses": {
           "204": {
             "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/groups/{group}/:send": {
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_sendToGroup",
+        "summary": "Send content inside request body to a group of connections.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "minLength": 1,
+            "maxLength": 1024,
+            "type": "string"
+          },
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "description": "Excluded connectionIds.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The request has been received but not yet acted upon."
           },
           "default": {
             "description": "An unexpected error response",
@@ -480,73 +640,6 @@
       }
     },
     "/api/hubs/{hub}/permissions/{permission}/connections/{connectionId}": {
-      "head": {
-        "tags": [
-          "webpubsub"
-        ],
-        "operationId": "WebPubSubService_checkPermission",
-        "summary": "Check if a connection has permission to the specified action.",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
-            "type": "string"
-          },
-          {
-            "name": "permission",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "sendToGroup",
-              "joinLeaveGroup"
-            ],
-            "x-ms-enum": {
-              "name": "WebPubSubPermission",
-              "modelAsString": false
-            }
-          },
-          {
-            "name": "connectionId",
-            "in": "path",
-            "required": true,
-            "description": "Target connection Id",
-            "minLength": 1,
-            "type": "string"
-          },
-          {
-            "name": "api-version",
-            "in": "query",
-            "required": true,
-            "description": "The version of the REST APIs.",
-            "type": "string"
-          },
-          {
-            "name": "targetName",
-            "in": "query",
-            "required": false,
-            "description": "The meaning of the target depends on the specific permission. For joinLeaveGroup and sendToGroup, targetName is a required parameter standing for the group name.",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Http response with status code"
-          },
-          "404": {
-            "description": "The server can not find the requested resource."
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/ErrorDetail"
-            }
-          }
-        }
-      },
       "put": {
         "tags": [
           "webpubsub"
@@ -613,6 +706,182 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_revokePermission",
+        "summary": "Revoke permission for the connection.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "sendToGroup",
+              "joinLeaveGroup"
+            ],
+            "x-ms-enum": {
+              "name": "WebPubSubPermission",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "Target connection Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "targetName",
+            "in": "query",
+            "required": false,
+            "description": "The meaning of the target depends on the specific permission. For joinLeaveGroup and sendToGroup, targetName is a required parameter standing for the group name.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_checkPermission",
+        "summary": "Check if a connection has permission to the specified action.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "sendToGroup",
+              "joinLeaveGroup"
+            ],
+            "x-ms-enum": {
+              "name": "WebPubSubPermission",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "Target connection Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "targetName",
+            "in": "query",
+            "required": false,
+            "description": "The meaning of the target depends on the specific permission. For joinLeaveGroup and sendToGroup, targetName is a required parameter standing for the group name.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "404": {
+            "description": "The server can not find the requested resource."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/users/{userId}": {
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_userExists",
+        "summary": "Check if there are any client connections connected for the given user.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Target user Id.",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
       }
     },
     "/api/hubs/{hub}/users/{userId}/:closeConnections": {
@@ -654,6 +923,106 @@
             "in": "query",
             "required": false,
             "description": "The reason closing the client connection.",
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/users/{userId}/:send": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_sendToUser",
+        "summary": "Send content inside request body to the specific user.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Target user Id.",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "body",
+            "required": true,
+            "description": "The payload body.",
+            "schema": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The request has been received but not yet acted upon."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/users/{userId}/groups": {
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_removeUserFromAllGroups",
+        "summary": "Remove a user from all groups.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Target user Id.",
+            "minLength": 1,
             "type": "string"
           },
           {
