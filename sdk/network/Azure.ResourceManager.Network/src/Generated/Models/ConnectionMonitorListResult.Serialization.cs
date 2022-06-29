@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorListResult DeserializeConnectionMonitorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectionMonitorData>> value = default;
+            Optional<IReadOnlyList<ConnectionMonitorResultData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectionMonitorData> array = new List<ConnectionMonitorData>();
+                    List<ConnectionMonitorResultData> array = new List<ConnectionMonitorResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item));
+                        array.Add(ConnectionMonitorResultData.DeserializeConnectionMonitorResultData(item));
                     }
                     value = array;
                     continue;

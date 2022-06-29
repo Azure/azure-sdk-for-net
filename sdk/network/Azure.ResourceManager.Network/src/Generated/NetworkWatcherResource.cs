@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Network
             return GetPacketCaptures().Get(packetCaptureName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectionMonitorResources in the NetworkWatcher. </summary>
-        /// <returns> An object representing collection of ConnectionMonitorResources and their operations over a ConnectionMonitorResource. </returns>
-        public virtual ConnectionMonitorCollection GetConnectionMonitors()
+        /// <summary> Gets a collection of ConnectionMonitorResultResources in the NetworkWatcher. </summary>
+        /// <returns> An object representing collection of ConnectionMonitorResultResources and their operations over a ConnectionMonitorResultResource. </returns>
+        public virtual ConnectionMonitorResultCollection GetConnectionMonitorResults()
         {
-            return GetCachedClient(Client => new ConnectionMonitorCollection(Client, Id));
+            return GetCachedClient(Client => new ConnectionMonitorResultCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionMonitorResource>> GetConnectionMonitorAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionMonitorResultResource>> GetConnectionMonitorResultAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            return await GetConnectionMonitors().GetAsync(connectionMonitorName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectionMonitorResults().GetAsync(connectionMonitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectionMonitorResource> GetConnectionMonitor(string connectionMonitorName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectionMonitorResultResource> GetConnectionMonitorResult(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            return GetConnectionMonitors().Get(connectionMonitorName, cancellationToken);
+            return GetConnectionMonitorResults().Get(connectionMonitorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FlowLogResources in the NetworkWatcher. </summary>

@@ -18,6 +18,12 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
+rename-mapping:
+  ConnectionMonitor: ConnectionMonitorInput
+  ConnectionMonitorResult: ConnectionMonitor
+
+debug: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -67,12 +73,12 @@ override-operation-name:
 
 directive:
 #   networkWatcher.json:
-  - rename-model:
-      from: ConnectionMonitor
-      to: ConnectionMonitorInput
-  - rename-model:
-      from: ConnectionMonitorResult
-      to: ConnectionMonitor
+#  - rename-model:
+#      from: ConnectionMonitor
+#      to: ConnectionMonitorInput
+#  - rename-model:
+#      from: ConnectionMonitorResult
+#      to: ConnectionMonitor
   - rename-model:
       from: PacketCapture
       to: PacketCaptureInput

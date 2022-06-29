@@ -15,9 +15,9 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ConnectionMonitorData
+    public partial class ConnectionMonitorResultData
     {
-        internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element)
+        internal static ConnectionMonitorResultData DeserializeConnectionMonitorResultData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<AzureLocation> location = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
+            return new ConnectionMonitorResultData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
         }
     }
 }

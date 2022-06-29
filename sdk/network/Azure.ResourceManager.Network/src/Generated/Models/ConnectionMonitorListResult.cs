@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
         internal ConnectionMonitorListResult()
         {
-            Value = new ChangeTrackingList<ConnectionMonitorData>();
+            Value = new ChangeTrackingList<ConnectionMonitorResultData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
         /// <param name="value"> Information about connection monitors. </param>
-        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value)
+        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorResultData> value)
         {
             Value = value;
         }
 
         /// <summary> Information about connection monitors. </summary>
-        public IReadOnlyList<ConnectionMonitorData> Value { get; }
+        public IReadOnlyList<ConnectionMonitorResultData> Value { get; }
     }
 }
