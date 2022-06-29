@@ -13,13 +13,13 @@ namespace Azure.Template
     /// <summary> Client options for AnalyzeClient. </summary>
     public partial class AnalyzeClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_15_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2022-05-15-preview". </summary>
-            V2022_05_15_preview = 1,
+            V2022_05_15_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Template
         {
             Version = version switch
             {
-                ServiceVersion.V2022_05_15_preview => "2022-05-15-preview",
+                ServiceVersion.V2022_05_15_Preview => "2022-05-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

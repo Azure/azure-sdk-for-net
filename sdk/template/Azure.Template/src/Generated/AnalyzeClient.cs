@@ -16,9 +16,10 @@ namespace Azure.Template
     /// <summary> The Analyze service client. </summary>
     public partial class AnalyzeClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,34 +34,36 @@ namespace Azure.Template
         }
 
         /// <summary> Initializes a new instance of AnalyzeClient. </summary>
+        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public AnalyzeClient(TokenCredential credential) : this(credential, new AnalyzeClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AnalyzeClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AnalyzeClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AnalyzeClient. </summary>
+        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public AnalyzeClient(TokenCredential credential, AnalyzeClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AnalyzeClient(Uri endpoint, AzureKeyCredential credential, AnalyzeClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AnalyzeClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
         /// <summary> Submit a collection of text documents for analysis.  Specify a single unique task to be executed immediately. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="showStats"> If set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
@@ -654,16 +657,15 @@ namespace Azure.Template
         /// </details>
         /// 
         /// </remarks>
-        public virtual async Task<Response> AnalyzeTextAsync(string endpoint, RequestContent content, bool? showStats = null, RequestContext context = null)
+        public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, bool? showStats = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.AnalyzeText");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextRequest(endpoint, content, showStats, context);
+                using HttpMessage message = CreateAnalyzeTextRequest(content, showStats, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -674,12 +676,10 @@ namespace Azure.Template
         }
 
         /// <summary> Submit a collection of text documents for analysis.  Specify a single unique task to be executed immediately. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="showStats"> If set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
@@ -1273,16 +1273,15 @@ namespace Azure.Template
         /// </details>
         /// 
         /// </remarks>
-        public virtual Response AnalyzeText(string endpoint, RequestContent content, bool? showStats = null, RequestContext context = null)
+        public virtual Response AnalyzeText(RequestContent content, bool? showStats = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.AnalyzeText");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAnalyzeTextRequest(endpoint, content, showStats, context);
+                using HttpMessage message = CreateAnalyzeTextRequest(content, showStats, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1293,11 +1292,9 @@ namespace Azure.Template
         }
 
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
@@ -1326,16 +1323,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> SubmitJobAsync(string endpoint, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> SubmitJobAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.SubmitJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitJobRequest(endpoint, content, context);
+                using HttpMessage message = CreateSubmitJobRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1346,11 +1342,9 @@ namespace Azure.Template
         }
 
         /// <summary> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <remarks>
@@ -1379,16 +1373,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response SubmitJob(string endpoint, RequestContent content, RequestContext context = null)
+        public virtual Response SubmitJob(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.SubmitJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitJobRequest(endpoint, content, context);
+                using HttpMessage message = CreateSubmitJobRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1399,14 +1392,13 @@ namespace Azure.Template
         }
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="showStats"> If set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
@@ -1462,16 +1454,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetJobStatusAsync(string endpoint, string jobId, int? top = null, int? skip = null, bool? showStats = null, RequestContext context = null)
+        public virtual async Task<Response> GetJobStatusAsync(string jobId, int? top = null, int? skip = null, bool? showStats = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.GetJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobStatusRequest(endpoint, jobId, top, skip, showStats, context);
+                using HttpMessage message = CreateGetJobStatusRequest(jobId, top, skip, showStats, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1482,14 +1473,13 @@ namespace Azure.Template
         }
 
         /// <summary> Get the status of an analysis job.  A job may consist of one or more tasks.  Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="top"> The maximum number of resources to return from the collection. </param>
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="showStats"> If set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
@@ -1545,16 +1535,15 @@ namespace Azure.Template
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetJobStatus(string endpoint, string jobId, int? top = null, int? skip = null, bool? showStats = null, RequestContext context = null)
+        public virtual Response GetJobStatus(string jobId, int? top = null, int? skip = null, bool? showStats = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.GetJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetJobStatusRequest(endpoint, jobId, top, skip, showStats, context);
+                using HttpMessage message = CreateGetJobStatusRequest(jobId, top, skip, showStats, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1565,23 +1554,21 @@ namespace Azure.Template
         }
 
         /// <summary> Cancel a long-running Text Analysis job. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelJobAsync(string endpoint, string jobId, RequestContext context = null)
+        public virtual async Task<Response> CancelJobAsync(string jobId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.CancelJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelJobRequest(endpoint, jobId, context);
+                using HttpMessage message = CreateCancelJobRequest(jobId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1592,23 +1579,21 @@ namespace Azure.Template
         }
 
         /// <summary> Cancel a long-running Text Analysis job. </summary>
-        /// <param name="endpoint"> The endpoint to use. </param>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CancelJob(string endpoint, string jobId, RequestContext context = null)
+        public virtual Response CancelJob(string jobId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("AnalyzeClient.CancelJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelJobRequest(endpoint, jobId, context);
+                using HttpMessage message = CreateCancelJobRequest(jobId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1618,13 +1603,13 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateAnalyzeTextRequest(string endpoint, RequestContent content, bool? showStats, RequestContext context)
+        internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, bool? showStats, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, true);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:analyze-text", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1639,13 +1624,13 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateSubmitJobRequest(string endpoint, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSubmitJobRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, true);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-text/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1656,13 +1641,13 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateGetJobStatusRequest(string endpoint, string jobId, int? top, int? skip, bool? showStats, RequestContext context)
+        internal HttpMessage CreateGetJobStatusRequest(string jobId, int? top, int? skip, bool? showStats, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, true);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-text/jobs/", false);
             uri.AppendPath(jobId, true);
@@ -1684,13 +1669,13 @@ namespace Azure.Template
             return message;
         }
 
-        internal HttpMessage CreateCancelJobRequest(string endpoint, string jobId, RequestContext context)
+        internal HttpMessage CreateCancelJobRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, true);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-text/jobs/", false);
             uri.AppendPath(jobId, true);

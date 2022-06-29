@@ -16,13 +16,16 @@
     "hostTemplate": "{Endpoint}/language",
     "useSchemePrefix": false,
     "parameters": [
-      {
-        "name": "Endpoint",
-        "in": "path",
-        "required": true,
-        "description": "The endpoint to use.",
-        "type": "string"
-      }
+        {
+            "name": "Endpoint",
+            "in": "path",
+            "required": true,
+            "description": "The endpoint to use.",
+            "type": "string",
+            "format": "url",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        }
     ]
   },
   "produces": [

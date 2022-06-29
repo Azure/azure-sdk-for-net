@@ -1,35 +1,26 @@
 namespace Azure.Template
 {
-    public partial class TemplateClient
+    public partial class AnalyzeClient
     {
-        protected TemplateClient() { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential) { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options) { }
+        protected AnalyzeClient() { }
+        public AnalyzeClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public AnalyzeClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Template.AnalyzeClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AnalyzeText(Azure.Core.RequestContent content, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextAsync(Azure.Core.RequestContent content, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CancelJob(string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelJobAsync(string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetJobStatus(string jobId, int? top = default(int?), int? skip = default(int?), bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetJobStatusAsync(string jobId, int? top = default(int?), int? skip = default(int?), bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SubmitJob(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SubmitJobAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class TemplateClientOptions : Azure.Core.ClientOptions
+    public partial class AnalyzeClientOptions : Azure.Core.ClientOptions
     {
-        public TemplateClientOptions(Azure.Template.TemplateClientOptions.ServiceVersion version = Azure.Template.TemplateClientOptions.ServiceVersion.V7_0) { }
+        public AnalyzeClientOptions(Azure.Template.AnalyzeClientOptions.ServiceVersion version = Azure.Template.AnalyzeClientOptions.ServiceVersion.V2022_05_15_Preview) { }
         public enum ServiceVersion
         {
-            V7_0 = 1,
+            V2022_05_15_Preview = 1,
         }
-    }
-}
-namespace Azure.Template.Models
-{
-    public partial class SecretBundle
-    {
-        internal SecretBundle() { }
-        public string ContentType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Kid { get { throw null; } }
-        public bool? Managed { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string Value { get { throw null; } }
     }
 }
