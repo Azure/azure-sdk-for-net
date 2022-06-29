@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: "F95",
+                    sapVirtualInstanceName: "F97",
                     data: SviCreatePayload);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: "F95",
+                    sapVirtualInstanceName: "F97",
                     data: SviInstallPayload);
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Console.WriteLine(ex);
             }
 
-            var sviObject1 = await rg.GetSapVirtualInstanceAsync("F95");
+            var sviObject1 = await rg.GetSapVirtualInstanceAsync("F97");
 
             // Delete RG
             await rg.DeleteAsync(WaitUntil.Completed);
@@ -96,33 +96,18 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var lro = await subscription.GetResourceGroups().GetAsync("E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2");
             ResourceGroupResource rg = lro.Value;
+
+            // Stop operation
             var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync("C11");
             await sviObject1.Value.StopAsync(WaitUntil.Completed);
 
-            int count = 0;
-            var sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
+            var sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync("C11");
+            Assert.Equals(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Offline);
 
-            do
-            {
-                Thread.Sleep(GetOpsIntervalinMillis);
-                sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
-                count++;
-            }
-            while (sviObjectstatus != SapVirtualInstanceStatus.Offline &&
-                count < 10);
-
-            Assert.Equals(lro.Value.GetSapVirtualInstance("C11").Value.Data.Status, SapVirtualInstanceStatus.Offline);
-
-            count = 0;
-            do
-            {
-                Thread.Sleep(GetOpsIntervalinMillis);
-                sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
-                count++;
-            }
-            while (sviObjectstatus != SapVirtualInstanceStatus.Running &&
-                    count < 10);
-            Assert.Equals(lro.Value.GetSapVirtualInstance("C11").Value.Data.Status, SapVirtualInstanceStatus.Running);
+            // Start operation
+            await sviObject1.Value.StartAsync(WaitUntil.Completed);
+            sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync("C11");
+            Assert.Equals(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Running);
         }
 
         /// <summary>
@@ -130,7 +115,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// </summary>
         /// <param name="infraRgName"> Contains the infra RG
         /// used as app resource group. </param>
-        /// <returns>PHP Workload Resource.</returns>
+        /// <returns>SVI Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
             var testSapWorkloadJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"tests\SingleServerInstall.json"));
@@ -221,9 +206,9 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.DocumentationRules",
-    "SA1600:Elements should be documented",
-    Justification = "keeping related things together")]
+            "StyleCop.CSharp.DocumentationRules",
+            "SA1600:Elements should be documented",
+            Justification = "keeping related things together")]
         public class OsImage
         {
             [JsonProperty("Offer")]
