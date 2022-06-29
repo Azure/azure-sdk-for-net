@@ -112,42 +112,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.score").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("id").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("qualifiedName").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("name").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("description").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("entityType").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("classification").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("label").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("glossaryName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("assetType").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -269,42 +269,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term").Item[0].GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term").Item[0].GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.score").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("id").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("qualifiedName").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("name").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("description").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.highlights").GetProperty("entityType").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("classification").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("label").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("glossaryName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("assetType").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -407,23 +407,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.SuggestAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.score").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("classification").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("label").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("glossaryName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("assetType").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -499,23 +499,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.Suggest(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.score").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("@search.text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("classification").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("label").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("glossaryName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("term").Item[0].GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contact").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("assetType").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -593,16 +593,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isLeaf").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("mail").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("isLeaf").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("mail").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -682,16 +682,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("@search.count").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("entityType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isLeaf").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("displayName").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("mail").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("owner").Item[0].GetProperty("contactType").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("path").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("isLeaf").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("mail").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -769,8 +769,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("queryPlusText").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -846,8 +846,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.AutoComplete(RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("text").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("queryPlusText").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>

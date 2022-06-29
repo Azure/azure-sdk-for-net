@@ -420,7 +420,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetOAuthTokensAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetOAuthTokensAsync with all parameters, and how to parse the result.
@@ -432,14 +433,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetOAuthTokensAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("authProviderId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isValid").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        ///     Console.WriteLine(result.GetProperty("isValid").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -523,7 +522,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetOAuthTokens())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetOAuthTokens with all parameters, and how to parse the result.
@@ -535,14 +535,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetOAuthTokens(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("authProviderId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isValid").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("authProviderId").ToString());
+        ///     Console.WriteLine(result.GetProperty("isValid").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>

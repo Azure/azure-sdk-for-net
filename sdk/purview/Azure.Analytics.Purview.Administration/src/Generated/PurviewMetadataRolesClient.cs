@@ -45,26 +45,6 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// await foreach (var data in client.GetMetadataRolesAsync())
         /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("roleType").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("friendlyName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -135,26 +115,6 @@ namespace Azure.Analytics.Purview.Administration
         /// 
         /// foreach (var data in client.GetMetadataRoles())
         /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("provisioningState").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("roleType").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("friendlyName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("cnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeName").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueIncludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludes").ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("dnfCondition").Item[0].Item[0].GetProperty("attributeValueExcludedIn").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("values").Item[0].GetProperty("properties").GetProperty("version").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
         /// }
         /// ]]></code>
         /// </example>

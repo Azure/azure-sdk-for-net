@@ -463,20 +463,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -561,20 +561,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -661,20 +661,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -763,20 +763,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -864,20 +864,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -964,20 +964,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1065,20 +1065,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1167,20 +1167,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1440,20 +1440,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1540,20 +1540,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1640,20 +1640,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1740,20 +1740,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2022,15 +2022,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("language").ToString());
+        ///     Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        ///     Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2122,15 +2121,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetProjects(1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("projectName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("language").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("multilingualResource").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("settings").GetProperty("defaultAnswer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("projectName").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("language").ToString());
+        ///     Console.WriteLine(result.GetProperty("multilingualResource").ToString());
+        ///     Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2225,9 +2223,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2316,9 +2313,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeployedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2395,7 +2391,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
@@ -2407,8 +2403,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2484,7 +2479,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetSynonyms("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
@@ -2496,8 +2491,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("alterations").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2573,6 +2567,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -2585,13 +2581,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2672,6 +2667,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetSources("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -2684,13 +2681,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("displayName").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceUri").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("contentStructureKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2784,30 +2780,29 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2932,30 +2927,29 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("questions").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("isContextOnly").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayOrder").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qnaId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("answer").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("questions").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("qna").GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dialog").GetProperty("prompts").Item[0].GetProperty("displayText").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("clusterHead").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("question").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("userSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("activeLearningSuggestions").Item[0].GetProperty("suggestedQuestions").Item[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastUpdatedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -3205,20 +3199,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3326,20 +3320,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("details").Item[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors").Item[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>

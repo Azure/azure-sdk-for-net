@@ -76,7 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -227,7 +227,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// ]]></code>
         /// This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -254,7 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -353,7 +353,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// ]]></code>
         /// This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -380,7 +380,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-        /// Console.WriteLine(result.GetProperty("shapefileColumnNames").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());

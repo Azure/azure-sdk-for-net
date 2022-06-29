@@ -83,9 +83,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -182,9 +182,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -403,23 +403,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -537,23 +535,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("sceneDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("fileLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFiles").Item[0].GetProperty("resolution").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("imageFormat").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCoverPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("darkPixelPercentage").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("ndviMedianValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("provider").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("fileLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFiles")[0].GetProperty("resolution").ToString());
+        ///     Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCoverPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
+        ///     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -701,9 +697,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
@@ -876,9 +872,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("provider").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageFormats")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("data").GetProperty("imageResolutions")[0].ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());

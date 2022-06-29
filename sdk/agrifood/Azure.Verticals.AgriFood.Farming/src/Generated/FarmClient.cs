@@ -76,7 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
-        /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -163,7 +163,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
-        /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -287,7 +287,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
-        /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
@@ -430,7 +430,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("authProviderId").ToString());
-        /// Console.WriteLine(result.GetProperty("operations").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("operations")[0].ToString());
         /// Console.WriteLine(result.GetProperty("startYear").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());

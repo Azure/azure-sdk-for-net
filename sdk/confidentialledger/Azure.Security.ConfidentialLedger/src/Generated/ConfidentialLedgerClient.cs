@@ -156,8 +156,8 @@ namespace Azure.Security.ConfidentialLedger
         /// Response response = await client.GetConsortiumMembersAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
-        /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("members")[0].GetProperty("certificate").ToString());
+        /// Console.WriteLine(result.GetProperty("members")[0].GetProperty("id").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -210,8 +210,8 @@ namespace Azure.Security.ConfidentialLedger
         /// Response response = client.GetConsortiumMembers();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
-        /// Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("members")[0].GetProperty("certificate").ToString());
+        /// Console.WriteLine(result.GetProperty("members")[0].GetProperty("id").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -673,8 +673,8 @@ namespace Azure.Security.ConfidentialLedger
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("right").ToString());
+        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
+        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
         /// Console.WriteLine(result.GetProperty("state").ToString());
@@ -746,8 +746,8 @@ namespace Azure.Security.ConfidentialLedger
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("right").ToString());
+        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
+        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
         /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
         /// Console.WriteLine(result.GetProperty("state").ToString());
@@ -1391,8 +1391,7 @@ namespace Azure.Security.ConfidentialLedger
         /// await foreach (var data in client.GetLedgerEntriesAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("state").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("contents").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
@@ -1404,11 +1403,9 @@ namespace Azure.Security.ConfidentialLedger
         /// await foreach (var data in client.GetLedgerEntriesAsync("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("state").ToString());
-        ///     Console.WriteLine(result.GetProperty("@nextLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("subLedgerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("transactionId").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -1474,8 +1471,7 @@ namespace Azure.Security.ConfidentialLedger
         /// foreach (var data in client.GetLedgerEntries())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("state").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("contents").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
@@ -1487,11 +1483,9 @@ namespace Azure.Security.ConfidentialLedger
         /// foreach (var data in client.GetLedgerEntries("<subLedgerId>", "<fromTransactionId>", "<toTransactionId>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("state").ToString());
-        ///     Console.WriteLine(result.GetProperty("@nextLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("contents").ToString());
+        ///     Console.WriteLine(result.GetProperty("subLedgerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("transactionId").ToString());
         /// }
         /// ]]></code>
         /// </example>

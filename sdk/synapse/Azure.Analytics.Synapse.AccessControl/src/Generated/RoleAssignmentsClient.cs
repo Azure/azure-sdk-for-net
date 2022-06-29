@@ -114,13 +114,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -247,13 +247,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("accessDecision").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("actionId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
-        /// Console.WriteLine(result.GetProperty("accessDecisions").Item[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -353,11 +353,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scope").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -437,11 +437,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("count").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("roleDefinitionId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalId").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("scope").ToString());
-        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("principalType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>

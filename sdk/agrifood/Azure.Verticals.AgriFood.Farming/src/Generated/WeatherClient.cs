@@ -459,7 +459,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
@@ -471,53 +479,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -637,7 +643,15 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetWeathers with all parameters, and how to parse the result.
@@ -649,53 +663,51 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("latitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("location").GetProperty("longitude").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("unitSystemCode").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("extensionVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("weatherDataType").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("granularity").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cloudCover").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("dewPoint").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("growingDegreeDay").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("precipitation").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("pressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilMoisture").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("soilTemperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("temperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("visibility").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windChill").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windDirection").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windGust").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("windSpeed").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>

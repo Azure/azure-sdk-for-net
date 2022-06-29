@@ -460,9 +460,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -546,9 +546,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -622,11 +622,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// await foreach (var data in client.GetVersionsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -697,11 +695,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// foreach (var data in client.GetVersions())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("count").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
         /// }
         /// ]]></code>
         /// </example>

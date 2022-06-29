@@ -80,11 +80,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("farmId").ToString());
         /// Console.WriteLine(result.GetProperty("fieldId").ToString());
         /// Console.WriteLine(result.GetProperty("seasonId").ToString());
-        /// Console.WriteLine(result.GetProperty("cropVarietyIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
@@ -181,11 +181,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("farmId").ToString());
         /// Console.WriteLine(result.GetProperty("fieldId").ToString());
         /// Console.WriteLine(result.GetProperty("seasonId").ToString());
-        /// Console.WriteLine(result.GetProperty("cropVarietyIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
@@ -317,11 +317,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("farmId").ToString());
         /// Console.WriteLine(result.GetProperty("fieldId").ToString());
         /// Console.WriteLine(result.GetProperty("seasonId").ToString());
-        /// Console.WriteLine(result.GetProperty("cropVarietyIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
@@ -478,11 +478,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("farmerId").ToString());
         /// Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("boundaryIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("farmId").ToString());
         /// Console.WriteLine(result.GetProperty("fieldId").ToString());
         /// Console.WriteLine(result.GetProperty("seasonId").ToString());
-        /// Console.WriteLine(result.GetProperty("cropVarietyIds").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
         /// Console.WriteLine(result.GetProperty("cropId").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
         /// Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
@@ -920,29 +920,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("fieldId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("seasonId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropVarietyIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("plantingDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -1075,29 +1073,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("fieldId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("seasonId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropVarietyIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("plantingDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -1227,29 +1223,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("fieldId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("seasonId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropVarietyIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("plantingDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -1377,29 +1371,27 @@ namespace Azure.Verticals.AgriFood.Farming
         /// foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("primaryBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("boundaryIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("farmId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("fieldId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("seasonId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropVarietyIds").Item[0].ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("cropId").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgYieldUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationValue").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("avgSeedPopulationUnit").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("plantingDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("properties").GetProperty("<test>").ToString());
-        ///     Console.WriteLine(result.GetProperty("$skipToken").ToString());
-        ///     Console.WriteLine(result.GetProperty("nextLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("farmId").ToString());
+        ///     Console.WriteLine(result.GetProperty("fieldId").ToString());
+        ///     Console.WriteLine(result.GetProperty("seasonId").ToString());
+        ///     Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("cropId").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
+        ///     Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// }
         /// ]]></code>
         /// </example>

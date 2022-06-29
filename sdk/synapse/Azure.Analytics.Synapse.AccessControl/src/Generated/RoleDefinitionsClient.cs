@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = await client.GetRoleDefinitionsAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
+        /// Console.WriteLine(result[0].ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -84,16 +84,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = client.GetRoleDefinitions();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
+        /// Console.WriteLine(result[0].ToString());
         /// ]]></code>
         /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -174,16 +174,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = client.GetRoleDefinitions(true, "<scope>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("name").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("isBuiltIn").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("scopes").Item[0].ToString());
-        /// Console.WriteLine(result.Item[0].GetProperty("availabilityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -258,11 +258,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
         /// ]]></code>
         /// </example>
@@ -340,11 +340,11 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
         /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("actions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("dataActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("permissions").Item[0].GetProperty("notDataActions").Item[0].ToString());
-        /// Console.WriteLine(result.GetProperty("scopes").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes")[0].ToString());
         /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
         /// ]]></code>
         /// </example>
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = await client.GetScopesAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
+        /// Console.WriteLine(result[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -465,7 +465,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Response response = client.GetScopes();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.Item[0].ToString());
+        /// Console.WriteLine(result[0].ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
