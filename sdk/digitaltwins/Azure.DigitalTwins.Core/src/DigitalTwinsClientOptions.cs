@@ -28,14 +28,9 @@ namespace Azure.DigitalTwins.Core
             V2020_10_31 = 1,
 
             /// <summary>
-            /// 2021-06-30-preview
-            /// </summary>
-            V2021_06_30_Preview = 2,
-
-            /// <summary>
             /// 2022-05-31
             /// </summary>
-            V2022_05_31 = 3
+            V2022_05_31 = 2
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
@@ -69,7 +64,6 @@ namespace Azure.DigitalTwins.Core
             return Version switch
             {
                 ServiceVersion.V2020_10_31 => "2020-10-31",
-                ServiceVersion.V2021_06_30_Preview => "2021-06-30-preview",
                 ServiceVersion.V2022_05_31 => "2022-05-31",
                 _ => throw new ArgumentException(Version.ToString()),
             };

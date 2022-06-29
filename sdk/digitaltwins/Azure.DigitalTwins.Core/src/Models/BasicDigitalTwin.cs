@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.DigitalTwins.Core.Serialization;
@@ -106,6 +107,7 @@ namespace Azure.DigitalTwins.Core
     ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
     /// </code>
     /// </example>
+    [JsonConverter(typeof(BasicDigitalTwinJsonConverter))]
     public class BasicDigitalTwin
     {
         /// <summary>
@@ -120,6 +122,12 @@ namespace Azure.DigitalTwins.Core
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinETag)]
         [JsonConverter(typeof(OptionalETagConverter))] // TODO: Remove when #16272 is fixed
         public ETag? ETag { get; set; }
+
+        /// <summary>
+        /// The date and time the component was last updated.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
+        public DateTimeOffset? LastUpdatedOn { get; internal set; }
 
         /// <summary>
         /// Information about the model a digital twin conforms to.

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -38,7 +40,19 @@ namespace Azure.DigitalTwins.Core
 
                 if (propertyName == DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)
                 {
-                    component.Metadata = JsonSerializer.Deserialize<DigitalTwinComponentMetadata>(ref reader, options);
+                    JsonElement metadataBlock = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+
+                    foreach (JsonProperty p in metadataBlock.EnumerateObject())
+                    {
+                        if (p.Name == DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
+                        {
+                            component.LastUpdatedOn = p.Value.TryGetDateTimeOffset(out DateTimeOffset lastUpdateTimeValue) ? lastUpdateTimeValue : null;
+                        }
+                        else
+                        {
+                            component.Metadata[p.Name] = JsonSerializer.Deserialize<DigitalTwinPropertyMetadata>(p.Value.GetRawText(), options);
+                        }
+                    }
                 }
                 else
                 {
@@ -56,7 +70,24 @@ namespace Azure.DigitalTwins.Core
         {
             writer.WriteStartObject();
             writer.WritePropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata);
-            JsonSerializer.Serialize<DigitalTwinComponentMetadata>(writer, value.Metadata as DigitalTwinComponentMetadata, options);
+
+            // Write component metadata
+            writer.WriteStartObject();
+
+            foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.Metadata)
+            {
+                writer.WritePropertyName(p.Key);
+                JsonSerializer.Serialize<DigitalTwinPropertyMetadata>(writer, p.Value, options);
+            }
+
+            if (value.LastUpdatedOn != null)
+            {
+                writer.WritePropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime);
+                JsonSerializer.Serialize<DateTimeOffset>(writer, value.LastUpdatedOn.Value, options);
+            }
+
+            writer.WriteEndObject();
+
             foreach (KeyValuePair<string, object> p in value.Contents)
             {
                 writer.WritePropertyName(p.Key);

@@ -24,12 +24,6 @@ namespace Azure.DigitalTwins.Core
         public string ModelId { get; set; }
 
         /// <summary>
-        /// The date and time the digital twin was last updated.
-        /// </summary>
-        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
-        public DateTimeOffset? LastUpdatedOn { get; set; }
-
-        /// <summary>
         /// This field will contain metadata about changes on properties on the digital twin.
         /// The key will be the property name, and the value is the metadata.
         /// </summary>
