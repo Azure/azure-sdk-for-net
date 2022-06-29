@@ -21,7 +21,7 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 `CallingServerClient` provides the functionality to make call connection, join call connection, answer incoming call or initialize a server call.
 
 ### Using statements
-```C# Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
+```C#
 using System;
 using System.Collections.Generic;
 using Azure.Communication.CallingServer;
