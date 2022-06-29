@@ -79,7 +79,7 @@ public class EventProducerTest
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private Task RunRoleAsync(Role role,
-                                   CancellationToken cancellationToken)
+                              CancellationToken cancellationToken)
     {
         switch (role)
         {
