@@ -20,22 +20,21 @@ using System.Drawing.Design;
 
 namespace Azure.ResourceManager.Workloads.Tests.Tests
 {
-    [TestFixture]
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
-        /// <summary>
-        /// The Get Ops Extension Status Interval.
-        /// </summary>
-        private const int GetOpsIntervalinMillis = 30000;
-
-        public SviCRUDTests() : base(true, RecordedTestMode.Record)
-        {}
+        public SviCRUDTests(bool isAsync) : base(isAsync)
+        { }
 
         [OneTimeTearDown]
         public void Cleanup()
         {
             CleanupResourceGroups();
         }
+
+        /// <summary>
+        /// The Get Ops Extension Status Interval.
+        /// </summary>
+        private const int GetOpsIntervalinMillis = 30000;
 
         /// <summary>
         /// The SVI CRUD test that creates and installs
@@ -45,6 +44,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         [RecordedTest]
         public async Task TestSVICrudOperations()
         {
+            string SviName = "F97";
             // Create Test RG
             var resourceGroupName = Recording.GenerateAssetName("SdkRg-SVICrud");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: "F97",
+                    sapVirtualInstanceName: SviName,
                     data: SviCreatePayload);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: "F97",
+                    sapVirtualInstanceName: SviName,
                     data: SviInstallPayload);
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Console.WriteLine(ex);
             }
 
-            var sviObject1 = await rg.GetSapVirtualInstanceAsync("F97");
+            var sviObject1 = await rg.GetSapVirtualInstanceAsync(SviName);
 
             // Delete RG
             await rg.DeleteAsync(WaitUntil.Completed);
@@ -93,21 +93,23 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         [RecordedTest]
         public async Task TestSVIStartStopOperations()
         {
+            string SviName = "C11";
+
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var lro = await subscription.GetResourceGroups().GetAsync("E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2");
             ResourceGroupResource rg = lro.Value;
 
             // Stop operation
-            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync("C11");
+            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync(SviName);
             await sviObject1.Value.StopAsync(WaitUntil.Completed);
 
-            var sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync("C11");
-            Assert.Equals(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Offline);
+            var sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(SviName);
+            Assert.AreEqual(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Offline);
 
             // Start operation
             await sviObject1.Value.StartAsync(WaitUntil.Completed);
-            sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync("C11");
-            Assert.Equals(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Running);
+            sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(SviName);
+            Assert.AreEqual(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Running);
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// </summary>
         /// <param name="infraRgName"> Contains the infra RG
         /// used as app resource group. </param>
-        /// <returns>SVI Workload Resource.</returns>
+        /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
             var testSapWorkloadJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"tests\SingleServerInstall.json"));
