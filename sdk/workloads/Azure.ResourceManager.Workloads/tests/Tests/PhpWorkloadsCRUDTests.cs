@@ -75,11 +75,9 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.IsNotNull(getResource);
                 Assert.AreEqual(rgName, getResource.Value.Data.Name);
 
-                // Update - TODO shig: Figure out a way how to do patch.
+                // Update
                 var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
-                JsonElement patchElement = JsonDocument.Parse(patchJson).RootElement;
                 PhpWorkloadResourcePatch updatePayload = JsonConvert.DeserializeObject<PhpWorkloadResourcePatch>(patchJson);
-
                 Response<PhpWorkloadResource> updateResponse = await getResource.Value.UpdateAsync(updatePayload);
                 Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
                     Models.PhpWorkloadProvisioningState.Succeeded);
