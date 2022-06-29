@@ -12,9 +12,9 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
     /// The performance test scenario focused on downloading blobs from the Azure blobs storage.
     /// </summary>
     /// <seealso cref="Azure.Test.Perf.PerfTest{StorageTransferOptionsOptions}" />
-    public sealed class DownloadBlob : BlobTest<StorageTransferOptionsOptions>
+    public sealed class DownloadBlob : BlobTest<Options.StorageTransferOptionsOptions>
     {
-        public DownloadBlob(StorageTransferOptionsOptions options)
+        public DownloadBlob(Options.StorageTransferOptionsOptions options)
             : base(options, createBlob: true, singletonBlob: true)
         {
         }

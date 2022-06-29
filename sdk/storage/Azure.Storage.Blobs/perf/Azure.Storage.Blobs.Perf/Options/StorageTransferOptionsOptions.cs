@@ -8,7 +8,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Test.Perf;
 using CommandLine;
 
-namespace Azure.Storage.Blobs.Perf
+namespace Azure.Storage.Blobs.Perf.Options
 {
     public class StorageTransferOptionsOptions : SizeOptions, IBlobClientOptionsOptions
     {
