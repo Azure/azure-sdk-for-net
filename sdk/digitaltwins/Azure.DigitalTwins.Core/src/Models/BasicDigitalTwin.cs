@@ -118,7 +118,7 @@ namespace Azure.DigitalTwins.Core
         public ETag? ETag { get; set; }
 
         /// <summary>
-        /// The date and time the component was last updated.
+        /// The date and time the twin was last updated.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
         public DateTimeOffset? LastUpdatedOn { get; internal set; }
