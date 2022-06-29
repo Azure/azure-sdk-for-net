@@ -170,7 +170,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
-                    Description = buildModelOptions.ModelDescription
+                    Description = buildModelOptions.Description
                 };
 
                 foreach (var tag in buildModelOptions.Tags)
@@ -246,7 +246,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 var request = new BuildDocumentModelRequest(modelId, buildMode)
                 {
                     AzureBlobSource = source,
-                    Description = buildModelOptions.ModelDescription
+                    Description = buildModelOptions.Description
                 };
 
                 foreach (var tag in buildModelOptions.Tags)
@@ -268,7 +268,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         #region Management Ops
 
         /// <summary>
-        /// Gets a description of a model, including the types of documents it can recognize and the fields it will extract for each document type.
+        /// Gets information about a model, including the types of documents it can recognize and the fields it will extract for each document type.
         /// </summary>
         /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -294,7 +294,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Gets a description of a model, including the types of documents it can recognize and the fields it will extract for each document type.
+        /// Gets information about a model, including the types of documents it can recognize and the fields it will extract for each document type.
         /// </summary>
         /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -706,18 +706,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
         /// <param name="modelId">A unique ID for your copied model. If not specified, a model ID will be created for you.</param>
-        /// <param name="modelDescription">An optional description to add to the model.</param>
+        /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual Response<CopyAuthorization> GetCopyAuthorization(string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual Response<CopyAuthorization> GetCopyAuthorization(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
             var request = new AuthorizeCopyRequest(modelId)
             {
-                Description = modelDescription
+                Description = description
             };
 
             if (tags != null)
@@ -747,18 +747,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Generate authorization for copying a custom model into the target Form Recognizer resource.
         /// </summary>
         /// <param name="modelId">A unique ID for your copied model. If not specified, a model ID will be created for you.</param>
-        /// <param name="modelDescription">An optional description to add to the model.</param>
+        /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to <see cref="CopyAuthorization"/> containing
         /// the authorization information necessary to copy a custom model into a target Form Recognizer resource.</returns>
-        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CopyAuthorization>> GetCopyAuthorizationAsync(string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             modelId ??= Guid.NewGuid().ToString();
 
             var request = new AuthorizeCopyRequest(modelId)
             {
-                Description = modelDescription
+                Description = description
             };
 
             if (tags != null)
@@ -796,14 +796,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
-        /// <param name="modelDescription">An optional description to add to the model.</param>
+        /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
         /// </returns>
-        public virtual BuildModelOperation StartCreateComposedModel(IEnumerable<string> componentModelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation StartCreateComposedModel(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -815,7 +815,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 modelId ??= Guid.NewGuid().ToString();
                 var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(componentModelIds))
                 {
-                    Description = modelDescription
+                    Description = description
                 };
 
                 if (tags != null)
@@ -844,14 +844,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
-        /// <param name="modelDescription">An optional description to add to the model.</param>
+        /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> StartCreateComposedModelAsync(IEnumerable<string> componentModelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> StartCreateComposedModelAsync(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -863,7 +863,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 modelId ??= Guid.NewGuid().ToString();
                 var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(componentModelIds))
                 {
-                    Description = modelDescription
+                    Description = description
                 };
 
                 if (tags != null)

@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var options = new BuildModelOptions()
             {
-                ModelDescription = description
+                Description = description
             };
 
             foreach (var tag in TestingTags)
