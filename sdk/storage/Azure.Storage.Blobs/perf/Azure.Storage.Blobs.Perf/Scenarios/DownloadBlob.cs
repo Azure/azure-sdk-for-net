@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf.Scenarios
 {
