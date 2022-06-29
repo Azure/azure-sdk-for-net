@@ -11,10 +11,12 @@ using Azure.Security.KeyVault.Secrets;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Threading;
+using System.Drawing.Design;
 
 namespace Azure.ResourceManager.Workloads.Tests.Tests
 {
@@ -26,8 +28,8 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// </summary>
         private const int GetOpsIntervalinMillis = 30000;
 
-        public SviCRUDTests(bool isAsync) : base(isAsync)
-        { }
+        public SviCRUDTests() : base(true, RecordedTestMode.Record)
+        {}
 
         [OneTimeTearDown]
         public void Cleanup()
@@ -51,9 +53,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 resourceGroupName,
                 AzureLocation.EastUS);
 
-            SapVirtualInstanceData SviData = this.GetSingleServerPayloadToPut(rg.Data.Name, false);
-
-            SapVirtualInstanceData SviInstallData = this.GetSingleServerPayloadToPut(rg.Data.Name, true);
+            SapVirtualInstanceData SviCreatePayload = this.GetSingleServerPayloadToPut(rg.Data.Name, false);
 
             // Create SVI
             try
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
                     sapVirtualInstanceName: "F95",
-                    data: SviData);
+                    data: SviCreatePayload);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            SapVirtualInstanceCollection collection = rg.GetSapVirtualInstances();
+            SapVirtualInstanceData SviInstallPayload = this.GetSingleServerPayloadToPut(rg.Data.Name, true);
 
             // Install SVI
             try
@@ -76,15 +76,16 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
                     sapVirtualInstanceName: "F95",
-                    data: SviInstallData);
+                    data: SviInstallPayload);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
+            var sviObject1 = await rg.GetSapVirtualInstanceAsync("F95");
+
             // Delete RG
-            collection = rg.GetSapVirtualInstances();
             await rg.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -93,32 +94,35 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         public async Task TestSVIStartStopOperations()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            var lro = await subscription.GetResourceGroups().GetAsync("E2E-SVI-DevBox-16Jun-avzone-RHEL-SAP-HA-84sapha-gen2");
+            var lro = await subscription.GetResourceGroups().GetAsync("E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2");
             ResourceGroupResource rg = lro.Value;
-            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync("F62");
+            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync("C11");
+            await sviObject1.Value.StopAsync(WaitUntil.Completed);
 
             int count = 0;
-            var sviObjectstatus = lro.Value.GetSapVirtualInstance("A13").Value.Data.Status;
+            var sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
+
             do
             {
                 Thread.Sleep(GetOpsIntervalinMillis);
-                sviObjectstatus = lro.Value.GetSapVirtualInstance("A13").Value.Data.Status;
+                sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
                 count++;
             }
             while (sviObjectstatus != SapVirtualInstanceStatus.Offline &&
-                count < 6);
-            Assert.Equals(lro.Value.GetSapVirtualInstance("A13").Value.Data.Status, SapVirtualInstanceStatus.Offline);
-            lro.Value.GetSapVirtualInstance("A13").Value.Stop(WaitUntil.Completed);
+                count < 10);
+
+            Assert.Equals(lro.Value.GetSapVirtualInstance("C11").Value.Data.Status, SapVirtualInstanceStatus.Offline);
+
             count = 0;
             do
             {
                 Thread.Sleep(GetOpsIntervalinMillis);
-                sviObjectstatus = lro.Value.GetSapVirtualInstance("A13").Value.Data.Status;
+                sviObjectstatus = lro.Value.GetSapVirtualInstance("C11").Value.Data.Status;
                 count++;
             }
             while (sviObjectstatus != SapVirtualInstanceStatus.Running &&
-                    count < 6);
-            Assert.Equals(lro.Value.GetSapVirtualInstance("A13").Value.Data.Status, SapVirtualInstanceStatus.Running);
+                    count < 10);
+            Assert.Equals(lro.Value.GetSapVirtualInstance("C11").Value.Data.Status, SapVirtualInstanceStatus.Running);
         }
 
         /// <summary>
@@ -129,47 +133,26 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
-            var testSapWorkloadJson = File.ReadAllText(
-                @"C:\Users\skottukkal\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\tests\SingleServerInstall.json");
-            //var testSapWorkload =
-            //    JsonConvert.DeserializeObject<SapVirtualInstanceData>(testSapWorkloadJson);
+            var testSapWorkloadJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"tests\SingleServerInstall.json"));
+            var deploymentConfigurationJson = JsonDocument.Parse(testSapWorkloadJson).RootElement;
+            DeploymentConfiguration deploymentConfiguration = DeploymentConfiguration.DeserializeDeploymentConfiguration(
+                deploymentConfigurationJson.GetProperty("properties").GetProperty("configuration"));
 
-            JObject jObject = JsonConvert.DeserializeObject(testSapWorkloadJson) as JObject;
-
-            var deploymentConfiguration =
-                JsonConvert.DeserializeObject<DeploymentConfiguration>(
-                    jObject.SelectToken("properties.configuration").ToString());
-
-            var singleServerConfiguration = JsonConvert.DeserializeObject<SingleServerConfiguration>(
-                jObject.SelectToken("properties.configuration.infrastructureConfiguration").ToString());
-            singleServerConfiguration.AppResourceGroup = infraRgName;
-
-            var ssh = JsonConvert.DeserializeObject<SshConfiguration>(jObject.SelectToken("properties.configuration.infrastructureConfiguration.virtualMachineConfiguration.osProfile.osConfiguration.ssh").ToString());
-            var osConfiguration = JsonConvert.DeserializeObject<LinuxConfiguration>(
-                jObject.SelectToken(
-                    "properties.configuration.infrastructureConfiguration." +
-                    "virtualMachineConfiguration.osProfile.osConfiguration").ToString());
-
-            osConfiguration.Ssh = ssh;
-            singleServerConfiguration.VirtualMachineConfiguration.OSProfile.OSConfiguration = osConfiguration;
-            ServiceInitiatedSoftwareConfiguration softwareConfiguration = null;
+            deploymentConfiguration.InfrastructureConfiguration.AppResourceGroup = infraRgName;
 
             if (isInstall)
             {
-                softwareConfiguration = JsonConvert.DeserializeObject<ServiceInitiatedSoftwareConfiguration>(
-                jObject.SelectToken("properties.configuration.softwareConfiguration").ToString());
+                // Creating the installation payload after fetching the SshPrivateKey
+                ServiceInitiatedSoftwareConfiguration softwareConfiguration =
+                    ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(
+                        deploymentConfigurationJson.GetProperty("properties").GetProperty("configuration").GetProperty("softwareConfiguration"));
                 softwareConfiguration.SshPrivateKey = this.GetKeyVaultSecret("E2ETestPrivatesshkey");
+                deploymentConfiguration.SoftwareConfiguration = softwareConfiguration;
             }
             else
             {
-                softwareConfiguration = null;
+                deploymentConfiguration.SoftwareConfiguration = null;
             }
-
-            singleServerConfiguration.VirtualMachineConfiguration
-                .OSProfile.OSConfiguration = osConfiguration;
-
-            deploymentConfiguration.InfrastructureConfiguration = singleServerConfiguration;
-            deploymentConfiguration.SoftwareConfiguration = softwareConfiguration;
 
             SapVirtualInstanceData testSapWorkload = new SapVirtualInstanceData(
                 location: AzureLocation.EastUS2,
