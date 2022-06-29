@@ -30,13 +30,13 @@ using Azure.Communication.CallingServer;
 ### Authenticate the client
 Calling server client can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
-```C# Snippet
+```C#
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 CallingServerClient callingServerClient = new CallingServerClient(connectionString);
 ```
 
 Or alternatively using a valid Active Directory token.
-```C# Snippet
+```C#
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
 var client = new CallingServerClient(endpoint, tokenCredential);
@@ -45,12 +45,12 @@ var client = new CallingServerClient(endpoint, tokenCredential);
 ## Examples
 ### Make a call to a phone number recipient
 To make an outbound call, call the `CreateCallConnection` or `CreateCallConnectionAsync` function from the `CallingServerClient`.
-```C# Snippet
+```C#
 var createCallOption = new CreateCallOptions(
        AlternateCallerId: new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted recipient phone number
        );
 ```
-```C# Snippet
+```C#
 var callConnection = await callingServerClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number

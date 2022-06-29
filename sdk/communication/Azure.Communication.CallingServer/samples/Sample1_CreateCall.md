@@ -8,7 +8,7 @@ To get started you'll need a Communication Service Resource.  See [README][READM
 
 CallingServer client can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal.
 
-```C# Snippet
+```C#
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
 CallingServerClient callingServerClient = new CallingServerClient(connectionString);
 ```
@@ -16,12 +16,12 @@ CallingServerClient callingServerClient = new CallingServerClient(connectionStri
 ## Make a call to a phone number recipient
 
 To make a call, call the `CreateCall` or `CreateCallAsync` function from the `CallClient`. The returned value is `CreateCallResponse` objects that contains the created Call's Id if succeed, else throws a RequestFailedException.
-```C# Snippet
+```C#
 var createCallOption = new CreateCallOptions(
        AlternateCallerId: new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted recipient phone number
        );
 ```
-```C# Snippet:Azure_Communication_Call_Tests_CreateCall
+```C#
 var callConnection = await callingServerClient.CreateCall(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
