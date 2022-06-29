@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication;
 using Azure.Communication.CallingServer;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer.Models
 {
@@ -18,16 +18,24 @@ namespace Azure.Communication.CallingServer.Models
     {
         /// <summary> Initializes a new instance of PlayRequest. </summary>
         /// <param name="playSourceInfo"> The source of the audio to be played. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
-        public PlayRequest(PlaySource playSourceInfo)
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to. 
+        /// Plays to everyone in the call when not provided.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> or <paramref name="playTo"/> is null. </exception>
+        public PlayRequest(PlaySource playSourceInfo, IEnumerable<CommunicationIdentifierModel> playTo)
         {
             if (playSourceInfo == null)
             {
                 throw new ArgumentNullException(nameof(playSourceInfo));
             }
+            if (playTo == null)
+            {
+                throw new ArgumentNullException(nameof(playTo));
+            }
 
             PlaySourceInfo = playSourceInfo;
-            PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
+            PlayTo = playTo.ToList();
         }
 
         /// <summary> The source of the audio to be played. </summary>

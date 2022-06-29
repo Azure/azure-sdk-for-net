@@ -47,11 +47,15 @@ namespace Azure.Communication.CallingServer
         /// <summary> The callback URI. </summary>
         public virtual Uri CallbackUri { get; internal set; }
 
-        internal CallConnection(string CallConnectionId, CallConnectionsRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
+        /// <summary> Content Capabilities for the call. </summary>
+        internal ContentCapabilities ContentCapabilities { get; }
+
+        internal CallConnection(string callConnectionId, CallConnectionsRestClient callConnectionRestClient, ContentRestClient contentRestClient, ClientDiagnostics clientDiagnostics)
         {
-            this.CallConnectionId = CallConnectionId;
-            this.RestClient = callConnectionRestClient;
-            this._clientDiagnostics = clientDiagnostics;
+            CallConnectionId = callConnectionId;
+            RestClient = callConnectionRestClient;
+            _clientDiagnostics = clientDiagnostics;
+            ContentCapabilities = new ContentCapabilities(CallConnectionId, contentRestClient);
         }
 
         /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>
@@ -60,6 +64,7 @@ namespace Azure.Communication.CallingServer
             _clientDiagnostics = null;
             RestClient = null;
             CallConnectionId = null;
+            ContentCapabilities = null;
         }
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
