@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "145",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0e4a062cf4702ff7ab9f15681f0f93d9-6b95b7b3b2026d38-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f410b6ed4317e619038820bbcab942f1",
+        "traceparent": "00-64c0f51f24e3254d8ef175c993bb2ec4-eacdb73d3a33a346-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4c47c936042f2210f93a4a23f1ce1bd8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,176 +18,176 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "198589e3-1674-4ad5-8c48-5a41c3ae81cd",
+        "apim-request-id": "48249a08-561e-44aa-a434-816a98f2603e",
         "Content-Length": "0",
-        "Date": "Fri, 20 May 2022 22:30:37 GMT",
-        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+        "Date": "Wed, 15 Jun 2022 19:18:55 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "366"
+        "x-envoy-upstream-service-time": "226"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "df4334c1ebcac1f99c8ac15ec998a96a",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0f53767564b5b346752dc8ac127e545a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cf284ca0-9612-417c-96e5-cc5001429167",
+        "apim-request-id": "b2240095-e1f0-4287-b9e5-435e3fe3beb1",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:37 GMT",
+        "Date": "Wed, 15 Jun 2022 19:18:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:37Z"
-      }
-    },
-    {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "dd3d7e10cb6229c4d421748451f1a0b2",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "3d5a6f5f-0f3c-4454-ab0b-b94732643176",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:39 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:37Z"
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:18:55Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "40d6f515bd570190bd4f588c81bb1c6a",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ca057a59012e6bd74f6f5307c69d0f64",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5890aed3-b1b2-4308-8e8b-479087ccf2dc",
+        "apim-request-id": "56be5185-5c54-4835-b14b-96f737cb9cb1",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:40 GMT",
+        "Date": "Wed, 15 Jun 2022 19:18:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15"
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:37Z"
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:18:55Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4caab6df657cf68e6f1a0ba8777470aa",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "30b1d86fcfa4d1958293d6013c640f7b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "93b92d53-b8d1-40a6-af03-a6497b58fb9c",
+        "apim-request-id": "380fad06-9dc6-4c82-82c3-7c0e501e6bc9",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:41 GMT",
+        "Date": "Wed, 15 Jun 2022 19:18:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "15"
+        "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:37Z"
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:18:55Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d4490fe968c25312ed3b1f137237a819",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "77c9f0e650c973aa9ee7bf45103fedd8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7b13b24f-1b94-4fed-96c4-2ea343603edf",
+        "apim-request-id": "6708a07d-38e5-40be-91cc-7c844620add7",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:42 GMT",
+        "Date": "Wed, 15 Jun 2022 19:18:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:37Z"
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:18:55Z"
       }
     },
     {
-      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/198589e3-1674-4ad5-8c48-5a41c3ae81cd?api-version=2022-06-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9aa50a055447af3667e0d03db1e78a49",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3a3d631e23cd8ab5e433479a2ad62feb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d1cff6e9-c1f5-4ecf-bdc1-223b0928040d",
+        "apim-request-id": "d8f3be25-ba4c-485a-9981-74c3698b173b",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 22:30:44 GMT",
+        "Date": "Wed, 15 Jun 2022 19:18:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "50"
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:18:55Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-document/analyzeResults/48249a08-561e-44aa-a434-816a98f2603e?api-version=2022-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220615.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d621d86097d31e9b2d3d91bd104fc043",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8e2b467c-c3c3-491d-b557-b31358cdf1ef",
+        "Content-Length": "132423",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 15 Jun 2022 19:19:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "74"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-05-20T22:30:37Z",
-        "lastUpdatedDateTime": "2022-05-20T22:30:43Z",
+        "createdDateTime": "2022-06-15T19:18:55Z",
+        "lastUpdatedDateTime": "2022-06-15T19:19:00Z",
         "analyzeResult": {
           "apiVersion": "2022-06-30-preview",
           "modelId": "prebuilt-document",
@@ -213,7 +213,7 @@
                     138,
                     167
                   ],
-                  "confidence": 0.9963978,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 0,
                     "length": 8
@@ -231,7 +231,7 @@
                     267,
                     167
                   ],
-                  "confidence": 0.9976223,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 9,
                     "length": 5
@@ -249,7 +249,7 @@
                     620,
                     266
                   ],
-                  "confidence": 0.9887308,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 15,
                     "length": 4
@@ -267,7 +267,7 @@
                     801,
                     267
                   ],
-                  "confidence": 0.9970272,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 20,
                     "length": 7
@@ -285,7 +285,7 @@
                     164,
                     379
                   ],
-                  "confidence": 0.9968976,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 28,
                     "length": 7
@@ -303,7 +303,7 @@
                     279,
                     378
                   ],
-                  "confidence": 0.997417,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 36,
                     "length": 6
@@ -321,7 +321,7 @@
                     366,
                     377
                   ],
-                  "confidence": 0.9926521,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 43,
                     "length": 12
@@ -339,7 +339,7 @@
                     165,
                     417
                   ],
-                  "confidence": 0.9935073,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 56,
                     "length": 8
@@ -357,7 +357,7 @@
                     273,
                     418
                   ],
-                  "confidence": 0.9811829,
+                  "confidence": 0.981,
                   "span": {
                     "offset": 65,
                     "length": 19
@@ -375,7 +375,7 @@
                     166,
                     460
                   ],
-                  "confidence": 0.9968605,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 85,
                     "length": 6
@@ -393,7 +393,7 @@
                     163,
                     504
                   ],
-                  "confidence": 0.8820519,
+                  "confidence": 0.882,
                   "span": {
                     "offset": 92,
                     "length": 24
@@ -411,7 +411,7 @@
                     1112,
                     372
                   ],
-                  "confidence": 0.9964059,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 117,
                     "length": 8
@@ -429,7 +429,7 @@
                     1387,
                     372
                   ],
-                  "confidence": 0.9976429,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 126,
                     "length": 5
@@ -447,7 +447,7 @@
                     1025,
                     449
                   ],
-                  "confidence": 0.9941862,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 132,
                     "length": 5
@@ -465,7 +465,7 @@
                     1112,
                     448
                   ],
-                  "confidence": 0.9980098,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 138,
                     "length": 3
@@ -483,7 +483,7 @@
                     1163,
                     448
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 142,
                     "length": 10
@@ -501,7 +501,7 @@
                     1024,
                     489
                   ],
-                  "confidence": 0.9960922,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 153,
                     "length": 8
@@ -519,7 +519,7 @@
                     1156,
                     488
                   ],
-                  "confidence": 0.9975974,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 162,
                     "length": 5
@@ -537,7 +537,7 @@
                     1244,
                     488
                   ],
-                  "confidence": 0.9980257,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 168,
                     "length": 2
@@ -555,7 +555,7 @@
                     1278,
                     488
                   ],
-                  "confidence": 0.997027,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 171,
                     "length": 6
@@ -573,7 +573,7 @@
                     163,
                     594
                   ],
-                  "confidence": 0.9956776,
+                  "confidence": 0.995,
                   "span": {
                     "offset": 178,
                     "length": 7
@@ -591,7 +591,7 @@
                     341,
                     591
                   ],
-                  "confidence": 0.997713,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 186,
                     "length": 2
@@ -609,7 +609,7 @@
                     157,
                     635
                   ],
-                  "confidence": 0.9973713,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 189,
                     "length": 6
@@ -627,7 +627,7 @@
                     258,
                     639
                   ],
-                  "confidence": 0.9975758,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 196,
                     "length": 5
@@ -645,7 +645,7 @@
                     349,
                     640
                   ],
-                  "confidence": 0.9968197,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 202,
                     "length": 7
@@ -663,7 +663,7 @@
                     436,
                     639
                   ],
-                  "confidence": 0.9976097,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 210,
                     "length": 5
@@ -681,7 +681,7 @@
                     160,
                     676
                   ],
-                  "confidence": 0.9966563,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 216,
                     "length": 7
@@ -699,7 +699,7 @@
                     285,
                     678
                   ],
-                  "confidence": 0.9975129,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 224,
                     "length": 5
@@ -717,7 +717,7 @@
                     375,
                     678
                   ],
-                  "confidence": 0.9969298,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 230,
                     "length": 6
@@ -735,7 +735,7 @@
                     459,
                     678
                   ],
-                  "confidence": 0.9969633,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 237,
                     "length": 6
@@ -753,7 +753,7 @@
                     552,
                     677
                   ],
-                  "confidence": 0.997581,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 244,
                     "length": 5
@@ -771,7 +771,7 @@
                     159,
                     712
                   ],
-                  "confidence": 0.9950378,
+                  "confidence": 0.995,
                   "span": {
                     "offset": 250,
                     "length": 8
@@ -789,7 +789,7 @@
                     274,
                     713
                   ],
-                  "confidence": 0.9979851,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 259,
                     "length": 3
@@ -807,7 +807,7 @@
                     327,
                     713
                   ],
-                  "confidence": 0.9974213,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 263,
                     "length": 2
@@ -825,7 +825,7 @@
                     368,
                     713
                   ],
-                  "confidence": 0.9969258,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 266,
                     "length": 6
@@ -843,7 +843,7 @@
                     461,
                     713
                   ],
-                  "confidence": 0.9892117,
+                  "confidence": 0.989,
                   "span": {
                     "offset": 273,
                     "length": 4
@@ -861,7 +861,7 @@
                     279,
                     750
                   ],
-                  "confidence": 0.9968912,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 278,
                     "length": 7
@@ -879,7 +879,7 @@
                     378,
                     751
                   ],
-                  "confidence": 0.9975561,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 286,
                     "length": 5
@@ -897,7 +897,7 @@
                     439,
                     751
                   ],
-                  "confidence": 0.9976509,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 292,
                     "length": 2
@@ -915,7 +915,7 @@
                     483,
                     751
                   ],
-                  "confidence": 0.9975423,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 295,
                     "length": 5
@@ -933,7 +933,7 @@
                     611,
                     752
                   ],
-                  "confidence": 0.997382,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 301,
                     "length": 6
@@ -951,7 +951,7 @@
                     707,
                     752
                   ],
-                  "confidence": 0.9920142,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 308,
                     "length": 12
@@ -969,7 +969,7 @@
                     165,
                     826
                   ],
-                  "confidence": 0.99695,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 321,
                     "length": 7
@@ -987,7 +987,7 @@
                     337,
                     829
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 329,
                     "length": 4
@@ -1005,7 +1005,7 @@
                     166,
                     880
                   ],
-                  "confidence": 0.9975532,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 334,
                     "length": 5
@@ -1023,7 +1023,7 @@
                     253,
                     879
                   ],
-                  "confidence": 0.9973082,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 340,
                     "length": 6
@@ -1041,7 +1041,7 @@
                     341,
                     879
                   ],
-                  "confidence": 0.9970075,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 347,
                     "length": 7
@@ -1059,7 +1059,7 @@
                     164,
                     922
                   ],
-                  "confidence": 0.9968109,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 355,
                     "length": 7
@@ -1077,7 +1077,7 @@
                     287,
                     922
                   ],
-                  "confidence": 0.997592,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 363,
                     "length": 5
@@ -1095,7 +1095,7 @@
                     378,
                     922
                   ],
-                  "confidence": 0.9964311,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 369,
                     "length": 7
@@ -1113,7 +1113,7 @@
                     472,
                     922
                   ],
-                  "confidence": 0.9887898,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 377,
                     "length": 4
@@ -1131,7 +1131,7 @@
                     540,
                     922
                   ],
-                  "confidence": 0.9973668,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 382,
                     "length": 6
@@ -1149,7 +1149,7 @@
                     165,
                     953
                   ],
-                  "confidence": 0.9940747,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 389,
                     "length": 8
@@ -1167,7 +1167,7 @@
                     279,
                     952
                   ],
-                  "confidence": 0.9980518,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 398,
                     "length": 3
@@ -1185,7 +1185,7 @@
                     331,
                     953
                   ],
-                  "confidence": 0.9945136,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 402,
                     "length": 1
@@ -1203,7 +1203,7 @@
                     358,
                     953
                   ],
-                  "confidence": 0.9961027,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 404,
                     "length": 7
@@ -1221,7 +1221,7 @@
                     454,
                     953
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 412,
                     "length": 4
@@ -1239,7 +1239,7 @@
                     281,
                     992
                   ],
-                  "confidence": 0.9948382,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 417,
                     "length": 8
@@ -1257,7 +1257,7 @@
                     381,
                     992
                   ],
-                  "confidence": 0.9978627,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 426,
                     "length": 2
@@ -1275,7 +1275,7 @@
                     432,
                     991
                   ],
-                  "confidence": 0.9942424,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 429,
                     "length": 5
@@ -1293,7 +1293,7 @@
                     759,
                     992
                   ],
-                  "confidence": 0.9934152,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 435,
                     "length": 6
@@ -1311,7 +1311,7 @@
                     852,
                     992
                   ],
-                  "confidence": 0.9928769,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 442,
                     "length": 12
@@ -1329,7 +1329,7 @@
                     449,
                     1079
                   ],
-                  "confidence": 0.9936237,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 455,
                     "length": 7
@@ -1347,7 +1347,7 @@
                     887,
                     1082
                   ],
-                  "confidence": 0.9934899,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 463,
                     "length": 8
@@ -1365,7 +1365,7 @@
                     1110,
                     1077
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 472,
                     "length": 4
@@ -1383,7 +1383,7 @@
                     1185,
                     1077
                   ],
-                  "confidence": 0.99761,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 477,
                     "length": 5
@@ -1401,7 +1401,7 @@
                     1384,
                     1079
                   ],
-                  "confidence": 0.997573,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 483,
                     "length": 5
@@ -1419,7 +1419,7 @@
                     171,
                     1121
                   ],
-                  "confidence": 0.9947137,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 489,
                     "length": 8
@@ -1437,7 +1437,7 @@
                     862,
                     1117
                   ],
-                  "confidence": 0.9980585,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 498,
                     "length": 2
@@ -1455,7 +1455,7 @@
                     1241,
                     1117
                   ],
-                  "confidence": 0.9844514,
+                  "confidence": 0.984,
                   "span": {
                     "offset": 501,
                     "length": 4
@@ -1473,7 +1473,7 @@
                     1460,
                     1119
                   ],
-                  "confidence": 0.9974732,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 506,
                     "length": 5
@@ -1491,7 +1491,7 @@
                     171,
                     1161
                   ],
-                  "confidence": 0.9940992,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 512,
                     "length": 6
@@ -1509,7 +1509,7 @@
                     258,
                     1162
                   ],
-                  "confidence": 0.9975199,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 519,
                     "length": 5
@@ -1527,7 +1527,7 @@
                     861,
                     1159
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 525,
                     "length": 2
@@ -1545,7 +1545,7 @@
                     1240,
                     1159
                   ],
-                  "confidence": 0.9980585,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 528,
                     "length": 4
@@ -1563,7 +1563,7 @@
                     1459,
                     1159
                   ],
-                  "confidence": 0.9970989,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 533,
                     "length": 5
@@ -1581,7 +1581,7 @@
                     170,
                     1210
                   ],
-                  "confidence": 0.9970077,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 539,
                     "length": 7
@@ -1599,7 +1599,7 @@
                     272,
                     1208
                   ],
-                  "confidence": 0.996344,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 547,
                     "length": 8
@@ -1617,7 +1617,7 @@
                     863,
                     1203
                   ],
-                  "confidence": 0.9980055,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 556,
                     "length": 2
@@ -1635,7 +1635,7 @@
                     1238,
                     1206
                   ],
-                  "confidence": 0.9884576,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 559,
                     "length": 4
@@ -1653,7 +1653,7 @@
                     1443,
                     1204
                   ],
-                  "confidence": 0.993466,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 564,
                     "length": 6
@@ -1671,7 +1671,7 @@
                     170,
                     1250
                   ],
-                  "confidence": 0.9974216,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 571,
                     "length": 6
@@ -1689,7 +1689,7 @@
                     265,
                     1252
                   ],
-                  "confidence": 0.9975067,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 578,
                     "length": 5
@@ -1707,7 +1707,7 @@
                     333,
                     1252
                   ],
-                  "confidence": 0.9973741,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 584,
                     "length": 6
@@ -1725,7 +1725,7 @@
                     860,
                     1245
                   ],
-                  "confidence": 0.9977217,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 591,
                     "length": 2
@@ -1743,7 +1743,7 @@
                     1239,
                     1246
                   ],
-                  "confidence": 0.9963499,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 594,
                     "length": 4
@@ -1761,7 +1761,7 @@
                     1446,
                     1248
                   ],
-                  "confidence": 0.9942095,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 599,
                     "length": 6
@@ -1779,7 +1779,7 @@
                     543,
                     1743
                   ],
-                  "confidence": 0.9938194,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 606,
                     "length": 6
@@ -1797,7 +1797,7 @@
                     622,
                     1742
                   ],
-                  "confidence": 0.997023,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 613,
                     "length": 7
@@ -1815,7 +1815,7 @@
                     578,
                     1776
                   ],
-                  "confidence": 0.996983,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 621,
                     "length": 7
@@ -1833,7 +1833,7 @@
                     488,
                     1706
                   ],
-                  "confidence": 0.9971254,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 629,
                     "length": 6
@@ -1851,7 +1851,7 @@
                     616,
                     1706
                   ],
-                  "confidence": 0.9975133,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 636,
                     "length": 7
@@ -1869,7 +1869,7 @@
                     171,
                     1830
                   ],
-                  "confidence": 0.9923577,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 644,
                     "length": 10
@@ -1887,7 +1887,7 @@
                     360,
                     1830
                   ],
-                  "confidence": 0.9973639,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 655,
                     "length": 6
@@ -1905,7 +1905,7 @@
                     171,
                     1907
                   ],
-                  "confidence": 0.997957,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 662,
                     "length": 2
@@ -1923,7 +1923,7 @@
                     208,
                     1908
                   ],
-                  "confidence": 0.9979927,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 665,
                     "length": 3
@@ -1941,7 +1941,7 @@
                     259,
                     1909
                   ],
-                  "confidence": 0.9973065,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 669,
                     "length": 6
@@ -1959,7 +1959,7 @@
                     338,
                     1910
                   ],
-                  "confidence": 0.9872848,
+                  "confidence": 0.987,
                   "span": {
                     "offset": 676,
                     "length": 4
@@ -1977,7 +1977,7 @@
                     403,
                     1911
                   ],
-                  "confidence": 0.9966772,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 681,
                     "length": 6
@@ -1995,7 +1995,7 @@
                     506,
                     1912
                   ],
-                  "confidence": 0.9944509,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 688,
                     "length": 10
@@ -2013,7 +2013,7 @@
                     627,
                     1913
                   ],
-                  "confidence": 0.9963038,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 699,
                     "length": 6
@@ -2031,7 +2031,7 @@
                     170,
                     1960
                   ],
-                  "confidence": 0.9935312,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 706,
                     "length": 7
@@ -2049,7 +2049,7 @@
                     275,
                     1960
                   ],
-                  "confidence": 0.9888159,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 714,
                     "length": 4
@@ -2067,7 +2067,7 @@
                     360,
                     1959
                   ],
-                  "confidence": 0.9955592,
+                  "confidence": 0.995,
                   "span": {
                     "offset": 719,
                     "length": 6
@@ -2085,7 +2085,7 @@
                     471,
                     1959
                   ],
-                  "confidence": 0.9913172,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 726,
                     "length": 4
@@ -2103,7 +2103,7 @@
                     527,
                     1959
                   ],
-                  "confidence": 0.9973628,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 731,
                     "length": 6
@@ -2121,7 +2121,7 @@
                     630,
                     1959
                   ],
-                  "confidence": 0.99801,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 738,
                     "length": 3
@@ -2139,7 +2139,7 @@
                     693,
                     1958
                   ],
-                  "confidence": 0.9980064,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 742,
                     "length": 3
@@ -2157,7 +2157,7 @@
                     769,
                     1958
                   ],
-                  "confidence": 0.9979916,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 746,
                     "length": 3
@@ -2175,7 +2175,7 @@
                     826,
                     1958
                   ],
-                  "confidence": 0.9885427,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 750,
                     "length": 4
@@ -2193,7 +2193,7 @@
                     907,
                     1958
                   ],
-                  "confidence": 0.9975618,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 755,
                     "length": 2
@@ -2211,7 +2211,7 @@
                     935,
                     1958
                   ],
-                  "confidence": 0.9948891,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 758,
                     "length": 8
@@ -2229,7 +2229,7 @@
                     1069,
                     1958
                   ],
-                  "confidence": 0.9967861,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 767,
                     "length": 6
@@ -2247,7 +2247,7 @@
                     1163,
                     1958
                   ],
-                  "confidence": 0.9975675,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 774,
                     "length": 2
@@ -2265,7 +2265,7 @@
                     1209,
                     1958
                   ],
-                  "confidence": 0.9890199,
+                  "confidence": 0.989,
                   "span": {
                     "offset": 777,
                     "length": 4
@@ -2283,7 +2283,7 @@
                     1288,
                     1958
                   ],
-                  "confidence": 0.9977133,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 782,
                     "length": 2
@@ -2301,7 +2301,7 @@
                     1327,
                     1958
                   ],
-                  "confidence": 0.9967949,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 785,
                     "length": 7
@@ -2319,7 +2319,7 @@
                     1447,
                     1958
                   ],
-                  "confidence": 0.9936312,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 793,
                     "length": 3
@@ -2337,7 +2337,7 @@
                     170,
                     1991
                   ],
-                  "confidence": 0.9949165,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 797,
                     "length": 5
@@ -2355,7 +2355,7 @@
                     240,
                     1992
                   ],
-                  "confidence": 0.9980102,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 803,
                     "length": 3
@@ -2373,7 +2373,7 @@
                     305,
                     1992
                   ],
-                  "confidence": 0.9979956,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 807,
                     "length": 3
@@ -2391,7 +2391,7 @@
                     379,
                     1993
                   ],
-                  "confidence": 0.9980099,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 811,
                     "length": 3
@@ -2409,7 +2409,7 @@
                     426,
                     1993
                   ],
-                  "confidence": 0.9980104,
+                  "confidence": 0.998,
                   "span": {
                     "offset": 815,
                     "length": 3
@@ -2427,7 +2427,7 @@
                     490,
                     1993
                   ],
-                  "confidence": 0.9883824,
+                  "confidence": 0.988,
                   "span": {
                     "offset": 819,
                     "length": 4
@@ -2445,7 +2445,7 @@
                     562,
                     1993
                   ],
-                  "confidence": 0.9975247,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 824,
                     "length": 5
@@ -2463,7 +2463,7 @@
                     635,
                     1993
                   ],
-                  "confidence": 0.9937863,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 830,
                     "length": 9
@@ -2481,7 +2481,7 @@
                     1144,
                     1602
                   ],
-                  "confidence": 0.993413,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 840,
                     "length": 8
@@ -2499,7 +2499,7 @@
                     1426,
                     1599
                   ],
-                  "confidence": 0.9929602,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 849,
                     "length": 7
@@ -2517,7 +2517,7 @@
                     1239,
                     1642
                   ],
-                  "confidence": 0.9973856,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 857,
                     "length": 3
@@ -2535,7 +2535,7 @@
                     1459,
                     1641
                   ],
-                  "confidence": 0.9935583,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 861,
                     "length": 5
@@ -2553,7 +2553,7 @@
                     1201,
                     1701
                   ],
-                  "confidence": 0.994193,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 867,
                     "length": 5
@@ -2571,7 +2571,7 @@
                     1426,
                     1699
                   ],
-                  "confidence": 0.9924933,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 873,
                     "length": 7
@@ -7294,14 +7294,25 @@
               ]
             }
           ],
-          "styles": []
+          "styles": [
+            {
+              "confidence": 0.9,
+              "spans": [
+                {
+                  "offset": 629,
+                  "length": 14
+                }
+              ],
+              "isHandwritten": true
+            }
+          ]
         }
       }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
-    "RandomSeed": "308507418"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1408412641"
   }
 }

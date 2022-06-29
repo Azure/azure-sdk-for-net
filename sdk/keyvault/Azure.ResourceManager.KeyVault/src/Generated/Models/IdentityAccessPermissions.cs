@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
         public IdentityAccessPermissions()
         {
-            Keys = new ChangeTrackingList<KeyPermission>();
-            Secrets = new ChangeTrackingList<SecretPermission>();
-            Certificates = new ChangeTrackingList<CertificatePermission>();
-            Storage = new ChangeTrackingList<StoragePermission>();
+            Keys = new ChangeTrackingList<IdentityAccessKeyPermission>();
+            Secrets = new ChangeTrackingList<IdentityAccessSecretPermission>();
+            Certificates = new ChangeTrackingList<IdentityAccessCertificatePermission>();
+            Storage = new ChangeTrackingList<IdentityAccessStoragePermission>();
         }
 
         /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>
         /// <param name="storage"> Permissions to storage accounts. </param>
-        internal IdentityAccessPermissions(IList<KeyPermission> keys, IList<SecretPermission> secrets, IList<CertificatePermission> certificates, IList<StoragePermission> storage)
+        internal IdentityAccessPermissions(IList<IdentityAccessKeyPermission> keys, IList<IdentityAccessSecretPermission> secrets, IList<IdentityAccessCertificatePermission> certificates, IList<IdentityAccessStoragePermission> storage)
         {
             Keys = keys;
             Secrets = secrets;
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Permissions to keys. </summary>
-        public IList<KeyPermission> Keys { get; }
+        public IList<IdentityAccessKeyPermission> Keys { get; }
         /// <summary> Permissions to secrets. </summary>
-        public IList<SecretPermission> Secrets { get; }
+        public IList<IdentityAccessSecretPermission> Secrets { get; }
         /// <summary> Permissions to certificates. </summary>
-        public IList<CertificatePermission> Certificates { get; }
+        public IList<IdentityAccessCertificatePermission> Certificates { get; }
         /// <summary> Permissions to storage accounts. </summary>
-        public IList<StoragePermission> Storage { get; }
+        public IList<IdentityAccessStoragePermission> Storage { get; }
     }
 }

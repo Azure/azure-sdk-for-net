@@ -11,10 +11,8 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class Encryption
     {
         /// <summary> Initializes a new instance of Encryption. </summary>
-        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </param>
-        public Encryption(KeySource keySource)
+        public Encryption()
         {
-            KeySource = keySource;
         }
 
         /// <summary> Initializes a new instance of Encryption. </summary>
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
-        internal Encryption(EncryptionServices services, KeySource keySource, bool? requireInfrastructureEncryption, KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)
+        internal Encryption(EncryptionServices services, KeySource? keySource, bool? requireInfrastructureEncryption, KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)
         {
             Services = services;
             KeySource = keySource;
@@ -35,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> List of services which support encryption. </summary>
         public EncryptionServices Services { get; set; }
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </summary>
-        public KeySource KeySource { get; set; }
+        public KeySource? KeySource { get; set; }
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
         public bool? RequireInfrastructureEncryption { get; set; }
         /// <summary> Properties provided by key vault. </summary>

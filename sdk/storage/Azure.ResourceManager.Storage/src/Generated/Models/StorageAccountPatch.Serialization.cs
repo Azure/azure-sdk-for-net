@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowedCopyScope");
                 writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
+            if (Optional.IsDefined(DnsEndpointType))
+            {
+                writer.WritePropertyName("dnsEndpointType");
+                writer.WriteStringValue(DnsEndpointType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

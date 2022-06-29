@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<string> resourceName = default;
             Optional<string> unit = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<DateTimeOffset> nextResetTime = default;
-            Optional<ComputeModeOptions> computeMode = default;
+            Optional<ComputeModeOption> computeMode = default;
             Optional<string> siteMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeMode = property0.Value.GetString().ToComputeModeOptions();
+                            computeMode = property0.Value.GetString().ToComputeModeOption();
                             continue;
                         }
                         if (property0.NameEquals("siteMode"))
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceUsage(id, name, type, systemData, kind.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value);
+            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value, kind.Value);
         }
     }
 }

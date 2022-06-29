@@ -15,11 +15,11 @@ description: Samples for the Azure.AI.FormRecognizer client library
 
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
-- Layout - Extract text, selection marks, and table structures, along with their bounding region coordinates, from documents.
-- Document - Analyze key-value pairs and entities in addition to general layout from documents.
+- Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
+- Document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
-- Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, identity documents, or US W2 tax forms) using prebuilt models.
-- Custom - Build custom models to analyze text, field values, selection marks, and tabular data from documents. Custom models are trained with your own data, so they're tailored to your documents.
+- Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, vaccination cards, US W2 tax forms, and US health insurance cards.
+- Custom - Build custom models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
 
 ## Common scenarios samples for client library version 4.0.0-beta.x
 - [Extract the layout of a document](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ExtractLayout.md)

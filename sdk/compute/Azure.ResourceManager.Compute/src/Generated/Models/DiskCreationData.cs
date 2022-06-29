@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
-        /// <param name="imageReference"> Disk source information. </param>
-        /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
+        /// <param name="imageReference"> Disk source information for PIR or user images. </param>
+        /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
         /// <param name="sourceUri"> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </param>
         /// <param name="sourceResourceId"> If createOption is Copy, this is the ARM id of the source snapshot or disk. </param>
         /// <param name="sourceUniqueId"> If this field is set, this is the unique id identifying the source of this resource. </param>
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskCreateOption CreateOption { get; set; }
         /// <summary> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }
-        /// <summary> Disk source information. </summary>
+        /// <summary> Disk source information for PIR or user images. </summary>
         public ImageDiskReference ImageReference { get; set; }
-        /// <summary> Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </summary>
+        /// <summary> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </summary>
         public ImageDiskReference GalleryImageReference { get; set; }
         /// <summary> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </summary>
         public Uri SourceUri { get; set; }

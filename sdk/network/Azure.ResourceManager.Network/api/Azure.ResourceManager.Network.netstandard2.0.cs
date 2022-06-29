@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> CustomErrorConfigurations { get { throw null; } }
         public bool? EnableFips { get { throw null; } set { } }
         public bool? EnableHttp2 { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public bool? ForceFirewallPolicyAssociation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get { throw null; } }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
     {
         public ApplicationGatewayPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationSecurityGroupData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ApplicationSecurityGroupData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
         public AzureFirewallData() { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.HubIPAddresses HubIPAddresses { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> IPConfigurations { get { throw null; } }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
     public partial class AzureWebCategoryData : Azure.ResourceManager.Models.ResourceData
     {
         internal AzureWebCategoryData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Group { get { throw null; } }
     }
     public partial class AzureWebCategoryResource : Azure.ResourceManager.ArmResource
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
     {
         public BackendAddressPoolData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
     {
         public BastionHostData() { }
         public string DnsName { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BastionHostSkuName? SkuName { get { throw null; } set { } }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
     {
         public BgpConnectionData() { }
         public Azure.ResourceManager.Network.Models.HubBgpConnectionStatus? ConnectionState { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
         public string PeerIP { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ConnectionMonitorType? ConnectionMonitorType { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? MonitoringIntervalInSeconds { get { throw null; } }
         public string MonitoringStatus { get { throw null; } }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Network
         public string Cidr { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CommissionedState? CommissionedState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixParent { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string FailedReason { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Network
     public partial class DdosCustomPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public DdosCustomPolicyData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ProtocolCustomSettingsFormat> ProtocolCustomSettings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Network
     public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DdosProtectionPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworks { get { throw null; } }
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> AssociatedNetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosIPRange> DestinationIPRanges { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.QosPortRange> DestinationPortRanges { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<int> Markings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProtocolType? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Network
         public ExpressRouteCircuitAuthorizationData() { }
         public string AuthorizationKey { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.AuthorizationUseStatus? AuthorizationUseStatus { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ExpressRouteCircuitAuthorizationResource : Azure.ResourceManager.ArmResource
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
         public string AddressPrefix { get { throw null; } set { } }
         public string AuthorizationKey { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CircuitConnectionStatus? CircuitConnectionStatus { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitPeeringId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerExpressRouteCircuitPeeringId { get { throw null; } set { } }
@@ -744,9 +744,9 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitAuthorizationData> Authorizations { get { throw null; } }
         public float? BandwidthInGbps { get { throw null; } set { } }
         public string CircuitProvisioningState { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRoutePortId { get { throw null; } set { } }
-        public string GatewayManagerEtag { get { throw null; } set { } }
+        public string GatewayManagerETag { get { throw null; } set { } }
         public bool? GlobalReachEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> Peerings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -777,9 +777,9 @@ namespace Azure.ResourceManager.Network
         public ExpressRouteCircuitPeeringData() { }
         public int? AzureASN { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCircuitConnectionData> Connections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteConnectionId { get { throw null; } }
-        public string GatewayManagerEtag { get { throw null; } set { } }
+        public string GatewayManagerETag { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get { throw null; } set { } }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Network
     {
         public ExpressRouteCrossConnectionData() { }
         public int? BandwidthInMbps { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitId { get { throw null; } set { } }
         public string PeeringLocation { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteCrossConnectionPeeringData> Peerings { get { throw null; } }
@@ -942,8 +942,8 @@ namespace Azure.ResourceManager.Network
     {
         public ExpressRouteCrossConnectionPeeringData() { }
         public int? AzureASN { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
-        public string GatewayManagerEtag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string GatewayManagerETag { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get { throw null; } set { } }
         public string LastModifiedBy { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get { throw null; } set { } }
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.Network
     {
         public ExpressRouteGatewayData() { }
         public Azure.ResourceManager.Network.Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.Network
         public ExpressRouteLinkData() { }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkAdminState? AdminState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkConnectorType? ConnectorType { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string InterfaceName { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRouteLinkMacSecConfig MacSecConfig { get { throw null; } set { } }
         public string PatchPanelId { get { throw null; } }
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Network
         public int? BandwidthInGbps { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Circuits { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExpressRoutePortsEncapsulation? Encapsulation { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string EtherType { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteLinkData> Links { get { throw null; } }
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.Network
         public Azure.Core.ResourceIdentifier BasePolicyId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> ChildPolicies { get { throw null; } }
         public Azure.ResourceManager.Network.Models.DnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Firewalls { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.FirewallPolicyInsights Insights { get { throw null; } set { } }
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.Network
     public partial class FirewallPolicyRuleCollectionGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FirewallPolicyRuleCollectionGroupData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRuleCollectionInfo> RuleCollections { get { throw null; } }
@@ -1289,14 +1289,14 @@ namespace Azure.ResourceManager.Network
     {
         public FlowLogData() { }
         public bool? Enabled { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.FlowLogFormatParameters Format { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.FlowLogFormat Format { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
-        public string StorageId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageId { get { throw null; } set { } }
         public System.Guid? TargetResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration { get { throw null; } set { } }
     }
     public partial class FlowLogResource : Azure.ResourceManager.ArmResource
     {
@@ -1334,7 +1334,7 @@ namespace Azure.ResourceManager.Network
     public partial class FrontendIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public FrontendIPConfigurationData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier GatewayLoadBalancerId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundNatPools { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundNatRules { get { throw null; } }
@@ -1377,7 +1377,7 @@ namespace Azure.ResourceManager.Network
     public partial class HubIPConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public HubIPConfigurationData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Network
     {
         public HubRouteTableData() { }
         public System.Collections.Generic.IReadOnlyList<string> AssociatedConnections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PropagatingConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowHubToRemoteVnetTransit { get { throw null; } set { } }
         public bool? AllowRemoteVnetToUseHubVnetGateways { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RemoteVirtualNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
@@ -1499,11 +1499,11 @@ namespace Azure.ResourceManager.Network
         public int? BackendPort { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class InboundNatRuleResource : Azure.ResourceManager.ArmResource
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.Network
     {
         public IPAllocationData() { }
         public System.Collections.Generic.IDictionary<string, string> AllocationTags { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationType? IPAllocationType { get { throw null; } set { } }
         public string IpamAllocationId { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.Network
     public partial class IPGroupData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public IPGroupData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> FirewallPolicies { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Firewalls { get { throw null; } }
         public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Network
     {
         public LoadBalancerData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.BackendAddressPoolData> BackendAddressPools { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.FrontendIPConfigurationData> FrontendIPConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.InboundNatPool> InboundNatPools { get { throw null; } }
@@ -1705,13 +1705,13 @@ namespace Azure.ResourceManager.Network
         public bool? DisableOutboundSnat { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPort { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class LoadBalancingRuleResource : Azure.ResourceManager.ArmResource
@@ -1743,7 +1743,7 @@ namespace Azure.ResourceManager.Network
     {
         public LocalNetworkGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Fqdn { get { throw null; } set { } }
         public string GatewayIPAddress { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LocalNetworkAddressPrefixes { get { throw null; } }
@@ -1788,7 +1788,7 @@ namespace Azure.ResourceManager.Network
     public partial class NatGatewayData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NatGatewayData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
@@ -2190,7 +2190,7 @@ namespace Azure.ResourceManager.Network
         public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> HostedWorkloads { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> IPConfigurations { get { throw null; } }
@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.Network
         public NetworkInterfaceIPConfigurationData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.ApplicationSecurityGroupData> ApplicationSecurityGroups { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier GatewayLoadBalancerId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.BackendAddressPoolData> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.InboundNatRuleData> LoadBalancerInboundNatRules { get { throw null; } }
@@ -2299,7 +2299,7 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceTapConfigurationData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public NetworkInterfaceTapConfigurationData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.VirtualNetworkTapData VirtualNetworkTap { get { throw null; } set { } }
     }
@@ -2336,7 +2336,7 @@ namespace Azure.ResourceManager.Network
     {
         public NetworkPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.Network
         public NetworkProfileData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterface> ContainerNetworkInterfaces { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
     }
@@ -2418,7 +2418,7 @@ namespace Azure.ResourceManager.Network
     {
         public NetworkSecurityGroupData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.SecurityRuleData> DefaultSecurityRules { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.FlowLogData> FlowLogs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -2474,7 +2474,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<string> BootStrapConfigurationBlobs { get { throw null; } }
         public string CloudInitConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CloudInitConfigurationBlobs { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> InboundSecurityRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualApplianceSkuProperties NvaSku { get { throw null; } set { } }
@@ -2527,7 +2527,7 @@ namespace Azure.ResourceManager.Network
         public NetworkVirtualApplianceSkuData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AvailableVersions { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Vendor { get { throw null; } }
     }
     public partial class NetworkVirtualApplianceSkuResource : Azure.ResourceManager.ArmResource
@@ -2564,7 +2564,7 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatcherData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkWatcherData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class NetworkWatcherResource : Azure.ResourceManager.ArmResource
@@ -2639,7 +2639,7 @@ namespace Azure.ResourceManager.Network
         public int? AllocatedOutboundPorts { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontendIPConfigurations { get { throw null; } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol? Protocol { get { throw null; } set { } }
@@ -2674,7 +2674,7 @@ namespace Azure.ResourceManager.Network
     {
         public P2SVpnGatewayData() { }
         public System.Collections.Generic.IList<string> CustomDnsServers { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? IsRoutingPreferenceInternet { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.P2SConnectionConfiguration> P2SConnectionConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -2728,14 +2728,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PacketCaptureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PacketCaptureData
+    public partial class PacketCaptureData : Azure.ResourceManager.Models.ResourceData
     {
         internal PacketCaptureData() { }
         public long? BytesToCapturePerPacket { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.PacketCaptureFilter> Filters { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation StorageLocation { get { throw null; } }
         public string Target { get { throw null; } }
@@ -2780,7 +2778,7 @@ namespace Azure.ResourceManager.Network
         public string AuthResourceGuid { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.CircuitConnectionStatus? CircuitConnectionStatus { get { throw null; } }
         public string ConnectionName { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitPeeringId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PeerExpressRouteCircuitPeeringId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -2813,7 +2811,7 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateDnsZoneGroupData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateDnsZoneGroupData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -2850,7 +2848,7 @@ namespace Azure.ResourceManager.Network
     {
         public PrivateEndpointData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
@@ -2902,7 +2900,7 @@ namespace Azure.ResourceManager.Network
         public string Alias { get { throw null; } }
         public System.Collections.Generic.IList<string> AutoApprovalSubscriptions { get { throw null; } }
         public bool? EnableProxyProtocol { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Fqdns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> IPConfigurations { get { throw null; } }
@@ -2951,7 +2949,7 @@ namespace Azure.ResourceManager.Network
     public partial class ProbeData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ProbeData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? IntervalInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
         public int? NumberOfProbes { get { throw null; } set { } }
@@ -2989,9 +2987,9 @@ namespace Azure.ResourceManager.Network
     {
         public PublicIPAddressData() { }
         public Azure.ResourceManager.Network.Models.DdosSettings DdosSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.DeleteOptions? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.IPAddressDeleteOption? DeleteOption { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PublicIPAddressDnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public string IPAddress { get { throw null; } set { } }
@@ -3048,7 +3046,7 @@ namespace Azure.ResourceManager.Network
     {
         public PublicIPPrefixData() { }
         public Azure.Core.ResourceIdentifier CustomIPPrefixId { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string IPPrefix { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPTag> IPTags { get { throw null; } }
@@ -3101,7 +3099,7 @@ namespace Azure.ResourceManager.Network
     {
         public RouteData() { }
         public string AddressPrefix { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? HasBgpOverride { get { throw null; } set { } }
         public string NextHopIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RouteNextHopType? NextHopType { get { throw null; } set { } }
@@ -3125,7 +3123,7 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public RouteFilterData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> Peerings { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -3172,9 +3170,9 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public RouteFilterRuleData() { }
-        public Azure.ResourceManager.Network.Models.Access? Access { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkAccess? Access { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Communities { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RouteFilterRuleType? RouteFilterRuleType { get { throw null; } set { } }
@@ -3226,7 +3224,7 @@ namespace Azure.ResourceManager.Network
     {
         public RouteTableData() { }
         public bool? DisableBgpRoutePropagation { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.RouteData> Routes { get { throw null; } }
@@ -3274,7 +3272,7 @@ namespace Azure.ResourceManager.Network
     {
         public SecurityPartnerProviderData() { }
         public Azure.ResourceManager.Network.Models.SecurityPartnerProviderConnectionStatus? ConnectionStatus { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.SecurityProviderName? SecurityProviderName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
@@ -3325,7 +3323,7 @@ namespace Azure.ResourceManager.Network
         public string DestinationPortRange { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DestinationPortRanges { get { throw null; } }
         public Azure.ResourceManager.Network.Models.SecurityRuleDirection? Direction { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.SecurityRuleProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -3367,7 +3365,7 @@ namespace Azure.ResourceManager.Network
     public partial class ServiceEndpointPolicyData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public ServiceEndpointPolicyData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Kind { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
@@ -3393,10 +3391,10 @@ namespace Azure.ResourceManager.Network
     {
         public ServiceEndpointPolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Service { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ServiceResources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ServiceResources { get { throw null; } }
     }
     public partial class ServiceEndpointPolicyDefinitionResource : Azure.ResourceManager.ArmResource
     {
@@ -3456,16 +3454,16 @@ namespace Azure.ResourceManager.Network
         public string AddressPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.Delegation> Delegations { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ServiceDelegation> Delegations { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfigurationProfile> IPConfigurationProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.IPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier NatGatewayId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkSecurityGroupData NetworkSecurityGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies? PrivateEndpointNetworkPolicies { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.PrivateEndpointData> PrivateEndpoints { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies? PrivateLinkServiceNetworkPolicies { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Purpose { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ResourceNavigationLink> ResourceNavigationLinks { get { throw null; } }
@@ -3515,7 +3513,7 @@ namespace Azure.ResourceManager.Network
     {
         public VirtualApplianceSiteData() { }
         public string AddressPrefix { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BreakOutCategoryPolicies O365BreakOutCategories { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -3555,7 +3553,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowBranchToBranchTraffic { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AzureFirewallId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> BgpConnections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier ExpressRouteGatewayId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPConfigurations { get { throw null; } }
         public Azure.Core.ResourceIdentifier P2SVpnGatewayId { get { throw null; } set { } }
@@ -3628,7 +3626,7 @@ namespace Azure.ResourceManager.Network
     {
         public VirtualHubRouteTableV2Data() { }
         public System.Collections.Generic.IList<string> AttachedConnections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VirtualHubRouteV2> Routes { get { throw null; } }
     }
@@ -3670,7 +3668,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<string> DhcpOptionsDnsServers { get { throw null; } }
         public bool? EnableDdosProtection { get { throw null; } set { } }
         public bool? EnableVmProtection { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public int? FlowTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations { get { throw null; } }
@@ -3721,7 +3719,7 @@ namespace Azure.ResourceManager.Network
         public long? EgressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressNatRules { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? ExpressRouteGatewayBypass { get { throw null; } set { } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressNatRules { get { throw null; } }
@@ -3785,7 +3783,7 @@ namespace Azure.ResourceManager.Network
         public bool? EnableBgpRouteTranslationForNat { get { throw null; } set { } }
         public bool? EnableDnsForwarding { get { throw null; } set { } }
         public bool? EnablePrivateIPAddress { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier GatewayDefaultSiteId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayType? GatewayType { get { throw null; } set { } }
@@ -3818,7 +3816,7 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayNatRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayNatRuleData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> ExternalMappings { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> InternalMappings { get { throw null; } }
         public string IPConfigurationId { get { throw null; } set { } }
@@ -3917,7 +3915,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowGatewayTransit { get { throw null; } set { } }
         public bool? AllowVirtualNetworkAccess { get { throw null; } set { } }
         public bool? DoNotVerifyRemoteGateways { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPeeringState? PeeringState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkPeeringLevel? PeeringSyncLevel { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -3993,7 +3991,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get { throw null; } set { } }
         public int? DestinationPort { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
@@ -4036,7 +4034,7 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualRouterData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public VirtualRouterData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier HostedGatewayId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostedSubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Peerings { get { throw null; } }
@@ -4062,7 +4060,7 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualRouterPeeringData : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualRouterPeeringData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
         public string PeerIP { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -4125,7 +4123,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowBranchToBranchTraffic { get { throw null; } set { } }
         public bool? AllowVnetToVnetTraffic { get { throw null; } set { } }
         public bool? DisableVpnEncryption { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.OfficeTrafficCategory? Office365LocalBreakoutCategory { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualHubs { get { throw null; } }
@@ -4185,7 +4183,7 @@ namespace Azure.ResourceManager.Network
         public bool? EnableBgp { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
         public bool? EnableRateLimiting { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -4240,7 +4238,7 @@ namespace Azure.ResourceManager.Network
         public VpnGatewayData() { }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VpnConnectionData> Connections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.VpnGatewayIPConfiguration> IPConfigurations { get { throw null; } }
         public bool? IsRoutingPreferenceInternet { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.VpnGatewayNatRuleData> NatRules { get { throw null; } }
@@ -4267,7 +4265,7 @@ namespace Azure.ResourceManager.Network
     {
         public VpnGatewayNatRuleData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressVpnSiteLinkConnections { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> ExternalMappings { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressVpnSiteLinkConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnNatRuleMapping> InternalMappings { get { throw null; } }
@@ -4341,7 +4339,7 @@ namespace Azure.ResourceManager.Network
     {
         public VpnServerConfigurationData() { }
         public Azure.ResourceManager.Network.Models.AadAuthenticationParameters AadAuthenticationParameters { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.P2SVpnGatewayData> P2SVpnGateways { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get { throw null; } }
@@ -4396,7 +4394,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.BgpSettings BgpProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.DeviceProperties DeviceProperties { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string IPAddress { get { throw null; } set { } }
         public bool? IsSecuritySite { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.O365BreakOutCategoryPolicies O365BreakOutCategories { get { throw null; } set { } }
@@ -4440,7 +4438,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> EgressNatRules { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
         public bool? EnableRateLimiting { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IngressNatRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
@@ -4471,7 +4469,7 @@ namespace Azure.ResourceManager.Network
     {
         public VpnSiteLinkData() { }
         public Azure.ResourceManager.Network.Models.VpnLinkBgpSettings BgpProperties { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Fqdn { get { throw null; } set { } }
         public string IPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VpnLinkProviderProperties LinkProperties { get { throw null; } set { } }
@@ -4530,7 +4528,7 @@ namespace Azure.ResourceManager.Network
         public WebApplicationFirewallPolicyData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ApplicationGatewayData> ApplicationGateways { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.WebApplicationFirewallCustomRule> CustomRules { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> HttpListeners { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ManagedRulesDefinition ManagedRules { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PathBasedRules { get { throw null; } }
@@ -4568,29 +4566,11 @@ namespace Azure.ResourceManager.Network.Models
         public string AadIssuer { get { throw null; } set { } }
         public string AadTenant { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Access : System.IEquatable<Azure.ResourceManager.Network.Models.Access>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Access(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.Access Allow { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Access Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.Access other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.Access left, Azure.ResourceManager.Network.Models.Access right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.Access (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.Access left, Azure.ResourceManager.Network.Models.Access right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ApplicationGatewayAuthenticationCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayAuthenticationCertificate() { }
         public string Data { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayAutoscaleConfiguration
@@ -4610,7 +4590,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayBackendAddressPool() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayBackendAddress> BackendAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayBackendHealth
@@ -4672,7 +4652,7 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> AuthenticationCertificates { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayConnectionDraining ConnectionDraining { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string HostName { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool? PickHostNameFromBackendAddress { get { throw null; } set { } }
@@ -4681,13 +4661,13 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public int? RequestTimeout { get { throw null; } set { } }
+        public int? RequestTimeoutInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedRootCertificates { get { throw null; } }
     }
     public partial class ApplicationGatewayConnectionDraining
     {
-        public ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSec) { }
-        public int DrainTimeoutInSec { get { throw null; } set { } }
+        public ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSeconds) { }
+        public int DrainTimeoutInSeconds { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4787,7 +4767,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFrontendIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayFrontendIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkConfigurationId { get { throw null; } set { } }
@@ -4798,7 +4778,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFrontendPort : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayFrontendPort() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -4812,7 +4792,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ApplicationGatewayHttpListener() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayCustomError> CustomErrorConfigurations { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier FrontendPortId { get { throw null; } set { } }
@@ -4827,7 +4807,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
@@ -4868,7 +4848,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayPathRule() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FirewallPolicyId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Paths { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -4878,15 +4858,15 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayPrivateLinkConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ApplicationGatewayPrivateLinkIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
-        public bool? Primary { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public bool? IsPrimary { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -4895,7 +4875,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayPrivateLinkResource : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayPrivateLinkResource() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
@@ -4903,9 +4883,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayProbe : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayProbe() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Host { get { throw null; } set { } }
-        public int? Interval { get { throw null; } set { } }
+        public int? IntervalInSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProbeHealthResponseMatch Match { get { throw null; } set { } }
         public int? MinServers { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
@@ -4913,7 +4893,7 @@ namespace Azure.ResourceManager.Network.Models
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public int? Timeout { get { throw null; } set { } }
+        public int? TimeoutInSeconds { get { throw null; } set { } }
         public int? UnhealthyThreshold { get { throw null; } set { } }
     }
     public partial class ApplicationGatewayProbeHealthResponseMatch
@@ -4943,7 +4923,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayRedirectConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayRedirectConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? IncludePath { get { throw null; } set { } }
         public bool? IncludeQueryString { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PathRules { get { throw null; } }
@@ -4978,7 +4958,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayRequestRoutingRule() { }
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackendHttpSettingsId { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier HttpListenerId { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -5031,7 +5011,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayRewriteRuleSet : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayRewriteRuleSet() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayRewriteRule> RewriteRules { get { throw null; } }
     }
@@ -5069,7 +5049,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ApplicationGatewaySslCertificate() { }
         public string Data { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -5168,7 +5148,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewaySslProfile : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewaySslProfile() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedClientCertificates { get { throw null; } }
@@ -5218,7 +5198,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayTrustedClientCertificate() { }
         public string ClientCertIssuerDN { get { throw null; } }
         public string Data { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string ValidatedCertData { get { throw null; } }
     }
@@ -5226,7 +5206,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ApplicationGatewayTrustedRootCertificate() { }
         public string Data { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -5244,7 +5224,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier DefaultBackendHttpSettingsId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultRedirectConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultRewriteRuleSetId { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayPathRule> PathRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -5399,7 +5379,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public AzureFirewallApplicationRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallApplicationRule> Rules { get { throw null; } }
@@ -5432,14 +5412,14 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallFqdnTag : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public AzureFirewallFqdnTag() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string FqdnTagName { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class AzureFirewallIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public AzureFirewallIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
@@ -5487,7 +5467,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public AzureFirewallNatRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallNatRCActionType? ActionType { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNatRule> Rules { get { throw null; } }
@@ -5509,7 +5489,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public AzureFirewallNetworkRuleCollectionData() { }
         public Azure.ResourceManager.Network.Models.AzureFirewallRCActionType? ActionType { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.AzureFirewallNetworkRule> Rules { get { throw null; } }
@@ -5657,7 +5637,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class BastionHostIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public BastionHostIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
@@ -5681,9 +5661,9 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.BastionHostSkuName left, Azure.ResourceManager.Network.Models.BastionHostSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BGPCommunity
+    public partial class BgpCommunity
     {
-        public BGPCommunity() { }
+        public BgpCommunity() { }
         public string CommunityName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CommunityPrefixes { get { throw null; } }
         public string CommunityValue { get { throw null; } set { } }
@@ -5732,7 +5712,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class BgpServiceCommunity : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public BgpServiceCommunity() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BGPCommunity> BgpCommunities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.BgpCommunity> BgpCommunities { get { throw null; } }
         public string ServiceName { get { throw null; } set { } }
     }
     public partial class BgpSettings
@@ -6073,7 +6053,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.ConnectivityDestination Destination { get { throw null; } }
         public Azure.ResourceManager.Network.Models.HttpConfiguration HttpProtocolConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PreferredIPVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.Protocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkWatcherProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectivitySource Source { get { throw null; } }
     }
     public partial class ConnectivityDestination
@@ -6112,8 +6092,8 @@ namespace Azure.ResourceManager.Network.Models
         internal ConnectivityIssue() { }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Context { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IssueType? IssueType { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.Origin? Origin { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.Severity? Severity { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.IssueOrigin? Origin { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.IssueSeverity? Severity { get { throw null; } }
     }
     public partial class ConnectivitySource
     {
@@ -6126,7 +6106,7 @@ namespace Azure.ResourceManager.Network.Models
         public ContainerNetworkInterface() { }
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -6134,7 +6114,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ContainerNetworkInterfaceConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ContainerNetworkInterfaces { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPConfigurationProfile> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -6142,7 +6122,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ContainerNetworkInterfaceIPConfiguration() { }
         public string ContainerNetworkInterfaceIpConfigurationType { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -6238,32 +6218,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage left, Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Delegation : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
-    {
-        public Delegation() { }
-        public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public string ServiceName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeleteOptions : System.IEquatable<Azure.ResourceManager.Network.Models.DeleteOptions>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DeleteOptions(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.DeleteOptions Delete { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.DeleteOptions Detach { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.DeleteOptions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.DeleteOptions left, Azure.ResourceManager.Network.Models.DeleteOptions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.DeleteOptions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.DeleteOptions left, Azure.ResourceManager.Network.Models.DeleteOptions right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DestinationPortBehavior : System.IEquatable<Azure.ResourceManager.Network.Models.DestinationPortBehavior>
     {
@@ -6311,24 +6265,6 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(Azure.ResourceManager.Network.Models.DhGroup left, Azure.ResourceManager.Network.Models.DhGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.Network.Models.DhGroup (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.DhGroup left, Azure.ResourceManager.Network.Models.DhGroup right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Direction : System.IEquatable<Azure.ResourceManager.Network.Models.Direction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Direction(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.Direction Inbound { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Direction Outbound { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.Direction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.Direction left, Azure.ResourceManager.Network.Models.Direction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.Direction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.Direction left, Azure.ResourceManager.Network.Models.Direction right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DnsNameAvailabilityResult
@@ -6850,24 +6786,24 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
-        public Azure.ResourceManager.Network.Models.ExtendedLocationTypes? ExtendedLocationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtendedLocationTypes : System.IEquatable<Azure.ResourceManager.Network.Models.ExtendedLocationTypes>
+    public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Network.Models.ExtendedLocationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExtendedLocationTypes(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ExtendedLocationTypes EdgeZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.ExtendedLocationTypes other) { throw null; }
+        public ExtendedLocationType(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.ExtendedLocationType EdgeZone { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.ExtendedLocationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.ExtendedLocationTypes left, Azure.ResourceManager.Network.Models.ExtendedLocationTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.ExtendedLocationTypes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.ExtendedLocationTypes left, Azure.ResourceManager.Network.Models.ExtendedLocationTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.ExtendedLocationType left, Azure.ResourceManager.Network.Models.ExtendedLocationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.ExtendedLocationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.ExtendedLocationType left, Azure.ResourceManager.Network.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class FirewallPolicyCertificateAuthority
@@ -7091,9 +7027,9 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> Fqdns { get { throw null; } }
         public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
     }
-    public partial class FlowLogFormatParameters
+    public partial class FlowLogFormat
     {
-        public FlowLogFormatParameters() { }
+        public FlowLogFormat() { }
         public Azure.ResourceManager.Network.Models.FlowLogFormatType? FormatType { get { throw null; } set { } }
         public int? Version { get { throw null; } set { } }
     }
@@ -7116,13 +7052,13 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class FlowLogInformation
     {
-        public FlowLogInformation(Azure.Core.ResourceIdentifier targetResourceId, string storageId, bool enabled) { }
+        public FlowLogInformation(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.FlowLogFormatParameters Format { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.FlowLogFormat Format { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
-        public string StorageId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration { get { throw null; } set { } }
     }
     public partial class FlowLogStatusContent
     {
@@ -7359,18 +7295,18 @@ namespace Azure.ResourceManager.Network.Models
         public int? BackendPort { get { throw null; } set { } }
         public bool? EnableFloatingIP { get { throw null; } set { } }
         public bool? EnableTcpReset { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
         public int? FrontendPortRangeStart { get { throw null; } set { } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.TransportProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class InboundSecurityRule : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public InboundSecurityRule() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.InboundSecurityRules> Rules { get { throw null; } }
     }
@@ -7405,6 +7341,24 @@ namespace Azure.ResourceManager.Network.Models
         public bool? Available { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AvailableIPAddresses { get { throw null; } }
         public bool? IsPlatformReserved { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IPAddressDeleteOption : System.IEquatable<Azure.ResourceManager.Network.Models.IPAddressDeleteOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IPAddressDeleteOption(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.IPAddressDeleteOption Delete { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IPAddressDeleteOption Detach { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.IPAddressDeleteOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.IPAddressDeleteOption left, Azure.ResourceManager.Network.Models.IPAddressDeleteOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.IPAddressDeleteOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.IPAddressDeleteOption left, Azure.ResourceManager.Network.Models.IPAddressDeleteOption right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IPAllocationMethod : System.IEquatable<Azure.ResourceManager.Network.Models.IPAllocationMethod>
@@ -7445,7 +7399,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class IPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -7463,7 +7417,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class IPConfigurationProfile : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public IPConfigurationProfile() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.SubnetData Subnet { get { throw null; } set { } }
     }
@@ -7584,6 +7538,43 @@ namespace Azure.ResourceManager.Network.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IssueOrigin : System.IEquatable<Azure.ResourceManager.Network.Models.IssueOrigin>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IssueOrigin(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Inbound { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Local { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueOrigin Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.IssueOrigin other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.IssueOrigin left, Azure.ResourceManager.Network.Models.IssueOrigin right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.IssueOrigin (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.IssueOrigin left, Azure.ResourceManager.Network.Models.IssueOrigin right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IssueSeverity : System.IEquatable<Azure.ResourceManager.Network.Models.IssueSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IssueSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.IssueSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.IssueSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.IssueSeverity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.IssueSeverity left, Azure.ResourceManager.Network.Models.IssueSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.IssueSeverity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.IssueSeverity left, Azure.ResourceManager.Network.Models.IssueSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IssueType : System.IEquatable<Azure.ResourceManager.Network.Models.IssueType>
     {
         private readonly object _dummy;
@@ -7690,6 +7681,25 @@ namespace Azure.ResourceManager.Network.Models
         public LoadBalancerVipSwapRequestFrontendIPConfiguration() { }
         public string Id { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LoadBalancingTransportProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LoadBalancingTransportProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol All { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Udp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol left, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol left, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadDistribution : System.IEquatable<Azure.ResourceManager.Network.Models.LoadDistribution>
@@ -7802,6 +7812,24 @@ namespace Azure.ResourceManager.Network.Models
         public string TranslatedFqdn { get { throw null; } set { } }
         public string TranslatedPort { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkAccess : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkAccess Allow { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkAccess Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkAccess left, Azure.ResourceManager.Network.Models.NetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkAccess left, Azure.ResourceManager.Network.Models.NetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkConfigurationDiagnosticContent
     {
         public NetworkConfigurationDiagnosticContent(Azure.Core.ResourceIdentifier targetResourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NetworkConfigurationDiagnosticProfile> profiles) { }
@@ -7811,10 +7839,10 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class NetworkConfigurationDiagnosticProfile
     {
-        public NetworkConfigurationDiagnosticProfile(Azure.ResourceManager.Network.Models.Direction direction, string protocol, string source, string destination, string destinationPort) { }
+        public NetworkConfigurationDiagnosticProfile(Azure.ResourceManager.Network.Models.TrafficDirection direction, string protocol, string source, string destination, string destinationPort) { }
         public string Destination { get { throw null; } set { } }
         public string DestinationPort { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.Direction Direction { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.TrafficDirection Direction { get { throw null; } set { } }
         public string Protocol { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
     }
@@ -7832,7 +7860,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkIntentPolicy : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
     {
         public NetworkIntentPolicy() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
     }
     public partial class NetworkIntentPolicyConfiguration
     {
@@ -7990,14 +8018,57 @@ namespace Azure.ResourceManager.Network.Models
         public long CurrentValue { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public long Limit { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.UsageName Name { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.UsageUnit Unit { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkUsageName Name { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkUsageUnit Unit { get { throw null; } }
+    }
+    public partial class NetworkUsageName
+    {
+        internal NetworkUsageName() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkUsageUnit : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkUsageUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkUsageUnit(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkUsageUnit Count { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NetworkUsageUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkUsageUnit left, Azure.ResourceManager.Network.Models.NetworkUsageUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NetworkUsageUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkUsageUnit left, Azure.ResourceManager.Network.Models.NetworkUsageUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetworkVirtualApplianceSkuInstances
     {
         public NetworkVirtualApplianceSkuInstances() { }
         public int? InstanceCount { get { throw null; } }
         public string ScaleUnit { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkWatcherProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.NetworkWatcherProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkWatcherProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Https { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Icmp { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.NetworkWatcherProtocol Tcp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol left, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.NetworkWatcherProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.NetworkWatcherProtocol left, Azure.ResourceManager.Network.Models.NetworkWatcherProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetworkWritableResourceData
     {
@@ -8071,25 +8142,6 @@ namespace Azure.ResourceManager.Network.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Origin : System.IEquatable<Azure.ResourceManager.Network.Models.Origin>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Origin(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.Origin Inbound { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Origin Local { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Origin Outbound { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.Origin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.Origin left, Azure.ResourceManager.Network.Models.Origin right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.Origin (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.Origin left, Azure.ResourceManager.Network.Models.Origin right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OutputType : System.IEquatable<Azure.ResourceManager.Network.Models.OutputType>
     {
         private readonly object _dummy;
@@ -8157,7 +8209,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public P2SConnectionConfiguration() { }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VpnClientAddressPrefixes { get { throw null; } }
@@ -8216,7 +8268,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public PacketCaptureStorageLocation() { }
         public string FilePath { get { throw null; } set { } }
-        public string StorageId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageId { get { throw null; } set { } }
         public string StoragePath { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -8384,16 +8436,16 @@ namespace Azure.ResourceManager.Network.Models
     {
         public PrivateLinkServiceConnection() { }
         public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
-        public string PrivateLinkServiceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateLinkServiceId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
     }
     public partial class PrivateLinkServiceIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public PrivateLinkServiceIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? Primary { get { throw null; } set { } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
@@ -8448,26 +8500,6 @@ namespace Azure.ResourceManager.Network.Models
         public PropagatedRouteTable() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Ids { get { throw null; } }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Protocol : System.IEquatable<Azure.ResourceManager.Network.Models.Protocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Protocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.Protocol Http { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Protocol Https { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Protocol Icmp { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Protocol Tcp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.Protocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.Protocol left, Azure.ResourceManager.Network.Models.Protocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.Protocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.Protocol left, Azure.ResourceManager.Network.Models.Protocol right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ProtocolCustomSettingsFormat
     {
@@ -8650,7 +8682,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ResourceNavigationLink : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ResourceNavigationLink() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string Link { get { throw null; } set { } }
         public string LinkedResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -8851,11 +8883,19 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ServiceAssociationLink() { }
         public bool? AllowDelete { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
-        public string Link { get { throw null; } set { } }
-        public string LinkedResourceType { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Link { get { throw null; } set { } }
+        public Azure.Core.ResourceType? LinkedResourceType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class ServiceDelegation : Azure.ResourceManager.Network.Models.NetworkWritableResourceData
+    {
+        public ServiceDelegation() { }
+        public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        public string ServiceName { get { throw null; } set { } }
     }
     public partial class ServiceEndpointPropertiesFormat
     {
@@ -8907,24 +8947,6 @@ namespace Azure.ResourceManager.Network.Models
         public string Cloud { get { throw null; } }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ServiceTagInformation> Values { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.Network.Models.Severity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Severity(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.Severity Error { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.Severity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.Severity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.Severity left, Azure.ResourceManager.Network.Models.Severity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.Severity (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.Severity left, Azure.ResourceManager.Network.Models.Severity right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StaticRoute
     {
@@ -8987,10 +9009,28 @@ namespace Azure.ResourceManager.Network.Models
     {
         public TrafficAnalyticsConfigurationProperties() { }
         public bool? Enabled { get { throw null; } set { } }
-        public int? TrafficAnalyticsInterval { get { throw null; } set { } }
+        public int? TrafficAnalyticsIntervalInMinutes { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
         public string WorkspaceRegion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceResourceId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficDirection : System.IEquatable<Azure.ResourceManager.Network.Models.TrafficDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficDirection(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.TrafficDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.TrafficDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.TrafficDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.TrafficDirection left, Azure.ResourceManager.Network.Models.TrafficDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.TrafficDirection (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.TrafficDirection left, Azure.ResourceManager.Network.Models.TrafficDirection right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TrafficSelectorPolicy
     {
@@ -8998,30 +9038,11 @@ namespace Azure.ResourceManager.Network.Models
         public System.Collections.Generic.IList<string> LocalAddressRanges { get { throw null; } }
         public System.Collections.Generic.IList<string> RemoteAddressRanges { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TransportProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.TransportProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TransportProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol All { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol Tcp { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.TransportProtocol Udp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.TransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.TransportProtocol left, Azure.ResourceManager.Network.Models.TransportProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.TransportProtocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.TransportProtocol left, Azure.ResourceManager.Network.Models.TransportProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class TroubleshootingContent
     {
-        public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, string storageId, string storagePath) { }
-        public string StorageId { get { throw null; } }
-        public string StoragePath { get { throw null; } }
+        public TroubleshootingContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.Core.ResourceIdentifier storageId, System.Uri storageUri) { }
+        public Azure.Core.ResourceIdentifier StorageId { get { throw null; } }
+        public System.Uri StorageUri { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
     }
     public partial class TroubleshootingDetails
@@ -9063,29 +9084,6 @@ namespace Azure.ResourceManager.Network.Models
         public UnprepareNetworkPoliciesContent() { }
         public string ServiceName { get { throw null; } set { } }
     }
-    public partial class UsageName
-    {
-        internal UsageName() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsageUnit : System.IEquatable<Azure.ResourceManager.Network.Models.UsageUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsageUnit(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.UsageUnit Count { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.UsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.UsageUnit left, Azure.ResourceManager.Network.Models.UsageUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.UsageUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.UsageUnit left, Azure.ResourceManager.Network.Models.UsageUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VerbosityLevel : System.IEquatable<Azure.ResourceManager.Network.Models.VerbosityLevel>
     {
@@ -9107,8 +9105,8 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class VerificationIPFlowContent
     {
-        public VerificationIPFlowContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.ResourceManager.Network.Models.Direction direction, Azure.ResourceManager.Network.Models.IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress) { }
-        public Azure.ResourceManager.Network.Models.Direction Direction { get { throw null; } }
+        public VerificationIPFlowContent(Azure.Core.ResourceIdentifier targetResourceId, Azure.ResourceManager.Network.Models.TrafficDirection direction, Azure.ResourceManager.Network.Models.IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress) { }
+        public Azure.ResourceManager.Network.Models.TrafficDirection Direction { get { throw null; } }
         public string LocalIPAddress { get { throw null; } }
         public string LocalPort { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPFlowProtocol Protocol { get { throw null; } }
@@ -9120,7 +9118,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VerificationIPFlowResult
     {
         internal VerificationIPFlowResult() { }
-        public Azure.ResourceManager.Network.Models.Access? Access { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.NetworkAccess? Access { get { throw null; } }
         public string RuleName { get { throw null; } }
     }
     public partial class VirtualApplianceNicProperties
@@ -9167,7 +9165,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType ConnectionType { get { throw null; } set { } }
         public long? EgressBytesTransferred { get { throw null; } }
         public bool? EnableBgp { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? ExpressRouteGatewayBypass { get { throw null; } set { } }
         public long? IngressBytesTransferred { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get { throw null; } }
@@ -9263,7 +9261,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkGatewayIPConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VirtualNetworkGatewayIPConfiguration() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -9402,39 +9400,39 @@ namespace Azure.ResourceManager.Network.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualNetworkPrivateEndpointNetworkPolicies : System.IEquatable<Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies>
+    public readonly partial struct VirtualNetworkPrivateEndpointNetworkPolicy : System.IEquatable<Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VirtualNetworkPrivateEndpointNetworkPolicies(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies other) { throw null; }
+        public VirtualNetworkPrivateEndpointNetworkPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicies right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VirtualNetworkPrivateLinkServiceNetworkPolicies : System.IEquatable<Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies>
+    public readonly partial struct VirtualNetworkPrivateLinkServiceNetworkPolicy : System.IEquatable<Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VirtualNetworkPrivateLinkServiceNetworkPolicies(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies other) { throw null; }
+        public VirtualNetworkPrivateLinkServiceNetworkPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicies right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy left, Azure.ResourceManager.Network.Models.VirtualNetworkPrivateLinkServiceNetworkPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VirtualNetworkUsage
@@ -9594,14 +9592,14 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnClientRevokedCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnClientRevokedCertificate() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string Thumbprint { get { throw null; } set { } }
     }
     public partial class VpnClientRootCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public VpnClientRootCertificate(string publicCertData) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicCertData { get { throw null; } set { } }
     }
@@ -9855,7 +9853,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public WebApplicationFirewallCustomRule(int priority, Azure.ResourceManager.Network.Models.WebApplicationFirewallRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.MatchCondition> matchConditions, Azure.ResourceManager.Network.Models.WebApplicationFirewallAction action) { }
         public Azure.ResourceManager.Network.Models.WebApplicationFirewallAction Action { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.MatchCondition> MatchConditions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }

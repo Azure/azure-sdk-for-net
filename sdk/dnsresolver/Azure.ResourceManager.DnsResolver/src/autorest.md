@@ -8,9 +8,18 @@ azure-arm: true
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ccdf0b74eedb671fe038ed1a30a9be9f911ebc4f/specification/dnsresolver/resource-manager/readme.md
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-output-folder: Generated/
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   Os: OS
@@ -26,3 +35,9 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag
