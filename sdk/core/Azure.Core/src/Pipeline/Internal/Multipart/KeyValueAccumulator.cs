@@ -14,30 +14,30 @@ namespace Azure.Core
 {
     internal struct KeyValueAccumulator
     {
-        private Dictionary<string, string []> _accumulator;
+        private Dictionary<string, string[]?> _accumulator;
         private Dictionary<string, List<string>> _expandingAccumulator;
 
         public void Append(string key, string value)
         {
             if (_accumulator == null)
             {
-                _accumulator = new Dictionary<string, string []>(StringComparer.OrdinalIgnoreCase);
+                _accumulator = new Dictionary<string, string[]?>(StringComparer.OrdinalIgnoreCase);
             }
 
-            string[] values;
+            string[]? values;
             if (_accumulator.TryGetValue(key, out values))
             {
-                if (values.Length == 0)
+                if (values?.Length == 0)
                 {
                     // Marker entry for this key to indicate entry already in expanding list dictionary
                     _expandingAccumulator[key].Add(value);
                 }
-                else if (values.Length == 1)
+                else if (values?.Length == 1)
                 {
                     // Second value for this key
                     _accumulator[key] = new string[] { values[0], value };
                 }
-                else
+                else if (values != null)
                 {
                     // Third value for this key
                     // Add zero count entry and move to data to expanding list dictionary
@@ -73,7 +73,7 @@ namespace Azure.Core
 
         public int ValueCount { get; private set; }
 
-        public Dictionary<string, string []> GetResults()
+        public Dictionary<string, string []?> GetResults()
         {
             if (_expandingAccumulator != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.Core
                 }
             }
 
-            return _accumulator ?? new Dictionary<string, string []>(0, StringComparer.OrdinalIgnoreCase);
+            return _accumulator ?? new Dictionary<string, string[]?>(0, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

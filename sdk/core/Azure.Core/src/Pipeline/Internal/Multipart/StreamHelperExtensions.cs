@@ -33,6 +33,7 @@ namespace Azure.Core
             long total = 0;
             try
             {
+#pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
                 var read = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
                 while (read > 0)
                 {
@@ -44,6 +45,7 @@ namespace Azure.Core
                     }
                     total += read;
                     read = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+#pragma warning restore // WriteAsync(Memory<>) overload is not available in all targets
                 }
             }
             finally
