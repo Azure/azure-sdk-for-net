@@ -98,11 +98,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>
         /// <param name="targetModelId"> Identifier of the target model. </param>
         /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
-        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
+        /// <param name="expiresOn"> Date/time when the access token expires. </param>
         /// <returns> A new <see cref="DocumentAnalysis.CopyAuthorization"/> instance for mocking. </returns>
-        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expirationDateTime = default)
+        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expiresOn = default)
         {
-            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expirationDateTime);
+            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expiresOn);
         }
 
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
