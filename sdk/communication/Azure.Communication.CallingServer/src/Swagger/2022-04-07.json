@@ -828,7 +828,8 @@
         },
         "PlayRequest": {
             "required": [
-                "playSourceInfo"
+                "playSourceInfo",
+                "playTo"
             ],
             "type": "object",
             "properties": {

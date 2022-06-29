@@ -17,16 +17,13 @@ namespace Azure.Communication.CallingServer.Models
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo");
             writer.WriteObjectValue(PlaySourceInfo);
-            if (Optional.IsCollectionDefined(PlayTo))
+            writer.WritePropertyName("playTo");
+            writer.WriteStartArray();
+            foreach (var item in PlayTo)
             {
-                writer.WritePropertyName("playTo");
-                writer.WriteStartArray();
-                foreach (var item in PlayTo)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions");

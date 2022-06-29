@@ -26,6 +26,7 @@ namespace Azure.Communication.CallingServer
 
         internal CallConnectionsRestClient CallConnectionsRestClient { get; }
         internal ServerCallingRestClient ServerCallingRestClient { get; }
+        internal ContentRestClient ContentRestClient { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
@@ -85,6 +86,7 @@ namespace Azure.Communication.CallingServer
             _contentDownloader = new(this);
             ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
@@ -104,6 +106,7 @@ namespace Azure.Communication.CallingServer
             _contentDownloader = new(this);
             CallConnectionsRestClient = null;
             ServerCallingRestClient = null;
+            ContentRestClient = null;
         }
 
         /// Answer an incoming call.
@@ -124,7 +127,7 @@ namespace Azure.Communication.CallingServer
                 var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, _clientDiagnostics),
+                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -153,7 +156,7 @@ namespace Azure.Communication.CallingServer
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, _clientDiagnostics),
+                    new CallConnection(answerResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     answerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -305,7 +308,7 @@ namespace Azure.Communication.CallingServer
                     ).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, _clientDiagnostics),
+                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -351,7 +354,7 @@ namespace Azure.Communication.CallingServer
                     );
 
                 return Response.FromValue(
-                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, _clientDiagnostics),
+                    new CallConnection(createCallResponse.Value.CallConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics),
                     createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -372,7 +375,7 @@ namespace Azure.Communication.CallingServer
             {
                 var response = await CallConnectionsRestClient.GetCallAsync(callConnectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, _clientDiagnostics);
+                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
                 callConnection.Source = CommunicationIdentifierSerializer.Deserialize(response.Value.Source);
                 callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
                 callConnection.Targets = response.Value.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
@@ -401,7 +404,7 @@ namespace Azure.Communication.CallingServer
             {
                 var response = CallConnectionsRestClient.GetCall(callConnectionId, cancellationToken: cancellationToken);
 
-                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, _clientDiagnostics);
+                var callConnection = new CallConnection(callConnectionId, CallConnectionsRestClient, ContentRestClient, _clientDiagnostics);
                 callConnection.Source = CommunicationIdentifierSerializer.Deserialize(response.Value.Source);
                 callConnection.AlternateCallerId = new PhoneNumberIdentifier(response.Value.AlternateCallerId.Value);
                 callConnection.Targets = response.Value.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t));
