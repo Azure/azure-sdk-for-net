@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> fullyQualifiedDomainName = default;
             Optional<string> administratorLogin = default;
             Optional<string> administratorLoginPassword = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<string> state = default;
             Optional<ManagedInstanceLicenseType> licenseType = default;
             Optional<int> vCores = default;
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.Sql
             Optional<string> dnsZone = default;
             Optional<string> dnsZonePartner = default;
             Optional<bool> publicDataEndpointEnabled = default;
-            Optional<string> sourceManagedInstanceId = default;
+            Optional<ResourceIdentifier> sourceManagedInstanceId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<ManagedInstanceProxyOverride> proxyOverride = default;
             Optional<string> timezoneId = default;
-            Optional<string> instancePoolId = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> instancePoolId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<bool> zoneRedundant = default;
-            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<string> keyId = default;
             Optional<ManagedInstanceExternalAdministrator> administrators = default;
             Optional<ServicePrincipal> servicePrincipal = default;
@@ -317,7 +317,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"))
@@ -382,7 +387,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("sourceManagedInstanceId"))
                         {
-                            sourceManagedInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))
@@ -412,12 +422,22 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("instancePoolId"))
                         {
-                            instancePoolId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            instancePoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -472,7 +492,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentityId"))
                         {
-                            primaryUserAssignedIdentityId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyId"))

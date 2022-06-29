@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServerInfo DeserializeServerInfo(JsonElement element)
         {
-            string serverId = default;
+            ResourceIdentifier serverId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverId"))
                 {
-                    serverId = property.Value.GetString();
+                    serverId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

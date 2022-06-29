@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationAuthoringClientLiveTests : ConversationAnalysisTestBase<ConversationAuthoringClient>
     {
-        public ConversationAuthoringClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAuthoringClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(
-                    new ConversationAnalysisClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)));
 
             AsyncPageable<BinaryData> response = client.GetProjectsAsync();
             Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
