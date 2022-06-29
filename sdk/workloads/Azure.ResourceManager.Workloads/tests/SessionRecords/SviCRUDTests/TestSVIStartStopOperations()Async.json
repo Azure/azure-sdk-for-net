@@ -1,0 +1,1613 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-d50dc2a5d9ddf1489afccdb72e9b2d29-53646151ae94f649-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9cb110c2708dfd1f3f32053a841a3da0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "445",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:46:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c3f8363c-9e6d-40e4-a404-8196ea97c200",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "c3f8363c-9e6d-40e4-a404-8196ea97c200",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204656Z:c3f8363c-9e6d-40e4-a404-8196ea97c200"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "49d64d54-e966-4c46-a868-1999802b762c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Az WaaS Test 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d10c823e842da64fb0a5c2a74259b786-b8213ac6855b2043-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "17be9dccc011195f5309021f0958b04c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "328",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:46:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ed62a153-d9e3-4fbc-9f0a-e1f64ec2ff4d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "ed62a153-d9e3-4fbc-9f0a-e1f64ec2ff4d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204657Z:ed62a153-d9e3-4fbc-9f0a-e1f64ec2ff4d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2",
+        "name": "E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2euap",
+        "tags": {
+          "Created": "20220627"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-10a1c39e2e5ea04cb98145bccec0a14b-d0d346de2a06c143-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e16e3141fc33fd826fba8f7aa0e69b12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1040",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:46:58 GMT",
+        "ETag": "\u00220100dfe9-0000-3400-0000-62bcb98e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6ba6a664-ce64-459c-84b5-1008e458f255",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "6895484c-ac91-4d80-af3d-b93a48017495",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204658Z:6ba6a664-ce64-459c-84b5-1008e458f255"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "name": "C11",
+        "type": "microsoft.workloads/sapvirtualinstances",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
+          "createdByType": "Application",
+          "createdAt": "2022-06-27T05:58:53.9976459Z",
+          "lastModifiedBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-29T20:43:58.1989925Z"
+        },
+        "properties": {
+          "environment": "NonProd",
+          "sapProduct": "S4HANA",
+          "configuration": {
+            "configurationType": "Discovery",
+            "centralServerVmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2-infra/providers/Microsoft.Compute/virtualMachines/c11ascszavm",
+            "appLocation": "eastus"
+          },
+          "state": "RegistrationComplete",
+          "provisioningState": "Succeeded",
+          "managedResourceGroupConfiguration": {
+            "name": "mrg-C11-3fe4ac"
+          },
+          "status": "Running",
+          "health": "Healthy"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11/stop?api-version=2021-12-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-329c8aa8be661844-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "522f9ff051ac0136b09749836e00f3e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:46:59 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5beb08a4-958f-4aa7-9f10-630e3135cf6d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204659Z:5beb08a4-958f-4aa7-9f10-630e3135cf6d"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-2a870e00ad4e8b4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "692eef6e5d28ef9ffa6c309cb2fe8e6e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:46:59 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0ec0c16f-b6b9-43ca-8df6-877ba01cfa3c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "c19073f8-271e-4217-bbfe-761c4f8416a9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204659Z:0ec0c16f-b6b9-43ca-8df6-877ba01cfa3c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-4bef82cc374a4643-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e7f7a8c648ee9467326037ebaadfd0cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:00 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "911ffdd7-fafe-459a-8a2b-6df2066294fb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "7d8eebcc-09cc-44fe-9e27-9695a15179e7",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204701Z:911ffdd7-fafe-459a-8a2b-6df2066294fb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-b7fde1b86acfff45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7e15dd1d8ad124be1809583e2bd11c1c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:02 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0c925528-bc32-4f60-8409-a891bc69d548",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "602ee377-23c8-4f7c-bc28-117eeb1bf9a1",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204702Z:0c925528-bc32-4f60-8409-a891bc69d548"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-b24f34a41828e04c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "888f393292ed267e889a37c725b4451a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:03 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "64f5c0e0-fa65-4e07-8aa7-fdd01b46903e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "c1d6e7cf-1518-4b2b-b23f-ffebdcdffadc",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204703Z:64f5c0e0-fa65-4e07-8aa7-fdd01b46903e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-9f85d74d42eb6247-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d57e659b10e83c9cead3cee4ef286961",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:05 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b9693943-2644-46c6-86db-dd3f47342e12",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "827ecbcd-9cfc-49dd-a9ad-1d2739171a6d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204705Z:b9693943-2644-46c6-86db-dd3f47342e12"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-227d202724ba0147-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "71b91a43484f8bdd5feff53752f6ff64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:09 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "28f6a9ad-ed32-47da-9b44-902def63384c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "4e769b97-aecd-4cae-b024-a2c6439c2775",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204710Z:28f6a9ad-ed32-47da-9b44-902def63384c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-c80be40f92030149-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c5a33dc4475222349c539e1ac3993660",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:17 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8414db60-81fa-4ee4-a88e-73df4d2454f3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "0ca6b77d-5f9c-4fcb-8948-0deac83884e4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204718Z:8414db60-81fa-4ee4-a88e-73df4d2454f3"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-efd4133b7f14d147-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0a84d630d4fa53ca87f276f91a65e9f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:47:34 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d422e65b-6482-46d2-94f9-671d05fa4151",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "42303600-1f17-439b-ba33-d1cd2c89d501",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204734Z:d422e65b-6482-46d2-94f9-671d05fa4151"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-8d2ab86c6471684b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b11f6ad3a385fb0ee697d5fcaac2c8c5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:48:06 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "13a96d50-2eb9-49b8-85af-1487864c5062",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "8956bec4-164a-4095-890a-9b7bebd947ed",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204806Z:13a96d50-2eb9-49b8-85af-1487864c5062"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-66c16b9aa85e3c44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7c0694b8f472f069734f3d60d13a0736",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:48:38 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b3251ef2-90de-4248-83f7-0b7b3dc0d1f7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "f098430a-f734-403b-8704-c5d814f15f0b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204839Z:b3251ef2-90de-4248-83f7-0b7b3dc0d1f7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-3ad8dd56632d524d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5946ab6984798ddbc7882363fecea9c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:49:11 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "61361529-985f-4ec0-bc79-208c6eab81ae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "4812cb8b-a97f-416f-a8db-0c8ab35a5075",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204911Z:61361529-985f-4ec0-bc79-208c6eab81ae"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-e922787be13cc149-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8641b02a6d5edf81002f3e3565ae2aac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:49:42 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0e12dd02-ea04-42a5-9ebc-129cb9288750",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "4c8707dd-e184-4bce-9330-f535f9eb3a45",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T204943Z:0e12dd02-ea04-42a5-9ebc-129cb9288750"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-26b74f50f635254a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ff939e8f6e7c334bb979b4e9d106f1a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:50:15 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2ab5819e-ed7f-40c8-a318-50851f3fb3af",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "7d298428-ded9-454c-85ca-04dee1583926",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205015Z:2ab5819e-ed7f-40c8-a318-50851f3fb3af"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-fa4b892e16809642-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "203578a681f9fcd72967594a45a62719",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:50:47 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bf7975a2-e295-4eb4-8fc1-5921a94cbe13",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "7e1de56f-195a-4e4a-8d3f-384b5fec6450",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205048Z:bf7975a2-e295-4eb4-8fc1-5921a94cbe13"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-a627ab528a1f4846-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "60d3775eaa3bbb48650dcde5b8970efa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:19 GMT",
+        "ETag": "\u0022ad01dca5-0000-3400-0000-62bcba430000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ae961ca1-3431-4924-8b0f-46b4b26a3b2e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "aa5ccba5-7368-4ea0-ad70-7ffc6e85a22e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205120Z:ae961ca1-3431-4924-8b0f-46b4b26a3b2e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:46:59.0720533Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f60c6423a2af2e408ed76764c55a8fa0-ddd64cbad170b140-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ec8f9a3e09780eb2c696d5141501ed12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:52 GMT",
+        "ETag": "\u0022ad01fddd-0000-3400-0000-62bcbb5f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "eaff8fec-dc55-4c21-b678-04dadd78063f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "eb805248-e67d-4e47-9f9b-e6a5b69161e3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205152Z:eaff8fec-dc55-4c21-b678-04dadd78063f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "eb348d77-e2cc-4a28-9c90-ccf57ac0c80f*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Succeeded",
+        "startTime": "2022-06-29T20:46:59.0720533Z",
+        "endTime": "2022-06-29T20:51:43.0476131Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-acb78cd03334eb4db250bbef44dd09fb-9511ca45d0671a43-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "598a9b529032fb69307abbecb4f24391",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1039",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:52 GMT",
+        "ETag": "\u002201003dea-0000-3400-0000-62bcbb530000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d2699f4c-17b0-4dea-9a04-2d416e87ab46",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "65ca40a2-f9a8-4b10-a6e3-36ac0cfc6707",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205153Z:d2699f4c-17b0-4dea-9a04-2d416e87ab46"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "name": "C11",
+        "type": "microsoft.workloads/sapvirtualinstances",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
+          "createdByType": "Application",
+          "createdAt": "2022-06-27T05:58:53.9976459Z",
+          "lastModifiedBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-29T20:51:30.579826Z"
+        },
+        "properties": {
+          "environment": "NonProd",
+          "sapProduct": "S4HANA",
+          "configuration": {
+            "configurationType": "Discovery",
+            "centralServerVmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2-infra/providers/Microsoft.Compute/virtualMachines/c11ascszavm",
+            "appLocation": "eastus"
+          },
+          "state": "RegistrationComplete",
+          "provisioningState": "Succeeded",
+          "managedResourceGroupConfiguration": {
+            "name": "mrg-C11-3fe4ac"
+          },
+          "status": "Offline",
+          "health": "Unknown"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11/start?api-version=2021-12-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-383b2a2f8ae45940-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ab0c5e593a1755a1c4c499a4d534a563",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-12-01-preview",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:53 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "52b223c8-da12-4696-8892-18abfcba6532",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "060a5591-cbf7-43eb-ba78-ccd661535078",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205154Z:52b223c8-da12-4696-8892-18abfcba6532"
+      },
+      "ResponseBody": "null"
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-7cf7e8b1629fdb46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b6ba435241f517fbf935956df7c526fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:54 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "25c656ab-94b8-44b8-b173-41260ee3b362",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "dc25c693-4150-485a-af8b-44f200bb85bb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205154Z:25c656ab-94b8-44b8-b173-41260ee3b362"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-74c3ebb3c4196541-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f9cc58d5265ea584975e7b837da307fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:55 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cf2293fc-ff96-428a-a91c-dae842854f42",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "3fba9f54-f54b-4b4b-8020-d421e858a4b7",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205155Z:cf2293fc-ff96-428a-a91c-dae842854f42"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Connection": "close",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-a591cf6f61c1b846-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9151c56aee7add6ebe7b23d81f5ab66b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Connection": "close",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:56 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fc611e7b-25bb-4468-ae3d-68f6e51e5a8d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "31f6ec3b-f248-40ed-9a06-a302cd823de9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205156Z:fc611e7b-25bb-4468-ae3d-68f6e51e5a8d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-88632521de7f1847-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f528c16c61f92c76bf141f96c6789956",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:51:58 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d663f47a-9eff-4d3c-9a06-c184a54af8a5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "125dfc1d-649c-41f3-9d5d-a2a607ec472c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205159Z:d663f47a-9eff-4d3c-9a06-c184a54af8a5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-f2679582bf3e7c48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3203972d9473e681e9ef3be202ac863c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:52:00 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0b447fd4-62fd-446b-89ef-a1e7ea2cbecf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "712d39cd-e6ea-4a13-940c-ef2b856b7c8e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205201Z:0b447fd4-62fd-446b-89ef-a1e7ea2cbecf"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-4f8298eac75c6f46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "bc160fa8117a08044f25d265ced81646",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:52:05 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4dd71a7c-ec7c-470f-984f-8c086a03c283",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "abdc57e2-9fae-4521-8a79-0be86ed397f9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205205Z:4dd71a7c-ec7c-470f-984f-8c086a03c283"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-17c6a2f3063ab84b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "88aacde28357d7f840420b0a26932912",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:52:13 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6b6ffc5f-de0a-4205-8448-4e7104399fcb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "bbcce5fb-78f7-4f4c-8d62-5135f2e15d4e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205213Z:6b6ffc5f-de0a-4205-8448-4e7104399fcb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-c94415d19d5f6246-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b6ede38edd611cdb92fae34ec21b1711",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:52:29 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "516d33b0-5b00-4733-b700-b5e45f9ef47a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "3f579a3d-e550-4203-b7ef-38198239cf96",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205230Z:516d33b0-5b00-4733-b700-b5e45f9ef47a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-2632478be7e9fa45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3500f4d8fd0124e5173e7c3805fae2bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:53:02 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d0d0bc4e-41f7-4d77-8f23-047ae2d5d382",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "7dc85319-8d4f-4479-86f2-86b7105ff155",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205302Z:d0d0bc4e-41f7-4d77-8f23-047ae2d5d382"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-6ccef1e4034b1d4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "ebd6bffb5fea04e4f18ef55ca0a91524",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:53:34 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "976293a7-d088-4e2b-8f05-376724996f00",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "c1481618-a903-464d-99df-594727b0dfa1",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205334Z:976293a7-d088-4e2b-8f05-376724996f00"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-f2e546f063eb3e48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3131fa2af3929110fec89f2261a31698",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:54:06 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "30440f2a-234c-435c-80b0-7e7b595b7885",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "db877bf5-756b-4dd6-82e0-9e6946bf059f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205406Z:30440f2a-234c-435c-80b0-7e7b595b7885"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-f1156a0cf9fa5345-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "025227172c4579260ffc44730888846d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:54:38 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dae32bc1-0afb-4c79-a9c3-a85707b027ea",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "114fdbda-40de-4f5b-b34e-26f6f9a8cde9",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205439Z:dae32bc1-0afb-4c79-a9c3-a85707b027ea"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-af9130202d1b8d4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0b0d5729b1c80728af45ed22c0c2a34e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:55:11 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "44144cb8-a467-4c4b-a2c4-3ad08f943e72",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "7df69192-2414-4588-9afd-cedfa90d26fd",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205511Z:44144cb8-a467-4c4b-a2c4-3ad08f943e72"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-5faabe28263a5749-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "79455c771356fedfd3b82196af9d8876",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:55:43 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ce37d03d-b47a-4adf-9a2f-528da448847a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "7020a9b4-0837-45d4-b25d-700dce31315e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205543Z:ce37d03d-b47a-4adf-9a2f-528da448847a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-6408d33fbac86047-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0af931440a9566cffe4a53ff3e04b84d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:56:15 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "52467827-413c-434a-8f81-995fa819bd1c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "9c608625-c293-4e5e-914c-8920751f3d56",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205616Z:52467827-413c-434a-8f81-995fa819bd1c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-ae4c7911659cdf4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "abfcf6580a421516770e37108f925812",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:56:47 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "aeacea6d-beb8-4225-8fca-3c5d0c658d94",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "46652f7c-39f1-42a6-8250-7d7b1fb86a3e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205648Z:aeacea6d-beb8-4225-8fca-3c5d0c658d94"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Connection": "close",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-522a4658482b294b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8ede77bc99c86cb88ddf7b0cc0e0bfcf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Connection": "close",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:57:20 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "879112f8-2b04-4036-b45d-46e96edd341f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "ce1b7aa3-eb9f-4189-973f-e1bac940676a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205720Z:879112f8-2b04-4036-b45d-46e96edd341f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-d0c2db2a1686234b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b93dd4ffdda139331ae39286d3bfd66c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:57:52 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "15a7c786-f092-4df9-a9d8-0ecc1e021fcc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "74e6605d-7d14-42e3-93c7-9fddf9fc207b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205753Z:15a7c786-f092-4df9-a9d8-0ecc1e021fcc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-5b855ba949d99d40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c74241f22926bf843d8f1e638f0a5597",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "591",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:58:25 GMT",
+        "ETag": "\u0022ad0189e0-0000-3400-0000-62bcbb690000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e6f087ab-751e-456c-9a54-7dfe8829a544",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "b39b0873-1aa0-4265-bb3f-3efa60c83fb3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205825Z:e6f087ab-751e-456c-9a54-7dfe8829a544"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Accepted",
+        "startTime": "2022-06-29T20:51:53.6932377Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0668822b638f0144933c259536dcfa4d-d42745ee19d0bf4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "bb11684f9f54df7143a474e5063299ce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "651",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:58:57 GMT",
+        "ETag": "\u0022ae01ce30-0000-3400-0000-62bcbd020000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "af48a08e-9a9a-47e6-a029-93580ebaad59",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "04c5a1e9-cb08-4a3c-b4c3-4195928ba27e",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205857Z:af48a08e-9a9a-47e6-a029-93580ebaad59"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2EUAP/operationStatuses/060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "name": "060a5591-cbf7-43eb-ba78-ccd661535078*1F84C0A79B9477BD52D4CBACC610858B2A49F352166EC54AF0D7F259C20C0E3D",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "status": "Succeeded",
+        "startTime": "2022-06-29T20:51:53.6932377Z",
+        "endTime": "2022-06-29T20:58:42.8118618Z",
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f05fc8ee7c0c5845a9863bfde84f33ec-d05e556cad91c244-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7f1a0e08f89dd5a94f7d7b11becfaa0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1040",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Jun 2022 20:58:57 GMT",
+        "ETag": "\u00220100a4ea-0000-3400-0000-62bcbcfa0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fdd44fdb-2a30-48c8-b8e1-9979420de684",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "ba96cf01-61c1-4bcb-b7bf-a651b5561767",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220629T205858Z:fdd44fdb-2a30-48c8-b8e1-9979420de684"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/C11",
+        "name": "C11",
+        "type": "microsoft.workloads/sapvirtualinstances",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
+          "createdByType": "Application",
+          "createdAt": "2022-06-27T05:58:53.9976459Z",
+          "lastModifiedBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-06-29T20:58:34.4507093Z"
+        },
+        "properties": {
+          "environment": "NonProd",
+          "sapProduct": "S4HANA",
+          "configuration": {
+            "configurationType": "Discovery",
+            "centralServerVmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2-infra/providers/Microsoft.Compute/virtualMachines/c11ascszavm",
+            "appLocation": "eastus"
+          },
+          "state": "RegistrationComplete",
+          "provisioningState": "Succeeded",
+          "managedResourceGroupConfiguration": {
+            "name": "mrg-C11-3fe4ac"
+          },
+          "status": "Running",
+          "health": "Healthy"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "186982113",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "49d64d54-e966-4c46-a868-1999802b762c"
+  }
+}
