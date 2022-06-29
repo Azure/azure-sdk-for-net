@@ -26,23 +26,23 @@ internal class BufferedPublisher
     /// <summary>The <see cref="BufferedPublisherConfiguration"/> used to configure the instance of this role.</summary>
     private readonly BufferedPublisherConfiguration _bufferedPublisherConfiguration;
 
-    /// <summary>The <see cref="TestConfiguration"/> used to configure this test run.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test run.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>
     ///   Initializes a new <see cref="BufferedPublisher"\> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the processor test scenario run.</param>
     /// <param name="bufferedPublisherConfiguration">The <see cref="BufferedPublisherConfiguration" /> instance used to configure this instance of <see cref="BufferedPublisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
-    public BufferedPublisher(TestConfiguration testConfiguration,
+    public BufferedPublisher(TestParameters testParameters,
                              BufferedPublisherConfiguration bufferedPublisherConfiguration,
                              Metrics metrics)
     {
         _metrics = metrics;
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _bufferedPublisherConfiguration = bufferedPublisherConfiguration;
     }
 
@@ -72,7 +72,7 @@ internal class BufferedPublisher
                 },
                 MaximumWaitTime = _bufferedPublisherConfiguration.MaxWaitTime
             };
-            var producer = new EventHubBufferedProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+            var producer = new EventHubBufferedProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
             try
             {

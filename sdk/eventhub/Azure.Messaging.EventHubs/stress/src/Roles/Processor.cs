@@ -32,8 +32,8 @@ internal class Processor
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Processor" /> instance.</summary>
     private Metrics _metrics { get; }
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private TestConfiguration _testConfiguration { get; }
+    /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
+    private TestParameters _testParameters { get; }
 
     /// <summary>The <see cref="ProcessorConfiguration" /> used to configure the instance of this role.</summary>
     private ProcessorConfiguration _processorConfiguration { get; }
@@ -42,17 +42,17 @@ internal class Processor
     ///   Initializes a new <see cref="Processor" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to run the processor test scenario.</param>
     /// <param name="processorConfiguration">The <see cref="ProcessorConfiguration" /> instance used to configure this instance of <see cref="Processor" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     /// <param name="partitionCount">The number of partitions in the Event Hub associated with this processor.</param>
     ///
-    public Processor(TestConfiguration testConfiguration,
+    public Processor(TestParameters testParameters,
                      ProcessorConfiguration processorConfiguration,
                      Metrics metrics,
                      int partitionCount)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _processorConfiguration = processorConfiguration;
         _metrics = metrics;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
@@ -64,7 +64,9 @@ internal class Processor
     ///   <see cref="Publisher"/> role.
     /// </summary>
     ///
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="processEventHandler">The method to use for the <see cref="EventHubProcessorClient"/> process event handler.</param>
+    /// <param name="processErrorHandler">The method to use for the <see cref="EventHubProcessorClient"/> process error handler.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     public async Task RunAsync(Func<ProcessEventArgs, Task> processEventHandler,
                                Func<ProcessErrorEventArgs, Task> processErrorHandler,
@@ -87,8 +89,8 @@ internal class Processor
 
             try
             {
-                var storageClient = new BlobContainerClient(_testConfiguration.StorageConnectionString, _testConfiguration.BlobContainer);
-                processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+                var storageClient = new BlobContainerClient(_testParameters.StorageConnectionString, _testParameters.BlobContainer);
+                processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
                 processor.ProcessEventAsync += processEventHandler;
                 processor.ProcessErrorAsync += processErrorHandler;

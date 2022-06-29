@@ -14,8 +14,8 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 public class EventProducerTest
 {
-    /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
     private readonly string _jobIndex;
@@ -30,15 +30,15 @@ public class EventProducerTest
     ///  Initializes a new <see cref="EventProducerTest"/> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
+    /// <param name="TestParameters">The <see cref="TestParameters"/> to use to configure this test run.</param>
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public EventProducerTest(TestConfiguration testConfiguration,
+    public EventProducerTest(TestParameters testParameters,
                              Metrics metrics,
                              string jobIndex = default)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _jobIndex = jobIndex;
         _metrics = metrics;
         _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-prod-{Guid.NewGuid().ToString()}";
@@ -85,12 +85,12 @@ public class EventProducerTest
         {
             case Role.Publisher:
                 var publisherConfiguration = new PublisherConfiguration();
-                var publisher = new Publisher(publisherConfiguration, _testConfiguration, _metrics);
+                var publisher = new Publisher(publisherConfiguration, _testParameters, _metrics);
                 return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             case Role.BufferedPublisher:
                 var buffpublisherConfiguration = new BufferedPublisherConfiguration();
-                var buffpublisher = new BufferedPublisher(_testConfiguration, buffpublisherConfiguration, _metrics);
+                var buffpublisher = new BufferedPublisher(_testParameters, buffpublisherConfiguration, _metrics);
                 return Task.Run(() => buffpublisher.RunAsync(cancellationToken));
             default:
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");

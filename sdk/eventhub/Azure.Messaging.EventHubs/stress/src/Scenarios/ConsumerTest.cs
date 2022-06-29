@@ -16,8 +16,8 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 public class ConsumerTest
 {
-    /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
     private readonly string _jobIndex;
@@ -38,15 +38,15 @@ public class ConsumerTest
     ///  Initializes a new <see cref="ConsumerTest"/> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters"/> to use to run this test scenario.</param>
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public ConsumerTest(TestConfiguration testConfiguration,
+    public ConsumerTest(TestParameters testParameters,
                         Metrics metrics,
                         string jobIndex = default)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _jobIndex = jobIndex;
         _metrics = metrics;
         _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-consumer-{Guid.NewGuid().ToString()}";
@@ -62,7 +62,7 @@ public class ConsumerTest
     {
         var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
         var testRunTasks = new List<Task>();
-        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
 
         if (runAllRoles)
         {
@@ -87,15 +87,15 @@ public class ConsumerTest
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private Task RunRoleAsync(Role role,
-                                   int roleIndex,
-                                   string[] partitionIds,
-                                   CancellationToken cancellationToken)
+                              int roleIndex,
+                              string[] partitionIds,
+                              CancellationToken cancellationToken)
     {
         switch (role)
         {
             case Role.Consumer:
                 var consumerConfiguration = new ConsumerConfiguration();
-                var consumer = new Consumer(_testConfiguration, consumerConfiguration, _metrics, _readEvents, _lastReadPartitionSequence);
+                var consumer = new Consumer(_testParameters, consumerConfiguration, _metrics, _readEvents, _lastReadPartitionSequence);
                 return Task.Run(() => consumer.RunAsync(cancellationToken));
 
             case Role.PartitionPublisher:
@@ -103,7 +103,7 @@ public class ConsumerTest
                 var partitionsCount = partitionIds.Length;
                 var partitions = EventTracking.GetAssignedPartitions(partitionsCount, roleIndex, partitionIds, _roles);
 
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, partitions);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, partitions);
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:

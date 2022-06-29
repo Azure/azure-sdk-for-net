@@ -61,11 +61,11 @@ public class Program
         var testScenarioTasks = new List<Task>();
         var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenario)) : new TestScenario[]{StringToTestScenario(opts.Test)};
 
-        var testConfiguration = new TestConfiguration();
-        testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
+        var testParameters = new TestParameters();
+        testParameters.EventHubsConnectionString = eventHubsConnectionString;
 
         var cancellationSource = new CancellationTokenSource();
-        var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
+        var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
         cancellationSource.CancelAfter(runDuration);
 
         var metrics = new Metrics(appInsightsKey);
@@ -88,50 +88,50 @@ public class Program
                 {
                     case TestScenario.BufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var bufferedProducerTest = new BufferedProducerTest(testConfiguration, metrics, opts.Role);
+                        var bufferedProducerTest = new BufferedProducerTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(bufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
                     case TestScenario.BurstBufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testConfiguration, metrics, opts.Role);
+                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
                     case TestScenario.EventProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var eventProducerTest = new EventProducerTest(testConfiguration, metrics, opts.Role);
+                        var eventProducerTest = new EventProducerTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
                     case TestScenario.ProcessorTest:
                         // Get the Event Hub name for this test
                         environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
                         // Get the storage blob name for this test
                         environment.TryGetValue(EnvironmentVariables.StorageBlobProcessorTest, out storageBlob);
-                        testConfiguration.BlobContainer = PromptForResources("Storage Blob Name", testName, storageBlob, opts.Interactive);
+                        testParameters.BlobContainer = PromptForResources("Storage Blob Name", testName, storageBlob, opts.Interactive);
 
                         // Get the storage account connection string for this test
                         environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
-                        testConfiguration.StorageConnectionString = PromptForResources("Storage Account Connection String", testName, storageConnectionString, opts.Interactive);
+                        testParameters.StorageConnectionString = PromptForResources("Storage Account Connection String", testName, storageConnectionString, opts.Interactive);
 
-                        var processorTest = new ProcessorTest(testConfiguration, metrics, opts.Role);
+                        var processorTest = new ProcessorTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
 
                     case TestScenario.ConsumerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var consumerTest = new ConsumerTest(testConfiguration, metrics, opts.Role);
+                        var consumerTest = new ConsumerTest(testParameters, metrics, opts.Role);
                         testScenarioTasks.Add(consumerTest.RunTestAsync(cancellationSource.Token));
                         break;
                 }
@@ -168,6 +168,7 @@ public class Program
         }
         finally
         {
+            testParameters.Dispose();
             metrics.Client.Flush();
             await Task.Delay(60000).ConfigureAwait(false);
         }

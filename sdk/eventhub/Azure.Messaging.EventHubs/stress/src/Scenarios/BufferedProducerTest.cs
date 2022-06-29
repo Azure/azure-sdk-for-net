@@ -14,8 +14,8 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 public class BufferedProducerTest
 {
-    /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
     private readonly string _jobIndex;
@@ -34,11 +34,11 @@ public class BufferedProducerTest
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public BufferedProducerTest(TestConfiguration testConfiguration,
+    public BufferedProducerTest(TestParameters testParameters,
                                 Metrics metrics,
                                 string jobIndex = default)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _jobIndex = jobIndex;
         _metrics = metrics;
         _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-buff-prod-{Guid.NewGuid().ToString()}";
@@ -84,7 +84,7 @@ public class BufferedProducerTest
         {
             case Role.BufferedPublisher:
                 var publisherConfiguration = new BufferedPublisherConfiguration();
-                var publisher = new BufferedPublisher(_testConfiguration, publisherConfiguration, _metrics);
+                var publisher = new BufferedPublisher(_testParameters, publisherConfiguration, _metrics);
                 return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             default:

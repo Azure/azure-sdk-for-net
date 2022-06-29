@@ -27,8 +27,8 @@ internal class Publisher
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters" /> used to run the test scenario running this role.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The <see cref="PublisherConfiguration" /> used to configure the instance of this role.</summary>
     private readonly PublisherConfiguration _publisherconfiguration;
@@ -37,15 +37,15 @@ internal class Publisher
     ///   Initializes a new <see cref="Publisher" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
     /// <param name="publisherConfiguration">The <see cref="PublisherConfiguration" /> instance used to configure this instance of <see cref="Publisher" />.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the test scenario running this publishing role.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public Publisher(PublisherConfiguration publisherConfiguration,
-                     TestConfiguration testConfiguration,
+                     TestParameters testParameters,
                      Metrics metrics)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _publisherconfiguration = publisherConfiguration;
         _metrics = metrics;
     }
@@ -71,7 +71,7 @@ internal class Publisher
                     TryTimeout = _publisherconfiguration.SendTimeout
                 }
             };
-            var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+            var producer = new EventHubProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
 
             try
             {

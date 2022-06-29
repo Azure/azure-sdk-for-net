@@ -19,8 +19,8 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///
 public class ProcessorTest
 {
-    /// <summary>The <see cref="TestConfiguration"/> used to configure this test scenario.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
+    private readonly TestParameters _testParameters;
 
     // <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
     private readonly string _jobIndex;
@@ -47,13 +47,15 @@ public class ProcessorTest
     ///  Initializes a new <see cref="ProcessorTest"/> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> to use to configure this test run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters"/> to use to configure this test run.</param>
     /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
-    public ProcessorTest(TestConfiguration testConfiguration, Metrics metrics, string jobIndex = default)
+    public ProcessorTest(TestParameters testParameters,
+                         Metrics metrics,
+                         string jobIndex = default)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _jobIndex = jobIndex;
         _metrics = metrics;
         _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-processor-{Guid.NewGuid().ToString()}";
@@ -67,7 +69,7 @@ public class ProcessorTest
     ///
     public async Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
         var partitionCount = partitionIds.Length;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
 
@@ -106,7 +108,7 @@ public class ProcessorTest
         {
             case Role.Processor:
                 var processorConfiguration = new ProcessorConfiguration();
-                var processor = new Processor(_testConfiguration, processorConfiguration, _metrics, partitionCount);
+                var processor = new Processor(_testParameters, processorConfiguration, _metrics, partitionCount);
                 _identifier = processor.Identifier;
                 _metrics.Client.TrackEvent("Starting to process events");
                 return Task.Run(() => processor.RunAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken));
@@ -114,7 +116,7 @@ public class ProcessorTest
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
                 var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, roleIndex, partitionIds, _roles);
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testConfiguration, _metrics, assignedPartitions);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, assignedPartitions);
                 _metrics.Client.TrackEvent("Starting to publish events");
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
@@ -122,7 +124,7 @@ public class ProcessorTest
                 throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
- 
+
     /// <summary>
     ///   The method to pass to the <see cref="EventProcessorClient" /> instance as the <see cref="EventProcessorClient.ProcessEventAsync" />
     ///   event handler.
@@ -133,7 +135,6 @@ public class ProcessorTest
     private Task ProcessEventHandler(ProcessEventArgs args)
     {
         var partitionIndex = int.Parse(args.Partition.PartitionId);
-        using var sha256Hash = SHA256.Create();
 
         try
         {
@@ -157,7 +158,7 @@ public class ProcessorTest
             {
                 _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
 
-                EventTracking.ProcessEventAsync(args, sha256Hash, _metrics, _lastReadPartitionSequence, _readEvents);
+                EventTracking.ProcessEventAsync(args, _testParameters.Sha256Hash, _metrics, _lastReadPartitionSequence, _readEvents);
 
                 _metrics.Client.GetMetric(Metrics.EventsProcessed).TrackValue(1);
             }
@@ -185,7 +186,8 @@ public class ProcessorTest
     private Task ProcessErrorHandler(ProcessErrorEventArgs args)
     {
         var exceptionProperties = new Dictionary<string, string>();
-        _metrics.Client.TrackException(args.Exception);
+        exceptionProperties.Add(Metrics.PartitionId, args.PartitionId);
+        _metrics.Client.TrackException(args.Exception, exceptionProperties);
         return Task.CompletedTask;
     }
 }

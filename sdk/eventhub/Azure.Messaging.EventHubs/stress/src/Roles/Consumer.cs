@@ -24,8 +24,8 @@ internal class Consumer
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Consumer" /> instance.</summary>
     private Metrics _metrics { get; }
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private TestConfiguration _testConfiguration { get; }
+    /// <summary>The <see cref="TestParameters" /> used to run this test.</summary>
+    private TestParameters _testParameters { get; }
 
     /// <summary>The <see cref="ConsumerConfiguration" /> used to configure the instance of this role.</summary>
     private ConsumerConfiguration _consumerConfiguration { get; }
@@ -43,17 +43,19 @@ internal class Consumer
     ///   Initializes a new <see cref="Consumer" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration"/> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters"/> used to configure the processor test scenario run.</param>
     /// <param name="consumerConfiguration">The <see cref="ConsumerConfiguration"/> instance used to configure this instance of <see cref="Processor" />.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send metrics to Application Insights.</param>
+    /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
+    /// <param name="lastReadPartitionSequence">The dictionary mapping each partition to the last read sequence for tbat partition.</param>
     ///
-    public Consumer(TestConfiguration testConfiguration,
+    public Consumer(TestParameters testParameters,
                      ConsumerConfiguration consumerConfiguration,
                      Metrics metrics,
                      ConcurrentDictionary<string, byte> readEvents,
                      ConcurrentDictionary<string, int> lastReadPartitionSequence)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _consumerConfiguration = consumerConfiguration;
         _metrics = metrics;
         _readEvents = readEvents;
@@ -71,7 +73,7 @@ internal class Consumer
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         var consumerTasks = new Dictionary<string, Task>();
-        var partitionIds = await _testConfiguration.GetEventHubPartitionsAsync();
+        var partitionIds = await _testParameters.GetEventHubPartitionsAsync();
 
         foreach (var partitionId in partitionIds)
         {
@@ -86,17 +88,14 @@ internal class Consumer
     /// </summary>
     ////
     /// <param name="partitionId">The Id of the partition to read events from.</param>
-    /// <param name="eventTracking">The <see cref="EventTracking"/> instance used to validate events.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     private async Task ConsumePartitionAsync(string partitionId,
                                              CancellationToken cancellationToken)
     {
-        using var sha256Hash = SHA256.Create();
-
         while (!cancellationToken.IsCancellationRequested)
         {
-            var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub);
+            var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, _testParameters.EventHubsConnectionString, _testParameters.EventHub);
             try
             {
                 var seenPartition = _lastReceivedSequence.TryGetValue(partitionId, out int sequenceNumber);
@@ -111,7 +110,7 @@ internal class Consumer
                 {
                     if (receivedEvent.Data != null)
                     {
-                        EventTracking.ConsumeEvent(receivedEvent, _metrics, sha256Hash, _lastReadPartitionSequence, _readEvents);
+                        EventTracking.ConsumeEvent(receivedEvent, _metrics, _testParameters.Sha256Hash, _lastReadPartitionSequence, _readEvents);
                         _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
                     }
                 }

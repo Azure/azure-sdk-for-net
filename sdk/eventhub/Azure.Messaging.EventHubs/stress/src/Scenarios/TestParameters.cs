@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using System.Security.Cryptography;
@@ -11,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The set of configurations to use for a test scenario run.
 /// </summary>
 ///
-public class TestConfiguration
+public class TestParameters : IDisposable
 {
     // Resource Configurations
 
@@ -47,7 +48,13 @@ public class TestConfiguration
     ///
     public int DurationInHours = 150;
 
-    public SHA256 Sha256Hash = default;
+    /// <summary>
+    ///   The hasher to use when hashing event bodies for validation.
+    /// </summary>
+    ///
+    public SHA256 Sha256Hash = SHA256.Create();
+
+    private bool _disposed = false;
 
     /// <summary>
     ///   Gets the list of partitions from the Event Hub being used for this test run.
@@ -65,6 +72,14 @@ public class TestConfiguration
         await using (var producerClient = new EventHubProducerClient(EventHubsConnectionString, EventHub))
         {
             return (await producerClient.GetPartitionIdsAsync().ConfigureAwait(false));
+        }
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            Sha256Hash.Dispose();
         }
     }
 }

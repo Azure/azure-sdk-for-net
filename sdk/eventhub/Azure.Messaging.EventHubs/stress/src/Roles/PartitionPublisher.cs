@@ -27,8 +27,8 @@ internal class PartitionPublisher
     /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="PartitionPublisher" /> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="TestConfiguration" /> used to configure this test run.</summary>
-    private readonly TestConfiguration _testConfiguration;
+    /// <summary>The <see cref="TestParameters" /> used to run this scenario.</summary>
+    private readonly TestParameters _testParameters;
 
     /// <summary>The <see cref="PartitionPublisherConfiguration" /> used to configure the instance of this role.</summary>
     private readonly PartitionPublisherConfiguration _publisherconfiguration;
@@ -43,20 +43,20 @@ internal class PartitionPublisher
     ///   Initializes a new <see cref="PartitionPublisher" \> instance.
     /// </summary>
     ///
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to run the processor test scenario.</param>
     /// <param name="publisherConfiguration">The <see cref="PartitionPublisherConfiguration" /> instance used to configure this instance of <see cref="PartitionPublisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
+    /// <param name="assignedPartitions">The <see cref="List" /> of partition Id's that this publisher should send to.</param>
     ///
     public PartitionPublisher(PartitionPublisherConfiguration publisherConfiguration,
-                              TestConfiguration testConfiguration,
+                              TestParameters testParameters,
                               Metrics metrics,
                               List<string> assignedPartitions)
     {
-        _testConfiguration = testConfiguration;
+        _testParameters = testParameters;
         _publisherconfiguration = publisherConfiguration;
         _metrics = metrics;
         _assignedPartitions = assignedPartitions;
-
         _lastSentPerPartition = new ConcurrentDictionary<string, int>();
     }
 
@@ -103,7 +103,7 @@ internal class PartitionPublisher
                     TryTimeout = _publisherconfiguration.SendTimeout
                 }
             };
-            var producer = new EventHubProducerClient(_testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
+            var producer = new EventHubProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -172,7 +172,7 @@ internal class PartitionPublisher
         {
             var currentIndexNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v + 1);
             Console.WriteLine(currentIndexNumber);
-            EventTracking.AugmentEvent(currentEvent, currentIndexNumber, partitionId);
+            EventTracking.AugmentEvent(currentEvent, _testParameters.Sha256Hash, currentIndexNumber, partitionId);
 
             if (!batch.TryAdd(currentEvent))
             {

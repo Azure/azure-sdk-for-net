@@ -59,10 +59,12 @@ public static class EventTracking
     /// </summary>
     ///
     /// <param name="eventData">The <see cref="EventData"/> instance to augment.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
     /// <param name="indexNumber">The producer assigned index number for this event.</param>
     /// <param name="partition">The partition, if any, that this event was intended to be sent to.</param>
     ///
     public static void AugmentEvent(EventData eventData,
+                                    SHA256 sha256Hash,
                                     int indexNumber,
                                     string partition=null)
     {
@@ -70,10 +72,7 @@ public static class EventTracking
         eventData.Properties.Add(PublishTimePropertyName, DateTimeOffset.UtcNow);
         eventData.Properties.Add(IdPropertyName, Guid.NewGuid().ToString());
 
-        using (SHA256 sha256Hash = SHA256.Create())
-        {
-            eventData.Properties.Add(EventBodyHashPropertyName, sha256Hash.ComputeHash(eventData.EventBody.ToArray()).ToString());
-        }
+        eventData.Properties.Add(EventBodyHashPropertyName, sha256Hash.ComputeHash(eventData.EventBody.ToArray()).ToString());
 
         if (!string.IsNullOrEmpty(partition))
         {
@@ -87,7 +86,10 @@ public static class EventTracking
     /// </summary>
     ///
     /// <param name="args">The <see cref="ProcessEventArgs"/> received from the processor client to be used for processing.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
+    /// <param name="lastReadPartitionSequence">The dictionary mapping each partition to the last read sequence for tbat partition.</param>
     ///
     public static async void ProcessEventAsync(ProcessEventArgs args,
                                                SHA256 sha256Hash,
@@ -110,6 +112,9 @@ public static class EventTracking
     ///
     /// <param name="partitionEvent">The <see cref="PartitionEvent"/> received from the consumer client to be used for processing.</param>
     /// <param name="metrics">The <see cref="Metrics"/> instance used to send information about the processed event to Application Insights.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
+    /// <param name="lastReadPartitionSequence">The dictionary mapping each partition to the last read sequence for tbat partition.</param>
     ///
     public static void ConsumeEvent(PartitionEvent partitionEvent,
                                     Metrics metrics,
@@ -123,9 +128,10 @@ public static class EventTracking
     ///   role without needing access to the <see cref="PartitionPublisher"/> instance.
     /// </summary>
     ///
-    /// <param name="partitionCount"></param>
-    /// <param name="roleIndex"></param>
-    /// <param name="partitionIds"></param>
+    /// <param name="partitionCount">The number of partitions in this Event Hub.</param>
+    /// <param name="roleIndex">The job index of the current role being run.</param>
+    /// <param name="partitionIds">The set of Id's of the current partitions in this Event Hub.</param>
+    /// <param name="roles">The set of roles being run for this test.</param>
     ///
     /// <returns>The set of partitions that a given <see cref="PartitionPublisher"/> should send to.</returns>
     ///
@@ -172,9 +178,12 @@ public static class EventTracking
     ///   the body is valid.
     /// </summary>
     ///
-    /// <param name="eventData"></param>
-    /// <param name="partitionReceivedFrom"></param>
-    /// <param name="metrics"></param>
+    /// <param name="eventData">The <see cref="EventData"/> to be checked.</param>
+    /// <param name="sha256Hash">The <see cref="SHA256"/> instance to hash the event body.</param>
+    /// <param name="partitionReceivedFrom">The partition Id representing which partition this event was received from.</param>
+    /// <param name="metrics">The metrics instance used to send metrics to application insights.</param>
+    /// <param name="readEvents">The dictionary holding the key values of the unique Id's of all the events that have been read so far.</param>
+    /// <param name="lastReadPartitionSequence">The dictionary mapping each partition to the last read sequence for tbat partition.</param>
     ///
     /// <returns>The publisher assigned index number of the event that was just read, or -1 if this event was unkown or a duplicate.</returns>
     ///
@@ -184,11 +193,11 @@ public static class EventTracking
     /// </remarks>
     ///
     private static int CheckEvent(EventData eventData,
-                           SHA256 sha256Hash,
-                           string partitionReceivedFrom,
-                           Metrics metrics,
-                           ConcurrentDictionary<string, int> lastReadPartitionSequence,
-                           ConcurrentDictionary<string, byte> readEvents)
+                                  SHA256 sha256Hash,
+                                  string partitionReceivedFrom,
+                                  Metrics metrics,
+                                  ConcurrentDictionary<string, int> lastReadPartitionSequence,
+                                  ConcurrentDictionary<string, byte> readEvents)
     {
         // Id Checks
         var hasId = eventData.Properties.TryGetValue(IdPropertyName, out var eventIdProperty);
