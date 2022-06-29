@@ -204,33 +204,5 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 }
             }
         }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.DocumentationRules",
-            "SA1600:Elements should be documented",
-            Justification = "keeping related things together")]
-        public class OsImage
-        {
-            [JsonProperty("Offer")]
-            public string Offer { get; set; }
-
-            [JsonProperty("Publisher")]
-            public string Publisher { get; set; }
-
-            [JsonProperty("Sku")]
-            public string Sku { get; set; }
-
-            [JsonProperty("Version")]
-            public string Version { get; set; }
-
-            [JsonProperty("platform")]
-            public string Platform { get; set; }
-
-            [JsonProperty("text")]
-            public string Text { get; set; }
-
-            [JsonProperty("id")]
-            public string Id { get; set; }
-        }
     }
 }
