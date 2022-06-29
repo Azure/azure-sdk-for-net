@@ -32,11 +32,6 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(TransfereeParticipantId))
-            {
-                writer.WritePropertyName("transfereeParticipantId");
-                writer.WriteStringValue(TransfereeParticipantId);
-            }
             writer.WriteEndObject();
         }
     }

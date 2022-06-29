@@ -10,15 +10,6 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ServerCallingModelFactory
     {
-        /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="callConnectionId"> The subscription id. </param>
-        /// <returns> A new <see cref="CallingServer.AnswerCallResponse"/> instance for mocking. </returns>
-        public static AnswerCallResponse AnswerCallResponse(string serverCallId = null, string callConnectionId = null)
-        {
-            return new AnswerCallResponse(serverCallId, callConnectionId);
-        }
-
         /// <summary> Initializes a new instance of TransferCallResponse. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
@@ -38,6 +29,17 @@ namespace Azure.Communication.CallingServer
         public static CallingOperationResultDetailsDto CallingOperationResultDetailsDto(int code = default, int subcode = default, string message = null)
         {
             return new CallingOperationResultDetailsDto(code, subcode, message);
+        }
+
+        /// <summary> Initializes a new instance of PlayResponse. </summary>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <param name="resultDetails"> The result info for the operation. </param>
+        /// <returns> A new <see cref="CallingServer.PlayResponse"/> instance for mocking. </returns>
+        public static PlayResponse PlayResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        {
+            return new PlayResponse(operationId, status, operationContext, resultDetails);
         }
 
         /// <summary> Initializes a new instance of AddParticipantsResponse. </summary>

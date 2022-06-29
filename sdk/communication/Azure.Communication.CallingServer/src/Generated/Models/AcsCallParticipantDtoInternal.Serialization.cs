@@ -6,31 +6,41 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AcsCallParticipantDtoInternal : IUtf8JsonSerializable
+    internal partial class AcsCallParticipantDtoInternal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static AcsCallParticipantDtoInternal DeserializeAcsCallParticipantDtoInternal(JsonElement element)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Identifier))
+            Optional<CommunicationIdentifierModel> identifier = default;
+            Optional<bool> isMuted = default;
+            foreach (var property in element.EnumerateObject())
             {
-                writer.WritePropertyName("identifier");
-                writer.WriteObjectValue(Identifier);
+                if (property.NameEquals("identifier"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("isMuted"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isMuted = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            if (Optional.IsDefined(ParticipantId))
-            {
-                writer.WritePropertyName("participantId");
-                writer.WriteStringValue(ParticipantId);
-            }
-            if (Optional.IsDefined(IsMuted))
-            {
-                writer.WritePropertyName("isMuted");
-                writer.WriteBooleanValue(IsMuted.Value);
-            }
-            writer.WriteEndObject();
+            return new AcsCallParticipantDtoInternal(identifier.Value, Optional.ToNullable(isMuted));
         }
     }
 }

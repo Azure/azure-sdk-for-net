@@ -20,12 +20,8 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Create Call Options.
         /// </summary>
-        /// <param name="alternateCallerId">The alternate caller id of the source</param>
-        /// <param name="subject">The subject.</param>
-        public CreateCallOptions(PhoneNumberIdentifier alternateCallerId, string subject)
+        public CreateCallOptions()
         {
-            AlternateCallerId = alternateCallerId;
-            Subject = subject;
         }
     }
 }

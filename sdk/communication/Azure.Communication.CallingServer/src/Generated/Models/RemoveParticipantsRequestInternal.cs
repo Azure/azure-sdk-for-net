@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -17,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
         /// <param name="participantsToRemove"> The participants to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public RemoveParticipantsRequestInternal(IEnumerable<AcsCallParticipantDtoInternal> participantsToRemove)
+        public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
             if (participantsToRemove == null)
             {
@@ -28,7 +29,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> The participants to invite. </summary>
-        public IList<AcsCallParticipantDtoInternal> ParticipantsToRemove { get; }
+        public IList<CommunicationIdentifierModel> ParticipantsToRemove { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
     }

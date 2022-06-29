@@ -13,15 +13,22 @@ namespace Azure.Communication.CallingServer
     internal partial class AcsCallParticipantDtoInternal
     {
         /// <summary> Initializes a new instance of AcsCallParticipantDtoInternal. </summary>
-        public AcsCallParticipantDtoInternal()
+        internal AcsCallParticipantDtoInternal()
         {
         }
 
+        /// <summary> Initializes a new instance of AcsCallParticipantDtoInternal. </summary>
+        /// <param name="identifier"> Communication identifier of the participant. </param>
+        /// <param name="isMuted"> Is participant muted. </param>
+        internal AcsCallParticipantDtoInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        {
+            Identifier = identifier;
+            IsMuted = isMuted;
+        }
+
         /// <summary> Communication identifier of the participant. </summary>
-        public CommunicationIdentifierModel Identifier { get; set; }
-        /// <summary> Participant id, will be ignored if Identifier is set. </summary>
-        public string ParticipantId { get; set; }
+        public CommunicationIdentifierModel Identifier { get; }
         /// <summary> Is participant muted. </summary>
-        public bool? IsMuted { get; set; }
+        public bool? IsMuted { get; }
     }
 }

@@ -28,13 +28,11 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> The caller ID of the transferee if transferring to a pstn number. </summary>
+        /// <summary> The caller ID of the transferee when transferring to PSTN. </summary>
         public PhoneNumberIdentifierModel TransfereeCallerId { get; set; }
         /// <summary> The user to user information. </summary>
         public string UserToUserInformation { get; set; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The participantId of the transferee (optional). </summary>
-        public string TransfereeParticipantId { get; set; }
     }
 }

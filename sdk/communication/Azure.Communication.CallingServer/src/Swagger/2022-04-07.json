@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "version": "2022-04-07-preview",
-        "title": "Azure Communication ServerCalling APIs"
+        "title": "Azure Communication Service ServerCalling APIs"
     },
     "schemes": [
         "https"
@@ -14,6 +14,43 @@
         "application/json"
     ],
     "paths": {
+        "/calling/callConnections": {
+            "post": {
+                "tags": [
+                    "PreConnections"
+                ],
+                "summary": "Create an outbound call.",
+                "description": "Create an outbound call.",
+                "operationId": "ServerCalling_CreateCall",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "The create call request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Returns the create call response.",
+                        "schema": {
+                            "$ref": "#/definitions/CallConnectionPropertiesDto"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Create an outbound call.": {
+                        "$ref": "./examples/ServerCalling_CreateCall.json"
+                    }
+                }
+            }
+        },
         "/calling/callConnections:answer": {
             "post": {
                 "tags": [
@@ -37,10 +74,10 @@
                     }
                 ],
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Returns the answer call response.",
                         "schema": {
-                            "$ref": "#/definitions/AnswerCallResponse"
+                            "$ref": "#/definitions/CallConnectionPropertiesDto"
                         }
                     }
                 },
@@ -120,6 +157,38 @@
             }
         },
         "/calling/callConnections/{callConnectionId}": {
+            "get": {
+                "tags": [
+                    "MidConnections"
+                ],
+                "summary": "Get call connection.",
+                "operationId": "CallConnections_GetCall",
+                "parameters": [
+                    {
+                        "name": "callConnectionId",
+                        "in": "path",
+                        "description": "The call connection id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the get call response.",
+                        "schema": {
+                            "$ref": "#/definitions/CallConnectionPropertiesDto"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Get call connection.": {
+                        "$ref": "./examples/CallConnections_GetCall.json"
+                    }
+                }
+            },
             "delete": {
                 "tags": [
                     "MidConnections"
@@ -227,29 +296,29 @@
                 }
             }
         },
-        "/calling/callConnections/{callConnectionId}:transferToCall": {
+        "/calling/callConnections/{callConnectionId}/content:play": {
             "post": {
                 "tags": [
                     "MidConnections"
                 ],
-                "summary": "Transfer the current call to another call.",
-                "description": "Transfer the current call to another call.",
-                "operationId": "CallConnections_TransferToCall",
+                "summary": "Plays audio to participants in the call.",
+                "description": "Plays audio to participants in the call.",
+                "operationId": "Content_Play",
                 "parameters": [
                     {
                         "name": "callConnectionId",
                         "in": "path",
-                        "description": "The call connection id.",
+                        "description": "",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "transferToCallRequest",
+                        "name": "playRequest",
                         "in": "body",
-                        "description": "The transfer to call request.",
+                        "description": "",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/TransferToCallRequest"
+                            "$ref": "#/definitions/PlayRequest"
                         }
                     },
                     {
@@ -257,16 +326,54 @@
                     }
                 ],
                 "responses": {
-                    "202": {
-                        "description": "Returns the transfer call response.",
+                    "201": {
+                        "description": "Returns the play audio response.",
                         "schema": {
-                            "$ref": "#/definitions/TransferCallResponse"
+                            "$ref": "#/definitions/PlayResponse"
                         }
                     }
                 },
                 "x-ms-examples": {
-                    "Transfer the current call to another call.": {
-                        "$ref": "./examples/CallConnections_TransferToCall.json"
+                    "Plays audio to participants in the call.": {
+                        "$ref": "./examples/Content_Play.json"
+                    }
+                }
+            }
+        },
+        "/calling/callConnections/{callConnectionId}/participants": {
+            "get": {
+                "tags": [
+                    "MidConnections"
+                ],
+                "summary": "Get participants from a call.",
+                "description": "Get participants from a call.",
+                "operationId": "CallConnections_GetParticipants",
+                "parameters": [
+                    {
+                        "name": "callConnectionId",
+                        "in": "path",
+                        "description": "The call connection Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the get participants response.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AcsCallParticipantDto"
+                            }
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Get participants from a call.": {
+                        "$ref": "./examples/CallConnections_GetParticipants.json"
                     }
                 }
             }
@@ -358,57 +465,78 @@
                     }
                 }
             }
+        },
+        "/calling/callConnections/{callConnectionId}/participants:get": {
+            "post": {
+                "tags": [
+                    "MidConnections"
+                ],
+                "summary": "Get a participant from a call.",
+                "description": "Get a participant from a call.",
+                "operationId": "CallConnections_GetParticipant",
+                "parameters": [
+                    {
+                        "name": "callConnectionId",
+                        "in": "path",
+                        "description": "The call connection Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "getParticipantsRequest",
+                        "in": "body",
+                        "description": "The get participant request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetParticipantRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the get participant response.",
+                        "schema": {
+                            "$ref": "#/definitions/AcsCallParticipantDto"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Get a participant from a call.": {
+                        "$ref": "./examples/CallConnections_GetParticipant.json"
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "AnswerCallRequest": {
-            "description": "The request payload for answering the call.",
+        "CreateCallRequest": {
             "required": [
-                "incomingCallContext"
+                "targets",
+                "source",
+                "callbackUri"
             ],
             "type": "object",
             "properties": {
-                "incomingCallContext": {
-                    "description": "The context associated with the call.",
+                "targets": {
+                    "description": "The targets of the call.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "source": {
+                    "$ref": "#/definitions/CallSourceDto"
+                },
+                "subject": {
+                    "description": "The subject.",
                     "type": "string"
                 },
                 "callbackUri": {
-                    "description": "The callback uri.",
+                    "description": "The callback URI.",
                     "type": "string"
-                }
-            }
-        },
-        "AnswerCallResponse": {
-            "description": "The response payload of the answer call operation.",
-            "type": "object",
-            "properties": {
-                "serverCallId": {
-                    "description": "The server call id.",
-                    "type": "string",
-                    "readOnly": true
-                },
-                "callConnectionId": {
-                    "description": "The subscription id.",
-                    "type": "string",
-                    "readOnly": true
-                }
-            }
-        },
-        "RedirectCallRequest": {
-            "description": "The request payload for redirecting the call.",
-            "required": [
-                "incomingCallContext",
-                "target"
-            ],
-            "type": "object",
-            "properties": {
-                "incomingCallContext": {
-                    "description": "The context associated with the call.",
-                    "type": "string"
-                },
-                "target": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "The target identity to redirect the call to."
                 }
             }
         },
@@ -430,6 +558,21 @@
                 "microsoftTeamsUser": {
                     "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
                     "description": "The Microsoft Teams user."
+                }
+            }
+        },
+        "CallSourceDto": {
+            "required": [
+                "identifier"
+            ],
+            "type": "object",
+            "properties": {
+                "callerId": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The alternate identity of the source of the call if dialing out to a pstn number"
+                },
+                "identifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
                 }
             }
         },
@@ -462,6 +605,9 @@
             }
         },
         "MicrosoftTeamsUserIdentifierModel": {
+            "required": [
+                "userId"
+            ],
             "type": "object",
             "properties": {
                 "userId": {
@@ -472,6 +618,97 @@
                 },
                 "cloud": {
                     "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
+                }
+            }
+        },
+        "CallConnectionStateModel": {
+            "description": "The state of the call connection.",
+            "enum": [
+                "unknown",
+                "connecting",
+                "connected",
+                "transferring",
+                "transferAccepted",
+                "disconnecting",
+                "disconnected"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CallConnectionStateModel",
+                "modelAsString": true
+            }
+        },
+        "CallConnectionPropertiesDto": {
+            "type": "object",
+            "properties": {
+                "callConnectionId": {
+                    "description": "The call connection id.",
+                    "type": "string"
+                },
+                "serverCallId": {
+                    "description": "The server call id.",
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The source of the call."
+                },
+                "alternateCallerId": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The alternate identity of the source of the call if dialing out to a pstn number"
+                },
+                "targets": {
+                    "description": "The targets of the call.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "callConnectionState": {
+                    "$ref": "#/definitions/CallConnectionStateModel"
+                },
+                "subject": {
+                    "description": "The subject.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
+                    "type": "string"
+                }
+            }
+        },
+        "AnswerCallRequest": {
+            "description": "The request payload for answering the call.",
+            "required": [
+                "incomingCallContext"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback uri.",
+                    "type": "string"
+                }
+            }
+        },
+        "RedirectCallRequest": {
+            "description": "The request payload for redirecting the call.",
+            "required": [
+                "incomingCallContext",
+                "target"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The target identity to redirect the call to."
                 }
             }
         },
@@ -517,7 +754,7 @@
                 },
                 "transfereeCallerId": {
                     "$ref": "#/definitions/PhoneNumberIdentifierModel",
-                    "description": "The caller ID of the transferee if transferring to a pstn number."
+                    "description": "The caller ID of the transferee when transferring to PSTN."
                 },
                 "userToUserInformation": {
                     "description": "The user to user information.",
@@ -525,10 +762,6 @@
                 },
                 "operationContext": {
                     "description": "The operation context.",
-                    "type": "string"
-                },
-                "transfereeParticipantId": {
-                    "description": "The participantId of the transferee (optional).",
                     "type": "string"
                 }
             }
@@ -593,28 +826,100 @@
                 }
             }
         },
-        "TransferToCallRequest": {
-            "description": "The transfer call to other call request. Used for consultative transfers.",
+        "PlayRequest": {
             "required": [
-                "targetCallConnectionId"
+                "playSourceInfo"
             ],
             "type": "object",
             "properties": {
-                "targetCallConnectionId": {
-                    "description": "The call connection id to replace the current call with. This parameter should be used for consultative transfer.",
+                "playSourceInfo": {
+                    "$ref": "#/definitions/PlaySource",
+                    "description": "The source of the audio to be played."
+                },
+                "playTo": {
+                    "description": "The list of call participants play provided audio to. \r\nPlays to everyone in the call when not provided.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "playOptions": {
+                    "$ref": "#/definitions/PlayOptions",
+                    "description": "Defines options for playing the audio."
+                }
+            }
+        },
+        "PlaySourceType": {
+            "description": "Defines the type of the play source",
+            "enum": [
+                "file"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "PlaySourceType",
+                "modelAsString": true
+            }
+        },
+        "PlaySource": {
+            "required": [
+                "sourceType"
+            ],
+            "type": "object",
+            "properties": {
+                "sourceType": {
+                    "$ref": "#/definitions/PlaySourceType"
+                },
+                "playSourceId": {
+                    "description": "Defines the identifier to be used for caching related media",
+                    "type": "string"
+                }
+            }
+        },
+        "PlayOptions": {
+            "required": [
+                "loop"
+            ],
+            "type": "object",
+            "properties": {
+                "loop": {
+                    "description": "The option to play the provided audio source in loop when set to true",
+                    "type": "boolean"
+                }
+            }
+        },
+        "PlayResponse": {
+            "required": [
+                "status"
+            ],
+            "type": "object",
+            "properties": {
+                "operationId": {
+                    "description": "The operation id.",
                     "type": "string"
                 },
-                "userToUserInformation": {
-                    "description": "The user to user information.",
-                    "type": "string"
+                "status": {
+                    "$ref": "#/definitions/CallingOperationStatusDto"
                 },
                 "operationContext": {
-                    "description": "The operation context.",
+                    "description": "The operation context provided by client.",
                     "type": "string"
                 },
-                "transfereeParticipantId": {
-                    "description": "The participantId of the transferee (optional).",
-                    "type": "string"
+                "resultDetails": {
+                    "$ref": "#/definitions/CallingOperationResultDetailsDto",
+                    "description": "The result info for the operation."
+                }
+            }
+        },
+        "AcsCallParticipantDto": {
+            "type": "object",
+            "properties": {
+                "identifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "Communication identifier of the participant"
+                },
+                "isMuted": {
+                    "description": "Is participant muted",
+                    "type": "boolean"
                 }
             }
         },
@@ -639,10 +944,6 @@
                     "format": "int32",
                     "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
                     "type": "integer"
-                },
-                "replacementCallConnectionId": {
-                    "description": "Replaces the call with this call connection Id after invitation.",
-                    "type": "string"
                 },
                 "operationContext": {
                     "description": "The operation context.",
@@ -684,29 +985,12 @@
                     "description": "The participants to invite.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/AcsCallParticipantDto"
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
                     }
                 },
                 "operationContext": {
                     "description": "The operation context.",
                     "type": "string"
-                }
-            }
-        },
-        "AcsCallParticipantDto": {
-            "type": "object",
-            "properties": {
-                "identifier": {
-                    "$ref": "#/definitions/CommunicationIdentifierModel",
-                    "description": "Communication identifier of the participant"
-                },
-                "participantId": {
-                    "description": "Participant id, will be ignored if Identifier is set",
-                    "type": "string"
-                },
-                "isMuted": {
-                    "description": "Is participant muted",
-                    "type": "boolean"
                 }
             }
         },
@@ -730,6 +1014,14 @@
                 "resultDetails": {
                     "$ref": "#/definitions/CallingOperationResultDetailsDto",
                     "description": "The result info for the operation."
+                }
+            }
+        },
+        "GetParticipantRequest": {
+            "type": "object",
+            "properties": {
+                "participant": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
                 }
             }
         }

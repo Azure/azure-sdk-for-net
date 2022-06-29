@@ -37,8 +37,6 @@ namespace Azure.Communication.CallingServer
         /// The maximum value of this is 180 seconds
         /// </summary>
         public int? InvitationTimeoutInSeconds { get; set; }
-        /// <summary> Replaces the call with this call connection Id after invitation. </summary>
-        public string ReplacementCallConnectionId { get; set; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
     }

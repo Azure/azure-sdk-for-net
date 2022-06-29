@@ -32,11 +32,6 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("invitationTimeoutInSeconds");
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(ReplacementCallConnectionId))
-            {
-                writer.WritePropertyName("replacementCallConnectionId");
-                writer.WriteStringValue(ReplacementCallConnectionId);
-            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");
