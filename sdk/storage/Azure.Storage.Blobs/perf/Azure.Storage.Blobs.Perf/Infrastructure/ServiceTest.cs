@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Perf
         {
             BlobClientOptions clientOptions = options is Options.IBlobClientOptionsOptions clientOptionsOptions
                 ? clientOptionsOptions.ClientOptions
-                : default;
+                : new BlobClientOptions();
             BlobServiceClient = new BlobServiceClient(
                 PerfTestEnvironment.Instance.BlobStorageConnectionString, ConfigureClientOptions(clientOptions));
 
