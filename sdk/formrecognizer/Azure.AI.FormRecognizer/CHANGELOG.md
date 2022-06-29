@@ -10,7 +10,7 @@
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Renamed `DocumentModelInfo` to `DocumentModelSummary`.
-- Removed `DocumentCaption` and `DocumentFootnote` feature.
+- Removed `DocumentCaption` and `DocumentFootnote` features.
 
 ### Bugs Fixed
 
