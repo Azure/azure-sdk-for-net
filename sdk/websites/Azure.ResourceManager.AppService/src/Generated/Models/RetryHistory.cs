@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the error response. </summary>
         internal ErrorResponse Error { get; set; }
         /// <summary> The error properties. </summary>
-        public ErrorProperties Error
+        public ErrorProperties Errors
         {
             get => Error is null ? default(ErrorProperties) : Error.Error;
             set

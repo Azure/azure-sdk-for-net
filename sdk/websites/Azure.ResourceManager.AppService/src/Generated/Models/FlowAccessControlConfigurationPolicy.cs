@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The authentication policies for workflow. </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
         /// <summary> Open authentication policies. </summary>
-        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicies
+        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPoliciesWR
         {
             get
             {
