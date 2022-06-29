@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// associated with the disk encryption set. The user identity
         /// dictionary key references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public EncryptionSetIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string), IDictionary<string, EncryptionSetIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, EncryptionSetIdentityUserAssignedIdentitiesValue>))
+        public EncryptionSetIdentity(string type = default(string), string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentitiesValue>))
         {
             Type = type;
             PrincipalId = principalId;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, EncryptionSetIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }
