@@ -2,31 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
-///   The set of configurations that can be specified when creating a <see cref="Publisher" />
+///   The set of configurations that can be specified when creating a <see cref="PartitionPublisher" />
 ///   role.
 /// </summary>
 ///
-internal class PublisherConfiguration
+internal class PartitionPublisherConfiguration
 {
-    // Test Configuration Values
-
     /// <summary>
     ///   The number of events to generate and put into a batch during each iteration of
     ///   <see cref="EventHubProducerClient.SendAsync" />.
     /// </summary>
     ///
     public int PublishBatchSize = 50;
-
-    /// <summary>
-    ///   The number of concurrent sends going to the same <see cref="EventHubBufferedProducerClient" />.
-    /// </summary>
-    ///
-    public int ConcurrentSends = 5;
 
     /// <summary>
     ///   The minimum body size in bytes of events to generate when sending to the event hub.

@@ -18,52 +18,84 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The role responsible for running a <see cref="EventHubProducerClient" \>, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" \>. The metrics collected are garbage collection information, any exceptions
-///   thrown or heard, and how many events and batches are published. It stops sending events and cleans up resources
+///   thrown or heard, and how many events are published. It stops sending events and cleans up resources
 ///   at the end of the test run.
 /// </summary>
 ///
-internal class Publisher
+internal class PartitionPublisher
 {
-    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="Publisher" /> instance.</summary>
+    /// <summary>The <see cref="Metrics" /> instance associated with this <see cref="PartitionPublisher" /> instance.</summary>
     private readonly Metrics _metrics;
 
-    /// <summary>The <see cref="TestParameters" /> used to run the test scenario running this role.</summary>
+    /// <summary>The <see cref="TestParameters" /> used to run this scenario.</summary>
     private readonly TestParameters _testParameters;
 
-    /// <summary>The <see cref="PublisherConfiguration" /> used to configure the instance of this role.</summary>
-    private readonly PublisherConfiguration _publisherconfiguration;
+    /// <summary>The <see cref="PartitionPublisherConfiguration" /> used to configure the instance of this role.</summary>
+    private readonly PartitionPublisherConfiguration _publisherconfiguration;
+
+    /// <summary>The list of partitions that this publisher should publish to.</summary>
+    private readonly List<string> _assignedPartitions;
+
+    /// <summary>A dictionary mapping the partitionId to the last sent index number to that partition</summary>
+    private ConcurrentDictionary<string, int> _lastSentPerPartition;
 
     /// <summary>
-    ///   Initializes a new <see cref="Publisher" \> instance.
+    ///   Initializes a new <see cref="PartitionPublisher" \> instance.
     /// </summary>
     ///
-    /// <param name="publisherConfiguration">The <see cref="PublisherConfiguration" /> instance used to configure this instance of <see cref="Publisher" />.</param>
-    /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the test scenario running this publishing role.</param>
+    /// <param name="testParameters">The <see cref="TestParameters" /> used to run the processor test scenario.</param>
+    /// <param name="publisherConfiguration">The <see cref="PartitionPublisherConfiguration" /> instance used to configure this instance of <see cref="PartitionPublisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
+    /// <param name="assignedPartitions">The <see cref="List" /> of partition Id's that this publisher should send to.</param>
     ///
-    public Publisher(PublisherConfiguration publisherConfiguration,
-                     TestParameters testParameters,
-                     Metrics metrics)
+    public PartitionPublisher(PartitionPublisherConfiguration publisherConfiguration,
+                              TestParameters testParameters,
+                              Metrics metrics,
+                              List<string> assignedPartitions)
     {
         _testParameters = testParameters;
         _publisherconfiguration = publisherConfiguration;
         _metrics = metrics;
+        _assignedPartitions = assignedPartitions;
+        _lastSentPerPartition = new ConcurrentDictionary<string, int>();
     }
 
     /// <summary>
-    ///   Starts an instance of a <see cref="Publisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
-    ///   and monitors it while it sends events to this test's dedicated Event Hub.
+    ///   Starts an instance of a <see cref="PartitionPublisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
+    ///   and monitors it while it sends events to the assigned partitions of this test's dedicated Event Hub.
     /// </summary>
     ///
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     public async Task RunAsync(CancellationToken cancellationToken)
     {
-        var sendTasks = new List<Task>();
+        var producersRunning = new List<Task>();
 
         while (!cancellationToken.IsCancellationRequested)
         {
             using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+            foreach (var partition in _assignedPartitions)
+            {
+                producersRunning.Add(RunPartitionSpecificProducerAsync(partition, backgroundCancellationSource.Token));
+            }
+
+            await Task.WhenAll(producersRunning).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    ///   Starts an instance of a <see cref="PartitionPublisher"/> role. This role creates an <see cref="EventHubProducerClient"/>
+    ///   and monitors it while it sends events to the assigned partitions of this test's dedicated Event Hub.
+    /// </summary>
+    ///
+    /// <param name="partitionId">The Id of the partition to send events to.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
+    private async Task RunPartitionSpecificProducerAsync(string partitionId, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
             var options = new EventHubProducerClientOptions
             {
                 RetryOptions = new EventHubsRetryOptions
@@ -72,99 +104,63 @@ internal class Publisher
                 }
             };
             var producer = new EventHubProducerClient(_testParameters.EventHubsConnectionString, _testParameters.EventHub, options);
-
             try
             {
-                sendTasks.Clear();
-
-                // Create a set of background tasks to handle all but one of the concurrent sends.  The final
-                // send will be performed directly.
-
-                if (_publisherconfiguration.ConcurrentSends > 1)
-                {
-                    for (var index = 0; index < _publisherconfiguration.ConcurrentSends - 1; ++index)
-                    {
-                        sendTasks.Add(Task.Run(async () =>
-                        {
-                            while (!backgroundCancellationSource.Token.IsCancellationRequested)
-                            {
-                                await PerformSendAsync(producer, backgroundCancellationSource.Token).ConfigureAwait(false);
-
-                                if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
-                                {
-                                    await Task.Delay(_publisherconfiguration.ProducerPublishingDelay.Value, backgroundCancellationSource.Token).ConfigureAwait(false);
-                                }
-                            }
-                        }));
-                    }
-                }
-                // Perform one of the sends in the foreground, which will allow easier detection of a
-                // processor-level issue.
-
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     try
                     {
-                        await PerformSendAsync(producer, cancellationToken).ConfigureAwait(false);
-
+                        // send
+                        await PerformSend(producer, partitionId, cancellationToken).ConfigureAwait(false);
                         if ((_publisherconfiguration.ProducerPublishingDelay.HasValue) && (_publisherconfiguration.ProducerPublishingDelay.Value > TimeSpan.Zero))
                         {
                             await Task.Delay(_publisherconfiguration.ProducerPublishingDelay.Value, cancellationToken).ConfigureAwait(false);
                         }
                     }
-                    catch (TaskCanceledException)
+                    catch (Exception ex)
                     {
-                        backgroundCancellationSource.Cancel();
-                        await Task.WhenAll(sendTasks).ConfigureAwait(false);
+                        _metrics.Client.GetMetric(Metrics.EventsFailedToPublish).TrackValue(1);
+                        _metrics.Client.TrackException(ex);
                     }
                 }
             }
-            catch (TaskCanceledException)
-            {
-                // No action needed.
-            }
-            catch (Exception ex) when
-                (ex is OutOfMemoryException
-                || ex is StackOverflowException
-                || ex is ThreadAbortException)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
-                // If this catch is hit, there's a problem with the producer itself; cancel the
-                // background sending and wait before allowing the producer to restart.
-
-                backgroundCancellationSource.Cancel();
-                await Task.WhenAll(sendTasks).ConfigureAwait(false);
-
                 _metrics.Client.GetMetric(Metrics.ProducerRestarted).TrackValue(1);
                 _metrics.Client.TrackException(ex);
             }
             finally
             {
-                _metrics.Client.TrackEvent("Stopping publishing events.");
-                await producer.CloseAsync();
+                await producer.CloseAsync().ConfigureAwait(false);
             }
         }
     }
 
     /// <summary>
     ///   Performs the actual sends to the Event Hub for this particular test, using the <see cref="EventHubProducerClient" /> parameter.
-    ///   This method generates events using the <see cref="PublisherConfiguration" />  configurations.
+    ///   This method generates events using the <see cref="PartitionPublisherConfiguration" />  configurations.
     /// </summary>
     ///
     /// <param name="producer">The <see cref="EventHubProducerClient" /> to send events to.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="partitionId">The Id of the partition within the Event Hub to send events to.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private async Task PerformSendAsync(EventHubProducerClient producer,
-                                        CancellationToken cancellationToken)
+    private async Task PerformSend(EventHubProducerClient producer,
+                                   string partitionId,
+                                   CancellationToken cancellationToken)
     {
         // Create the batch and generate a set of random events, keeping only those that were able to fit into the batch.
         // Because there is a side-effect of TryAdd in the statement, ensure that ToList is called to materialize the set
         // or the batch will be empty at send.
 
-        using var batch = await producer.CreateBatchAsync().ConfigureAwait(false);
+        var batchOptions = new CreateBatchOptions
+        {
+            PartitionId = partitionId
+        };
+
+        using var batch = await producer.CreateBatchAsync(batchOptions).ConfigureAwait(false);
+
+        var observableBatch = new List<EventData>();
 
         var events = EventGenerator.CreateEvents(batch.MaximumSizeInBytes,
                                                  _publisherconfiguration.PublishBatchSize,
@@ -174,10 +170,17 @@ internal class Publisher
 
         foreach (var currentEvent in events)
         {
+            var currentIndexNumber = _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v + 1);
+            Console.WriteLine(currentIndexNumber);
+            EventTracking.AugmentEvent(currentEvent, _testParameters.Sha256Hash, currentIndexNumber, partitionId);
+
             if (!batch.TryAdd(currentEvent))
             {
+                _lastSentPerPartition.AddOrUpdate(partitionId, -1, (k,v) => v--);
                 break;
             }
+
+            observableBatch.Add(currentEvent);
         }
 
         // Publish the events and report them, capturing any failures specific to the send operation.
@@ -187,6 +190,7 @@ internal class Publisher
             if (batch.Count > 0)
             {
                 _metrics.Client.GetMetric(Metrics.PublishAttempts).TrackValue(1);
+
                 await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
             }
 
@@ -204,6 +208,16 @@ internal class Publisher
             exceptionProperties.Add("Process", "Send");
 
             _metrics.Client.TrackException(ex, exceptionProperties);
+
+            foreach (var failedEvent in observableBatch)
+            {
+                failedEvent.Properties.TryGetValue(EventTracking.IndexNumberPropertyName, out var failedIndexNumber);
+                var eventProperties = new Dictionary<String, String>();
+                eventProperties.Add(Metrics.PartitionId, partitionId);
+                eventProperties.Add(Metrics.PublisherAssignedIndex, failedIndexNumber.ToString());
+
+                _metrics.Client.TrackEvent(Metrics.EventsFailedToPublish, eventProperties);
+            }
         }
     }
 }
