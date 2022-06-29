@@ -8,7 +8,7 @@ using CommandLine;
 
 namespace Azure.Storage.Blobs.Perf.Options
 {
-    public class PartitionedTransferOptions : SizeOptions, IBlobClientOptionsOptions, IStorageTransferOptionsOptions
+    public class PartitionedTransferOptions : SizeOptions, IBlobClientOptionsProvider, IStorageTransferOptionsProvider
     {
         private int? _maximumTransferLength;
         private int? _maximumConcurrency;
@@ -36,34 +36,17 @@ namespace Azure.Storage.Blobs.Perf.Options
         }
 
         [Option("clientEncryptionVersion")]
-        public string EncryptionVersionString { get; set; }
+        public ClientSideEncryptionVersion? EncryptionVersion { get; set; }
 
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
-        BlobClientOptions IBlobClientOptionsOptions.ClientOptions
+        BlobClientOptions IBlobClientOptionsProvider.ClientOptions
         {
             get {
-                static bool TryParseEncryptionVersion(
-                    string versionString,
-                    out ClientSideEncryptionVersion version)
-                {
-                    switch (versionString)
-                    {
-                        case "2.0":
-                            version = ClientSideEncryptionVersion.V2_0;
-                            return true;
-                        case "1.0":
-                            version = ClientSideEncryptionVersion.V1_0;
-                            return true;
-                        default:
-                            version = 0;
-                            return false;
-                    }
-                }
                 return new SpecializedBlobClientOptions
                 {
-                    ClientSideEncryption = TryParseEncryptionVersion(EncryptionVersionString, out ClientSideEncryptionVersion version)
-                        ? new ClientSideEncryptionOptions(version)
+                    ClientSideEncryption = EncryptionVersion.HasValue
+                        ? new ClientSideEncryptionOptions(EncryptionVersion.Value)
                         {
                             KeyEncryptionKey = new LocalKeyEncryptionKey(),
                             KeyWrapAlgorithm = "foo"

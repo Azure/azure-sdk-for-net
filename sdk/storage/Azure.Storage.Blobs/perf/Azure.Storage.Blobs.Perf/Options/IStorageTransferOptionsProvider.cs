@@ -3,7 +3,7 @@
 
 namespace Azure.Storage.Blobs.Perf.Options
 {
-    public interface IStorageTransferOptionsOptions
+    public interface IStorageTransferOptionsProvider
     {
         StorageTransferOptions StorageTransferOptions { get; }
     }

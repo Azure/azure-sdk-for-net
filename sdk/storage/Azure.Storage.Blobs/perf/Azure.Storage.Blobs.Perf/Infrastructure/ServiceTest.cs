@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Perf
 
         public ServiceTest(TOptions options) : base(options)
         {
-            BlobClientOptions clientOptions = options is Options.IBlobClientOptionsOptions clientOptionsOptions
+            BlobClientOptions clientOptions = options is Options.IBlobClientOptionsProvider clientOptionsOptions
                 ? clientOptionsOptions.ClientOptions
                 : new BlobClientOptions();
             BlobServiceClient = new BlobServiceClient(

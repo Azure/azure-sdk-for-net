@@ -3,7 +3,7 @@
 
 namespace Azure.Storage.Blobs.Perf.Options
 {
-    public interface IBlobClientOptionsOptions
+    public interface IBlobClientOptionsProvider
     {
         BlobClientOptions ClientOptions { get; }
     }
