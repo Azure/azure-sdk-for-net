@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
 using System;
-using System.Collections.Generic;
-//@@ using Azure.Communication.CallingServer;
-#endregion Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
 using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
