@@ -229,12 +229,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
-            DocumentModelInfo modelInfo = client.GetModelsAsync().ToEnumerableAsync().Result
+            DocumentModelSummary modelSummary = client.GetModelsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(m => m.ModelId == modelId);
 
-            Assert.NotNull(modelInfo);
+            Assert.NotNull(modelSummary);
 
-            ValidateDocumentModelInfo(modelInfo, description, TestingTags);
+            ValidateDocumentModelSummary(modelSummary, description, TestingTags);
 
             await client.DeleteModelAsync(modelId);
 
@@ -509,12 +509,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateDocumentModel(DocumentModel model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            ValidateDocumentModelInfo(model, description, tags);
+            ValidateDocumentModelSummary(model, description, tags);
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
         }
 
-        private void ValidateDocumentModelInfo(DocumentModelInfo model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModelSummary(DocumentModelSummary model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             if (description != null)
             {

@@ -371,10 +371,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Gets a collection of items describing the models available on this Cognitive Services Account.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelInfo"/> items.</returns>
-        public virtual Pageable<DocumentModelInfo> GetModels(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
+        public virtual Pageable<DocumentModelSummary> GetModels(CancellationToken cancellationToken = default)
         {
-            Page<DocumentModelInfo> FirstPageFunc(int? pageSizeHint)
+            Page<DocumentModelSummary> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
                 scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            Page<DocumentModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DocumentModelSummary> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
                 scope.Start();
@@ -415,10 +415,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Gets a collection of items describing the models available on this Cognitive Services Account.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A collection of <see cref="DocumentModelInfo"/> items.</returns>
-        public virtual AsyncPageable<DocumentModelInfo> GetModelsAsync(CancellationToken cancellationToken = default)
+        /// <returns>A collection of <see cref="DocumentModelSummary"/> items.</returns>
+        public virtual AsyncPageable<DocumentModelSummary> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DocumentModelInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DocumentModelSummary>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
                 scope.Start();
@@ -435,7 +435,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
 
-            async Task<Page<DocumentModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DocumentModelSummary>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(GetModels)}");
                 scope.Start();
