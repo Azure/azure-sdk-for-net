@@ -72,6 +72,20 @@ format-by-name-rules:
   'locations': 'azure-location'
   'azureLocation': 'azure-location'
   'azureLocations': 'azure-location'
+  'targetResourceId': 'arm-id'
+  'vNetExtendedLocationResourceId': 'arm-id'
+  'workspaceResourceId': 'arm-id'
+  'targetNicResourceId': 'arm-id'
+  'networkSecurityGroupId': 'arm-id'
+  'storageId': 'arm-id'
+  'vpnServerConfigurationResourceId': 'arm-id'
+  'routeTableId': 'arm-id'
+  'privateLinkServiceId': 'arm-id'
+  'resourceId': 'arm-id'
+  'serviceResources': 'arm-id'
+  'resourceGuid': 'uuid'
+  'targetResourceGuid': 'uuid'
+  'linkedResourceType': 'resource-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -125,7 +139,6 @@ directive:
     where: $.definitions
     transform: >
       $.BgpPeerStatus.properties.connectedDuration['x-ms-format'] = 'duration-constant';
-      $.VirtualNetworkGatewayPropertiesFormat.properties.vNetExtendedLocationResourceId['x-ms-format'] = 'arm-id';
   - from: network.json
     where: $.definitions
     transform: >
@@ -205,10 +218,6 @@ directive:
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
   - from: virtualWan.json
-    where: $.definitions
-    transform: >
-      $.VirtualWanVpnProfileParameters.properties.vpnServerConfigurationResourceId['x-ms-format'] = 'arm-id';
-  - from: virtualWan.json
     where: $.definitions.VpnServerConfigurationProperties.properties.name
     transform: 'return undefined'
     reason: The same property is defined in VpnServerConfiguration and service only returns value there.
@@ -216,18 +225,6 @@ directive:
     where: $.definitions.VpnServerConfigurationProperties.properties.etag
     transform: 'return undefined'
     reason: The same property is defined in VpnServerConfiguration and service only returns value there.
-  - from: swagger-document
-    where: $.definitions..resourceGuid
-    transform: >
-      $['format'] = 'uuid';
-  - from: swagger-document
-    where: $.definitions..targetResourceId
-    transform: >
-      $['x-ms-format'] = 'arm-id';
-  - from: swagger-document
-    where: $.definitions..resourceId
-    transform: >
-      $['x-ms-format'] = 'arm-id';
   - from: azureFirewall.json
     where: $.definitions
     transform: >
@@ -235,7 +232,6 @@ directive:
   - from: networkWatcher.json
     where: $.definitions
     transform: >
-      $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
       $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.PacketCaptureResult.properties.type = {
@@ -243,16 +239,6 @@ directive:
         'type': 'string',
         'description': 'Resource type.'
       };
-      $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
-      $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
-      $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
-      $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
-      $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
-      $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
-      $.PacketCaptureStorageLocation.properties.storageId['x-ms-format'] = 'arm-id';
-      $.TroubleshootingProperties.properties.storageId['x-ms-format'] = 'arm-id';
-      $.FlowLogProperties.properties.storageId['x-ms-format'] = 'arm-id';
-      $.FlowLogPropertiesFormat.properties.storageId['x-ms-format'] = 'arm-id';
   - from: usage.json
     where: $.definitions
     transform: >
@@ -260,8 +246,11 @@ directive:
   - from: virtualNetwork.json
     where: $.definitions
     transform: >
-        $.ServiceAssociationLinkPropertiesFormat.properties.linkedResourceType['x-ms-format'] = 'resource-type';
-        $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
+      $.VirtualNetworkUsage.properties.id['x-ms-format'] = 'arm-id';
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.VpnGatewayIpConfiguration.properties.id['x-ms-format'] = 'arm-id';
   - from: endpointService.json
     where: $.definitions
     transform: >
@@ -274,15 +263,6 @@ directive:
           'x-ms-format': 'arm-id'
       };
     reason: id should be read-only.
-# shorten 'privateLinkServiceConnectionState' property name
-  - from: privateEndpoint.json
-    where: $.definitions
-    transform: >
-      $.PrivateLinkServiceConnectionProperties.properties.privateLinkServiceId['x-ms-format'] = 'arm-id';
-  - from: serviceEndpointPolicy.json
-    where: $.definitions
-    transform: >
-      $.ServiceEndpointPolicyDefinitionPropertiesFormat.properties.serviceResources.items['x-ms-format'] = 'arm-id';
 
 ```
 
