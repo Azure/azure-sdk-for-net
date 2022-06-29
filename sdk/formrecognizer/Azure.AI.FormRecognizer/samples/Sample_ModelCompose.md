@@ -3,7 +3,7 @@
 Model compose allows multiple models to be composed and called with a single model ID. This is useful when you have created different models and want to aggregate a group of them into a single model that you (or a user) could use to analyze a document.
 When doing so, you can let the service decide which model more accurately represents the document, instead of manually trying each model against the document and selecting the most appropiate one.
 
-Please note that composed models can also be created using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
+Please note that models can also be composed using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -20,7 +20,7 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
 ```
 
-## Create a composed model
+## Compose a model
 In our case, we will be writing an application that collects the expenses a company is making. There are 4 main areas where we get purchase orders from (office supplies, office equipment, furniture, and cleaning supplies). Because each area has its own document with its own structure, we need to create a model per document type.
 
 ```C# Snippet:FormRecognizerSampleBuildVariousModels
@@ -58,9 +58,9 @@ Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.Wait
 DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
 ```
 
-When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can create a composed model that aggregates the previous models, and use that model in `StartAnalyzeDocument` and let the service decide which model fits best according to the document provided.
+When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can compose a model that aggregates the previous models, and use that model in `StartAnalyzeDocument` and let the service decide which model fits best according to the document provided.
 
-```C# Snippet:FormRecognizerSampleCreateComposedModel
+```C# Snippet:FormRecognizerSampleComposeModel
 List<string> modelIds = new List<string>()
 {
     officeSuppliesModel.ModelId,
@@ -80,7 +80,7 @@ Console.WriteLine($"  Created on: {purchaseOrderModel.CreatedOn}");
 ```
 
 To see the full example source files, see:
-* [Composed Model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_CreateComposedModelAsync.cs)
+* [Compose a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ComposeModelAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool

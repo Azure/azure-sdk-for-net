@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
-        public async Task CreateComposedModelAsync()
+        public async Task ComposeModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #endregion
 
-            #region Snippet:FormRecognizerSampleCreateComposedModel
+            #region Snippet:FormRecognizerSampleComposeModel
 
             List<string> modelIds = new List<string>()
             {
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 cleaningSuppliesModel.ModelId
             };
 
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, description: "Composed Purchase order");
+            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, description: "Composed Purchase order");
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel purchaseOrderModel = operationResponse.Value;
 

@@ -789,25 +789,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         #region Composed Model
 
         /// <summary>
-        /// Creates a composed model from a collection of existing models.
-        /// A composed model allows multiple models to be called with a single model ID. When a document is
-        /// submitted to be analyzed with a composed model ID, a classification step is first performed to
-        /// route it to the correct custom model.
+        /// Composes a model from a collection of existing models.
+        /// A model built by composition allows multiple models to be called with a single model ID. When a document is
+        /// submitted to be analyzed with its model ID, a classification step is first performed to route it to the correct
+        /// custom model.
         /// </summary>
-        /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
-        /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
+        /// <param name="componentModelIds">List of model ids to use in the composition.</param>
+        /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
-        /// completion will contain meta-data about the composed model.</para>
+        /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual BuildModelOperation StartCreateComposedModel(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation StartComposeModel(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCreateComposedModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartComposeModel)}");
             scope.Start();
 
             try
@@ -837,25 +837,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Creates a composed model from a collection of existing models.
-        /// A composed model allows multiple models to be called with a single model ID. When a document is
-        /// submitted to be analyzed with a composed model ID, a classification step is first performed to
-        /// route it to the correct custom model.
+        /// Composes a model from a collection of existing models.
+        /// A model built by composition allows multiple models to be called with a single model ID. When a document is
+        /// submitted to be analyzed with its model ID, a classification step is first performed to route it to the correct
+        /// custom model.
         /// </summary>
-        /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
-        /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
+        /// <param name="componentModelIds">List of model ids to use in the composition.</param>
+        /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
         /// <param name="description">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
-        /// completion will contain meta-data about the composed model.</para>
+        /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> StartCreateComposedModelAsync(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> StartComposeModelAsync(IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCreateComposedModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartComposeModel)}");
             scope.Start();
 
             try
