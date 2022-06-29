@@ -214,7 +214,7 @@ directive:
       $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
       $.Topology['x-ms-client-name'] = 'NetworkTopology';
       $.TopologyResource['x-ms-client-name'] = 'TopologyResourceInfo';
-      $.PacketCapture.properties.type = {
+      $.PacketCaptureResult.properties.type = {
         'readOnly': true,
         'type': 'string',
         'description': 'Resource type.'

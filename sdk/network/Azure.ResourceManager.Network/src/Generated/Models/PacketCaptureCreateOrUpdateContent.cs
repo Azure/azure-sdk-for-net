@@ -34,8 +34,6 @@ namespace Azure.ResourceManager.Network.Models
             Filters = new ChangeTrackingList<PacketCaptureFilter>();
         }
 
-        /// <summary> Resource type. </summary>
-        public string PacketCaptureType { get; }
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>
         public string Target { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
