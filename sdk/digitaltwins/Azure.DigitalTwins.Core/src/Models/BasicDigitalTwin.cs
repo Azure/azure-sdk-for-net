@@ -54,19 +54,16 @@ namespace Azure.DigitalTwins.Core
     ///             new BasicDigitalTwinComponent
     ///             {
     ///                 // writeable component metadata
-    ///                 Metadata = new DigitalTwinComponentMetadata
+    ///                 Metadata =  new Dictionary&lt;string, DigitalTwinPropertyMetadata&gt;
     ///                 {
-    ///                     PropertyMetadata = new Dictionary&lt;string, DigitalTwinPropertyMetadata&gt;
     ///                     {
+    ///                         &quot;ComponentProp2&quot;,
+    ///                         new DigitalTwinPropertyMetadata
     ///                         {
-    ///                             &quot;ComponentProp2&quot;,
-    ///                             new DigitalTwinPropertyMetadata
-    ///                             {
-    ///                                 // must always be serialized as ISO 8601
-    ///                                 SourceTime = DateTimeOffset.UtcNow,
-    ///                             }
+    ///                             // must always be serialized as ISO 8601
+    ///                             SourceTime = DateTimeOffset.UtcNow,
     ///                         }
-    ///                     },
+    ///                     }
     ///                 },
     ///                 // component properties
     ///                 Contents =
@@ -93,18 +90,15 @@ namespace Azure.DigitalTwins.Core
     /// string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
     /// var component1 = JsonSerializer.Deserialize&lt;BasicDigitalTwinComponent&gt;(component1RawText);
     ///
-    /// // Must cast Component1.Metadata as DigitalTwinComponentMetadata in order to access all metadata properties
-    /// var component1Metadata = component1.Metadata as DigitalTwinComponentMetadata;
-    ///
     /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
     ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
-    ///     $&quot;LastUpdatedOn: {basicDt.Metadata.LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t&quot; +
     ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
     ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].SourceTime}\n\t&quot; +
-    ///     $&quot;Component1.LastUpdatedOn: {component1Metadata.LastUpdatedOn}\n\t&quot; +
-    ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1Metadata.PropertyMetadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
-    ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
+    ///     $&quot;Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+    ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1.Metadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
     /// </code>
     /// </example>
     [JsonConverter(typeof(BasicDigitalTwinJsonConverter))]
@@ -151,18 +145,15 @@ namespace Azure.DigitalTwins.Core
         /// string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
         /// var component1 = JsonSerializer.Deserialize&lt;BasicDigitalTwinComponent&gt;(component1RawText);
         ///
-        /// // Must cast Component1.Metadata as DigitalTwinComponentMetadata in order to access all metadata properties
-        /// var component1Metadata = component1.Metadata as DigitalTwinComponentMetadata;
-        ///
         /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
         ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
         ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
-        ///     $&quot;LastUpdatedOn: {basicDt.Metadata.LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t&quot; +
         ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
         ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}, last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].SourceTime}\n\t&quot; +
-        ///     $&quot;Component1.LastUpdatedOn: {component1Metadata.LastUpdatedOn}\n\t&quot; +
-        ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1Metadata.PropertyMetadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
-        ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1Metadata.PropertyMetadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
+        ///     $&quot;Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]}, last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn} and sourced at: {component1.Metadata[&quot;ComponentProp2&quot;].SourceTime}&quot;);
         /// </code>
         /// </example>
 #pragma warning disable CA2227 // Collection properties should be readonly

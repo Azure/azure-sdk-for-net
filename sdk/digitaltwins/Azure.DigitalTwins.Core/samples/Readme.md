@@ -176,19 +176,16 @@ var basicTwin = new BasicDigitalTwin
             new BasicDigitalTwinComponent
             {
                 // writeable component metadata
-                Metadata = new DigitalTwinComponentMetadata
+                Metadata =  new Dictionary<string, DigitalTwinPropertyMetadata>
                 {
-                    PropertyMetadata = new Dictionary<string, DigitalTwinPropertyMetadata>
                     {
+                        "ComponentProp2",
+                        new DigitalTwinPropertyMetadata
                         {
-                            "ComponentProp2",
-                            new DigitalTwinPropertyMetadata
-                            {
-                                // must always be serialized as ISO 8601
-                                SourceTime = DateTimeOffset.UtcNow,
-                            }
+                            // must always be serialized as ISO 8601
+                            SourceTime = DateTimeOffset.UtcNow,
                         }
-                    },
+                    }
                 },
                 // component properties
                 Contents =
@@ -240,18 +237,15 @@ BasicDigitalTwin basicDt = getBasicDtResponse.Value;
 string component1RawText = ((JsonElement)basicDt.Contents["Component1"]).GetRawText();
 var component1 = JsonSerializer.Deserialize<BasicDigitalTwinComponent>(component1RawText);
 
-// Must cast Component1.Metadata as DigitalTwinComponentMetadata in order to access all metadata properties
-var component1Metadata = component1.Metadata as DigitalTwinComponentMetadata;
-
 Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
     $"ETag: {basicDt.ETag}\n\t" +
     $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
-    $"LastUpdatedOn: {basicDt.Metadata.LastUpdatedOn}\n\t" +
+    $"LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t" +
     $"Prop1: {basicDt.Contents["Prop1"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
     $"Prop2: {basicDt.Contents["Prop2"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata["Prop2"].SourceTime}\n\t" +
-    $"Component1.LastUpdatedOn: {component1Metadata.LastUpdatedOn}\n\t" +
-    $"Component1.Prop1: {component1.Contents["ComponentProp1"]}, last updated on: {component1Metadata.PropertyMetadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-    $"Component1.Prop2: {component1.Contents["ComponentProp2"]}, last updated on: {component1Metadata.PropertyMetadata["ComponentProp2"].LastUpdatedOn} and sourced at: {component1Metadata.PropertyMetadata["ComponentProp2"].SourceTime}");
+    $"Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t" +
+    $"Component1.Prop1: {component1.Contents["ComponentProp1"]}, last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop2: {component1.Contents["ComponentProp2"]}, last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn} and sourced at: {component1.Metadata["ComponentProp2"].SourceTime}");
 ```
 
 Getting and deserializing a digital twin into a custom data type is extremely easy.

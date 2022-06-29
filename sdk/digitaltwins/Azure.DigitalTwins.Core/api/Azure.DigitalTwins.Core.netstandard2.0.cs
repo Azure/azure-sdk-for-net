@@ -9,6 +9,8 @@ namespace Azure.DigitalTwins.Core
         public Azure.ETag? ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
@@ -17,6 +19,8 @@ namespace Azure.DigitalTwins.Core
         public BasicDigitalTwinComponent() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Metadata { get { throw null; } set { } }
     }
@@ -36,34 +40,9 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$targetId")]
         public string TargetId { get { throw null; } set { } }
     }
-    public partial class DigitalTwinComponentMetadata : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata>>, System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata>>, System.Collections.IEnumerable
-    {
-        public DigitalTwinComponentMetadata() { }
-        public int Count { get { throw null; } }
-        public bool IsReadOnly { get { throw null; } }
-        public Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata this[string key] { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
-        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> PropertyMetadata { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Values { get { throw null; } }
-        public void Add(System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> item) { }
-        public void Add(string key, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata value) { }
-        public void Clear() { }
-        public bool Contains(System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> item) { throw null; }
-        public bool ContainsKey(string key) { throw null; }
-        public void CopyTo(System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata>[] array, int arrayIndex) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata>> GetEnumerator() { throw null; }
-        public bool Remove(System.Collections.Generic.KeyValuePair<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> item) { throw null; }
-        public bool Remove(string key) { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, out Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata value) { throw null; }
-    }
     public partial class DigitalTwinMetadata
     {
         public DigitalTwinMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
-        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
         public string ModelId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> PropertyMetadata { get { throw null; } set { } }
@@ -138,8 +117,7 @@ namespace Azure.DigitalTwins.Core
         public enum ServiceVersion
         {
             V2020_10_31 = 1,
-            V2021_06_30_Preview = 2,
-            V2022_05_31 = 3,
+            V2022_05_31 = 2,
         }
     }
     public partial class DigitalTwinsEventRoute
