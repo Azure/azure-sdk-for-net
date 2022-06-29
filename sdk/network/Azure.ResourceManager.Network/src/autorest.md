@@ -21,6 +21,9 @@ resource-model-requires-type: false
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
+  PacketCapture: PacketCaptureInput
+  PacketCaptureResult: PacketCapture
+
 
 debug: true
 
@@ -72,19 +75,6 @@ override-operation-name:
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
 
 directive:
-#   networkWatcher.json:
-#  - rename-model:
-#      from: ConnectionMonitor
-#      to: ConnectionMonitorInput
-#  - rename-model:
-#      from: ConnectionMonitorResult
-#      to: ConnectionMonitor
-  - rename-model:
-      from: PacketCapture
-      to: PacketCaptureInput
-  - rename-model:
-      from: PacketCaptureResult
-      to: PacketCapture
   - remove-operation: 'PutBastionShareableLink'
   - remove-operation: 'DeleteBastionShareableLink'
   - remove-operation: 'GetBastionShareableLink'

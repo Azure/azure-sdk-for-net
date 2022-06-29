@@ -4397,20 +4397,20 @@ namespace Azure.ResourceManager.Network
         }
         #endregion
 
-        #region ConnectionMonitorResultResource
+        #region ConnectionMonitorResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectionMonitorResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectionMonitorResultResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectionMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectionMonitorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectionMonitorResultResource" /> object. </returns>
-        public static ConnectionMonitorResultResource GetConnectionMonitorResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectionMonitorResource" /> object. </returns>
+        public static ConnectionMonitorResource GetConnectionMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConnectionMonitorResultResource.ValidateResourceId(id);
-                return new ConnectionMonitorResultResource(client, id);
+                ConnectionMonitorResource.ValidateResourceId(id);
+                return new ConnectionMonitorResource(client, id);
             }
             );
         }

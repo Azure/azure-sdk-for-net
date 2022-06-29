@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorResultCreateOrUpdateContent content, string migrate)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorResultCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorResultCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionMonitorResultData>> GetAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectionMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ConnectionMonitorResultData value = default;
+                        ConnectionMonitorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionMonitorResultData.DeserializeConnectionMonitorResultData(document.RootElement);
+                        value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionMonitorResultData)null, message.Response);
+                    return Response.FromValue((ConnectionMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionMonitorResultData> Get(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
+        public Response<ConnectionMonitorData> Get(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ConnectionMonitorResultData value = default;
+                        ConnectionMonitorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionMonitorResultData.DeserializeConnectionMonitorResultData(document.RootElement);
+                        value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ConnectionMonitorResultData)null, message.Response);
+                    return Response.FromValue((ConnectionMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="tagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionMonitorResultData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectionMonitorData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ConnectionMonitorResultData value = default;
+                        ConnectionMonitorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionMonitorResultData.DeserializeConnectionMonitorResultData(document.RootElement);
+                        value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/>, <paramref name="connectionMonitorName"/> or <paramref name="tagsObject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionMonitorResultData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response<ConnectionMonitorData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        ConnectionMonitorResultData value = default;
+                        ConnectionMonitorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ConnectionMonitorResultData.DeserializeConnectionMonitorResultData(document.RootElement);
+                        value = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

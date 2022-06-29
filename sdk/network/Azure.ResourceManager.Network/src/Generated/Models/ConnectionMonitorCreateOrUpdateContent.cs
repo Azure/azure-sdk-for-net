@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the operation to create a connection monitor. </summary>
-    public partial class ConnectionMonitorResultCreateOrUpdateContent
+    public partial class ConnectionMonitorCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorResultCreateOrUpdateContent. </summary>
-        public ConnectionMonitorResultCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of ConnectionMonitorCreateOrUpdateContent. </summary>
+        public ConnectionMonitorCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
