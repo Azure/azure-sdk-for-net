@@ -11,7 +11,7 @@ namespace Azure.Core
 {
     internal class MultipartSection
     {
-        public Dictionary<string, string[]> Headers { get; set; }
+        public Dictionary<string, string[]>? Headers { get; set; }
 
         /// <summary>
         /// Gets or sets the body.

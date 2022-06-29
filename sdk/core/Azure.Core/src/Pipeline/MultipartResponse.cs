@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 #nullable disable
 
@@ -20,7 +21,7 @@ namespace Azure.Core
     /// including https://www.odata.org/documentation/odata-version-3-0/batch-processing/
     /// and https://www.ietf.org/rfc/rfc2046.txt.
     /// </summary>
-    internal static class Multipart
+    public static class MultipartResponse
     {
         private const int KB = 1024;
         private const int ResponseLineSize = 4 * KB;
@@ -38,8 +39,39 @@ namespace Azure.Core
         /// <summary>
         /// Parse a multipart/mixed response body into several responses.
         /// </summary>
-        /// <param name="batchContent">The response content.</param>
-        /// <param name="batchContentType">The response content type.</param>
+        /// <param name="response">The response containing multi-part content.</param>
+        /// <param name="expectCrLf">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>The parsed <see cref="Response"/>s.</returns>
+        public static Response[] Parse(
+            Response response,
+            bool expectCrLf,
+            CancellationToken cancellationToken) =>
+                ParseAsync(response, expectCrLf, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Parse a multipart/mixed response body into several responses.
+        /// </summary>
+        /// <param name="response">The response containing multi-part content.</param>
+        /// <param name="expectCrLf">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>The parsed <see cref="Response"/>s.</returns>
+        public static async Task<Response[]> ParseAsync(
+            Response response,
+            bool expectCrLf,
+            CancellationToken cancellationToken) =>
+                await ParseAsync(response, expectCrLf, true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Parse a multipart/mixed response body into several responses.
+        /// </summary>
+        /// <param name="parentResponse">The response containing multi-part content.</param>
         /// <param name="expectBoundariesWithCRLF">Controls whether the parser will expect all multi-part boundaries to use CRLF line breaks. This should be true unless more permissive line break parsing is required.</param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -50,12 +82,14 @@ namespace Azure.Core
         /// </param>
         /// <returns>The parsed <see cref="Response"/>s.</returns>
         internal static async Task<Response[]> ParseAsync(
-            Stream batchContent,
-            string batchContentType,
+            Response parentResponse,
             bool expectBoundariesWithCRLF,
             bool async,
             CancellationToken cancellationToken)
         {
+            Stream batchContent = parentResponse.ContentStream;
+            string batchContentType = parentResponse.Headers.ContentType;
+
             // Get the batch boundary
             if (!GetBoundary(batchContentType, out string batchBoundary))
             {
@@ -82,7 +116,7 @@ namespace Azure.Core
                         GetBoundary(contentTypeValues[0], out string subBoundary))
                 {
                     // ExpectBoundariesWithCRLF should always be true for the Body.
-                    reader = new MultipartReader(subBoundary, section.Body){ ExpectBoundariesWithCRLF = true };
+                    reader = new MultipartReader(subBoundary, section.Body) { ExpectBoundariesWithCRLF = true };
                     continue;
                 }
                 // Get the Content-ID header
@@ -100,6 +134,9 @@ namespace Azure.Core
 
                 // Build a response
                 MemoryResponse response = new MemoryResponse();
+                response.RequestFailedDetailsParser = parentResponse.RequestFailedDetailsParser;
+                response.Sanitizer = parentResponse.Sanitizer;
+
                 if (contentIdFound)
                 {
                     // track responses by Content-ID
@@ -145,7 +182,7 @@ namespace Azure.Core
                 var responseContent = new MemoryStream();
                 if (async)
                 {
-                    await body.CopyToAsync(responseContent).ConfigureAwait(false);
+                    await body.CopyToAsync(responseContent, (int)body.Length, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
