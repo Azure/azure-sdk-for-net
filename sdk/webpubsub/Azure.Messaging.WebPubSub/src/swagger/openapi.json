@@ -39,7 +39,340 @@
     }
   ],
   "paths": {
-    
+    "/api/hubs/{hub}/:closeConnections": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_closeAllConnections",
+        "summary": "Close the connections in the hub.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "description": "Exclude these connectionIds when closing the connections in the hub.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": false,
+            "description": "The reason closing the client connection.",
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/:generateToken": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_generateClientToken",
+        "summary": "Close connections in the specific user.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "description": "The user Id.",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "description": "Roles that the connection with the generated token will have.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minutesToExpire",
+            "in": "query",
+            "required": false,
+            "description": "The expire time of the generated token.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/:send": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_sendToAll",
+        "summary": "Broadcast content inside request body to all the connected client connections.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "description": "Excluded connection Ids.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "body",
+            "required": true,
+            "description": "The payload body.",
+            "schema": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The request has been received but not yet acted upon."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/connections/{connectionId}": {
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_connectionExists",
+        "summary": "Check if the connection with the given connectionId exists.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "The connection Id.",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "404": {
+            "description": "The server can not find the requested resource."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_closeConnection",
+        "summary": "Close the client connection.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "Target connection Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": false,
+            "description": "The reason closing the client connection.",
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/groups/{group}/:closeConnections": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_closeGroupConnections",
+        "summary": "Close connections in the specific group.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "in": "path",
+            "required": true,
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "minLength": 1,
+            "maxLength": 1024,
+            "type": "string"
+          },
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "description": "Exclude these connectionIds when closing the connections in the group.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": false,
+            "description": "The reason closing the client connection.",
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
     "/api/hubs/{hub}/groups/{group}/connections/{connectionId}": {
       "put": {
         "tags": [
@@ -195,6 +528,7 @@
             "name": "targetName",
             "in": "query",
             "required": false,
+            "description": "The meaning of the target depends on the specific permission. For joinLeaveGroup and sendToGroup, targetName is a required parameter standing for the group name.",
             "type": "string"
           }
         ],
@@ -204,6 +538,135 @@
           },
           "404": {
             "description": "The server can not find the requested resource."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_grantPermission",
+        "summary": "Grant permission to the connection.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "permission",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "sendToGroup",
+              "joinLeaveGroup"
+            ],
+            "x-ms-enum": {
+              "name": "WebPubSubPermission",
+              "modelAsString": false
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "description": "Target connection Id",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          },
+          {
+            "name": "targetName",
+            "in": "query",
+            "required": false,
+            "description": "The meaning of the target depends on the specific permission. For joinLeaveGroup and sendToGroup, targetName is a required parameter standing for the group name.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "404": {
+            "description": "The server can not find the requested resource."
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/ErrorDetail"
+            }
+          }
+        }
+      }
+    },
+    "/api/hubs/{hub}/users/{userId}/:closeConnections": {
+      "post": {
+        "tags": [
+          "webpubsub"
+        ],
+        "operationId": "WebPubSubService_closeUserConnections",
+        "summary": "Close connections in the specific user.",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The user Id.",
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "name": "excluded",
+            "in": "query",
+            "required": false,
+            "description": "Exclude these connectionIds when closing the connections in the group.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": false,
+            "description": "The reason closing the client connection.",
+            "type": "string"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "description": "The version of the REST APIs.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Http response with status code"
           },
           "default": {
             "description": "An unexpected error response",
