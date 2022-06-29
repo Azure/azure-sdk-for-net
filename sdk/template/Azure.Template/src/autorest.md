@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- $(this-folder)/swagger/mini-secrets.json
-namespace: Azure.Template
+- $(this-folder)/swagger/openapi.json
+namespace: Azure.AI.TextAnalytics
 security: AADToken
 security-scopes: https://vault.azure.net/.default
 ```
