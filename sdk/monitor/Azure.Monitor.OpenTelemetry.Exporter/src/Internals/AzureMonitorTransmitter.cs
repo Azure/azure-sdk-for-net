@@ -120,8 +120,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                         if (result == ExportResult.Success)
                         {
-                            blob.TryDelete();
                             AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
+
+                            // In case if the delete fails, there is a possibility
+                            // that the current batch will be transmitted more than once resulting in duplicates.
+                            blob.TryDelete();
                         }
                         else
                         {
