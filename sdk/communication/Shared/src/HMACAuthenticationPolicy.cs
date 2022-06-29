@@ -17,8 +17,8 @@ namespace Azure.Communication.Pipeline
         private readonly String DATE_HEADER_NAME = "x-ms-date";
         private readonly AzureKeyCredential _keyCredential;
 
-        public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
-            => _keyCredential = keyCredential;
+		public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
+			=> _keyCredential = keyCredential;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
