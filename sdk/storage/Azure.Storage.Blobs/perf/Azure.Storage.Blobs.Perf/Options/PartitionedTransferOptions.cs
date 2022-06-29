@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Azure.Storage.Blobs.Perf.Infrastructure;
 using Azure.Storage.Blobs.Perf.Infrastructure.Models.ClientSideEncryption;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Test.Perf;
@@ -10,7 +8,7 @@ using CommandLine;
 
 namespace Azure.Storage.Blobs.Perf.Options
 {
-    public class StorageTransferOptionsOptions : SizeOptions, IBlobClientOptionsOptions
+    public class PartitionedTransferOptions : SizeOptions, IBlobClientOptionsOptions, IStorageTransferOptionsOptions
     {
         private int? _maximumTransferLength;
         private int? _maximumConcurrency;
