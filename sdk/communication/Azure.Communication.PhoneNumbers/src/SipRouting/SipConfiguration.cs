@@ -13,6 +13,12 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     internal partial class SipConfiguration
     {
         /// <summary>
+        /// Domains for routing calls.
+        /// Map key is trunk&apos;s FQDN (1-249 characters).
+        /// </summary>
+        internal IReadOnlyDictionary<string, SipDomain> Domains { get; }
+
+        /// <summary>
         /// SIP trunks for routing calls.
         /// Map key is trunk&apos;s FQDN (1-249 characters).
         /// </summary>
@@ -20,6 +26,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         /// <summary> Trunk routes for routing calls. </summary>
         internal IReadOnlyList<SipTrunkRoute> Routes { get; }
+
+        internal SipConfiguration(IDictionary<string, SipDomain> domains)
+        {
+            Domains = new ReadOnlyDictionary<string, SipDomain>(domains);
+        }
 
         internal SipConfiguration(IDictionary<string, SipTrunk> trunks)
         {
@@ -36,6 +47,25 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         internal void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Domains != null)
+            {
+                writer.WritePropertyName("domains");
+                writer.WriteStartObject();
+
+                foreach (KeyValuePair<string, SipDomain> item in Domains)
+                {
+                    if (item.Value != null)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNull(item.Key);
+                    }
+                }
+                writer.WriteEndObject();
+            }
             if (Trunks != null)
             {
                 writer.WritePropertyName("trunks");
@@ -71,10 +101,26 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         internal static SipConfiguration DeserializeSipConfiguration(JsonElement element)
         {
+            Optional<IReadOnlyDictionary<string, SipDomain>> domains = default;
             Optional<IReadOnlyDictionary<string, SipTrunk>> trunks = default;
             Optional<IReadOnlyList<SipTrunkRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("domains"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, SipDomain> dictionary = new Dictionary<string, SipDomain>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, SipDomain.DeserializeSipDomain(property0.Value));
+                    }
+                    domains = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("trunks"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,7 +163,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     continue;
                 }
             }
-            return new SipConfiguration(Optional.ToDictionary(trunks), Optional.ToList(routes));
+            return new SipConfiguration(Optional.ToDictionary(domains), Optional.ToDictionary(trunks), Optional.ToList(routes));
         }
     }
 }

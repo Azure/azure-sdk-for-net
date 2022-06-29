@@ -16,6 +16,17 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Domains))
+            {
+                writer.WritePropertyName("domains");
+                writer.WriteStartObject();
+                foreach (var item in Domains)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsCollectionDefined(Trunks))
             {
                 writer.WritePropertyName("trunks");

@@ -17,43 +17,36 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     internal partial class SipRoutingRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of SipRoutingRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SipRoutingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-05-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public SipRoutingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-09-01-preview")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetSipConfigurationRequest()
+        internal HttpMessage CreateGetRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/sip", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -61,9 +54,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         /// <summary> Gets SIP configuration for resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SipConfiguration>> GetSipConfigurationAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<SipConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSipConfigurationRequest();
+            using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -75,15 +68,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets SIP configuration for resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SipConfiguration> GetSipConfiguration(CancellationToken cancellationToken = default)
+        public Response<SipConfiguration> Get(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSipConfigurationRequest();
+            using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -95,16 +88,37 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
+        }
+
+        internal HttpMessage CreatePatchRequest(SipConfiguration body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/sip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/merge-patch+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
         }
 
         /// <summary> Patches SIP configuration for resource. </summary>
         /// <param name="body"> Configuration patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SipConfiguration>> PatchSipConfigurationAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SipConfiguration>> PatchAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchSipConfigurationRequest(body);
+            using var message = CreatePatchRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -116,16 +130,16 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Patches SIP configuration for resource. </summary>
         /// <param name="body"> Configuration patch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SipConfiguration> PatchSipConfiguration(SipConfiguration body = null, CancellationToken cancellationToken = default)
+        public Response<SipConfiguration> Patch(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePatchSipConfigurationRequest(body);
+            using var message = CreatePatchRequest(body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -137,7 +151,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }
