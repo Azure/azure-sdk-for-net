@@ -12,15 +12,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 {
 
     /// <summary>
-    /// Defines values for EventChannelProvisioningState.
+    /// Defines values for TopicTypeSourceScope.
     /// </summary>
-    public static class EventChannelProvisioningState
+    public static class TopicTypeSourceScope
     {
-        public const string Creating = "Creating";
-        public const string Updating = "Updating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Canceled = "Canceled";
-        public const string Failed = "Failed";
+        public const string Resource = "Resource";
+        public const string ResourceGroup = "ResourceGroup";
+        public const string AzureSubscription = "AzureSubscription";
+        public const string ManagementGroup = "ManagementGroup";
     }
 }
