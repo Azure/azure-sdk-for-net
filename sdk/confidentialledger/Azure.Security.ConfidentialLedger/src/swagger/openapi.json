@@ -400,6 +400,41 @@
           }
         }
       }
+    },
+    "/ledgerIdentity/{ledgerId}": {
+      "get": {
+        "operationId": "ConfidentialLedgerIdentityService_GetLedgerIdentity",
+        "summary": "Gets identity information for a Confidential Ledger instance.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "name": "ledgerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the Confidential Ledger instance to get information for",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
