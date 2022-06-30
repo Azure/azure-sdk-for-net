@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IkeV2Value = "IkeV2";
+        private const string Ikev2Value = "IkeV2";
         private const string SstpValue = "SSTP";
         private const string OpenVpnValue = "OpenVPN";
 
         /// <summary> IkeV2. </summary>
-        public static VpnClientProtocol IkeV2 { get; } = new VpnClientProtocol(IkeV2Value);
+        public static VpnClientProtocol Ikev2 { get; } = new VpnClientProtocol(Ikev2Value);
         /// <summary> SSTP. </summary>
         public static VpnClientProtocol Sstp { get; } = new VpnClientProtocol(SstpValue);
         /// <summary> OpenVPN. </summary>

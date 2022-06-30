@@ -121,6 +121,9 @@ rename-rules:
   ANY: Any
   LOA: Loa
   P2S: P2s
+  IKEv1: Ikev1
+  IKEv2: Ikev2
+  IkeV2: Ikev2
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -205,10 +208,6 @@ directive:
         { value: 'PFS24',       name: 'Pfs24' },
         { value: 'PFS14',       name: 'Pfs14' },
         { value: 'PFSMM',       name: 'Pfs' }
-      ];
-      $.ConnectionProtocol['x-ms-enum']['values'] = [
-        { value: 'IKEv2',       name: 'Ikev2' },
-        { value: 'IKEv1',       name: 'Ikev1' }
       ];
   - from: network.json
     where: $.definitions
