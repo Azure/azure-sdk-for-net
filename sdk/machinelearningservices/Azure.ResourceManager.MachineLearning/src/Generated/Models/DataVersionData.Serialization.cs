@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class DataVersionBaseData : IUtf8JsonSerializable
+    public partial class DataVersionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteEndObject();
         }
 
-        internal static DataVersionBaseData DeserializeDataVersionBaseData(JsonElement element)
+        internal static DataVersionData DeserializeDataVersionData(JsonElement element)
         {
-            DataVersionBaseProperties properties = default;
+            DataVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = DataVersionBaseProperties.DeserializeDataVersionBaseProperties(property.Value);
+                    properties = DataVersionProperties.DeserializeDataVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new DataVersionBaseData(id, name, type, systemData.Value, properties);
+            return new DataVersionData(id, name, type, systemData.Value, properties);
         }
     }
 }
