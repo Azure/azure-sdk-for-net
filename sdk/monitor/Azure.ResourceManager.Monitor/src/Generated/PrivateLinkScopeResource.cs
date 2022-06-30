@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the PrivateLinkScope. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkCollection GetPrivateLinks()
+        /// <summary> Gets a collection of MonitorPrivateLinkResources in the PrivateLinkScope. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkResources and their operations over a MonitorPrivateLinkResource. </returns>
+        public virtual MonitorPrivateLinkResourceCollection GetMonitorPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PrivateLinkCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkResource>> GetMonitorPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateLinks().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLink(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkResource> GetMonitorPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinks().Get(groupName, cancellationToken);
+            return GetMonitorPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorPrivateEndpointConnectionResources in the PrivateLinkScope. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class PrivateLinkData : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkData DeserializePrivateLinkData(JsonElement element)
+        internal static MonitorPrivateLinkResourceData DeserializeMonitorPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new PrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers));
+            return new MonitorPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers));
         }
     }
 }

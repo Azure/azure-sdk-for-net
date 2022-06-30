@@ -43,13 +43,16 @@ rename-rules:
   URI: Uri
   Etag: ETag
 
+rename-mapping:
+  MetricTrigger.metricResourceUri: metricResourceId
+  AutoscaleSetting: AutoscaleSettingProperties
+  AutoscaleSettingResource: AutoscaleSetting
+  AutoscaleSettingResource.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
+  AzureMonitorPrivateLinkScope: PrivateLinkScope
+  ScopedResource: ScopedPrivateLink
+
 directive:
-  - from: autoscale_API.json
-    where: $.definitions.MetricTrigger.properties.metricResourceUri
-    transform: $["x-ms-client-name"] = "metricResourceId"
-  - from: autoscale_API.json
-    where: $.definitions.AutoscaleSetting.properties.targetResourceUri
-    transform: $["x-ms-client-name"] = "targetResourceId"
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
     transform: >
@@ -67,15 +70,6 @@ directive:
     transform: >
         $["x-nullable"] = true;
   - rename-model:
-      from: AzureMonitorPrivateLinkScope
-      to: PrivateLinkScope
-  - rename-model:
-      from: ScopedResource
-      to: ScopedPrivateLink
-  - rename-model:
-      from: PrivateLinkResource
-      to: PrivateLink
-  - rename-model:
       from: MetricAlertResource
       to: MetricAlert
   - from: swagger-document
@@ -90,9 +84,6 @@ directive:
           ],
           "x-ms-client-flatten": false
         }
-#   - rename-model:
-#       from: DataCollectionRuleAssociation
-#       to: DataCollectionRuleAssociationProperties
   - from: swagger-document
     where: $.definitions.DataCollectionRuleAssociation
     transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
@@ -117,12 +108,12 @@ directive:
   - rename-model:
       from: AlertRuleResource
       to: AlertRule
-  - rename-model:
-      from: AutoscaleSetting
-      to: AutoscaleSettingProperties
-  - rename-model:
-      from: AutoscaleSettingResource
-      to: AutoscaleSetting
+#   - rename-model:
+#       from: AutoscaleSetting
+#       to: AutoscaleSettingProperties
+#   - rename-model:
+#       from: AutoscaleSettingResource
+#       to: AutoscaleSetting
   - rename-model:
       from: Action
       to: MonitorAction
@@ -174,9 +165,6 @@ directive:
           ],
           "x-ms-client-flatten": false
         }
-#   - rename-model:
-#       from: DataCollectionEndpoint
-#       to: DataCollectionEndpointProperties
   - from: swagger-document
     where: $.definitions.DataCollectionEndpoint
     transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
@@ -195,9 +183,6 @@ directive:
           ],
           "x-ms-client-flatten": false
         }
-#   - rename-model:
-#       from: DataCollectionRule
-#       to: DataCollectionRuleProperties
   - from: swagger-document
     where: $.definitions.DataCollectionRule
     transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
@@ -228,12 +213,10 @@ directive:
   - rename-model:
       from: VMInsightsOnboardingStatus
       to: VmInsightsOnboardingStatus
-#   - rename-model:
-#       from: Resource
-#       to: MonitorResource
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
+    ## this is just renaming a property from resourceUri to resourceId, but this is not correct.
   - from: swagger-document
     where: $.definitions.RuleDataSource.properties
     transform:  >

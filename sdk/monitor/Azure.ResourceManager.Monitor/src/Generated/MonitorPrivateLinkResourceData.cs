@@ -11,23 +11,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the PrivateLink data model. </summary>
-    public partial class PrivateLinkData : ResourceData
+    /// <summary> A class representing the MonitorPrivateLinkResource data model. </summary>
+    public partial class MonitorPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
-        public PrivateLinkData()
+        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceData. </summary>
+        public MonitorPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        internal PrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers) : base(id, name, resourceType, systemData)
+        internal MonitorPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

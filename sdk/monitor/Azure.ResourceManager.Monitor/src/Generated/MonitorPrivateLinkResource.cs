@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a PrivateLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkScopeResource" /> using the GetPrivateLink method.
+    /// A Class representing a MonitorPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateLinkResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkScopeResource" /> using the GetMonitorPrivateLinkResource method.
     /// </summary>
-    public partial class PrivateLinkResource : ArmResource
+    public partial class MonitorPrivateLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MonitorPrivateLinkResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateLinkPrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkPrivateLinkResourcesRestClient;
-        private readonly PrivateLinkData _data;
+        private readonly ClientDiagnostics _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _monitorPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly MonitorPrivateLinkResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class for mocking. </summary>
-        protected PrivateLinkResource()
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkResource"/> class for mocking. </summary>
+        protected MonitorPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, PrivateLinkData data) : this(client, data.Id)
+        internal MonitorPrivateLinkResource(ArmClient client, MonitorPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
-            _privateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkPrivateLinkResourcesApiVersion);
+            _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string monitorPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _monitorPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkResourcePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateLinkData Data
+        public virtual MonitorPrivateLinkResourceData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -1203,20 +1203,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region PrivateLinkResource
+        #region MonitorPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
+        public static MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkResource.ValidateResourceId(id);
-                return new PrivateLinkResource(client, id);
+                MonitorPrivateLinkResource.ValidateResourceId(id);
+                return new MonitorPrivateLinkResource(client, id);
             }
             );
         }
