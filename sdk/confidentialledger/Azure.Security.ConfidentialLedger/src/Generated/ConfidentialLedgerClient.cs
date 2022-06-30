@@ -41,117 +41,6 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionArray</c>:
-        /// <code>{
-        ///   items: [
-        ///     {
-        ///       collectionId: string, # Required.
-        ///     }
-        ///   ], # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetCollectionsAsync(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCollections");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCollectionsRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>CollectionArray</c>:
-        /// <code>{
-        ///   items: [
-        ///     {
-        ///       collectionId: string, # Required.
-        ///     }
-        ///   ], # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetCollections(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCollections");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCollectionsRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetEnclaveQuotes(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -224,6 +113,118 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateGetConsortiumMembersRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+
+        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEnclaveQuotes(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEnclaveQuotesRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionArray</c>:
+        /// <code>{
+        ///   items: [
+        ///     {
+        ///       collectionId: string, # Required.
+        ///     }
+        ///   ], # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetCollectionsAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCollections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionsRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Collection ids are user-created collections of ledger entries. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionArray</c>:
+        /// <code>{
+        ///   items: [
+        ///     {
+        ///       collectionId: string, # Required.
+        ///     }
+        ///   ], # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetCollections(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCollections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionsRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -679,33 +680,8 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        internal HttpMessage CreateGetCollectionsRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerUri);
-            uri.AppendPath("/app/collections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
 
-        internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerUri);
-            uri.AppendPath("/app/enclaveQuotes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
+
 
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
@@ -734,6 +710,35 @@ namespace Azure.Security.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerUri);
+            uri.AppendPath("/app/enclaveQuotes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerUri);
+            uri.AppendPath("/app/collections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
 
         internal HttpMessage CreatePostLedgerEntryRequest(RequestContent content, string collectionId, RequestContext context)
         {
