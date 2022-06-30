@@ -13,7 +13,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -77,8 +76,21 @@ rename-mapping:
   ActivityLogAlertResource: ActivityLogAlert
   AlertRule: AlertRuleProperties
   AlertRuleResource: AlertRule
+  DataCollectionEndpoint: DataCollectionEndpointProperties
+  DataCollectionEndpointResource: DataCollectionEndpoint
+  DataCollectionRule: DataCollectionRuleProperties
+  DataCollectionRuleResource: DataCollectionRule
+  DiagnosticSettingsCategory: DiagnosticSettingsCategoryProperties
+  DiagnosticSettingsCategoryResource: DiagnosticSettingsCategory
+  LogProfileResource: LogProfile
+  LogSearchRule: LogSearchRuleProperties
+  LogSearchRuleResource: LogSearchRule
+  RuleDataSource.resourceUri: resourceId
+  RuleMetricDataSource.resourceUri: resourceId
+  RuleManagementEventDataSource.resourceUri: resourceId
 
 directive:
+  # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
     transform: >
@@ -95,90 +107,11 @@ directive:
     where: $.definitions.AutoscaleSetting.properties.notifications
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
-    where: $.definitions.DataCollectionEndpointResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionEndpoint"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-  - from: swagger-document
-    where: $.definitions.DataCollectionEndpoint
-    transform: $["x-ms-client-name"] = "DataCollectionEndpointProperties"
-  - rename-model:
-      from: DataCollectionEndpointResource
-      to: DataCollectionEndpoint
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRule"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-  - from: swagger-document
-    where: $.definitions.DataCollectionRule
-    transform: $["x-ms-client-name"] = "DataCollectionRuleProperties"
-  - rename-model:
-      from: DataCollectionRuleResource
-      to: DataCollectionRule
-  - rename-model:
-      from: DiagnosticSettingsCategory
-      to: DiagnosticSettingsCategoryProperties
-  - rename-model:
-      from: DiagnosticSettingsCategoryResource
-      to: DiagnosticSettingsCategory
-  - rename-model:
-      from: LogProfileResource
-      to: LogProfile
-  - rename-model:
-      from: LogSearchRule
-      to: LogSearchRuleProperties
-  - rename-model:
-      from: LogSearchRuleResource
-      to: LogSearchRule
+  # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
-    ## this is just renaming a property from resourceUri to resourceId, but this is not correct.
-  - from: swagger-document
-    where: $.definitions.RuleDataSource.properties
-    transform:  >
-        $ = {
-          "odata.type": {
-            "type": "string",
-            "description": "specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource"
-          },
-          "resourceId": {
-            "type": "string",
-            "description": "the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
-          },
-          "legacyResourceId": {
-            "type": "string",
-            "description": "the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule."
-          },
-          "resourceLocation": {
-            "type": "string",
-            "description": "the location of the resource."
-          },
-          "metricNamespace": {
-            "type": "string",
-            "description": "the namespace of the metric."
-          }
-        }  
-  - from: swagger-document
-    where: $.paths
-    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}"
-  - from: swagger-document
-    where: $.paths
-    remove: "/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings"
+  - from: scheduledQueryRule_API.json
+    where: $.definitions.Resource
+    transform: $["x-ms-client-name"] = "ScheduledQueryRuleResource"
 ```

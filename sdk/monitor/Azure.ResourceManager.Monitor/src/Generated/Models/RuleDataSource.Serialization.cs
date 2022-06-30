@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceUri");
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             string odataType = default;
-            Optional<string> resourceId = default;
+            Optional<string> resourceUri = default;
             Optional<string> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Monitor.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceUri"))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("legacyResourceId"))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new RuleDataSource(odataType, resourceId.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
+            return new RuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
         }
     }
 }
