@@ -96,7 +96,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Uri"/> referencing the Data Lake service.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri)
-            : this(serviceUri, (HttpPipelinePolicy)null, null, null)
+            : this(serviceUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential:null)
         {
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, DataLakeClientOptions options)
-            : this(serviceUri, (HttpPipelinePolicy)null, options, null)
+            : this(serviceUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
         {
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
+                clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _uri = conn.BlobEndpoint;
@@ -170,7 +170,7 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration.Pipeline,
                 authPolicy,
-                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
 
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
@@ -250,7 +250,7 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakeServiceClient(Uri serviceUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, null)
+            : this(serviceUri, credential.AsPolicy<DataLakeUriBuilder>(serviceUri), options, null, credential)
         {
         }
 
@@ -265,7 +265,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
-            : this(serviceUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
+            : this(serviceUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -286,7 +286,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(serviceUri, credential.AsPolicy(options), options, null)
+            : this(serviceUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -319,6 +319,33 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
+            : this(serviceUri, authentication, options, null, sasCredential)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
         /// class.
         /// </summary>
@@ -345,7 +372,7 @@ namespace Azure.Storage.Files.DataLake
                 // auth is included in pipeline in client configuration.
                 // blobs keeps it separate for niche use cases that are inaccessible from datalake clients
                 authentication: default,
-                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
         }
 
@@ -385,14 +412,63 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
-                version: options.Version,
+                clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _clientConfiguration.Pipeline,
                 authentication,
-                _clientConfiguration.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
+                _clientConfiguration.ClientDiagnostics);
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the Data Lake service.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            ClientDiagnostics clientDiagnostics,
+            AzureSasCredential sasCredential)
+        {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            options ??= new DataLakeClientOptions();
+
+            _uri = serviceUri;
+            _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
+                clientDiagnostics: clientDiagnostics ?? new StorageClientDiagnostics(options),
+                clientOptions: options,
+                customerProvidedKey: options.CustomerProvidedKey);
+
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _clientConfiguration.Pipeline,
+                authentication,
+                _clientConfiguration.ClientOptions.Version.AsBlobsVersion(),
                 _clientConfiguration.ClientDiagnostics);
 
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);

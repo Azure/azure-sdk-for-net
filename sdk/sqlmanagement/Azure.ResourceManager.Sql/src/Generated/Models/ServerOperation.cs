@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorDescription"> The operation error description. </param>
         /// <param name="errorSeverity"> The operation error severity. </param>
         /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompletionOn"> The estimated completion time of the operation. </param>
+        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ServerOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
+        internal ServerOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
         {
             Operation = operation;
             OperationFriendlyName = operationFriendlyName;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             ErrorDescription = errorDescription;
             ErrorSeverity = errorSeverity;
             IsUserError = isUserError;
-            EstimatedCompletionOn = estimatedCompletionOn;
+            EstimatedCompleteOn = estimatedCompleteOn;
             Description = description;
             IsCancellable = isCancellable;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not the error is a user error. </summary>
         public bool? IsUserError { get; }
         /// <summary> The estimated completion time of the operation. </summary>
-        public DateTimeOffset? EstimatedCompletionOn { get; }
+        public DateTimeOffset? EstimatedCompleteOn { get; }
         /// <summary> The operation description. </summary>
         public string Description { get; }
         /// <summary> Whether the operation can be cancelled. </summary>

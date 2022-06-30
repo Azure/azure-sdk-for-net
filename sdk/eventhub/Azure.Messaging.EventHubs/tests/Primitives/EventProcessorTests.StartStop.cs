@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -612,16 +613,56 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var processInvokedAfterStop = false;
+            var stopInvoked = false;
+            var ownedPartitions = new[] { "0", "1" };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionIds)
+                .Returns(ownedPartitions);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
-                .Returns(Mock.Of<EventHubConnection>());
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.ProcessEventBatchAsync(It.IsAny<EventProcessorPartition>(), It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Callback(() =>
+                {
+                    if ((stopInvoked) && (!cancellationSource.Token.IsCancellationRequested))
+                    {
+                        processInvokedAfterStop = true;
+                    }
+
+                    completionSource.TrySetResult(true);
+                });
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+
+            var processorCancellationSource = GetRunningProcessorCancellationSource(mockProcessor.Object);
+
+            ownedPartitions
+                .Select(partition => InvokeTryStartProcessingPartition(mockProcessor.Object, partition, processorCancellationSource.Token))
+                .ToList();
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             if (async)
             {
@@ -632,10 +673,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
+            stopInvoked = true;
+
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.That(GetActivePartitionProcessors(mockProcessor.Object).Count, Is.Zero, "No partition processor should be running.");
+            Assert.That(processInvokedAfterStop, Is.False, "No batches should be processed after stopping.");
         }
 
         /// <summary>
