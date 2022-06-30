@@ -705,18 +705,18 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocumentStyle(isHandwritten, spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="apiVersion"> API version used to create this model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelInfo"/> instance for mocking. </returns>
-        internal static DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
+        internal static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelInfo(modelId, description, createdOn, apiVersion, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, apiVersion, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentModel. </summary>
