@@ -37,6 +37,35 @@
   "paths": {
     "/app/collections": {
       "get": {
+        "operationId": "ConfidentialLedger_GetEnclaveQuotes",
+        "summary": "Gets quotes for all nodes of the Confidential Ledger.",
+        "description": "A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/enclaveQuotes": {
+      "get": {
         "operationId": "ConfidentialLedger_ListCollections",
         "summary": "Retrieves a list of collection ids present in the Confidential Ledger",
         "description": "Collection ids are user-created collections of ledger entries",
@@ -50,6 +79,211 @@
             "description": "The request has succeeded.",
             "schema": {
               "$ref": "#/definitions/CollectionArray"
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/governance/constitution": {
+      "get": {
+        "operationId": "ConfidentialLedger_GetConstitution",
+        "summary": "Gets the constitution used for governance.",
+        "description": "The constitution is a script that assesses and applies proposals from consortium members.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/governance/members": {
+      "get": {
+        "operationId": "ConfidentialLedger_GetConsortiumMembers",
+        "summary": "Gets the consortium members.",
+        "description": "Consortium members can manage the Confidential Ledger.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/transactions/{transactionId}/receipt": {
+      "get": {
+        "operationId": "ConfidentialLedger_GetReceipt",
+        "summary": "Gets a receipt certifying ledger contents at a particular transaction id.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/TransactionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/transactions/{transactionId}/status": {
+      "get": {
+        "operationId": "ConfidentialLedger_GetTransactionStatus",
+        "summary": "Gets the status of an entry identified by a transaction id.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/TransactionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/transactions/current": {
+      "get": {
+        "operationId": "ConfidentialLedger_GetCurrentLedgerEntry",
+        "summary": "Gets the current value available in the ledger.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/CollectionIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    },
+    "/app/users/{userId}": {
+      "delete": {
+        "operationId": "ConfidentialLedger_DeleteUser",
+        "summary": "Deletes a user from the Confidential Ledger.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/UserIdParameter"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "There is no content to send for this request, but the headers may be useful. "
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "ConfidentialLedger_GetUser",
+        "summary": "Gets a user.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/UserIdParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "number",
+              "enum": [
+                200
+              ]
             }
           },
           "default": {
@@ -130,6 +364,30 @@
       "required": true,
       "description": "The API version to use for this operation.",
       "minLength": 1,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "CollectionIdParameter": {
+      "name": "collectionId",
+      "in": "query",
+      "required": false,
+      "description": "The collection id.",
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "TransactionIdParameter": {
+      "name": "transactionId",
+      "in": "path",
+      "required": true,
+      "description": "Identifies a write transaction.",
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "UserIdParameter": {
+      "name": "userId",
+      "in": "path",
+      "required": true,
+      "description": "The user id, either an AAD object ID or certificate fingerprint.",
       "type": "string",
       "x-ms-parameter-location": "method"
     }

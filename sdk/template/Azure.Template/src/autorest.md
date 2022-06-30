@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
 - $(this-folder)/swagger/openapi.json
-namespace: Azure.Template
+namespace: Azure.Security.ConfidentialLedger
 security: AADToken
 security-scopes: https://vault.azure.net/.default
 ```
