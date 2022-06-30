@@ -26,20 +26,30 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServicePrincipal DeserializeServicePrincipal(JsonElement element)
         {
-            Optional<string> principalId = default;
-            Optional<string> clientId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> clientId = default;
             Optional<Guid> tenantId = default;
             Optional<ServicePrincipalType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("clientId"))
                 {
-                    clientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
@@ -63,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServicePrincipal(principalId.Value, clientId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
+            return new ServicePrincipal(Optional.ToNullable(principalId), Optional.ToNullable(clientId), Optional.ToNullable(tenantId), Optional.ToNullable(type));
         }
     }
 }

@@ -192,6 +192,16 @@ namespace Microsoft.Azure.Management.Compute
         public virtual ILogAnalyticsOperations LogAnalytics { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; private set; }
+
+        /// <summary>
         /// Gets the IDisksOperations.
         /// </summary>
         public virtual IDisksOperations Disks { get; private set; }
@@ -215,16 +225,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         public virtual ISnapshotsOperations Snapshots { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineRunCommandsOperations.
-        /// </summary>
-        public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineScaleSetVMRunCommandsOperations.
-        /// </summary>
-        public virtual IVirtualMachineScaleSetVMRunCommandsOperations VirtualMachineScaleSetVMRunCommands { get; private set; }
 
         /// <summary>
         /// Gets the IResourceSkusOperations.
@@ -581,13 +581,13 @@ namespace Microsoft.Azure.Management.Compute
             CapacityReservationGroups = new CapacityReservationGroupsOperations(this);
             CapacityReservations = new CapacityReservationsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
+            VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
+            VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             Disks = new DisksOperations(this);
             DiskAccesses = new DiskAccessesOperations(this);
             DiskEncryptionSets = new DiskEncryptionSetsOperations(this);
             DiskRestorePoint = new DiskRestorePointOperations(this);
             Snapshots = new SnapshotsOperations(this);
-            VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
-            VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Galleries = new GalleriesOperations(this);
             GalleryImages = new GalleryImagesOperations(this);

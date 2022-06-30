@@ -16,7 +16,8 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
     {
         private readonly Stream _stream;
 
-        public UploadBlob(StorageTransferOptionsOptions options) : base(options)
+        public UploadBlob(StorageTransferOptionsOptions options)
+            : base(options, createBlob: false, singletonBlob: false)
         {
             _stream = RandomStream.Create(options.Size);
         }
