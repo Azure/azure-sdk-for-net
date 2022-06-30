@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuRestrictions
+    public partial class ComputeResourceSkuRestrictions
     {
-        internal static ResourceSkuRestrictions DeserializeResourceSkuRestrictions(JsonElement element)
+        internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element)
         {
             Optional<ResourceSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
-            Optional<ResourceSkuRestrictionInfo> restrictionInfo = default;
+            Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
             Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restrictionInfo = ResourceSkuRestrictionInfo.DeserializeResourceSkuRestrictionInfo(property.Value);
+                    restrictionInfo = ComputeResourceSkuRestrictionInfo.DeserializeComputeResourceSkuRestrictionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
         }
     }
 }

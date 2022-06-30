@@ -11,33 +11,33 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes scaling information of a SKU. </summary>
-    public partial class ResourceSkuRestrictions
+    public partial class ComputeResourceSkuRestrictions
     {
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
-        internal ResourceSkuRestrictions()
+        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictions. </summary>
+        internal ComputeResourceSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
-        /// <param name="restrictionsType"> The type of restrictions. </param>
+        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictions. </summary>
+        /// <param name="resourceSkuRestrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
+        internal ComputeResourceSkuRestrictions(ResourceSkuRestrictionsType? resourceSkuRestrictionsType, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode)
         {
-            RestrictionsType = restrictionsType;
+            ResourceSkuRestrictionsType = resourceSkuRestrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
         }
 
         /// <summary> The type of restrictions. </summary>
-        public ResourceSkuRestrictionsType? RestrictionsType { get; }
+        public ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
-        public ResourceSkuRestrictionInfo RestrictionInfo { get; }
+        public ComputeResourceSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> The reason for restriction. </summary>
         public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
     }
