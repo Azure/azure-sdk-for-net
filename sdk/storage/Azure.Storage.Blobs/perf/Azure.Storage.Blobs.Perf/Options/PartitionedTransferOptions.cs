@@ -10,21 +10,33 @@ namespace Azure.Storage.Blobs.Perf.Options
 {
     public class PartitionedTransferOptions : SizeOptions, IBlobClientOptionsProvider, IStorageTransferOptionsProvider
     {
-        private int? _maximumTransferLength;
+        private long? _maximumTransferSize;
+        private long? _initialTransferSize;
         private int? _maximumConcurrency;
 
-        [Option('l', "maximumTransferLength")]
-        public int? MaximumTransferLength
+        [Option("transfer-block-size")]
+        public long? MaximumTransferSize
         {
-            get => _maximumTransferLength;
+            get => _maximumTransferSize;
             set
             {
-                _maximumTransferLength = value;
+                _maximumTransferSize = value;
                 UpdateStorageTransferOptions();
             }
         }
 
-        [Option('t', "MaximumConcurrency")]
+        [Option("transfer-initial-size")]
+        public long? InitialTransferSize
+        {
+            get => _initialTransferSize;
+            set
+            {
+                _maximumTransferSize = value;
+                UpdateStorageTransferOptions();
+            }
+        }
+
+        [Option("transfer-concurrency")]
         public int? MaximumConcurrency
         {
             get => _maximumConcurrency;
@@ -35,7 +47,7 @@ namespace Azure.Storage.Blobs.Perf.Options
             }
         }
 
-        [Option("clientEncryptionVersion")]
+        [Option("client-encryption")]
         public string EncryptionVersionString { get; set; }
 
         public StorageTransferOptions StorageTransferOptions { get; private set; }
@@ -78,9 +90,9 @@ namespace Azure.Storage.Blobs.Perf.Options
         {
             StorageTransferOptions = new StorageTransferOptions()
             {
-                MaximumConcurrency = MaximumConcurrency,
-                MaximumTransferLength = MaximumTransferLength,
-                InitialTransferLength = MaximumTransferLength,
+                MaximumConcurrency = _maximumConcurrency,
+                MaximumTransferSize = _maximumTransferSize,
+                InitialTransferSize = _initialTransferSize,
             };
         }
     }
