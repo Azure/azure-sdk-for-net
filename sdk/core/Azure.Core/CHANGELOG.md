@@ -1,14 +1,12 @@
 # Release History
 
-## 1.25.0-beta.1 (Unreleased)
+## 1.25.0 (2022-06-23)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `RequestFailedDetailsParser` abstract class, which client libraries can implement to control customization of exception messages for failed responses.
+- Added `HttpPipelineOptions` type which is accepted in a new overload to `HttpPipelineBuilder.Build`.  This type contains all the properties from other overloads and adds a property to specify a `RequestFailedDetailsParser`.
+- Added a property to `HttpPipelineTransportOptions` called `ClientCertificates` which is a collection of `X509Certificate2`. If populated, the certificates in the collection will be used by the client for TLS client certificate authentication. 
+- Added the `MultipartResponse` type, which can be used by clients to parse the sub-responses for multi-part responses.
 
 ## 1.24.0 (2022-04-04)
 
