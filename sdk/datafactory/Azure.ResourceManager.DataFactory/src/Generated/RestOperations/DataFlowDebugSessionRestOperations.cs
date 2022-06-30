@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateAddDataFlowRequest(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage request)
+        internal HttpMessage CreateAddDataFlowRequest(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/addDataFlowToDebugSession", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(request);
-            request0.Content = content0;
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -224,26 +224,26 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
-        /// <param name="request"> Data flow debug session definition with debug content. </param>
+        /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage request, CancellationToken cancellationToken = default)
+        public async Task<Response<AddDataFlowToDebugSessionResult>> AddDataFlowAsync(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, request);
+            using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AddDataFlowToDebugSessionResponse value = default;
+                        AddDataFlowToDebugSessionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
+                        value = AddDataFlowToDebugSessionResult.DeserializeAddDataFlowToDebugSessionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,26 +255,26 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
-        /// <param name="request"> Data flow debug session definition with debug content. </param>
+        /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AddDataFlowToDebugSessionResponse> AddDataFlow(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage request, CancellationToken cancellationToken = default)
+        public Response<AddDataFlowToDebugSessionResult> AddDataFlow(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugPackage content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, request);
+            using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AddDataFlowToDebugSessionResponse value = default;
+                        AddDataFlowToDebugSessionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
+                        value = AddDataFlowToDebugSessionResult.DeserializeAddDataFlowToDebugSessionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.DataFactory
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string factoryName, DeleteDataFlowDebugSessionContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -297,12 +297,12 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/deleteDataFlowDebugSession", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -362,8 +362,8 @@ namespace Azure.ResourceManager.DataFactory
         internal HttpMessage CreateExecuteCommandRequest(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugCommandContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -374,12 +374,12 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(factoryName, true);
             uri.AppendPath("/executeDataFlowDebugCommand", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -441,13 +441,13 @@ namespace Azure.ResourceManager.DataFactory
         internal HttpMessage CreateQueryByFactoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

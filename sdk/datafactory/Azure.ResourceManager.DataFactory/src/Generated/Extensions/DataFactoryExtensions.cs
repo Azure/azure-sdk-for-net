@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FactoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FactoryResource> GetFactoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetFactoriesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataFactoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FactoryResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FactoryResource> GetFactories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataFactoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataFactoryResource> GetDataFactories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetFactories(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataFactories(cancellationToken);
         }
 
         /// <summary>
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static async Task<Response<FactoryResource>> ConfigureFactoryRepoFactoryAsync(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return await GetExtensionClient(subscriptionResource).ConfigureFactoryRepoFactoryAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ConfigureFactoryRepoAsync(locationId, factoryRepoUpdate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        public static Response<FactoryResource> ConfigureFactoryRepoFactory(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public static Response<DataFactoryResource> ConfigureFactoryRepo(this SubscriptionResource subscriptionResource, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
-            return GetExtensionClient(subscriptionResource).ConfigureFactoryRepoFactory(locationId, factoryRepoUpdate, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ConfigureFactoryRepo(locationId, factoryRepoUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
-        /// <param name="exposureControlRequest"> The exposure control request. </param>
+        /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="exposureControlRequest"/> is null. </exception>
-        public static async Task<Response<ExposureControlResponse>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, string locationId, ExposureControlRequest exposureControlRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
-            Argument.AssertNotNull(exposureControlRequest, nameof(exposureControlRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, exposureControlRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationId"> The location identifier. </param>
-        /// <param name="exposureControlRequest"> The exposure control request. </param>
+        /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="exposureControlRequest"/> is null. </exception>
-        public static Response<ExposureControlResponse> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, string locationId, ExposureControlRequest exposureControlRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="locationId"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, string locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
-            Argument.AssertNotNull(exposureControlRequest, nameof(exposureControlRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetFeatureValueExposureControl(locationId, exposureControlRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.DataFactory
             );
         }
 
-        /// <summary> Gets a collection of FactoryResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of FactoryResources and their operations over a FactoryResource. </returns>
-        public static FactoryCollection GetFactories(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
+        public static DataFactoryCollection GetDataFactories(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetFactories();
+            return GetExtensionClient(resourceGroupResource).GetDataFactories();
         }
 
         /// <summary>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FactoryResource>> GetFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataFactoryResource>> GetDataFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFactories().GetAsync(factoryName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDataFactories().GetAsync(factoryName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,25 +176,25 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FactoryResource> GetFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public static Response<DataFactoryResource> GetDataFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFactories().Get(factoryName, ifNoneMatch, cancellationToken);
+            return resourceGroupResource.GetDataFactories().Get(factoryName, ifNoneMatch, cancellationToken);
         }
 
-        #region FactoryResource
+        #region DataFactoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="FactoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FactoryResource.CreateResourceIdentifier" /> to create a <see cref="FactoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FactoryResource" /> object. </returns>
-        public static FactoryResource GetFactoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryResource" /> object. </returns>
+        public static DataFactoryResource GetDataFactoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FactoryResource.ValidateResourceId(id);
-                return new FactoryResource(client, id);
+                DataFactoryResource.ValidateResourceId(id);
+                return new DataFactoryResource(client, id);
             }
             );
         }
@@ -257,39 +257,39 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
-        #region PipelineResource
+        #region DataFactoryPipelineResource
         /// <summary>
-        /// Gets an object representing a <see cref="PipelineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PipelineResource.CreateResourceIdentifier" /> to create a <see cref="PipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PipelineResource" /> object. </returns>
-        public static PipelineResource GetPipelineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryPipelineResource" /> object. </returns>
+        public static DataFactoryPipelineResource GetDataFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PipelineResource.ValidateResourceId(id);
-                return new PipelineResource(client, id);
+                DataFactoryPipelineResource.ValidateResourceId(id);
+                return new DataFactoryPipelineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TriggerResource
+        #region DataFactoryTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="TriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TriggerResource.CreateResourceIdentifier" /> to create a <see cref="TriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TriggerResource" /> object. </returns>
-        public static TriggerResource GetTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryTriggerResource" /> object. </returns>
+        public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TriggerResource.ValidateResourceId(id);
-                return new TriggerResource(client, id);
+                DataFactoryTriggerResource.ValidateResourceId(id);
+                return new DataFactoryTriggerResource(client, id);
             }
             );
         }
@@ -352,39 +352,39 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region DataFactoryPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource" /> object. </returns>
+        public static DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                DataFactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new DataFactoryPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GlobalParameterResource
+        #region DataFactoryGlobalParameterResource
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="GlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataFactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataFactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GlobalParameterResource" /> object. </returns>
-        public static GlobalParameterResource GetGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource" /> object. </returns>
+        public static DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GlobalParameterResource.ValidateResourceId(id);
-                return new GlobalParameterResource(client, id);
+                DataFactoryGlobalParameterResource.ValidateResourceId(id);
+                return new DataFactoryGlobalParameterResource(client, id);
             }
             );
         }

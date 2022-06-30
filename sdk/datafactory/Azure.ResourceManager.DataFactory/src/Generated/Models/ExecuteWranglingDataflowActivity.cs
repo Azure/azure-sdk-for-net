@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute power query activity. </summary>
-    public partial class ExecuteWranglingDataflowActivity : Activity
+    public partial class ExecuteWranglingDataflowActivity : DataFactoryPipelineActivity
     {
         /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
         /// <param name="name"> Activity name. </param>

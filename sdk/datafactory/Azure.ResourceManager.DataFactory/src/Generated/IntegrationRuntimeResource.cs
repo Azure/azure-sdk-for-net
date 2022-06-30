@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory
     /// A Class representing an IntegrationRuntimeResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationRuntimeResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetIntegrationRuntimeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FactoryResource" /> using the GetIntegrationRuntimeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetIntegrationRuntimeResource method.
     /// </summary>
     public partial class IntegrationRuntimeResource : ArmResource
     {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: IntegrationRuntimes_GetStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeStatusResponse>> GetStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeStatusResult>> GetStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetStatus");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: IntegrationRuntimes_GetStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeStatusResponse> GetStatus(CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeStatusResult> GetStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetStatus");
             scope.Start();
@@ -494,14 +494,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IntegrationRuntimeStatusResponse>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IntegrationRuntimeStatusResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResource.Start");
             scope.Start();
             try
             {
                 var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -520,14 +520,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IntegrationRuntimeStatusResponse> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IntegrationRuntimeStatusResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResource.Start");
             scope.Start();
             try
             {
                 var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics, Pipeline, _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The linked integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeStatusResponse>> CreateLinkedIntegrationRuntimeAsync(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The linked integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeStatusResponse> CreateLinkedIntegrationRuntime(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -834,14 +834,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SsisObjectMetadataStatusResponse>> RefreshIntegrationRuntimeObjectMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SsisObjectMetadataStatusResult>> RefreshIntegrationRuntimeObjectMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("IntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
                 var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -860,14 +860,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SsisObjectMetadataStatusResponse> RefreshIntegrationRuntimeObjectMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SsisObjectMetadataStatusResult> RefreshIntegrationRuntimeObjectMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("IntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
                 var response = _integrationRuntimeObjectMetadataRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

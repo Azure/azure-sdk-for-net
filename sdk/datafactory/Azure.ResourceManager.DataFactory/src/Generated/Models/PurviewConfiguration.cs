@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Purview configuration. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
         /// <param name="purviewResourceId"> Purview resource id. </param>
-        internal PurviewConfiguration(string purviewResourceId)
+        internal PurviewConfiguration(ResourceIdentifier purviewResourceId)
         {
             PurviewResourceId = purviewResourceId;
         }
 
         /// <summary> Purview resource id. </summary>
-        public string PurviewResourceId { get; set; }
+        public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

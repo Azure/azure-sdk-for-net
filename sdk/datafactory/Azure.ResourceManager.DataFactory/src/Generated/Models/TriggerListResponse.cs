@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerListResponse. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TriggerListResponse(IEnumerable<TriggerResourceData> value)
+        internal TriggerListResponse(IEnumerable<DataFactoryTriggerData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerListResponse. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal TriggerListResponse(IReadOnlyList<TriggerResourceData> value, string nextLink)
+        internal TriggerListResponse(IReadOnlyList<DataFactoryTriggerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of triggers. </summary>
-        public IReadOnlyList<TriggerResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryTriggerData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

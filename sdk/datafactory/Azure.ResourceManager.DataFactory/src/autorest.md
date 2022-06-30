@@ -42,14 +42,51 @@ rename-rules:
   URI: Uri
   MWS: Mws
 
+rename-mapping:
+  DatasetDataElement.name: ColumnName
+  DatasetDataElement.type: columnType
+  DatasetSchemaDataElement.name: schemaColumnName
+  DatasetSchemaDataElement.type: schemaColumnType
+  DatasetCompression.type: datasetCompressionType
+  Factory: DataFactory
+  GlobalParameterResource: DataFactoryGlobalParameter
+  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
+  TriggerResource: DataFactoryTrigger
+  PipelineResource: DataFactoryPipeline
+  AddDataFlowToDebugSessionResponse: AddDataFlowToDebugSessionResult
+  CreateDataFlowDebugSessionResponse: CreateDataFlowDebugSessionResult
+  DataFlowDebugCommandResponse: DataFlowDebugCommandResult
+  AccessPolicyResponse: AccessPolicyResult
+  ExposureControlResponse: ExposureControlResult
+  ExposureControlRequest: ExposureControlContent
+  GitHubAccessTokenResponse: GitHubAccessTokenResult
+  RunFilterParameters: RunFilterContent
+  ExposureControlBatchResponse: ExposureControlBatchResult
+  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
+  SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
+  CreateRunResponse: CreateRunResult
+  Trigger: DataFactoryTriggerProperties
+  Activity: DataFactoryPipelineActivity
+
+override-operation-name:
+  ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun
+  PipelineRuns_QueryByFactory: GetPipelineRuns
+  TriggerRuns_QueryByFactory: GetTriggerRuns
+  DataFlowDebugSession_QueryByFactory: GetDataFlowDebugSessions
+  ExposureControl_QueryFeatureValuesByFactory: GetExposureControlFeatureValues
+  Triggers_QueryByFactory: GetTriggers
+  Factories_ConfigureFactoryRepo: ConfigureFactoryRepo
+
 directive:
-  - from: Dataset.json
+  - from: datafactory.json
     where: $.definitions
     transform: >
-      $.DatasetDataElement.properties.name['x-ms-client-name'] = 'columnName';
-      $.DatasetDataElement.properties.type['x-ms-client-name'] = 'columnType';
-      $.DatasetSchemaDataElement.properties.name['x-ms-client-name'] = 'schemaColumnName';
-      $.DatasetSchemaDataElement.properties.type['x-ms-client-name'] = 'schemaColumnType';
-      $.DatasetCompression.properties.type['x-ms-client-name'] = 'datasetCompressionType';
+      $.PurviewConfiguration.properties.purviewResourceId['x-ms-format'] = 'arm-id';
+  - from: datafactory.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/addDataFlowToDebugSession'].post.parameters[4].name = 'content';
+      $['/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue'].post.parameters[3].name = 'content';
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getFeatureValue'].post.parameters[4].name = 'content';
 
 ```

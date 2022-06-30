@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, TriggerResourceData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, DataFactoryTriggerData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriggerResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, TriggerResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryTriggerData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -257,9 +257,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        TriggerResourceData value = default;
+                        DataFactoryTriggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TriggerResourceData.DeserializeTriggerResourceData(document.RootElement);
+                        value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriggerResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, TriggerResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryTriggerData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,9 +291,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        TriggerResourceData value = default;
+                        DataFactoryTriggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TriggerResourceData.DeserializeTriggerResourceData(document.RootElement);
+                        value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriggerResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryTriggerData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -349,14 +349,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        TriggerResourceData value = default;
+                        DataFactoryTriggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TriggerResourceData.DeserializeTriggerResourceData(document.RootElement);
+                        value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((TriggerResourceData)null, message.Response);
+                    return Response.FromValue((DataFactoryTriggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriggerResourceData> Get(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryTriggerData> Get(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -384,14 +384,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        TriggerResourceData value = default;
+                        DataFactoryTriggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TriggerResourceData.DeserializeTriggerResourceData(document.RootElement);
+                        value = DataFactoryTriggerData.DeserializeDataFactoryTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((TriggerResourceData)null, message.Response);
+                    return Response.FromValue((DataFactoryTriggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

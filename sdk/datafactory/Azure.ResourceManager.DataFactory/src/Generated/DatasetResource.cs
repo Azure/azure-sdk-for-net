@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory
     /// A Class representing a DatasetResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatasetResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDatasetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FactoryResource" /> using the GetDatasetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDatasetResource method.
     /// </summary>
     public partial class DatasetResource : ArmResource
     {

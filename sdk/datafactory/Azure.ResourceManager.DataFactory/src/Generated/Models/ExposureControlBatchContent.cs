@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ExposureControlBatchContent. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlRequests"/> is null. </exception>
-        public ExposureControlBatchContent(IEnumerable<ExposureControlRequest> exposureControlRequests)
+        public ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests)
         {
             if (exposureControlRequests == null)
             {
@@ -28,6 +28,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of exposure control features. </summary>
-        public IList<ExposureControlRequest> ExposureControlRequests { get; }
+        public IList<ExposureControlContent> ExposureControlRequests { get; }
     }
 }

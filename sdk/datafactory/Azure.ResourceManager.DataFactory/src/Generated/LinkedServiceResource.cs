@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory
     /// A Class representing a LinkedServiceResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LinkedServiceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetLinkedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FactoryResource" /> using the GetLinkedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetLinkedServiceResource method.
     /// </summary>
     public partial class LinkedServiceResource : ArmResource
     {

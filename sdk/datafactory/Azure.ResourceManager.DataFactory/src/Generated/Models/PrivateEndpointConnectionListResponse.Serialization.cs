@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PrivateEndpointConnectionListResponse DeserializePrivateEndpointConnectionListResponse(JsonElement element)
         {
-            IReadOnlyList<PrivateEndpointConnectionResourceData> value = default;
+            IReadOnlyList<DataFactoryPrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PrivateEndpointConnectionResourceData> array = new List<PrivateEndpointConnectionResourceData>();
+                    List<DataFactoryPrivateEndpointConnectionData> array = new List<DataFactoryPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(item));
+                        array.Add(DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

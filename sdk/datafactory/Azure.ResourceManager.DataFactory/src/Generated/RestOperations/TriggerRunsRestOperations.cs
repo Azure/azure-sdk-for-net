@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateQueryByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName, RunFilterParameters filterParameters)
+        internal HttpMessage CreateQueryByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName, RunFilterContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.DataFactory
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(filterParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -228,18 +228,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriggerRunsQueryResponse>> QueryByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TriggerRunsQueryResponse>> QueryByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(filterParameters, nameof(filterParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, filterParameters);
+            using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -259,18 +259,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="factoryName"> The factory name. </param>
-        /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriggerRunsQueryResponse> QueryByFactory(string subscriptionId, string resourceGroupName, string factoryName, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
+        public Response<TriggerRunsQueryResponse> QueryByFactory(string subscriptionId, string resourceGroupName, string factoryName, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(filterParameters, nameof(filterParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, filterParameters);
+            using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

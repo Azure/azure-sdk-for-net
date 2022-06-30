@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of GlobalParameterListResponse. </summary>
         /// <param name="value"> List of global parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GlobalParameterListResponse(IEnumerable<GlobalParameterResourceData> value)
+        internal GlobalParameterListResponse(IEnumerable<DataFactoryGlobalParameterData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of GlobalParameterListResponse. </summary>
         /// <param name="value"> List of global parameters. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal GlobalParameterListResponse(IReadOnlyList<GlobalParameterResourceData> value, string nextLink)
+        internal GlobalParameterListResponse(IReadOnlyList<DataFactoryGlobalParameterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of global parameters. </summary>
-        public IReadOnlyList<GlobalParameterResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryGlobalParameterData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

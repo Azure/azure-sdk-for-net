@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DataFactory
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FactoryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FactoryResources and their operations over a FactoryResource. </returns>
-        public virtual FactoryCollection GetFactories()
+        /// <summary> Gets a collection of DataFactoryResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
+        public virtual DataFactoryCollection GetDataFactories()
         {
-            return GetCachedClient(Client => new FactoryCollection(Client, Id));
+            return GetCachedClient(Client => new DataFactoryCollection(Client, Id));
         }
     }
 }

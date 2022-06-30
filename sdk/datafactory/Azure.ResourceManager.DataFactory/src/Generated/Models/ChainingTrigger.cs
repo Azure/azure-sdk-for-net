@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs. </summary>
-    public partial class ChainingTrigger : Trigger
+    public partial class ChainingTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of ChainingTrigger. </summary>
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>

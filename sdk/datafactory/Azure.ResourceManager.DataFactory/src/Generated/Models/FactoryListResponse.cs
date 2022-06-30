@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of FactoryListResponse. </summary>
         /// <param name="value"> List of factories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FactoryListResponse(IEnumerable<FactoryData> value)
+        internal FactoryListResponse(IEnumerable<DataFactoryData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of FactoryListResponse. </summary>
         /// <param name="value"> List of factories. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal FactoryListResponse(IReadOnlyList<FactoryData> value, string nextLink)
+        internal FactoryListResponse(IReadOnlyList<DataFactoryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of factories. </summary>
-        public IReadOnlyList<FactoryData> Value { get; }
+        public IReadOnlyList<DataFactoryData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

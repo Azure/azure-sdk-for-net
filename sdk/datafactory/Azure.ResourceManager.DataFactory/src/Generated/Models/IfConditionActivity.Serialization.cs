@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             Expression expression = default;
-            Optional<IList<Activity>> ifTrueActivities = default;
-            Optional<IList<Activity>> ifFalseActivities = default;
+            Optional<IList<DataFactoryPipelineActivity>> ifTrueActivities = default;
+            Optional<IList<DataFactoryPipelineActivity>> ifFalseActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Activity> array = new List<Activity>();
+                            List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeActivity(item));
+                                array.Add(DeserializeDataFactoryPipelineActivity(item));
                             }
                             ifTrueActivities = array;
                             continue;
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Activity> array = new List<Activity>();
+                            List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeActivity(item));
+                                array.Add(DeserializeDataFactoryPipelineActivity(item));
                             }
                             ifFalseActivities = array;
                             continue;

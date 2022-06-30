@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PipelineListResponse(IEnumerable<PipelineResourceData> value)
+        internal PipelineListResponse(IEnumerable<DataFactoryPipelineData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal PipelineListResponse(IReadOnlyList<PipelineResourceData> value, string nextLink)
+        internal PipelineListResponse(IReadOnlyList<DataFactoryPipelineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of pipelines. </summary>
-        public IReadOnlyList<PipelineResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryPipelineData> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerQueryResponse. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TriggerQueryResponse(IEnumerable<TriggerResourceData> value)
+        internal TriggerQueryResponse(IEnumerable<DataFactoryTriggerData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerQueryResponse. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal TriggerQueryResponse(IReadOnlyList<TriggerResourceData> value, string continuationToken)
+        internal TriggerQueryResponse(IReadOnlyList<DataFactoryTriggerData> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
         /// <summary> List of triggers. </summary>
-        public IReadOnlyList<TriggerResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryTriggerData> Value { get; }
         /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
         public string ContinuationToken { get; }
     }

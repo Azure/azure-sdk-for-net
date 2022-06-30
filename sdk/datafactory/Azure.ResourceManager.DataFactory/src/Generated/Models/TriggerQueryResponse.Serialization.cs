@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static TriggerQueryResponse DeserializeTriggerQueryResponse(JsonElement element)
         {
-            IReadOnlyList<TriggerResourceData> value = default;
+            IReadOnlyList<DataFactoryTriggerData> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<TriggerResourceData> array = new List<TriggerResourceData>();
+                    List<DataFactoryTriggerData> array = new List<DataFactoryTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerResourceData.DeserializeTriggerResourceData(item));
+                        array.Add(DataFactoryTriggerData.DeserializeDataFactoryTriggerData(item));
                     }
                     value = array;
                     continue;

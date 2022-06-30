@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A class representing a collection of <see cref="LinkedServiceResource" /> and their operations.
-    /// Each <see cref="LinkedServiceResource" /> in the collection will belong to the same instance of <see cref="FactoryResource" />.
-    /// To get a <see cref="LinkedServiceResourceCollection" /> instance call the GetLinkedServiceResources method from an instance of <see cref="FactoryResource" />.
+    /// Each <see cref="LinkedServiceResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
+    /// To get a <see cref="LinkedServiceResourceCollection" /> instance call the GetLinkedServiceResources method from an instance of <see cref="DataFactoryResource" />.
     /// </summary>
     public partial class LinkedServiceResourceCollection : ArmCollection, IEnumerable<LinkedServiceResource>, IAsyncEnumerable<LinkedServiceResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != FactoryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FactoryResource.ResourceType), nameof(id));
+            if (id.ResourceType != DataFactoryResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
         }
 
         /// <summary>
