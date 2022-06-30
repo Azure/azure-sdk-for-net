@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             Azure.ResourceManager.Models.SystemData systemData = default;
             Optional<string> storageAccountId = default;
             Optional<string> serviceBusRuleId = default;
-            IList<string> locations = default;
+            IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -93,10 +94,10 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("locations"))
                         {
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             locations = array;
                             continue;
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogProfileData(id, name, type, systemData, tags, location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
+            return new LogProfileData(id, name, type, systemData, tags, location, new ResourceIdentifier(storageAccountId.Value), new ResourceIdentifier(serviceBusRuleId.Value), locations, categories, retentionPolicy);
         }
     }
 }
