@@ -7,7 +7,7 @@ Run `ddotnet msbuild /t:GenerateCode /p:AutoRestInput=.\SipRouting\autorest_sipr
 
 ``` yaml
 tag: package-2022-09-01-preview
-require: C:\Projects\Azure\azure-rest-api-specs\specification\communication\data-plane\SipRouting\readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/01563419f540c27a96abae75f9feaa3e5e9a1f13/specification/communication/data-plane/SipRouting/readme.md
 output-folder: $(project-folder)\SipRouting\Generated
 namespace: Azure.Communication.PhoneNumbers.SipRouting
 enable-xml: true
