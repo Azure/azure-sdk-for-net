@@ -90,4 +90,8 @@ directive:
   - rename-model:
       from: WebPubSubResource
       to: WebPubSub
+  # Change type to ResourceIdentifier
+  - from: webpubsub.json
+    where: $.definitions.SharedPrivateLinkProperties.properties.privateLinkResourceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var container = _webPubSub.GetSharedPrivateLinks();
             SharedPrivateLinkData data = new SharedPrivateLinkData()
             {
-                PrivateLinkResourceId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}",
+                PrivateLinkResourceId = new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}"),
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
