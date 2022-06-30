@@ -60,7 +60,6 @@ directive:
       $.smartGroup.properties.properties['x-ms-client-flatten'] = true;
       $.smartGroupProperties.properties.smartGroupState['x-ms-enum']['name'] = 'SmartGroupState';
       $.smartGroupProperties.properties.severity['x-ms-enum']['name'] = 'ServiceAlertSeverity';
-      $.smartGroupProperties.properties.startDateTime['x-ms-client-name'] = 'startedOn';
       $.smartGroupProperties.properties.lastModifiedUserName['x-ms-client-name'] = 'lastModifiedBy';
   - from: AlertProcessingRules.json
     where: $.definitions
