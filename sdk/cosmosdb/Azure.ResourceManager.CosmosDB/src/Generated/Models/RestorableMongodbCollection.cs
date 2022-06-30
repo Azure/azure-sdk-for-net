@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
-        internal RestorableMongodbCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableMongodbCollectionPropertiesResource resource) : base(id, name, resourceType, systemData)
+        internal RestorableMongodbCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongodbCollectionResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
-        public RestorableMongodbCollectionPropertiesResource Resource { get; }
+        public ExtendedRestorableMongodbCollectionResourceInfo Resource { get; }
     }
 }

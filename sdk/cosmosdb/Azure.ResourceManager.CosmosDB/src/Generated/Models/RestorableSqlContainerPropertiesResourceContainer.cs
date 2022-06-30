@@ -11,7 +11,7 @@ using Azure;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL container resource object. </summary>
-    public partial class RestorableSqlContainerPropertiesResourceContainer : SqlContainerResource
+    public partial class RestorableSqlContainerPropertiesResourceContainer : CosmosDBSqlContainerResourceInfo
     {
         /// <summary> Initializes a new instance of RestorableSqlContainerPropertiesResourceContainer. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL container. </param>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> deletionTime = default;
             Optional<ApiType> apiType = default;
-            Optional<IReadOnlyList<RestorableLocationResource>> restorableLocations = default;
+            Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RestorableLocationResource> array = new List<RestorableLocationResource>();
+                            List<RestorableLocationResourceInfo> array = new List<RestorableLocationResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RestorableLocationResource.DeserializeRestorableLocationResource(item));
+                                array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item));
                             }
                             restorableLocations = array;
                             continue;

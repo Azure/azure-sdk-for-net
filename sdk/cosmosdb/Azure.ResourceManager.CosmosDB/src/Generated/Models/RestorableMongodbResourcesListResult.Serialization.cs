@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableMongodbResourcesListResult DeserializeRestorableMongodbResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseRestoreResource>> value = default;
+            Optional<IReadOnlyList<DatabaseRestoreResourceInfo>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseRestoreResource> array = new List<DatabaseRestoreResource>();
+                    List<DatabaseRestoreResourceInfo> array = new List<DatabaseRestoreResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseRestoreResource.DeserializeDatabaseRestoreResource(item));
+                        array.Add(DatabaseRestoreResourceInfo.DeserializeDatabaseRestoreResourceInfo(item));
                     }
                     value = array;
                     continue;

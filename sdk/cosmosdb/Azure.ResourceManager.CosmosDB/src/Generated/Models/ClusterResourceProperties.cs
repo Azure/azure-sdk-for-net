@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="hoursBetweenBackups"> Number of hours to wait between taking a backup of the cluster. To disable backups, set this property to 0. </param>
         /// <param name="deallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="cassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
-        internal ClusterResourceProperties(ManagedCassandraProvisioningState? provisioningState, string restoreFromBackupId, string delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, AuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, SeedNode prometheusEndpoint, bool? repairEnabled, IList<Certificate> clientCertificates, IList<Certificate> externalGossipCertificates, IReadOnlyList<Certificate> gossipCertificates, IList<SeedNode> externalSeedNodes, IReadOnlyList<SeedNode> seedNodes, int? hoursBetweenBackups, bool? deallocated, bool? cassandraAuditLoggingEnabled)
+        internal ClusterResourceProperties(ManagedCassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, AuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, SeedNode prometheusEndpoint, bool? repairEnabled, IList<Certificate> clientCertificates, IList<Certificate> externalGossipCertificates, IReadOnlyList<Certificate> gossipCertificates, IList<SeedNode> externalSeedNodes, IReadOnlyList<SeedNode> seedNodes, int? hoursBetweenBackups, bool? deallocated, bool? cassandraAuditLoggingEnabled)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </summary>
         public string RestoreFromBackupId { get; set; }
         /// <summary> Resource id of a subnet that this cluster&apos;s management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form &apos;/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;&apos;. </summary>
-        public string DelegatedManagementSubnetId { get; set; }
+        public ResourceIdentifier DelegatedManagementSubnetId { get; set; }
         /// <summary> Which version of Cassandra should this cluster converge to running (e.g., 3.11). When updated, the cluster may take some time to migrate to the new version. </summary>
         public string CassandraVersion { get; set; }
         /// <summary> If you need to set the clusterName property in cassandra.yaml to something besides the resource name of the cluster, set the value to use on this property. </summary>

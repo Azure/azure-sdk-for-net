@@ -292,20 +292,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region SqlDatabaseResource
+        #region CosmosDBSqlDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
-        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource" /> object. </returns>
+        public static CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlDatabaseResource.ValidateResourceId(id);
-                return new SqlDatabaseResource(client, id);
+                CosmosDBSqlDatabaseResource.ValidateResourceId(id);
+                return new CosmosDBSqlDatabaseResource(client, id);
             }
             );
         }
@@ -482,115 +482,115 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region SqlContainerResource
+        #region CosmosDBSqlContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="SqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlContainerResource" /> object. </returns>
-        public static SqlContainerResource GetSqlContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
+        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlContainerResource.ValidateResourceId(id);
-                return new SqlContainerResource(client, id);
+                CosmosDBSqlContainerResource.ValidateResourceId(id);
+                return new CosmosDBSqlContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlStoredProcedureResource
+        #region CosmosDBSqlStoredProcedureResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="SqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlStoredProcedureResource" /> object. </returns>
-        public static SqlStoredProcedureResource GetSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource" /> object. </returns>
+        public static CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlStoredProcedureResource.ValidateResourceId(id);
-                return new SqlStoredProcedureResource(client, id);
+                CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
+                return new CosmosDBSqlStoredProcedureResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlUserDefinedFunctionResource
+        #region CosmosDBSqlUserDefinedFunctionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlUserDefinedFunctionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlUserDefinedFunctionResource" /> object. </returns>
-        public static SqlUserDefinedFunctionResource GetSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> object. </returns>
+        public static CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlUserDefinedFunctionResource.ValidateResourceId(id);
-                return new SqlUserDefinedFunctionResource(client, id);
+                CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
+                return new CosmosDBSqlUserDefinedFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlTriggerResource
+        #region CosmosDBSqlTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="SqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTriggerResource" /> object. </returns>
-        public static SqlTriggerResource GetSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource" /> object. </returns>
+        public static CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlTriggerResource.ValidateResourceId(id);
-                return new SqlTriggerResource(client, id);
+                CosmosDBSqlTriggerResource.ValidateResourceId(id);
+                return new CosmosDBSqlTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlRoleDefinitionResource
+        #region CosmosDBSqlRoleDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleDefinitionResource" /> object. </returns>
-        public static SqlRoleDefinitionResource GetSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource" /> object. </returns>
+        public static CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlRoleDefinitionResource.ValidateResourceId(id);
-                return new SqlRoleDefinitionResource(client, id);
+                CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
+                return new CosmosDBSqlRoleDefinitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlRoleAssignmentResource
+        #region CosmosDBSqlRoleAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleAssignmentResource" /> object. </returns>
-        public static SqlRoleAssignmentResource GetSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource" /> object. </returns>
+        public static CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlRoleAssignmentResource.ValidateResourceId(id);
-                return new SqlRoleAssignmentResource(client, id);
+                CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
+                return new CosmosDBSqlRoleAssignmentResource(client, id);
             }
             );
         }

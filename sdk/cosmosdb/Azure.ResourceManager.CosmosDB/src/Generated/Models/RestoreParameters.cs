@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestoreParameters. </summary>
         public RestoreParameters()
         {
-            DatabasesToRestore = new ChangeTrackingList<DatabaseRestoreResource>();
+            DatabasesToRestore = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of RestoreParameters. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
         /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
-        internal RestoreParameters(RestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResource> databasesToRestore)
+        internal RestoreParameters(RestoreMode? restoreMode, string restoreSource, DateTimeOffset? restoreTimestampInUtc, IList<DatabaseRestoreResourceInfo> databasesToRestore)
         {
             RestoreMode = restoreMode;
             RestoreSource = restoreSource;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Time to which the account has to be restored (ISO-8601 format). </summary>
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
         /// <summary> List of specific databases available for restore. </summary>
-        public IList<DatabaseRestoreResource> DatabasesToRestore { get; }
+        public IList<DatabaseRestoreResourceInfo> DatabasesToRestore { get; }
     }
 }

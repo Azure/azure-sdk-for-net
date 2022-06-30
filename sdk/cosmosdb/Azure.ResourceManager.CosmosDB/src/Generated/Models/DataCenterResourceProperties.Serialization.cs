@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<ManagedCassandraProvisioningState> provisioningState = default;
             Optional<string> dataCenterLocation = default;
-            Optional<string> delegatedSubnetId = default;
+            Optional<ResourceIdentifier> delegatedSubnetId = default;
             Optional<int> nodeCount = default;
             Optional<IReadOnlyList<SeedNode>> seedNodes = default;
             Optional<string> base64EncodedCassandraYamlFragment = default;
@@ -108,7 +108,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("delegatedSubnetId"))
                 {
-                    delegatedSubnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nodeCount"))

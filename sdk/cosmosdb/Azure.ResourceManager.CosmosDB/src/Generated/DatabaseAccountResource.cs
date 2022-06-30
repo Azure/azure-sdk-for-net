@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SqlDatabaseResources in the DatabaseAccount. </summary>
-        /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
-        public virtual SqlDatabaseCollection GetSqlDatabases()
+        /// <summary> Gets a collection of CosmosDBSqlDatabaseResources in the DatabaseAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlDatabaseResources and their operations over a CosmosDBSqlDatabaseResource. </returns>
+        public virtual CosmosDBSqlDatabaseCollection GetCosmosDBSqlDatabases()
         {
-            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBSqlDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBSqlDatabaseResource>> GetCosmosDBSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,31 +165,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBSqlDatabaseResource> GetCosmosDBSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
-            return GetSqlDatabases().Get(databaseName, cancellationToken);
+            return GetCosmosDBSqlDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlRoleDefinitionResources in the DatabaseAccount. </summary>
-        /// <returns> An object representing collection of SqlRoleDefinitionResources and their operations over a SqlRoleDefinitionResource. </returns>
-        public virtual SqlRoleDefinitionCollection GetSqlRoleDefinitions()
+        /// <summary> Gets a collection of CosmosDBSqlRoleDefinitionResources in the DatabaseAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlRoleDefinitionResources and their operations over a CosmosDBSqlRoleDefinitionResource. </returns>
+        public virtual CosmosDBSqlRoleDefinitionCollection GetCosmosDBSqlRoleDefinitions()
         {
-            return GetCachedClient(Client => new SqlRoleDefinitionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleDefinitions/{roleDefinitionId}
-        /// Operation Id: SqlResources_GetSqlRoleDefinition
-        /// </summary>
-        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlRoleDefinitionResource>> GetSqlRoleDefinitionAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new CosmosDBSqlRoleDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -202,16 +187,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlRoleDefinitionResource> GetSqlRoleDefinition(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBSqlRoleDefinitionResource>> GetCosmosDBSqlRoleDefinitionAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return GetSqlRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+            return await GetCosmosDBSqlRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of SqlRoleAssignmentResources in the DatabaseAccount. </summary>
-        /// <returns> An object representing collection of SqlRoleAssignmentResources and their operations over a SqlRoleAssignmentResource. </returns>
-        public virtual SqlRoleAssignmentCollection GetSqlRoleAssignments()
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleDefinitions/{roleDefinitionId}
+        /// Operation Id: SqlResources_GetSqlRoleDefinition
+        /// </summary>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CosmosDBSqlRoleDefinitionResource> GetCosmosDBSqlRoleDefinition(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new SqlRoleAssignmentCollection(Client, Id));
+            return GetCosmosDBSqlRoleDefinitions().Get(roleDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CosmosDBSqlRoleAssignmentResources in the DatabaseAccount. </summary>
+        /// <returns> An object representing collection of CosmosDBSqlRoleAssignmentResources and their operations over a CosmosDBSqlRoleAssignmentResource. </returns>
+        public virtual CosmosDBSqlRoleAssignmentCollection GetCosmosDBSqlRoleAssignments()
+        {
+            return GetCachedClient(Client => new CosmosDBSqlRoleAssignmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlRoleAssignmentResource>> GetSqlRoleAssignmentAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBSqlRoleAssignmentResource>> GetCosmosDBSqlRoleAssignmentAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
-            return await GetSqlRoleAssignments().GetAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBSqlRoleAssignments().GetAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlRoleAssignmentResource> GetSqlRoleAssignment(string roleAssignmentId, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBSqlRoleAssignmentResource> GetCosmosDBSqlRoleAssignment(string roleAssignmentId, CancellationToken cancellationToken = default)
         {
-            return GetSqlRoleAssignments().Get(roleAssignmentId, cancellationToken);
+            return GetCosmosDBSqlRoleAssignments().Get(roleAssignmentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of MongoDBDatabaseResources in the DatabaseAccount. </summary>

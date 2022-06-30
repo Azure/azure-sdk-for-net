@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a DatabaseAccountSqlDatabaseThroughputSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDatabaseAccountSqlDatabaseThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDatabaseAccountSqlDatabaseThroughputSetting method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlDatabaseResource" /> using the GetDatabaseAccountSqlDatabaseThroughputSetting method.
     /// </summary>
     public partial class DatabaseAccountSqlDatabaseThroughputSettingResource : ArmResource
     {
