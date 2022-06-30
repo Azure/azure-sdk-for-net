@@ -10,18 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class TestQuery : IUtf8JsonSerializable
+    public partial class TestInputContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Diagnostics))
-            {
-                writer.WritePropertyName("diagnostics");
-                writer.WriteObjectValue(Diagnostics);
-            }
-            writer.WritePropertyName("streamingJob");
-            writer.WriteObjectValue(StreamingJob);
+            writer.WritePropertyName("input");
+            writer.WriteObjectValue(Input);
             writer.WriteEndObject();
         }
     }

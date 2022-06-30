@@ -11,12 +11,12 @@ using Azure.ResourceManager.StreamAnalytics;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> A stream analytics input. </summary>
-    public partial class TestContent
+    public partial class TestInputContent
     {
-        /// <summary> Initializes a new instance of TestContent. </summary>
+        /// <summary> Initializes a new instance of TestInputContent. </summary>
         /// <param name="input"> The stream analytics input to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public TestContent(StreamingJobInputData input)
+        public TestInputContent(StreamingJobInputData input)
         {
             if (input == null)
             {

@@ -65,6 +65,8 @@ directive:
   transform: >
     $.Function['x-ms-client-name'] = 'StreamingJobFunction';
     $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
+    $.UpdateMode['x-ms-client-name'] = 'FunctionUpdateMode';
+    $.UdfType['x-ms-client-name'] = 'FunctionUdfType';
 - from: inputs.json
   where: $.definitions
   transform: >
@@ -95,5 +97,7 @@ directive:
   where: $.definitions
   transform: >
     $.SubResource['x-ms-client-name'] = 'StreamAnalyticsSubResource';
-
+    $.TestInput['x-ms-client-name'] = 'TestInputContent';
+    $.TestOutput['x-ms-client-name'] = 'TestOutputContent';
+    $.TestQuery['x-ms-client-name'] = 'TestQueryContent';
 ```

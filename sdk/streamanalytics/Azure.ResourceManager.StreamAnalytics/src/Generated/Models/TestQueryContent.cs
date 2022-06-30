@@ -11,12 +11,12 @@ using Azure.ResourceManager.StreamAnalytics;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The request object for query testing. </summary>
-    public partial class TestQuery
+    public partial class TestQueryContent
     {
-        /// <summary> Initializes a new instance of TestQuery. </summary>
+        /// <summary> Initializes a new instance of TestQueryContent. </summary>
         /// <param name="streamingJob"> Stream analytics job object which defines the input, output, and transformation for the query testing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamingJob"/> is null. </exception>
-        public TestQuery(StreamingJobData streamingJob)
+        public TestQueryContent(StreamingJobData streamingJob)
         {
             if (streamingJob == null)
             {
