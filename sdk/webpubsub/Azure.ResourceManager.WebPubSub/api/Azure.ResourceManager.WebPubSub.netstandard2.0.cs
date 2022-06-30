@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         public SharedPrivateLinkData() { }
         public string GroupId { get { throw null; } set { } }
-        public string PrivateLinkResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus? Status { get { throw null; } }

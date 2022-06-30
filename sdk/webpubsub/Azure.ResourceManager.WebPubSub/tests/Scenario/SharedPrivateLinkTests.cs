@@ -117,50 +117,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var vnetContainer = _resourceGroup.GetVirtualNetworks();
             var vnet = await vnetContainer.CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
 
-            //2.1 Create AppServicePlan
-            //string appServicePlanName = "appServicePlan5952";
-            //string location = "westus2";
-            //string appServicePlanId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/serverfarms/{appServicePlanName}";
-            //var armClient = GetArmClient();
-            //await armClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(appServicePlanId, new GenericResourceData(location)
-            //{
-            //    Properties = new Dictionary<string, object>
-            //    {
-            //        { "resources", new Dictionary<string, object>
-            //            {
-            //                { "type", "Microsoft.Web/serverfarms" },
-            //                { "apiVersion", "2021-01-15" },
-            //                { "name", appServicePlanName },
-            //                { "location", location },
-            //                { "kind", "app" },
-            //                { "sku", new Dictionary<string,object>
-            //                    {
-            //                        { "name", "P1v2" },
-            //                        { "tier", "PremiumV2" },
-            //                        { "size", "P1v2" },
-            //                        { "family", "P1v2" },
-            //                        { "capacity", 1 },
-            //                    }
-            //                },
-            //                { "properties", new Dictionary<string,object>
-            //                    {
-            //                        { "perSiteScaling", false },
-            //                        { "elasticScaleEnabled", false },
-            //                        { "maximumElasticWorkerCount", 1 },
-            //                        { "isSpot", false },
-            //                        { "reserved", false },
-            //                        { "isXenon", false },
-            //                        { "hyperV", false },
-            //                        { "targetWorkerCount", 0 },
-            //                        { "targetWorkerSizeId", 0 },
-            //                    }
-            //                },
-            //            }
-            //        }
-            //    }
-            //});
-
-            //TODO: 2.2 Create Appservice(Microsoft.Web/sites)
+            //TODO: 2 Create Appservice(Microsoft.Web/sites)
             string WebAppName = SessionRecording.GenerateAssetName("site-");
 
             //3 create SharedPrivateLink
@@ -168,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var container = _webPubSub.GetSharedPrivateLinks();
             SharedPrivateLinkData data = new SharedPrivateLinkData()
             {
-                PrivateLinkResourceId = $"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}",
+                PrivateLinkResourceId =new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}") ,
                 GroupId = "webPubSub",
                 RequestMessage = "please approve",
             };
