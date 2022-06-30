@@ -10,7 +10,7 @@ namespace Azure.Storage
     }
     public enum ClientSideEncryptionVersion
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This version is considered insecure. Applications are encouraged to migrate to version 2.0 or to one of Azure Storage's server-side encryption solutions. See https://techcommunity.microsoft.com/t5/azure-storage-blog/preview-azure-storage-updating-client-side-encryption-in-sdk-to/ba-p/3522620 for more details.")]
         V1_0 = 1,
         V2_0 = 2,
     }
