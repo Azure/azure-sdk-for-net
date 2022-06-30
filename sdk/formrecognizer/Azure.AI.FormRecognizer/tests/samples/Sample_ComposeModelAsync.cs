@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
-        public async Task CreateComposedModelAsync()
+        public async Task ComposeModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri officeSuppliesUri = new Uri(trainingFileUrl);
 #endif
-            var officeSupplieOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office supplies" };
+            var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
 
             BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
             Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri officeEquipmentUri = new Uri(trainingFileUrl);
 #endif
-            var equipmentOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Office Equipment" };
+            var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
 
             BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri furnitureUri = new Uri(trainingFileUrl);
 #endif
-            var furnitureOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Furniture" };
+            var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
 
             BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 #endif
-            var cleaningOptions = new BuildModelOptions() { ModelDescription = "Purchase order - Cleaning Supplies" };
+            var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
             BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
             Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #endregion
 
-            #region Snippet:FormRecognizerSampleCreateComposedModel
+            #region Snippet:FormRecognizerSampleComposeModel
 
             List<string> modelIds = new List<string>()
             {
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 cleaningSuppliesModel.ModelId
             };
 
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, modelDescription: "Composed Purchase order");
+            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, description: "Composed Purchase order");
             Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
             DocumentModel purchaseOrderModel = operationResponse.Value;
 

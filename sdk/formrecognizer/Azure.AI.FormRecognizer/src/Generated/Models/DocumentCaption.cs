@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An object representing the location and content of a table caption. </summary>
-    public partial class DocumentCaption
+    internal partial class DocumentCaption
     {
         /// <summary> Initializes a new instance of DocumentCaption. </summary>
         /// <param name="content"> Table caption content. </param>

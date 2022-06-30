@@ -5,6 +5,12 @@
 ### Features Added
 
 ### Breaking Changes
+- Renamed method `StartCreateComposedModel` to `StartComposeModel`.
+- Renamed `BuildModelOptions.ModelDescription` to `Description`.
+- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
+- Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
+- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
+- Removed `DocumentCaption` and `DocumentFootnote` features.
 
 ### Bugs Fixed
 
