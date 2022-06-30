@@ -9,24 +9,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The authentication info
-    /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
     /// </summary>
-    public partial class AuthInfoBase
+    public partial class AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of AuthInfoBase. </summary>
-        public AuthInfoBase()
+        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
+        public AuthBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthInfoBase. </summary>
+        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
         /// <param name="authType"> The authentication type. </param>
-        internal AuthInfoBase(AuthType authType)
+        internal AuthBaseInfo(LinkerAuthType authType)
         {
             AuthType = authType;
         }
 
         /// <summary> The authentication type. </summary>
-        internal AuthType AuthType { get; set; }
+        internal LinkerAuthType AuthType { get; set; }
     }
 }

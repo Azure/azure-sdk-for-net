@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.ServiceLinker
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TargetServiceBase> targetService = default;
-            Optional<AuthInfoBase> authInfo = default;
-            Optional<ApplicationClientType> clientType = default;
+            Optional<TargetServiceBaseInfo> targetService = default;
+            Optional<AuthBaseInfo> authInfo = default;
+            Optional<LinkerClientType> clientType = default;
             Optional<string> provisioningState = default;
             Optional<VnetSolution> vNetSolution = default;
-            Optional<SecretStore> secretStore = default;
+            Optional<LinkerSecretStore> secretStore = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetService = TargetServiceBase.DeserializeTargetServiceBase(property0.Value);
+                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authInfo = AuthInfoBase.DeserializeAuthInfoBase(property0.Value);
+                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientType"))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientType = new ApplicationClientType(property0.Value.GetString());
+                            clientType = new LinkerClientType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = SecretStore.DeserializeSecretStore(property0.Value);
+                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("scope"))

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResource : IUtf8JsonSerializable
+    public partial class AzureResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureResource DeserializeAzureResource(JsonElement element)
+        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
-            Optional<AzureResourcePropertiesBase> resourceProperties = default;
+            Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourcePropertiesBase.DeserializeAzureResourcePropertiesBase(property.Value);
+                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new AzureResource(type, id.Value, resourceProperties.Value);
+            return new AzureResourceInfo(type, id.Value, resourceProperties.Value);
         }
     }
 }

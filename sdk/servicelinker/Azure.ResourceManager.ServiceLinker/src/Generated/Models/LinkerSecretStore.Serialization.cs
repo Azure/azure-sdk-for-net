@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class SecretStore : IUtf8JsonSerializable
+    internal partial class LinkerSecretStore : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretStore DeserializeSecretStore(JsonElement element)
+        internal static LinkerSecretStore DeserializeLinkerSecretStore(JsonElement element)
         {
             Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new SecretStore(keyVaultId.Value);
+            return new LinkerSecretStore(keyVaultId.Value);
         }
     }
 }

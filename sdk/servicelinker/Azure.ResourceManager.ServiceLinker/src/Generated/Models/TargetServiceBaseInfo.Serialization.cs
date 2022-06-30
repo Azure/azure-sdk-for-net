@@ -10,35 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResourcePropertiesBase : IUtf8JsonSerializable
+    public partial class TargetServiceBaseInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(AzureResourceType.ToString());
+            writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static AzureResourcePropertiesBase DeserializeAzureResourcePropertiesBase(JsonElement element)
+        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element);
+                    case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element);
+                    case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element);
+                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element);
                 }
             }
-            AzureResourceType type = default;
+            TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new AzureResourceType(property.Value.GetString());
+                    type = new TargetServiceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new AzureResourcePropertiesBase(type);
+            return new TargetServiceBaseInfo(type);
         }
     }
 }

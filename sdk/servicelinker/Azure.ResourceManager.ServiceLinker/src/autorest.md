@@ -16,10 +16,29 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  TargetServiceBase: TargetServiceBaseInfo
+  AzureResource: AzureResourceInfo
+  ConfluentBootstrapServer: ConfluentBootstrapServerInfo
+  ConfluentSchemaRegistry: ConfluentSchemaRegistryInfo
+  AzureResourcePropertiesBase: AzureResourceBaseProperties
+  SecretInfoBase: SecretBaseInfo
+  ValueSecretInfo: RawValueSecretInfo
+  AuthInfoBase: AuthBaseInfo
+  AuthType: LinkerAuthType
+  SecretType: LinkerSecretType
+  SecretStore: LinkerSecretStore
+  ClientType: LinkerClientType
+  ValidationResultItem: ValidationResultItemData
+
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'keyVaultId': 'arm-id'
+  'sourceId': 'arm-id'
+  'targetId': 'arm-id'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -50,12 +69,8 @@ directive:
   - from: servicelinker.json
     where: $.definitions
     transform: >
-      $.SecretStore.properties.keyVaultId['x-ms-format'] = 'arm-id';
       $.AzureResource.properties.id['x-ms-format'] = 'arm-id';
       $.TargetServiceBase.properties.type['x-ms-client-name'] = 'TargetServiceType';
       $.AzureResourcePropertiesBase.properties.type['x-ms-client-name'] = 'AzureResourceType';
-      $.LinkerProperties.properties.clientType['x-ms-enum']['name'] = 'ApplicationClientType';
-      $.ValidateResult.properties.sourceId['x-ms-format'] = 'arm-id';
-      $.ValidateResult.properties.targetId['x-ms-format'] = 'arm-id';
 
 ```

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
         internal ValidateOperationResult()
         {
-            ValidationDetail = new ChangeTrackingList<ValidationResultItem>();
+            ValidationDetail = new ChangeTrackingList<ValidationResultItemData>();
         }
 
         /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
-        internal ValidateOperationResult(string resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartTimeUtc, DateTimeOffset? reportEndTimeUtc, ResourceIdentifier sourceId, ResourceIdentifier targetId, AuthType? authType, IReadOnlyList<ValidationResultItem> validationDetail)
+        internal ValidateOperationResult(string resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartTimeUtc, DateTimeOffset? reportEndTimeUtc, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<ValidationResultItemData> validationDetail)
         {
             ResourceId = resourceId;
             Status = status;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The resource Id of target service. </summary>
         public ResourceIdentifier TargetId { get; }
         /// <summary> The authentication type. </summary>
-        public AuthType? AuthType { get; }
+        public LinkerAuthType? AuthType { get; }
         /// <summary> The detail of validation result. </summary>
-        public IReadOnlyList<ValidationResultItem> ValidationDetail { get; }
+        public IReadOnlyList<ValidationResultItemData> ValidationDetail { get; }
     }
 }
