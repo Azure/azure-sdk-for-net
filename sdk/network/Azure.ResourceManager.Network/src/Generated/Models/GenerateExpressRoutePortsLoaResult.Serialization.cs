@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GenerateExpressRoutePortsLOAResult
+    public partial class GenerateExpressRoutePortsLoaResult
     {
-        internal static GenerateExpressRoutePortsLOAResult DeserializeGenerateExpressRoutePortsLOAResult(JsonElement element)
+        internal static GenerateExpressRoutePortsLoaResult DeserializeGenerateExpressRoutePortsLoaResult(JsonElement element)
         {
             Optional<string> encodedContent = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new GenerateExpressRoutePortsLOAResult(encodedContent.Value);
+            return new GenerateExpressRoutePortsLoaResult(encodedContent.Value);
         }
     }
 }

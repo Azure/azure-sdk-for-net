@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
         internal ConnectivityIssue()
         {
-            Context = new ChangeTrackingList<IDictionary<string, string>>();
+            Contexts = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>
-        /// <param name="context"> Provides additional context on the issue. </param>
-        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context)
+        /// <param name="contexts"> Provides additional context on the issue. </param>
+        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> contexts)
         {
             Origin = origin;
             Severity = severity;
             IssueType = issueType;
-            Context = context;
+            Contexts = contexts;
         }
 
         /// <summary> The origin of the issue. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of issue. </summary>
         public IssueType? IssueType { get; }
         /// <summary> Provides additional context on the issue. </summary>
-        public IReadOnlyList<IDictionary<string, string>> Context { get; }
+        public IReadOnlyList<IDictionary<string, string>> Contexts { get; }
     }
 }

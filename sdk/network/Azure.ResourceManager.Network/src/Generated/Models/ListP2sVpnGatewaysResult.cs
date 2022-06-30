@@ -12,25 +12,25 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list P2SVpnGateways. It contains a list of P2SVpnGateways and a URL nextLink to get the next set of results. </summary>
-    internal partial class ListP2SVpnGatewaysResult
+    internal partial class ListP2sVpnGatewaysResult
     {
-        /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
-        internal ListP2SVpnGatewaysResult()
+        /// <summary> Initializes a new instance of ListP2sVpnGatewaysResult. </summary>
+        internal ListP2sVpnGatewaysResult()
         {
-            Value = new ChangeTrackingList<P2SVpnGatewayData>();
+            Value = new ChangeTrackingList<P2sVpnGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
+        /// <summary> Initializes a new instance of ListP2sVpnGatewaysResult. </summary>
         /// <param name="value"> List of P2SVpnGateways. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListP2SVpnGatewaysResult(IReadOnlyList<P2SVpnGatewayData> value, string nextLink)
+        internal ListP2sVpnGatewaysResult(IReadOnlyList<P2sVpnGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of P2SVpnGateways. </summary>
-        public IReadOnlyList<P2SVpnGatewayData> Value { get; }
+        public IReadOnlyList<P2sVpnGatewayData> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

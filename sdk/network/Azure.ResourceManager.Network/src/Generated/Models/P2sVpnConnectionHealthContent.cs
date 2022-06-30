@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of P2S Vpn connection health request. </summary>
-    public partial class P2SVpnConnectionHealthContent
+    public partial class P2sVpnConnectionHealthContent
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionHealthContent. </summary>
-        public P2SVpnConnectionHealthContent()
+        /// <summary> Initializes a new instance of P2sVpnConnectionHealthContent. </summary>
+        public P2sVpnConnectionHealthContent()
         {
             VpnUserNamesFilter = new ChangeTrackingList<string>();
         }

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IKEv2Value = "IKEv2";
-        private const string IKEv1Value = "IKEv1";
+        private const string Ikev2Value = "IKEv2";
+        private const string Ikev1Value = "IKEv1";
 
         /// <summary> IKEv2. </summary>
-        public static VirtualNetworkGatewayConnectionProtocol IKEv2 { get; } = new VirtualNetworkGatewayConnectionProtocol(IKEv2Value);
+        public static VirtualNetworkGatewayConnectionProtocol Ikev2 { get; } = new VirtualNetworkGatewayConnectionProtocol(Ikev2Value);
         /// <summary> IKEv1. </summary>
-        public static VirtualNetworkGatewayConnectionProtocol IKEv1 { get; } = new VirtualNetworkGatewayConnectionProtocol(IKEv1Value);
+        public static VirtualNetworkGatewayConnectionProtocol Ikev1 { get; } = new VirtualNetworkGatewayConnectionProtocol(Ikev1Value);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionProtocol"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionProtocol left, VirtualNetworkGatewayConnectionProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionProtocol"/> values are not the same. </summary>

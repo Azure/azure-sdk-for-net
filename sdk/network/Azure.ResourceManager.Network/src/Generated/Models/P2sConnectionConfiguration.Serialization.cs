@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable
+    public partial class P2sConnectionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element)
+        internal static P2sConnectionConfiguration DeserializeP2sConnectionConfiguration(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(provisioningState));
+            return new P2sConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(provisioningState));
         }
     }
 }

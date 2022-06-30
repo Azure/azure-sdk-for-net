@@ -64,6 +64,10 @@ rename-mapping:
   Protocol: NetworkWatcherProtocol
   Access: NetworkAccess
   Resource: NetworkTrackedResourceData
+  ConnectivityIssue.context: Contexts
+  VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
+  VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
+  TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -83,9 +87,9 @@ format-by-name-rules:
   'privateLinkServiceId': 'arm-id'
   'resourceId': 'arm-id'
   'serviceResources': 'arm-id'
-  'resourceGuid': 'uuid'
-  'targetResourceGuid': 'uuid'
   'linkedResourceType': 'resource-type'
+  '*Guid': 'uuid'
+  '*Time': 'datetime'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -112,6 +116,11 @@ rename-rules:
   URI: Uri
   Etag: ETag
   BGP: Bgp
+  TCP: Tcp
+  UDP: Udp
+  ANY: Any
+  LOA: Loa
+  P2S: P2s
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -139,6 +148,68 @@ directive:
     where: $.definitions
     transform: >
       $.BgpPeerStatus.properties.connectedDuration['x-ms-format'] = 'duration-constant';
+      $.DhGroup['x-ms-enum']['name'] = 'DHGroup';
+      $.DhGroup['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'DHGroup1',    name: 'DHGroup1' },
+        { value: 'DHGroup2',    name: 'DHGroup2' },
+        { value: 'DHGroup14',   name: 'DHGroup14' },
+        { value: 'DHGroup2048', name: 'DHGroup2048' },
+        { value: 'ECP256',      name: 'Ecp256' },
+        { value: 'ECP384',      name: 'Ecp384' },
+        { value: 'DHGroup24',   name: 'DHGroup24' }
+      ];
+      $.IkeEncryption['x-ms-enum']['values'] = [
+        { value: 'DES',         name: 'Des' },
+        { value: 'DES3',        name: 'Des3' },
+        { value: 'AES128',      name: 'Aes128' },
+        { value: 'AES192',      name: 'Aes192' },
+        { value: 'AES256',      name: 'Aes256' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.IkeIntegrity['x-ms-enum']['values'] = [
+        { value: 'MD5',         name: 'MD5' },
+        { value: 'SHA1',        name: 'Sha1' },
+        { value: 'SHA256',      name: 'Sha256' },
+        { value: 'SHA384',      name: 'Sha384' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.IpsecEncryption['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'DES',         name: 'Des' },
+        { value: 'DES3',        name: 'Des3' },
+        { value: 'AES128',      name: 'Aes128' },
+        { value: 'AES192',      name: 'Aes192' },
+        { value: 'AES256',      name: 'Aes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' },
+        { value: 'GCMAES192',   name: 'GcmAes192' },
+        { value: 'GCMAES256',   name: 'GcmAes256' }
+      ];
+      $.IpsecIntegrity['x-ms-enum']['values'] = [
+        { value: 'MD5',         name: 'MD5' },
+        { value: 'SHA1',        name: 'Sha1' },
+        { value: 'SHA256',      name: 'Sha256' },
+        { value: 'SHA384',      name: 'Sha384' },
+        { value: 'GCMAES256',   name: 'GcmAes256' },
+        { value: 'GCMAES128',   name: 'GcmAes128' }
+      ];
+      $.PfsGroup['x-ms-enum']['values'] = [
+        { value: 'None',        name: 'None' },
+        { value: 'PFS1',        name: 'Pfs1' },
+        { value: 'PFS2',        name: 'Pfs2' },
+        { value: 'PFS2048',     name: 'Pfs2048' },
+        { value: 'ECP256',      name: 'Ecp256' },
+        { value: 'ECP384',      name: 'Ecp384' },
+        { value: 'PFS24',       name: 'Pfs24' },
+        { value: 'PFS14',       name: 'Pfs14' },
+        { value: 'PFSMM',       name: 'Pfs' }
+      ];
+      $.ConnectionProtocol['x-ms-enum']['values'] = [
+        { value: 'IKEv2',       name: 'Ikev2' },
+        { value: 'IKEv1',       name: 'Ikev1' }
+      ];
   - from: network.json
     where: $.definitions
     transform: >
