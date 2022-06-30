@@ -1,35 +1,20 @@
 namespace Azure.Template
 {
-    public partial class TemplateClient
+    public partial class ConfidentialLedgerClient
     {
-        protected TemplateClient() { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential) { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options) { }
+        protected ConfidentialLedgerClient() { }
+        public ConfidentialLedgerClient(System.Uri ledgerUri, Azure.Core.TokenCredential credential) { }
+        public ConfidentialLedgerClient(System.Uri ledgerUri, Azure.Core.TokenCredential credential, Azure.Template.ConfidentialLedgerClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecretValue(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretValueAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetCollections(Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(Azure.RequestContext context = null) { throw null; }
     }
-    public partial class TemplateClientOptions : Azure.Core.ClientOptions
+    public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {
-        public TemplateClientOptions(Azure.Template.TemplateClientOptions.ServiceVersion version = Azure.Template.TemplateClientOptions.ServiceVersion.V7_0) { }
+        public ConfidentialLedgerClientOptions(Azure.Template.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Template.ConfidentialLedgerClientOptions.ServiceVersion.V2022_05_13) { }
         public enum ServiceVersion
         {
-            V7_0 = 1,
+            V2022_05_13 = 1,
         }
-    }
-}
-namespace Azure.Template.Models
-{
-    public partial class SecretBundle
-    {
-        internal SecretBundle() { }
-        public string ContentType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Kid { get { throw null; } }
-        public bool? Managed { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string Value { get { throw null; } }
     }
 }

@@ -1,0 +1,137 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Confidential Ledger Service",
+    "version": "2022-05-13",
+    "x-cadl-generated": [
+      {
+        "emitter": "@azure-tools/cadl-autorest"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{ledgerUri}",
+    "useSchemePrefix": false,
+    "parameters": [
+        {
+            "name": "ledgerUri",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "url",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        }
+    ]
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [],
+  "paths": {
+    "/app/collections": {
+      "get": {
+        "operationId": "ConfidentialLedger_ListCollections",
+        "summary": "Retrieves a list of collection ids present in the Confidential Ledger",
+        "description": "Collection ids are user-created collections of ledger entries",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/CollectionArray"
+            }
+          },
+          "default": {
+            "description": "An error response from Confidential Ledger.",
+            "schema": {
+              "$ref": "#/definitions/ConfidentialLedgerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Collection": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "type": "string"
+        }
+      },
+      "description": "Identifier for collections.",
+      "required": [
+        "collectionId"
+      ]
+    },
+    "CollectionArray": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Collection"
+          },
+          "x-ms-identifiers": [],
+          "x-cadl-name": "Collection[]"
+        }
+      },
+      "description": "A list of identifiers for ledger collections.",
+      "required": [
+        "items"
+      ]
+    },
+    "ConfidentialLedgerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ConfidentialLedgerErrorBody"
+        }
+      },
+      "description": "An error response from Confidential Ledger.",
+      "required": [
+        "error"
+      ]
+    },
+    "ConfidentialLedgerErrorBody": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The error code."
+        },
+        "message": {
+          "type": "string",
+          "description": "The error message."
+        }
+      },
+      "description": "An error response from Confidential Ledger.",
+      "required": [
+        "code",
+        "message"
+      ]
+    }
+  },
+  "parameters": {
+    "Azure.Core.ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "description": "The API version to use for this operation.",
+      "minLength": 1,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
