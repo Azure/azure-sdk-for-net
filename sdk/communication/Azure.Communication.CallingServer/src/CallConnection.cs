@@ -55,7 +55,7 @@ namespace Azure.Communication.CallingServer
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
             _clientDiagnostics = clientDiagnostics;
-            ContentCapabilities = new ContentCapabilities(CallConnectionId, contentRestClient);
+            ContentCapabilities = new ContentCapabilities(CallConnectionId, contentRestClient, _clientDiagnostics);
         }
 
         /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>

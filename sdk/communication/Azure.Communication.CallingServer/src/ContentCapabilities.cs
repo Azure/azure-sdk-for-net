@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.CallingServer.Models;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.CallingServer
 {
@@ -16,11 +18,13 @@ namespace Azure.Communication.CallingServer
     {
         internal ContentRestClient _client;
         private string _callConnectionId;
+        private ClientDiagnostics _clientDiagnostics;
 
-        internal ContentCapabilities(string callConnectionId, ContentRestClient client)
+        internal ContentCapabilities(string callConnectionId, ContentRestClient client, ClientDiagnostics clientDiagnostics)
         {
             _callConnectionId = callConnectionId;
             _client = client;
+            _clientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -69,6 +73,48 @@ namespace Azure.Communication.CallingServer
         public Response<PlayResponse> PlayToAll(PlaySource playSource, CancellationToken cancellationToken = default)
         {
             return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken);
+        }
+
+        /// <summary> Cancel all media operations in the call. </summary>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response> CancelAllMediaOperationsAsync(string operationContext = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
+            scope.Start();
+            try
+            {
+                // dummy code while we generate the right swagger
+                var response = await PlayToAllAsync(null, cancellationToken).ConfigureAwait(false);
+                return response.GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel all media operations in the call. </summary>
+        /// <param name="operationContext">The operation context. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response CancelAllMediaOperations(string operationContext = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
+            scope.Start();
+            try
+            {
+                // dummy code while we generate the right swagger
+                var response = PlayToAll(null, cancellationToken);
+                return response.GetRawResponse();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }
