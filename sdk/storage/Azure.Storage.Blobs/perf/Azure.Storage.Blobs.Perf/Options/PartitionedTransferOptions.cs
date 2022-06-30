@@ -53,9 +53,11 @@ namespace Azure.Storage.Blobs.Perf.Options
                         case "2.0":
                             version = ClientSideEncryptionVersion.V2_0;
                             return true;
+#pragma warning disable CS0618 // obsolete
                         case "1.0":
                             version = ClientSideEncryptionVersion.V1_0;
                             return true;
+#pragma warning restore CS0618 // obsolete
                         default:
                             version = 0;
                             return false;
