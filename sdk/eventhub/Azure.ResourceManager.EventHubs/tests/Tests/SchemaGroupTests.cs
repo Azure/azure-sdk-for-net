@@ -28,21 +28,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             _schemaGroupCollection = eHNamespace.GetEventHubsSchemaGroups();
         }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-                List<EventHubsNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubsNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
-        }
 
         [Test]
         [RecordedTest]

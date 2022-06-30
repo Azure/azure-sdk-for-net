@@ -29,6 +29,12 @@ namespace Azure.Messaging.ServiceBus
         public virtual string SubscriptionPath { get; }
 
         /// <summary>
+        /// The fully qualified Service Bus namespace that the rule manager is associated with. This is likely
+        /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+
+        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
