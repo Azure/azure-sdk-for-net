@@ -4,7 +4,6 @@
     <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Resources" />
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 </Project>
