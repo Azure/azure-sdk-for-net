@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
 
-            Assert.StartsWith("my-namespace.unknown_service", resourceParser.RoleName);
+            Assert.StartsWith("[my-namespace]/unknown_service", resourceParser.RoleName);
             Assert.Equal(Dns.GetHostName(), resourceParser.RoleInstance);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
 
-            Assert.Equal("my-namespace.my-service", resourceParser.RoleName);
+            Assert.Equal("[my-namespace]/my-service", resourceParser.RoleName);
             Assert.Equal("my-instance", resourceParser.RoleInstance);
         }
 

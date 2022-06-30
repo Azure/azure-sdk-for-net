@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             string name = default;
             Optional<bool> primary = default;
-            Optional<DeleteOption> deleteOption = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableFpga = default;
             Optional<bool> enableIPForwarding = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOption(property0.Value.GetString());
+                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableAcceleratedNetworking"))

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> deletionTime = default;
-            Optional<string> originalId = default;
+            Optional<ResourceIdentifier> originalId = default;
             Optional<string> fullyQualifiedDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +86,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("originalId"))
                         {
-                            originalId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originalId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("fullyQualifiedDomainName"))

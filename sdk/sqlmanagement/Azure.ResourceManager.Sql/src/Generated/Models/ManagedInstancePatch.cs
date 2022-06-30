@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The administrator login password (required for managed instance creation). </summary>
         public string AdministratorLoginPassword { get; set; }
         /// <summary> Subnet resource ID for the managed instance. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> The state of the managed instance. </summary>
         public string State { get; }
         /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (regular price inclusive of a new SQL license) and &apos;BasePrice&apos; (discounted AHB price for bringing your own SQL licenses). </summary>
@@ -63,9 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         public bool? PublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
-        public string SourceManagedInstanceId { get; set; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
+        public ResourceIdentifier SourceManagedInstanceId { get; set; }
         /// <summary> Connection type used for connecting to the instance. </summary>
         public ManagedInstanceProxyOverride? ProxyOverride { get; set; }
         /// <summary>
@@ -78,9 +76,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         public string TimezoneId { get; set; }
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
-        public string InstancePoolId { get; set; }
+        public ResourceIdentifier InstancePoolId { get; set; }
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> List of private endpoint connections on a managed instance. </summary>
         public IReadOnlyList<ManagedInstancePecProperty> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not the multi-az is enabled. </summary>
         public bool? ZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
-        public string PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         public string KeyId { get; set; }
         /// <summary> The Azure Active Directory administrator of the server. </summary>

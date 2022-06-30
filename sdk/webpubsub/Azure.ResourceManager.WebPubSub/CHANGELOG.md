@@ -6,6 +6,22 @@
 
 - Rename plenty of classes and property names according to the architecture board's review.
 
+## 1.0.0-beta.5 (2022-06-28)
+
+### Breaking Changes
+
+- Prepended RP name `WebPubSub` to Private Endpoint related classes.
+- Changed `Location` property/parameter type from `string` to `AzureLocation`.
+- Changed `TenantId` property type from `string` to `Guid`.
+
+### Features Added
+
+- Added `Update` methods for Resource classes.
+
+### Bugs Fixed
+
+- Fixed serialization/deserialization bugs of `Tags` and `SystemData` properties for models inherited from ResourceData/TrackedResourceData.
+
 ## 1.0.0-beta.4 (2022-04-08)
 
 ### Breaking Changes

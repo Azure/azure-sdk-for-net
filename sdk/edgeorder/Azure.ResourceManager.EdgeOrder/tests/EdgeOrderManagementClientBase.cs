@@ -10,7 +10,6 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.EdgeOrder.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class EdgeOrderManagementClientBase : ManagementRecordedTestBase<EdgeOrderManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }

@@ -23,10 +23,13 @@ list-exception:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+no-property-type-replacement:
+- ManagedHsmVirtualNetworkRule
 
 rename-rules:
   CPU: Cpu
@@ -49,6 +52,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
   Managecontacts: ManageContacts
   Getissuers: GetIssuers
   Listissuers: ListIssuers
@@ -61,6 +65,7 @@ rename-rules:
   Listsas: ListSas
   Setsas: SetSas
   Mhsm: ManagedHsm
+
 prompted-enum-values: Default
 directive:
   - from: swagger-document
@@ -77,61 +82,55 @@ directive:
     transform: >
       $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
       $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.MHSMIPRule['x-ms-client-name'] = 'ManagedHsmIPRule';
       $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'ManagedHsmProvisioningState';
       $.ManagedHsmProperties.properties.createMode['x-ms-enum']['name'] = 'ManagedHsmCreateMode';
+      $.ManagedHsmProperties.properties.publicNetworkAccess['x-ms-enum']['name'] = 'ManagedHsmPublicNetworkAccess';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
-      $.MHSMNetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
+      $.MHSMNetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'ManagedHsmNetworkRuleBypassOption';
+      $.MHSMPrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ManagedHsmActionsRequiredMessage';
+      $.MHSMPrivateLinkResource['x-ms-client-name'] = 'ManagedHsmPrivateLinkResourceData';
+      $.MHSMPrivateEndpointConnectionItem['x-ms-client-name'] = 'ManagedHsmPrivateEndpointConnectionItemData';
+      $.MHSMPrivateEndpointConnectionProvisioningState['x-ms-enum']['name'] = 'ManagedHsmPrivateEndpointConnectionProvisioningState';
+      $.MHSMPrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'ManagedHsmPrivateEndpointServiceConnectionStatus';
+      $.MHSMPrivateLinkServiceConnectionState['x-ms-client-name'] = 'ManagedHsmPrivateLinkServiceConnectionState';
   - from: keyvault.json
     where: $.definitions
     transform: >
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'NameAvailabilityReason';
       $.CheckNameAvailabilityResult['x-ms-client-name'] = 'VaultNameAvailabilityResult';
-      $.Permissions.properties.keys.items['x-ms-enum']['name'] = 'KeyPermission';
-      $.Permissions.properties.secrets.items['x-ms-enum']['name'] = 'SecretPermission';
-      $.Permissions.properties.certificates.items['x-ms-enum']['name'] = 'CertificatePermission';
-      $.Permissions.properties.storage.items['x-ms-enum']['name'] = 'StoragePermission';
-      $.Resource['x-ms-client-name'] = 'KeyVaultResourceData';
+      $.Permissions.properties.keys.items['x-ms-enum']['name'] = 'IdentityAccessKeyPermission';
+      $.Permissions.properties.secrets.items['x-ms-enum']['name'] = 'IdentityAccessSecretPermission';
+      $.Permissions.properties.certificates.items['x-ms-enum']['name'] = 'IdentityAccessCertificatePermission';
+      $.Permissions.properties.storage.items['x-ms-enum']['name'] = 'IdentityAccessStoragePermission';
+      $.Permissions['x-ms-client-name'] = 'IdentityAccessPermissions';
       $.IPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.IPRule['x-ms-client-name'] = 'VaultIPRule';
+      $.VirtualNetworkRule['x-ms-client-name'] = 'VaultVirtualNetworkRule';
       $.DeletedVaultProperties.properties.vaultId['x-ms-format'] = 'arm-id';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
       $.VaultProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.VaultPatchProperties.properties.createMode['x-ms-enum']['name'] = 'VaultPatchMode';
       $.VaultPatchProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
-      $.Resource.properties.location['x-ms-format'] = 'azure-location';
-      $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';
-      $.PrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
-      $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ActionsRequiredMessage';
+      $.PrivateEndpointConnectionItem['x-ms-client-name'] = 'VaultPrivateEndpointConnectionItemData';
+      $.PrivateEndpointConnection['x-ms-client-name'] = 'VaultPrivateEndpointConnection';
+      $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'VaultActionsRequiredMessage';
       $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
       $.VaultCheckNameAvailabilityParameters['x-ms-client-name'] = 'VaultNameAvailabilityParameters';
-      $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
+      $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'VaultNetworkRuleBypassOption';
       $.NetworkRuleSet['x-ms-client-name'] = 'VaultNetworkRuleSet';
       $.AccessPolicyEntry['x-ms-client-name'] = 'VaultAccessPolicy';
-  - rename-model:
-      from: MHSMIPRule
-      to: MhsmIPRule
-  - rename-model:
-      from: Attributes
-      to: BaseAttributes
-  - rename-model:
-      from: Permissions
-      to: IdentityAccessPermissions
-  - rename-model:
-      from: MHSMPrivateLinkResource
-      to: MHSMPrivateLinkResourceData
-  - rename-model:
-      from: PrivateLinkResource
-      to: PrivateLinkResourceData
-  - rename-model:
-      from: MHSMPrivateEndpointConnectionItem
-      to: MHSMPrivateEndpointConnectionItemData
-  - rename-model:
-      from: PrivateEndpointConnectionItem
-      to: PrivateEndpointConnectionItemData
+      $.PrivateEndpointConnectionProvisioningState['x-ms-enum']['name'] = 'VaultPrivateEndpointConnectionProvisioningState';
+      $.PrivateEndpointServiceConnectionStatus['x-ms-enum']['name'] = 'VaultPrivateEndpointServiceConnectionStatus';
+      $.PrivateLinkServiceConnectionState['x-ms-client-name'] = 'VaultPrivateLinkServiceConnectionState';
+      $.PrivateLinkResource['x-ms-client-name'] = 'VaultPrivateLinkResourceData';
+      $.Sku.properties.family['x-ms-enum']['name'] = 'VaultSkuFamily';
+      $.Sku.properties.name['x-ms-enum']['name'] = 'VaultSkuName';
+      $.Sku['x-ms-client-name'] = 'VaultSku';
 ```
 
 ### Tag: package-2021-10

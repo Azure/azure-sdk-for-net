@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </param>
         /// <param name="advancedSettings"> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManage manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
             ManageActions = manageActions;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The source image from which the Image Version is going to be created. </summary>
         public UserArtifactSource Source { get; set; }
         /// <summary> Gets or sets the manage actions. </summary>
-        public UserArtifactManage ManageActions { get; set; }
+        public UserArtifactManagement ManageActions { get; set; }
         /// <summary> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </summary>
         public UserArtifactSettings Settings { get; set; }
         /// <summary> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </summary>

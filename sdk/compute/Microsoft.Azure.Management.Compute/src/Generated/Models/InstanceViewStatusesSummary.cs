@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the InstanceViewStatusesSummary
         /// class.
         /// </summary>
+        /// <param name="statusesSummary">The summary.</param>
         public InstanceViewStatusesSummary(IList<StatusCodeCount> statusesSummary = default(IList<StatusCodeCount>))
         {
             StatusesSummary = statusesSummary;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the summary.
         /// </summary>
         [JsonProperty(PropertyName = "statusesSummary")]
         public IList<StatusCodeCount> StatusesSummary { get; private set; }
