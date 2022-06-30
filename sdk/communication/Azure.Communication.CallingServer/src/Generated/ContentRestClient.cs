@@ -122,5 +122,77 @@ namespace Azure.Communication.CallingServer
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateRecordingRequest(StartCallRecordingRequest startCallRecording)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(startCallRecording);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Start recording the call. </summary>
+        /// <param name="startCallRecording"> The request body of start call recording request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
+        public async Task<Response<StartCallRecordingResponse>> RecordingAsync(StartCallRecordingRequest startCallRecording, CancellationToken cancellationToken = default)
+        {
+            if (startCallRecording == null)
+            {
+                throw new ArgumentNullException(nameof(startCallRecording));
+            }
+
+            using var message = CreateRecordingRequest(startCallRecording);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StartCallRecordingResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = StartCallRecordingResponse.DeserializeStartCallRecordingResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Start recording the call. </summary>
+        /// <param name="startCallRecording"> The request body of start call recording request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="startCallRecording"/> is null. </exception>
+        public Response<StartCallRecordingResponse> Recording(StartCallRecordingRequest startCallRecording, CancellationToken cancellationToken = default)
+        {
+            if (startCallRecording == null)
+            {
+                throw new ArgumentNullException(nameof(startCallRecording));
+            }
+
+            using var message = CreateRecordingRequest(startCallRecording);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StartCallRecordingResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = StartCallRecordingResponse.DeserializeStartCallRecordingResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace Azure.Communication.CallingServer
         internal CallConnectionsRestClient CallConnectionsRestClient { get; }
         internal ServerCallingRestClient ServerCallingRestClient { get; }
         internal ContentRestClient ContentRestClient { get; }
+        internal ServerCallsRestClient ServerCallsRestClient { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
@@ -88,6 +89,7 @@ namespace Azure.Communication.CallingServer
             ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
@@ -415,6 +417,253 @@ namespace Azure.Communication.CallingServer
                 return Response.FromValue(
                     callConnection,
                     response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start recording of the call.
+        /// </summary>
+        /// <param name="callLocator"> The callLocator. </param>
+        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual Response<StartCallRecordingResponse> StartRecording(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContentType? content = null, RecordingChannelType? channel = null, RecordingFormatType? format = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartRecording)}");
+            scope.Start();
+            try
+            {
+                StartCallRecordingRequest request = new StartCallRecordingRequest(callLocator)
+                {
+                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
+                    RecordingChannelType = channel,
+                    RecordingContentType = content,
+                    RecordingFormatType = format,
+                };
+
+                return ContentRestClient.Recording(request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start recording of the call.
+        /// </summary>
+        /// <param name="callLocator"> The callLocator. </param>
+        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="content">content for recording.</param>
+        /// <param name="channel">channel for recording.</param>
+        /// <param name="format">format for recording.</param>
+        public virtual async Task<Response<StartCallRecordingResponse>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContentType? content = null, RecordingChannelType? channel = null, RecordingFormatType? format = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StartRecording)}");
+            scope.Start();
+            try
+            {
+                StartCallRecordingRequest request = new StartCallRecordingRequest(callLocator)
+                {
+                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
+                    RecordingChannelType = channel,
+                    RecordingContentType = content,
+                    RecordingFormatType = format,
+                };
+                return await ContentRestClient.RecordingAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the current recording state by recording id.
+        /// </summary>
+        /// <param name="recordingId">The recording id to get the state of.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response<GetCallRecordingStateResponse> GetRecordingState(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetRecordingState)}");
+            scope.Start();
+            try
+            {
+                return ServerCallsRestClient.GetRecordingProperties(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the current recording state by recording id.
+        /// </summary>
+        /// <param name="recordingId">The recording id to get the state of.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response<GetCallRecordingStateResponse>> GetRecordingStateAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetRecordingState)}");
+            scope.Start();
+            try
+            {
+                return await ServerCallsRestClient.GetRecordingPropertiesAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to stop.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response StopRecording(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopRecording)}");
+            scope.Start();
+            try
+            {
+                return ServerCallsRestClient.StopRecording(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to stop.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> StopRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(StopRecording)}");
+            scope.Start();
+            try
+            {
+                return await ServerCallsRestClient.StopRecordingAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Pause recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> PauseRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PauseRecording)}");
+            scope.Start();
+            try
+            {
+                return await ServerCallsRestClient.PauseRecordingAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Pause recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response PauseRecording(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(PauseRecording)}");
+            scope.Start();
+            try
+            {
+                return ServerCallsRestClient.PauseRecording(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resume recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to pause.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> ResumeRecordingAsync(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(ResumeRecording)}");
+            scope.Start();
+            try
+            {
+                return await ServerCallsRestClient.ResumeRecordingAsync(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// resume recording of the call.
+        /// </summary>
+        /// <param name="recordingId">The recording id to resume.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response ResumeRecording(string recordingId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(ResumeRecording)}");
+            scope.Start();
+            try
+            {
+                return ServerCallsRestClient.ResumeRecording(
+                    recordingId: recordingId,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
