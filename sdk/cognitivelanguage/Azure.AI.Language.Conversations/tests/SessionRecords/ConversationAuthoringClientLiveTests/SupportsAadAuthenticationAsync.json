@@ -6,23 +6,23 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a185f14c0bad434b7b530da4786c089a-f8e8da9cee91006b-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220623.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "d89a28e575b991e7fc764d2d8fe61f37",
+        "traceparent": "00-687a8047bcbff940a8133122ef3d6748-a0e8045796c54549-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8d01778cea68307db1d0222324acfb62",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "88ff7d2e-00ea-4e08-aade-b778cef8a906",
+        "apim-request-id": "70c30d34-6fa2-4114-922f-0e2f3a18d091",
         "Content-Length": "455",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 21:53:02 GMT",
-        "request-id": "88ff7d2e-00ea-4e08-aade-b778cef8a906",
+        "Date": "Thu, 30 Jun 2022 23:13:38 GMT",
+        "request-id": "70c30d34-6fa2-4114-922f-0e2f3a18d091",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "192"
+        "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
         "value": [
@@ -50,8 +50,9 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1418259061"
+    "RandomSeed": "746936965"
   }
 }

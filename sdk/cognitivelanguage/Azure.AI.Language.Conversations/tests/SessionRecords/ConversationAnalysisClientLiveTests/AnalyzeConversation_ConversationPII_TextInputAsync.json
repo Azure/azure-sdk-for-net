@@ -1,0 +1,204 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "482",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-97bf9ee51439b357cecf679d82c5a867-783da5a62dadb802-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d19995af87236d137bfc90c463ab3079",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hi, I am John Doe.?",
+                  "id": "1",
+                  "participantId": "0"
+                },
+                {
+                  "text": "Hi John, how are you doing today?",
+                  "id": "2",
+                  "participantId": "1"
+                },
+                {
+                  "text": "Pretty good.",
+                  "id": "3",
+                  "participantId": "0"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "piiCategories": [
+                "All"
+              ],
+              "includeAudioRedaction": false,
+              "modelVersion": "2022-05-15-preview",
+              "loggingOptOut": false
+            },
+            "kind": "ConversationalPIITask",
+            "taskName": "analyze"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "f62a78e3-e183-46e9-9bd3-0a5574995445",
+        "Content-Length": "0",
+        "Date": "Thu, 30 Jun 2022 23:03:35 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/383d767f-f4be-4bb3-9503-ba9810561e7c?api-version=2022-05-15-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "121"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/383d767f-f4be-4bb3-9503-ba9810561e7c?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d5967eb735485dfd3570deda6a5654e9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cd9d1da7-82a4-46f3-82b0-e0e43b5b4113",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 30 Jun 2022 23:03:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "383d767f-f4be-4bb3-9503-ba9810561e7c",
+        "lastUpdatedDateTime": "2022-06-30T23:03:35Z",
+        "createdDateTime": "2022-06-30T23:03:35Z",
+        "expirationDateTime": "2022-07-01T23:03:35Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/383d767f-f4be-4bb3-9503-ba9810561e7c?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f9dde8a46365851a9d45c3a2a444ee9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e648780d-c055-4740-b416-0beefc0fcb53",
+        "Content-Length": "925",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 30 Jun 2022 23:03:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "jobId": "383d767f-f4be-4bb3-9503-ba9810561e7c",
+        "lastUpdatedDateTime": "2022-06-30T23:03:35Z",
+        "createdDateTime": "2022-06-30T23:03:35Z",
+        "expirationDateTime": "2022-07-01T23:03:35Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "conversationalPIIResults",
+              "taskName": "analyze",
+              "lastUpdateDateTime": "2022-06-30T23:03:35.7691383Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "id": "1",
+                    "conversationItems": [
+                      {
+                        "id": "1",
+                        "redactedContent": {
+                          "text": "Hi, I am ********.?"
+                        },
+                        "entities": [
+                          {
+                            "text": "John Doe",
+                            "category": "Name",
+                            "offset": 9,
+                            "length": 8,
+                            "confidenceScore": 0.83
+                          }
+                        ]
+                      },
+                      {
+                        "id": "2",
+                        "redactedContent": {
+                          "text": "Hi ****, how are you doing today?"
+                        },
+                        "entities": [
+                          {
+                            "text": "John",
+                            "category": "Name",
+                            "offset": 3,
+                            "length": 4,
+                            "confidenceScore": 0.97
+                          }
+                        ]
+                      },
+                      {
+                        "id": "3",
+                        "redactedContent": {
+                          "text": "Pretty good."
+                        },
+                        "entities": []
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-05-15-preview"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "1954873402"
+  }
+}

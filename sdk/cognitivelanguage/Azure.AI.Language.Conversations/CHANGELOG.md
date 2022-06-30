@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added conversation summarization and personally identifiable information (PII) extraction methods to `ConversationAnalysisClient`:
+  - `AnalyzeConversation` and `AnalyzeConversationAsync`
+  - `CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync`
+  - `GetAnalyzeConversationJobStatus` and `GetAnalyzeConversationJobStatusAsync`
+- Added support for service version 2022-05-15-preview.
+
 ### Breaking Changes
 
 ### Bugs Fixed
