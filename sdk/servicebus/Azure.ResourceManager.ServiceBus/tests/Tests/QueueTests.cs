@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public QueueTests(bool isAsync) : base(isAsync)
         {
         }
+
         [SetUp]
         public async Task CreateNamespaceAndGetQueueCollection()
         {
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             _queueCollection = serviceBusNamespace.GetServiceBusQueues();
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteQueue()
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             NamespaceQueueAuthorizationRuleCollection ruleCollection = queue.GetNamespaceQueueAuthorizationRules();
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRight.Listen, AccessRight.Send }
             };
             NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
@@ -140,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.True(isContainAuthorizationRuleName);
 
             //update authorization rule
-            parameter.Rights.Add(AccessRights.Manage);
+            parameter.Rights.Add(AccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
@@ -168,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { AccessRight.Listen, AccessRight.Send }
             };
             NamespaceQueueAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
@@ -179,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
+            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyContent(KeyType.PrimaryKey));
 
             //the recordings are sanitized therefore cannot be compared
             if (Mode != RecordedTestMode.Playback)
@@ -188,7 +190,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
+            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyContent(KeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);

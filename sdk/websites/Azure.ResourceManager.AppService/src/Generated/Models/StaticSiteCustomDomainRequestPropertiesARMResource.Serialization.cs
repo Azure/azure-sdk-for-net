@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> validationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,11 +59,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteCustomDomainRequestPropertiesARMResource(id, name, type, systemData, kind.Value, validationMethod.Value);
+            return new StaticSiteCustomDomainRequestPropertiesARMResource(id, name, type, systemData.Value, validationMethod.Value, kind.Value);
         }
     }
 }

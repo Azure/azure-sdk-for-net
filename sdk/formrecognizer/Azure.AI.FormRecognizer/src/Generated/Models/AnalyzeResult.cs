@@ -42,9 +42,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages.ToList();
+            Paragraphs = new ChangeTrackingList<DocumentParagraph>();
             Tables = new ChangeTrackingList<DocumentTable>();
             KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
-            Entities = new ChangeTrackingList<DocumentEntity>();
             Styles = new ChangeTrackingList<DocumentStyle>();
             Languages = new ChangeTrackingList<DocumentLanguage>();
             Documents = new ChangeTrackingList<AnalyzedDocument>();
@@ -56,22 +56,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
+        /// <param name="paragraphs"> Extracted paragraphs. </param>
         /// <param name="tables"> Extracted tables. </param>
         /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="entities"> Extracted entities. </param>
         /// <param name="styles"> Extracted font styles. </param>
         /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentEntity> entities, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
+        internal AnalyzeResult(ApiVersion apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages;
+            Paragraphs = paragraphs;
             Tables = tables;
             KeyValuePairs = keyValuePairs;
-            Entities = entities;
             Styles = styles;
             Languages = languages;
             Documents = documents;
@@ -82,12 +82,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Content { get; }
         /// <summary> Analyzed pages. </summary>
         public IReadOnlyList<DocumentPage> Pages { get; }
+        /// <summary> Extracted paragraphs. </summary>
+        public IReadOnlyList<DocumentParagraph> Paragraphs { get; }
         /// <summary> Extracted tables. </summary>
         public IReadOnlyList<DocumentTable> Tables { get; }
         /// <summary> Extracted key-value pairs. </summary>
         public IReadOnlyList<DocumentKeyValuePair> KeyValuePairs { get; }
-        /// <summary> Extracted entities. </summary>
-        public IReadOnlyList<DocumentEntity> Entities { get; }
         /// <summary> Extracted font styles. </summary>
         public IReadOnlyList<DocumentStyle> Styles { get; }
         /// <summary> Detected languages. </summary>

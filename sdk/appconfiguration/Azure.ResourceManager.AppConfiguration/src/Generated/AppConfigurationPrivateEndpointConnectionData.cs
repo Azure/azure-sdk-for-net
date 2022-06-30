@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, resourceType, systemData)
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        internal AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, AppConfigurationPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> The provisioning status of the private endpoint connection. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public AppConfigurationPrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }

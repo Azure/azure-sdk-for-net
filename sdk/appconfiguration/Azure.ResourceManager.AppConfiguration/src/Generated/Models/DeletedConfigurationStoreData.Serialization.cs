@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> configurationStoreId = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -41,11 +41,16 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -65,7 +70,12 @@ namespace Azure.ResourceManager.AppConfiguration
                         }
                         if (property0.NameEquals("location"))
                         {
-                            location = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deletionDate"))
@@ -117,7 +127,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new DeletedConfigurationStoreData(id, name, type, systemData, configurationStoreId.Value, location.Value, Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled));
+            return new DeletedConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled));
         }
     }
 }

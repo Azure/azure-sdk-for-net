@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MhsmPrivateEndpointConnectionResources in the ManagedHsm. </summary>
-        /// <returns> An object representing collection of MhsmPrivateEndpointConnectionResources and their operations over a MhsmPrivateEndpointConnectionResource. </returns>
-        public virtual MhsmPrivateEndpointConnectionCollection GetMhsmPrivateEndpointConnections()
+        /// <summary> Gets a collection of ManagedHsmPrivateEndpointConnectionResources in the ManagedHsm. </summary>
+        /// <returns> An object representing collection of ManagedHsmPrivateEndpointConnectionResources and their operations over a ManagedHsmPrivateEndpointConnectionResource. </returns>
+        public virtual ManagedHsmPrivateEndpointConnectionCollection GetManagedHsmPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new MhsmPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedHsmPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MhsmPrivateEndpointConnectionResource>> GetMhsmPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsmPrivateEndpointConnectionResource>> GetManagedHsmPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetMhsmPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedHsmPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MhsmPrivateEndpointConnectionResource> GetMhsmPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsmPrivateEndpointConnectionResource> GetManagedHsmPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetMhsmPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetManagedHsmPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -293,19 +293,19 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByMhsmResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MhsmPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedHsmPrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMhsmPrivateLinkResources");
+                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
                 scope.Start();
                 try
                 {
-                    var response = await _mhsmPrivateLinkResourcesRestClient.ListByMhsmResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _mhsmPrivateLinkResourcesRestClient.ListByManagedHsmResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -320,19 +320,19 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByMhsmResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
-            Page<MhsmPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedHsmPrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMhsmPrivateLinkResources");
+                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
                 scope.Start();
                 try
                 {
-                    var response = _mhsmPrivateLinkResourcesRestClient.ListByMhsmResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _mhsmPrivateLinkResourcesRestClient.ListByManagedHsmResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSet");
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile");
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -36,9 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ManagedDiskParameters DeserializeManagedDiskParameters(JsonElement element)
         {
-            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
-            Optional<string> id = default;
+            Optional<VmDiskSecurityProfile> securityProfile = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))
@@ -61,13 +67,28 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("securityProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityProfile = VmDiskSecurityProfile.DeserializeVmDiskSecurityProfile(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ManagedDiskParameters(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet);
+            return new ManagedDiskParameters(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
         }
     }
 }

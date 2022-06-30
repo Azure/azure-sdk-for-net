@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.ActionGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.ActionGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ActionGroupData : Azure.ResourceManager.Monitor.Models.AzureResource
+    public partial class ActionGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ActionGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ArmRoleReceiver> ArmRoleReceivers { get { throw null; } }
@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.Monitor
         public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.EventHubReceiver> EventHubReceivers { get { throw null; } }
         public string GroupShortName { get { throw null; } set { } }
+        public string Identity { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ItsmReceiver> ItsmReceivers { get { throw null; } }
+        public string Kind { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.LogicAppReceiver> LogicAppReceivers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.SmsReceiver> SmsReceivers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.VoiceReceiver> VoiceReceivers { get { throw null; } }
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class AlertRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AlertRuleData(Azure.Core.AzureLocation location, string namePropertiesName, bool isEnabled, Azure.ResourceManager.Monitor.Models.RuleCondition condition) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Monitor.Models.RuleAction Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.RuleAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.RuleCondition Condition { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -211,7 +214,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class DataCollectionEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DataCollectionEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProperties Properties { get { throw null; } set { } }
     }
@@ -253,7 +256,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class DataCollectionRuleAssociationData : Azure.ResourceManager.Models.ResourceData
     {
         public DataCollectionRuleAssociationData() { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProperties Properties { get { throw null; } set { } }
     }
     public partial class DataCollectionRuleAssociationResource : Azure.ResourceManager.ArmResource
@@ -288,7 +291,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class DataCollectionRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DataCollectionRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleProperties Properties { get { throw null; } set { } }
     }
@@ -442,15 +445,18 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.LogSearchRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.LogSearchRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LogSearchRuleData : Azure.ResourceManager.Monitor.Models.ResourceAutoGenerated
+    public partial class LogSearchRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public LogSearchRuleData(Azure.Core.AzureLocation location, Azure.ResourceManager.Monitor.Models.MonitorSource source, Azure.ResourceManager.Monitor.Models.MonitorAction action) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Monitor.Models.MonitorAction Action { get { throw null; } set { } }
         public bool? AutoMitigate { get { throw null; } set { } }
         public string CreatedWithApiVersion { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.Enabled? Enabled { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
         public bool? IsLegacyLogAnalyticsRule { get { throw null; } }
+        public string Kind { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorSchedule Schedule { get { throw null; } set { } }
@@ -640,8 +646,8 @@ namespace Azure.ResourceManager.Monitor
     public partial class MonitorPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public MonitorPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
     public partial class MonitorPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -859,6 +865,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class AlertRulePatch
     {
         public AlertRulePatch() { }
+        public Azure.ResourceManager.Monitor.Models.RuleAction Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.RuleAction> Actions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.RuleCondition Condition { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -911,7 +918,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public AutoscaleNotification() { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
-        public string Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.OperationType Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WebhookNotification> Webhooks { get { throw null; } }
     }
     public partial class AutoscaleProfile
@@ -955,12 +962,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.Uri HttpTriggerUri { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
-    }
-    public partial class AzureResource : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public AzureResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Identity { get { throw null; } }
-        public string Kind { get { throw null; } }
     }
     public enum CategoryType
     {
@@ -1010,17 +1011,25 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ContextType { get { throw null; } }
         public string NotificationSource { get { throw null; } }
     }
-    public partial class DataCollectionEndpointProperties : Azure.ResourceManager.Monitor.DataCollectionEndpointData
+    public partial class DataCollectionEndpointProperties : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DataCollectionEndpointProperties(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProperties Properties { get { throw null; } set { } }
     }
-    public partial class DataCollectionRuleAssociationProperties : Azure.ResourceManager.Monitor.DataCollectionRuleAssociationData
+    public partial class DataCollectionRuleAssociationProperties : Azure.ResourceManager.Models.ResourceData
     {
         public DataCollectionRuleAssociationProperties() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionRuleAssociationProperties Properties { get { throw null; } set { } }
     }
-    public partial class DataCollectionRuleProperties : Azure.ResourceManager.Monitor.DataCollectionRuleData
+    public partial class DataCollectionRuleProperties : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DataCollectionRuleProperties(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.DataCollectionRuleProperties Properties { get { throw null; } set { } }
     }
     public partial class DataContainer
     {
@@ -1179,7 +1188,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset? SubmissionTimestamp { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.LocalizableString SubStatus { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
     }
     public partial class EventHubReceiver
     {
@@ -1188,7 +1197,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string EventHubNameSpace { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
     public enum EventLevel
@@ -1202,7 +1211,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class HttpRequestInfo
     {
         internal HttpRequestInfo() { }
-        public string ClientIpAddress { get { throw null; } }
+        public string ClientIPAddress { get { throw null; } }
         public string ClientRequestId { get { throw null; } }
         public string Method { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
@@ -1544,6 +1553,23 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.OperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.OperationType Scale { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.OperationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.OperationType left, Azure.ResourceManager.Monitor.Models.OperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.OperationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.OperationType left, Azure.ResourceManager.Monitor.Models.OperationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.Monitor.Models.Operator>
     {
         private readonly object _dummy;
@@ -1631,12 +1657,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.Collections.Generic.IList<int> Hours { get { throw null; } }
         public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
-    }
-    public partial class ResourceAutoGenerated : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ResourceAutoGenerated(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Etag { get { throw null; } }
-        public string Kind { get { throw null; } }
     }
     public partial class ResourceForUpdate
     {
@@ -1845,7 +1865,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get { throw null; } set { } }
         public string ObjectId { get { throw null; } set { } }
         public System.Uri ServiceUri { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public bool? UseAadAuth { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
@@ -1858,9 +1878,9 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class WorkspaceInfo
     {
-        public WorkspaceInfo(string id, string location, string customerId) { }
+        public WorkspaceInfo(string id, Azure.Core.AzureLocation location, string customerId) { }
         public string CustomerId { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
     }
 }

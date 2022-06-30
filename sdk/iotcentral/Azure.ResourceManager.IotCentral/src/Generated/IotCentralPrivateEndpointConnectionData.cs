@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal IotCentralPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, IotCentralPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IotCentralPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal IotCentralPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> groupIds, SubResource privateEndpoint, IotCentralPrivateLinkServiceConnectionState connectionState, IotCentralPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotCentral
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public IotCentralPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public IotCentralPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         public IotCentralPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

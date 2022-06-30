@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicKey"> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </param>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateKey"/>, <paramref name="publicKey"/> or <paramref name="id"/> is null. </exception>
-        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, string id)
+        internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, ResourceIdentifier id)
         {
             if (privateKey == null)
             {
@@ -42,6 +43,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </summary>
         public string PublicKey { get; }
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

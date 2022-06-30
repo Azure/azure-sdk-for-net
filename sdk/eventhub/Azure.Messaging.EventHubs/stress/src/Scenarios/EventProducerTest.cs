@@ -2,109 +2,98 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Producer;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Extensibility;
-using System.Diagnostics.Tracing;
-using Azure.Core.Diagnostics;
 
-namespace Azure.Messaging.EventHubs.Stress
+namespace Azure.Messaging.EventHubs.Stress;
+
+/// <summary>
+///   The test scenario responsible for running all of the roles needed for the Event Producer test scenario.
+/// <summary/>
+///
+public class EventProducerTest
 {
-    internal class EventProducerTest
+    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
+    private readonly TestParameters _testParameters;
+
+    /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
+    private readonly string _jobIndex;
+
+    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
+    private Metrics _metrics;
+
+    /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
+    private static Role[] _roles = {Role.Publisher, Role.Publisher};
+
+    /// <summary>
+    ///  Initializes a new <see cref="EventProducerTest"/> instance.
+    /// </summary>
+    ///
+    /// <param name="TestParameters">The <see cref="TestParameters"/> to use to configure this test run.</param>
+    /// <param name="metrics">The <see cref="Metrics"/> to use to send metrics to Application Insights.</param>
+    /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
+    ///
+    public EventProducerTest(TestParameters testParameters,
+                             Metrics metrics,
+                             string jobIndex = default)
     {
-        private Metrics _metrics;
-        private EventProducerTestConfig _testConfiguration;
+        _testParameters = testParameters;
+        _jobIndex = jobIndex;
+        _metrics = metrics;
+        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-prod-{Guid.NewGuid().ToString()}";
+    }
 
-        public EventProducerTest(EventProducerTestConfig testConfiguration)
+    /// <summary>
+    ///   Runs all of the roles required for this instance of the Event Producer test scenario.
+    /// </summary>
+    ///
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
+
+    public async Task RunTestAsync(CancellationToken cancellationToken)
+    {
+        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
+        var testRunTasks = new List<Task>();
+
+        if (runAllRoles)
         {
-            _testConfiguration = testConfiguration;
-            _metrics = new Metrics(testConfiguration.InstrumentationKey);
-        }
-
-        public async Task Run()
-        {
-            using var publishCancellationSource = new CancellationTokenSource();
-
-            var runDuration = TimeSpan.FromHours(_testConfiguration.DurationInHours);
-            publishCancellationSource.CancelAfter(runDuration);
-
-            using var azureEventListener = new AzureEventSourceListener(SendHeardException, EventLevel.Error);
-
-            var publishingTasks = default(IEnumerable<Task>);
-
-            try
+            foreach (Role role in _roles)
             {
-                // Begin publishing events in the background.
-
-                publishingTasks = Enumerable
-                    .Range(0, 2)
-                    .Select(_ => Task.Run(() => new Publisher(_testConfiguration, _metrics).Start(publishCancellationSource.Token)))
-                    .ToList();
-
-                // Periodically update garbage collection metrics
-                while (!publishCancellationSource.Token.IsCancellationRequested)
-                {
-                    UpdateEnvironmentStatistics(_metrics);
-                    await Task.Delay(TimeSpan.FromMinutes(1), publishCancellationSource.Token).ConfigureAwait(false);
-                }
-
-                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
-            }
-            catch (TaskCanceledException)
-            {
-                // No action needed.
-            }
-            catch (Exception ex) when
-                (ex is OutOfMemoryException
-                || ex is StackOverflowException
-                || ex is ThreadAbortException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _metrics.Client.TrackException(ex);
-            }
-
-            // The run is ending.  Clean up the outstanding background operations.
-
-            try
-            {
-                publishCancellationSource.Cancel();
-                await Task.WhenAll(publishingTasks).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                _metrics.Client.TrackException(ex);
-            }
-            finally
-            {
-                // Flush and wait for all metrics to be aggregated and sent to application insights
-                _metrics.Client.Flush();
-                await Task.Delay(60000).ConfigureAwait(false);
+                testRunTasks.Add(RunRoleAsync(role, cancellationToken));
             }
         }
-
-        private void UpdateEnvironmentStatistics(Metrics _metrics)
+        else
         {
-            _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-            _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-            _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
+            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], cancellationToken));
         }
 
-        private void SendHeardException(EventWrittenEventArgs args, string level)
+        await Task.WhenAll(testRunTasks).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    ///   Creates a role instance and runs that role.
+    /// </summary>
+    ///
+    /// <param name="role">The <see cref="Role"/> to run.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+    ///
+    private Task RunRoleAsync(Role role,
+                              CancellationToken cancellationToken)
+    {
+        switch (role)
         {
-            var output = args.ToString();
-            _metrics.Client.TrackTrace($"EventWritten: {output} Level: {level}.");
+            case Role.Publisher:
+                var publisherConfiguration = new PublisherConfiguration();
+                var publisher = new Publisher(publisherConfiguration, _testParameters, _metrics);
+                return Task.Run(() => publisher.RunAsync(cancellationToken));
+
+            case Role.BufferedPublisher:
+                var buffpublisherConfiguration = new BufferedPublisherConfiguration();
+                var buffpublisher = new BufferedPublisher(_testParameters, buffpublisherConfiguration, _metrics);
+                return Task.Run(() => buffpublisher.RunAsync(cancellationToken));
+            default:
+                throw new NotSupportedException($"Running role { role.ToString() } is not supported by this test scenario.");
         }
     }
 }

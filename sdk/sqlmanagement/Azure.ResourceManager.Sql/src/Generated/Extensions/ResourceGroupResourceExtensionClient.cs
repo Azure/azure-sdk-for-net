@@ -63,6 +63,28 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(Client => new InstancePoolCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <returns> An object representing collection of ServerTrustGroupResources and their operations over a ServerTrustGroupResource. </returns>
+        public virtual ServerTrustGroupCollection GetServerTrustGroups(string locationName)
+        {
+            return new ServerTrustGroupCollection(Client, Id, locationName);
+        }
+
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
+        public virtual VirtualClusterCollection GetVirtualClusters()
+        {
+            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
+        public virtual SqlServerCollection GetSqlServers()
+        {
+            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -88,28 +110,6 @@ namespace Azure.ResourceManager.Sql
         public virtual ManagedInstanceCollection GetManagedInstances()
         {
             return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of ServerTrustGroupResources and their operations over a ServerTrustGroupResource. </returns>
-        public virtual ServerTrustGroupCollection GetServerTrustGroups(string locationName)
-        {
-            return new ServerTrustGroupCollection(Client, Id, locationName);
-        }
-
-        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
-        public virtual VirtualClusterCollection GetVirtualClusters()
-        {
-            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
-        public virtual SqlServerCollection GetSqlServers()
-        {
-            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary>

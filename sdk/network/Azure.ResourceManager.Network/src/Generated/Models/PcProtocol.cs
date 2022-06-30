@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
         private const string AnyValue = "Any";
 
         /// <summary> TCP. </summary>
-        public static PcProtocol TCP { get; } = new PcProtocol(TCPValue);
+        public static PcProtocol Tcp { get; } = new PcProtocol(TcpValue);
         /// <summary> UDP. </summary>
-        public static PcProtocol UDP { get; } = new PcProtocol(UDPValue);
+        public static PcProtocol Udp { get; } = new PcProtocol(UdpValue);
         /// <summary> Any. </summary>
         public static PcProtocol Any { get; } = new PcProtocol(AnyValue);
         /// <summary> Determines if two <see cref="PcProtocol"/> values are the same. </summary>

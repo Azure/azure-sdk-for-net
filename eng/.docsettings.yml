@@ -120,6 +120,7 @@ known_content_issues:
   - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','azure-sdk-tools/issues/404']
   - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/textanalytics/Azure.AI.TextAnalytics.Legacy.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md', 'azure-sdk-tools/issues/404 - requires different name for auth section']
 
   - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936: Needs Examples']

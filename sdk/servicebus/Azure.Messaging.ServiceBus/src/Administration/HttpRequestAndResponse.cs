@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(forwardTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusSupplementartyAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(fwdDeadLetterTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
             }
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);

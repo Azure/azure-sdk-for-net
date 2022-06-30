@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Topology>> GetTopologyAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkTopology>> GetTopologyAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Topology value = default;
+                        NetworkTopology value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Topology.DeserializeTopology(document.RootElement);
+                        value = NetworkTopology.DeserializeNetworkTopology(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Topology> GetTopology(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyContent content, CancellationToken cancellationToken = default)
+        public Response<NetworkTopology> GetTopology(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -580,9 +580,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        Topology value = default;
+                        NetworkTopology value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Topology.DeserializeTopology(document.RootElement);
+                        value = NetworkTopology.DeserializeNetworkTopology(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

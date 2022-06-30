@@ -42,29 +42,29 @@ VaultCollection vaultCollection = resourceGroup.GetVaults();
 string vaultName = "myVault";
 Guid tenantIdGuid = new Guid("Your tenantId");
 string objectId = "Your Object Id";
-AccessPermissions permissions = new AccessPermissions
+IdentityAccessPermissions permissions = new IdentityAccessPermissions
 {
-    Keys = { new KeyPermission("all") },
-    Secrets = { new SecretPermission("all") },
-    Certificates = { new CertificatePermission("all") },
-    Storage = { new StoragePermission("all") },
+    Keys = { new IdentityAccessKeyPermission("all") },
+    Secrets = { new IdentityAccessSecretPermission("all") },
+    Certificates = { new IdentityAccessCertificatePermission("all") },
+    Storage = { new IdentityAccessStoragePermission("all") },
 };
-AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
+VaultAccessPolicy AccessPolicy = new VaultAccessPolicy(tenantIdGuid, objectId, permissions);
 
-VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;
 VaultProperties.EnableSoftDelete = true;
 VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-VaultProperties.NetworkAcls = new NetworkRuleSet()
+VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet()
 {
     Bypass = "AzureServices",
     DefaultAction = "Allow",
     IPRules =
     {
-        new IPRule("1.2.3.4/32"),
-        new IPRule("1.0.0.0/25")
+        new VaultIPRule("1.2.3.4/32"),
+        new VaultIPRule("1.0.0.0/25")
     }
 };
 VaultProperties.AccessPolicies.Add(AccessPolicy);

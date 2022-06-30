@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -353,9 +351,23 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the domain topic.
             /// </param>
-            public static IEnumerable<EventSubscription> List(this IDomainTopicEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName)
+            /// <param name='filter'>
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
+            /// </param>
+            public static IPage<EventSubscription> List(this IDomainTopicEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListAsync(resourceGroupName, domainName, topicName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, domainName, topicName, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -377,12 +389,26 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='topicName'>
             /// Name of the domain topic.
             /// </param>
+            /// <param name='filter'>
+            /// The query used to filter the search results using OData syntax. Filtering
+            /// is permitted on the 'name' property only and with limited number of OData
+            /// operations. These operations are: the 'contains' function as well as the
+            /// following logical operations: not, and, or, eq (for equal), and ne (for not
+            /// equal). No arithmetic operations are supported. The following is a valid
+            /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+            /// The following is not a valid filter example: $filter=location eq 'westus'.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return per page for the list operation. Valid
+            /// range for top parameter is 1 to 100. If not specified, the default number
+            /// of results to be returned is 20 items per page.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventSubscription>> ListAsync(this IDomainTopicEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EventSubscription>> ListAsync(this IDomainTopicEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, domainName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, domainName, topicName, filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -636,6 +662,48 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<EventSubscription> BeginUpdateAsync(this IDomainTopicEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, topicName, eventSubscriptionName, eventSubscriptionUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all nested event subscriptions for a specific domain topic.
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EventSubscription> ListNext(this IDomainTopicEventSubscriptionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all nested event subscriptions for a specific domain topic.
+            /// </summary>
+            /// <remarks>
+            /// List all event subscriptions that have been created for a specific domain
+            /// topic.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EventSubscription>> ListNextAsync(this IDomainTopicEventSubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

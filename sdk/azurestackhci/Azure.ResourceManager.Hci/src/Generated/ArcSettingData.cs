@@ -29,47 +29,43 @@ namespace Azure.ResourceManager.Hci
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
         /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
+        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
+        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
+        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
+        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
+            ArcApplicationClientId = arcApplicationClientId;
+            ArcApplicationTenantId = arcApplicationTenantId;
+            ArcServicePrincipalObjectId = arcServicePrincipalObjectId;
+            ArcApplicationObjectId = arcApplicationObjectId;
             AggregateState = aggregateState;
             PerNodeDetails = perNodeDetails;
-            CreatedBy = createdBy;
-            CreatedByType = createdByType;
-            CreatedOn = createdOn;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedByType = lastModifiedByType;
-            LastModifiedOn = lastModifiedOn;
+            ConnectivityProperties = connectivityProperties;
         }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
-        public string ArcInstanceResourceGroup { get; }
+        public string ArcInstanceResourceGroup { get; set; }
+        /// <summary> App id of arc AAD identity. </summary>
+        public Guid? ArcApplicationClientId { get; set; }
+        /// <summary> Tenant id of arc AAD identity. </summary>
+        public Guid? ArcApplicationTenantId { get; set; }
+        /// <summary> Object id of arc AAD service principal. </summary>
+        public Guid? ArcServicePrincipalObjectId { get; set; }
+        /// <summary> Object id of arc AAD identity. </summary>
+        public Guid? ArcApplicationObjectId { get; set; }
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
         public ArcSettingAggregateState? AggregateState { get; }
         /// <summary> State of Arc agent in each of the nodes. </summary>
         public IReadOnlyList<PerNodeState> PerNodeDetails { get; }
-        /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
-        /// <summary> The type of identity that created the resource. </summary>
-        public Models.CreatedByType? CreatedByType { get; set; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
-        /// <summary> The type of identity that last modified the resource. </summary>
-        public Models.CreatedByType? LastModifiedByType { get; set; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        public BinaryData ConnectivityProperties { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> roleName = default;
             Optional<RoleDefinitionType> type0 = default;
             Optional<IList<string>> assignableScopes = default;
@@ -78,11 +78,16 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new SqlRoleDefinitionData(id, name, type, systemData, roleName.Value, Optional.ToNullable(type0), Optional.ToList(assignableScopes), Optional.ToList(permissions));
+            return new SqlRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), Optional.ToList(assignableScopes), Optional.ToList(permissions));
         }
     }
 }

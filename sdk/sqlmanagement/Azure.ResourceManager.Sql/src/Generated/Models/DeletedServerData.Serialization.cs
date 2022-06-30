@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> deletionTime = default;
-            Optional<string> originalId = default;
+            Optional<ResourceIdentifier> originalId = default;
             Optional<string> fullyQualifiedDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,11 +47,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -81,7 +86,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("originalId"))
                         {
-                            originalId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originalId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("fullyQualifiedDomainName"))
@@ -93,7 +103,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DeletedServerData(id, name, type, systemData, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
+            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
         }
     }
 }

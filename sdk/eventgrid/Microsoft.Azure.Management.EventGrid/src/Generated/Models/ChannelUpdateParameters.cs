@@ -33,19 +33,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the ChannelUpdateParameters class.
         /// </summary>
         /// <param name="expirationTimeIfNotActivatedUtc">Expiration time of
-        /// the event channel. If this timer expires while the corresponding
-        /// partner topic or partner destination is never activated,
+        /// the channel. If this timer expires while the corresponding partner
+        /// topic or partner destination is never activated,
         /// the channel and corresponding partner topic or partner destination
         /// are deleted.</param>
-        /// <param name="partnerDestinationInfo">Partner destination properties
-        /// which can be updated if the channel is of type
-        /// PartnerDestination.</param>
         /// <param name="partnerTopicInfo">Partner topic properties which can
         /// be updated if the channel is of type PartnerTopic.</param>
-        public ChannelUpdateParameters(System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), PartnerUpdateDestinationInfo partnerDestinationInfo = default(PartnerUpdateDestinationInfo), PartnerUpdateTopicInfo partnerTopicInfo = default(PartnerUpdateTopicInfo))
+        public ChannelUpdateParameters(System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), PartnerUpdateTopicInfo partnerTopicInfo = default(PartnerUpdateTopicInfo))
         {
             ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
-            PartnerDestinationInfo = partnerDestinationInfo;
             PartnerTopicInfo = partnerTopicInfo;
             CustomInit();
         }
@@ -56,21 +52,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets expiration time of the event channel. If this timer
-        /// expires while the corresponding partner topic or partner
-        /// destination is never activated,
+        /// Gets or sets expiration time of the channel. If this timer expires
+        /// while the corresponding partner topic or partner destination is
+        /// never activated,
         /// the channel and corresponding partner topic or partner destination
         /// are deleted.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expirationTimeIfNotActivatedUtc")]
         public System.DateTime? ExpirationTimeIfNotActivatedUtc { get; set; }
-
-        /// <summary>
-        /// Gets or sets partner destination properties which can be updated if
-        /// the channel is of type PartnerDestination.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.partnerDestinationInfo")]
-        public PartnerUpdateDestinationInfo PartnerDestinationInfo { get; set; }
 
         /// <summary>
         /// Gets or sets partner topic properties which can be updated if the

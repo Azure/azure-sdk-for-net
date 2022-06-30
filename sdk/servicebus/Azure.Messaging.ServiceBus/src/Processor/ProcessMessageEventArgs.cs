@@ -26,6 +26,16 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        /// <summary>
+        /// The path of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string EntityPath => _receiver.EntityPath;
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the message was received from.
+        /// </summary>
+        public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
+
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
 
         private readonly ServiceBusReceiver _receiver;

@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AnomalyDetectorClient(Uri endpoint, TokenCredential credential, ApiVersion? apiVersion = default, AnomalyDetectorClientOptions options = null)
+        public AnomalyDetectorClient(Uri endpoint, TokenCredential credential, ApiVersion? apiVersion = null, AnomalyDetectorClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, ApiVersion? apiVersion = default, AnomalyDetectorClientOptions options = null)
+        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, ApiVersion? apiVersion = null, AnomalyDetectorClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Anomaly Detector API version (for example, v1.0). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
-        internal AnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = default)
+        internal AnomalyDetectorClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ApiVersion? apiVersion = null)
         {
             RestClient = new AnomalyDetectorRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;

@@ -8,14 +8,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: CosmosDB
-skip-csproj: true
 namespace: Azure.ResourceManager.CosmosDB
 require: https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/readme.md
 tag: package-2021-10-csharp
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-flatten-payloads: false
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
 model-namespae: true
+
 operation-id-mappings:
   DatabaseAccountCassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
@@ -50,6 +52,13 @@ operation-id-mappings:
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -71,6 +80,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
 
 directive:
 - from: cosmos-db.json

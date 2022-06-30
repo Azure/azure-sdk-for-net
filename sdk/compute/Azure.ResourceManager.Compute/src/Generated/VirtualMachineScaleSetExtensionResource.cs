@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetExtensionResource(ArmClient client, VirtualMachineScaleSetExtensionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualMachineScaleSetExtensionResource(ArmClient client, VirtualMachineScaleSetExtensionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

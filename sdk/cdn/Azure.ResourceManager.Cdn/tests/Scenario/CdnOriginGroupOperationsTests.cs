@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnOriginGroupResource cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
             CdnOriginGroupPatch updateOptions = new CdnOriginGroupPatch()
             {
-                HealthProbeSettings = new HealthProbeParameters
+                HealthProbeSettings = new HealthProbeSettings
                 {
                     ProbePath = "/healthz",
                     ProbeRequestType = HealthProbeRequestType.Head,
-                    ProbeProtocol = ProbeProtocol.Https,
+                    ProbeProtocol = HealthProbeProtocol.Https,
                     ProbeIntervalInSeconds = 60
                 }
             };

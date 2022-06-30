@@ -4,6 +4,7 @@
 parameters:
   ServiceDirectory: ''
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+  ResourceType: test
 
 # SubscriptionConfiguration will be splat into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -29,10 +30,11 @@ steps:
 
       eng/common/TestResources/Remove-TestResources.ps1 `
         @subscriptionConfiguration `
+        -ResourceType '${{ parameters.ResourceType }}' `
         -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
         -CI `
         -Force `
         -Verbose
     displayName: Remove test resources
-    condition: eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true')
+    condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
     continueOnError: true

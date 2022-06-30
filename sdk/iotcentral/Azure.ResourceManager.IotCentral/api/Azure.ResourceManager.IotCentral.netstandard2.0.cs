@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotCentral
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppSku SkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.AppSku? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.AppState? State { get { throw null; } }
         public string Subdomain { get { throw null; } set { } }
         public string Template { get { throw null; } set { } }
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.IotCentral
     public partial class IotCentralPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public IotCentralPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class IotCentralPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppSku SkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.AppSku? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.AppState? State { get { throw null; } }
         public string Subdomain { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

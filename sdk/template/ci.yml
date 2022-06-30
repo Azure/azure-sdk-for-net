@@ -1,4 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
 trigger:
   branches:
     include:
@@ -30,13 +31,10 @@ pr:
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
     # eng/common code changes trigger template pipeline for basic checking.
     - eng/common/
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
 #endif
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
     ArtifactName: packages

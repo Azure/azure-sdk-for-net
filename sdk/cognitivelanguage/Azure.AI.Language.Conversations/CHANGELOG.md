@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-06-27)
+
+### Features Added
+
+- Added `ConversationAuthoringClient` to manage authoring projects.
+- Added support for Azure Active Directory (AAD) authentication.
+
+### Breaking Changes
+
+- `ConversationAnalysisClient.AnalyzeConversation` and `AnalyzeConversationAsync` now take a `RequestContent` and `RequestContext` for more control and flexibility.
+- Removed all models. See README.md for samples to use this client library.
+- Renamed `ConversationAnalysisClientOptions` to `ConversationsClientOptions`.
 
 ## 1.0.0-beta.3 (2022-04-20)
 

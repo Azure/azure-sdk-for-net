@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal CdnOriginGroupData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, HealthProbeParameters healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
-        public HealthProbeParameters HealthProbeSettings { get; set; }
+        public HealthProbeSettings HealthProbeSettings { get; set; }
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
         public IList<WritableSubResource> Origins { get; }
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
-        public ResponseBasedOriginErrorDetectionParameters ResponseBasedOriginErrorDetectionSettings { get; set; }
+        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
         /// <summary> Resource status of the origin group. </summary>
         public OriginGroupResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin group. </summary>
-        public string ProvisioningState { get; }
+        public OriginGroupProvisioningState? ProvisioningState { get; }
     }
 }

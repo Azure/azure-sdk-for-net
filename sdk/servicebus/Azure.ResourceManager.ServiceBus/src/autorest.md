@@ -6,14 +6,26 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
-require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c2d2b523575031790b8672640ea762bdf9ad4964/specification/servicebus/resource-manager/readme.md
+tag: package-2021-11
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+  Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+  DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -38,6 +50,15 @@ rename-rules:
   URI: Uri
 
 directive:
+    - from: namespace-preview.json
+      where: $.definitions.Encryption
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.Identity
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.userAssignedIdentityProperties
+      transform: $['x-ms-client-flatten'] = false
     - rename-model:
         from: SBNamespace
         to: ServiceBusNamespace
@@ -182,10 +203,10 @@ directive:
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
     - rename-model:
         from: RegenerateAccessKeyParameters
-        to: RegenerateAccessKeyOptions
+        to: RegenerateAccessKeyContent
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateOptions
+        to: ServiceBusNamespaceUpdateContent
     - from: swagger-document
       where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
       transform: $['x-ms-client-name'] = 'iPRules'
@@ -196,7 +217,7 @@ directive:
       where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
       transform: >
         $['x-ms-enum'] = {
-          "name": "ProvisioningStateDisasterRecovery",
+          "name": "DisasterRecoveryProvisioningState",
           "modelAsString": false
         }
 ```

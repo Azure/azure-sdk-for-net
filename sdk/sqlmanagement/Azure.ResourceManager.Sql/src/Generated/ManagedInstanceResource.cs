@@ -531,6 +531,117 @@ namespace Azure.ResourceManager.Sql
             return GetRestorableDroppedManagedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DistributedAvailabilityGroupResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of DistributedAvailabilityGroupResources and their operations over a DistributedAvailabilityGroupResource. </returns>
+        public virtual DistributedAvailabilityGroupCollection GetDistributedAvailabilityGroups()
+        {
+            return GetCachedClient(Client => new DistributedAvailabilityGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}
+        /// Operation Id: DistributedAvailabilityGroups_Get
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetDistributedAvailabilityGroups().GetAsync(distributedAvailabilityGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a distributed availability group info.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}
+        /// Operation Id: DistributedAvailabilityGroups_Get
+        /// </summary>
+        /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="distributedAvailabilityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DistributedAvailabilityGroupResource> GetDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerTrustCertificateResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ServerTrustCertificateResources and their operations over a ServerTrustCertificateResource. </returns>
+        public virtual ServerTrustCertificateCollection GetServerTrustCertificates()
+        {
+            return GetCachedClient(Client => new ServerTrustCertificateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server trust certificate that was uploaded from box to Sql Managed Instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustCertificates/{certificateName}
+        /// Operation Id: ServerTrustCertificates_Get
+        /// </summary>
+        /// <param name="certificateName"> Name of of the certificate to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServerTrustCertificateResource>> GetServerTrustCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerTrustCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server trust certificate that was uploaded from box to Sql Managed Instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustCertificates/{certificateName}
+        /// Operation Id: ServerTrustCertificates_Get
+        /// </summary>
+        /// <param name="certificateName"> Name of of the certificate to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServerTrustCertificateResource> GetServerTrustCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            return GetServerTrustCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EndpointCertificateResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of EndpointCertificateResources and their operations over a EndpointCertificateResource. </returns>
+        public virtual EndpointCertificateCollection GetEndpointCertificates()
+        {
+            return GetCachedClient(Client => new EndpointCertificateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a certificate used on the endpoint with the given id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}
+        /// Operation Id: EndpointCertificates_Get
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EndpointCertificateResource>> GetEndpointCertificateAsync(string endpointType, CancellationToken cancellationToken = default)
+        {
+            return await GetEndpointCertificates().GetAsync(endpointType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a certificate used on the endpoint with the given id.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}
+        /// Operation Id: EndpointCertificates_Get
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EndpointCertificateResource> GetEndpointCertificate(string endpointType, CancellationToken cancellationToken = default)
+        {
+            return GetEndpointCertificates().Get(endpointType, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a managed instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
@@ -778,6 +889,150 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Creates a TDE certificate for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
+        /// Operation Id: ManagedInstanceTdeCertificates_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
+        public virtual async Task<ArmOperation> CreateManagedInstanceTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
+
+            using var scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceTdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a TDE certificate for a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
+        /// Operation Id: ManagedInstanceTdeCertificates_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
+        public virtual ArmOperation CreateManagedInstanceTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
+
+            using var scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceTdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
+                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a server trust groups by instance name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
+        /// Operation Id: ServerTrustGroups_ListByInstance
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _serverTrustGroupRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                scope.Start();
+                try
+                {
+                    var response = await _serverTrustGroupRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a server trust groups by instance name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
+        /// Operation Id: ServerTrustGroups_ListByInstance
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
+        {
+            Page<ServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                scope.Start();
+                try
+                {
+                    var response = _serverTrustGroupRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                scope.Start();
+                try
+                {
+                    var response = _serverTrustGroupRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Get top resource consuming queries of a managed instance.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
         /// Operation Id: ManagedInstances_ListByManagedInstance
@@ -927,150 +1182,6 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Creates a TDE certificate for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
-        /// Operation Id: ManagedInstanceTdeCertificates_Create
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateManagedInstanceTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
-
-            using var scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceTdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates a TDE certificate for a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
-        /// Operation Id: ManagedInstanceTdeCertificates_Create
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual ArmOperation CreateManagedInstanceTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
-
-            using var scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceTdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tdeCertificate).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a server trust groups by instance name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
-        /// Operation Id: ServerTrustGroups_ListByInstance
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a server trust groups by instance name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustGroups
-        /// Operation Id: ServerTrustGroups_ListByInstance
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
-        {
-            Page<ServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = _serverTrustGroupRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
-                scope.Start();
-                try
-                {
-                    var response = _serverTrustGroupRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

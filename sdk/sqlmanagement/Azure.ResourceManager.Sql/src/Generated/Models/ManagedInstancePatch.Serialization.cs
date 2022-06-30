@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sourceManagedInstanceId");
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(ProxyOverride))
             {
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("minimalTlsVersion");
                 writer.WriteStringValue(MinimalTlsVersion);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
-                writer.WritePropertyName("storageAccountType");
-                writer.WriteStringValue(StorageAccountType.Value.ToString());
+                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(ZoneRedundant))
             {
@@ -149,6 +149,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("administrators");
                 writer.WriteObjectValue(Administrators);
+            }
+            if (Optional.IsDefined(ServicePrincipal))
+            {
+                writer.WritePropertyName("servicePrincipal");
+                writer.WriteObjectValue(ServicePrincipal);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

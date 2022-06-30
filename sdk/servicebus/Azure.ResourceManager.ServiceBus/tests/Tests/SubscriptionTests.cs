@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public SubscriptionTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteSubscription()

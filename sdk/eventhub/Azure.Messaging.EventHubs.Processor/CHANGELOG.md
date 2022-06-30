@@ -1,6 +1,12 @@
 # Release History
 
-## 5.7.0-beta.6 (Unreleased)
+## 5.8.0-beta.1 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Chad Vidovcich _([GitHub](https://github.com/chadvidovcich))_
 
 ### Features Added
 
@@ -9,6 +15,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- `EventProcessorClient` and `BlobCheckpointStore` will now detect when an ownership blob has been deleted externally while the processor is running and gracefully recover.
+
+- Samples now each havee a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
+
+## 5.7.0 (2022-05-10)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
+
+### Other Changes
+
+- Based on a new series of profiling and testing in real-world application scenarios, the default values for processor load balancing are being updated to provide better performance and stability.  The default load balancing interval was changed from 10 seconds to 30 seconds.  The default ownership expiration interval was changed from 30 seconds to 2 minutes.  The default load balancing strategy has been changed from balanced to greedy.
+
+- Added additional heuristics for the `EventProcessorClient` load balancing cycle to help discover issues that can impact processor performance and stability; these validations will produce warnings should potential concerns be found.
+
+- `EventProcessorClient` will now log a verbose message indicating what event position was chosen to read from when initializing a partition.
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+- Enhanced documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
 
 ## 5.7.0-beta.5 (2022-04-05)
 

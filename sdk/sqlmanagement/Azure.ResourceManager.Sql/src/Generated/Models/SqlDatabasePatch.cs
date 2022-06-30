@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A database resource. </summary>
+    /// <summary> A database update resource. </summary>
     public partial class SqlDatabasePatch
     {
         /// <summary> Initializes a new instance of SqlDatabasePatch. </summary>
@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku Sku { get; set; }
+        /// <summary> Database identity. </summary>
+        public DatabaseIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>
@@ -51,35 +53,33 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
         public SampleSchemaName? SampleName { get; set; }
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
-        public string ElasticPoolId { get; set; }
+        public ResourceIdentifier ElasticPoolId { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
-        public string SourceDatabaseId { get; set; }
+        public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>
         public DatabaseStatus? Status { get; }
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
         public string RequestedServiceObjectiveName { get; }
         /// <summary> The default secondary region for this database. </summary>
-        public string DefaultSecondaryLocation { get; }
+        public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
-        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
-        public string RecoveryServicesRecoveryPointId { get; set; }
+        public ResourceIdentifier RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
-        public string LongTermRetentionBackupResourceId { get; set; }
+        public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
-        public string RecoverableDatabaseId { get; set; }
+        public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The resource identifier of the restorable dropped database associated with create operation of this database. </summary>
-        public string RestorableDroppedDatabaseId { get; set; }
+        public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> Collation of the metadata catalog. </summary>
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Sql.Models
         public long? MaxLogSizeBytes { get; }
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
-        /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </summary>
+        /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public DatabaseReadScale? ReadScale { get; set; }
-        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. </summary>
+        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         public SecondaryType? SecondaryType { get; set; }
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this database. </summary>
-        public RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         public double? MinCapacity { get; set; }
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
@@ -111,10 +111,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
         public DateTimeOffset? ResumedOn { get; }
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         public bool? IsLedgerOn { get; set; }
         /// <summary> Infra encryption is enabled for this database. </summary>
         public bool? IsInfraEncryptionEnabled { get; }
+        /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
+        public Guid? FederatedClientId { get; set; }
     }
 }

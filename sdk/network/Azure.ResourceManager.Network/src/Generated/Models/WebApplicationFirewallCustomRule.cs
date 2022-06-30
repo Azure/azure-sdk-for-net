@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -35,15 +36,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, string etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
+        internal WebApplicationFirewallCustomRule(string name, ETag? eTag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             Name = name;
-            Etag = etag;
+            ETag = eTag;
             Priority = priority;
             RuleType = ruleType;
             MatchConditions = matchConditions;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within a policy. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
         public int Priority { get; set; }
         /// <summary> The rule type. </summary>

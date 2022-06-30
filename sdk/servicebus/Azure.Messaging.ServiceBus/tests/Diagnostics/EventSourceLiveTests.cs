@@ -247,7 +247,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [Test]
         public async Task LogsProcessorEvents()
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: ShortLockDuration))
             {
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
@@ -255,13 +255,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await using var processor = client.CreateProcessor(scope.QueueName);
                 var tcs = new TaskCompletionSource<bool>();
                 string lockToken = null;
-                Task ProcessMessage(ProcessMessageEventArgs args)
+                async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     // intentionally not disposing to ensure that the exception will be thrown even after the callback returns
                     args.CancellationToken.Register(args.CancellationToken.ThrowIfCancellationRequested);
                     lockToken = args.Message.LockToken;
+                    await Task.Delay(ShortLockDuration);
                     tcs.SetResult(true);
-                    return Task.CompletedTask;
                 }
 
                 Task ExceptionHandler(ProcessErrorEventArgs args)
@@ -284,6 +284,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerStartEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.EventsById(
+                    ServiceBusEventSource.ProcessorRenewMessageLockStartEvent).Any(e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
+                _listener.EventsById(
+                    ServiceBusEventSource.ProcessorRenewMessageLockCompleteEvent).Any(e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
@@ -293,6 +297,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(
                     ServiceBusEventSource.StopProcessingCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier));
+            }
+        }
+
+        [Test]
+        public async Task LogsProcessorEventsUserExceptionDoesNotTriggerOtherExceptions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: ShortLockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                await using var processor = client.CreateProcessor(scope.QueueName);
+                var tcs = new TaskCompletionSource<bool>();
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    throw new Exception("Custom exception message");
+                }
+
+                Task ExceptionHandler(ProcessErrorEventArgs args)
+                {
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+
+                // add a delay to ensure that we collect any logs that could be emitted after CloseAsync returns
+                await Task.Delay(ShortLockDuration.Add(ShortLockDuration));
+
+                var errors = _listener.EventData.Where(e => e.Level == EventLevel.Error && e.EventId != ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent).ToList();
+                Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.Message)));
             }
         }
 

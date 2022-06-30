@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
     {
         public const string P1Y = "P1Y";
         public const string P3Y = "P3Y";
+        public const string P5Y = "P5Y";
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> eventTime = default;
             Optional<SecurityEventType> securityEventType = default;
             Optional<string> subscription = default;
@@ -52,11 +52,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEvent(id, name, type, systemData, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIp.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
         }
     }
 }

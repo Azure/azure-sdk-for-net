@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
+        public HealthcareRelationInternal(HealthcareEntityRelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
         {
             if (entities == null)
             {
@@ -33,15 +33,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
-        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities)
+        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IList<HealthcareRelationEntity> entities)
         {
             RelationType = relationType;
             Entities = entities;
         }
 
         /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
-        public HealthcareEntityRelationType RelationType { get; }
+        public HealthcareEntityRelationType RelationType { get; set; }
         /// <summary> The entities in the relation. </summary>
-        public IReadOnlyList<HealthcareRelationEntity> Entities { get; }
+        public IList<HealthcareRelationEntity> Entities { get; }
     }
 }

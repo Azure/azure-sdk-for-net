@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("privateEndpoint");
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
             Optional<IReadOnlyList<string>> groupIds = default;
@@ -58,11 +58,16 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }
