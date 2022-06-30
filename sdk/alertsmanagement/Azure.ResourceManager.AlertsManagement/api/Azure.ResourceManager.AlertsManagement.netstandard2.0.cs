@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty> ResourceTypes { get { throw null; } }
         public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? Severity { get { throw null; } }
         public Azure.ResourceManager.AlertsManagement.Models.SmartGroupState? SmartGroupState { get { throw null; } }
-        public System.DateTimeOffset? StartedOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     public partial class SmartGroupResource : Azure.ResourceManager.ArmResource
     {
