@@ -36,17 +36,35 @@ namespace Azure.Storage.Blobs.Perf.Options
         }
 
         [Option("clientEncryptionVersion")]
-        public ClientSideEncryptionVersion? EncryptionVersion { get; set; }
+        public string EncryptionVersionString { get; set; }
 
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
         BlobClientOptions IBlobClientOptionsProvider.ClientOptions
         {
-            get {
+            get
+            {
+                static bool TryParseEncryptionVersion(
+                    string versionString,
+                    out ClientSideEncryptionVersion version)
+                {
+                    switch (versionString)
+                    {
+                        case "2.0":
+                            version = ClientSideEncryptionVersion.V2_0;
+                            return true;
+                        case "1.0":
+                            version = ClientSideEncryptionVersion.V1_0;
+                            return true;
+                        default:
+                            version = 0;
+                            return false;
+                    }
+                }
                 return new SpecializedBlobClientOptions
                 {
-                    ClientSideEncryption = EncryptionVersion.HasValue
-                        ? new ClientSideEncryptionOptions(EncryptionVersion.Value)
+                    ClientSideEncryption = TryParseEncryptionVersion(EncryptionVersionString, out ClientSideEncryptionVersion version)
+                        ? new ClientSideEncryptionOptions(version)
                         {
                             KeyEncryptionKey = new LocalKeyEncryptionKey(),
                             KeyWrapAlgorithm = "foo"
