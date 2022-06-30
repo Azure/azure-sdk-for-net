@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the express route circuit connection resource. </param>
         /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
         /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
-        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, Guid? authResourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = eTag;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the express route circuit connection resource. </summary>
         public string ConnectionName { get; set; }
         /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
-        public string AuthResourceGuid { get; set; }
+        public Guid? AuthResourceGuid { get; set; }
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

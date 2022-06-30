@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SVpnProfileContent : IUtf8JsonSerializable
+    public partial class GenerateExpressRoutePortsLoaContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthenticationMethod))
-            {
-                writer.WritePropertyName("authenticationMethod");
-                writer.WriteStringValue(AuthenticationMethod.Value.ToString());
-            }
+            writer.WritePropertyName("customerName");
+            writer.WriteStringValue(CustomerName);
             writer.WriteEndObject();
         }
     }

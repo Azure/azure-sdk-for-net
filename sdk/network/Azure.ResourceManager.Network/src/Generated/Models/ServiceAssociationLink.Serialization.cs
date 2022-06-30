@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<ResourceType> linkedResourceType = default;
-            Optional<ResourceIdentifier> link = default;
+            Optional<string> link = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> allowDelete = default;
             Optional<IList<AzureLocation>> locations = default;
@@ -127,12 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("link"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            link = new ResourceIdentifier(property0.Value.GetString());
+                            link = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
