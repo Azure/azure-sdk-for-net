@@ -15,11 +15,6 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlternateCallerId))
-            {
-                writer.WritePropertyName("alternateCallerId");
-                writer.WriteObjectValue(AlternateCallerId);
-            }
             writer.WritePropertyName("targets");
             writer.WriteStartArray();
             foreach (var item in Targets)
@@ -36,26 +31,6 @@ namespace Azure.Communication.CallingServer
             }
             writer.WritePropertyName("callbackUri");
             writer.WriteStringValue(CallbackUri);
-            if (Optional.IsCollectionDefined(RequestedMediaTypes))
-            {
-                writer.WritePropertyName("requestedMediaTypes");
-                writer.WriteStartArray();
-                foreach (var item in RequestedMediaTypes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(RequestedCallEvents))
-            {
-                writer.WritePropertyName("requestedCallEvents");
-                writer.WriteStartArray();
-                foreach (var item in RequestedCallEvents)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
     }
