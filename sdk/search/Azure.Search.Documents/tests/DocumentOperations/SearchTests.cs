@@ -272,7 +272,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task TextNormilizer()
+        public async Task TestNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Response<SearchResults<Hotel>> response =

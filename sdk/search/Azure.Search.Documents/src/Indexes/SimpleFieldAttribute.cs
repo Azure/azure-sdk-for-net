@@ -55,6 +55,7 @@ namespace Azure.Search.Documents.Indexes
         /// This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field.
         /// Must be null for complex fields.
         /// </summary>
+        /// <value>String values from <see cref="LexicalNormalizerName.Values">LexicalAnalyzerName</see>.</value>
         public string NormalizerName { get; set; }
 
         /// <inheritdoc/>
