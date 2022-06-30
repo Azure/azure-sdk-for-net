@@ -1,14 +1,10 @@
 # Release History
 
-## 4.11.0-beta.3 (Unreleased)
+## 4.11.0 (2022-07-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for sending events to partner channels.
 
 ## 4.11.0-beta.2 (2022-05-10)
 
