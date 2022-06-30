@@ -26,7 +26,6 @@ pr:
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/resourcemanager/
     - sdk/network/
-    - sdk/storage/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

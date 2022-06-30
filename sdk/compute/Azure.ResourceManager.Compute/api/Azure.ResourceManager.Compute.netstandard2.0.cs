@@ -2672,7 +2672,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuRestrictions> Restrictions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public string Tier { get { throw null; } }
     }
@@ -2692,6 +2692,20 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+    }
+    public partial class ComputeResourceSkuRestrictionInfo
+    {
+        internal ComputeResourceSkuRestrictionInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+    }
+    public partial class ComputeResourceSkuRestrictions
+    {
+        internal ComputeResourceSkuRestrictions() { }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? ResourceSkuRestrictionsType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public partial class ComputeSku
     {
@@ -4451,20 +4465,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
-    }
-    public partial class ResourceSkuRestrictionInfo
-    {
-        internal ResourceSkuRestrictionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
-    }
-    public partial class ResourceSkuRestrictions
-    {
-        internal ResourceSkuRestrictions() { }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     public enum ResourceSkuRestrictionsReasonCode
     {
