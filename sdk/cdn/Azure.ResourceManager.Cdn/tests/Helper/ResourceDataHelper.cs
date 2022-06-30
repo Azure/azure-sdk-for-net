@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
+            Assert.AreEqual(model.Data.ETag, getResult.Data.ETag);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);

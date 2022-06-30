@@ -22,8 +22,8 @@ using Azure.Storage.Test.Shared;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using static Azure.Storage.Blobs.Tests.ClientSideEncryptionTestExtensions;
 using static Azure.Storage.Constants.ClientSideEncryption;
+using static Azure.Storage.Test.Shared.ClientSideEncryptionTestExtensions;
 using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
@@ -133,94 +133,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 keyMock.Verify(k => k.UnwrapKey(s_algorithmName, IsNotNull<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()), Times.Once);
             }
-        }
-
-        private Mock<IKeyEncryptionKeyResolver> GetAlwaysFailsKeyResolver(bool throws)
-        {
-            var mock = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
-            if (IsAsync)
-            {
-                if (throws)
-                {
-                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
-                        .Throws<Exception>();
-                }
-                else
-                {
-                    mock.Setup(r => r.ResolveAsync(IsNotNull<string>(), s_cancellationToken))
-                        .Returns(Task.FromResult<IKeyEncryptionKey>(null));
-                }
-            }
-            else
-            {
-                if (throws)
-                {
-                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
-                        .Throws<Exception>();
-                }
-                else
-                {
-                    mock.Setup(r => r.Resolve(IsNotNull<string>(), s_cancellationToken))
-                        .Returns((IKeyEncryptionKey)null);
-                }
-            }
-
-            return mock;
-        }
-
-        private Mock<Microsoft.Azure.KeyVault.Core.IKey> GetTrackOneIKey(byte[] userKeyBytes = default, string keyId = default)
-        {
-            if (userKeyBytes == default)
-            {
-                const int keySizeBits = 256;
-                var bytes = new byte[keySizeBits >> 3];
-#if NET6_0_OR_GREATER
-                RandomNumberGenerator.Create().GetBytes(bytes);
-#else
-                new RNGCryptoServiceProvider().GetBytes(bytes);
-#endif
-                userKeyBytes = bytes;
-            }
-            keyId ??= Guid.NewGuid().ToString();
-
-            var keyMock = new Mock<Microsoft.Azure.KeyVault.Core.IKey>(MockBehavior.Strict);
-            keyMock.SetupGet(k => k.Kid).Returns(keyId);
-            keyMock.SetupGet(k => k.DefaultKeyWrapAlgorithm).Returns(s_algorithmName);
-            // track one had async-only key wrapping
-            keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                                                                                                                     // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
-                .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(
-                    Tuple.Create(/*Xor(userKeyBytes, key)*/key, s_algorithmName)));
-            keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(
-                    /*Xor(userKeyBytes, wrappedKey)*/wrappedKey));
-
-            return keyMock;
-        }
-
-        private Mock<Microsoft.Azure.KeyVault.Core.IKeyResolver> GetTrackOneIKeyResolver(Microsoft.Azure.KeyVault.Core.IKey iKey)
-        {
-            var resolverMock = new Mock<Microsoft.Azure.KeyVault.Core.IKeyResolver>(MockBehavior.Strict);
-            resolverMock.Setup(r => r.ResolveKeyAsync(IsNotNull<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                .Returns<string, CancellationToken>((keyId, cancellationToken) => iKey?.Kid == keyId ? Task.FromResult(iKey) : throw new Exception("Mock resolver couldn't resolve key id."));
-
-            return resolverMock;
-        }
-
-        private static byte[] Xor(byte[] a, byte[] b)
-        {
-            if (a.Length != b.Length)
-            {
-                throw new ArgumentException("Keys must be the same length for this mock implementation.");
-            }
-
-            var aBits = new System.Collections.BitArray(a);
-            var bBits = new System.Collections.BitArray(b);
-
-            var result = new byte[a.Length];
-            aBits.Xor(bBits).CopyTo(result, 0);
-
-            return result;
         }
 
         /// <summary>
@@ -786,7 +698,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        // TODO revisit once download range is implemented for v2
         [TestCase(ClientSideEncryptionVersion.V1_0, 0, 16)]  // first block
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)] // not first block
         [TestCase(ClientSideEncryptionVersion.V1_0, 32, 32)] // multiple blocks; IV not at blob start
@@ -862,16 +773,10 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(Constants.KB);
 
-            const int keySizeBits = 256;
-            var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-#if NET6_0_OR_GREATER
-            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
-#else
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
-#endif
-            var keyId = Guid.NewGuid().ToString();
+            var keyEncryptionKeyBytes = this.GenerateKeyBytes();
+            var keyId = this.GenerateKeyId();
 
-            var mockKey = GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
+            var mockKey = this.GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, this.GetIKeyEncryptionKey(s_cancellationToken, keyEncryptionKeyBytes, keyId).Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
             {
@@ -914,17 +819,11 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
 
-            const int keySizeBits = 256;
-            var keyEncryptionKeyBytes = new byte[keySizeBits >> 3];
-#if NET6_0_OR_GREATER
-            RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
-#else
-            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
-#endif
-            var keyId = Guid.NewGuid().ToString();
+            var keyEncryptionKeyBytes = this.GenerateKeyBytes();
+            var keyId = this.GenerateKeyId();
 
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken, keyEncryptionKeyBytes, keyId).Object;
-            var mockKeyResolver = GetTrackOneIKeyResolver(GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object).Object;
+            var mockKeyResolver = this.GetTrackOneIKeyResolver(this.GetTrackOneIKey(keyEncryptionKeyBytes, keyId).Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
                 new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                 {
@@ -1031,7 +930,7 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
 
                 bool threw = false;
-                var resolver = this.GetAlwaysFailsKeyResolver(resolverThrows);
+                var resolver = this.GetAlwaysFailsKeyResolver(s_cancellationToken, resolverThrows);
                 try
                 {
                     // download but can't find key

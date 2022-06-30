@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Resource properties. </summary>
         public DataCollectionRuleAssociationProperties Properties { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }

@@ -25,7 +25,7 @@ request-path-to-singleton-resource:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -52,6 +52,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   SAS: Sas
+  Etag: ETag
   
 directive:
   - rename-model:
