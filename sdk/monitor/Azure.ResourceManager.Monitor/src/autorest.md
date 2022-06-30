@@ -18,8 +18,18 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'ResourceId': 'arm-id'
+  'TargetResourceId': 'arm-id'
+  'TargetResourceLocation': 'azure-location'
+  'StorageAccountId': 'arm-id'
+  'ServiceBusRuleId': 'arm-id'
+  'EventHubAuthorizationRuleId': 'arm-id'
+  'WorkspaceResourceId': 'arm-id'
+  'MetricResourceId': 'arm-id'
+  'MetricResourceLocation': 'azure-location'
 
 rename-rules:
   Os: OS
@@ -56,26 +66,38 @@ prepend-rp-prefix:
 - Schedule
 - Criteria
 - Source
+- OperationType
+
+override-operation-name:
+  ActionGroups_GetTestNotifications: GetActionGroupTestNotifications
 
 rename-mapping:
   MetricTrigger.metricResourceUri: metricResourceId
   AutoscaleSetting: AutoscaleSettingProperties
   AutoscaleSettingResource: AutoscaleSetting
   AutoscaleSettingResource.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResource.properties.enabled: IsEnabled
+  AutoscaleSettingResource.properties.name: AutoscaleSettingName
   AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
+  AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
+  AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
   AzureMonitorPrivateLinkScope: PrivateLinkScope
-  ScopedResource: ScopedPrivateLink
+  ScopedResource: PrivateLinkScopedResource
   DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
   DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
   ActionGroup: ActionGroupProperties
   ActionGroupResource: ActionGroup
+  ActionGroupResource.properties.enabled: IsEnabled
   MetricAlertResource: MetricAlert
   DiagnosticSettings: DiagnosticSettingsProperties
   DiagnosticSettingsResource: DiagnosticSettings
   ActivityLogAlert: ActivityLogAlertProperties
   ActivityLogAlertResource: ActivityLogAlert
+  ActivityLogAlertResource.properties.enabled: IsEnabled
+  ActivityLogAlertResourcePatch.properties.enabled: IsEnabled
   AlertRule: AlertRuleProperties
   AlertRuleResource: AlertRule
+  AlertRuleResource.properties.name: AlertRuleName
   DataCollectionEndpoint: DataCollectionEndpointProperties
   DataCollectionEndpointResource: DataCollectionEndpoint
   DataCollectionRule: DataCollectionRuleProperties
@@ -88,6 +110,17 @@ rename-mapping:
   RuleDataSource.resourceUri: resourceId
   RuleMetricDataSource.resourceUri: resourceId
   RuleManagementEventDataSource.resourceUri: resourceId
+  LogSearchRule.autoMitigate: IsAutoMitigate
+  MetricAlertResource.properties.autoMitigate: IsAutoMitigate
+  MetricAlertResource.properties.enabled: IsEnabled
+  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigate
+  MetricAlertResourcePatch.properties.enabled: IsEnabled
+  MetricSettings.enabled: IsEnabled
+  EventData: EventDataInfo
+  LogSettings.enabled: IsEnabled
+  RetentionPolicy.enabled: IsEnabled
+  TimeWindow.start: StartOn
+  TimeWindow.end: EndOn
 
 directive:
   # nullable issue resolution
@@ -114,4 +147,46 @@ directive:
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ScheduledQueryRuleResource"
+  # some format changes
+  - from: swagger-document
+    where: $.definitions.DiagnosticSettings.properties.workspaceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.ScopedResourceProperties.properties.linkedResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.ActivityLogAlertActionGroup.properties.actionGroupId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.AutomationRunbookReceiver.properties.automationAccountId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.AutomationRunbookReceiver.properties.webhookResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.AzureFunctionReceiver.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.MetricAlertAction.properties.actionGroupId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.Source.properties.dataSourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.webTestId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.componentId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.WorkspaceInfo.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
+  - from: swagger-document
+    where: $.definitions.ErrorResponseCommon.properties
+    transform: >
+      $["target"] = {
+        "readOnly": true,
+        "type": "string"
+      }
 ```

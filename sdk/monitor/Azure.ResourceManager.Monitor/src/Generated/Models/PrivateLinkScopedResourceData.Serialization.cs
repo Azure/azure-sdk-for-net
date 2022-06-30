@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ScopedPrivateLinkData : IUtf8JsonSerializable
+    public partial class PrivateLinkScopedResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static ScopedPrivateLinkData DeserializeScopedPrivateLinkData(JsonElement element)
+        internal static PrivateLinkScopedResourceData DeserializePrivateLinkScopedResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> linkedResourceId = default;
+            Optional<ResourceIdentifier> linkedResourceId = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,12 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("linkedResourceId"))
                         {
-                            linkedResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ScopedPrivateLinkData(id, name, type, systemData.Value, linkedResourceId.Value, provisioningState.Value);
+            return new PrivateLinkScopedResourceData(id, name, type, systemData.Value, linkedResourceId.Value, provisioningState.Value);
         }
     }
 }

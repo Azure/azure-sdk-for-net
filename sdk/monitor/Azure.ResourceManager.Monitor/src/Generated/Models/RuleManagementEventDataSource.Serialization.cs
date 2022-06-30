@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> subStatus = default;
             Optional<RuleManagementEventClaimsDataSource> claims = default;
             string odataType = default;
-            Optional<string> resourceUri = default;
+            Optional<ResourceIdentifier> resourceUri = default;
             Optional<string> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
@@ -160,7 +160,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("resourceUri"))
                 {
-                    resourceUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("legacyResourceId"))

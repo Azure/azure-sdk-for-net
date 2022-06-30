@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="componentId"> The Application Insights resource Id. </param>
         /// <param name="failedLocationCount"> The number of failed locations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestId"/> or <paramref name="componentId"/> is null. </exception>
-        public WebtestLocationAvailabilityCriteria(string webTestId, string componentId, float failedLocationCount)
+        public WebtestLocationAvailabilityCriteria(ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount)
         {
             if (webTestId == null)
             {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="webTestId"> The Application Insights web test Id. </param>
         /// <param name="componentId"> The Application Insights resource Id. </param>
         /// <param name="failedLocationCount"> The number of failed locations. </param>
-        internal WebtestLocationAvailabilityCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, string webTestId, string componentId, float failedLocationCount) : base(odataType, additionalProperties)
+        internal WebtestLocationAvailabilityCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount) : base(odataType, additionalProperties)
         {
             WebTestId = webTestId;
             ComponentId = componentId;
@@ -50,9 +51,9 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The Application Insights web test Id. </summary>
-        public string WebTestId { get; set; }
+        public ResourceIdentifier WebTestId { get; set; }
         /// <summary> The Application Insights resource Id. </summary>
-        public string ComponentId { get; set; }
+        public ResourceIdentifier ComponentId { get; set; }
         /// <summary> The number of failed locations. </summary>
         public float FailedLocationCount { get; set; }
     }

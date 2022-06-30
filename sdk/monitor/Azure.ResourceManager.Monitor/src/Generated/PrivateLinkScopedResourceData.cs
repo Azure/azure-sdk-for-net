@@ -10,29 +10,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the ScopedPrivateLink data model. </summary>
-    public partial class ScopedPrivateLinkData : ResourceData
+    /// <summary> A class representing the PrivateLinkScopedResource data model. </summary>
+    public partial class PrivateLinkScopedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopedPrivateLinkData. </summary>
-        public ScopedPrivateLinkData()
+        /// <summary> Initializes a new instance of PrivateLinkScopedResourceData. </summary>
+        public PrivateLinkScopedResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkScopedResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal ScopedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
+        internal PrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
         {
             LinkedResourceId = linkedResourceId;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> The resource id of the scoped Azure monitor resource. </summary>
-        public string LinkedResourceId { get; set; }
+        public ResourceIdentifier LinkedResourceId { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
         public string ProvisioningState { get; }
     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Log Analytics destination. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
-        internal LogAnalyticsDestination(string workspaceResourceId, string workspaceId, string name)
+        internal LogAnalyticsDestination(ResourceIdentifier workspaceResourceId, string workspaceId, string name)
         {
             WorkspaceResourceId = workspaceResourceId;
             WorkspaceId = workspaceId;
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The resource ID of the Log Analytics workspace. </summary>
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
         /// <summary> The Customer ID of the Log Analytics workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary>

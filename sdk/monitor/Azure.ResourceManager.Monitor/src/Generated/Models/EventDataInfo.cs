@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The Azure event log entries are of type EventData. </summary>
-    public partial class EventData
+    public partial class EventDataInfo
     {
-        /// <summary> Initializes a new instance of EventData. </summary>
-        internal EventData()
+        /// <summary> Initializes a new instance of EventDataInfo. </summary>
+        internal EventDataInfo()
         {
             Claims = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EventData. </summary>
+        /// <summary> Initializes a new instance of EventDataInfo. </summary>
         /// <param name="authorization"> The sender authorization information. </param>
         /// <param name="claims"> key value pairs to identify ARM permissions. </param>
         /// <param name="caller"> the email address of the user who has performed the operation, the UPN claim or SPN claim based on availability. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="submissionTimestamp"> the timestamp of when the event became available for querying via this API. It is in ISO 8601 format. This value should not be confused eventTimestamp. As there might be a delay between the occurrence time of the event, and the time that the event is submitted to the Azure logging infrastructure. </param>
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
-        internal EventData(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, LocalizableString eventName, LocalizableString category, HttpRequestInfo httpRequest, EventLevel? level, string resourceGroupName, LocalizableString resourceProviderName, string resourceId, LocalizableString resourceType, string operationId, LocalizableString operationName, IReadOnlyDictionary<string, string> properties, LocalizableString status, LocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
+        internal EventDataInfo(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, LocalizableString eventName, LocalizableString category, HttpRequestInfo httpRequest, EventLevel? level, string resourceGroupName, LocalizableString resourceProviderName, ResourceIdentifier resourceId, LocalizableString resourceType, string operationId, LocalizableString operationName, IReadOnlyDictionary<string, string> properties, LocalizableString status, LocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
         {
             Authorization = authorization;
             Claims = claims;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the resource provider name of the impacted resource. </summary>
         public LocalizableString ResourceProviderName { get; }
         /// <summary> the resource uri that uniquely identifies the resource that caused this event. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> the resource type. </summary>
         public LocalizableString ResourceType { get; }
         /// <summary> It is usually a GUID shared among the events corresponding to single operation. This value should not be confused with EventName. </summary>

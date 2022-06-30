@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
         {
-            string webTestId = default;
-            string componentId = default;
+            ResourceIdentifier webTestId = default;
+            ResourceIdentifier componentId = default;
             float failedLocationCount = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("webTestId"))
                 {
-                    webTestId = property.Value.GetString();
+                    webTestId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("componentId"))
                 {
-                    componentId = property.Value.GetString();
+                    componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failedLocationCount"))

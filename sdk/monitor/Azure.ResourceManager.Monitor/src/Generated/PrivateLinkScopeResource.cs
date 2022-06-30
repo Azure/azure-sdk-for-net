@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Monitor
             return GetMonitorPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScopedPrivateLinkResources in the PrivateLinkScope. </summary>
-        /// <returns> An object representing collection of ScopedPrivateLinkResources and their operations over a ScopedPrivateLinkResource. </returns>
-        public virtual ScopedPrivateLinkCollection GetScopedPrivateLinks()
+        /// <summary> Gets a collection of PrivateLinkScopedResources in the PrivateLinkScope. </summary>
+        /// <returns> An object representing collection of PrivateLinkScopedResources and their operations over a PrivateLinkScopedResource. </returns>
+        public virtual PrivateLinkScopedResourceCollection GetPrivateLinkScopedResources()
         {
-            return GetCachedClient(Client => new ScopedPrivateLinkCollection(Client, Id));
+            return GetCachedClient(Client => new PrivateLinkScopedResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScopedPrivateLinkResource>> GetScopedPrivateLinkAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkScopedResource>> GetPrivateLinkScopedResourceAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetScopedPrivateLinks().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateLinkScopedResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScopedPrivateLinkResource> GetScopedPrivateLink(string name, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkScopedResource> GetPrivateLinkScopedResource(string name, CancellationToken cancellationToken = default)
         {
-            return GetScopedPrivateLinks().Get(name, cancellationToken);
+            return GetPrivateLinkScopedResources().Get(name, cancellationToken);
         }
 
         /// <summary>
