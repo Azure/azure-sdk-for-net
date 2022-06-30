@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     public class PhpWorkloadsCRUDTests : WorkloadsManagementTestBase
     {
         private const string TestResourceNamePrefix = "sdk-tests-dotNet-php-";
-        private readonly string BasePath = System.AppDomain.CurrentDomain.BaseDirectory;
+        private readonly string BasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public PhpWorkloadsCRUDTests(bool isAsync) : base(isAsync)
         {
@@ -44,8 +45,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 var rgName = rg.Data.Name;
 
-                var resourceJson = File.ReadAllText(
-                    Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
+                var resourceJson = File.ReadAllText(Path.Combine(BasePath, "TestData", "PhpWorkloads", "PutPhpWorkload.json"));
                 JsonElement json = JsonDocument.Parse(resourceJson).RootElement;
 
                 var resourceData = PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(json);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.AreEqual(rgName, getResource.Value.Data.Name);
 
                 // Update
-                var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PatchPhpWorkload.json"));
+                var patchJson = File.ReadAllText(Path.Combine(BasePath, "TestData", "PhpWorkloads", "PatchPhpWorkload.json"));
                 PhpWorkloadResourcePatch updatePayload = JsonConvert.DeserializeObject<PhpWorkloadResourcePatch>(patchJson);
                 Response<PhpWorkloadResource> updateResponse = await getResource.Value.UpdateAsync(updatePayload);
                 Assert.IsTrue(updateResponse.Value.Data.ProvisioningState ==
