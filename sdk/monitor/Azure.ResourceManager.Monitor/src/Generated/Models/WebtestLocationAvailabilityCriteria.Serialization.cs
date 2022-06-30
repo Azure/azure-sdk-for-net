@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string webTestId = default;
             string componentId = default;
             float failedLocationCount = default;
-            Odatatype odataType = default;
+            MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("odata.type"))
                 {
-                    odataType = new Odatatype(property.Value.GetString());
+                    odataType = new MonitorOdataType(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

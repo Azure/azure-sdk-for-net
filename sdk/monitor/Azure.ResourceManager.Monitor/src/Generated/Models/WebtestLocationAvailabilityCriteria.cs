@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
             WebTestId = webTestId;
             ComponentId = componentId;
             FailedLocationCount = failedLocationCount;
-            OdataType = Odatatype.MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria;
+            OdataType = MonitorOdataType.MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria;
         }
 
         /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="webTestId"> The Application Insights web test Id. </param>
         /// <param name="componentId"> The Application Insights resource Id. </param>
         /// <param name="failedLocationCount"> The number of failed locations. </param>
-        internal WebtestLocationAvailabilityCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, string webTestId, string componentId, float failedLocationCount) : base(odataType, additionalProperties)
+        internal WebtestLocationAvailabilityCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, string webTestId, string componentId, float failedLocationCount) : base(odataType, additionalProperties)
         {
             WebTestId = webTestId;
             ComponentId = componentId;

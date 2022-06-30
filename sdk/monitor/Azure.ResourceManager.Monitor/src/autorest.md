@@ -42,6 +42,21 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag
+  Odatatype: OdataType
+
+prepend-rp-prefix:
+- Action
+- Recurrence
+- Operator
+- Response
+- OdataType
+- Metric
+- Incident
+- Enabled
+- Dimension
+- Schedule
+- Criteria
+- Source
 
 rename-mapping:
   MetricTrigger.metricResourceUri: metricResourceId
@@ -51,6 +66,17 @@ rename-mapping:
   AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
   AzureMonitorPrivateLinkScope: PrivateLinkScope
   ScopedResource: ScopedPrivateLink
+  DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
+  DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
+  ActionGroup: ActionGroupProperties
+  ActionGroupResource: ActionGroup
+  MetricAlertResource: MetricAlert
+  DiagnosticSettings: DiagnosticSettingsProperties
+  DiagnosticSettingsResource: DiagnosticSettings
+  ActivityLogAlert: ActivityLogAlertProperties
+  ActivityLogAlertResource: ActivityLogAlert
+  AlertRule: AlertRuleProperties
+  AlertRuleResource: AlertRule
 
 directive:
   - from: swagger-document
@@ -69,90 +95,6 @@ directive:
     where: $.definitions.AutoscaleSetting.properties.notifications
     transform: >
         $["x-nullable"] = true;
-  - rename-model:
-      from: MetricAlertResource
-      to: MetricAlert
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociationProxyOnlyResource.properties.properties
-    transform:  >
-        $ = {
-          "description": "Resource properties.",
-          "allOf": [
-            {
-              "$ref": "#/definitions/DataCollectionRuleAssociation"
-            }
-          ],
-          "x-ms-client-flatten": false
-        }
-  - from: swagger-document
-    where: $.definitions.DataCollectionRuleAssociation
-    transform: $["x-ms-client-name"] = "DataCollectionRuleAssociationProperties"
-  - rename-model:
-      from: DataCollectionRuleAssociationProxyOnlyResource
-      to: DataCollectionRuleAssociation
-  - rename-model:
-      from: ActionGroup
-      to: ActionGroupProperties
-  - rename-model:
-      from: ActionGroupResource
-      to: ActionGroup
-  - rename-model:
-      from: ActivityLogAlert
-      to: ActivityLogAlertProperties
-  - rename-model:
-      from: ActivityLogAlertResource
-      to: ActivityLogAlert
-  - rename-model:
-      from: AlertRule
-      to: AlertRuleProperties
-  - rename-model:
-      from: AlertRuleResource
-      to: AlertRule
-#   - rename-model:
-#       from: AutoscaleSetting
-#       to: AutoscaleSettingProperties
-#   - rename-model:
-#       from: AutoscaleSettingResource
-#       to: AutoscaleSetting
-  - rename-model:
-      from: Action
-      to: MonitorAction
-  - rename-model:
-      from: Recurrence
-      to: MonitorRecurrence
-  - rename-model:
-      from: Operator
-      to: MonitorOperator
-  - rename-model:
-      from: Response
-      to: MonitorResponse
-  - rename-model:
-      from: Odatatype
-      to: MonitorOdatatype
-  - rename-model:
-      from: Metric
-      to: MonitorMetric
-  - rename-model:
-      from: Metric
-      to: MonitorMetric
-  - rename-model:
-      from: Incident
-      to: MonitorIncident
-  - rename-model:
-      from: Enabled
-      to: MonitorEnabled
-  - rename-model:
-      from: Dimension
-      to: MonitorDimension
-  - rename-model:
-      from: Schedule
-      to: MonitorSchedule
-  - rename-model:
-      from: Criteria
-      to: MonitorCriteria
-  - rename-model:
-      from: Source
-      to: MonitorSource
   - from: swagger-document
     where: $.definitions.DataCollectionEndpointResource.properties.properties
     transform:  >
@@ -196,12 +138,6 @@ directive:
       from: DiagnosticSettingsCategoryResource
       to: DiagnosticSettingsCategory
   - rename-model:
-      from: DiagnosticSettings
-      to: DiagnosticSettingsProperties
-  - rename-model:
-      from: DiagnosticSettingsResource
-      to: DiagnosticSettings
-  - rename-model:
       from: LogProfileResource
       to: LogProfile
   - rename-model:
@@ -210,9 +146,6 @@ directive:
   - rename-model:
       from: LogSearchRuleResource
       to: LogSearchRule
-  - rename-model:
-      from: VMInsightsOnboardingStatus
-      to: VmInsightsOnboardingStatus
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
