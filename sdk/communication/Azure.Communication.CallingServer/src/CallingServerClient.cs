@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
 using Azure.Communication.CallingServer;
+using Azure.Communication.CallingServer.Models;
 
 namespace Azure.Communication.CallingServer
 {
@@ -273,7 +274,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity </param>
+        /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="options"> The call options. </param>
@@ -282,17 +283,17 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> CreateCallAsync(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnection>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCallAsync)}");
             scope.Start();
             try
             {
-                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source));
+                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
 
                 if (options != null)
                 {
-                    sourceDto.CallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
                 }
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);
@@ -319,7 +320,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity </param>
+        /// <param name="source"> The source identity. </param>
         /// <param name="targets"> The target identities. </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
         /// <param name="options"> The call options. </param>
@@ -328,17 +329,17 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual Response<CallConnection> CreateCall(CommunicationIdentifier source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<CallConnection> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source));
+                CallSourceDto sourceDto = new CallSourceDto(CommunicationIdentifierSerializer.Serialize(source.Identifier));
 
                 if (options != null)
                 {
-                    sourceDto.CallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    sourceDto.CallerId = source.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(source.AlternateCallerId.PhoneNumber);
                 }
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)), sourceDto, callbackUri?.AbsoluteUri);

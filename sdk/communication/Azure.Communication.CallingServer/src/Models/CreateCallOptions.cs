@@ -11,9 +11,6 @@ namespace Azure.Communication.CallingServer
     /// <summary> The options for creating a call. </summary>
     public class CreateCallOptions
     {
-        /// <summary> The alternate caller id of the source. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
-
         /// <summary> The subject. </summary>
         public string Subject { get; set; }
 

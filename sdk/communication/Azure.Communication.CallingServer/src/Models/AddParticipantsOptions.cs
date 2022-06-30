@@ -18,10 +18,10 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; set; }
 
         /// <summary> Timeout before invitation timesout. </summary>
-        public int invitationTimeoutInSeconds { get; set; }
+        public int InvitationTimeoutInSeconds { get; set; }
 
-        /// <summary> The replacement CallConnectionId </summary>
-        public string replacementCallConnectionId { get; set; }
+        /// <summary> The replacement CallConnectionId. </summary>
+        public string ReplacementCallConnectionId { get; set; }
 
         /// <summary>
         /// Add Participants Options.
@@ -34,8 +34,8 @@ namespace Azure.Communication.CallingServer
         {
             AlternateCallerId = alternateCallerId;
             OperationContext = operationContext;
-            this.invitationTimeoutInSeconds = invitationTimeoutInSeconds;
-            this.replacementCallConnectionId = replacementCallConnectionId;
+            this.InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            this.ReplacementCallConnectionId = replacementCallConnectionId;
         }
     }
 }

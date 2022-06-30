@@ -236,7 +236,7 @@ namespace Azure.Communication.CallingServer
                 {
                     request.SourceCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
                     request.OperationContext = options.OperationContext;
-                    request.InvitationTimeoutInSeconds = options.invitationTimeoutInSeconds;
+                    request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
                 }
 
                 return await RestClient.AddParticipantAsync(
@@ -270,7 +270,7 @@ namespace Azure.Communication.CallingServer
                 {
                     request.SourceCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
                     request.OperationContext = options.OperationContext;
-                    request.InvitationTimeoutInSeconds = options.invitationTimeoutInSeconds;
+                    request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
                 }
 
                 return RestClient.AddParticipant(

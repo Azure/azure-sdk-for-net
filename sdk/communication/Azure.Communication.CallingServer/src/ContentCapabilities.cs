@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Plays a file.
+        /// Plays a file async.
         /// </summary>
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary>
-        /// Plays a file async.
+        /// Plays a file.
         /// </summary>
         /// <param name="playSource"></param>
         /// <param name="cancellationToken"></param>
