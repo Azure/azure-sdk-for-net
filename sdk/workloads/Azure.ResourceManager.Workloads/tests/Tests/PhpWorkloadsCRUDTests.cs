@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 var patchJson = File.ReadAllText(Path.Combine(BasePath, @"TestData\PhpWorkloads\PutPhpWorkload.json"));
                 PhpWorkloadResourcePatch updatePayload = JsonConvert.DeserializeObject<PhpWorkloadResourcePatch>(patchJson);
                 Response<PhpWorkloadResource> updateResponse = await getResource.Value.UpdateAsync(updatePayload);
-                Assert.IsTrue(createdResource.Value.Data.ProvisioningState ==
+                Assert.IsTrue(updateResponse.Value.Data.ProvisioningState ==
                     Models.PhpWorkloadProvisioningState.Succeeded);
 
-                Assert.AreEqual(rgName, createdResource.Value.Data.Name);
+                Assert.AreEqual(rgName, updateResponse.Value.Data.Name);
                 Assert.AreEqual(updatePayload.Tags.Count, updateResponse.Value.Data.Tags.Count);
                 Assert.IsFalse(updateResponse.Value.Data.Tags.Except(updatePayload.Tags).Any());
 
