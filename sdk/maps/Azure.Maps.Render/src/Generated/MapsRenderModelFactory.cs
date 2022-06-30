@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.Maps.Render.Models
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class RenderModelFactory
+    public static partial class MapsRenderModelFactory
     {
         /// <summary> Initializes a new instance of CopyrightCaption. </summary>
         /// <param name="formatVersion"> Format Version property. </param>

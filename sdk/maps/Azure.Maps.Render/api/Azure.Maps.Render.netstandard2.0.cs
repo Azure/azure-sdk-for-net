@@ -71,7 +71,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.LocalizedMapView left, Azure.Maps.Render.Models.LocalizedMapView right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.LocalizedMapView(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.LocalizedMapView (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.LocalizedMapView left, Azure.Maps.Render.Models.LocalizedMapView right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -88,7 +88,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.MapImageryStyle left, Azure.Maps.Render.Models.MapImageryStyle right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.MapImageryStyle(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.MapImageryStyle (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.MapImageryStyle left, Azure.Maps.Render.Models.MapImageryStyle right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -106,9 +106,16 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.MapImageStyle left, Azure.Maps.Render.Models.MapImageStyle right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.MapImageStyle(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.MapImageStyle (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.MapImageStyle left, Azure.Maps.Render.Models.MapImageStyle right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class MapsRenderModelFactory
+    {
+        public static Azure.Maps.Render.Models.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyrightsCaption = null) { throw null; }
+        public static Azure.Maps.Render.Models.RegionCopyrights RegionCopyrights(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Render.Models.RegionCopyrightsCountry country = null) { throw null; }
+        public static Azure.Maps.Render.Models.RegionCopyrightsCountry RegionCopyrightsCountry(string isO3 = null, string label = null) { throw null; }
+        public static Azure.Maps.Render.Models.RenderCopyrights RenderCopyrights(string formatVersion = null, System.Collections.Generic.IEnumerable<string> generalCopyrights = null, System.Collections.Generic.IEnumerable<Azure.Maps.Render.Models.RegionCopyrights> regions = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MapTileLayer : System.IEquatable<Azure.Maps.Render.Models.MapTileLayer>
@@ -126,7 +133,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.MapTileLayer left, Azure.Maps.Render.Models.MapTileLayer right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.MapTileLayer(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.MapTileLayer (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.MapTileLayer left, Azure.Maps.Render.Models.MapTileLayer right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -144,7 +151,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.MapTileSize left, Azure.Maps.Render.Models.MapTileSize right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.MapTileSize(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.MapTileSize (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.MapTileSize left, Azure.Maps.Render.Models.MapTileSize right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -163,7 +170,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.MapTileStyle left, Azure.Maps.Render.Models.MapTileStyle right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.MapTileStyle(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.MapTileStyle (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.MapTileStyle left, Azure.Maps.Render.Models.MapTileStyle right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -180,7 +187,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.RasterTileFormat left, Azure.Maps.Render.Models.RasterTileFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.RasterTileFormat(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.RasterTileFormat (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.RasterTileFormat left, Azure.Maps.Render.Models.RasterTileFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -202,13 +209,6 @@ namespace Azure.Maps.Render.Models
         public string FormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> GeneralCopyrights { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Render.Models.RegionCopyrights> Regions { get { throw null; } }
-    }
-    public static partial class RenderModelFactory
-    {
-        public static Azure.Maps.Render.Models.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyrightsCaption = null) { throw null; }
-        public static Azure.Maps.Render.Models.RegionCopyrights RegionCopyrights(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Render.Models.RegionCopyrightsCountry country = null) { throw null; }
-        public static Azure.Maps.Render.Models.RegionCopyrightsCountry RegionCopyrightsCountry(string isO3 = null, string label = null) { throw null; }
-        public static Azure.Maps.Render.Models.RenderCopyrights RenderCopyrights(string formatVersion = null, System.Collections.Generic.IEnumerable<string> generalCopyrights = null, System.Collections.Generic.IEnumerable<Azure.Maps.Render.Models.RegionCopyrights> regions = null) { throw null; }
     }
     public partial class RenderStaticImageOptions
     {
@@ -251,7 +251,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.ResponseFormat left, Azure.Maps.Render.Models.ResponseFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.ResponseFormat(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.ResponseFormat (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.ResponseFormat left, Azure.Maps.Render.Models.ResponseFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -270,7 +270,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.StaticMapLayer left, Azure.Maps.Render.Models.StaticMapLayer right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.StaticMapLayer(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.StaticMapLayer (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.StaticMapLayer left, Azure.Maps.Render.Models.StaticMapLayer right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -288,7 +288,7 @@ namespace Azure.Maps.Render.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Render.Models.TileFormat left, Azure.Maps.Render.Models.TileFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Render.Models.TileFormat(string value) { throw null; }
+        public static implicit operator Azure.Maps.Render.Models.TileFormat (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Render.Models.TileFormat left, Azure.Maps.Render.Models.TileFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
