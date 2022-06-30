@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DataVersionBaseProperties : IUtf8JsonSerializable
+    public partial class DataVersionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static DataVersionBaseProperties DeserializeDataVersionBaseProperties(JsonElement element)
+        internal static DataVersionProperties DeserializeDataVersionProperties(JsonElement element)
         {
             if (element.TryGetProperty("dataType", out JsonElement discriminator))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new DataVersionBaseProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri);
+            return new DataVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri);
         }
     }
 }

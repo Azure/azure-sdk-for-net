@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the DataVersionBase data model. </summary>
-    public partial class DataVersionBaseData : ResourceData
+    /// <summary> A class representing the DataVersion data model. </summary>
+    public partial class DataVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataVersionBaseData. </summary>
+        /// <summary> Initializes a new instance of DataVersionData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataVersionBaseData(DataVersionBaseProperties properties)
+        public DataVersionData(DataVersionProperties properties)
         {
             if (properties == null)
             {
@@ -32,26 +32,26 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataVersionBaseData. </summary>
+        /// <summary> Initializes a new instance of DataVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </param>
-        internal DataVersionBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataVersionBaseProperties properties) : base(id, name, resourceType, systemData)
+        internal DataVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="DataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </summary>
-        public DataVersionBaseProperties Properties { get; set; }
+        public DataVersionProperties Properties { get; set; }
     }
 }
