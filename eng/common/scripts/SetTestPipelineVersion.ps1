@@ -11,23 +11,34 @@ param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+Write-Host "PackageName: $PackageName"
+Write-Host "ServiceDirectory: $ServiceDirectory"
+Write-Host "BuildID: $BuildID"
+
+$newVersion = [AzureEngSemanticVersion]::new("1.0.0")
 $latestTags = git tag -l "${PackageName}_*"
+
+Write-Host "Get Latest Tag : git tag -l ${PackageName}_*"
 $semVars = @()
 
-Foreach ($tags in $latestTags)
+if ($latestTags -and ($latestTags.Length -gt 0))
 {
-  $semVars += $tags.Replace("${PackageName}_", "")
+  foreach ($tags in $latestTags)
+  {
+    $semVars += $tags.Replace("${PackageName}_", "")
+  }
+
+  $semVarsSorted = [AzureEngSemanticVersion]::SortVersionStrings($semVars)
+  Write-Host "Last Published Version $($semVarsSorted[0])"
+  $newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
 }
 
-$semVarsSorted = [AzureEngSemanticVersion]::SortVersionStrings($semVars)
-LogDebug "Last Published Version $($semVarsSorted[0])"
-
-$newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
 $newVersion.PrereleaseLabel = $newVersion.DefaultPrereleaseLabel
 $newVersion.PrereleaseNumber = $BuildID
+$newVersion.IsPrerelease = $True
 
-LogDebug "Version to publish [ $($newVersion.ToString()) ]"
+Write-Host "Version to publish [ $($newVersion.ToString()) ]"
 
 SetPackageVersion -PackageName $PackageName `
-  -Version $newVersion `
+  -Version $newVersion.ToString() `
   -ServiceDirectory $ServiceDirectory
