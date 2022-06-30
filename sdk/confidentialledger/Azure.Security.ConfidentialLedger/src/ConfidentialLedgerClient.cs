@@ -73,9 +73,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
@@ -113,9 +111,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Schema for <c>LedgerEntry</c>:
         /// <code>{
         ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: {
-        ///     collectionId: string, # Required.
-        ///   }, # Optional. Identifier for collections.
+        ///   collectionId: string, # Optional.
         ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
         /// }
         /// </code>
