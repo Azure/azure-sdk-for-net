@@ -140,8 +140,8 @@ directive:
       $.DataContainer["x-ms-client-name"] = "DataContainerProperties";
       $.DatastoreResource["x-ms-client-name"] = "Datastore";
       $.Datastore["x-ms-client-name"] = "DatastoreProperties";
-      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersionBase";
-      $.DataVersionBase["x-ms-client-name"] = "DataVersionBaseProperties";
+      $.DataVersionBaseResource["x-ms-client-name"] = "DataVersion";
+      $.DataVersionBase["x-ms-client-name"] = "DataVersionProperties";
       $.EnvironmentContainerResource["x-ms-client-name"] = "EnvironmentContainer";
       $.EnvironmentContainer["x-ms-client-name"] = "EnvironmentContainerProperties";
       $.EnvironmentVersionResource["x-ms-client-name"] = "EnvironmentVersion";

@@ -23,10 +23,13 @@ list-exception:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+no-property-type-replacement:
+- ManagedHsmVirtualNetworkRule
 
 rename-rules:
   CPU: Cpu
@@ -49,6 +52,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
   Managecontacts: ManageContacts
   Getissuers: GetIssuers
   Listissuers: ListIssuers
@@ -61,6 +65,7 @@ rename-rules:
   Listsas: ListSas
   Setsas: SetSas
   Mhsm: ManagedHsm
+
 prompted-enum-values: Default
 directive:
   - from: swagger-document

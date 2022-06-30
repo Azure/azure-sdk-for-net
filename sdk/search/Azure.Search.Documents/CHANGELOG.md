@@ -1,14 +1,12 @@
 # Release History
 
-## 11.4.0-beta.8 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 11.4.0-beta.8 (2022-07-07)
 
 ### Bugs Fixed
+- Fixed issue where `SearchOptions.SessionId` property was not passed to the service ([#27549](https://github.com/Azure/azure-sdk-for-net/issues/27549))
 
 ### Other Changes
+- Added [Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md).
 
 ## 11.4.0-beta.7 (2022-03-08)
 

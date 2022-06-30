@@ -34,17 +34,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
         }
 
-        [TearDown]
-        public async Task TearDown()
-        {
-            List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            foreach (EventHubsPrivateEndpointConnectionResource connection in privateEndpointConnections)
-            {
-                await connection.DeleteAsync(WaitUntil.Completed);
-            }
-            await _eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-        }
-
         [Test]
         [RecordedTest]
         [Ignore("RequestFailedException")]
@@ -72,7 +61,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
@@ -84,7 +72,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
         [Test]
         [RecordedTest]
-        [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task PrivateEndpointConnectionDelete()
         {
             await CreatePrivateEndpoint();
@@ -119,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            VirtualNetworkResource virtualNetwork = await _resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Started, vnetName, vnet).WaitForCompletionAsync();
+            VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
 
             var name = Recording.GenerateAssetName("pe-");
             var privateEndpointData = new PrivateEndpointData
@@ -140,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 },
             };
 
-            return await _resourceGroup.GetPrivateEndpoints().CreateOrUpdate(WaitUntil.Started, name, privateEndpointData).WaitForCompletionAsync();
+            return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
         }
 
         private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, EventHubsPrivateEndpointConnectionResource actualValue)

@@ -39,8 +39,6 @@ namespace Azure.ResourceManager.Sql
         private readonly ServersRestOperations _sqlServerServersRestClient;
         private readonly ClientDiagnostics _serverUsagesClientDiagnostics;
         private readonly ServerUsagesRestOperations _serverUsagesRestClient;
-        private readonly ClientDiagnostics _firewallRuleClientDiagnostics;
-        private readonly FirewallRulesRestOperations _firewallRuleRestClient;
         private readonly ClientDiagnostics _serverOperationsClientDiagnostics;
         private readonly ServerRestOperations _serverOperationsRestClient;
         private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
@@ -75,9 +73,6 @@ namespace Azure.ResourceManager.Sql
             _sqlServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerServersApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FirewallRuleResource.ResourceType, out string firewallRuleApiVersion);
-            _firewallRuleRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -1305,58 +1300,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Replaces all firewall rules on the server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
-        /// Operation Id: FirewallRules_Replace
-        /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
-        public virtual async Task<Response<FirewallRuleResource>> ReplaceFirewallRuleAsync(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServerResource.ReplaceFirewallRule");
-            scope.Start();
-            try
-            {
-                var response = await _firewallRuleRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleList, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replaces all firewall rules on the server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
-        /// Operation Id: FirewallRules_Replace
-        /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
-        public virtual Response<FirewallRuleResource> ReplaceFirewallRule(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(firewallRuleList, nameof(firewallRuleList));
-
-            using var scope = _firewallRuleClientDiagnostics.CreateScope("SqlServerResource.ReplaceFirewallRule");
-            scope.Start();
-            try
-            {
-                var response = _firewallRuleRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleList, cancellationToken);
-                return Response.FromValue(new FirewallRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
