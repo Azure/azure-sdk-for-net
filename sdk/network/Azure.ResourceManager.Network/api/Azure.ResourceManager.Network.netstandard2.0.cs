@@ -9576,7 +9576,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public VpnClientProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.VpnClientProtocol IkeV2 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VpnClientProtocol Ikev2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnClientProtocol OpenVpn { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnClientProtocol Sstp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnClientProtocol other) { throw null; }
@@ -9684,7 +9684,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public VpnGatewayTunnelingProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol IkeV2 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol Ikev2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol OpenVpn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnGatewayTunnelingProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
