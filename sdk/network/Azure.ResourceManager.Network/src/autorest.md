@@ -121,9 +121,9 @@ rename-rules:
   ANY: Any
   LOA: Loa
   P2S: P2s
-  IKEv1: Ikev1
-  IKEv2: Ikev2
-  IkeV2: Ikev2
+  IKEv1: IkeV1
+  IKEv2: IkeV2
+  IkeV2: IkeV2
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

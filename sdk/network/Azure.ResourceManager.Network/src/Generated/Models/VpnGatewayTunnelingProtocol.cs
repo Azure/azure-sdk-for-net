@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Ikev2Value = "IkeV2";
+        private const string IkeV2Value = "IkeV2";
         private const string OpenVpnValue = "OpenVPN";
 
         /// <summary> IkeV2. </summary>
-        public static VpnGatewayTunnelingProtocol Ikev2 { get; } = new VpnGatewayTunnelingProtocol(Ikev2Value);
+        public static VpnGatewayTunnelingProtocol IkeV2 { get; } = new VpnGatewayTunnelingProtocol(IkeV2Value);
         /// <summary> OpenVPN. </summary>
         public static VpnGatewayTunnelingProtocol OpenVpn { get; } = new VpnGatewayTunnelingProtocol(OpenVpnValue);
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are the same. </summary>
