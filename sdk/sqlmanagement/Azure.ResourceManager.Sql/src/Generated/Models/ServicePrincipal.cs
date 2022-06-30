@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="clientId"> The Azure Active Directory application client id. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
         /// <param name="principalType"> Service principal type. </param>
-        internal ServicePrincipal(string principalId, string clientId, Guid? tenantId, ServicePrincipalType? principalType)
+        internal ServicePrincipal(Guid? principalId, Guid? clientId, Guid? tenantId, ServicePrincipalType? principalType)
         {
             PrincipalId = principalId;
             ClientId = clientId;
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The Azure Active Directory application object id. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The Azure Active Directory application client id. </summary>
-        public string ClientId { get; }
+        public Guid? ClientId { get; }
         /// <summary> The Azure Active Directory tenant id. </summary>
         public Guid? TenantId { get; }
         /// <summary> Service principal type. </summary>

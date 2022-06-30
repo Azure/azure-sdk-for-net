@@ -53,35 +53,33 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the sample schema to apply when creating this database. </summary>
         public SampleSchemaName? SampleName { get; set; }
         /// <summary> The resource identifier of the elastic pool containing this database. </summary>
-        public string ElasticPoolId { get; set; }
+        public ResourceIdentifier ElasticPoolId { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
-        public string SourceDatabaseId { get; set; }
+        public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>
         public DatabaseStatus? Status { get; }
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current service level objective name of the database. </summary>
         public string CurrentServiceObjectiveName { get; }
         /// <summary> The requested service level objective name of the database. </summary>
         public string RequestedServiceObjectiveName { get; }
         /// <summary> The default secondary region for this database. </summary>
-        public string DefaultSecondaryLocation { get; }
+        public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public string FailoverGroupId { get; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
-        public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
-        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
-        public string RecoveryServicesRecoveryPointId { get; set; }
+        public ResourceIdentifier RecoveryServicesRecoveryPointId { get; set; }
         /// <summary> The resource identifier of the long term retention backup associated with create operation of this database. </summary>
-        public string LongTermRetentionBackupResourceId { get; set; }
+        public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
-        public string RecoverableDatabaseId { get; set; }
+        public ResourceIdentifier RecoverableDatabaseId { get; set; }
         /// <summary> The resource identifier of the restorable dropped database associated with create operation of this database. </summary>
-        public string RestorableDroppedDatabaseId { get; set; }
+        public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
         /// <summary> Collation of the metadata catalog. </summary>
         public CatalogCollationType? CatalogCollation { get; set; }
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The date when database was resumed by user action or database login (ISO8601 format). Null if the database is paused. </summary>
         public DateTimeOffset? ResumedOn { get; }
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         public bool? IsLedgerOn { get; set; }
         /// <summary> Infra encryption is enabled for this database. </summary>
