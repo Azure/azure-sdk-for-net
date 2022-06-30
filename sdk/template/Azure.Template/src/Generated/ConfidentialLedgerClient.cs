@@ -493,6 +493,86 @@ namespace Azure.Template
             }
         }
 
+        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LedgerUser</c>:
+        /// <code>{
+        ///   assignedRole: ConfidentialLedgerUserRoleName, # Required. Represents an assignable role
+        ///   userId: string, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Adds a user or updates a user&apos;s fields. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <remarks>
+        /// Below is the JSON schema for the request payload.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LedgerUser</c>:
+        /// <code>{
+        ///   assignedRole: ConfidentialLedgerUserRoleName, # Required. Represents an assignable role
+        ///   userId: string, # Required.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateUserRequest(userId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -626,6 +706,23 @@ namespace Azure.Template
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerUri);
+            uri.AppendPath("/app/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
