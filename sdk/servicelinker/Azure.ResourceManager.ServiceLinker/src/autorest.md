@@ -30,6 +30,8 @@ rename-mapping:
   SecretStore: LinkerSecretStore
   ClientType: LinkerClientType
   ValidationResultItem: ValidationResultItemData
+  ValidateOperationResult.properties.reportStartTimeUtc: reportStartOn
+  ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
 
 
 format-by-name-rules:
@@ -39,6 +41,7 @@ format-by-name-rules:
   'keyVaultId': 'arm-id'
   'sourceId': 'arm-id'
   'targetId': 'arm-id'
+  'ResourceId': 'arm-id'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 

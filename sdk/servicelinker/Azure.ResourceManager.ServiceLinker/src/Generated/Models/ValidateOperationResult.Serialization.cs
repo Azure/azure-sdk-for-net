@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static ValidateOperationResult DeserializeValidateOperationResult(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> status = default;
             Optional<string> linkerName = default;
             Optional<bool?> isConnectionAvailable = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceId = null;
                         continue;
                     }
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

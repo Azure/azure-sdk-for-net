@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public Azure.ResourceManager.ServiceLinker.Models.LinkerAuthType? AuthType { get { throw null; } }
         public bool? IsConnectionAvailable { get { throw null; } }
         public string LinkerName { get { throw null; } }
-        public System.DateTimeOffset? ReportEndTimeUtc { get { throw null; } }
-        public System.DateTimeOffset? ReportStartTimeUtc { get { throw null; } }
-        public string ResourceId { get { throw null; } }
+        public System.DateTimeOffset? ReportEndOn { get { throw null; } }
+        public System.DateTimeOffset? ReportStartOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
         public string Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
