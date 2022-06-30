@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public BlobListener(ISharedListener sharedListener, BlobContainerClient containerClient, IBlobPathSource blobPathSource, ILoggerFactory loggerFactory)
         {
             _sharedListener = sharedListener;
-            _details = $"blob container={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}";
+            _details = $"blob container name={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}";
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
