@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 {
 
     /// <summary>
-    /// Defines values for PartnerTopicReadinessState.
+    /// Defines values for PrivateEndpointConnectionsParentType.
     /// </summary>
-    public static class PartnerTopicReadinessState
+    public static class PrivateEndpointConnectionsParentType
     {
-        public const string NotActivatedByUserYet = "NotActivatedByUserYet";
-        public const string ActivatedByUser = "ActivatedByUser";
-        public const string DeactivatedByUser = "DeactivatedByUser";
-        public const string DeletedByUser = "DeletedByUser";
+        public const string Topics = "topics";
+        public const string Domains = "domains";
+        public const string PartnerNamespaces = "partnerNamespaces";
     }
 }
