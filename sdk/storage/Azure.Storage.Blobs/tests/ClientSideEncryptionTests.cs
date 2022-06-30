@@ -234,7 +234,11 @@ namespace Azure.Storage.Blobs.Test
                     Algorithm = s_algorithmName,
                     KeyId = kek.KeyId
                 },
-                ContentEncryptionIV = GetRandomBuffer(32),
+                EncryptedRegionInfo = new EncryptedRegionInfo
+                {
+                    DataLength = 4 * Constants.MB,
+                    NonceLength = 12
+                },
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = "foo",
