@@ -1267,7 +1267,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_False(
-            [ValueSource("GetEncryptionVerions")] ClientSideEncryptionVersion version)
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             // Arrange
             var constants = TestConstants.Create(this);
