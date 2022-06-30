@@ -1179,6 +1179,41 @@
                 }
             }
         },
+        "CommunicationErrorResponse": {
+            "description": "The Communication Services error response",
+            "required": [
+                "error"
+            ],
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "CommunicationError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationError"
+                    }
+                },
+                "innererror": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
         "GetParticipantRequest": {
             "type": "object",
             "properties": {
@@ -1326,6 +1361,43 @@
             "type": "string",
             "x-ms-skip-url-encoding": true,
             "x-ms-parameter-location": "client"
+        }
+    },
+    "responses": {
+        "400": {
+            "description": "BadRequest",
+            "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
+        },
+        "401": {
+            "description": "Unauthorized",
+            "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
+        },
+        "403": {
+            "description": "Forbidden",
+            "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
+        },
+        "404": {
+            "description": "NotFound",
+            "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
+        },
+        "500": {
+            "description": "InternalServerError",
+            "schema": {
+                "$ref": "#/definitions/CommunicationErrorResponse"
+            },
+            "x-ms-error-response": true
         }
     },
     "x-ms-parameterized-host": {
