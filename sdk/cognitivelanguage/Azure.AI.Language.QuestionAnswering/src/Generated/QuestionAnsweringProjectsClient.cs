@@ -1162,7 +1162,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var data = new {
         ///     value = new[] {
         ///         new {
-        ///             alterations = ,
+        ///             alterations = new[] {
+        ///                 "<WordAlterationsItem>"
+        ///             },
         ///         }
         ///     },
         ///     nextLink = "<SynonymAssetsNextLink>",
@@ -1237,7 +1239,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// var data = new {
         ///     value = new[] {
         ///         new {
-        ///             alterations = ,
+        ///             alterations = new[] {
+        ///                 "<WordAlterationsItem>"
+        ///             },
         ///         }
         ///     },
         ///     nextLink = "<SynonymAssetsNextLink>",
@@ -3030,7 +3034,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     assets = new {
         ///         synonyms = new[] {
         ///             new {
-        ///                 alterations = ,
+        ///                 alterations = new[] {
+        ///                     "<WordAlterationsItem>"
+        ///                 },
         ///             }
         ///         },
         ///         qnas = new[] {
@@ -3061,13 +3067,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                                 metadata = new {
         ///                                     key = "<String>",
         ///                                 },
-        ///                                 dialog = ,
         ///                                 activeLearningSuggestions = new[] {
         ///                                     new {
         ///                                         clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                                         suggestedQuestions = new[] {
         ///                                             new {
-        ///                                                 question = ,
+        ///                                                 question = "<SuggestedQuestion>",
         ///                                                 userSuggestedCount = 1234,
         ///                                                 autoSuggestedCount = 1234,
         ///                                             }
@@ -3085,7 +3090,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                         clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                         suggestedQuestions = new[] {
         ///                             new {
-        ///                                 question = ,
+        ///                                 question = "<SuggestedQuestion>",
         ///                                 userSuggestedCount = 1234,
         ///                                 autoSuggestedCount = 1234,
         ///                             }
@@ -3235,7 +3240,9 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     assets = new {
         ///         synonyms = new[] {
         ///             new {
-        ///                 alterations = ,
+        ///                 alterations = new[] {
+        ///                     "<WordAlterationsItem>"
+        ///                 },
         ///             }
         ///         },
         ///         qnas = new[] {
@@ -3266,13 +3273,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                                 metadata = new {
         ///                                     key = "<String>",
         ///                                 },
-        ///                                 dialog = ,
         ///                                 activeLearningSuggestions = new[] {
         ///                                     new {
         ///                                         clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                                         suggestedQuestions = new[] {
         ///                                             new {
-        ///                                                 question = ,
+        ///                                                 question = "<SuggestedQuestion>",
         ///                                                 userSuggestedCount = 1234,
         ///                                                 autoSuggestedCount = 1234,
         ///                                             }
@@ -3290,7 +3296,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                         clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                         suggestedQuestions = new[] {
         ///                             new {
-        ///                                 question = ,
+        ///                                 question = "<SuggestedQuestion>",
         ///                                 userSuggestedCount = 1234,
         ///                                 autoSuggestedCount = 1234,
         ///                             }
@@ -3664,7 +3670,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     new {
         ///                         displayOrder = 1234,
         ///                         qnaId = 1234,
-        ///                         qna = ,
         ///                         displayText = "<QnaPromptDisplayText>",
         ///                     }
         ///                 },
@@ -3674,7 +3679,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                     suggestedQuestions = new[] {
         ///                         new {
-        ///                             question = ,
+        ///                             question = "<SuggestedQuestion>",
         ///                             userSuggestedCount = 1234,
         ///                             autoSuggestedCount = 1234,
         ///                         }
@@ -3788,7 +3793,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     new {
         ///                         displayOrder = 1234,
         ///                         qnaId = 1234,
-        ///                         qna = ,
         ///                         displayText = "<QnaPromptDisplayText>",
         ///                     }
         ///                 },
@@ -3798,7 +3802,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     clusterHead = "<SuggestedQuestionsClusterHead>",
         ///                     suggestedQuestions = new[] {
         ///                         new {
-        ///                             question = ,
+        ///                             question = "<SuggestedQuestion>",
         ///                             userSuggestedCount = 1234,
         ///                             autoSuggestedCount = 1234,
         ///                         }

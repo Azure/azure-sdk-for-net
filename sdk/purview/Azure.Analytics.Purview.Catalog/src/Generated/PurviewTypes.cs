@@ -6932,36 +6932,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -7027,36 +7017,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -7119,36 +7099,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -7213,36 +7183,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -7317,36 +7277,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -7412,36 +7362,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8316,36 +8256,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8411,36 +8341,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8503,36 +8423,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8597,36 +8507,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8701,36 +8601,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -8796,36 +8686,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -9697,36 +9577,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -9792,36 +9662,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -9884,36 +9744,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -9978,36 +9828,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -10082,36 +9922,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -10177,36 +10007,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11078,36 +10898,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11173,36 +10983,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11265,36 +11065,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11359,36 +11149,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11463,36 +11243,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -11558,36 +11328,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12457,36 +12217,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12552,36 +12302,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12644,36 +12384,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12738,36 +12468,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12842,36 +12562,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -12937,36 +12647,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13311,36 +13011,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13406,36 +13096,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13498,36 +13178,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13592,36 +13262,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13696,36 +13356,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },
@@ -13791,36 +13441,26 @@ namespace Azure.Analytics.Purview.Catalog
         ///                     "<DateFormatAvailableLocalesItem>"
         ///                 },
         ///                 calendar = 1234,
-        ///                 dateInstance = ,
-        ///                 dateTimeInstance = ,
-        ///                 instance = ,
         ///                 lenient = true,
         ///                 numberFormat = new {
         ///                     availableLocales = new[] {
         ///                         "<NumberFormatAvailableLocalesItem>"
         ///                     },
         ///                     currency = "<NumberFormatCurrency>",
-        ///                     currencyInstance = ,
         ///                     groupingUsed = true,
-        ///                     instance = ,
-        ///                     integerInstance = ,
         ///                     maximumFractionDigits = 1234,
         ///                     maximumIntegerDigits = 1234,
         ///                     minimumFractionDigits = 1234,
         ///                     minimumIntegerDigits = 1234,
-        ///                     numberInstance = ,
         ///                     parseIntegerOnly = true,
-        ///                     percentInstance = ,
         ///                     roundingMode = "<UP>",
         ///                 },
-        ///                 timeInstance = ,
         ///                 timeZone = new {
         ///                     dstSavings = 1234,
         ///                     id = "<TimeZoneId>",
         ///                     availableIds = new[] {
         ///                         "<TimeZoneAvailableIdsItem>"
         ///                     },
-        ///                     default = ,
         ///                     displayName = "<TimeZoneDisplayName>",
         ///                     rawOffset = 1234,
         ///                 },

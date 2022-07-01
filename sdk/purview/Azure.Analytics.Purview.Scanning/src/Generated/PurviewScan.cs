@@ -29190,7 +29190,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                             key = new {},
         ///                         },
         ///                         day = "<Sunday>",
-        ///                         occurrence = ,
+        ///                         occurrence = 1234,
         ///                     }
         ///                 },
         ///             },
@@ -29381,7 +29381,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                             key = new {},
         ///                         },
         ///                         day = "<Sunday>",
-        ///                         occurrence = ,
+        ///                         occurrence = 1234,
         ///                     }
         ///                 },
         ///             },
