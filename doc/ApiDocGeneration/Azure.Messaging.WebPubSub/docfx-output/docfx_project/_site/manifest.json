@@ -24,7 +24,7 @@
           "hash": "voK2+urXZyi8FDlq6/vSc5bwo+ehHWetc+6qkJrc+Oc="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.html",
-          "hash": "CCgsp5O8NNkfrTc4+KWw3n5Zgru03RoeoyyXTTwD2Zs="
+          "hash": "jXwygd7e5/qkNuHDAe0Ae9uYk++iZ8JdC1AkJWExSZA="
         }
       },
       "is_incremental": false,
@@ -48,7 +48,7 @@
           "hash": "mo/024ZHNeoDUxMqigNliKxfl3uaPwGeZYM2NrhNNOg="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -60,7 +60,7 @@
           "hash": "V3qhx60yt3qne5yhfcBiN0rwedLmvzMkPuRZfL+lhqQ="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -96,7 +96,7 @@
           "hash": "B8/evv4wb2PBY/zzEZIOvt5FVrCQeZyMOGFNoEiMXv0="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -120,7 +120,7 @@
           "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -139,25 +139,23 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 2,
-          "skipped_file_count": 0
+          "skipped_file_count": 2
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 0
+          "skipped_file_count": 6
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
@@ -170,8 +168,8 @@
     },
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

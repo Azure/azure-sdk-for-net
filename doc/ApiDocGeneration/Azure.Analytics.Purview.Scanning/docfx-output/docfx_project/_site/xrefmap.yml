@@ -7,717 +7,681 @@ references:
   commentId: N:Azure.Analytics.Purview.Scanning
   fullName: Azure.Analytics.Purview.Scanning
   nameWithType: Azure.Analytics.Purview.Scanning
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
-  name: PurviewClassificationRuleClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html
-  commentId: T:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
-  nameWithType: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
-  name: PurviewClassificationRuleClient()
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient__ctor
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient()
-  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient()
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
-  name: PurviewClassificationRuleClient(Uri, String, TokenCredential)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient__ctor_System_Uri_System_String_Azure_Core_TokenCredential_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
-  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  name: PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient__ctor_System_Uri_System_String_Azure_Core_TokenCredential_Azure_Analytics_Purview_Scanning_PurviewScanningServiceClientOptions_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor*
-  name: PurviewClassificationRuleClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient__ctor_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule
+  name: PurviewClassificationRule
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewClassificationRule
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewClassificationRule
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.#ctor
+  name: PurviewClassificationRule()
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule__ctor
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.#ctor
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.PurviewClassificationRule()
+  nameWithType: PurviewClassificationRule.PurviewClassificationRule()
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.#ctor*
+  name: PurviewClassificationRule
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule__ctor_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.#ctor
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient
-  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.PurviewClassificationRule
+  nameWithType: PurviewClassificationRule.PurviewClassificationRule
   type: constructor
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdate(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
-  nameWithType: PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRule.CreateOrUpdate(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate*
   name: CreateOrUpdate
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_CreateOrUpdate_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdate_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate
-  nameWithType: PurviewClassificationRuleClient.CreateOrUpdate
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdate
+  nameWithType: PurviewClassificationRule.CreateOrUpdate
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateAsync(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-  nameWithType: PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRule.CreateOrUpdateAsync(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync*
   name: CreateOrUpdateAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_CreateOrUpdateAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdateAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync
-  nameWithType: PurviewClassificationRuleClient.CreateOrUpdateAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.CreateOrUpdateAsync
+  nameWithType: PurviewClassificationRule.CreateOrUpdateAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete(Azure.RequestContext)
   name: Delete(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_Delete_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.Delete(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Delete_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete(RequestContext)
+  nameWithType: PurviewClassificationRule.Delete(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete*
   name: Delete
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_Delete_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Delete_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete
-  nameWithType: PurviewClassificationRuleClient.Delete
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Delete
+  nameWithType: PurviewClassificationRule.Delete
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync(Azure.RequestContext)
   name: DeleteAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_DeleteAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.DeleteAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_DeleteAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync(RequestContext)
+  nameWithType: PurviewClassificationRule.DeleteAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync*
   name: DeleteAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_DeleteAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_DeleteAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync
-  nameWithType: PurviewClassificationRuleClient.DeleteAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.DeleteAsync
+  nameWithType: PurviewClassificationRule.DeleteAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties(Azure.RequestContext)
   name: GetProperties(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetProperties_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.GetProperties(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetProperties_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties(RequestContext)
+  nameWithType: PurviewClassificationRule.GetProperties(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties*
   name: GetProperties
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetProperties_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetProperties_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties
-  nameWithType: PurviewClassificationRuleClient.GetProperties
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetProperties
+  nameWithType: PurviewClassificationRule.GetProperties
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync(Azure.RequestContext)
   name: GetPropertiesAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetPropertiesAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetPropertiesAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync(RequestContext)
+  nameWithType: PurviewClassificationRule.GetPropertiesAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync*
   name: GetPropertiesAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetPropertiesAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetPropertiesAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync
-  nameWithType: PurviewClassificationRuleClient.GetPropertiesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetPropertiesAsync
+  nameWithType: PurviewClassificationRule.GetPropertiesAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions(Azure.RequestContext)
   name: GetVersions(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetVersions_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.GetVersions(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersions_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions(RequestContext)
+  nameWithType: PurviewClassificationRule.GetVersions(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions*
   name: GetVersions
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetVersions_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersions_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions
-  nameWithType: PurviewClassificationRuleClient.GetVersions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersions
+  nameWithType: PurviewClassificationRule.GetVersions
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync(Azure.RequestContext)
   name: GetVersionsAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetVersionsAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
-  nameWithType: PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersionsAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync(RequestContext)
+  nameWithType: PurviewClassificationRule.GetVersionsAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync*
   name: GetVersionsAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_GetVersionsAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersionsAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync
-  nameWithType: PurviewClassificationRuleClient.GetVersionsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.GetVersionsAsync
+  nameWithType: PurviewClassificationRule.GetVersionsAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_Pipeline
-  commentId: P:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
-  nameWithType: PurviewClassificationRuleClient.Pipeline
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Pipeline
+  commentId: P:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline
+  nameWithType: PurviewClassificationRule.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline*
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_Pipeline_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Pipeline_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
-  nameWithType: PurviewClassificationRuleClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.Pipeline
+  nameWithType: PurviewClassificationRule.Pipeline
   type: property
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion(System.Int32,System.String,Azure.RequestContext)
   name: TagVersion(Int32, String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_TagVersion_System_Int32_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
-  nameWithType: PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersion_System_Int32_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion(System.Int32,System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRule.TagVersion(Int32, String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion*
   name: TagVersion
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_TagVersion_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersion_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion
-  nameWithType: PurviewClassificationRuleClient.TagVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersion
+  nameWithType: PurviewClassificationRule.TagVersion
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
   name: TagVersionAsync(Int32, String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_TagVersionAsync_System_Int32_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
-  nameWithType: PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersionAsync_System_Int32_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRule.TagVersionAsync(Int32, String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync*
   name: TagVersionAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRuleClient_TagVersionAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html#Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersionAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync
-  nameWithType: PurviewClassificationRuleClient.TagVersionAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRule.TagVersionAsync
+  nameWithType: PurviewClassificationRule.TagVersionAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
-  name: PurviewDataSourceClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html
-  commentId: T:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
-  nameWithType: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor
-  name: PurviewDataSourceClient()
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient__ctor
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.PurviewDataSourceClient()
-  nameWithType: PurviewDataSourceClient.PurviewDataSourceClient()
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
-  name: PurviewDataSourceClient(Uri, String, TokenCredential)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient__ctor_System_Uri_System_String_Azure_Core_TokenCredential_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.PurviewDataSourceClient(Uri, String, TokenCredential)
-  nameWithType: PurviewDataSourceClient.PurviewDataSourceClient(Uri, String, TokenCredential)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  name: PurviewDataSourceClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient__ctor_System_Uri_System_String_Azure_Core_TokenCredential_Azure_Analytics_Purview_Scanning_PurviewScanningServiceClientOptions_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.PurviewDataSourceClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-  nameWithType: PurviewDataSourceClient.PurviewDataSourceClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor*
-  name: PurviewDataSourceClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient__ctor_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource
+  name: PurviewDataSource
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewDataSource
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewDataSource
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.#ctor
+  name: PurviewDataSource()
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource__ctor
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.#ctor
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.PurviewDataSource()
+  nameWithType: PurviewDataSource.PurviewDataSource()
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.#ctor*
+  name: PurviewDataSource
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource__ctor_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.#ctor
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.PurviewDataSourceClient
-  nameWithType: PurviewDataSourceClient.PurviewDataSourceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.PurviewDataSource
+  nameWithType: PurviewDataSource.PurviewDataSource
   type: constructor
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdate(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate(RequestContent, RequestContext)
-  nameWithType: PurviewDataSourceClient.CreateOrUpdate(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate(RequestContent, RequestContext)
+  nameWithType: PurviewDataSource.CreateOrUpdate(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate*
   name: CreateOrUpdate
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_CreateOrUpdate_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_CreateOrUpdate_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate
-  nameWithType: PurviewDataSourceClient.CreateOrUpdate
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdate
+  nameWithType: PurviewDataSource.CreateOrUpdate
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateAsync(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-  nameWithType: PurviewDataSourceClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync(RequestContent, RequestContext)
+  nameWithType: PurviewDataSource.CreateOrUpdateAsync(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync*
   name: CreateOrUpdateAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_CreateOrUpdateAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_CreateOrUpdateAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync
-  nameWithType: PurviewDataSourceClient.CreateOrUpdateAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.CreateOrUpdateAsync
+  nameWithType: PurviewDataSource.CreateOrUpdateAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete(Azure.RequestContext)
   name: Delete(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_Delete_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete(RequestContext)
-  nameWithType: PurviewDataSourceClient.Delete(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_Delete_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete(RequestContext)
+  nameWithType: PurviewDataSource.Delete(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete*
   name: Delete
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_Delete_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_Delete_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete
-  nameWithType: PurviewDataSourceClient.Delete
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.Delete
+  nameWithType: PurviewDataSource.Delete
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync(Azure.RequestContext)
   name: DeleteAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_DeleteAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync(RequestContext)
-  nameWithType: PurviewDataSourceClient.DeleteAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_DeleteAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync(RequestContext)
+  nameWithType: PurviewDataSource.DeleteAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync*
   name: DeleteAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_DeleteAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_DeleteAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync
-  nameWithType: PurviewDataSourceClient.DeleteAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.DeleteAsync
+  nameWithType: PurviewDataSource.DeleteAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties(Azure.RequestContext)
   name: GetProperties(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetProperties_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties(RequestContext)
-  nameWithType: PurviewDataSourceClient.GetProperties(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetProperties_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties(RequestContext)
+  nameWithType: PurviewDataSource.GetProperties(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties*
   name: GetProperties
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetProperties_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetProperties_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties
-  nameWithType: PurviewDataSourceClient.GetProperties
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetProperties
+  nameWithType: PurviewDataSource.GetProperties
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync(Azure.RequestContext)
   name: GetPropertiesAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetPropertiesAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync(RequestContext)
-  nameWithType: PurviewDataSourceClient.GetPropertiesAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetPropertiesAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync(RequestContext)
+  nameWithType: PurviewDataSource.GetPropertiesAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync*
   name: GetPropertiesAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetPropertiesAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetPropertiesAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync
-  nameWithType: PurviewDataSourceClient.GetPropertiesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPropertiesAsync
+  nameWithType: PurviewDataSource.GetPropertiesAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient(System.String)
-  name: GetScanClient(String)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScanClient_System_String_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient(System.String)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient(String)
-  nameWithType: PurviewDataSourceClient.GetScanClient(String)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient*
-  name: GetScanClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScanClient_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient(System.String)
+  name: GetPurviewScanClient(String)
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetPurviewScanClient_System_String_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient(System.String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient(String)
+  nameWithType: PurviewDataSource.GetPurviewScanClient(String)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient*
+  name: GetPurviewScanClient
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetPurviewScanClient_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient
-  nameWithType: PurviewDataSourceClient.GetScanClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetPurviewScanClient
+  nameWithType: PurviewDataSource.GetPurviewScanClient
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans(Azure.RequestContext)
   name: GetScans(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScans_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans(RequestContext)
-  nameWithType: PurviewDataSourceClient.GetScans(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetScans_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans(RequestContext)
+  nameWithType: PurviewDataSource.GetScans(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans*
   name: GetScans
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScans_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetScans_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans
-  nameWithType: PurviewDataSourceClient.GetScans
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScans
+  nameWithType: PurviewDataSource.GetScans
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync(Azure.RequestContext)
   name: GetScansAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScansAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync(RequestContext)
-  nameWithType: PurviewDataSourceClient.GetScansAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetScansAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync(RequestContext)
+  nameWithType: PurviewDataSource.GetScansAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync*
   name: GetScansAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_GetScansAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_GetScansAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync
-  nameWithType: PurviewDataSourceClient.GetScansAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.GetScansAsync
+  nameWithType: PurviewDataSource.GetScansAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_Pipeline
-  commentId: P:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline
-  nameWithType: PurviewDataSourceClient.Pipeline
-- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_Pipeline
+  commentId: P:Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline
+  nameWithType: PurviewDataSource.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline*
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.html#Azure_Analytics_Purview_Scanning_PurviewDataSourceClient_Pipeline_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html#Azure_Analytics_Purview_Scanning_PurviewDataSource_Pipeline_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline
-  nameWithType: PurviewDataSourceClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSource.Pipeline
+  nameWithType: PurviewDataSource.Pipeline
   type: property
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient
-  name: PurviewScanClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html
-  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanClient
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient
-  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanClient
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor
-  name: PurviewScanClient()
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient__ctor
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.PurviewScanClient()
-  nameWithType: PurviewScanClient.PurviewScanClient()
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential)
-  name: PurviewScanClient(Uri, String, String, TokenCredential)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient__ctor_System_Uri_System_String_System_String_Azure_Core_TokenCredential_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.PurviewScanClient(Uri, String, String, TokenCredential)
-  nameWithType: PurviewScanClient.PurviewScanClient(Uri, String, String, TokenCredential)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  name: PurviewScanClient(Uri, String, String, TokenCredential, PurviewScanningServiceClientOptions)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient__ctor_System_Uri_System_String_System_String_Azure_Core_TokenCredential_Azure_Analytics_Purview_Scanning_PurviewScanningServiceClientOptions_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.PurviewScanClient(Uri, String, String, TokenCredential, PurviewScanningServiceClientOptions)
-  nameWithType: PurviewScanClient.PurviewScanClient(Uri, String, String, TokenCredential, PurviewScanningServiceClientOptions)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor*
-  name: PurviewScanClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient__ctor_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan
+  name: PurviewScan
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScan
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScan
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.#ctor
+  name: PurviewScan()
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan__ctor
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.#ctor
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.PurviewScan()
+  nameWithType: PurviewScan.PurviewScan()
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.#ctor*
+  name: PurviewScan
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan__ctor_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.#ctor
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.PurviewScanClient
-  nameWithType: PurviewScanClient.PurviewScanClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.PurviewScan
+  nameWithType: PurviewScan.PurviewScan
   type: constructor
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan(System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan(System.String,Azure.RequestContext)
   name: CancelScan(String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CancelScan_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan(System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan(String, RequestContext)
-  nameWithType: PurviewScanClient.CancelScan(String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CancelScan_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan(System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan(String, RequestContext)
+  nameWithType: PurviewScan.CancelScan(String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan*
   name: CancelScan
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CancelScan_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CancelScan_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan
-  nameWithType: PurviewScanClient.CancelScan
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScan
+  nameWithType: PurviewScan.CancelScan
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync(System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync(System.String,Azure.RequestContext)
   name: CancelScanAsync(String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CancelScanAsync_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync(System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync(String, RequestContext)
-  nameWithType: PurviewScanClient.CancelScanAsync(String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CancelScanAsync_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync(System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync(String, RequestContext)
+  nameWithType: PurviewScan.CancelScanAsync(String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync*
   name: CancelScanAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CancelScanAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CancelScanAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync
-  nameWithType: PurviewScanClient.CancelScanAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CancelScanAsync
+  nameWithType: PurviewScan.CancelScanAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdate(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdate(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdate(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate*
   name: CreateOrUpdate
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdate_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdate_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate
-  nameWithType: PurviewScanClient.CreateOrUpdate
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdate
+  nameWithType: PurviewScan.CreateOrUpdate
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateAsync(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdateAsync(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdateAsync(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync*
   name: CreateOrUpdateAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync
-  nameWithType: PurviewScanClient.CreateOrUpdateAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateAsync
+  nameWithType: PurviewScan.CreateOrUpdateAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateFilter(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateFilter_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdateFilter(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateFilter_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdateFilter(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter*
   name: CreateOrUpdateFilter
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateFilter_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateFilter_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter
-  nameWithType: PurviewScanClient.CreateOrUpdateFilter
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilter
+  nameWithType: PurviewScan.CreateOrUpdateFilter
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateFilterAsync(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateFilterAsync_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdateFilterAsync(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateFilterAsync_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdateFilterAsync(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync*
   name: CreateOrUpdateFilterAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateFilterAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateFilterAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync
-  nameWithType: PurviewScanClient.CreateOrUpdateFilterAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateFilterAsync
+  nameWithType: PurviewScan.CreateOrUpdateFilterAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateTrigger(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateTrigger_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdateTrigger(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateTrigger_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdateTrigger(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger*
   name: CreateOrUpdateTrigger
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateTrigger_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateTrigger_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger
-  nameWithType: PurviewScanClient.CreateOrUpdateTrigger
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTrigger
+  nameWithType: PurviewScan.CreateOrUpdateTrigger
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)
   name: CreateOrUpdateTriggerAsync(RequestContent, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateTriggerAsync_Azure_Core_RequestContent_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync(RequestContent, RequestContext)
-  nameWithType: PurviewScanClient.CreateOrUpdateTriggerAsync(RequestContent, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateTriggerAsync_Azure_Core_RequestContent_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync(RequestContent, RequestContext)
+  nameWithType: PurviewScan.CreateOrUpdateTriggerAsync(RequestContent, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync*
   name: CreateOrUpdateTriggerAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdateTriggerAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_CreateOrUpdateTriggerAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync
-  nameWithType: PurviewScanClient.CreateOrUpdateTriggerAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.CreateOrUpdateTriggerAsync
+  nameWithType: PurviewScan.CreateOrUpdateTriggerAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.Delete(Azure.RequestContext)
   name: Delete(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_Delete_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete(RequestContext)
-  nameWithType: PurviewScanClient.Delete(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_Delete_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.Delete(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.Delete(RequestContext)
+  nameWithType: PurviewScan.Delete(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.Delete*
   name: Delete
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_Delete_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_Delete_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.Delete
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete
-  nameWithType: PurviewScanClient.Delete
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.Delete
+  nameWithType: PurviewScan.Delete
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync(Azure.RequestContext)
   name: DeleteAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync(RequestContext)
-  nameWithType: PurviewScanClient.DeleteAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync(RequestContext)
+  nameWithType: PurviewScan.DeleteAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync*
   name: DeleteAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync
-  nameWithType: PurviewScanClient.DeleteAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteAsync
+  nameWithType: PurviewScan.DeleteAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger(Azure.RequestContext)
   name: DeleteTrigger(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteTrigger_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger(RequestContext)
-  nameWithType: PurviewScanClient.DeleteTrigger(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteTrigger_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger(RequestContext)
+  nameWithType: PurviewScan.DeleteTrigger(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger*
   name: DeleteTrigger
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteTrigger_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteTrigger_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger
-  nameWithType: PurviewScanClient.DeleteTrigger
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTrigger
+  nameWithType: PurviewScan.DeleteTrigger
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync(Azure.RequestContext)
   name: DeleteTriggerAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteTriggerAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync(RequestContext)
-  nameWithType: PurviewScanClient.DeleteTriggerAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteTriggerAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync(RequestContext)
+  nameWithType: PurviewScan.DeleteTriggerAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync*
   name: DeleteTriggerAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_DeleteTriggerAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_DeleteTriggerAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync
-  nameWithType: PurviewScanClient.DeleteTriggerAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.DeleteTriggerAsync
+  nameWithType: PurviewScan.DeleteTriggerAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter(Azure.RequestContext)
   name: GetFilter(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetFilter_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter(RequestContext)
-  nameWithType: PurviewScanClient.GetFilter(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetFilter_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter(RequestContext)
+  nameWithType: PurviewScan.GetFilter(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter*
   name: GetFilter
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetFilter_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetFilter_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter
-  nameWithType: PurviewScanClient.GetFilter
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilter
+  nameWithType: PurviewScan.GetFilter
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync(Azure.RequestContext)
   name: GetFilterAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetFilterAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync(RequestContext)
-  nameWithType: PurviewScanClient.GetFilterAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetFilterAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync(RequestContext)
+  nameWithType: PurviewScan.GetFilterAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync*
   name: GetFilterAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetFilterAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetFilterAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync
-  nameWithType: PurviewScanClient.GetFilterAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetFilterAsync
+  nameWithType: PurviewScan.GetFilterAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties(Azure.RequestContext)
   name: GetProperties(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetProperties_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties(RequestContext)
-  nameWithType: PurviewScanClient.GetProperties(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetProperties_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties(RequestContext)
+  nameWithType: PurviewScan.GetProperties(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties*
   name: GetProperties
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetProperties_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetProperties_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties
-  nameWithType: PurviewScanClient.GetProperties
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetProperties
+  nameWithType: PurviewScan.GetProperties
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync(Azure.RequestContext)
   name: GetPropertiesAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetPropertiesAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync(RequestContext)
-  nameWithType: PurviewScanClient.GetPropertiesAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetPropertiesAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync(RequestContext)
+  nameWithType: PurviewScan.GetPropertiesAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync*
   name: GetPropertiesAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetPropertiesAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetPropertiesAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync
-  nameWithType: PurviewScanClient.GetPropertiesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetPropertiesAsync
+  nameWithType: PurviewScan.GetPropertiesAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns(Azure.RequestContext)
   name: GetRuns(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetRuns_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns(RequestContext)
-  nameWithType: PurviewScanClient.GetRuns(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetRuns_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns(RequestContext)
+  nameWithType: PurviewScan.GetRuns(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns*
   name: GetRuns
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetRuns_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetRuns_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns
-  nameWithType: PurviewScanClient.GetRuns
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetRuns
+  nameWithType: PurviewScan.GetRuns
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync(Azure.RequestContext)
   name: GetRunsAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetRunsAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync(RequestContext)
-  nameWithType: PurviewScanClient.GetRunsAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetRunsAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync(RequestContext)
+  nameWithType: PurviewScan.GetRunsAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync*
   name: GetRunsAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetRunsAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetRunsAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync
-  nameWithType: PurviewScanClient.GetRunsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetRunsAsync
+  nameWithType: PurviewScan.GetRunsAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger(Azure.RequestContext)
   name: GetTrigger(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetTrigger_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger(RequestContext)
-  nameWithType: PurviewScanClient.GetTrigger(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetTrigger_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger(RequestContext)
+  nameWithType: PurviewScan.GetTrigger(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger*
   name: GetTrigger
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetTrigger_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetTrigger_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger
-  nameWithType: PurviewScanClient.GetTrigger
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetTrigger
+  nameWithType: PurviewScan.GetTrigger
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync(Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync(Azure.RequestContext)
   name: GetTriggerAsync(RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetTriggerAsync_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync(Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync(RequestContext)
-  nameWithType: PurviewScanClient.GetTriggerAsync(RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetTriggerAsync_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync(Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync(RequestContext)
+  nameWithType: PurviewScan.GetTriggerAsync(RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync*
   name: GetTriggerAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_GetTriggerAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_GetTriggerAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync
-  nameWithType: PurviewScanClient.GetTriggerAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.GetTriggerAsync
+  nameWithType: PurviewScan.GetTriggerAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_Pipeline
-  commentId: P:Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline
-  nameWithType: PurviewScanClient.Pipeline
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_Pipeline
+  commentId: P:Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline
+  nameWithType: PurviewScan.Pipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline*
   name: Pipeline
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_Pipeline_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_Pipeline_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline
-  nameWithType: PurviewScanClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.Pipeline
+  nameWithType: PurviewScan.Pipeline
   type: property
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan(System.String,System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.RunScan(System.String,System.String,Azure.RequestContext)
   name: RunScan(String, String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_RunScan_System_String_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan(System.String,System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan(String, String, RequestContext)
-  nameWithType: PurviewScanClient.RunScan(String, String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_RunScan_System_String_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.RunScan(System.String,System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.RunScan(String, String, RequestContext)
+  nameWithType: PurviewScan.RunScan(String, String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.RunScan*
   name: RunScan
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_RunScan_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_RunScan_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.RunScan
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan
-  nameWithType: PurviewScanClient.RunScan
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.RunScan
+  nameWithType: PurviewScan.RunScan
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync(System.String,System.String,Azure.RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync(System.String,System.String,Azure.RequestContext)
   name: RunScanAsync(String, String, RequestContext)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_RunScanAsync_System_String_System_String_Azure_RequestContext_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync(System.String,System.String,Azure.RequestContext)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync(String, String, RequestContext)
-  nameWithType: PurviewScanClient.RunScanAsync(String, String, RequestContext)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync*
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_RunScanAsync_System_String_System_String_Azure_RequestContext_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync(System.String,System.String,Azure.RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync(String, String, RequestContext)
+  nameWithType: PurviewScan.RunScanAsync(String, String, RequestContext)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync*
   name: RunScanAsync
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html#Azure_Analytics_Purview_Scanning_PurviewScanClient_RunScanAsync_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html#Azure_Analytics_Purview_Scanning_PurviewScan_RunScanAsync_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync
   isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync
-  nameWithType: PurviewScanClient.RunScanAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScan.RunScanAsync
+  nameWithType: PurviewScan.RunScanAsync
   type: method
 - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
   name: PurviewScanningServiceClient
@@ -863,20 +827,6 @@ references:
   fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync
   nameWithType: PurviewScanningServiceClient.DeleteScanRulesetAsync
   type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
-  name: GetClassificationRuleClient(String)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetClassificationRuleClient_System_String_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(String)
-  nameWithType: PurviewScanningServiceClient.GetClassificationRuleClient(String)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient*
-  name: GetClassificationRuleClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetClassificationRuleClient_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient
-  isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient
-  nameWithType: PurviewScanningServiceClient.GetClassificationRuleClient
-  type: method
 - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)
   name: GetClassificationRules(RequestContext)
   href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetClassificationRules_Azure_RequestContext_
@@ -904,20 +854,6 @@ references:
   isSpec: "True"
   fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync
   nameWithType: PurviewScanningServiceClient.GetClassificationRulesAsync
-  type: method
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
-  name: GetDataSourceClient(String)
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetDataSourceClient_System_String_
-  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(String)
-  nameWithType: PurviewScanningServiceClient.GetDataSourceClient(String)
-- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient*
-  name: GetDataSourceClient
-  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetDataSourceClient_
-  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient
-  isSpec: "True"
-  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient
-  nameWithType: PurviewScanningServiceClient.GetDataSourceClient
   type: method
 - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)
   name: GetDataSources(RequestContext)
@@ -1030,6 +966,34 @@ references:
   isSpec: "True"
   fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync
   nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesetsAsync
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient(System.String)
+  name: GetPurviewClassificationRuleClient(String)
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetPurviewClassificationRuleClient_System_String_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient(System.String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient(String)
+  nameWithType: PurviewScanningServiceClient.GetPurviewClassificationRuleClient(String)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient*
+  name: GetPurviewClassificationRuleClient
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetPurviewClassificationRuleClient_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient
+  isSpec: "True"
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewClassificationRuleClient
+  nameWithType: PurviewScanningServiceClient.GetPurviewClassificationRuleClient
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient(System.String)
+  name: GetPurviewDataSourceClient(String)
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetPurviewDataSourceClient_System_String_
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient(System.String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient(String)
+  nameWithType: PurviewScanningServiceClient.GetPurviewDataSourceClient(String)
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient*
+  name: GetPurviewDataSourceClient
+  href: api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html#Azure_Analytics_Purview_Scanning_PurviewScanningServiceClient_GetPurviewDataSourceClient_
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient
+  isSpec: "True"
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetPurviewDataSourceClient
+  nameWithType: PurviewScanningServiceClient.GetPurviewDataSourceClient
   type: method
 - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)
   name: GetScanRuleset(String, RequestContext)

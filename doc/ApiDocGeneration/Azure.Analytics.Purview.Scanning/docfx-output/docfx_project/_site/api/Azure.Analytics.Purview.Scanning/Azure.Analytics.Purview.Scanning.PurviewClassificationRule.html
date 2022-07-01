@@ -197,7 +197,7 @@
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -205,7 +205,7 @@
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -216,7 +216,8 @@
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -228,41 +229,89 @@
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom" (required)
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
+<pre><code>{
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
+}
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
+<pre><code>{
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
+      {
+        kind: "Regex", # Required.
+      }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
+}
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext__examples">Examples</h5>
-  <p>This sample shows how to call CreateOrUpdate with required request content and parse the result.</p>
+  <p>This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.</p>
 <pre><code>
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
@@ -273,13 +322,44 @@ var data = new {
 };
 
 Response response = client.CreateOrUpdate(RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+</code></pre>
+<p>This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.</p>
+<pre><code>
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
+var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
+
+var data = new {
+    kind = "&lt;System&gt;",
+    properties = new {
+        description = "&lt;SystemClassificationRulePropertiesDescription&gt;",
+        classificationName = "&lt;SystemClassificationRulePropertiesClassificationName&gt;",
+        ruleStatus = "&lt;Enabled&gt;",
+    },
+};
+
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -305,7 +385,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateA
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -313,7 +393,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateA
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -324,7 +404,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateA
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -336,41 +417,89 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateA
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom" (required)
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
+<pre><code>{
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
+}
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
+<pre><code>{
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
+      {
+        kind: "Regex", # Required.
+      }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
+}
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_CreateOrUpdateAsync_Azure_Core_RequestContent_Azure_RequestContext__examples">Examples</h5>
-  <p>This sample shows how to call CreateOrUpdateAsync with required request content and parse the result.</p>
+  <p>This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.</p>
 <pre><code>
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
@@ -381,13 +510,44 @@ var data = new {
 };
 
 Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+</code></pre>
+<p>This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.</p>
+<pre><code>
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
+var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
+
+var data = new {
+    kind = "&lt;System&gt;",
+    properties = new {
+        description = "&lt;SystemClassificationRulePropertiesDescription&gt;",
+        classificationName = "&lt;SystemClassificationRulePropertiesClassificationName&gt;",
+        ruleStatus = "&lt;Enabled&gt;",
+    },
+};
+
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -412,7 +572,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -423,7 +583,8 @@ Console.WriteLine(result.GetProperty("kind").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -435,30 +596,46 @@ Console.WriteLine(result.GetProperty("kind").ToString());
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Delete_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_Delete_Azure_RequestContext__examples">Examples</h5>
@@ -469,13 +646,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = client.Delete();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -501,7 +689,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteAsync (Az
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -512,7 +700,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteAsync (Az
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -524,30 +713,46 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteAsync (Az
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_DeleteAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_DeleteAsync_Azure_RequestContext__examples">Examples</h5>
@@ -558,13 +763,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = await client.DeleteAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -589,7 +805,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -600,7 +816,8 @@ Console.WriteLine(result.GetProperty("kind").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -612,30 +829,46 @@ Console.WriteLine(result.GetProperty("kind").ToString());
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetProperties_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetProperties_Azure_RequestContext__examples">Examples</h5>
@@ -646,13 +879,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = client.GetProperties();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -678,7 +922,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetPropertiesAs
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -689,7 +933,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetPropertiesAs
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -701,30 +946,46 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetPropertiesAs
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetPropertiesAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.</p>
+<details><summary>SystemClassificationRule</summary>Schema for <code data-dev-comment-type="c">SystemClassificationRule</code>:
 <pre><code>{
-  id: string,
-  name: string,
-  kind: "System" | "Custom"
+  kind: System, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
+</code></pre></details><details><summary>~+ 1 more JSON objects</summary><details><summary>CustomClassificationRule</summary>Schema for <code data-dev-comment-type="c">CustomClassificationRule</code>:
 <pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
+  kind: Custom, # Required.
+  id: string, # Optional.
+  name: string, # Optional.
+  properties: {
+    minimumPercentageMatch: number, # Optional.
+    classificationAction: "Keep" | "Delete", # Optional.
+    dataPatterns: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
+        kind: "Regex", # Required.
       }
-    ]
-  }
+    ], # Optional.
+    columnPatterns: [ClassificationRulePattern], # Optional.
+    description: string, # Optional.
+    version: number, # Optional.
+    classificationName: string, # Optional.
+    ruleStatus: "Enabled" | "Disabled", # Optional.
+    createdAt: string (ISO 8601 Format), # Optional.
+    lastModifiedAt: string (ISO 8601 Format), # Optional.
+  }, # Optional.
 }
-</code></pre>
+</code></pre></details></details>
 </div>
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetPropertiesAsync_Azure_RequestContext__examples">Examples</h5>
@@ -735,13 +996,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = await client.GetPropertiesAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("kind").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -766,7 +1038,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -777,7 +1049,8 @@ Console.WriteLine(result.GetProperty("kind").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p>
+        <p><p>The <span class="xref">Azure.Pageable</span> from the service containing a list of <span class="xref">System.BinaryData</span> objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -789,34 +1062,13 @@ Console.WriteLine(result.GetProperty("kind").ToString());
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersions_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">ClassificationRuleListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      id: string,
-      name: string,
-      kind: "System" | "Custom"
-    }
-  ],
-  nextLink: string,
-  count: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
-      {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
-      }
-    ]
-  }
+  id: string, # Optional.
+  name: string, # Optional.
+  kind: "System" | "Custom", # Required.
 }
 </code></pre>
 </div>
@@ -828,16 +1080,26 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
-Response response = client.GetVersions();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-Console.WriteLine(result.GetProperty("count").ToString());
+foreach (var data in client.GetVersions())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+}
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -862,7 +1124,7 @@ Console.WriteLine(result.GetProperty("count").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -873,7 +1135,8 @@ Console.WriteLine(result.GetProperty("count").ToString());
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p>
+        <p><p>The <span class="xref">Azure.AsyncPageable</span> from the service containing a list of <span class="xref">System.BinaryData</span> objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -885,34 +1148,13 @@ Console.WriteLine(result.GetProperty("count").ToString());
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_GetVersionsAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">ClassificationRuleListValue</code>:</p>
 <pre><code>{
-  value: [
-    {
-      id: string,
-      name: string,
-      kind: "System" | "Custom"
-    }
-  ],
-  nextLink: string,
-  count: number
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
-      {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
-      }
-    ]
-  }
+  id: string, # Optional.
+  name: string, # Optional.
+  kind: "System" | "Custom", # Required.
 }
 </code></pre>
 </div>
@@ -924,16 +1166,26 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
-Response response = await client.GetVersionsAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-Console.WriteLine(result.GetProperty("count").ToString());
+await foreach (var data in client.GetVersionsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("kind").ToString());
+}
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -974,7 +1226,7 @@ Console.WriteLine(result.GetProperty("count").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -985,7 +1237,8 @@ Console.WriteLine(result.GetProperty("count").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -997,42 +1250,27 @@ Console.WriteLine(result.GetProperty("count").ToString());
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersion_System_Int32_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">OperationResponse</code>:</p>
 <pre><code>{
-  scanResultId: OperationResponseScanResultId,
-  startTime: string (ISO 8601 Format),
-  endTime: string (ISO 8601 Format),
-  status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+  scanResultId: OperationResponseScanResultId, # Optional.
+  startTime: string (ISO 8601 Format), # Optional.
+  endTime: string (ISO 8601 Format), # Optional.
+  status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled", # Optional.
   error: {
-    code: string,
-    message: string,
-    target: string,
+    code: string, # Optional.
+    message: string, # Optional.
+    target: string, # Optional.
     details: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorInfo]
+        code: string, # Optional.
+        message: string, # Optional.
+        target: string, # Optional.
+        details: [ErrorInfo], # Optional.
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
-      {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
-      }
-    ]
-  }
+    ], # Optional.
+  }, # Optional.
 }
 </code></pre>
 </div>
@@ -1045,7 +1283,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = client.TagVersion(1234, "&lt;action&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1053,9 +1292,9 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 </code></pre>
 
   
@@ -1065,6 +1304,13 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].Get
       <td>
         <span class="xref">System.ArgumentNullException</span>
         <p><p><code data-dev-comment-type="paramref">action</code> is null.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1110,7 +1356,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; TagVersionAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1121,7 +1367,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; TagVersionAsync
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1133,42 +1380,27 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; TagVersionAsync
   
   
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewClassificationRule_TagVersionAsync_System_Int32_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">OperationResponse</code>:</p>
 <pre><code>{
-  scanResultId: OperationResponseScanResultId,
-  startTime: string (ISO 8601 Format),
-  endTime: string (ISO 8601 Format),
-  status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+  scanResultId: OperationResponseScanResultId, # Optional.
+  startTime: string (ISO 8601 Format), # Optional.
+  endTime: string (ISO 8601 Format), # Optional.
+  status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled", # Optional.
   error: {
-    code: string,
-    message: string,
-    target: string,
+    code: string, # Optional.
+    message: string, # Optional.
+    target: string, # Optional.
     details: [
       {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorInfo]
+        code: string, # Optional.
+        message: string, # Optional.
+        target: string, # Optional.
+        details: [ErrorInfo], # Optional.
       }
-    ]
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    target: string,
-    details: [
-      {
-        code: string,
-        message: string,
-        target: string,
-        details: [ErrorModel]
-      }
-    ]
-  }
+    ], # Optional.
+  }, # Optional.
 }
 </code></pre>
 </div>
@@ -1181,7 +1413,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 Response response = await client.TagVersionAsync(1234, "&lt;action&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("scanResultId").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
@@ -1189,9 +1422,9 @@ Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 </code></pre>
 
   
@@ -1201,6 +1434,13 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].Get
       <td>
         <span class="xref">System.ArgumentNullException</span>
         <p><p><code data-dev-comment-type="paramref">action</code> is null.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>

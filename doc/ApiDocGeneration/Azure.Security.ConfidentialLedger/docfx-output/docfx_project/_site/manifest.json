@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerClient.html",
-          "hash": "+03H5E3Bmi/oQfk/u1jIuDBlggz/V6bsDpVlAie8Mec="
+          "hash": "ZIpDPTuSE38opU9eEEGdOJ6JThZwlZPCEPDzs4D65Cg="
         }
       },
       "is_incremental": false,
@@ -39,7 +39,7 @@
           "hash": "PVROOr/K5RyLFNmnM4DUrb4Qyq6QjLe8qdOHQiRaGdY="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -51,7 +51,7 @@
           "hash": "HyLJRryX2ccyE2h6+bSaAYml0wyqNOFDbBCJ6tDmbZE="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -63,7 +63,7 @@
           "hash": "Ag3m5nwABUsIMuo4BYUPkkbG0841p9oQBvmydnBTMDA="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -72,7 +72,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Security.ConfidentialLedger/Azure.Security.ConfidentialLedger.ConfidentialLedgerIdentityServiceClient.html",
-          "hash": "wQb91gosbq3ewcfO0Csrs2KUnHASXFrXRaZTIWeem58="
+          "hash": "tDZXQDOE00jz6k1Ae727B7XoXGZZjHB/qQZlCC+nn3s="
         }
       },
       "is_incremental": false,
@@ -102,7 +102,7 @@
           "hash": "wLlbxSZ8Dm2NpqWUNFZCBF4GfjlOVPNQdSgVtfheZ2w="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -126,7 +126,7 @@
           "hash": "N7Rk4lzTK7FU8wCZVXu+7gGikIwZkk0tXg6eROCZUu0="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -145,25 +145,23 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
+        "can_incremental": true,
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
+        "skipped_file_count": 0
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 2,
-          "skipped_file_count": 0
+          "skipped_file_count": 2
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
+          "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 0
+          "skipped_file_count": 5
         },
         "TocDocumentProcessor": {
           "can_incremental": false,
@@ -176,8 +174,8 @@
     },
     {
       "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

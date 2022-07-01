@@ -317,7 +317,7 @@
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -325,7 +325,7 @@
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -336,7 +336,8 @@
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -348,25 +349,19 @@
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_CreateOrUpdateUser_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader" (required),
-  userId: string
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader",
-  userId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
 </div>
@@ -383,7 +378,8 @@ var data = new {
 };
 
 Response response = client.CreateOrUpdateUser("&lt;userId&gt;", RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 </code></pre>
@@ -402,6 +398,13 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -439,7 +442,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateU
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -447,7 +450,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateU
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -458,7 +461,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateU
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -470,25 +474,19 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateU
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_CreateOrUpdateUserAsync_System_String_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader" (required),
-  userId: string
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader",
-  userId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
 </div>
@@ -505,7 +503,8 @@ var data = new {
 };
 
 Response response = await client.CreateOrUpdateUserAsync("&lt;userId&gt;", RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 </code></pre>
@@ -524,6 +523,13 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -560,7 +566,7 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -571,7 +577,8 @@ Console.WriteLine(result.GetProperty("userId").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -622,6 +629,13 @@ Console.WriteLine(response.Status);
 </p>
       </td>
     </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
   </table>
   
   </div>
@@ -656,7 +670,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteUserAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -667,7 +681,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteUserAsync
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -718,6 +733,13 @@ Console.WriteLine(response.Status);
 </p>
       </td>
     </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
   </table>
   
   </div>
@@ -743,7 +765,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -754,7 +776,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -766,23 +789,16 @@ Console.WriteLine(response.Status);
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetConsortiumMembers_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Consortium</code>:</p>
 <pre><code>{
   members: [
     {
-      certificate: string,
-      id: string
+      certificate: string, # Required. PEM-encoded certificate associated with the member.
+      id: string, # Required. Identifier assigned to the member.
     }
-  ]
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  ], # Required.
 }
 </code></pre>
 </div>
@@ -795,12 +811,23 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetConsortiumMembers();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
-Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("members")[0].GetProperty("certificate").ToString());
+Console.WriteLine(result.GetProperty("members")[0].GetProperty("id").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -826,7 +853,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConsortiumMe
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -837,7 +864,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConsortiumMe
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -849,23 +877,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConsortiumMe
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetConsortiumMembersAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Consortium</code>:</p>
 <pre><code>{
   members: [
     {
-      certificate: string,
-      id: string
+      certificate: string, # Required. PEM-encoded certificate associated with the member.
+      id: string, # Required. Identifier assigned to the member.
     }
-  ]
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  ], # Required.
 }
 </code></pre>
 </div>
@@ -878,12 +899,23 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetConsortiumMembersAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("certificate").ToString());
-Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToString());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("members")[0].GetProperty("certificate").ToString());
+Console.WriteLine(result.GetProperty("members")[0].GetProperty("id").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -908,7 +940,7 @@ Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToStri
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -919,7 +951,8 @@ Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToStri
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -931,19 +964,12 @@ Console.WriteLine(result.GetProperty("members").Item[0].GetProperty("id").ToStri
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetConstitution_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Constitution</code>:</p>
 <pre><code>{
-  digest: string,
-  script: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  digest: string, # Required. SHA256 digest of the constitution script.
+  script: string, # Required. Contents of the constitution.
 }
 </code></pre>
 </div>
@@ -956,12 +982,23 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetConstitution();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("digest").ToString());
 Console.WriteLine(result.GetProperty("script").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -987,7 +1024,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConstitution
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -998,7 +1035,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConstitution
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1010,19 +1048,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetConstitution
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetConstitutionAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">Constitution</code>:</p>
 <pre><code>{
-  digest: string,
-  script: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  digest: string, # Required. SHA256 digest of the constitution script.
+  script: string, # Required. Contents of the constitution.
 }
 </code></pre>
 </div>
@@ -1035,12 +1066,23 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetConstitutionAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("digest").ToString());
 Console.WriteLine(result.GetProperty("script").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1073,7 +1115,7 @@ Console.WriteLine(result.GetProperty("script").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1084,7 +1126,8 @@ Console.WriteLine(result.GetProperty("script").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1096,20 +1139,13 @@ Console.WriteLine(result.GetProperty("script").ToString());
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetCurrentLedgerEntry_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntry</code>:</p>
 <pre><code>{
-  contents: string,
-  subLedgerId: string,
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -1122,7 +1158,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetCurrentLedgerEntry();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 </code></pre>
 <p>This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.</p>
@@ -1132,13 +1169,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetCurrentLedgerEntry("&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1172,7 +1220,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetCurrentLedge
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1183,7 +1231,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetCurrentLedge
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1195,20 +1244,13 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetCurrentLedge
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetCurrentLedgerEntryAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntry</code>:</p>
 <pre><code>{
-  contents: string,
-  subLedgerId: string,
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -1221,7 +1263,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetCurrentLedgerEntryAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 </code></pre>
 <p>This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.</p>
@@ -1231,13 +1274,24 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetCurrentLedgerEntryAsync("&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1262,7 +1316,7 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1273,7 +1327,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1285,19 +1340,12 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetEnclaveQuotes_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">ConfidentialLedgerEnclaves</code>:</p>
 <pre><code>{
-  currentNodeId: string,
-  enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
+  enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
 }
 </code></pre>
 </div>
@@ -1310,7 +1358,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetEnclaveQuotes();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("currentNodeId").ToString());
 Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;").GetProperty("nodeId").ToString());
 Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;").GetProperty("mrenclave").ToString());
@@ -1319,6 +1368,16 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;"
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1344,7 +1403,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetEnclaveQuote
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1355,7 +1414,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetEnclaveQuote
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1367,19 +1427,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetEnclaveQuote
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetEnclaveQuotesAsync_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">ConfidentialLedgerEnclaves</code>:</p>
 <pre><code>{
-  currentNodeId: string,
-  enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
+  enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
 }
 </code></pre>
 </div>
@@ -1392,7 +1445,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetEnclaveQuotesAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("currentNodeId").ToString());
 Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;").GetProperty("nodeId").ToString());
 Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;").GetProperty("mrenclave").ToString());
@@ -1401,6 +1455,16 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;"
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1449,7 +1513,7 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;"
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1460,7 +1524,8 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;"
     <tr>
       <td>
         <span class="xref">Azure.Pageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p>
+        <p><p>The <span class="xref">Azure.Pageable</span> from the service containing a list of <span class="xref">System.BinaryData</span> objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1472,26 +1537,13 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("&lt;test&gt;"
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetLedgerEntries_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntries</code>:</p>
 <pre><code>{
-  state: "Loading" | "Ready",
-  @nextLink: string,
-  entries: [
-    {
-      contents: string,
-      subLedgerId: string,
-      transactionId: string
-    }
-  ]
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -1503,10 +1555,11 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetLedgerEntries();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+foreach (var data in client.GetLedgerEntries())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+}
 </code></pre>
 <p>This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.</p>
 <pre><code>
@@ -1514,16 +1567,26 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = client.GetLedgerEntries("&lt;subLedgerId&gt;", "&lt;fromTransactionId&gt;", "&lt;toTransactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("@nextLink").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+foreach (var data in client.GetLedgerEntries("&lt;subLedgerId&gt;", "&lt;fromTransactionId&gt;", "&lt;toTransactionId&gt;"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("subLedgerId").ToString());
+    Console.WriteLine(result.GetProperty("transactionId").ToString());
+}
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1572,7 +1635,7 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1583,7 +1646,8 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
     <tr>
       <td>
         <span class="xref">Azure.AsyncPageable</span>&lt;<span class="xref">System.BinaryData</span>&gt;
-        <p>
+        <p><p>The <span class="xref">Azure.AsyncPageable</span> from the service containing a list of <span class="xref">System.BinaryData</span> objects. Details of the body schema for each item in the collection are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1595,26 +1659,13 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetLedgerEntriesAsync_System_String_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for one item in the pageable response.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntries</code>:</p>
 <pre><code>{
-  state: "Loading" | "Ready",
-  @nextLink: string,
-  entries: [
-    {
-      contents: string,
-      subLedgerId: string,
-      transactionId: string
-    }
-  ]
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -1626,10 +1677,11 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetLedgerEntriesAsync();
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
+await foreach (var data in client.GetLedgerEntriesAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+}
 </code></pre>
 <p>This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.</p>
 <pre><code>
@@ -1637,16 +1689,26 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
-Response response = await client.GetLedgerEntriesAsync("&lt;subLedgerId&gt;", "&lt;fromTransactionId&gt;", "&lt;toTransactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-Console.WriteLine(result.GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("@nextLink").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("contents").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("subLedgerId").ToString());
-Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transactionId").ToString());
+await foreach (var data in client.GetLedgerEntriesAsync("&lt;subLedgerId&gt;", "&lt;fromTransactionId&gt;", "&lt;toTransactionId&gt;"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+    Console.WriteLine(result.GetProperty("subLedgerId").ToString());
+    Console.WriteLine(result.GetProperty("transactionId").ToString());
+}
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1687,7 +1749,7 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1698,7 +1760,8 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1710,23 +1773,16 @@ Console.WriteLine(result.GetProperty("entries").Item[0].GetProperty("transaction
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetLedgerEntry_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerQueryResult</code>:</p>
 <pre><code>{
-  state: "Loading" | "Ready",
+  state: "Loading" | "Ready", # Required. State of a ledger query.
   entry: {
-    contents: string,
-    subLedgerId: string,
-    transactionId: string
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+    contents: string, # Required. Contents of the ledger entry.
+    subLedgerId: string, # Optional. Identifier for sub-ledgers.
+    transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+  }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
 }
 </code></pre>
 </div>
@@ -1739,7 +1795,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetLedgerEntry("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 </code></pre>
 <p>This sample shows how to call GetLedgerEntry with all parameters, and how to parse the result.</p>
@@ -1749,7 +1806,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetLedgerEntry("&lt;transactionId&gt;", "&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
@@ -1770,6 +1828,13 @@ Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToStr
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1815,7 +1880,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLedgerEntryA
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1826,7 +1891,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLedgerEntryA
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1838,23 +1904,16 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLedgerEntryA
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetLedgerEntryAsync_System_String_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerQueryResult</code>:</p>
 <pre><code>{
-  state: "Loading" | "Ready",
+  state: "Loading" | "Ready", # Required. State of a ledger query.
   entry: {
-    contents: string,
-    subLedgerId: string,
-    transactionId: string
-  }
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+    contents: string, # Required. Contents of the ledger entry.
+    subLedgerId: string, # Optional. Identifier for sub-ledgers.
+    transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
+  }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
 }
 </code></pre>
 </div>
@@ -1867,7 +1926,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetLedgerEntryAsync("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 </code></pre>
 <p>This sample shows how to call GetLedgerEntryAsync with all parameters, and how to parse the result.</p>
@@ -1877,7 +1937,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetLedgerEntryAsync("&lt;transactionId&gt;", "&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
 Console.WriteLine(result.GetProperty("entry").GetProperty("subLedgerId").ToString());
@@ -1898,6 +1959,13 @@ Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToStr
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1934,7 +2002,7 @@ Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToStr
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1945,7 +2013,8 @@ Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToStr
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1957,31 +2026,24 @@ Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToStr
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetReceipt_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">TransactionReceipt</code>:</p>
 <pre><code>{
   receipt: {
-    leaf: string,
-    nodeId: string,
+    leaf: string, # Required. Merkle tree leaf for this transaction.
+    nodeId: string, # Required. Id of the node returning the receipt.
     proof: [
       {
-        left: string,
-        right: string
+        left: string, # Optional.
+        right: string, # Optional.
       }
-    ],
-    root: string,
-    signature: string
-  },
-  state: "Loading" | "Ready",
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+    ], # Required. Merkle proof.
+    root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
+    signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
+  }, # Optional. A receipt certifying the transaction at the specified id.
+  state: "Loading" | "Ready", # Required. State of a ledger query.
+  transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -1994,11 +2056,12 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetReceipt("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
-Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("right").ToString());
+Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -2019,6 +2082,13 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2056,7 +2126,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetReceiptAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2067,7 +2137,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetReceiptAsync
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2079,31 +2150,24 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetReceiptAsync
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetReceiptAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">TransactionReceipt</code>:</p>
 <pre><code>{
   receipt: {
-    leaf: string,
-    nodeId: string,
+    leaf: string, # Required. Merkle tree leaf for this transaction.
+    nodeId: string, # Required. Id of the node returning the receipt.
     proof: [
       {
-        left: string,
-        right: string
+        left: string, # Optional.
+        right: string, # Optional.
       }
-    ],
-    root: string,
-    signature: string
-  },
-  state: "Loading" | "Ready",
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+    ], # Required. Merkle proof.
+    root: string, # Required. Root of the Merkle tree at the time the transaction was recorded.
+    signature: string, # Required. Signature by the node, with its certificate, over the Merkle root.
+  }, # Optional. A receipt certifying the transaction at the specified id.
+  state: "Loading" | "Ready", # Required. State of a ledger query.
+  transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -2116,11 +2180,12 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetReceiptAsync("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("left").ToString());
-Console.WriteLine(result.GetProperty("receipt").GetProperty("proof").Item[0].GetProperty("right").ToString());
+Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
+Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
 Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
 Console.WriteLine(result.GetProperty("state").ToString());
@@ -2141,6 +2206,13 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2177,7 +2249,7 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2188,7 +2260,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2200,19 +2273,12 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetTransactionStatus_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">TransactionStatus</code>:</p>
 <pre><code>{
-  state: "Committed" | "Pending",
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  state: "Committed" | "Pending", # Required. Represents the state of the transaction.
+  transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -2225,7 +2291,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetTransactionStatus("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
 </code></pre>
@@ -2244,6 +2311,13 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2281,7 +2355,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetTransactionS
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2292,7 +2366,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetTransactionS
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2304,19 +2379,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetTransactionS
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetTransactionStatusAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">TransactionStatus</code>:</p>
 <pre><code>{
-  state: "Committed" | "Pending",
-  transactionId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  state: "Committed" | "Pending", # Required. Represents the state of the transaction.
+  transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
 </div>
@@ -2329,7 +2397,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetTransactionStatusAsync("&lt;transactionId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("state").ToString());
 Console.WriteLine(result.GetProperty("transactionId").ToString());
 </code></pre>
@@ -2348,6 +2417,13 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">transactionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2384,7 +2460,7 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2395,7 +2471,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2407,19 +2484,12 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetUser_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader",
-  userId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
 </div>
@@ -2432,7 +2502,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = client.GetUser("&lt;userId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 </code></pre>
@@ -2451,6 +2522,13 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2488,7 +2566,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUserAsync (s
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2499,7 +2577,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUserAsync (s
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2511,19 +2590,12 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetUserAsync (s
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_GetUserAsync_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the response payload.</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerUser</code>:</p>
 <pre><code>{
-  assignedRole: "Administrator" | "Contributor" | "Reader",
-  userId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  assignedRole: "Administrator" | "Contributor" | "Reader", # Required. Represents an assignable role.
+  userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
 }
 </code></pre>
 </div>
@@ -2536,7 +2608,8 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new ConfidentialLedgerClient(endpoint, credential);
 
 Response response = await client.GetUserAsync("&lt;userId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("assignedRole").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 </code></pre>
@@ -2555,6 +2628,13 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2583,7 +2663,7 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2599,7 +2679,7 @@ Console.WriteLine(result.GetProperty("userId").ToString());
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2610,7 +2690,8 @@ Console.WriteLine(result.GetProperty("userId").ToString());
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2622,25 +2703,19 @@ Console.WriteLine(result.GetProperty("userId").ToString());
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_PostLedgerEntry_Azure_Core_RequestContent_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntry</code>:</p>
 <pre><code>{
-  contents: string (required),
-  subLedgerId: string,
-  transactionId: string
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerWriteResult</code>:</p>
 <pre><code>{
-  subLedgerId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  subLedgerId: string, # Required. Identifier for sub-ledgers.
 }
 </code></pre>
 </div>
@@ -2657,7 +2732,8 @@ var data = new {
 };
 
 Response response = client.PostLedgerEntry(RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 </code></pre>
 <p>This sample shows how to call PostLedgerEntry with all parameters and request content, and how to parse the result.</p>
@@ -2671,11 +2747,22 @@ var data = new {
 };
 
 Response response = client.PostLedgerEntry(RequestContent.Create(data), "&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -2778,7 +2865,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; PostLedgerEntry
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -2794,7 +2881,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; PostLedgerEntry
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2805,7 +2892,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; PostLedgerEntry
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service. Details of the response body schema are in the Remarks section below.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2817,25 +2905,19 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; PostLedgerEntry
   
   
   <h5 id="Azure_Security_ConfidentialLedger_ConfidentialLedgerClient_PostLedgerEntryAsync_Azure_Core_RequestContent_System_String_Azure_RequestContext__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Schema for <code data-dev-comment-type="c">Request Body</code>:</p>
+  <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads.</p>
+<p>Request Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerEntry</code>:</p>
 <pre><code>{
-  contents: string (required),
-  subLedgerId: string,
-  transactionId: string
+  contents: string, # Required. Contents of the ledger entry.
+  subLedgerId: string, # Optional. Identifier for sub-ledgers.
+  transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
 }
 </code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Body</code>:</p>
+<p>Response Body:</p>
+<p>Schema for <code data-dev-comment-type="c">LedgerWriteResult</code>:</p>
 <pre><code>{
-  subLedgerId: string
-}
-</code></pre>
-<p>Schema for <code data-dev-comment-type="c">Response Error</code>:</p>
-<pre><code>{
-  error: {
-    code: string,
-    message: string,
-    innererror: ConfidentialLedgerErrorBody
-  }
+  subLedgerId: string, # Required. Identifier for sub-ledgers.
 }
 </code></pre>
 </div>
@@ -2852,7 +2934,8 @@ var data = new {
 };
 
 Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data));
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 </code></pre>
 <p>This sample shows how to call PostLedgerEntryAsync with all parameters and request content, and how to parse the result.</p>
@@ -2866,11 +2949,22 @@ var data = new {
 };
 
 Response response = await client.PostLedgerEntryAsync(RequestContent.Create(data), "&lt;subLedgerId&gt;");
-JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("subLedgerId").ToString());
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   

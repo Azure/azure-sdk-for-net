@@ -624,7 +624,7 @@
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -635,7 +635,8 @@
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -664,9 +665,7 @@
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_AddConnectionToGroup_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call AddConnectionToGroup with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.AddConnectionToGroup("&lt;group&gt;", "&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
@@ -686,6 +685,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> or <code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -731,7 +737,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; AddConnectionTo
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -742,7 +748,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; AddConnectionTo
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -771,9 +778,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; AddConnectionTo
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_AddConnectionToGroupAsync_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call AddConnectionToGroupAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.AddConnectionToGroupAsync("&lt;group&gt;", "&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
@@ -793,6 +798,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> or <code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1159,7 +1171,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Che
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1170,7 +1182,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Che
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1199,24 +1212,30 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Che
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseAllConnections_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseAllConnections.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseAllConnections();
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseAllConnections with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseAllConnections(new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1258,7 +1277,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseAllConnect
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1269,7 +1288,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseAllConnect
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1298,24 +1318,30 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseAllConnect
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseAllConnectionsAsync_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseAllConnectionsAsync.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseAllConnectionsAsync();
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseAllConnectionsAsync with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseAllConnectionsAsync(new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 
   
+  <h5 class="exceptions">Exceptions</h5>
+  <table>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
+</p>
+      </td>
+    </tr>
+  </table>
   
   </div>
   
@@ -1356,7 +1382,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1367,7 +1393,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1396,18 +1423,14 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseConnection_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseConnection with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseConnection("&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseConnection with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseConnection("&lt;connectionId&gt;", "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -1427,6 +1450,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1472,7 +1502,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseConnection
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1483,7 +1513,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseConnection
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1512,18 +1543,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseConnection
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseConnectionAsync_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseConnectionAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseConnectionAsync("&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseConnectionAsync with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseConnectionAsync("&lt;connectionId&gt;", "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -1543,6 +1570,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1595,7 +1629,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1606,7 +1640,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1635,18 +1670,14 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseGroupConnections_System_String_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseGroupConnections with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseGroupConnections("&lt;group&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseGroupConnections with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseGroupConnections("&lt;group&gt;", new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -1666,6 +1697,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1719,7 +1757,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseGroupConne
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1730,7 +1768,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseGroupConne
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1759,18 +1798,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseGroupConne
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseGroupConnectionsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseGroupConnectionsAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseGroupConnectionsAsync("&lt;group&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseGroupConnectionsAsync with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseGroupConnectionsAsync("&lt;group&gt;", new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -1790,6 +1825,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1842,7 +1884,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1853,7 +1895,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -1882,18 +1925,14 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseUserConnections_System_String_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseUserConnections with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseUserConnections("&lt;userId&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseUserConnections with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.CloseUserConnections("&lt;userId&gt;", new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -1913,6 +1952,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -1966,7 +2012,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseUserConnec
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -1977,7 +2023,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseUserConnec
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2006,18 +2053,14 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CloseUserConnec
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_CloseUserConnectionsAsync_System_String_System_Collections_Generic_IEnumerable_System_String__System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call CloseUserConnectionsAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseUserConnectionsAsync("&lt;userId&gt;");
 Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call CloseUserConnectionsAsync with all parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.CloseUserConnectionsAsync("&lt;userId&gt;", new String[]{"&lt;excluded&gt;"}, "&lt;reason&gt;");
 Console.WriteLine(response.Status);
@@ -2037,6 +2080,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2742,7 +2792,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Gro
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2753,7 +2803,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Gro
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2782,9 +2833,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&lt;bool&gt;&gt; Gro
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_RemoveConnectionFromGroup_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call RemoveConnectionFromGroup with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.RemoveConnectionFromGroup("&lt;group&gt;", "&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
@@ -2804,6 +2853,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> or <code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2849,7 +2905,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveConnectio
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2860,7 +2916,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveConnectio
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2889,9 +2946,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveConnectio
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_RemoveConnectionFromGroupAsync_System_String_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call RemoveConnectionFromGroupAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.RemoveConnectionFromGroupAsync("&lt;group&gt;", "&lt;connectionId&gt;");
 Console.WriteLine(response.Status);
@@ -2911,6 +2966,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> or <code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -2947,7 +3009,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -2958,7 +3020,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -2987,9 +3050,7 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_RemoveUserFromAllGroups_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call RemoveUserFromAllGroups with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = client.RemoveUserFromAllGroups("&lt;userId&gt;");
 Console.WriteLine(response.Status);
@@ -3009,6 +3070,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -3046,7 +3114,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveUserFromA
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -3057,7 +3125,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveUserFromA
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -3086,9 +3155,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RemoveUserFromA
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_RemoveUserFromAllGroupsAsync_System_String_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call RemoveUserFromAllGroupsAsync with required parameters.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 Response response = await client.RemoveUserFromAllGroupsAsync("&lt;userId&gt;");
 Console.WriteLine(response.Status);
@@ -3108,6 +3175,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -3514,7 +3588,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RevokePermissio
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3538,7 +3612,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RevokePermissio
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -3549,7 +3623,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RevokePermissio
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -3578,9 +3653,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RevokePermissio
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToAll_Azure_Core_RequestContent_Azure_Core_ContentType_System_Collections_Generic_IEnumerable_System_String__Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToAll with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -3589,9 +3662,7 @@ Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call SendToAll with all parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -3606,6 +3677,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentNullException</span>
         <p><p><code data-dev-comment-type="paramref">content</code> is null.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -3635,7 +3713,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3659,7 +3737,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -3670,7 +3748,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -3699,9 +3778,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToAllAsync_Azure_Core_RequestContent_Azure_Core_ContentType_System_Collections_Generic_IEnumerable_System_String__Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToAllAsync with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -3710,9 +3787,7 @@ Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call SendToAllAsync with all parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -3727,6 +3802,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentNullException</span>
         <p><p><code data-dev-comment-type="paramref">content</code> is null.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -3884,7 +3966,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -3900,7 +3982,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -3911,7 +3993,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -3940,9 +4023,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToConnection_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToConnection with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -3964,6 +4045,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -4066,7 +4154,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToConnectio
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4082,7 +4170,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToConnectio
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -4093,7 +4181,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToConnectio
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -4122,9 +4211,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToConnectio
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToConnectionAsync_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToConnectionAsync with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4146,6 +4233,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">connectionId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -4246,7 +4340,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4270,7 +4364,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -4281,7 +4375,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -4310,9 +4405,7 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToGroup_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_System_Collections_Generic_IEnumerable_System_String__Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToGroup with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4321,9 +4414,7 @@ Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call SendToGroup with all parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4345,6 +4436,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -4447,7 +4545,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToGroupAsyn
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4471,7 +4569,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToGroupAsyn
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -4482,7 +4580,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToGroupAsyn
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -4511,9 +4610,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToGroupAsyn
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToGroupAsync_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_System_Collections_Generic_IEnumerable_System_String__Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToGroupAsync with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4522,9 +4619,7 @@ Console.WriteLine(response.Status);
 </code></pre>
 <p>This sample shows how to call SendToGroupAsync with all parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4546,6 +4641,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">group</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -4646,7 +4748,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4662,7 +4764,7 @@ Console.WriteLine(response.Status);
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -4673,7 +4775,8 @@ Console.WriteLine(response.Status);
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -4702,9 +4805,7 @@ Console.WriteLine(response.Status);
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToUser_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToUser with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4726,6 +4827,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
@@ -4828,7 +4936,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToUserAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. Details of the request body schema are in the Remarks section below.</p>
 </p>
       </td>
     </tr>
@@ -4844,7 +4952,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToUserAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.RequestContext</span></span>
         <span class="parametername">context</span>
-        <p><p>The request context, which can override default behaviors on the request on a per-call basis.</p>
+        <p><p>The request context, which can override default behaviors of the client pipeline on a per-call basis.</p>
 </p>
       </td>
     </tr>
@@ -4855,7 +4963,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToUserAsync
     <tr>
       <td>
         <span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Azure.Response</span>&gt;
-        <p>
+        <p><p>The response returned from the service.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -4884,9 +4993,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToUserAsync
   <h5 id="Azure_Messaging_WebPubSub_WebPubSubServiceClient_SendToUserAsync_System_String_Azure_Core_RequestContent_Azure_Core_ContentType_Azure_RequestContext__examples">Examples</h5>
   <p>This sample shows how to call SendToUserAsync with required parameters and request content.</p>
 <pre><code>
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
-var client = new WebPubSubServiceClient(endpoint, credential);
+var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
 var data = File.OpenRead("&lt;binary.data&gt;");
 
@@ -4908,6 +5015,13 @@ Console.WriteLine(response.Status);
       <td>
         <span class="xref">System.ArgumentException</span>
         <p><p><code data-dev-comment-type="paramref">userId</code> is an empty string, and was expected to be non-empty.</p>
+</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="xref">Azure.RequestFailedException</span>
+        <p><p>Service returned a non-success status code.</p>
 </p>
       </td>
     </tr>
