@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    [NonParallelizable]
     public abstract class BackupRestoreTestBase : AdministrationTestBase
     {
         public KeyVaultBackupClient Client { get; private set; }
@@ -27,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             SanitizedQueryParameters.Add("sig");
         }
 
-        internal KeyVaultBackupClient GetClient(bool isInstrumented = true)
+        internal KeyVaultBackupClient GetClient()
         {
             var client = new KeyVaultBackupClient(
                 Uri,
@@ -42,7 +41,8 @@ namespace Azure.Security.KeyVault.Administration.Tests
                             },
                         },
                 }));
-            return isInstrumented ? InstrumentClient(client) : client;
+
+            return InstrumentClient(client);
         }
 
         protected override void Start()

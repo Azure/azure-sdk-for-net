@@ -6,6 +6,7 @@ For this example, you need the following namespaces:
 ```C# Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -52,7 +53,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
 {
     HardwareProfile = new HardwareProfile()
     {
-        VmSize = VirtualMachineSizeTypes.StandardF2
+        VmSize = VirtualMachineSizeType.StandardF2
     },
     OSProfile = new OSProfile()
     {
@@ -61,15 +62,12 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         LinuxConfiguration = new LinuxConfiguration()
         {
             DisablePasswordAuthentication = true,
-            Ssh = new SshConfiguration()
-            {
-                PublicKeys = {
-        new SshPublicKeyInfo()
-        {
-            Path = $"/home/adminUser/.ssh/authorized_keys",
-            KeyData = "<value of the public ssh key>",
-        }
-    }
+            SshPublicKeys = {
+                new SshPublicKeyInfo()
+                {
+                    Path = $"/home/adminUser/.ssh/authorized_keys",
+                    KeyData = "<value of the public ssh key>",
+                }
             }
         }
     },
@@ -79,20 +77,20 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
         {
             new NetworkInterfaceReference()
             {
-                Id = "/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>",
+                Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                 Primary = true,
             }
         }
     },
     StorageProfile = new StorageProfile()
     {
-        OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+        OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
         {
-            OSType = OperatingSystemTypes.Linux,
-            Caching = CachingTypes.ReadWrite,
+            OSType = SupportedOperatingSystemType.Linux,
+            Caching = CachingType.ReadWrite,
             ManagedDisk = new ManagedDiskParameters()
             {
-                StorageAccountType = StorageAccountTypes.StandardLRS
+                StorageAccountType = StorageAccountType.StandardLRS
             }
         },
         ImageReference = new ImageReference()

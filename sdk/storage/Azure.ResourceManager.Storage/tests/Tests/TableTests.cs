@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if deleted successfully
             Assert.IsFalse(await _tableCollection.ExistsAsync(tableName));
-            TableResource table3 = await _tableCollection.GetIfExistsAsync(tableName);
-            Assert.IsNull(table3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _tableCollection.GetAsync(tableName); });
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]

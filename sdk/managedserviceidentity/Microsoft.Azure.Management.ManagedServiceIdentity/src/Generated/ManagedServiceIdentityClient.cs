@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             Operations = new Operations(this);
             UserAssignedIdentities = new UserAssignedIdentitiesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-11-30";
+            ApiVersion = "2021-09-30-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

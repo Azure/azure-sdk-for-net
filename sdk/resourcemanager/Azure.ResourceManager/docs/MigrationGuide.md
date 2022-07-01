@@ -1,6 +1,6 @@
 # Migrating from old to preview management SDK.
 
-There are several differences between the old sdk and this preview. Here's an example of how to create a Virtual Machine with both SDKs:
+There are several differences between the old sdk and this new sdk. Here's an example of how to create a Virtual Machine with both SDKs:
 
 ## Create a Virtual Machine example
 

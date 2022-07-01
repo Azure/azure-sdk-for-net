@@ -21,12 +21,16 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of SharedGallery and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SharedGalleryResource" /> and their operations.
+    /// Each <see cref="SharedGalleryResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="SharedGalleryCollection" /> instance call the GetSharedGalleries method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class SharedGalleryCollection : ArmCollection, IEnumerable<SharedGalleryResource>, IAsyncEnumerable<SharedGalleryResource>
     {
         private readonly ClientDiagnostics _sharedGalleryClientDiagnostics;
         private readonly SharedGalleriesRestOperations _sharedGalleryRestClient;
-        private readonly string _location;
+        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryCollection"/> class for mocking. </summary>
         protected SharedGalleryCollection()
@@ -37,9 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
@@ -73,10 +75,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, _location, galleryUniqueName, cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, galleryUniqueName);
+                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
                 return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -103,10 +105,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, _location, galleryUniqueName, cancellationToken);
+                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, galleryUniqueName);
+                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
                 return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SharedGalleryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedGalleryResource> GetAllAsync(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SharedGalleryResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SharedGalleryResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -132,10 +134,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryRestClient.ListAsync(Id.SubscriptionId, _location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(_location), sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, value.Name);
+                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), value.Name);
                         return new SharedGalleryResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -152,10 +154,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _sharedGalleryRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, _location, sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _sharedGalleryRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, value.Name);
+                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), value.Name);
                         return new SharedGalleryResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -177,7 +179,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedGalleryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedGalleryResource> GetAll(SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SharedGalleryResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Page<SharedGalleryResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -185,10 +187,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryRestClient.List(Id.SubscriptionId, _location, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryRestClient.List(Id.SubscriptionId, new AzureLocation(_location), sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, value.Name);
+                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), value.Name);
                         return new SharedGalleryResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -205,10 +207,10 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _sharedGalleryRestClient.ListNextPage(nextLink, Id.SubscriptionId, _location, sharedTo, cancellationToken: cancellationToken);
+                    var response = _sharedGalleryRestClient.ListNextPage(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value =>
                     {
-                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, value.Name);
+                        value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), value.Name);
                         return new SharedGalleryResource(Client, value);
                     }
                     ), response.Value.NextLink, response.GetRawResponse());
@@ -239,7 +241,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,68 +268,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(galleryUniqueName, cancellationToken: cancellationToken);
+                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
-        /// </summary>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        public virtual async Task<Response<SharedGalleryResource>> GetIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
-
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, _location, galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SharedGalleryResource>(null, response.GetRawResponse());
-                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, galleryUniqueName);
-                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}
-        /// Operation Id: SharedGalleries_Get
-        /// </summary>
-        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
-        public virtual Response<SharedGalleryResource> GetIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
-
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, _location, galleryUniqueName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SharedGalleryResource>(null, response.GetRawResponse());
-                response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, _location, galleryUniqueName);
-                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -16,11 +16,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerJobAgentJobVersionStepResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerJobAgentJobVersionStep along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerJobAgentJobVersionStepResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerJobAgentJobVersionStepResource method.
+    /// Otherwise you can get one from its parent resource <see cref="JobVersionResource" /> using the GetServerJobAgentJobVersionStep method.
+    /// </summary>
     public partial class ServerJobAgentJobVersionStepResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobVersionStepResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion, string stepName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, string stepName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}";
             return new ResourceIdentifier(resourceId);

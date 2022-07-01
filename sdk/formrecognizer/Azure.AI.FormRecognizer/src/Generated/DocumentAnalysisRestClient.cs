@@ -37,96 +37,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
-        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/formrecognizer", false);
-            uri.AppendPath("/documentModels/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath(":analyze", false);
-            if (pages != null)
-            {
-                uri.AppendQuery("pages", pages, true);
-            }
-            if (locale != null)
-            {
-                uri.AppendQuery("locale", locale, true);
-            }
-            if (stringIndexType != null)
-            {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
-            }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (analyzeRequest != null)
-            {
-                request.Headers.Add("Content-Type", contentType.ToSerialString());
-                request.Content = RequestContent.Create(analyzeRequest);
-            }
-            return message;
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, AnalyzeDocumentRequest analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -150,7 +60,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (analyzeRequest != null)
@@ -217,6 +127,184 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (analyzeRequest != null)
+            {
+                request.Headers.Add("Content-Type", contentType.ToSerialString());
+                request.Content = RequestContent.Create(analyzeRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Analyzes document with model. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Analyzes document with model. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, string analyzeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (analyzeRequest != null)
+            {
+                request.Headers.Add("Content-Type", "text/html");
+                request.Content = new StringRequestContent(analyzeRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Analyzes document with model. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, analyzeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Analyzes document with model. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, analyzeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateGetAnalyzeDocumentResultRequest(string modelId, string resultId)
         {
             var message = _pipeline.CreateMessage();
@@ -229,7 +317,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -308,7 +396,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -373,7 +461,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -438,7 +526,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -513,7 +601,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -588,7 +676,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -644,7 +732,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -713,7 +801,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -769,7 +857,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -839,7 +927,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -898,7 +986,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", "2022-06-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

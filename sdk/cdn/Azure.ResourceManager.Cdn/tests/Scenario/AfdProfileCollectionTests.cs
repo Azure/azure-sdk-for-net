@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
-            Assert.AreEqual(afdProfileName, afdProfile.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, null, afdProfile.Data));
+            Assert.AreEqual(afdProfileName, afdProfileResource.Data.Name);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, null, afdProfileResource.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, afdProfileName, null));
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             int count = 0;
             await foreach (var tempAfdProfileResource in subscription.GetProfilesAsync())
             {
-                if (tempAfdProfile.Data.Id == afdProfile.Data.Id)
+                if (tempAfdProfileResource.Data.Id == afdProfileResource.Data.Id)
                 {
                     count++;
                 }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             ProfileResource getAfdProfileResource = await rg.GetProfiles().GetAsync(afdProfileName);
-            ResourceDataHelper.AssertValidProfile(afdProfile, getAfdProfile);
+            ResourceDataHelper.AssertValidProfile(afdProfileResource, getAfdProfileResource);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().GetAsync(null));
         }
     }

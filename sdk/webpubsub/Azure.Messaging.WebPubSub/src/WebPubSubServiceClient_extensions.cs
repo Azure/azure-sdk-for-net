@@ -158,7 +158,7 @@ namespace Azure.Messaging.WebPubSub
             Endpoint = endpoint;
 
             options ??= new WebPubSubServiceClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _apiVersion = options.Version;
         }
 

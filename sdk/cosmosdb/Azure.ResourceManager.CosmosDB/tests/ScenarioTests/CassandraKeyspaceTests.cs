@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CassandraKeyspaceResource keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            if (keyspace != null)
+            if (await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName))
             {
+                var id = CassandraKeyspaceCollection.Id;
+                id = CassandraKeyspaceResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _keyspaceName);
+                CassandraKeyspaceResource keyspace = this.ArmClient.GetCassandraKeyspaceResource(id);
                 await keyspace.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyCassandraKeyspaces(keyspace, keyspace2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            CassandraKeyspaceCreateUpdateData updateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS, keyspace.Data.Resource)
+            var updateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS, keyspace.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var keyspace = await CreateCassandraKeyspace(null);
             await keyspace.DeleteAsync(WaitUntil.Completed);
 
-            keyspace = await CassandraKeyspaceCollection.GetIfExistsAsync(_keyspaceName);
-            Assert.Null(keyspace);
+            bool exists = await CassandraKeyspaceCollection.ExistsAsync(_keyspaceName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(AutoscaleSettings autoscale)
@@ -167,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<CassandraKeyspaceResource> CreateCassandraKeyspace(string name, AutoscaleSettings autoscale, CassandraKeyspaceCollection collection)
         {
-            CassandraKeyspaceCreateUpdateData cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateUpdateData(AzureLocation.WestUS,
+            var cassandraKeyspaceCreateUpdateOptions = new CassandraKeyspaceCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.CassandraKeyspaceResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -189,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

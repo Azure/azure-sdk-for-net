@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Moq;
@@ -609,16 +613,56 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var processInvokedAfterStop = false;
+            var stopInvoked = false;
+            var ownedPartitions = new[] { "0", "1" };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions), mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(lb => lb.OwnedPartitionIds)
+                .Returns(ownedPartitions);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
-                .Returns(Mock.Of<EventHubConnection>());
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.ProcessEventBatchAsync(It.IsAny<EventProcessorPartition>(), It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask)
+                .Callback(() =>
+                {
+                    if ((stopInvoked) && (!cancellationSource.Token.IsCancellationRequested))
+                    {
+                        processInvokedAfterStop = true;
+                    }
+
+                    completionSource.TrySetResult(true);
+                });
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>(), It.IsAny<long?>()))
+                .Returns(mockConsumer.Object);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
+
+            var processorCancellationSource = GetRunningProcessorCancellationSource(mockProcessor.Object);
+
+            ownedPartitions
+                .Select(partition => InvokeTryStartProcessingPartition(mockProcessor.Object, partition, processorCancellationSource.Token))
+                .ToList();
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             if (async)
             {
@@ -629,10 +673,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StopProcessing(cancellationSource.Token);
             }
 
+            stopInvoked = true;
+
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
+            Assert.That(GetActivePartitionProcessors(mockProcessor.Object).Count, Is.Zero, "No partition processor should be running.");
+            Assert.That(processInvokedAfterStop, Is.False, "No batches should be processed after stopping.");
         }
 
         /// <summary>
@@ -673,6 +721,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await Task.WhenAny(startCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
 
@@ -1210,6 +1259,120 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor should not be running.");
             Assert.That(capturedException, Is.Null, "No exception should have occurred when stopping the processor.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StopProcessing" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StopProcessingLogsWarningForTokenCancellationErrors(bool async)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var firstCall = true;
+            var partition = new EventProcessorPartition { PartitionId = "99" };
+            var position = EventPosition.FromOffset(12);
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) } };
+            var handlerCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockEventSource = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Returns(() => firstCall switch
+                {
+                    true => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData> { new EventData("Test") }),
+                    false => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData>())
+                });
+
+            mockProcessor.Object.Logger = mockEventSource.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                 .Setup(processor => processor.ProcessEventBatchAsync(It.IsAny<EventProcessorPartition>(), It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                 .Callback<EventProcessorPartition, IReadOnlyList<EventData>, bool, CancellationToken>((partition, events, dispatchEmpties, cancellationToken) =>
+                 {
+                     if (firstCall)
+                     {
+                         cancellationToken.Register(() => throw new InvalidOperationException());
+                         handlerCompletion.TrySetResult(true);
+                         firstCall = false;
+                     }
+                 })
+                 .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<string[]>>("ListPartitionIdsAsync",
+                    ItExpr.IsAny<EventHubConnection>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new[] { partition.PartitionId }));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<IEnumerable<EventProcessorPartitionOwnership>>>("ListOwnershipAsync",
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult<IEnumerable<EventProcessorPartitionOwnership>>(new[] {
+                    new EventProcessorPartitionOwnership
+                    {
+                      OwnerIdentifier = mockProcessor.Object.Identifier,
+                      FullyQualifiedNamespace = mockProcessor.Object.FullyQualifiedNamespace,
+                      EventHubName = mockProcessor.Object.EventHubName,
+                      ConsumerGroup = mockProcessor.Object.ConsumerGroup,
+                      PartitionId = partition.PartitionId,
+                      LastModifiedTime = DateTime.UtcNow
+                    }
+                }));
+
+            mockProcessor
+                .Protected()
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should be running.");
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
+
+            await Task.WhenAny(handlerCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            if (async)
+            {
+                await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
+            }
+            else
+            {
+                mockProcessor.Object.StopProcessing(cancellationSource.Token);
+            }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
+
+            mockEventSource
+                .Verify(log => log.ProcessorStoppingCancellationWarning(
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<string>()),
+                Times.Once);
 
             cancellationSource.Cancel();
         }

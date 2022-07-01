@@ -49,9 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            MongoDBDatabaseResource database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
-            if (database != null)
+            if (await MongoDBDatabaseCollection.ExistsAsync(_databaseName))
             {
+                var id = MongoDBDatabaseCollection.Id;
+                id = MongoDBDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                MongoDBDatabaseResource database = this.ArmClient.GetMongoDBDatabaseResource(id);
                 await database.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBDatabases(database, database2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            MongoDBDatabaseCreateUpdateData updateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS, database.Data.Resource)
+            var updateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS, database.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -154,8 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateMongoDBDatabase(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(AutoscaleSettings autoscale)
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(string name, AutoscaleSettings autoscale, MongoDBDatabaseCollection collection)
         {
-            MongoDBDatabaseCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.MongoDBDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -182,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

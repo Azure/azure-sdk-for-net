@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="status"> Status of the What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
-        internal WhatIfOperationResult(string status, ErrorDetail error, IReadOnlyList<WhatIfChange> changes)
+        internal WhatIfOperationResult(string status, ResponseError error, IReadOnlyList<WhatIfChange> changes)
         {
             Status = status;
             Error = error;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Status of the What-If operation. </summary>
         public string Status { get; }
         /// <summary> Error when What-If operation fails. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
         /// <summary> List of resource changes predicted by What-If operation. </summary>
         public IReadOnlyList<WhatIfChange> Changes { get; }
     }

@@ -13,22 +13,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class VaultData
+    public partial class VaultData : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(Properties);
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
+            writer.WriteEndObject();
+        }
+
         internal static VaultData DeserializeVaultData(JsonElement element)
         {
-            Optional<string> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
             VaultProperties properties = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("properties"))
                 {
-                    location = property.Value.GetString();
+                    properties = VaultProperties.DeserializeVaultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -46,9 +67,9 @@ namespace Azure.ResourceManager.KeyVault
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("location"))
                 {
-                    properties = VaultProperties.DeserializeVaultProperties(property.Value);
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -63,16 +84,21 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new VaultData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), properties);
+            return new VaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
         }
     }
 }

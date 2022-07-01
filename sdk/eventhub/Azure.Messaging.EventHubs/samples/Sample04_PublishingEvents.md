@@ -2,6 +2,23 @@
 
 This sample demonstrates publishing events to an Event Hub.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Client types](#client-types)
+- [Buffering versus explicit batching](#buffering-versus-explicit-batching)
+- [Event lifetime](#event-lifetime)
+- [Publishing size constraints](#publishing-size-constraints)
+- [Publishing and partitions](#publishing-and-partitions)
+- [Publishing events with automatic partition assignment](#publishing-events-with-automatic-partition-assignment)
+- [Publishing events with a partition key](#publishing-events-with-a-partition-key)
+- [Publishing events to a specific partition](#publishing-events-to-a-specific-partition)
+- [Publishing events with custom metadata](#publishing-events-with-custom-metadata)
+- [Guidance for buffered producer handler implementation](#guidance-for-buffered-producer-handler-implementation)
+- [Tuning throughput for buffered publishing](#tuning-throughput-for-buffered-publishing)
+- [Creating and publishing multiple batches](#creating-and-publishing-multiple-batches)
+- [Publishing events with an implicit batch](#publishing-events-with-an-implicit-batch)
+- [Restricting a batch to a custom size limit](#restricting-a-batch-to-a-custom-size-limit)
+
 ## Client types
 
 Event publishing is the responsibility of an event producer.  The client library offers two producers, the `EventHubProducerClient` and `EventHubBufferedProducerClient`, each tailored to a unique pattern of use, but applicable to the same application scenarios.  This sample will include code snippets for both types, unless the concept is not applicable to one.  More information about the available event producers can be found in [Sample02_EventHubsClients](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md).
@@ -411,6 +428,8 @@ It is also important that you guard against exceptions in your handler code; it 
 
 To ensure consistent performance and throughput, it is common for applications to make decisions around the pattern of publishing that they use - adjusting the frequency that batches are sent and how many operations take place concurrently.  Because the `EventHubBufferedProducerClient` manages batches and publishing in the background, your application cannot directly control these aspects.  
 
+Because the handlers are awaited, it is strongly advised that you *not* invoke `CloseAsync` or `DisposeAsync` from the handlers; doing so is likely to result in a deadlock scenario.  It is safe to attempt to resend events by adding them to the back of the buffer by calling `EnqueueEventAsync` or `EnqueueEventsAsync`
+
 By default, the `EventHubBufferedProducerClient` uses a set of values that will perform well for general-case scenarios, balancing consistent performance with ensuring that the order of events is maintained.  In the case where your application has different needs, it can provide a set of options when constructing the producer that will influence publishing behavior and help ensure that it is optimal for your specific scenarios.  
 
 The performance-related settings are:
@@ -423,6 +442,10 @@ The performance-related settings are:
 
 - **MaximumEventBufferLengthPerPartition**: The maximum number of events that can be buffered for each individual partition.  This is intended to ensure that your application does not run out of memory if buffering happens more frequently than events can be published.  When this limit is reached, your application can continue to call `EnqueueEventAsync` or `EnqueueEventsAsync` without an error; the call will block until space is available.  For applications that publish a high number of smaller-sized events, increasing this limit may help to improve throughput.  For scenarios where the application is buffering large events and needs to control memory use, lowering this limit may be helpful.  The default buffer length is 1500 events per partition.
 
+- **EnableIdempotentRetries**: Indicates whether or not events should be published using idempotent semantics for retries.   If enabled, retries during publishing will attempt to avoid duplication with a small cost to overall performance and throughput.  
+
+  **_NOTE:_** Enabling idempotent retries does not guarantee exactly-once semantics.  The Event Hubs at-least-once delivery contract still applies; duplicates are still possible but the chance of them occurring is much lower when idempotent retries are enabled.
+
 ```C# Snippet:EventHubs_Sample04_BufferedConfiguration
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -432,7 +455,8 @@ var options = new EventHubBufferedProducerClientOptions
     MaximumWaitTime = TimeSpan.FromSeconds(1),
     MaximumConcurrentSends = 5,
     MaximumConcurrentSendsPerPartition = 1,
-    MaximumEventBufferLengthPerPartition = 5000
+    MaximumEventBufferLengthPerPartition = 5000,
+    EnableIdempotentRetries = true
 };
 
 var producer = new EventHubBufferedProducerClient(connectionString, eventHubName, options);

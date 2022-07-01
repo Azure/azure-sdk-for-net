@@ -24,24 +24,24 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
         /// <param name="status"> Operation status. </param>
-        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status) : base(id, name, resourceType, systemData)
+        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, string status) : base(id, name, resourceType, systemData)
         {
+            ProvisioningState = provisioningState;
             ETag = eTag;
             RemotePrivateEndpoint = remotePrivateEndpoint;
-            ProvisioningState = provisioningState;
             Status = status;
         }
 
+        /// <summary> The provisioning state of the private endpoint connection proxy resource. </summary>
+        public PrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get; }
         /// <summary> ETag from NRP. </summary>
         public string ETag { get; }
         /// <summary> Remote private endpoint details. </summary>
         public RemotePrivateEndpoint RemotePrivateEndpoint { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection proxy resource. </summary>
-        public PrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get; }
         /// <summary> Operation status. </summary>
         public string Status { get; set; }
     }

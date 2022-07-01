@@ -83,12 +83,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// Create or update the quota (service limits) of a resource to the requested
             /// value.
             /// Steps:
-            ///
             /// 1. Make the Get request to get the quota information for specific resource.
-            ///
             /// 2. To increase the quota, update the limit field in the response from Get
             /// request to new value.
-            ///
             /// 3. Submit the JSON to the quota request API to update the quota.
             /// The Create quota request may be constructed as follows. The PUT operation
             /// can be used to update the quota.
@@ -122,12 +119,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// Create or update the quota (service limits) of a resource to the requested
             /// value.
             /// Steps:
-            ///
             /// 1. Make the Get request to get the quota information for specific resource.
-            ///
             /// 2. To increase the quota, update the limit field in the response from Get
             /// request to new value.
-            ///
             /// 3. Submit the JSON to the quota request API to update the quota.
             /// The Create quota request may be constructed as follows. The PUT operation
             /// can be used to update the quota.
@@ -165,12 +159,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             /// <summary>
             /// Update the quota (service limits) of this resource to the requested value.
-            ///
             /// • To get the quota information for specific resource, send a GET request.
-            ///
             /// • To increase the quota, update the limit field from the GET response to a
             /// new value.
-            ///
             /// • To update the quota value, submit the JSON response to the quota request
             /// API to update the quota.
             /// • To update the quota. use the PATCH operation.
@@ -202,12 +193,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             /// <summary>
             /// Update the quota (service limits) of this resource to the requested value.
-            ///
             /// • To get the quota information for specific resource, send a GET request.
-            ///
             /// • To increase the quota, update the limit field from the GET response to a
             /// new value.
-            ///
             /// • To update the quota value, submit the JSON response to the quota request
             /// API to update the quota.
             /// • To update the quota. use the PATCH operation.
@@ -297,12 +285,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// Create or update the quota (service limits) of a resource to the requested
             /// value.
             /// Steps:
-            ///
             /// 1. Make the Get request to get the quota information for specific resource.
-            ///
             /// 2. To increase the quota, update the limit field in the response from Get
             /// request to new value.
-            ///
             /// 3. Submit the JSON to the quota request API to update the quota.
             /// The Create quota request may be constructed as follows. The PUT operation
             /// can be used to update the quota.
@@ -336,12 +321,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// Create or update the quota (service limits) of a resource to the requested
             /// value.
             /// Steps:
-            ///
             /// 1. Make the Get request to get the quota information for specific resource.
-            ///
             /// 2. To increase the quota, update the limit field in the response from Get
             /// request to new value.
-            ///
             /// 3. Submit the JSON to the quota request API to update the quota.
             /// The Create quota request may be constructed as follows. The PUT operation
             /// can be used to update the quota.
@@ -379,12 +361,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             /// <summary>
             /// Update the quota (service limits) of this resource to the requested value.
-            ///
             /// • To get the quota information for specific resource, send a GET request.
-            ///
             /// • To increase the quota, update the limit field from the GET response to a
             /// new value.
-            ///
             /// • To update the quota value, submit the JSON response to the quota request
             /// API to update the quota.
             /// • To update the quota. use the PATCH operation.
@@ -416,12 +395,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             /// <summary>
             /// Update the quota (service limits) of this resource to the requested value.
-            ///
             /// • To get the quota information for specific resource, send a GET request.
-            ///
             /// • To increase the quota, update the limit field from the GET response to a
             /// new value.
-            ///
             /// • To update the quota value, submit the JSON response to the quota request
             /// API to update the quota.
             /// • To update the quota. use the PATCH operation.

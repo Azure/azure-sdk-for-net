@@ -14,10 +14,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a DeletedSiteResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a DeletedSite along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedSiteResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedSite method.
+    /// </summary>
     public partial class DeletedSiteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedSiteResource"/> instance. </summary>

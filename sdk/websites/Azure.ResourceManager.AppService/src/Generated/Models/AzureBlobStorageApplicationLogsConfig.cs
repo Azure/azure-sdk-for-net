@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs azure blob storage configuration. </summary>
@@ -17,23 +19,23 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of AzureBlobStorageApplicationLogsConfig. </summary>
         /// <param name="level"> Log level. </param>
-        /// <param name="sasUrl"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
+        /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">
         /// Retention in days.
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </param>
-        internal AzureBlobStorageApplicationLogsConfig(LogLevel? level, string sasUrl, int? retentionInDays)
+        internal AzureBlobStorageApplicationLogsConfig(LogLevel? level, Uri sasUri, int? retentionInDays)
         {
             Level = level;
-            SasUrl = sasUrl;
+            SasUri = sasUri;
             RetentionInDays = retentionInDays;
         }
 
         /// <summary> Log level. </summary>
         public LogLevel? Level { get; set; }
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
-        public string SasUrl { get; set; }
+        public Uri SasUri { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove blobs older than X days.

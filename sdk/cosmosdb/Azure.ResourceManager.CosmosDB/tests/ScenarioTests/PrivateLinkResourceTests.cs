@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected PrivateLinkResourceCollection PrivateLinkResourceCollection => _databaseAccount.GetPrivateLinkResources();
+        protected CosmosDBPrivateLinkResourceCollection CosmosDBPrivateLinkResourceCollection => _databaseAccount.GetCosmosDBPrivateLinkResources();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [RecordedTest]
         public async Task PrivateLinkResourceListAndGet()
         {
-            var privateLinkResources = await PrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
+            var privateLinkResources = await CosmosDBPrivateLinkResourceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(privateLinkResources);
 
-            var privateLinkResource = await PrivateLinkResourceCollection.GetAsync(privateLinkResources[0].Data.Name);
+            var privateLinkResource = await CosmosDBPrivateLinkResourceCollection.GetAsync(privateLinkResources[0].Data.Name);
 
             VerifyPrivateLinkResources(privateLinkResources[0], privateLinkResource);
         }
 
-        private void VerifyPrivateLinkResources(PrivateLinkResource expectedValue, PrivateLinkResource actualValue)
+        private void VerifyPrivateLinkResources(CosmosDBPrivateLinkResource expectedValue, CosmosDBPrivateLinkResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);

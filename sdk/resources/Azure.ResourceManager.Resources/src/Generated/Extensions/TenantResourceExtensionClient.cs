@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _deploymentClientDiagnostics;
-        private DeploymentsRestOperations _deploymentRestClient;
+        private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
+        private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        private ClientDiagnostics DeploymentClientDiagnostics => _deploymentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentResource.ResourceType.Namespace, Diagnostics);
-        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeploymentResource.ResourceType));
+        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
-        public virtual DeploymentCollection GetDeployments()
+        /// <summary> Gets a collection of ArmDeploymentResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments()
         {
-            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
         {
-            using var scope = DeploymentClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
-                var response = await DeploymentRestClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+                var response = await ArmDeploymentDeploymentsRestClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
         {
-            using var scope = DeploymentClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
-                var response = DeploymentRestClient.CalculateTemplateHash(template, cancellationToken);
+                var response = ArmDeploymentDeploymentsRestClient.CalculateTemplateHash(template, cancellationToken);
                 return response;
             }
             catch (Exception e)

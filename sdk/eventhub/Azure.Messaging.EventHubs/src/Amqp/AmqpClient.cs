@@ -419,7 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override TransportProducer CreateProducer(string partitionId,
                                                          string producerIdentifier,
                                                          TransportProducerFeatures requestedFeatures,
-                                                         PartitionPublishingOptionsInternal partitionOptions,
+                                                         PartitionPublishingOptions partitionOptions,
                                                          EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));

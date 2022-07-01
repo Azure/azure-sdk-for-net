@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs
         internal virtual TransportProducer CreateTransportProducer(string partitionId,
                                                                    string producerIdentifier,
                                                                    TransportProducerFeatures requestedFeatures,
-                                                                   PartitionPublishingOptionsInternal partitionOptions,
+                                                                   PartitionPublishingOptions partitionOptions,
                                                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));

@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
@@ -14,6 +15,7 @@ namespace Azure
     /// Represents an error returned by an Azure Service.
     /// </summary>
     [JsonConverter(typeof(Converter))]
+    [TypeReferenceType(true, new string[] { nameof(Target), nameof(Details) })]
     public sealed class ResponseError
     {
         private readonly JsonElement _element;
@@ -23,6 +25,7 @@ namespace Azure
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
+        [InitializationConstructor]
         public ResponseError(string? code, string? message) : this(code, message, null, default)
         {
         }
@@ -36,6 +39,7 @@ namespace Azure
         /// <param name="innerError">The inner error.</param>
         /// <param name="target">The error target.</param>
         /// <param name="details">The error details.</param>
+        [SerializationConstructor]
         internal ResponseError(string? code, string? message, string? target, JsonElement element, ResponseInnerError? innerError = null, IReadOnlyList<ResponseError>? details = null)
         {
             _element = element;

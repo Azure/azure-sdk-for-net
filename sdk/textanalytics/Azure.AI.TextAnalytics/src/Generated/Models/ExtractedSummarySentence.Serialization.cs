@@ -10,8 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ExtractedSummarySentence
+    internal partial class ExtractedSummarySentence : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("rankScore");
+            writer.WriteNumberValue(RankScore);
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            writer.WriteEndObject();
+        }
+
         internal static ExtractedSummarySentence DeserializeExtractedSummarySentence(JsonElement element)
         {
             string text = default;

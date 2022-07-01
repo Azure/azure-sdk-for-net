@@ -31,14 +31,14 @@ Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId 
 ```
 Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
- [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [-Environment <String>] [-CI] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### ResourceGroup
 ```
 Remove-TestResources.ps1 -ResourceGroupName <String> [-SubscriptionId <String>] [[-ServiceDirectory] <String>]
- [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [-Environment <String>] [-CI] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -231,6 +231,9 @@ Default value: AzureCloud
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -CI
+Run script in CI mode. Infers various environment variable names based on CI convention.
 
 ### -Force
 Force removal of resource group without asking for user confirmation

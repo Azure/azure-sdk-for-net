@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpirationTime))
+            if (Optional.IsDefined(ExpirationOn))
             {
                 writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationTime.Value, "O");
+                writer.WriteStringValue(ExpirationOn.Value, "O");
             }
             if (Optional.IsDefined(Token))
             {

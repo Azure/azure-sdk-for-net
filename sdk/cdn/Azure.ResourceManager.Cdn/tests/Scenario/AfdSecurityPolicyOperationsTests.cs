@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.PremiumAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
+            FrontDoorSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
             await afdSecurityPolicy.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdSecurityPolicy.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName1 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
+            FrontDoorEndpointResource afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicy afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
+            FrontDoorSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
             string afdEndpointName2 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
-            PatchableAfdSecurityPolicyData updateOptions = new PatchableAfdSecurityPolicyData
+            FrontDoorEndpointResource afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
+            FrontDoorSecurityPolicyPatch updateOptions = new FrontDoorSecurityPolicyPatch
             {
-                Parameters = new SecurityPolicyWebApplicationFirewallParameters
+                Properties = new SecurityPolicyWebApplicationFirewall
                 {
                     WafPolicy = new WritableSubResource
                     {
@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.Cdn.Tests
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = afdEndpointInstance1.Id
             });
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new WritableSubResource
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = afdEndpointInstance2.Id
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
-            ((SecurityPolicyWebApplicationFirewallParameters)updateOptions.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
+            ((SecurityPolicyWebApplicationFirewall)updateOptions.Properties).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await afdSecurityPolicy.UpdateAsync(WaitUntil.Completed, updateOptions);
-            AfdSecurityPolicy updatedSecurityPolicy = lro.Value;
+            FrontDoorSecurityPolicyResource updatedSecurityPolicy = lro.Value;
             ResourceDataHelper.AssertAfdSecurityPolicyUpdate(updatedSecurityPolicy, updateOptions);
         }
     }

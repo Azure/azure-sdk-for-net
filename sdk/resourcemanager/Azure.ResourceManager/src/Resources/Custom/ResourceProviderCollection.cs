@@ -88,59 +88,11 @@ namespace Azure.ResourceManager.Resources
             Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
             foreach (var type in results.Data.ResourceTypes)
             {
+                if (type.ApiVersions.Count == 0)
+                    continue;
                 resourceVersions[type.ResourceType] = type.ApiVersions[0];
             }
             return resourceVersions;
-        }
-
-        internal string GetApiVersionForNamespace(string resourceNamespace, CancellationToken cancellationToken = default)
-        {
-            string version;
-            if (!Client.NamespaceVersionCache.TryGetValue(resourceNamespace, out version))
-            {
-                ResourceProviderResource results = Get(resourceNamespace, cancellationToken: cancellationToken);
-                version = GetMaxVersion(results);
-                Client.NamespaceVersionCache.TryAdd(resourceNamespace, version);
-            }
-            return version;
-        }
-
-        internal async ValueTask<string> GetApiVersionForNamespaceAsync(string resourceNamespace, CancellationToken cancellationToken = default)
-        {
-            string version;
-            if (!Client.NamespaceVersionCache.TryGetValue(resourceNamespace, out version))
-            {
-                ResourceProviderResource results = await GetAsync(resourceNamespace, cancellationToken: cancellationToken).ConfigureAwait(false);
-                version = GetMaxVersion(results);
-                Client.NamespaceVersionCache.TryAdd(resourceNamespace, version);
-            }
-            return version;
-        }
-
-        private static string GetMaxVersion(ResourceProviderResource results)
-        {
-            DateTime maxVersion = DateTime.MinValue;
-            string maxVersionStr = null;
-            foreach (var type in results.Data.ResourceTypes)
-            {
-                string strVersion = GetDateFromVersion(type.ApiVersions[0]);
-                DateTime current = DateTime.Parse(strVersion, CultureInfo.InvariantCulture);
-                if (current > maxVersion)
-                {
-                    maxVersion = current;
-                    maxVersionStr = strVersion;
-                }
-            }
-            return maxVersionStr.ToString();
-        }
-
-        private static string GetDateFromVersion(string version)
-        {
-            var span = version.AsSpan();
-            int firstDash = span.IndexOf('-');
-            var slice = span.Slice(0, firstDash + 1);
-            int end = slice.IndexOf('-');
-            return span.Slice(0, firstDash + end + 2).ToString();
         }
     }
 }

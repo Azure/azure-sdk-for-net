@@ -13,14 +13,20 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a DeletedAccountResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a DeletedAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAccountResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAccount method.
+    /// </summary>
     public partial class DeletedAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedAccountResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string deletedAccountName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string deletedAccountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}";
             return new ResourceIdentifier(resourceId);
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());

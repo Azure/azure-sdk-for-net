@@ -18,14 +18,6 @@
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.ValueTuple" />
-
-    <!--
-        TEMP:
-            Project reference is needed until the CheckpointStore is included in a release.  Revert when
-            the 5.7.x line is released for GA; allow the dependency to flow in transitively.
-    -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-    <!-- END TEMP -->
   </ItemGroup>
 
   <ItemGroup>

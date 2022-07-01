@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
         /// <param name="unit"> Units of measurement for the quota resource. </param>
-        /// <param name="nextResetTime"> Next reset time for the resource counter. </param>
+        /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="currentValue"> The current value of the resource counter. </param>
         /// <param name="limit"> The resource limit. </param>
         /// <param name="name"> Quota name. </param>
-        internal CsmUsageQuota(string unit, DateTimeOffset? nextResetTime, long? currentValue, long? limit, LocalizableString name)
+        internal CsmUsageQuota(string unit, DateTimeOffset? nextResetOn, long? currentValue, long? limit, LocalizableString name)
         {
             Unit = unit;
-            NextResetTime = nextResetTime;
+            NextResetOn = nextResetOn;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Units of measurement for the quota resource. </summary>
         public string Unit { get; }
         /// <summary> Next reset time for the resource counter. </summary>
-        public DateTimeOffset? NextResetTime { get; }
+        public DateTimeOffset? NextResetOn { get; }
         /// <summary> The current value of the resource counter. </summary>
         public long? CurrentValue { get; }
         /// <summary> The resource limit. </summary>

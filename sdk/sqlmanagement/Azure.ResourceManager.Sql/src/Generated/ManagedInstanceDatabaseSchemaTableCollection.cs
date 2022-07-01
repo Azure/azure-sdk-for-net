@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceDatabaseSchemaTable and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceDatabaseSchemaTableResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceDatabaseSchemaTableResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceDatabaseSchemaResource" />.
+    /// To get a <see cref="ManagedInstanceDatabaseSchemaTableCollection" /> instance call the GetManagedInstanceDatabaseSchemaTables method from an instance of <see cref="ManagedInstanceDatabaseSchemaResource" />.
+    /// </summary>
     public partial class ManagedInstanceDatabaseSchemaTableCollection : ArmCollection, IEnumerable<ManagedInstanceDatabaseSchemaTableResource>, IAsyncEnumerable<ManagedInstanceDatabaseSchemaTableResource>
     {
         private readonly ClientDiagnostics _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics;
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,66 +241,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(tableName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// Operation Id: ManagedDatabaseTables_Get
-        /// </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual async Task<Response<ManagedInstanceDatabaseSchemaTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            using var scope = _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceDatabaseSchemaTableResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// Operation Id: ManagedDatabaseTables_Get
-        /// </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual Response<ManagedInstanceDatabaseSchemaTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            using var scope = _managedInstanceDatabaseSchemaTableManagedDatabaseTablesClientDiagnostics.CreateScope("ManagedInstanceDatabaseSchemaTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _managedInstanceDatabaseSchemaTableManagedDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceDatabaseSchemaTableResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceDatabaseSchemaTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of KeyVaultAndKeyReference. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
-        /// <param name="keyUrl"> Url pointing to a key or secret in KeyVault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUrl"/> is null. </exception>
-        public KeyVaultAndKeyReference(WritableSubResource sourceVault, string keyUrl)
+        /// <param name="keyUri"> Url pointing to a key or secret in KeyVault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUri"/> is null. </exception>
+        public KeyVaultAndKeyReference(WritableSubResource sourceVault, Uri keyUri)
         {
             if (sourceVault == null)
             {
                 throw new ArgumentNullException(nameof(sourceVault));
             }
-            if (keyUrl == null)
+            if (keyUri == null)
             {
-                throw new ArgumentNullException(nameof(keyUrl));
+                throw new ArgumentNullException(nameof(keyUri));
             }
 
             SourceVault = sourceVault;
-            KeyUrl = keyUrl;
+            KeyUri = keyUri;
         }
 
         /// <summary> Resource id of the KeyVault containing the key or secret. </summary>
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Url pointing to a key or secret in KeyVault. </summary>
-        public string KeyUrl { get; set; }
+        public Uri KeyUri { get; set; }
     }
 }

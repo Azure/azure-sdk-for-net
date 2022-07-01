@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DscpConfiguration and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DscpConfigurationResource" /> and their operations.
+    /// Each <see cref="DscpConfigurationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DscpConfigurationCollection" /> instance call the GetDscpConfigurations method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DscpConfigurationCollection : ArmCollection, IEnumerable<DscpConfigurationResource>, IAsyncEnumerable<DscpConfigurationResource>
     {
         private readonly ClientDiagnostics _dscpConfigurationClientDiagnostics;
@@ -55,23 +59,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
         /// Operation Id: DscpConfiguration_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update dscp configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<DscpConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DscpConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dscpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<DscpConfigurationResource>(new DscpConfigurationOperationSource(Client), _dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _dscpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<DscpConfigurationResource>(new DscpConfigurationOperationSource(Client), _dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,23 +92,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
         /// Operation Id: DscpConfiguration_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update dscp configuration operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update dscp configuration operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<DscpConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DscpConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dscpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<DscpConfigurationResource>(new DscpConfigurationOperationSource(Client), _dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _dscpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, data, cancellationToken);
+                var operation = new NetworkArmOperation<DscpConfigurationResource>(new DscpConfigurationOperationSource(Client), _dscpConfigurationClientDiagnostics, Pipeline, _dscpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(dscpConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dscpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,66 +306,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(dscpConfigurationName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
-        /// Operation Id: DscpConfiguration_Get
-        /// </summary>
-        /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<DscpConfigurationResource>> GetIfExistsAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
-
-            using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _dscpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DscpConfigurationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new DscpConfigurationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
-        /// Operation Id: DscpConfiguration_Get
-        /// </summary>
-        /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public virtual Response<DscpConfigurationResource> GetIfExists(string dscpConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
-
-            using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _dscpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dscpConfigurationName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<DscpConfigurationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new DscpConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,7 +18,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A class representing collection of EndpointResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EndpointResource" /> and their operations.
+    /// Each <see cref="EndpointResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get an <see cref="EndpointResourceCollection" /> instance call the GetEndpointResources method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourceEndpointsClientDiagnostics;
@@ -44,21 +48,21 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public virtual async Task<ArmOperation<EndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _endpointResourceEndpointsRestClient.CreateOrUpdateAsync(Id, endpointName, endpointResource, cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.CreateOrUpdateAsync(Id, endpointName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -76,21 +80,21 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
         /// Operation Id: Endpoints_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="endpointResource"> Endpoint details. </param>
+        /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="endpointResource"/> is null. </exception>
-        public virtual ArmOperation<EndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, EndpointResourceData endpointResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(endpointResource, nameof(endpointResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _endpointResourceEndpointsRestClient.CreateOrUpdate(Id, endpointName, endpointResource, cancellationToken);
+                var response = _endpointResourceEndpointsRestClient.CreateOrUpdate(Id, endpointName, data, cancellationToken);
                 var operation = new HybridConnectivityArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -259,7 +263,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,64 +289,8 @@ namespace Azure.ResourceManager.HybridConnectivity
             scope.Start();
             try
             {
-                var response = GetIfExists(endpointName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
-        /// </summary>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<EndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-
-            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _endpointResourceEndpointsRestClient.GetAsync(Id, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<EndpointResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
-        /// </summary>
-        /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<EndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-
-            using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _endpointResourceEndpointsRestClient.Get(Id, endpointName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<EndpointResource>(null, response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

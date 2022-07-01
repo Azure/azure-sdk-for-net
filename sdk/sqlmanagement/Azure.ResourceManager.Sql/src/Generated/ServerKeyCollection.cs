@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerKey and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerKeyResource" /> and their operations.
+    /// Each <see cref="ServerKeyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerKeyCollection" /> instance call the GetServerKeys method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerKeyCollection : ArmCollection, IEnumerable<ServerKeyResource>, IAsyncEnumerable<ServerKeyResource>
     {
         private readonly ClientDiagnostics _serverKeyClientDiagnostics;
@@ -54,23 +58,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
         /// Operation Id: ServerKeys_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
-        /// <param name="parameters"> The requested server key resource state. </param>
+        /// <param name="data"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServerKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, ServerKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerKeyResource>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _serverKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerKeyResource>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,23 +91,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
         /// Operation Id: ServerKeys_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="keyName"> The name of the server key to be operated on (updated or created). The key name is required to be in the format of &apos;vault_key_version&apos;. For example, if the keyId is https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion, then the server key name should be formatted as: YourVaultName_YourKeyName_YourKeyVersion. </param>
-        /// <param name="parameters"> The requested server key resource state. </param>
+        /// <param name="data"> The requested server key resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerKeyResource> CreateOrUpdate(WaitUntil waitUntil, string keyName, ServerKeyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServerKeyResource> CreateOrUpdate(WaitUntil waitUntil, string keyName, ServerKeyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ServerKeyResource>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _serverKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken);
+                var operation = new SqlArmOperation<ServerKeyResource>(new ServerKeyOperationSource(Client), _serverKeyClientDiagnostics, Pipeline, _serverKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -274,7 +278,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +305,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(keyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// Operation Id: ServerKeys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the server key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual async Task<Response<ServerKeyResource>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerKeyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerKeyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
-        /// Operation Id: ServerKeys_Get
-        /// </summary>
-        /// <param name="keyName"> The name of the server key to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<ServerKeyResource> GetIfExists(string keyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-
-            using var scope = _serverKeyClientDiagnostics.CreateScope("ServerKeyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serverKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerKeyResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerKeyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

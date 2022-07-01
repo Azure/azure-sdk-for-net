@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the AzureAsyncOperationResult class.
         /// </summary>
         /// <param name="status">Status of the Azure async operation. Possible
-        /// values are: 'InProgress', 'Succeeded', and 'Failed'. Possible
         /// values include: 'InProgress', 'Succeeded', 'Failed'</param>
         public AzureAsyncOperationResult(string status = default(string), Error error = default(Error))
         {
@@ -53,7 +52,6 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 
         /// <summary>
         /// Gets or sets status of the Azure async operation. Possible values
-        /// are: 'InProgress', 'Succeeded', and 'Failed'. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]

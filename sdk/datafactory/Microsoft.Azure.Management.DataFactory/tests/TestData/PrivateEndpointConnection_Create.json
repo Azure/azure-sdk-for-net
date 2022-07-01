@@ -12,6 +12,9 @@
           "status": "Approved",
           "description": "Approved by admin.",
           "actionsRequired": ""
+        },
+        "privateEndpoint": {
+          "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/privateEndpoints/myPrivateEndpoint"
         }
       }
     }

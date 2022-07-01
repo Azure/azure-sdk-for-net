@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of HostPool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HostPoolResource" /> and their operations.
+    /// Each <see cref="HostPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HostPoolCollection" /> instance call the GetHostPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class HostPoolCollection : ArmCollection, IEnumerable<HostPoolResource>, IAsyncEnumerable<HostPoolResource>
     {
         private readonly ClientDiagnostics _hostPoolClientDiagnostics;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="hostPool"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="hostPool"/> is null. </exception>
-        public virtual async Task<ArmOperation<HostPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HostPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-            Argument.AssertNotNull(hostPool, nameof(hostPool));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, hostPool, cancellationToken).ConfigureAwait(false);
+                var response = await _hostPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -88,22 +92,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="hostPool"> Object containing HostPool definitions. </param>
+        /// <param name="data"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="hostPool"/> is null. </exception>
-        public virtual ArmOperation<HostPoolResource> CreateOrUpdate(WaitUntil waitUntil, string hostPoolName, HostPoolData hostPool, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HostPoolResource> CreateOrUpdate(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-            Argument.AssertNotNull(hostPool, nameof(hostPool));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, hostPool, cancellationToken);
+                var response = _hostPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken);
                 var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(hostPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,66 +306,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(hostPoolName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
-        /// Operation Id: HostPools_Get
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual async Task<Response<HostPoolResource>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<HostPoolResource>(null, response.GetRawResponse());
-                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
-        /// Operation Id: HostPools_Get
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public virtual Response<HostPoolResource> GetIfExists(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<HostPoolResource>(null, response.GetRawResponse());
-                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

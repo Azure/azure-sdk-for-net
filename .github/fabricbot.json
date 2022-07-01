@@ -1012,6 +1012,60 @@
           "pathFilter": [
             "/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/"
           ]
+        },
+        {
+          "label": "Communication - Calling Server",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.CallingServer/"
+          ]
+        },
+        {
+          "label": "Communication - Chat",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Chat/"
+          ]
+        },
+        {
+          "label": "Communication - Common",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Common/"
+          ]
+        },
+        {
+          "label": "Communication - Identity",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Identity/"
+          ]
+        },
+        {
+          "label": "Communication - Network Traversal",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.NetworkTraversal/"
+          ]
+        },
+        {
+          "label": "Communication - Phone Numbers",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.PhoneNumbers/"
+          ]
+        },
+        {
+          "label": "Communication - Short Codes",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.ShortCodes/"
+          ]
+        },
+        {
+          "label": "Communication - SMS",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Sms/"
+          ]
+        },
+        {
+          "label": "Communication - Resource Manager",
+          "pathFilter": [
+            "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
         }
       ],
       "taskName": "Auto PR based on folder paths "
@@ -1409,7 +1463,7 @@
           ],
           "mentionees": [
             "ctstone",
-            "anrothMSFT"
+            "vkurpad"
           ]
         },
         {
@@ -1874,7 +1928,9 @@
             "johngallardo",
             "efriesner",
             "abhinav-gha",
-            "Aashish93-stack"
+            "Aashish93-stack",
+            "sjiherzig",
+            "Satya-Kolluri"
           ]
         },
         {
@@ -1980,8 +2036,9 @@
             "timtay-microsoft",
             "abhipsaMisra",
             "azabbasi",
+            "andyk-ms",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "tmahmood-microsoft"
           ]
         },
         {
@@ -2496,11 +2553,9 @@
             "Search"
           ],
           "mentionees": [
-            "brjohnstmsft",
+            "arv100kri",
             "bleroy",
-            "tjacobhi",
-            "markheff",
-            "miwelsh"
+            "tjacobhi"
           ]
         },
         {

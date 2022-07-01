@@ -37,7 +37,7 @@ After we have the resource group created, we can create a storage account
 StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
 StorageKind kind = StorageKind.Storage;
 string location = "westus2";
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
@@ -82,21 +82,6 @@ await foreach (FileShareResource fileShare in response)
 FileShareCollection fileShareCollection = fileService.GetFileShares();
 FileShareResource fileShare = await fileShareCollection.GetAsync("myFileShare");
 Console.WriteLine(fileShare.Id.Name);
-```
-
-***Try to get a file share if it exists***
-
-```C# Snippet:Managing_FileShares_GetFileShareIFExists
-FileShareCollection fileShareCollection = fileService.GetFileShares();
-FileShareResource fileShare = await fileShareCollection.GetIfExistsAsync("foo");
-if (fileShare != null)
-{
-    Console.WriteLine(fileShare.Id.Name);
-}
-if (await fileShareCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("file share 'bar' exists");
-}
 ```
 
 ***Delete a file share***

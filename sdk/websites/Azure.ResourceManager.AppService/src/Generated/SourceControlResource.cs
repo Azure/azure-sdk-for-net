@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SourceControlResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SourceControl along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SourceControlResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSourceControl method.
+    /// </summary>
     public partial class SourceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SourceControlResource"/> instance. </summary>
@@ -121,6 +127,66 @@ namespace Azure.ResourceManager.AppService
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: UpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Source control token information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SourceControlResource>> UpdateAsync(WaitUntil waitUntil, SourceControlData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _sourceControlRestClient.UpdateSourceControlAsync(Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: UpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Source control token information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SourceControlResource> Update(WaitUntil waitUntil, SourceControlData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _sourceControlRestClient.UpdateSourceControl(Id.Name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            PatchableCdnEndpointData updateOptions = new PatchableCdnEndpointData
+            CdnEndpointPatch updateOptions = new CdnEndpointPatch
             {
                 IsHttpAllowed = false,
                 OriginPath = "/path/valid",
@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("need more diagnosis")]
         public async Task StartAndStop()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -89,12 +88,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             cdnEndpointData.Origins.Add(deepCreatedOrigin);
             var lro = await cdnProfile.GetCdnEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, cdnEndpointName, cdnEndpointData);
             CdnEndpointResource cdnEndpoint = lro.Value;
-            PurgeOptions purgeParameters = new PurgeOptions(new List<string>
+            PurgeContent purgeParameters = new PurgeContent(new List<string>
             {
                 "/*"
             });
             Assert.DoesNotThrowAsync(async () => await cdnEndpoint.PurgeContentAsync(WaitUntil.Completed, purgeParameters));
-            LoadOptions loadParameters = new LoadOptions(new List<string>
+            LoadContent loadParameters = new LoadContent(new List<string>
             {
                 "/testfile/file1.txt"
             });
@@ -111,12 +110,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
-            ValidateCustomDomainInput validateCustomDomainInput1 = new ValidateCustomDomainInput("customdomainrecord.azuretest.net");
-            ValidateCustomDomainOutput validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainInput1);
-            Assert.True(validateResult.CustomDomainValidated);
-            ValidateCustomDomainInput validateCustomDomainInput2 = new ValidateCustomDomainInput("customdomainvirtual.azuretest.net");
-            validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainInput2);
-            Assert.False(validateResult.CustomDomainValidated);
+            ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.azuretest.net");
+            ValidateCustomDomainResult validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent1);
+            Assert.True(validateResult.IsCustomDomainValid);
+            ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.azuretest.net");
+            validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent2);
+            Assert.False(validateResult.IsCustomDomainValid);
         }
 
         [TestCase]
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             int count = 0;
-            await foreach (var tempResourceUsage in cdnEndpoint.GetResourceUsageAsync())
+            await foreach (var tempResourceUsage in cdnEndpoint.GetResourceUsagesAsync())
             {
                 count++;
             }

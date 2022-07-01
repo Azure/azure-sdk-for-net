@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28927.53
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32317.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Secrets", "Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj", "{AA1C6FB6-7176-400E-B556-B04253A69949}"
 EndProject
@@ -35,27 +35,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Key
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates.Perf", "Azure.Security.KeyVault.Certificates\perf\Azure.Security.KeyVault.Certificates.Perf.csproj", "{A756C6F1-AFF5-4ED9-ADB0-4A3080355D8F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{1B4494E7-3E61-46B8-940A-F09FCF03C560}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{6bef56a3-a6b2-4f21-a4b6-895764a384f3}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{8da63e2c-3d93-4fd6-aa95-8ca8befe57ef}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{aa1c6fb6-7176-400e-b556-b04253a69949}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{b404190b-c1d4-4655-99d4-45cb6532806b}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{c361b52f-cd94-465d-aa79-1b2c0461a166}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{e74dabdd-50b0-475c-b83a-44465cf5515c}*SharedItemsImports = 5
-		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{f2e6bd61-6a15-4f1b-a1a4-43e2af274ad5}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -112,11 +99,26 @@ Global
 		{A756C6F1-AFF5-4ED9-ADB0-4A3080355D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A756C6F1-AFF5-4ED9-ADB0-4A3080355D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A756C6F1-AFF5-4ED9-ADB0-4A3080355D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B4494E7-3E61-46B8-940A-F09FCF03C560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4494E7-3E61-46B8-940A-F09FCF03C560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4494E7-3E61-46B8-940A-F09FCF03C560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4494E7-3E61-46B8-940A-F09FCF03C560}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFEF6AF0-9A67-494B-B40B-35F6BD47E2A9}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{6bef56a3-a6b2-4f21-a4b6-895764a384f3}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{8da63e2c-3d93-4fd6-aa95-8ca8befe57ef}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{aa1c6fb6-7176-400e-b556-b04253a69949}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{b404190b-c1d4-4655-99d4-45cb6532806b}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{c361b52f-cd94-465d-aa79-1b2c0461a166}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{e74dabdd-50b0-475c-b83a-44465cf5515c}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{f2e6bd61-6a15-4f1b-a1a4-43e2af274ad5}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

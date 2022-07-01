@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotHybridConnectionNamespaceRelay along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotHybridConnectionNamespaceRelayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotHybridConnectionNamespaceRelay method.
+    /// </summary>
     public partial class SiteSlotHybridConnectionNamespaceRelayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> instance. </summary>
@@ -134,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnectionSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -160,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnectionSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -186,18 +191,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnectionSlot
         /// </summary>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> UpdateAsync(HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> UpdateAsync(HybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.UpdateHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectionEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.UpdateHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,18 +217,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnectionSlot
         /// </summary>
-        /// <param name="connectionEnvelope"> The details of the hybrid connection. </param>
+        /// <param name="data"> The details of the hybrid connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> Update(HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> Update(HybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionNamespaceRelayResource.Update");
             scope.Start();
             try
             {
-                var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.UpdateHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectionEnvelope, cancellationToken);
+                var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.UpdateHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

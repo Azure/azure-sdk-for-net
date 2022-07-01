@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of RouteTable and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RouteTableResource" /> and their operations.
+    /// Each <see cref="RouteTableResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="RouteTableCollection" /> instance call the GetRouteTables method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class RouteTableCollection : ArmCollection, IEnumerable<RouteTableResource>, IAsyncEnumerable<RouteTableResource>
     {
         private readonly ClientDiagnostics _routeTableClientDiagnostics;
@@ -55,23 +59,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
         /// Operation Id: RouteTables_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update route table operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<RouteTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<RouteTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, RouteTableData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _routeTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _routeTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,23 +92,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
         /// Operation Id: RouteTables_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update route table operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update route table operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<RouteTableResource> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<RouteTableResource> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, RouteTableData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routeTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _routeTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, data, cancellationToken);
+                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -278,7 +282,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(routeTableName, expand: expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,68 +310,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(routeTableName, expand: expand, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
-        /// Operation Id: RouteTables_Get
-        /// </summary>
-        /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual async Task<Response<RouteTableResource>> GetIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RouteTableResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
-        /// Operation Id: RouteTables_Get
-        /// </summary>
-        /// <param name="routeTableName"> The name of the route table. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<RouteTableResource> GetIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _routeTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<RouteTableResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

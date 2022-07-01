@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             batchTransportMock
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
-                .Callback<EventData>(addedEvent => batchEvent = addedEvent)
+                .Callback<EventData>(addedEvent => batchEvent = addedEvent.Clone())
                 .Returns(() =>
                 {
                     eventCount++;
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     var hasSpace = writtenEventsData.Count <= 1;
                     if (hasSpace)
                     {
-                        writtenEventsData.Add(e);
+                        writtenEventsData.Add(e.Clone());
                     }
                     return hasSpace;
                 });
@@ -293,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
-            var writtenEventsData = 0;
+            var writtenEventsData = new List<EventData>();
             var batchTransportMock = new Mock<TransportEventBatch>();
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
@@ -302,10 +302,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(m => m.TryAdd(It.IsAny<EventData>()))
                 .Returns<EventData>(e =>
                 {
-                    var hasSpace = writtenEventsData <= 1;
+                    var hasSpace = writtenEventsData.Count <= 1;
                     if (hasSpace)
                     {
-                        ++writtenEventsData;
+                        writtenEventsData.Add(e.Clone());
                     }
                     return hasSpace;
                 });
@@ -323,8 +323,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData1 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } });
             var eventData2 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } });
             var eventData3 = new EventData(new BinaryData(ReadOnlyMemory<byte>.Empty), new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id3" } });
-
-            EventDataBatch batch = await producer.CreateBatchAsync();
+            var batch = await producer.CreateBatchAsync();
 
             Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
             Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");

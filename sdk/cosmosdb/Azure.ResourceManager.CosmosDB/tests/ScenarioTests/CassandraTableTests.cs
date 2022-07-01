@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            CassandraTableResource table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
-            if (table != null)
+            if (await CassandraTableCollection.ExistsAsync(_tableName))
             {
+                var id = CassandraTableCollection.Id;
+                id = CassandraTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _tableName);
+                CassandraTableResource table = this.ArmClient.GetCassandraTableResource(id);
                 await table.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -159,11 +161,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var table = await CreateCassandraTable(null);
             await table.DeleteAsync(WaitUntil.Completed);
 
-            table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
-            Assert.Null(table);
+            bool exists = await CassandraTableCollection.ExistsAsync(_tableName);
+            Assert.IsFalse(exists);
         }
 
-        protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateUpdateData parameters)
+        protected async Task<CassandraTableResource> CreateCassandraTable(CassandraTableCreateOrUpdateContent parameters)
         {
             if (parameters == null)
             {
@@ -174,10 +176,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return tableLro.Value;
         }
 
-        private CassandraTableCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private CassandraTableCreateOrUpdateContent BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _tableName = Recording.GenerateAssetName("cassandra-table-");
-            return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
+            return new CassandraTableCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.CassandraTableResource(_tableName, default, new CassandraSchema {
                     Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
@@ -188,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
         }
 
-        private void VerifyCassandraTableCreation(CassandraTableResource cassandraTable, CassandraTableCreateUpdateData cassandraTableCreateUpdateOptions)
+        private void VerifyCassandraTableCreation(CassandraTableResource cassandraTable, CassandraTableCreateOrUpdateContent cassandraTableCreateUpdateOptions)
         {
             Assert.AreEqual(cassandraTable.Data.Resource.Id, cassandraTableCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns.Count, cassandraTableCreateUpdateOptions.Resource.Schema.Columns.Count);
@@ -224,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

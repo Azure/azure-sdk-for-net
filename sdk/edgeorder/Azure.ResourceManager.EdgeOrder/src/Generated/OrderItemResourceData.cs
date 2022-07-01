@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="location"> The location. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
-        /// <param name="startTime"> Start time of order item. </param>
+        /// <param name="startOn"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startTime, string orderId) : base(id, name, resourceType, systemData, tags, location)
+        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startOn, string orderId) : base(id, name, resourceType, systemData, tags, location)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
-            StartTime = startTime;
+            StartOn = startOn;
             OrderId = orderId;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Represents shipping and return address for order item. </summary>
         public AddressDetails AddressDetails { get; set; }
         /// <summary> Start time of order item. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Id of the order to which order item belongs to. </summary>
         public string OrderId { get; set; }
     }

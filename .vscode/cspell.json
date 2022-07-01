@@ -27,7 +27,6 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
-
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -52,6 +51,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "cref",
     "deduplication",
     "deserializable",
     "deserializes",
@@ -97,6 +97,22 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
     },
+	{
+      "filename": "**/sdk/alertsmanagement/**/*.cs",
+      "words": [
+        "groupby",
+        "groupedby",
+        "scom",
+        "zabbix"
+      ]
+    },
+    {
+      "filename": "**/sdk/appplatform/**/*.cs",
+      "words": [
+        "dynatrace",
+        "fqdns"
+      ]
+    },
     {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
@@ -134,7 +150,9 @@
       "words": [
         "apim",
         "nigiri",
-        "qnas"
+        "qnas",
+        "petabit",
+        "Picometer"
       ]
     },
     {
@@ -153,7 +171,47 @@
         "vSphere"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/containerapps/**/*",
+      "words": [
+        "dapr",
+        "grpc",
+        "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/datafactory/**/*.cs",
+      "words": [
+        "Ssis",
+        "Asana",
+        "Adls",
+        "Usql",
+        "Distcp",
+        "Eloqua",
+        "Vsts",
+        "Byoa",
+        "Hdfs",
+        "Distcp",
+        "Hcatalog",
+        "Oozie",
+        "Sasl",
+        "Informix",
+        "Exprired",
+        "Magento",
+        "Fqdns",
+        "Netezza",
+        "Responsys",
+        "Hana",
+        "Ssisdb",
+        "Sybase",
+        "Teradata",
+        "Inprogress",
+        "Twilio",
+        "Vertica",
+        "Xero"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -166,6 +224,20 @@
     {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": ["Fqdns"]
+    },
+    {
+      "filename": "**/sdk/dynatrace/**/*.cs",
+      "words": [
+        "Dynatrace",
+        "Liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/elasticsan/**/*.cs",
+      "words": [
+        "iscsi",
+        "mbps"
+      ]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
@@ -186,6 +258,7 @@
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
+        "ikev",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -216,6 +289,19 @@
         "setsas",
         "mhsm",
         "mhsmip"
+      ]
+    },
+	{
+      "filename": "**/sdk/networkfunction/**/*.cs",
+      "words": [
+        "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/reservations/**/*.cs",
+      "words": [
+        "msrp",
+        "hana"
       ]
     },
     {
@@ -277,7 +363,7 @@
     {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
-        "Iscsi"
+        "iscsi"
       ]
     },
     {
@@ -323,6 +409,7 @@
         "Idrg",
         "Esdni",
         "Eugps",
+        "Fhir",
         "Plregon",
         "Usuk"
       ]
@@ -340,7 +427,38 @@
         "Plex",
         "Vstsrm"
       ]
-    }
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
+      ]
+    },
+   {
+      "filename": "**/sdk/containerinstance/**/*.cs",
+      "words": [
+        "Noreuse",
+        "Unsecure"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningservices/**/*.cs",
+      "words": [
+        "Skus",
+        "Cname",
+        "Kube",
+        "Gluster",
+        "Gepc",
+        "Conda",
+        "Reimage",
+        "Cran",
+        "Rscript",
+        "VCPUs"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }

@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate if successfully deleted
             Assert.IsFalse(await _storageQueueCollection.ExistsAsync(storageQueueName));
-            StorageQueueResource queue3 = await _storageQueueCollection.GetIfExistsAsync(storageQueueName);
-            Assert.IsNull(queue3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _storageQueueCollection.GetAsync(storageQueueName); });
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]

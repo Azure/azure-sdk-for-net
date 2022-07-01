@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ProximityPlacementGroupResource ppg = ppgLro.Value;
             // update PPG requires the VM to be deallocated
             await vmss.DeallocateAsync(WaitUntil.Completed);
-            var update = new PatchableVirtualMachineScaleSetData()
+            var update = new VirtualMachineScaleSetPatch()
             {
                 ProximityPlacementGroup = new WritableSubResource()
                 {

@@ -922,7 +922,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Name of the App Service plan.
             /// </param>
-            public static IList<VnetInfo> ListVnets(this IAppServicePlansOperations operations, string resourceGroupName, string name)
+            public static IList<VnetInfoResource> ListVnets(this IAppServicePlansOperations operations, string resourceGroupName, string name)
             {
                 return operations.ListVnetsAsync(resourceGroupName, name).GetAwaiter().GetResult();
             }
@@ -946,7 +946,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VnetInfo>> ListVnetsAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<VnetInfoResource>> ListVnetsAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVnetsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -972,7 +972,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='vnetName'>
             /// Name of the Virtual Network.
             /// </param>
-            public static VnetInfo GetVnetFromServerFarm(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName)
+            public static VnetInfoResource GetVnetFromServerFarm(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName)
             {
                 return operations.GetVnetFromServerFarmAsync(resourceGroupName, name, vnetName).GetAwaiter().GetResult();
             }
@@ -998,7 +998,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VnetInfo> GetVnetFromServerFarmAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VnetInfoResource> GetVnetFromServerFarmAsync(this IAppServicePlansOperations operations, string resourceGroupName, string name, string vnetName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetVnetFromServerFarmWithHttpMessagesAsync(resourceGroupName, name, vnetName, null, cancellationToken).ConfigureAwait(false))
                 {

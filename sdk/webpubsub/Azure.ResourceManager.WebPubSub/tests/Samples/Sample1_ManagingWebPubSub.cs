@@ -103,26 +103,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
-            WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
-
-            WebPubSubResource webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
-            if (webPubSub != null)
-            {
-                Console.WriteLine(webPubSub.Data.Name);
-            }
-
-            if (await WebPubSubColletion.ExistsAsync("bar"))
-            {
-                Console.WriteLine("WebPubSub 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task DeleteVirtualWebPubSub()
         {
             #region Snippet:Managing_WebPubSub_DeleteWebPubSub

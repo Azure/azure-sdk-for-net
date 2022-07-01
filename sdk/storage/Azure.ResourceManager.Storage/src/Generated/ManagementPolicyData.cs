@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedTime"> Returns the date and time the ManagementPolicies was last modified. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the ManagementPolicies was last modified. </param>
         /// <param name="policy"> The Storage Account ManagementPolicy, in JSON format. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
-        internal ManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedTime, ManagementPolicySchema policy) : base(id, name, resourceType, systemData)
+        internal ManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, ManagementPolicySchema policy) : base(id, name, resourceType, systemData)
         {
-            LastModifiedTime = lastModifiedTime;
+            LastModifiedOn = lastModifiedOn;
             Policy = policy;
         }
 
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
-        public DateTimeOffset? LastModifiedTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The Storage Account ManagementPolicy, in JSON format. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
         internal ManagementPolicySchema Policy { get; set; }
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>

@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
-        /// <param name="parameters"> The requested recommended action resource state. </param>
+        /// <param name="data"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendedActionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<RecommendedActionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, advisorName, recommendedActionName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, advisorName, recommendedActionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="advisorName"> The name of the Database Advisor. </param>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
-        /// <param name="parameters"> The requested recommended action resource state. </param>
+        /// <param name="data"> The requested recommended action resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/>, <paramref name="recommendedActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="advisorName"/> or <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendedActionData> Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData parameters, CancellationToken cancellationToken = default)
+        public Response<RecommendedActionData> Update(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, advisorName, recommendedActionName, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, advisorName, recommendedActionName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

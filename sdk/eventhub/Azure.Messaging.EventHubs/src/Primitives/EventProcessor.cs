@@ -266,7 +266,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -293,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -581,7 +581,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             // If there were no events in the batch and empty batches should not be emitted,
             // take no further action.
 
-            if (((eventBatch == null) || (eventBatch.Count <= 0)) && (!dispatchEmptyBatches))
+            if ((eventBatch == null) || ((eventBatch.Count <= 0) && (!dispatchEmptyBatches)))
             {
                 return;
             }
@@ -614,14 +614,24 @@ namespace Azure.Messaging.EventHubs.Primitives
             // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
             // code.
 
+            var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+            var watch = ValueStopwatch.StartNew();
+
             try
             {
+                Logger.EventProcessorProcessingHandlerStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, eventBatch.Count);
                 await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
+                Logger.EventProcessorProcessingHandlerError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
                 diagnosticScope.Failed(ex);
+
                 throw new DeveloperCodeException(ex);
+            }
+            finally
+            {
+                Logger.EventProcessorProcessingHandlerComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, watch.GetElapsedTime().TotalSeconds);
             }
         }
 
@@ -1264,7 +1274,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // Canceling the main source here won't cause a problem and will help expedite stopping
                     // the processor later.
 
-                    _runningProcessorCancellationSource?.Cancel();
+                    try
+                    {
+                        _runningProcessorCancellationSource?.Cancel();
+                    }
+                    catch (Exception cancelEx)
+                    {
+                        Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, cancelEx.Message);
+                    }
                 }
             }
             catch (OperationCanceledException ex)
@@ -1358,9 +1375,19 @@ namespace Azure.Messaging.EventHubs.Primitives
                     return;
                 }
 
-                // Request cancellation of the running processor task.
+                // Request cancellation of the running processor task.  If developer code registered a cancellation
+                // callback in one of the event handlers, it is possible that cancellation will throw.  Capture this
+                // as a warning so that it does not interfere with shutting down the processor.
 
-                _runningProcessorCancellationSource?.Cancel();
+                try
+                {
+                    _runningProcessorCancellationSource?.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.ProcessorStoppingCancellationWarning(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+
                 _runningProcessorCancellationSource?.Dispose();
                 _runningProcessorCancellationSource = null;
 
@@ -1813,9 +1840,21 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 partition = partitionProcessor.Partition;
 
+                // If developer code in a handler registered a callback for cancellation, it is possible that
+                // the attempt to cancel will throw.  Capture this as a warning and do not prevent the partition processing
+                // task from being cleaned up.
+
                 try
                 {
                     partitionProcessor.CancellationSource.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.PartitionProcessorStoppingCancellationWarning(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+
+                try
+                {
                     await partitionProcessor.ProcessingTask.ConfigureAwait(false);
                 }
                 catch (TaskCanceledException)
@@ -1832,7 +1871,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 partitionProcessor.Dispose();
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Notify the handler of the now-closed partition, awaiting completion to allow for a more deterministic model
                 // for developers where the initialize and stop handlers will fire in a deterministic order and not interleave.

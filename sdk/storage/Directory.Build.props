@@ -37,6 +37,13 @@
       $(NoWarn);
       AZC0006;
       AZC0007;
+
+      <!--
+        Netstandard2.1 warnings that netstandard2.0 cannot adhere to.
+        Generally optimization/readability suggestions that standard2.0 doesn't suppot the API for.
+      -->
+      CA1835;
+      CA2249;
     </NoWarn>
 
     <!--

@@ -20,6 +20,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -1578,6 +1579,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task Download_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2304,6 +2306,48 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task StartCopyFromUriAsync_OperationAbort()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.Blob);
+            var data = GetRandomBuffer(8 * Constants.MB);
+
+            BlockBlobClient srcBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await srcBlob.UploadAsync(stream);
+            }
+
+            BlobServiceClient secondaryService = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer destTest = await GetTestContainerAsync(service: secondaryService);
+            {
+                BlockBlobClient destBlob = InstrumentClient(destTest.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                CopyFromUriOperation operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+
+                // Act
+                try
+                {
+                    Response response = await destBlob.AbortCopyFromUriAsync(operation.Id);
+
+                    // Act
+                    await operation.WaitForCompletionAsync();
+
+                    // Assert
+                    Assert.AreEqual(operation.Value,0);
+                    Assert.True(operation.HasCompleted);
+                    Assert.IsNotNull(operation.GetRawResponse());
+                }
+                catch (RequestFailedException e) when (e.ErrorCode == "NoPendingCopyOperation")
+                {
+                    WarnCopyCompletedTooQuickly();
+                }
+            }
+        }
+
+        [RecordedTest]
         public async Task AbortCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2981,7 +3025,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(null)]
         [TestCase(BlobCopySourceTagsMode.Replace)]

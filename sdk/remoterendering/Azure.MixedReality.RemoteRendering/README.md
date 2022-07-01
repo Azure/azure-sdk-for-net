@@ -16,15 +16,7 @@ the lifetime of remote rendering sessions.
 
 ### Install the package
 
-Install the Azure Mixed Reality ARR client library for .NET using one of the following methods.
-
-From Visual Studio Package Manager:
-
-```powershell
-Install-Package Azure.MixedReality.RemoteRendering
-```
-
-From .NET CLI
+Install the Azure Mixed Reality ARR client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.MixedReality.RemoteRendering

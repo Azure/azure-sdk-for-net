@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
+            IgnoreTestInNonWindowsAgent();
+
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
@@ -54,9 +56,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlStoredProcedureResource storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
-            if (storedProcedure != null)
+            if (await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName))
             {
+                var id = SqlStoredProcedureCollection.Id;
+                id = SqlStoredProcedureResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _storedProcedureName);
+                SqlStoredProcedureResource storedProcedure = this.ArmClient.GetSqlStoredProcedureResource(id);
                 await storedProcedure.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlStoredProcedures(storedProcedure, storedProcedure2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            SqlStoredProcedureCreateUpdateData updateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS, storedProcedure.Data.Resource)
+            var updateOptions = new SqlStoredProcedureCreateOrUpdateContent(AzureLocation.WestUS, storedProcedure.Data.Resource)
             {
                 Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
             };
@@ -113,14 +117,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var storedProcedure = await CreateSqlStoredProcedure(null);
             await storedProcedure.DeleteAsync(WaitUntil.Completed);
 
-            storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
-            Assert.Null(storedProcedure);
+            bool exists = await SqlStoredProcedureCollection.ExistsAsync(_storedProcedureName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlStoredProcedureResource> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlStoredProcedureCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS,
+            SqlStoredProcedureCreateOrUpdateContent sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
             Assert.AreEqual(expectedValue.Data.Resource.Body, actualValue.Data.Resource.Body);
         }
     }

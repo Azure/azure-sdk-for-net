@@ -96,23 +96,6 @@ NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAs
 Console.WriteLine(virtualNetwork.Data.Name);
 ```
 
-***Try to get a network interface if it exists***
-
-```C# Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-
-NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
-if (virtualNetwork != null)
-{
-    Console.WriteLine(virtualNetwork.Data.Name);
-}
-
-if (await networkInterfaceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Network interface 'bar' exists.");
-}
-```
-
 ***Delete a network interface***
 
 ```C# Snippet:Managing_Networks_DeleteANetworkInterface

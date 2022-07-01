@@ -19,7 +19,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Tenant and their operations over its parent. </summary>
+    /// <summary> A class representing a collection of <see cref="TenantResource" /> and their operations. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;

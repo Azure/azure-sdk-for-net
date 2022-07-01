@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableLocationResource. </summary>
         /// <param name="locationName"> The location of the regional restorable account. </param>
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
-        /// <param name="creationTime"> The creation time of the regional restorable database account (ISO-8601 format). </param>
-        /// <param name="deletionTime"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
-        internal RestorableLocationResource(string locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? creationTime, DateTimeOffset? deletionTime)
+        /// <param name="creationOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
+        /// <param name="deletionOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
+        internal RestorableLocationResource(string locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? creationOn, DateTimeOffset? deletionOn)
         {
             LocationName = locationName;
             RegionalDatabaseAccountInstanceId = regionalDatabaseAccountInstanceId;
-            CreationTime = creationTime;
-            DeletionTime = deletionTime;
+            CreationOn = creationOn;
+            DeletionOn = deletionOn;
         }
 
         /// <summary> The location of the regional restorable account. </summary>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The instance id of the regional restorable account. </summary>
         public string RegionalDatabaseAccountInstanceId { get; }
         /// <summary> The creation time of the regional restorable database account (ISO-8601 format). </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> The time at which the regional restorable database account has been deleted (ISO-8601 format). </summary>
-        public DateTimeOffset? DeletionTime { get; }
+        public DateTimeOffset? DeletionOn { get; }
     }
 }

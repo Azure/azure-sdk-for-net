@@ -28,8 +28,8 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> mail = default;
             Optional<IReadOnlyList<SignInName>> signInNames = default;
             Optional<string> objectId = default;
-            Optional<string> objectType = default;
-            Optional<DateTimeOffset> deletionTimestamp = default;
+            string objectType = default;
+            Optional<DateTimeOffset?> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deletionTimestamp = null;
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
@@ -132,7 +132,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new User(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, immutableId.Value, usageLocation.Value, givenName.Value, surname.Value, Optional.ToNullable(userType), Optional.ToNullable(accountEnabled), displayName.Value, userPrincipalName.Value, mailNickname.Value, mail.Value, Optional.ToList(signInNames));
+            return new User(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, immutableId.Value, usageLocation.Value, givenName.Value, surname.Value, Optional.ToNullable(userType), Optional.ToNullable(accountEnabled), displayName.Value, userPrincipalName.Value, mailNickname.Value, mail.Value, Optional.ToList(signInNames));
         }
     }
 }

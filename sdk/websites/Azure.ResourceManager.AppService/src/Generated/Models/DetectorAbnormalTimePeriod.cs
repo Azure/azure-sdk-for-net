@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
-        /// <param name="startTime"> Start time of the correlated event. </param>
-        /// <param name="endTime"> End time of the correlated event. </param>
+        /// <param name="startOn"> Start time of the correlated event. </param>
+        /// <param name="endOn"> End time of the correlated event. </param>
         /// <param name="message"> Message describing the event. </param>
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
         /// <param name="metaData"> Downtime metadata. </param>
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startTime, DateTimeOffset? endTime, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? issueType, IList<Solution> solutions)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? issueType, IList<Solution> solutions)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Message = message;
             Source = source;
             Priority = priority;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Start time of the correlated event. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the correlated event. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> Message describing the event. </summary>
         public string Message { get; set; }
         /// <summary> Represents the name of the Detector. </summary>

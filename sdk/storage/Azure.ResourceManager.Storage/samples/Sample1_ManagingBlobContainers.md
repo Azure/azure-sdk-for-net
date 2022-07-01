@@ -37,7 +37,7 @@ After we have the resource group created, we can create a storage account
 StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
 StorageKind kind = StorageKind.Storage;
 string location = "westus2";
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
@@ -82,21 +82,6 @@ await foreach (BlobContainerResource blobContainer in response)
 BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
 BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
 Console.WriteLine(blobContainer.Id.Name);
-```
-
-***Try to get a blob container if it exists***
-
-```C# Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainerResource blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
-if (blobContainer != null)
-{
-    Console.WriteLine(blobContainer.Id.Name);
-}
-if (await blobContainerCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("blob container 'bar' exists");
-}
 ```
 
 ***Delete a blob container***

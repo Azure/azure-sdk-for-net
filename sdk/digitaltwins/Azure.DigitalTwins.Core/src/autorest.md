@@ -10,6 +10,7 @@ Run `generate.ps1` in this directory or run `dotnet build /t:GenerateCode` to ge
 tag: package-2020-10-31
 require: 
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/14fb40342c19f8b483e132038f8424ee62b745d9/specification/digitaltwins/data-plane/readme.md
+generation1-convenience-client: true
 ```
 
 ### Directives

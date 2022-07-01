@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="databaseName"> The database name. </param>
-        /// <param name="endTime"> The time the operation finished (ISO8601 format). </param>
+        /// <param name="endOn"> The time the operation finished (ISO8601 format). </param>
         /// <param name="errorCode"> The error code if available. </param>
         /// <param name="errorMessage"> The error message if available. </param>
         /// <param name="errorSeverity"> The error severity if available. </param>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentServiceObjective"> The name of the current service objective if available. </param>
         /// <param name="requestedServiceObjective"> The name of the requested service objective if available. </param>
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
-        /// <param name="startTime"> The time the operation started (ISO8601 format). </param>
+        /// <param name="startOn"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
-        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string databaseName, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startTime, string state) : base(id, name, resourceType, systemData)
+        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startOn, string state) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DatabaseName = databaseName;
-            EndTime = endTime;
+            EndOn = endOn;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             ErrorSeverity = errorSeverity;
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.Sql.Models
             CurrentServiceObjective = currentServiceObjective;
             RequestedServiceObjective = requestedServiceObjective;
             ServerName = serverName;
-            StartTime = startTime;
+            StartOn = startOn;
             State = state;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The database name. </summary>
         public string DatabaseName { get; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The error code if available. </summary>
         public int? ErrorCode { get; }
         /// <summary> The error message if available. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the server the elastic pool is in. </summary>
         public string ServerName { get; }
         /// <summary> The time the operation started (ISO8601 format). </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The current state of the operation. </summary>
         public string State { get; }
     }

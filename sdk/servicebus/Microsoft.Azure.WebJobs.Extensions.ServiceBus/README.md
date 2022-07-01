@@ -20,7 +20,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.ServiceBus
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 
 ### Authenticate the Client
@@ -230,6 +230,32 @@ public static async Task Run(
 }
 ```
 
+### Binding to ReceiveActions
+
+It's possible to receive additional messages from within your function invocation. This may be useful if you need more control over how many messages to process within a function invocation based on some characteristics of the initial message delivered to your function via the binding parameter. Any additional messages that you receive will be subject to the same `AutoCompleteMessages` configuration as the initial message delivered to your function.
+
+```C# Snippet:ServiceBusBindingToReceiveActions
+[FunctionName("BindingToReceiveActions")]
+public static async Task Run(
+    [ServiceBusTrigger("<queue_name>", Connection = "<connection_name>", IsSessionsEnabled = true)]
+    ServiceBusReceivedMessage message,
+    ServiceBusMessageActions messageActions,
+    ServiceBusReceiveActions receiveActions)
+{
+    if (message.MessageId == "1")
+    {
+        await messageActions.DeadLetterMessageAsync(message);
+    }
+    else
+    {
+        await messageActions.CompleteMessageAsync(message);
+
+        // attempt to receive additional messages in this session
+        await receiveActions.ReceiveMessagesAsync(maxMessages: 10);
+    }
+}
+```
+
 ### Binding to ServiceBusClient
 
 There may be times when you want to bind to the same `ServiceBusClient` that the trigger is using. This can be useful if you need to dynamically create a sender based on the message that is received.
@@ -248,7 +274,9 @@ public static async Task Run(
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+If your function triggers an unhandled exception and you haven't already settled the message, the extension will attempt to abandon the message so that it becomes available for receiving again immediately.
+
+Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for more troubleshooting guidance.
 
 ## Next steps
 

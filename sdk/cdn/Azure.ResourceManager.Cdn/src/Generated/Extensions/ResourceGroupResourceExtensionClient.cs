@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _defaultClientDiagnostics;
+        private CdnManagementRestOperations _defaultRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -24,6 +33,9 @@ namespace Azure.ResourceManager.Cdn
         internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,6 +55,52 @@ namespace Azure.ResourceManager.Cdn
         public virtual CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies()
         {
             return GetCachedClient(Client => new CdnWebApplicationFirewallPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await DefaultRestClient.CheckEndpointNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = DefaultRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

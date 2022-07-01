@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a TenantPolicySetDefinitionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a TenantPolicySetDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPolicySetDefinitionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetTenantPolicySetDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPolicySetDefinition method.
+    /// </summary>
     public partial class TenantPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicySetDefinitionResource"/> instance. </summary>

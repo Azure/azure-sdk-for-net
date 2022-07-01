@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.15 (Unreleased)
+## 1.0.0-preview.16 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,9 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.15 (2022-04-07)
+- Added LinkConnectionOperations.
 
 ## 1.0.0-preview.14 (2022-03-08)
 - Added ScriptActivity.

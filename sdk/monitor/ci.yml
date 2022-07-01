@@ -23,7 +23,7 @@ pr:
     - sdk/monitor/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: monitor
     ArtifactName: packages
@@ -32,3 +32,7 @@ extends:
       safeName: MicrosoftOpenTelemetryExporterAzureMonitor
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
+    - name: Azure.ResourceManager.Monitor
+      safeName: AzureResourceManagerMonitor
+    - name: Azure.Monitor.Ingestion
+      safeName: AzureMonitorIngestion

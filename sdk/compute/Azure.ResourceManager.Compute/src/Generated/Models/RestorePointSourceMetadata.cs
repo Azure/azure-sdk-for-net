@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmId"> Gets the virtual machine unique id. </param>
         /// <param name="securityProfile"> Gets the security profile. </param>
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
-        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location)
+        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -47,8 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
         {
-            get => DiagnosticsProfile.BootDiagnostics;
-            set => DiagnosticsProfile.BootDiagnostics = value;
+            get => DiagnosticsProfile?.BootDiagnostics;
         }
 
         /// <summary> Gets the license type, which is for bring your own license scenario. </summary>
@@ -58,6 +59,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the security profile. </summary>
         public SecurityProfile SecurityProfile { get; }
         /// <summary> Location of the VM from which the restore point was created. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

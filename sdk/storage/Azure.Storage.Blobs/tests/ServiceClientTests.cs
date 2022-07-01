@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -570,6 +571,7 @@ namespace Azure.Storage.Blobs.Test
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
         [RecordedTest]
+        [PlaybackOnly(".NET autorest generator bug - https://github.com/Azure/azure-sdk-for-net/issues/28979")]
         public async Task GetStatisticsAsync()
         {
             // Arrange

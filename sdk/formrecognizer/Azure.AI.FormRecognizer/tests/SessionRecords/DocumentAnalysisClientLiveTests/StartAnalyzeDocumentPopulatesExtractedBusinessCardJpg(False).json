@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "151",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-39c1e5aefc8506f9598534c07dffe635-29ffa4ac6d0a431e-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c62dcf7a6ddefd8d24eaf6f655fc3ccf",
+        "traceparent": "00-9d79d0c8bb93f50b9994ef1a3bf25d1c-ff427c869972de83-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "798a938eae646f1e28feb24a943071cf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,175 +18,148 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "31dd0778-86e4-4169-9036-9e67e3234f39",
+        "apim-request-id": "e4b390e5-9516-4d66-a3c9-e878711b2996",
         "Content-Length": "0",
-        "Date": "Tue, 25 Jan 2022 22:20:32 GMT",
-        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
+        "Date": "Fri, 20 May 2022 21:37:58 GMT",
+        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/e4b390e5-9516-4d66-a3c9-e878711b2996?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "553"
+        "x-envoy-upstream-service-time": "718"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/e4b390e5-9516-4d66-a3c9-e878711b2996?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "b83dc78d7665729239303cf4e108b9a0",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f02f9e8a89d412977eeacfcc6618bfa1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "45dcab11-68d6-4b42-bd1d-5daad1aa2713",
+        "apim-request-id": "a64e4d10-9f41-43d7-b4aa-b9e5c0f60e24",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 22:20:32 GMT",
+        "Date": "Fri, 20 May 2022 21:37:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-25T22:20:32Z",
-        "lastUpdatedDateTime": "2022-01-25T22:20:32Z"
+        "createdDateTime": "2022-05-20T21:37:58Z",
+        "lastUpdatedDateTime": "2022-05-20T21:37:58Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/e4b390e5-9516-4d66-a3c9-e878711b2996?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "929663489212b85a35e5c23c2bc48c62",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a3118a1de881595d0602232dbc183fe9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "dbb53a27-d4f2-4eb2-ad44-36a1ce6caf76",
+        "apim-request-id": "78b180dd-2df6-4de6-ad81-d81feed5f2ef",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 22:20:33 GMT",
+        "Date": "Fri, 20 May 2022 21:37:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-25T22:20:32Z",
-        "lastUpdatedDateTime": "2022-01-25T22:20:32Z"
+        "createdDateTime": "2022-05-20T21:37:58Z",
+        "lastUpdatedDateTime": "2022-05-20T21:37:58Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/e4b390e5-9516-4d66-a3c9-e878711b2996?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0ecc4906781e03ee3cba8cae30981c1c",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2429d65cb8020459fc77fb79df520910",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1529aea6-b2f6-4152-b0bc-049f61f60522",
+        "apim-request-id": "daa678f0-9a27-4970-a1f1-8699e82623d6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 22:20:34 GMT",
+        "Date": "Fri, 20 May 2022 21:38:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-25T22:20:32Z",
-        "lastUpdatedDateTime": "2022-01-25T22:20:32Z"
+        "createdDateTime": "2022-05-20T21:37:58Z",
+        "lastUpdatedDateTime": "2022-05-20T21:37:58Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/e4b390e5-9516-4d66-a3c9-e878711b2996?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "f1ae5531a965fbbd6c848280b3564675",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "092c103fce1fa14e41d6e9d165695665",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cb28da5a-1228-4505-9a77-a487d0a4ffc3",
+        "apim-request-id": "f2f63027-4f96-4de4-933f-3fc08383373d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 22:20:35 GMT",
+        "Date": "Fri, 20 May 2022 21:38:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2022-01-25T22:20:32Z",
-        "lastUpdatedDateTime": "2022-01-25T22:20:32Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-businessCard/analyzeResults/31dd0778-86e4-4169-9036-9e67e3234f39?api-version=2022-01-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET 6.0.1; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "97eed9a3aa3bcf827592555706ac879c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "67763f5e-56a2-4d2d-87fa-be5af5d31438",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 25 Jan 2022 22:20:37 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "52"
+        "x-envoy-upstream-service-time": "43"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-01-25T22:20:32Z",
-        "lastUpdatedDateTime": "2022-01-25T22:20:37Z",
+        "createdDateTime": "2022-05-20T21:37:58Z",
+        "lastUpdatedDateTime": "2022-05-20T21:38:01Z",
         "analyzeResult": {
-          "apiVersion": "2022-01-30-preview",
+          "apiVersion": "2022-06-30-preview",
           "modelId": "prebuilt-businessCard",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Dr. Avery Smith\nSenior Researcher\nCloud \u0026 Al Department\navery.smith@contoso.com\nhttps://www.contoso.com/\nmob: \u002B44 (0) 7911 123456\ntel: \u002B44 (0) 20 9876 5432\nfax: \u002B44 (0) 20 6789 2345\nContoso\n2 Kingdom Street\nPaddington, London, W2 6BD",
+          "content": "Dr. Avery Smith Senior Researcher Cloud \u0026 Al Department\navery.smith@contoso.com https://www.contoso.com/\nmob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345\nContoso 2 Kingdom Street Paddington, London, W2 6BD\n5",
           "pages": [
             {
               "pageNumber": 1,
-              "angle": -16.0258,
+              "angle": -15.738499641418457,
               "width": 4032,
               "height": 3024,
               "unit": "pixel",
               "words": [
                 {
                   "content": "Dr.",
-                  "boundingBox": [
-                    417,
-                    1158,
-                    651,
-                    1105,
-                    680,
-                    1212,
-                    447,
-                    1260
+                  "polygon": [
+                    419,
+                    1156,
+                    653,
+                    1104,
+                    681,
+                    1215,
+                    446,
+                    1261
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9974269,
                   "span": {
                     "offset": 0,
                     "length": 3
@@ -194,17 +167,17 @@
                 },
                 {
                   "content": "Avery",
-                  "boundingBox": [
-                    683,
-                    1098,
-                    1104,
-                    1000,
-                    1132,
-                    1109,
-                    712,
-                    1205
+                  "polygon": [
+                    675,
+                    1099,
+                    1107,
+                    998,
+                    1135,
+                    1112,
+                    703,
+                    1210
                   ],
-                  "confidence": 0.999,
+                  "confidence": 0.9937401,
                   "span": {
                     "offset": 4,
                     "length": 5
@@ -212,17 +185,17 @@
                 },
                 {
                   "content": "Smith",
-                  "boundingBox": [
-                    1171,
-                    983,
-                    1562,
-                    886,
+                  "polygon": [
+                    1160,
+                    985,
+                    1560,
+                    883,
                     1589,
-                    992,
-                    1199,
-                    1092
+                    995,
+                    1188,
+                    1099
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9554825,
                   "span": {
                     "offset": 10,
                     "length": 5
@@ -230,17 +203,17 @@
                 },
                 {
                   "content": "Senior",
-                  "boundingBox": [
-                    454,
+                  "polygon": [
+                    453,
                     1315,
-                    758,
+                    761,
                     1240,
-                    774,
-                    1311,
-                    471,
-                    1383
+                    775,
+                    1313,
+                    467,
+                    1382
                   ],
-                  "confidence": 0.999,
+                  "confidence": 0.9974002,
                   "span": {
                     "offset": 16,
                     "length": 6
@@ -248,17 +221,17 @@
                 },
                 {
                   "content": "Researcher",
-                  "boundingBox": [
-                    783,
-                    1233,
-                    1303,
-                    1108,
-                    1317,
-                    1176,
-                    799,
-                    1305
+                  "polygon": [
+                    786,
+                    1234,
+                    1306,
+                    1104,
+                    1321,
+                    1175,
+                    800,
+                    1308
                   ],
-                  "confidence": 0.956,
+                  "confidence": 0.9950892,
                   "span": {
                     "offset": 23,
                     "length": 10
@@ -266,17 +239,17 @@
                 },
                 {
                   "content": "Cloud",
-                  "boundingBox": [
-                    475,
-                    1412,
-                    735,
-                    1348,
-                    753,
+                  "polygon": [
+                    476,
+                    1411,
+                    732,
+                    1350,
+                    752,
                     1424,
-                    494,
-                    1483
+                    497,
+                    1481
                   ],
-                  "confidence": 0.999,
+                  "confidence": 0.9940166,
                   "span": {
                     "offset": 34,
                     "length": 5
@@ -284,17 +257,17 @@
                 },
                 {
                   "content": "\u0026",
-                  "boundingBox": [
-                    789,
-                    1334,
-                    835,
-                    1323,
-                    853,
-                    1400,
+                  "polygon": [
+                    788,
+                    1337,
+                    829,
+                    1327,
+                    849,
+                    1401,
                     808,
                     1411
                   ],
-                  "confidence": 0.981,
+                  "confidence": 0.9980585,
                   "span": {
                     "offset": 40,
                     "length": 1
@@ -302,17 +275,17 @@
                 },
                 {
                   "content": "Al",
-                  "boundingBox": [
-                    899,
-                    1308,
-                    1006,
-                    1282,
+                  "polygon": [
+                    894,
+                    1311,
+                    1005,
+                    1285,
                     1024,
                     1358,
-                    917,
+                    914,
                     1385
                   ],
-                  "confidence": 0.785,
+                  "confidence": 0.7968695,
                   "span": {
                     "offset": 42,
                     "length": 2
@@ -320,17 +293,17 @@
                 },
                 {
                   "content": "Department",
-                  "boundingBox": [
-                    1023,
-                    1278,
+                  "polygon": [
+                    1018,
+                    1282,
                     1578,
-                    1144,
-                    1595,
-                    1208,
-                    1041,
+                    1145,
+                    1596,
+                    1205,
+                    1038,
                     1354
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.9949363,
                   "span": {
                     "offset": 45,
                     "length": 10
@@ -338,17 +311,17 @@
                 },
                 {
                   "content": "avery.smith@contoso.com",
-                  "boundingBox": [
-                    2106,
-                    937,
-                    2903,
-                    708,
-                    2918,
-                    764,
-                    2122,
-                    992
+                  "polygon": [
+                    2102,
+                    939,
+                    2904,
+                    713,
+                    2916,
+                    763,
+                    2119,
+                    989
                   ],
-                  "confidence": 0.969,
+                  "confidence": 0.8402659,
                   "span": {
                     "offset": 56,
                     "length": 23
@@ -356,17 +329,17 @@
                 },
                 {
                   "content": "https://www.contoso.com/",
-                  "boundingBox": [
-                    2118,
-                    1007,
-                    2987,
+                  "polygon": [
+                    2119,
+                    1005,
+                    2982,
                     765,
-                    3003,
-                    819,
-                    2140,
-                    1073
+                    2998,
+                    822,
+                    2143,
+                    1071
                   ],
-                  "confidence": 0.969,
+                  "confidence": 0.9567722,
                   "span": {
                     "offset": 80,
                     "length": 24
@@ -374,17 +347,17 @@
                 },
                 {
                   "content": "mob:",
-                  "boundingBox": [
+                  "polygon": [
                     2242,
-                    1102,
-                    2417,
-                    1045,
-                    2437,
-                    1110,
-                    2262,
+                    1103,
+                    2415,
+                    1049,
+                    2435,
+                    1111,
+                    2261,
                     1159
                   ],
-                  "confidence": 0.992,
+                  "confidence": 0.995233,
                   "span": {
                     "offset": 105,
                     "length": 4
@@ -392,17 +365,17 @@
                 },
                 {
                   "content": "\u002B44",
-                  "boundingBox": [
-                    2430,
-                    1041,
+                  "polygon": [
+                    2427,
+                    1045,
                     2547,
-                    1004,
-                    2566,
-                    1073,
-                    2450,
-                    1106
+                    1007,
+                    2568,
+                    1072,
+                    2448,
+                    1107
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.971645,
                   "span": {
                     "offset": 110,
                     "length": 3
@@ -410,17 +383,17 @@
                 },
                 {
                   "content": "(0)",
-                  "boundingBox": [
-                    2562,
-                    999,
-                    2659,
-                    969,
-                    2679,
-                    1039,
-                    2581,
-                    1068
+                  "polygon": [
+                    2565,
+                    1002,
+                    2656,
+                    974,
+                    2678,
+                    1040,
+                    2586,
+                    1067
                   ],
-                  "confidence": 0.983,
+                  "confidence": 0.9969795,
                   "span": {
                     "offset": 114,
                     "length": 3
@@ -428,17 +401,17 @@
                 },
                 {
                   "content": "7911",
-                  "boundingBox": [
-                    2672,
-                    965,
-                    2828,
-                    919,
-                    2847,
-                    988,
-                    2691,
-                    1035
+                  "polygon": [
+                    2669,
+                    970,
+                    2822,
+                    923,
+                    2844,
+                    989,
+                    2690,
+                    1036
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.9913172,
                   "span": {
                     "offset": 118,
                     "length": 4
@@ -446,17 +419,17 @@
                 },
                 {
                   "content": "123456",
-                  "boundingBox": [
-                    2842,
-                    915,
-                    3063,
-                    853,
-                    3081,
+                  "polygon": [
+                    2839,
+                    918,
+                    3059,
+                    852,
+                    3082,
                     913,
-                    2861,
-                    983
+                    2862,
+                    984
                   ],
-                  "confidence": 0.999,
+                  "confidence": 0.9960597,
                   "span": {
                     "offset": 123,
                     "length": 6
@@ -464,17 +437,17 @@
                 },
                 {
                   "content": "tel:",
-                  "boundingBox": [
-                    2341,
-                    1163,
-                    2455,
+                  "polygon": [
+                    2337,
+                    1158,
+                    2450,
                     1124,
-                    2475,
-                    1191,
-                    2362,
-                    1224
+                    2469,
+                    1192,
+                    2356,
+                    1223
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9966793,
                   "span": {
                     "offset": 130,
                     "length": 4
@@ -482,17 +455,17 @@
                 },
                 {
                   "content": "\u002B44",
-                  "boundingBox": [
-                    2468,
+                  "polygon": [
+                    2464,
                     1120,
-                    2584,
-                    1082,
-                    2604,
+                    2587,
+                    1083,
+                    2607,
                     1153,
-                    2488,
-                    1187
+                    2483,
+                    1189
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9913172,
                   "span": {
                     "offset": 135,
                     "length": 3
@@ -500,17 +473,17 @@
                 },
                 {
                   "content": "(0)",
-                  "boundingBox": [
-                    2604,
-                    1076,
-                    2700,
-                    1045,
-                    2720,
-                    1117,
-                    2624,
-                    1147
+                  "polygon": [
+                    2601,
+                    1079,
+                    2697,
+                    1049,
+                    2717,
+                    1121,
+                    2621,
+                    1149
                   ],
-                  "confidence": 0.977,
+                  "confidence": 0.9913172,
                   "span": {
                     "offset": 139,
                     "length": 3
@@ -518,17 +491,17 @@
                 },
                 {
                   "content": "20",
-                  "boundingBox": [
-                    2714,
-                    1041,
-                    2786,
-                    1019,
-                    2805,
-                    1091,
-                    2733,
-                    1113
+                  "polygon": [
+                    2711,
+                    1045,
+                    2787,
+                    1021,
+                    2808,
+                    1093,
+                    2731,
+                    1116
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9976584,
                   "span": {
                     "offset": 143,
                     "length": 2
@@ -536,17 +509,17 @@
                 },
                 {
                   "content": "9876",
-                  "boundingBox": [
+                  "polygon": [
                     2802,
-                    1014,
-                    2958,
-                    967,
-                    2977,
-                    1036,
-                    2821,
-                    1086
+                    1017,
+                    2956,
+                    968,
+                    2978,
+                    1039,
+                    2823,
+                    1088
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9910245,
                   "span": {
                     "offset": 146,
                     "length": 4
@@ -554,17 +527,17 @@
                 },
                 {
                   "content": "5432",
-                  "boundingBox": [
-                    2974,
+                  "polygon": [
+                    2970,
                     963,
-                    3127,
-                    919,
-                    3144,
-                    980,
+                    3128,
+                    912,
+                    3150,
+                    982,
                     2992,
-                    1031
+                    1035
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9906416,
                   "span": {
                     "offset": 151,
                     "length": 4
@@ -572,17 +545,17 @@
                 },
                 {
                   "content": "fax:",
-                  "boundingBox": [
-                    2375,
-                    1242,
-                    2505,
-                    1200,
-                    2525,
-                    1268,
-                    2396,
-                    1304
+                  "polygon": [
+                    2374,
+                    1243,
+                    2507,
+                    1201,
+                    2529,
+                    1265,
+                    2395,
+                    1301
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.9875401,
                   "span": {
                     "offset": 156,
                     "length": 4
@@ -590,17 +563,17 @@
                 },
                 {
                   "content": "\u002B44",
-                  "boundingBox": [
-                    2519,
-                    1196,
-                    2642,
-                    1156,
-                    2662,
-                    1228,
-                    2539,
-                    1264
+                  "polygon": [
+                    2520,
+                    1197,
+                    2643,
+                    1159,
+                    2666,
+                    1226,
+                    2542,
+                    1262
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9913172,
                   "span": {
                     "offset": 161,
                     "length": 3
@@ -608,17 +581,17 @@
                 },
                 {
                   "content": "(0)",
-                  "boundingBox": [
-                    2658,
-                    1151,
-                    2757,
-                    1120,
-                    2776,
+                  "polygon": [
+                    2657,
+                    1155,
+                    2752,
+                    1125,
+                    2774,
                     1193,
-                    2678,
-                    1223
+                    2680,
+                    1222
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9966816,
                   "span": {
                     "offset": 165,
                     "length": 3
@@ -626,17 +599,17 @@
                 },
                 {
                   "content": "20",
-                  "boundingBox": [
-                    2770,
-                    1116,
-                    2844,
-                    1092,
-                    2863,
-                    1166,
-                    2790,
+                  "polygon": [
+                    2765,
+                    1121,
+                    2841,
+                    1097,
+                    2864,
+                    1165,
+                    2787,
                     1189
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9976528,
                   "span": {
                     "offset": 169,
                     "length": 2
@@ -644,17 +617,17 @@
                 },
                 {
                   "content": "6789",
-                  "boundingBox": [
-                    2860,
-                    1087,
-                    3019,
-                    1037,
-                    3038,
+                  "polygon": [
+                    2859,
+                    1091,
+                    3016,
+                    1042,
+                    3040,
                     1108,
-                    2879,
+                    2882,
                     1160
                   ],
-                  "confidence": 0.977,
+                  "confidence": 0.9889123,
                   "span": {
                     "offset": 172,
                     "length": 4
@@ -662,17 +635,17 @@
                 },
                 {
                   "content": "2345",
-                  "boundingBox": [
-                    3035,
-                    1032,
-                    3186,
-                    985,
-                    3204,
-                    1050,
+                  "polygon": [
+                    3030,
+                    1037,
+                    3183,
+                    988,
+                    3208,
+                    1049,
                     3054,
-                    1102
+                    1103
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9913172,
                   "span": {
                     "offset": 177,
                     "length": 4
@@ -680,17 +653,17 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
-                    1148,
-                    1896,
-                    2247,
-                    1585,
-                    2307,
-                    1753,
-                    1208,
-                    2105
+                  "polygon": [
+                    1144,
+                    1915,
+                    2237,
+                    1582,
+                    2294,
+                    1741,
+                    1204,
+                    2111
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9962124,
                   "span": {
                     "offset": 182,
                     "length": 7
@@ -698,17 +671,17 @@
                 },
                 {
                   "content": "2",
-                  "boundingBox": [
-                    1238,
-                    2142,
-                    1287,
-                    2126,
-                    1313,
-                    2204,
+                  "polygon": [
+                    1234,
+                    2140,
+                    1289,
+                    2121,
+                    1321,
+                    2210,
                     1265,
-                    2220
+                    2225
                   ],
-                  "confidence": 0.982,
+                  "confidence": 0.9979979,
                   "span": {
                     "offset": 190,
                     "length": 1
@@ -716,17 +689,17 @@
                 },
                 {
                   "content": "Kingdom",
-                  "boundingBox": [
-                    1315,
-                    2116,
-                    1685,
-                    1991,
-                    1710,
-                    2072,
-                    1341,
-                    2196
+                  "polygon": [
+                    1308,
+                    2114,
+                    1687,
+                    1985,
+                    1717,
+                    2080,
+                    1340,
+                    2204
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9967916,
                   "span": {
                     "offset": 192,
                     "length": 7
@@ -734,17 +707,17 @@
                 },
                 {
                   "content": "Street",
-                  "boundingBox": [
-                    1754,
-                    1968,
-                    2022,
-                    1877,
-                    2045,
-                    1949,
-                    1778,
-                    2047
+                  "polygon": [
+                    1747,
+                    1964,
+                    2018,
+                    1875,
+                    2048,
+                    1946,
+                    1777,
+                    2057
                   ],
-                  "confidence": 1,
+                  "confidence": 0.9974377,
                   "span": {
                     "offset": 200,
                     "length": 6
@@ -752,17 +725,17 @@
                 },
                 {
                   "content": "Paddington,",
-                  "boundingBox": [
-                    1279,
-                    2259,
-                    1853,
-                    2061,
-                    1883,
-                    2155,
-                    1311,
-                    2350
+                  "polygon": [
+                    1282,
+                    2260,
+                    1855,
+                    2060,
+                    1885,
+                    2157,
+                    1314,
+                    2351
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.9934682,
                   "span": {
                     "offset": 207,
                     "length": 11
@@ -770,17 +743,17 @@
                 },
                 {
                   "content": "London,",
-                  "boundingBox": [
-                    1871,
-                    2055,
-                    2232,
-                    1926,
-                    2261,
-                    2016,
-                    1901,
-                    2148
+                  "polygon": [
+                    1873,
+                    2053,
+                    2226,
+                    1929,
+                    2255,
+                    2021,
+                    1903,
+                    2151
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.9968351,
                   "span": {
                     "offset": 219,
                     "length": 7
@@ -788,17 +761,17 @@
                 },
                 {
                   "content": "W2",
-                  "boundingBox": [
-                    2250,
-                    1919,
-                    2386,
-                    1869,
-                    2414,
-                    1957,
-                    2279,
-                    2009
+                  "polygon": [
+                    2244,
+                    1923,
+                    2387,
+                    1873,
+                    2416,
+                    1959,
+                    2273,
+                    2014
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.9938388,
                   "span": {
                     "offset": 227,
                     "length": 2
@@ -806,35 +779,53 @@
                 },
                 {
                   "content": "6BD",
-                  "boundingBox": [
-                    2403,
-                    1863,
-                    2560,
-                    1805,
-                    2588,
-                    1889,
-                    2432,
-                    1950
+                  "polygon": [
+                    2405,
+                    1866,
+                    2559,
+                    1812,
+                    2587,
+                    1891,
+                    2434,
+                    1951
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.9979795,
                   "span": {
                     "offset": 230,
                     "length": 3
+                  }
+                },
+                {
+                  "content": "5",
+                  "polygon": [
+                    763,
+                    1987,
+                    980,
+                    1985,
+                    1012,
+                    2438,
+                    771,
+                    2455
+                  ],
+                  "confidence": 0.8847622,
+                  "span": {
+                    "offset": 234,
+                    "length": 1
                   }
                 }
               ],
               "lines": [
                 {
                   "content": "Dr. Avery Smith",
-                  "boundingBox": [
-                    416,
-                    1156,
-                    1609,
-                    874,
-                    1635,
-                    987,
-                    443,
-                    1260
+                  "polygon": [
+                    419,
+                    1152,
+                    1600,
+                    873,
+                    1627,
+                    993,
+                    446,
+                    1261
                   ],
                   "spans": [
                     {
@@ -845,15 +836,15 @@
                 },
                 {
                   "content": "Senior Researcher",
-                  "boundingBox": [
-                    451,
+                  "polygon": [
+                    452,
                     1314,
-                    1315,
-                    1104,
-                    1330,
-                    1173,
+                    1316,
+                    1101,
+                    1332,
+                    1175,
                     468,
-                    1383
+                    1382
                   ],
                   "spans": [
                     {
@@ -864,15 +855,15 @@
                 },
                 {
                   "content": "Cloud \u0026 Al Department",
-                  "boundingBox": [
-                    472,
-                    1412,
-                    1591,
-                    1141,
-                    1608,
-                    1212,
-                    491,
-                    1483
+                  "polygon": [
+                    476,
+                    1410,
+                    1588,
+                    1143,
+                    1605,
+                    1213,
+                    494,
+                    1481
                   ],
                   "spans": [
                     {
@@ -883,15 +874,15 @@
                 },
                 {
                   "content": "avery.smith@contoso.com",
-                  "boundingBox": [
-                    2104,
+                  "polygon": [
+                    2101,
                     929,
-                    2934,
-                    699,
-                    2953,
-                    754,
-                    2119,
-                    992
+                    2935,
+                    704,
+                    2952,
+                    757,
+                    2117,
+                    989
                   ],
                   "spans": [
                     {
@@ -902,15 +893,15 @@
                 },
                 {
                   "content": "https://www.contoso.com/",
-                  "boundingBox": [
-                    2116,
-                    1006,
-                    2985,
-                    765,
-                    3003,
-                    824,
-                    2135,
-                    1073
+                  "polygon": [
+                    2119,
+                    1004,
+                    2980,
+                    764,
+                    2998,
+                    826,
+                    2138,
+                    1071
                   ],
                   "spans": [
                     {
@@ -921,11 +912,11 @@
                 },
                 {
                   "content": "mob: \u002B44 (0) 7911 123456",
-                  "boundingBox": [
-                    2242,
-                    1095,
-                    3073,
-                    850,
+                  "polygon": [
+                    2241,
+                    1099,
+                    3074,
+                    848,
                     3093,
                     912,
                     2260,
@@ -940,15 +931,15 @@
                 },
                 {
                   "content": "tel: \u002B44 (0) 20 9876 5432",
-                  "boundingBox": [
-                    2339,
-                    1158,
-                    3134,
-                    916,
-                    3154,
-                    980,
-                    2359,
-                    1224
+                  "polygon": [
+                    2337,
+                    1156,
+                    3135,
+                    910,
+                    3157,
+                    983,
+                    2357,
+                    1223
                   ],
                   "spans": [
                     {
@@ -959,15 +950,15 @@
                 },
                 {
                   "content": "fax: \u002B44 (0) 20 6789 2345",
-                  "boundingBox": [
-                    2373,
+                  "polygon": [
+                    2370,
                     1241,
                     3197,
-                    981,
+                    985,
                     3217,
-                    1051,
-                    2395,
-                    1304
+                    1053,
+                    2391,
+                    1302
                   ],
                   "spans": [
                     {
@@ -978,15 +969,15 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
-                    1148,
-                    1887,
-                    2317,
-                    1569,
-                    2376,
-                    1750,
-                    1206,
-                    2104
+                  "polygon": [
+                    1144,
+                    1909,
+                    2307,
+                    1563,
+                    2366,
+                    1733,
+                    1202,
+                    2110
                   ],
                   "spans": [
                     {
@@ -997,15 +988,15 @@
                 },
                 {
                   "content": "2 Kingdom Street",
-                  "boundingBox": [
-                    1235,
-                    2142,
-                    2025,
+                  "polygon": [
+                    1234,
+                    2139,
+                    2021,
                     1874,
                     2049,
-                    1952,
-                    1263,
-                    2220
+                    1961,
+                    1267,
+                    2225
                   ],
                   "spans": [
                     {
@@ -1016,15 +1007,15 @@
                 },
                 {
                   "content": "Paddington, London, W2 6BD",
-                  "boundingBox": [
-                    1278,
-                    2259,
-                    2574,
-                    1798,
-                    2605,
-                    1892,
-                    1312,
-                    2350
+                  "polygon": [
+                    1282,
+                    2260,
+                    2567,
+                    1808,
+                    2598,
+                    1899,
+                    1316,
+                    2351
                   ],
                   "spans": [
                     {
@@ -1032,14 +1023,156 @@
                       "length": 26
                     }
                   ]
+                },
+                {
+                  "content": "5",
+                  "polygon": [
+                    765,
+                    1985,
+                    1033,
+                    2061,
+                    1032,
+                    2338,
+                    763,
+                    2456
+                  ],
+                  "spans": [
+                    {
+                      "offset": 234,
+                      "length": 1
+                    }
+                  ]
                 }
               ],
               "spans": [
                 {
                   "offset": 0,
-                  "length": 233
+                  "length": 235
                 }
-              ]
+              ],
+              "kind": "document"
+            }
+          ],
+          "paragraphs": [
+            {
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 55
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    414,
+                    1153,
+                    1600,
+                    873,
+                    1678,
+                    1201,
+                    492,
+                    1482
+                  ]
+                }
+              ],
+              "content": "Dr. Avery Smith Senior Researcher Cloud \u0026 Al Department"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 56,
+                  "length": 48
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2098,
+                    930,
+                    2958,
+                    685,
+                    2998,
+                    826,
+                    2138,
+                    1071
+                  ]
+                }
+              ],
+              "content": "avery.smith@contoso.com https://www.contoso.com/"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 105,
+                  "length": 76
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2241,
+                    1099,
+                    3149,
+                    825,
+                    3217,
+                    1053,
+                    2310,
+                    1327
+                  ]
+                }
+              ],
+              "content": "mob: \u002B44 (0) 7911 123456 tel: \u002B44 (0) 20 9876 5432 fax: \u002B44 (0) 20 6789 2345"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 182,
+                  "length": 51
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1133,
+                    1913,
+                    2441,
+                    1452,
+                    2599,
+                    1899,
+                    1290,
+                    2360
+                  ]
+                }
+              ],
+              "content": "Contoso 2 Kingdom Street Paddington, London, W2 6BD"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 234,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    765,
+                    1985,
+                    1033,
+                    1986,
+                    1031,
+                    2457,
+                    763,
+                    2456
+                  ]
+                }
+              ],
+              "content": "5"
             }
           ],
           "styles": [],
@@ -1049,7 +1182,7 @@
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     4032,
@@ -1067,24 +1200,24 @@
                   "valueArray": [
                     {
                       "type": "string",
-                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "valueString": "2 Kingdom Street\nPaddington, London, W2 6BD",
                       "content": "2 Kingdom Street Paddington, London, W2 6BD",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            1238,
-                            2142,
-                            2519,
-                            1689,
-                            2595,
-                            1904,
-                            1313,
-                            2356
+                          "polygon": [
+                            1234,
+                            2140,
+                            2511,
+                            1680,
+                            2592,
+                            1903,
+                            1314,
+                            2363
                           ]
                         }
                       ],
-                      "confidence": 0.958,
+                      "confidence": 0.955,
                       "spans": [
                         {
                           "offset": 190,
@@ -1104,19 +1237,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            1148,
-                            1896,
-                            2247,
-                            1585,
-                            2307,
-                            1753,
-                            1208,
-                            2105
+                          "polygon": [
+                            1144,
+                            1915,
+                            2237,
+                            1582,
+                            2294,
+                            1741,
+                            1204,
+                            2111
                           ]
                         }
                       ],
-                      "confidence": 0.95,
+                      "confidence": 0.841,
                       "spans": [
                         {
                           "offset": 182,
@@ -1139,19 +1272,19 @@
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                683,
-                                1098,
-                                1104,
-                                1000,
-                                1132,
-                                1109,
-                                712,
-                                1205
+                              "polygon": [
+                                675,
+                                1099,
+                                1107,
+                                998,
+                                1135,
+                                1112,
+                                703,
+                                1210
                               ]
                             }
                           ],
-                          "confidence": 0.979,
+                          "confidence": 0.989,
                           "spans": [
                             {
                               "offset": 4,
@@ -1166,19 +1299,19 @@
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                1171,
-                                983,
-                                1562,
-                                886,
+                              "polygon": [
+                                1160,
+                                985,
+                                1560,
+                                883,
                                 1589,
-                                992,
-                                1199,
-                                1092
+                                995,
+                                1188,
+                                1099
                               ]
                             }
                           ],
-                          "confidence": 0.984,
+                          "confidence": 0.981,
                           "spans": [
                             {
                               "offset": 10,
@@ -1191,19 +1324,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            415,
-                            1151,
-                            1564,
-                            885,
+                          "polygon": [
+                            417,
+                            1146,
+                            1563,
+                            882,
                             1592,
-                            1003,
-                            442,
-                            1268
+                            1007,
+                            445,
+                            1271
                           ]
                         }
                       ],
-                      "confidence": 0.973,
+                      "confidence": 0.972,
                       "spans": [
                         {
                           "offset": 0,
@@ -1223,19 +1356,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            475,
-                            1410,
-                            1579,
-                            1143,
-                            1598,
-                            1220,
-                            493,
-                            1487
+                          "polygon": [
+                            476,
+                            1409,
+                            1581,
+                            1144,
+                            1600,
+                            1221,
+                            494,
+                            1486
                           ]
                         }
                       ],
-                      "confidence": 0.858,
+                      "confidence": 0.972,
                       "spans": [
                         {
                           "offset": 34,
@@ -1255,19 +1388,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            2106,
-                            937,
-                            2903,
-                            708,
-                            2918,
-                            764,
-                            2122,
-                            992
+                          "polygon": [
+                            2102,
+                            939,
+                            2904,
+                            713,
+                            2916,
+                            763,
+                            2119,
+                            989
                           ]
                         }
                       ],
-                      "confidence": 0.968,
+                      "confidence": 0.987,
                       "spans": [
                         {
                           "offset": 56,
@@ -1282,23 +1415,24 @@
                   "valueArray": [
                     {
                       "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10207892345",
                       "content": "\u002B44 (0) 20 6789 2345",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            2517,
+                          "polygon": [
+                            2520,
                             1196,
-                            3185,
-                            982,
-                            3209,
-                            1056,
-                            2541,
-                            1269
+                            3188,
+                            986,
+                            3210,
+                            1057,
+                            2542,
+                            1267
                           ]
                         }
                       ],
-                      "confidence": 0.986,
+                      "confidence": 0.987,
                       "spans": [
                         {
                           "offset": 161,
@@ -1318,19 +1452,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            453,
-                            1313,
-                            1303,
-                            1107,
-                            1320,
-                            1179,
-                            471,
-                            1384
+                          "polygon": [
+                            449,
+                            1304,
+                            1306,
+                            1104,
+                            1325,
+                            1185,
+                            468,
+                            1386
                           ]
                         }
                       ],
-                      "confidence": 0.979,
+                      "confidence": 0.987,
                       "spans": [
                         {
                           "offset": 16,
@@ -1340,33 +1474,29 @@
                     }
                   ]
                 },
-                "Locale": {
-                  "type": "string",
-                  "valueString": "en-US",
-                  "confidence": 1
-                },
                 "MobilePhones": {
                   "type": "array",
                   "valueArray": [
                     {
                       "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10791112345",
                       "content": "\u002B44 (0) 7911 123456",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            2429,
-                            1038,
-                            3062,
-                            848,
+                          "polygon": [
+                            2426,
+                            1043,
+                            3063,
+                            850,
                             3083,
-                            918,
-                            2450,
-                            1108
+                            917,
+                            2447,
+                            1110
                           ]
                         }
                       ],
-                      "confidence": 0.984,
+                      "confidence": 0.987,
                       "spans": [
                         {
                           "offset": 110,
@@ -1386,19 +1516,19 @@
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            2118,
-                            1007,
-                            2987,
+                          "polygon": [
+                            2119,
+                            1005,
+                            2982,
                             765,
-                            3003,
-                            819,
-                            2140,
-                            1073
+                            2998,
+                            822,
+                            2143,
+                            1071
                           ]
                         }
                       ],
-                      "confidence": 0.977,
+                      "confidence": 0.988,
                       "spans": [
                         {
                           "offset": 80,
@@ -1413,23 +1543,24 @@
                   "valueArray": [
                     {
                       "type": "phoneNumber",
+                      "valuePhoneNumber": "\u002B10209875432",
                       "content": "\u002B44 (0) 20 9876 5432",
                       "boundingRegions": [
                         {
                           "pageNumber": 1,
-                          "boundingBox": [
-                            2466,
-                            1118,
-                            3125,
-                            913,
-                            3147,
-                            985,
-                            2489,
-                            1189
+                          "polygon": [
+                            2461,
+                            1117,
+                            3128,
+                            912,
+                            3152,
+                            987,
+                            2484,
+                            1193
                           ]
                         }
                       ],
-                      "confidence": 0.971,
+                      "confidence": 0.972,
                       "spans": [
                         {
                           "offset": 135,
@@ -1444,7 +1575,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 233
+                  "length": 235
                 }
               ]
             }
@@ -1455,7 +1586,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
-    "RandomSeed": "2142368846"
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "1359066793"
   }
 }

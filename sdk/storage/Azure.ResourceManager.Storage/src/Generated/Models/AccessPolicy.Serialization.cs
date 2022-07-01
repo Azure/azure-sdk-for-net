@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiryTime))
+            if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpiryTime.Value, "O");
+                writer.WriteStringValue(ExpiryOn.Value, "O");
             }
             if (Optional.IsDefined(Permission))
             {

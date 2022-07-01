@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -42,9 +44,12 @@ namespace Microsoft.Azure.Management.Storage
             /// and 63 characters.The name must comprise of only alphanumeric characters
             /// and it cannot begin with a numeric character.
             /// </param>
-            public static Table Create(this ITableOperations operations, string resourceGroupName, string accountName, string tableName)
+            /// <param name='signedIdentifiers'>
+            /// List of stored access policies specified on the table.
+            /// </param>
+            public static Table Create(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>))
             {
-                return operations.CreateAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, tableName, signedIdentifiers).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,12 +73,15 @@ namespace Microsoft.Azure.Management.Storage
             /// and 63 characters.The name must comprise of only alphanumeric characters
             /// and it cannot begin with a numeric character.
             /// </param>
+            /// <param name='signedIdentifiers'>
+            /// List of stored access policies specified on the table.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Table> CreateAsync(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Table> CreateAsync(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, tableName, signedIdentifiers, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -100,9 +108,12 @@ namespace Microsoft.Azure.Management.Storage
             /// and 63 characters.The name must comprise of only alphanumeric characters
             /// and it cannot begin with a numeric character.
             /// </param>
-            public static Table Update(this ITableOperations operations, string resourceGroupName, string accountName, string tableName)
+            /// <param name='signedIdentifiers'>
+            /// List of stored access policies specified on the table.
+            /// </param>
+            public static Table Update(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>))
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, tableName, signedIdentifiers).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,12 +137,15 @@ namespace Microsoft.Azure.Management.Storage
             /// and 63 characters.The name must comprise of only alphanumeric characters
             /// and it cannot begin with a numeric character.
             /// </param>
+            /// <param name='signedIdentifiers'>
+            /// List of stored access policies specified on the table.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Table> UpdateAsync(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Table> UpdateAsync(this ITableOperations operations, string resourceGroupName, string accountName, string tableName, IList<TableSignedIdentifier> signedIdentifiers = default(IList<TableSignedIdentifier>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, tableName, signedIdentifiers, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

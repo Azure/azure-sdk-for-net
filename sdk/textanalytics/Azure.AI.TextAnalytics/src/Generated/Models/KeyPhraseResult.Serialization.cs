@@ -12,22 +12,49 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class KeyPhraseResult
+    internal partial class KeyPhraseResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("modelVersion");
+            writer.WriteStringValue(ModelVersion);
+            writer.WriteEndObject();
+        }
+
         internal static KeyPhraseResult DeserializeKeyPhraseResult(JsonElement element)
         {
-            IReadOnlyList<DocumentKeyPhrases> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<KeyPhraseResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<DocumentKeyPhrases> array = new List<DocumentKeyPhrases>();
+                    List<KeyPhraseResultDocumentsItem> array = new List<KeyPhraseResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentKeyPhrases.DeserializeDocumentKeyPhrases(item));
+                        array.Add(KeyPhraseResultDocumentsItem.DeserializeKeyPhraseResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -58,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new KeyPhraseResult(documents, errors, statistics.Value, modelVersion);
+            return new KeyPhraseResult(errors, statistics.Value, modelVersion, documents);
         }
     }
 }

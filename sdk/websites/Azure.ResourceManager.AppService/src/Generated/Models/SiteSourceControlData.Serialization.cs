@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUrl))
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl");
-                writer.WriteStringValue(RepoUrl);
+                writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> repoUrl = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
             Optional<bool> isManualIntegration = default;
             Optional<bool> isGitHubAction = default;
@@ -103,11 +104,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -122,7 +128,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("repoUrl"))
                         {
-                            repoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                repoUrl = null;
+                                continue;
+                            }
+                            repoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("branch"))
@@ -184,7 +195,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteSourceControlData(id, name, type, systemData, kind.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value);
+            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value);
         }
     }
 }

@@ -1,84 +1,94 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/general?model-version=2020-02-01\u0026showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Content-Length": "99",
+        "Accept": "application/json",
+        "Content-Length": "221",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-415ed741b38c27468b19ab5cd296853f-8f24a457a53daf46-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211119.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3b09106f973efe8efad9aad5561cc5ca",
+        "traceparent": "00-84c18b0ed83c2640857655a7ed549f3e-aaeb4b76f8c42740-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220501.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "aa115a8344eae5a5c9cfc99f5c3c0591",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "Bill Gates | Microsoft | New Mexico | 127.0.0.1",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Bill Gates | Microsoft | New Mexico | 127.0.0.1",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit",
+          "modelVersion": "2020-02-01"
+        },
+        "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "45d54ccf-100f-4c56-9307-7c21c752c0e1",
+        "apim-request-id": "4e63a42f-9b97-4402-bc0b-5c18b995963a",
+        "Content-Length": "519",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Sat, 20 Nov 2021 00:57:15 GMT",
+        "Date": "Sun, 01 May 2022 21:07:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "92"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "80"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "entities": [
-              {
-                "text": "Bill Gates",
-                "category": "Person",
-                "offset": 0,
-                "length": 10,
-                "confidenceScore": 0.6
-              },
-              {
-                "text": "Microsoft",
-                "category": "Organization",
-                "offset": 13,
-                "length": 9,
-                "confidenceScore": 0.85
-              },
-              {
-                "text": "New Mexico",
-                "category": "Location",
-                "subcategory": "GPE",
-                "offset": 25,
-                "length": 10,
-                "confidenceScore": 0.56
-              },
-              {
-                "text": "127.0.0.1",
-                "category": "IPAddress",
-                "offset": 38,
-                "length": 9,
-                "confidenceScore": 0.8
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-02-01"
+        "kind": "EntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "entities": [
+                {
+                  "text": "Bill Gates",
+                  "category": "Person",
+                  "offset": 0,
+                  "length": 10,
+                  "confidenceScore": 0.6
+                },
+                {
+                  "text": "Microsoft",
+                  "category": "Organization",
+                  "offset": 13,
+                  "length": 9,
+                  "confidenceScore": 0.85
+                },
+                {
+                  "text": "New Mexico",
+                  "category": "Location",
+                  "subcategory": "GPE",
+                  "offset": 25,
+                  "length": 10,
+                  "confidenceScore": 0.56
+                },
+                {
+                  "text": "127.0.0.1",
+                  "category": "IPAddress",
+                  "offset": 38,
+                  "length": 9,
+                  "confidenceScore": 0.8
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2020-02-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "235833771",
+    "RandomSeed": "146480551",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureStorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(AzureStorageType.Value.ToSerialString());
+                writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AccountName))
             {

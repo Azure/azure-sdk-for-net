@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -34,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(StorageAccountUrl))
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl");
-                writer.WriteStringValue(StorageAccountUrl);
+                writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BackupSchedule))
             {
@@ -64,10 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> backupName = default;
             Optional<bool> enabled = default;
-            Optional<string> storageAccountUrl = default;
+            Optional<Uri> storageAccountUrl = default;
             Optional<BackupSchedule> backupSchedule = default;
             Optional<IList<DatabaseBackupSetting>> databases = default;
             foreach (var property in element.EnumerateObject())
@@ -89,11 +90,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -123,7 +129,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("storageAccountUrl"))
                         {
-                            storageAccountUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageAccountUrl = null;
+                                continue;
+                            }
+                            storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("backupSchedule"))
@@ -155,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new BackupRequest(id, name, type, systemData, kind.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases));
+            return new BackupRequest(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value);
         }
     }
 }

@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this TenantResource tenantResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
+            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,71 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
+        /// Operation Id: CheckNameAvailabilityWithSubscription
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
+        /// Operation Id: ValidateProbe
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).ValidateProbe(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
         /// Operation Id: Profiles_List
         /// </summary>
@@ -109,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Lists all of the CDN profiles within an Azure subscription.
+        /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles
         /// Operation Id: Profiles_List
         /// </summary>
@@ -122,78 +186,14 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityWithSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
-
-            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityWithSubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
-
-            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
-        }
-
-        /// <summary>
-        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
-        /// Operation Id: ValidateProbe
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
-        public static async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
-
-            return await GetExtensionClient(subscriptionResource).ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe
-        /// Operation Id: ValidateProbe
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
-        public static Response<ValidateProbeOutput> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
-
-            return GetExtensionClient(subscriptionResource).ValidateProbe(validateProbeInput, cancellationToken);
-        }
-
-        /// <summary>
         /// Check the quota and actual usage of the CDN profiles under the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkResourceUsage
         /// Operation Id: ResourceUsage_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CdnUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
         }
@@ -205,15 +205,15 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CdnUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetResourceUsages(cancellationToken);
         }
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
         /// Operation Id: ManagedRuleSets_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Lists all available managed rule sets.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/CdnWebApplicationFirewallManagedRuleSets
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/cdnWebApplicationFirewallManagedRuleSets
         /// Operation Id: ManagedRuleSets_List
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -255,30 +255,32 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+        /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Retrieve protection policy with specified name within a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -302,6 +304,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -309,7 +312,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary>
         /// Retrieve protection policy with specified name within a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -317,10 +320,214 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability
+        /// Operation Id: CheckEndpointNameAvailability
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
+        }
+
+        #region FrontDoorCustomDomainResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorCustomDomainResource" /> object. </returns>
+        public static FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorCustomDomainResource.ValidateResourceId(id);
+                return new FrontDoorCustomDomainResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorEndpointResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorEndpointResource" /> object. </returns>
+        public static FrontDoorEndpointResource GetFrontDoorEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorEndpointResource.ValidateResourceId(id);
+                return new FrontDoorEndpointResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorOriginGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorOriginGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorOriginGroupResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorOriginGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorOriginGroupResource" /> object. </returns>
+        public static FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorOriginGroupResource.ValidateResourceId(id);
+                return new FrontDoorOriginGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorOriginResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorOriginResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorOriginResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorOriginResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorOriginResource" /> object. </returns>
+        public static FrontDoorOriginResource GetFrontDoorOriginResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorOriginResource.ValidateResourceId(id);
+                return new FrontDoorOriginResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorRouteResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorRouteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRouteResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRouteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorRouteResource" /> object. </returns>
+        public static FrontDoorRouteResource GetFrontDoorRouteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorRouteResource.ValidateResourceId(id);
+                return new FrontDoorRouteResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorRuleSetResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorRuleSetResource" /> object. </returns>
+        public static FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorRuleSetResource.ValidateResourceId(id);
+                return new FrontDoorRuleSetResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRuleResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorRuleResource" /> object. </returns>
+        public static FrontDoorRuleResource GetFrontDoorRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorRuleResource.ValidateResourceId(id);
+                return new FrontDoorRuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorSecurityPolicyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorSecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource" /> object. </returns>
+        public static FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorSecurityPolicyResource.ValidateResourceId(id);
+                return new FrontDoorSecurityPolicyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region FrontDoorSecretResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorSecretResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorSecretResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorSecretResource" /> object. </returns>
+        public static FrontDoorSecretResource GetFrontDoorSecretResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                FrontDoorSecretResource.ValidateResourceId(id);
+                return new FrontDoorSecretResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         #region ProfileResource
         /// <summary>

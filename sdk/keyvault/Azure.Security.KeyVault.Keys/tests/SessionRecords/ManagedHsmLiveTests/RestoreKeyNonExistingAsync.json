@@ -1,17 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys//restore?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys//restore?api-version=7.3",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "0",
-        "traceparent": "00-4adc67a013e49a49a1f96e47d13bc4be-1c5c1deddede364f-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "b8d082ee1f3d3947606cb62c90d4632f",
+        "traceparent": "00-3a383c08698fe64744a7b241dd2daeb6-e07620d428a75f88-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "09de256ba54a72ae0e4631a78489d4d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -25,25 +22,22 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "4a763d66-e4ec-11eb-b27f-000d3aeb0164",
-        "x-ms-server-latency": "1"
+        "x-ms-request-id": "c41a014e-aad4-11ec-9185-000d3aeeda4b",
+        "x-ms-server-latency": "0"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/keys//restore?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys//restore?api-version=7.3",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "28",
         "Content-Type": "application/json",
-        "traceparent": "00-4adc67a013e49a49a1f96e47d13bc4be-1c5c1deddede364f-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20210714.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "b8d082ee1f3d3947606cb62c90d4632f",
+        "traceparent": "00-3a383c08698fe64744a7b241dd2daeb6-e07620d428a75f88-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "09de256ba54a72ae0e4631a78489d4d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -58,19 +52,19 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "4acea460-e4ec-11eb-b27f-000d3aeb0164",
+        "x-ms-request-id": "c449d6f8-aad4-11ec-9185-000d3aeeda4b",
         "x-ms-server-latency": "1"
       },
       "ResponseBody": {
         "error": {
           "code": "MalformedBackupBlob",
-          "message": "Backup blob belongs to a different crypto domain and cannot be used with this instance. (Activity ID: 4acea460-e4ec-11eb-b27f-000d3aeb0164)"
+          "message": "Backup blob belongs to a different crypto domain and cannot be used with this instance. (Activity ID: c449d6f8-aad4-11ec-9185-000d3aeeda4b)"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_MANAGEDHSM_URL": "https://heathskvtesthsm.managedhsm.azure.net/",
-    "RandomSeed": "1682313834"
+    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
+    "RandomSeed": "1813009971"
   }
 }

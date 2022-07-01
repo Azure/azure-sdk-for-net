@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
         /// <param name="message"> Failure message: hints on what is wrong and how to recover. </param>
         /// <param name="errorCode"> Error code corresponding for the failure. </param>
-        /// <param name="lastHealthCheckDateTime"> The timestamp of the last update. </param>
-        internal SessionHostHealthCheckFailureDetails(string message, int? errorCode, DateTimeOffset? lastHealthCheckDateTime)
+        /// <param name="lastHealthCheckOn"> The timestamp of the last update. </param>
+        internal SessionHostHealthCheckFailureDetails(string message, int? errorCode, DateTimeOffset? lastHealthCheckOn)
         {
             Message = message;
             ErrorCode = errorCode;
-            LastHealthCheckDateTime = lastHealthCheckDateTime;
+            LastHealthCheckOn = lastHealthCheckOn;
         }
 
         /// <summary> Failure message: hints on what is wrong and how to recover. </summary>
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Error code corresponding for the failure. </summary>
         public int? ErrorCode { get; }
         /// <summary> The timestamp of the last update. </summary>
-        public DateTimeOffset? LastHealthCheckDateTime { get; }
+        public DateTimeOffset? LastHealthCheckOn { get; }
     }
 }

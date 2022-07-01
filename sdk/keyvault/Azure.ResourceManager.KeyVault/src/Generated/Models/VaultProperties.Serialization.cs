@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("enablePurgeProtection");
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static VaultProperties DeserializeVaultProperties(JsonElement element)
         {
             Guid tenantId = default;
-            KeyVaultSku sku = default;
-            Optional<IList<AccessPolicyEntry>> accessPolicies = default;
+            VaultSku sku = default;
+            Optional<IList<VaultAccessPolicy>> accessPolicies = default;
             Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enableSoftDelete = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<bool> enableRbacAuthorization = default;
-            Optional<CreateMode> createMode = default;
+            Optional<VaultCreateMode> createMode = default;
             Optional<bool> enablePurgeProtection = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<VaultNetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<VaultPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
             Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = VaultSku.DeserializeVaultSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessPolicyEntry> array = new List<AccessPolicyEntry>();
+                    List<VaultAccessPolicy> array = new List<VaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessPolicyEntry.DeserializeAccessPolicyEntry(item));
+                        array.Add(VaultAccessPolicy.DeserializeVaultAccessPolicy(item));
                     }
                     accessPolicies = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vaultUri = null;
                         continue;
                     }
                     vaultUri = new Uri(property.Value.GetString());
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = property.Value.GetString().ToCreateMode();
+                    createMode = property.Value.GetString().ToVaultCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property.Value);
+                    networkAcls = VaultNetworkRuleSet.DeserializeVaultNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"))
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionItem> array = new List<PrivateEndpointConnectionItem>();
+                    List<VaultPrivateEndpointConnectionItemData> array = new List<VaultPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionItem.DeserializePrivateEndpointConnectionItem(item));
+                        array.Add(VaultPrivateEndpointConnectionItemData.DeserializeVaultPrivateEndpointConnectionItemData(item));
                     }
                     privateEndpointConnections = array;
                     continue;

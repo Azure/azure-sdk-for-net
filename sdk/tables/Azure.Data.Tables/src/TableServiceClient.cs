@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -218,11 +219,14 @@ namespace Azure.Data.Tables
                 // This is for SAS key generation.
                 _tableSharedKeyCredential = credential;
             }
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { policy },
-                new ResponseClassifier());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { policy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -256,11 +260,14 @@ namespace Azure.Data.Tables
             var endpointString = _endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
 
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
-                new ResponseClassifier());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -286,11 +293,15 @@ namespace Azure.Data.Tables
                 null when sasCredential != null || !string.IsNullOrWhiteSpace(_endpoint.Query) => new AzureSasCredentialSynchronousPolicy(sasCredential ?? new AzureSasCredential(_endpoint.Query)),
                 _ => policy
             };
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { authPolicy },
-                new ResponseClassifier());
+
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { authPolicy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -327,7 +338,7 @@ namespace Azure.Data.Tables
             TableAccountSasResourceTypes resourceTypes,
             DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn);
         }
 
         /// <summary>
@@ -339,7 +350,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
         public virtual TableAccountSasBuilder GetSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn);
         }
 
         /// <summary>

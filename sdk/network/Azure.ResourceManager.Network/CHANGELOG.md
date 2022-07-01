@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.7 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.6 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.5 (2021-12-28)
 
@@ -157,10 +178,10 @@ After upgrade:
 IPsecPolicy policy = new IPsecPolicy(
    300,
    1024,
-   IPsecEncryption.AES128,
-   IPsecIntegrity.SHA256,
-   IkeEncryption.AES192,
-   IkeIntegrity.SHA1,
-   DhGroup.DHGroup2,
-   PfsGroup.PFS1);
+   IPsecEncryption.Aes128,
+   IPsecIntegrity.Sha256,
+   IkeEncryption.Aes192,
+   IkeIntegrity.Sha1,
+   DHGroup.DHGroup2,
+   PfsGroup.Pfs1);
 ```

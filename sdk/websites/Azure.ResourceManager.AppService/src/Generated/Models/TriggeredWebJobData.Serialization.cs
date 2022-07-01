@@ -31,30 +31,30 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("latest_run");
                 writer.WriteObjectValue(LatestRun);
             }
-            if (Optional.IsDefined(HistoryUrl))
+            if (Optional.IsDefined(HistoryUri))
             {
                 writer.WritePropertyName("history_url");
-                writer.WriteStringValue(HistoryUrl);
+                writer.WriteStringValue(HistoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SchedulerLogsUrl))
+            if (Optional.IsDefined(SchedulerLogsUri))
             {
                 writer.WritePropertyName("scheduler_logs_url");
-                writer.WriteStringValue(SchedulerLogsUrl);
+                writer.WriteStringValue(SchedulerLogsUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RunCommand))
             {
                 writer.WritePropertyName("run_command");
                 writer.WriteStringValue(RunCommand);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExtraInfoUrl))
+            if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url");
-                writer.WriteStringValue(ExtraInfoUrl);
+                writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WebJobType))
             {
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<TriggeredJobRun> latestRun = default;
-            Optional<string> historyUrl = default;
-            Optional<string> schedulerLogsUrl = default;
+            Optional<Uri> historyUrl = default;
+            Optional<Uri> schedulerLogsUrl = default;
             Optional<string> runCommand = default;
-            Optional<string> url = default;
-            Optional<string> extraInfoUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> extraInfoUrl = default;
             Optional<WebJobType> webJobType = default;
             Optional<string> error = default;
             Optional<bool> usingSdk = default;
@@ -126,11 +126,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -155,12 +160,22 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("history_url"))
                         {
-                            historyUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                historyUrl = null;
+                                continue;
+                            }
+                            historyUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scheduler_logs_url"))
                         {
-                            schedulerLogsUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                schedulerLogsUrl = null;
+                                continue;
+                            }
+                            schedulerLogsUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("run_command"))
@@ -170,12 +185,22 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("url"))
                         {
-                            url = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                url = null;
+                                continue;
+                            }
+                            url = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extra_info_url"))
                         {
-                            extraInfoUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                extraInfoUrl = null;
+                                continue;
+                            }
+                            extraInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("web_job_type"))
@@ -222,7 +247,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TriggeredWebJobData(id, name, type, systemData, kind.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
+            return new TriggeredWebJobData(id, name, type, systemData.Value, latestRun.Value, historyUrl.Value, schedulerLogsUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
         }
     }
 }

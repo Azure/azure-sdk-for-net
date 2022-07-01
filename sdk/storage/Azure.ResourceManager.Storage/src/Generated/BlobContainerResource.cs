@@ -17,7 +17,12 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a BlobContainerResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a BlobContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobContainerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetBlobContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource" /> using the GetBlobContainer method.
+    /// </summary>
     public partial class BlobContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlobContainerResource"/> instance. </summary>
@@ -142,7 +147,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -168,7 +173,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -194,18 +199,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Update
         /// </summary>
-        /// <param name="blobContainer"> Properties to update for the blob container. </param>
+        /// <param name="data"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
-        public virtual async Task<Response<BlobContainerResource>> UpdateAsync(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<BlobContainerResource>> UpdateAsync(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
             try
             {
-                var response = await _blobContainerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, blobContainer, cancellationToken).ConfigureAwait(false);
+                var response = await _blobContainerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,18 +225,18 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}
         /// Operation Id: BlobContainers_Update
         /// </summary>
-        /// <param name="blobContainer"> Properties to update for the blob container. </param>
+        /// <param name="data"> Properties to update for the blob container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobContainer"/> is null. </exception>
-        public virtual Response<BlobContainerResource> Update(BlobContainerData blobContainer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<BlobContainerResource> Update(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(blobContainer, nameof(blobContainer));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
             try
             {
-                var response = _blobContainerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, blobContainer, cancellationToken);
+                var response = _blobContainerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,15 +355,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/lease
         /// Operation Id: BlobContainers_Lease
         /// </summary>
-        /// <param name="parameters"> Lease Container request body. </param>
+        /// <param name="content"> Lease Container request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LeaseContainerResponse>> LeaseAsync(LeaseContainerRequest parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LeaseContainerResponse>> LeaseAsync(LeaseContainerContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Lease");
             scope.Start();
             try
             {
-                var response = await _blobContainerRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _blobContainerRestClient.LeaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -373,15 +378,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/lease
         /// Operation Id: BlobContainers_Lease
         /// </summary>
-        /// <param name="parameters"> Lease Container request body. </param>
+        /// <param name="content"> Lease Container request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LeaseContainerResponse> Lease(LeaseContainerRequest parameters = null, CancellationToken cancellationToken = default)
+        public virtual Response<LeaseContainerResponse> Lease(LeaseContainerContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Lease");
             scope.Start();
             try
             {
-                var response = _blobContainerRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, parameters, cancellationToken);
+                var response = _blobContainerRestClient.Lease(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -396,7 +401,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/migrate
         /// Operation Id: BlobContainers_ObjectLevelWorm
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ObjectLevelWormAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -422,7 +427,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/migrate
         /// Operation Id: BlobContainers_ObjectLevelWorm
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation ObjectLevelWorm(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {

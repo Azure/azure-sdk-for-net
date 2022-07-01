@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            GremlinGraphResource graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
-            if (graph != null)
+            if (await GremlinGraphContainer.ExistsAsync(_graphName))
             {
+                var id = GremlinGraphContainer.Id;
+                id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
+                GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
                 await graph.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -159,11 +161,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var graph = await CreateGremlinGraph(null);
             await graph.DeleteAsync(WaitUntil.Completed);
 
-            graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
-            Assert.Null(graph);
+            bool exists = await GremlinGraphContainer.ExistsAsync(_graphName);
+            Assert.IsFalse(exists);
         }
 
-        protected async Task<GremlinGraphResource> CreateGremlinGraph(GremlinGraphCreateUpdateData parameters)
+        protected async Task<GremlinGraphResource> CreateGremlinGraph(GremlinGraphCreateOrUpdateContent parameters)
         {
             if (parameters == null)
             {
@@ -174,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return graphLro.Value;
         }
 
-        private GremlinGraphCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private GremlinGraphCreateOrUpdateContent BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _graphName = Recording.GenerateAssetName("gremlin-graph-");
 
@@ -207,12 +209,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateUpdateData(AzureLocation.WestUS, new Models.GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
+            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }
 
-        private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateUpdateData gremlinGraphCreateUpdateOptions)
+        private void VerifyGremlinGraphCreation(GremlinGraphResource graph, GremlinGraphCreateOrUpdateContent gremlinGraphCreateUpdateOptions)
         {
             Assert.AreEqual(graph.Data.Resource.Id, gremlinGraphCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
 
             Assert.AreEqual(expectedValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath);
             Assert.AreEqual(expectedValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath, actualValue.Data.Resource.ConflictResolutionPolicy.ConflictResolutionPath);

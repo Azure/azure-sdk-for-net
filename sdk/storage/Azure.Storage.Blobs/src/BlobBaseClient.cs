@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -58,7 +59,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
-        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
+        internal virtual bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// Optional. The snapshot of the blob.
@@ -981,7 +982,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default,
             //    };
             //}
-            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1228,7 +1229,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default
             //    };
             //}
-            return DownloadStreamingInternal(
+            return DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1319,7 +1320,7 @@ namespace Azure.Storage.Blobs.Specialized
             //        //    : default
             //    };
             //}
-            return await DownloadStreamingInternal(
+            return await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash,
@@ -1425,7 +1426,20 @@ namespace Azure.Storage.Blobs.Specialized
         //        cancellationToken).ConfigureAwait(false);
         //}
 
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        /// <summary>
+        /// Internal advanced download implementations should call into
+        /// <see cref="DownloadStreamingInternal"/> instead.
+        /// Implementation for public DownloadStreaming/DownloadContent methods to call into.
+        /// </summary>
+        /// <param name="range"></param>
+        /// <param name="conditions"></param>
+        /// <param name="rangeGetContentHash"></param>
+        /// <param name="progressHandler"></param>
+        /// <param name="operationName"></param>
+        /// <param name="async"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
             BlobRequestConditions conditions,
             bool rangeGetContentHash,
@@ -1434,13 +1448,69 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            // TODO #27253
-            //if (UsingClientSideEncryption && options?.TransactionalHashingOptions != default)
-            //{
-            //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-            //}
-
             HttpRange requestedRange = range;
+            if (UsingClientSideEncryption)
+            {
+                if ((await GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                {
+                    range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
+                }
+            }
+
+            var response = await DownloadStreamingInternal(range, conditions, rangeGetContentHash, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
+
+            // if using clientside encryption, wrap the auto-retry stream in a decryptor
+            // we already return a nonseekable stream; returning a crypto stream is fine
+            if (UsingClientSideEncryption)
+            {
+                response.Value.Content = await new BlobClientSideDecryptor(
+                    new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
+                        response.Value.Content,
+                        response.Value.Details.Metadata,
+                        requestedRange,
+                        response.Value.Details.ContentRange,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Impl for a ranged download. Issues a single, smart-retriable request for a specified
+        /// range of this blob.
+        /// </summary>
+        /// <param name="range">
+        /// Optionally specified range.
+        /// </param>
+        /// <param name="conditions">
+        /// Access conditions.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// Whether to request an MD5 on download.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler.
+        /// </param>
+        /// <param name="operationName">
+        /// operation name of the calling API.
+        /// </param>
+        /// <param name="async">
+        /// Whether to operate asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns></returns>
+        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool rangeGetContentHash,
+            IProgress<long> progressHandler,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobBaseClient), message: $"{nameof(Uri)}: {Uri}");
@@ -1450,13 +1520,6 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-
-                    if (UsingClientSideEncryption)
-                    {
-                        // TODO #27253
-                        //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
-                        range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
-                    }
 
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
@@ -1475,9 +1538,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ETag etag = response.Value.Details.ETag;
                     BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
-                    // TODO #27253
-                    //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
-                    //options.Conditions = conditionsWithEtag;
 
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
@@ -1535,20 +1595,6 @@ namespace Azure.Storage.Blobs.Specialized
                     //    // we've consumed the network stream to hash it; return buffered stream to the user
                     //    stream = readDestStream;
                     //}
-
-                    // if using clientside encryption, wrap the auto-retry stream in a decryptor
-                    // we already return a nonseekable stream; returning a crypto stream is fine
-                    if (UsingClientSideEncryption)
-                    {
-                        stream = await new BlobClientSideDecryptor(
-                            new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
-                                stream,
-                                response.Value.Details.Metadata,
-                                requestedRange,
-                                response.Value.Details.ContentRange,
-                                async,
-                                cancellationToken).ConfigureAwait(false);
-                    }
 
                     response.Value.Content = stream;
                     return response;
@@ -2082,7 +2128,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
+            Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
                 rangeGetContentHash: default,
@@ -3010,21 +3056,29 @@ namespace Azure.Storage.Blobs.Specialized
                         readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                     }
 
+                    long blobContentLength = blobProperties.Value.ContentLength;
                     ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
+                    EncryptionData encryptionData = null;
                     if (UsingClientSideEncryption && !allowModifications)
                     {
                         contentEncryptionKeyCache = new();
+                        encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
                     }
 
+                    LazyLoadingReadOnlyStream<BlobProperties>.PredictEncryptedRangeAdjustment rangeAdjustmentFunc = UsingClientSideEncryption
+                        ? r => BlobClientSideDecryptor.GetEncryptedBlobRange(r, encryptionData)
+                        : LazyLoadingReadOnlyStream<BlobProperties>.NoRangeAdjustment;
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         //DownloadTransactionalHashingOptions hashingOptions,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
+                            HttpRange requestedRange = range;
                             if (UsingClientSideEncryption)
                             {
                                 ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
+                                range = rangeAdjustmentFunc(requestedRange);
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
@@ -3035,6 +3089,18 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 
+                            if (UsingClientSideEncryption)
+                            {
+                                response.Value.Content = await new BlobClientSideDecryptor(
+                                    new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
+                                        response.Value.Content,
+                                        response.Value.Details.Metadata,
+                                        requestedRange,
+                                        response.Value.Details.ContentRange,
+                                        async,
+                                        cancellationToken).ConfigureAwait(false);
+                            }
+
                             return Response.FromValue(
                                 (IDownloadedContent)response.Value,
                                 response.GetRawResponse());
@@ -3044,9 +3110,10 @@ namespace Azure.Storage.Blobs.Specialized
                         // TODO #27253
                         //hashingOptions,
                         allowModifications,
-                        blobProperties.Value.ContentLength,
+                        blobContentLength,
                         position,
-                        bufferSize);
+                        bufferSize,
+                        rangeAdjustmentFunc);
                 }
                 catch (Exception ex)
                 {

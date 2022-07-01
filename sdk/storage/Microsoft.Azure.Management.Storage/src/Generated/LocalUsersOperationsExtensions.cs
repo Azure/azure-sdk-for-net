@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Storage
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -36,7 +38,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static LocalUsers List(this ILocalUsersOperations operations, string resourceGroupName, string accountName)
+            public static IEnumerable<LocalUser> List(this ILocalUsersOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocalUsers> ListAsync(this ILocalUsersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<LocalUser>> ListAsync(this ILocalUsersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {

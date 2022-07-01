@@ -245,7 +245,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
             clientMock.SetupGet(c => c.ClientConfiguration.ClientDiagnostics).CallBase();
-            clientMock.SetupGet(c => c.ClientConfiguration.Version).CallBase();
+            clientMock.SetupGet(c => c.ClientConfiguration.ClientOptions.Version).CallBase();
             SetupInternalStaging(clientMock, sink);
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
@@ -292,10 +292,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                     default,
                     s_permissions,
                     s_umask,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     s_conditions,
                     _async,
                     s_cancellationToken
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
 
             clientMock.Setup(
                 c => c.AppendInternal(
@@ -347,6 +354,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                 IDictionary<string, string> metadata,
                 string permissions,
                 string umask,
+                string owner,
+                string group,
+                IList<PathAccessControlItem> accessControlList,
+                string leaseId,
+                TimeSpan? leaseDuration,
+                TimeSpan? timeToExpire,
+                DateTimeOffset? expiresOn,
                 DataLakeRequestConditions conditions,
                 bool async,
                 CancellationToken cancellationToken)

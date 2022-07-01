@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://emailsdktestingacs.communication.azure.com/emails:send?api-version=2021-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "352",
+        "Content-Type": "application/json",
+        "repeatability-first-sent": "Sanitized",
+        "repeatability-request-id": "Sanitized",
+        "traceparent": "00-4a1b70f41a76dba44337d74a9b368378-ebc9283a38a3c7d2-00",
+        "User-Agent": "azsdk-net-Communication.Email/1.0.0-alpha.20220523.1 (.NET 6.0.5; Microsoft Windows 10.0.25120)",
+        "x-ms-client-request-id": "758638719f2d9b30599ea13878e2f64a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 23 May 2022 18:55:46 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sender": "DoNotReply@c9d0862a-c699-4a7b-b840-5e091ce5d628.azurecomm.net",
+        "content": {
+          "subject": "This is the subject",
+          "plainText": "This is the body"
+        },
+        "recipients": {
+          "to": [
+            {
+              "email": "ACSFunctionalTest@outlook.com",
+              "displayName": "Customer Name"
+            }
+          ]
+        },
+        "attachments": [
+          {
+            "name": "Attachment.txt",
+            "attachmentType": "txt",
+            "contentBytesBase64": "VGhpcyBpcyBhIHRlc3Q="
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-01-preview",
+        "Content-Length": "0",
+        "Date": "Mon, 23 May 2022 18:55:45 GMT",
+        "Operation-Location": "https://emailsdktestingacs.communication.azure.com/emails/351812f5-5622-4903-8797-6c18221da373/status",
+        "Repeatability-Result": "accepted",
+        "X-Azure-Ref": "0stiLYgAAAADW5nxKZtVARox5LMDWM3FzV1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-request-id": "351812f5-5622-4903-8797-6c18221da373"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_MANAGED_FROM_EMAIL_ADDRESS": "DoNotReply@c9d0862a-c699-4a7b-b840-5e091ce5d628.azurecomm.net",
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://emailsdktestingacs.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1044434097",
+    "TO_EMAIL_ADDRESS": "ACSFunctionalTest@outlook.com"
+  }
+}

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotProcessModule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotProcessModuleResource" /> and their operations.
+    /// Each <see cref="SiteSlotProcessModuleResource" /> in the collection will belong to the same instance of <see cref="SiteSlotProcessResource" />.
+    /// To get a <see cref="SiteSlotProcessModuleCollection" /> instance call the GetSiteSlotProcessModules method from an instance of <see cref="SiteSlotProcessResource" />.
+    /// </summary>
     public partial class SiteSlotProcessModuleCollection : ArmCollection, IEnumerable<SiteSlotProcessModuleResource>, IAsyncEnumerable<SiteSlotProcessModuleResource>
     {
         private readonly ClientDiagnostics _siteSlotProcessModuleWebAppsClientDiagnostics;
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotProcessModuleWebAppsRestClient.GetProcessModuleSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,66 +239,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(baseAddress, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetProcessModuleSlot
-        /// </summary>
-        /// <param name="baseAddress"> Module base address. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotProcessModuleResource>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
-
-            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotProcessModuleWebAppsRestClient.GetProcessModuleSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotProcessModuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotProcessModuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
-        /// Operation Id: WebApps_GetProcessModuleSlot
-        /// </summary>
-        /// <param name="baseAddress"> Module base address. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual Response<SiteSlotProcessModuleResource> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
-
-            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteSlotProcessModuleWebAppsRestClient.GetProcessModuleSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotProcessModuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotProcessModuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

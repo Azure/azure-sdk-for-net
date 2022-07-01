@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RampUpStartTime))
+            if (Optional.IsDefined(RampUpStartOn))
             {
                 writer.WritePropertyName("rampUpStartTime");
-                writer.WriteStringValue(RampUpStartTime.Value, "O");
+                writer.WriteStringValue(RampUpStartOn.Value, "O");
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -52,20 +52,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("rampUpCapacityThresholdPct");
                 writer.WriteNumberValue(RampUpCapacityThresholdPct.Value);
             }
-            if (Optional.IsDefined(PeakStartTime))
+            if (Optional.IsDefined(PeakStartOn))
             {
                 writer.WritePropertyName("peakStartTime");
-                writer.WriteStringValue(PeakStartTime.Value, "O");
+                writer.WriteStringValue(PeakStartOn.Value, "O");
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("peakLoadBalancingAlgorithm");
                 writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
             }
-            if (Optional.IsDefined(RampDownStartTime))
+            if (Optional.IsDefined(RampDownStartOn))
             {
                 writer.WritePropertyName("rampDownStartTime");
-                writer.WriteStringValue(RampDownStartTime.Value, "O");
+                writer.WriteStringValue(RampDownStartOn.Value, "O");
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("rampDownNotificationMessage");
                 writer.WriteStringValue(RampDownNotificationMessage);
             }
-            if (Optional.IsDefined(OffPeakStartTime))
+            if (Optional.IsDefined(OffPeakStartOn))
             {
                 writer.WritePropertyName("offPeakStartTime");
-                writer.WriteStringValue(OffPeakStartTime.Value, "O");
+                writer.WriteStringValue(OffPeakStartOn.Value, "O");
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {

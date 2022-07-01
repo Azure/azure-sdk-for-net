@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The name of the condition for the delivery rule. </summary>
-    public readonly partial struct MatchVariable : IEquatable<MatchVariable>
+    internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
 
@@ -30,14 +30,17 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestHeaderValue = "RequestHeader";
         private const string RequestBodyValue = "RequestBody";
         private const string RequestSchemeValue = "RequestScheme";
-        private const string UrlPathValue = "UrlPath";
-        private const string UrlFileExtensionValue = "UrlFileExtension";
-        private const string UrlFileNameValue = "UrlFileName";
+        private const string UriPathValue = "UrlPath";
+        private const string UriFileExtensionValue = "UrlFileExtension";
+        private const string UriFileNameValue = "UrlFileName";
         private const string HttpVersionValue = "HttpVersion";
         private const string CookiesValue = "Cookies";
         private const string IsDeviceValue = "IsDevice";
-        private const string RemoteAddrValue = "RemoteAddr";
         private const string SocketAddrValue = "SocketAddr";
+        private const string ClientPortValue = "ClientPort";
+        private const string ServerPortValue = "ServerPort";
+        private const string HostNameValue = "HostName";
+        private const string SslProtocolValue = "SslProtocol";
 
         /// <summary> RemoteAddress. </summary>
         public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
@@ -56,21 +59,27 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> RequestScheme. </summary>
         public static MatchVariable RequestScheme { get; } = new MatchVariable(RequestSchemeValue);
         /// <summary> UrlPath. </summary>
-        public static MatchVariable UrlPath { get; } = new MatchVariable(UrlPathValue);
+        public static MatchVariable UriPath { get; } = new MatchVariable(UriPathValue);
         /// <summary> UrlFileExtension. </summary>
-        public static MatchVariable UrlFileExtension { get; } = new MatchVariable(UrlFileExtensionValue);
+        public static MatchVariable UriFileExtension { get; } = new MatchVariable(UriFileExtensionValue);
         /// <summary> UrlFileName. </summary>
-        public static MatchVariable UrlFileName { get; } = new MatchVariable(UrlFileNameValue);
+        public static MatchVariable UriFileName { get; } = new MatchVariable(UriFileNameValue);
         /// <summary> HttpVersion. </summary>
         public static MatchVariable HttpVersion { get; } = new MatchVariable(HttpVersionValue);
         /// <summary> Cookies. </summary>
         public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
         /// <summary> IsDevice. </summary>
         public static MatchVariable IsDevice { get; } = new MatchVariable(IsDeviceValue);
-        /// <summary> RemoteAddr. </summary>
-        public static MatchVariable RemoteAddr { get; } = new MatchVariable(RemoteAddrValue);
         /// <summary> SocketAddr. </summary>
         public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
+        /// <summary> ClientPort. </summary>
+        public static MatchVariable ClientPort { get; } = new MatchVariable(ClientPortValue);
+        /// <summary> ServerPort. </summary>
+        public static MatchVariable ServerPort { get; } = new MatchVariable(ServerPortValue);
+        /// <summary> HostName. </summary>
+        public static MatchVariable HostName { get; } = new MatchVariable(HostNameValue);
+        /// <summary> SslProtocol. </summary>
+        public static MatchVariable SslProtocol { get; } = new MatchVariable(SslProtocolValue);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are the same. </summary>
         public static bool operator ==(MatchVariable left, MatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are not the same. </summary>

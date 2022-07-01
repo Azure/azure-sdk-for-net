@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a CertificateOrderDetectorResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a CertificateOrderDetector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CertificateOrderDetectorResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCertificateOrderDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource" /> using the GetCertificateOrderDetector method.
+    /// </summary>
     public partial class CertificateOrderDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CertificateOrderDetectorResource"/> instance. </summary>

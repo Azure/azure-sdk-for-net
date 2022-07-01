@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);
             Assert.AreEqual(createdVault.Id, deletedVault.Data.Properties.VaultId);
             Assert.AreEqual("Microsoft.KeyVault/deletedVaults", deletedVault.Data.ResourceType);
-            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags));
-            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeDate);
-            Assert.NotNull(deletedVault.Data.Properties.DeletionDate);
+            Assert.True(createdVault.Tags.DictionaryEqual(deletedVault.Data.Properties.Tags.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)));
+            Assert.NotNull(deletedVault.Data.Properties.ScheduledPurgeOn);
+            Assert.NotNull(deletedVault.Data.Properties.DeletionOn);
             Assert.NotNull(deletedVault.Id);
             return true;
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this IList<AccessPolicyEntry> expected, IList<AccessPolicyEntry> actual)
+        public static bool IsEqual(this IList<VaultAccessPolicy> expected, IList<VaultAccessPolicy> actual)
         {
             if (expected == null && actual == null)
                 return true;
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             if (expected.Count != actual.Count)
                 return false;
 
-            AccessPolicyEntry[] expectedCopy = new AccessPolicyEntry[expected.Count];
+            VaultAccessPolicy[] expectedCopy = new VaultAccessPolicy[expected.Count];
             expected.CopyTo(expectedCopy, 0);
 
-            foreach (AccessPolicyEntry a in actual)
+            foreach (VaultAccessPolicy a in actual)
             {
                 var match = expectedCopy.Where(e =>
                     e.TenantId == a.TenantId &&

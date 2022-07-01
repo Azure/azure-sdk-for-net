@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlot and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotResource" /> and their operations.
+    /// Each <see cref="SiteSlotResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteSlotCollection" /> instance call the GetSiteSlots method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteSlotCollection : ArmCollection, IEnumerable<SiteSlotResource>, IAsyncEnumerable<SiteSlotResource>
     {
         private readonly ClientDiagnostics _siteSlotWebAppsClientDiagnostics;
@@ -54,23 +58,23 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_CreateOrUpdateSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteSlotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotResource>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotResource>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,23 +91,23 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_CreateOrUpdateSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slot"> Name of the deployment slot to create or update. By default, this API attempts to create or modify the production slot. </param>
-        /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
+        /// <param name="data"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="siteEnvelope"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotResource> CreateOrUpdate(WaitUntil waitUntil, string slot, WebSiteData siteEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteSlotResource> CreateOrUpdate(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotWebAppsRestClient.CreateOrUpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotResource>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, siteEnvelope).Request, response, OperationFinalStateVia.Location);
+                var response = _siteSlotWebAppsRestClient.CreateOrUpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotResource>(new SiteSlotOperationSource(Client), _siteSlotWebAppsClientDiagnostics, Pipeline, _siteSlotWebAppsRestClient.CreateCreateOrUpdateSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -274,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(slot, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotWebAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +305,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(slot, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// Operation Id: WebApps_GetSlot
-        /// </summary>
-        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotResource>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotWebAppsRestClient.GetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// Operation Id: WebApps_GetSlot
-        /// </summary>
-        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
-        public virtual Response<SiteSlotResource> GetIfExists(string slot, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-
-            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteSlotWebAppsRestClient.GetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slot, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

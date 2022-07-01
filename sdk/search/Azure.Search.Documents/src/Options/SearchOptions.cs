@@ -334,6 +334,7 @@ namespace Azure.Search.Documents
             destination.Select = source.Select;
             destination.SemanticConfigurationName = source.SemanticConfigurationName;
             destination.SemanticFields = source.SemanticFields;
+            destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }

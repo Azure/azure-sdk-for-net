@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of PercentileMetric. </summary>
-        /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
-        /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
+        /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
+        /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The percentile metric values for the specified time window and timestep. </param>
-        internal PercentileMetric(DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<PercentileMetricValue> metricValues)
+        internal PercentileMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<PercentileMetricValue> metricValues)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             TimeGrain = timeGrain;
             Unit = unit;
             Name = name;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The time grain to be used to summarize the metric values. </summary>
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>

@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -19,8 +17,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the platform of App Service
     /// Authentication/Authorization.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AuthPlatform : ProxyOnlyResource
+    public partial class AuthPlatform
     {
         /// <summary>
         /// Initializes a new instance of the AuthPlatform class.
@@ -33,10 +30,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AuthPlatform class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="enabled">&lt;code&gt;true&lt;/code&gt; if the
         /// Authentication / Authorization feature is enabled for the current
         /// app; otherwise, &lt;code&gt;false&lt;/code&gt;.</param>
@@ -48,8 +41,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// auth settings if they come from a file.
         /// If the path is relative, base will the site's root
         /// directory.</param>
-        public AuthPlatform(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), string configFilePath = default(string))
-            : base(id, name, kind, type)
+        public AuthPlatform(bool? enabled = default(bool?), string runtimeVersion = default(string), string configFilePath = default(string))
         {
             Enabled = enabled;
             RuntimeVersion = runtimeVersion;
@@ -67,7 +59,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Authentication / Authorization feature is enabled for the current
         /// app; otherwise, &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
+        [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
@@ -76,7 +68,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// The setting in this value can control the behavior of certain
         /// features in the Authentication / Authorization module.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.runtimeVersion")]
+        [JsonProperty(PropertyName = "runtimeVersion")]
         public string RuntimeVersion { get; set; }
 
         /// <summary>
@@ -84,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// if they come from a file.
         /// If the path is relative, base will the site's root directory.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.configFilePath")]
+        [JsonProperty(PropertyName = "configFilePath")]
         public string ConfigFilePath { get; set; }
 
     }

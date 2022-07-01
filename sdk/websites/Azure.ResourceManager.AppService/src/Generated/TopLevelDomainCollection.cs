@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of TopLevelDomain and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="TopLevelDomainResource" /> and their operations.
+    /// Each <see cref="TopLevelDomainResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="TopLevelDomainCollection" /> instance call the GetTopLevelDomains method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class TopLevelDomainCollection : ArmCollection, IEnumerable<TopLevelDomainResource>, IAsyncEnumerable<TopLevelDomainResource>
     {
         private readonly ClientDiagnostics _topLevelDomainClientDiagnostics;
@@ -209,7 +213,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,66 +240,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(name, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
-        /// </summary>
-        /// <param name="name"> Name of the top-level domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<TopLevelDomainResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<TopLevelDomainResource>(null, response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
-        /// </summary>
-        /// <param name="name"> Name of the top-level domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<TopLevelDomainResource> GetIfExists(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = _topLevelDomainClientDiagnostics.CreateScope("TopLevelDomainCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<TopLevelDomainResource>(null, response.GetRawResponse());
-                return Response.FromValue(new TopLevelDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

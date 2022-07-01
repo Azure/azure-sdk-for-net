@@ -12,12 +12,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of CopyAuthorization. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal CopyAuthorization(string targetResourceRegion, string targetModelId, string targetModelLocation, DateTimeOffset expirationDateTime)
+        internal CopyAuthorization(string targetResourceRegion, string targetModelId, string targetModelLocation, DateTimeOffset expiresOn)
         {
             TargetResourceRegion = targetResourceRegion;
             TargetModelId = targetModelId;
             TargetModelLocation = targetModelLocation;
-            ExpirationDateTime = expirationDateTime;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Initializes a new instance of CopyAuthorization. </summary>
@@ -26,9 +26,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="targetModelId"> Identifier of the target model. </param>
         /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
         /// <param name="accessToken"> Token used to authorize the request. </param>
-        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
+        /// <param name="expiresOn"> Date/time when the access token expires. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, <paramref name="targetModelId"/>, <paramref name="targetModelLocation"/>, or <paramref name="accessToken"/> is null. </exception>
-        internal CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, string targetModelLocation, string accessToken, DateTimeOffset expirationDateTime)
+        internal CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, string targetModelLocation, string accessToken, DateTimeOffset expiresOn)
         {
             if (targetResourceId == null)
             {
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             TargetModelId = targetModelId;
             TargetModelLocation = targetModelLocation;
             AccessToken = accessToken;
-            ExpirationDateTime = expirationDateTime;
+            ExpiresOn = expiresOn;
         }
         /// <summary> Location of the target Azure resource where the model should be copied to. </summary>
         [CodeGenMember("TargetResourceRegion")]
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Date/time when the access token expires. </summary>
         [CodeGenMember("ExpirationDateTime")]
-        public DateTimeOffset ExpirationDateTime { get; }
+        public DateTimeOffset ExpiresOn { get; }
 
         /// <summary> Token used to authorize the request. </summary>
         [CodeGenMember("AccessToken")]

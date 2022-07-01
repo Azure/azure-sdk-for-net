@@ -31,25 +31,25 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
-        public virtual DeploymentCollection GetDeployments()
+        /// <summary> Gets a collection of ArmDeploymentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments()
         {
-            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationResources and their operations over a ApplicationResource. </returns>
-        public virtual ApplicationCollection GetApplications()
+        /// <summary> Gets a collection of ArmApplicationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmApplicationResources and their operations over a ArmApplicationResource. </returns>
+        public virtual ArmApplicationCollection GetArmApplications()
         {
-            return GetCachedClient(Client => new ApplicationCollection(Client, Id));
+            return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationDefinitionResources and their operations over a ApplicationDefinitionResource. </returns>
-        public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
+        /// <summary> Gets a collection of ArmApplicationDefinitionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
+        public virtual ArmApplicationDefinitionCollection GetArmApplicationDefinitions()
         {
-            return GetCachedClient(Client => new ApplicationDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new ArmApplicationDefinitionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of JitRequestResources in the ResourceGroupResource. </summary>
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Resources
             return GetCachedClient(Client => new JitRequestCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DeploymentScriptResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeploymentScriptResources and their operations over a DeploymentScriptResource. </returns>
-        public virtual DeploymentScriptCollection GetDeploymentScripts()
+        /// <summary> Gets a collection of ArmDeploymentScriptResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
+        public virtual ArmDeploymentScriptCollection GetArmDeploymentScripts()
         {
-            return GetCachedClient(Client => new DeploymentScriptCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentScriptCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetworkGatewayNatRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkGatewayNatRuleResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkGatewayNatRuleResource" /> in the collection will belong to the same instance of <see cref="VirtualNetworkGatewayResource" />.
+    /// To get a <see cref="VirtualNetworkGatewayNatRuleCollection" /> instance call the GetVirtualNetworkGatewayNatRules method from an instance of <see cref="VirtualNetworkGatewayResource" />.
+    /// </summary>
     public partial class VirtualNetworkGatewayNatRuleCollection : ArmCollection, IEnumerable<VirtualNetworkGatewayNatRuleResource>, IAsyncEnumerable<VirtualNetworkGatewayNatRuleResource>
     {
         private readonly ClientDiagnostics _virtualNetworkGatewayNatRuleClientDiagnostics;
@@ -54,23 +58,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
         /// Operation Id: VirtualNetworkGatewayNatRules_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
+        /// <param name="data"> Parameters supplied to create or Update a Nat Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualNetworkGatewayNatRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualNetworkGatewayNatRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string natRuleName, VirtualNetworkGatewayNatRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
-            Argument.AssertNotNull(natRuleParameters, nameof(natRuleParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,23 +91,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
         /// Operation Id: VirtualNetworkGatewayNatRules_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="natRuleParameters"> Parameters supplied to create or Update a Nat Rule. </param>
+        /// <param name="data"> Parameters supplied to create or Update a Nat Rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="natRuleParameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualNetworkGatewayNatRuleResource> CreateOrUpdate(WaitUntil waitUntil, string natRuleName, VirtualNetworkGatewayNatRuleData natRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualNetworkGatewayNatRuleResource> CreateOrUpdate(WaitUntil waitUntil, string natRuleName, VirtualNetworkGatewayNatRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
-            Argument.AssertNotNull(natRuleParameters, nameof(natRuleParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, natRuleParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualNetworkGatewayNatRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, data, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualNetworkGatewayNatRuleResource>(new VirtualNetworkGatewayNatRuleOperationSource(Client), _virtualNetworkGatewayNatRuleClientDiagnostics, Pipeline, _virtualNetworkGatewayNatRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -274,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualNetworkGatewayNatRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +305,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(natRuleName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
-        /// Operation Id: VirtualNetworkGatewayNatRules_Get
-        /// </summary>
-        /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
-        public virtual async Task<Response<VirtualNetworkGatewayNatRuleResource>> GetIfExistsAsync(string natRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
-
-            using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkGatewayNatRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualNetworkGatewayNatRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkGatewayNatRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/natRules/{natRuleName}
-        /// Operation Id: VirtualNetworkGatewayNatRules_Get
-        /// </summary>
-        /// <param name="natRuleName"> The name of the nat rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
-        public virtual Response<VirtualNetworkGatewayNatRuleResource> GetIfExists(string natRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(natRuleName, nameof(natRuleName));
-
-            using var scope = _virtualNetworkGatewayNatRuleClientDiagnostics.CreateScope("VirtualNetworkGatewayNatRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _virtualNetworkGatewayNatRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, natRuleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualNetworkGatewayNatRuleResource>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkGatewayNatRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

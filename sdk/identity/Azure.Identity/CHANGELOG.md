@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2022-04-05)
+
+### Features Added
+- Added a new property under the `Diagnostics` options available on `TokenCredentialOptions` and all sub-types. If set to `true`, we try to log the account identifiers by parsing the received access token. The account identifiers we try to log are the:
+  - Application or Client Identifier
+  - User Principal Name
+  - Tenant Identifier
+  - Object Identifier of the authenticated user or app
+- `ManagedIdentityCredential` now attempts to use the newest "2019-08-01" api version for App Service Managed Identity sources. The newer API version will be used if the `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` environment variables are set.
+
+### Bugs Fixed
+- Fixed an issue where the x5c header is not sent for `OnBehalfOfCredential` when the `SendCertificateChain` option is set. [#27679](https://github.com/Azure/azure-sdk-for-net/issues/27679)
 
 ## 1.6.0-beta.1 (2022-02-11)
 
@@ -99,6 +112,9 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### New Features
 
+- Added regional STS support to client credential types
+  - Added `RegionalAuthority` extensible enum
+  - Added `RegionalAuthority` property to `ClientSecretCredentialOptions` and `ClientCertificateCredentialOptions`
 - Added support to `ManagedIdentityCredential` for Bridge to Kubernetes local development authentication.
 - TenantId values returned from service challenge responses can now be used to request tokens from the correct tenantId. To support this feature, there is a new `AllowMultiTenantAuthentication` option on `TokenCredentialOptions`.
   - By default, `AllowMultiTenantAuthentication` is false. When this option property is false and the tenant Id configured in the credential options differs from the tenant Id set in the `TokenRequestContext` sent to a credential, an `AuthorizationFailedException` will be thrown. This is potentially breaking change as it could be a different exception than what was thrown previously. This exception behavior can be overridden by either setting an `AppContext` switch named "Azure.Identity.EnableLegacyTenantSelection" to `true` or by setting the environment variable "AZURE_IDENTITY_ENABLE_LEGACY_TENANT_SELECTION" to "true". Note: AppContext switches can also be configured via configuration like below:
@@ -111,11 +127,6 @@ Thank you to our developer community members who helped to make Azure Identity b
   ```
   
 ## 1.5.0-beta.1 (2021-06-08)
-
-### New Features
-- Added regional STS support to client credential types
-  - Added `RegionalAuthority` extensible enum
-  - Added `RegionalAuthority` property to `ClientSecretCredentialOptions` and `ClientCertificateCredentialOptions`
 
 ### Fixes and improvements
 

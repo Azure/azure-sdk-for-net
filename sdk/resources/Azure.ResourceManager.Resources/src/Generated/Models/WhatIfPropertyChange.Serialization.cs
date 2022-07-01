@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element)
         {
             string path = default;
-            PropertyChangeType propertyChangeType = default;
+            WhatIfPropertyChangeType propertyChangeType = default;
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
             Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("propertyChangeType"))
                 {
-                    propertyChangeType = property.Value.GetString().ToPropertyChangeType();
+                    propertyChangeType = property.Value.GetString().ToWhatIfPropertyChangeType();
                     continue;
                 }
                 if (property.NameEquals("before"))

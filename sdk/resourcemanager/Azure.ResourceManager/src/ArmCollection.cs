@@ -73,12 +73,12 @@ namespace Azure.ResourceManager
         /// Gets a cached client to use for extension methods.
         /// </summary>
         /// <typeparam name="T"> The type of client to get. </typeparam>
-        /// <param name="func"> The constructor factory for the client. </param>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
             where T : class
         {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
         }
     }
 }

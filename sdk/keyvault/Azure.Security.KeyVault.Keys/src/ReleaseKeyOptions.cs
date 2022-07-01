@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Options for <see cref="KeyClient.ReleaseKey(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/> and
-    /// <see cref="KeyClient.ReleaseKeyAsync(string, string, string, ReleaseKeyOptions, System.Threading.CancellationToken)"/>.
+    /// Options for <see cref="KeyClient.ReleaseKey(ReleaseKeyOptions, System.Threading.CancellationToken)"/> and
+    /// <see cref="KeyClient.ReleaseKeyAsync(ReleaseKeyOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class ReleaseKeyOptions : IJsonSerializable
     {
@@ -18,9 +20,28 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="ReleaseKeyOptions"/> class.
         /// </summary>
-        public ReleaseKeyOptions()
+        /// <param name="name">The name of the key to release.</param>
+        /// <param name="targetAttestationToken">The attestation assertion for the target of the key release.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> contains an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
+        public ReleaseKeyOptions(string name, string targetAttestationToken)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
+
+            Name = name;
+            TargetAttestationToken = targetAttestationToken;
         }
+
+        /// <summary>
+        /// Gets the name of the key to release.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the optional version of the key to release.
+        /// </summary>
+        public string Version { get; set; }
 
         /// <summary>
         /// Gets or sets a client-provided nonce for freshness.
@@ -33,9 +54,9 @@ namespace Azure.Security.KeyVault.Keys
         public KeyExportEncryptionAlgorithm? Algorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the attestation assertion for the target of the key release.
+        /// Gets the attestation assertion for the target of the key release.
         /// </summary>
-        internal string TargetAttestationToken { get; set; }
+        public string TargetAttestationToken { get; }
 
         internal void WriteProperties(Utf8JsonWriter json)
         {

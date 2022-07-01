@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Resources
         {
             Namespaces = new ChangeTrackingList<string>();
             ResourceTypeAliases = new ChangeTrackingList<ResourceTypeAliases>();
-            Effects = new ChangeTrackingList<DataEffect>();
+            Effects = new ChangeTrackingList<DataPolicyManifestEffect>();
             FieldValues = new ChangeTrackingList<string>();
             Standard = new ChangeTrackingList<string>();
-            Custom = new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>();
+            CustomDefinitions = new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>();
         }
 
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="effects"> The effect definition. </param>
         /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
         /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
-        /// <param name="custom"> An array of data manifest custom resource definition. </param>
-        internal DataPolicyManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> namespaces, string policyMode, bool? isBuiltInOnly, IReadOnlyList<ResourceTypeAliases> resourceTypeAliases, IReadOnlyList<DataEffect> effects, IReadOnlyList<string> fieldValues, IReadOnlyList<string> standard, IReadOnlyList<DataManifestCustomResourceFunctionDefinition> custom) : base(id, name, resourceType, systemData)
+        /// <param name="customDefinitions"> An array of data manifest custom resource definition. </param>
+        internal DataPolicyManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> namespaces, string policyMode, bool? isBuiltInOnly, IReadOnlyList<ResourceTypeAliases> resourceTypeAliases, IReadOnlyList<DataPolicyManifestEffect> effects, IReadOnlyList<string> fieldValues, IReadOnlyList<string> standard, IReadOnlyList<DataManifestCustomResourceFunctionDefinition> customDefinitions) : base(id, name, resourceType, systemData)
         {
             Namespaces = namespaces;
             PolicyMode = policyMode;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources
             Effects = effects;
             FieldValues = fieldValues;
             Standard = standard;
-            Custom = custom;
+            CustomDefinitions = customDefinitions;
         }
 
         /// <summary> The list of namespaces for the data policy manifest. </summary>
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> An array of resource type aliases. </summary>
         public IReadOnlyList<ResourceTypeAliases> ResourceTypeAliases { get; }
         /// <summary> The effect definition. </summary>
-        public IReadOnlyList<DataEffect> Effects { get; }
+        public IReadOnlyList<DataPolicyManifestEffect> Effects { get; }
         /// <summary> The non-alias field accessor values that can be used in the policy rule. </summary>
         public IReadOnlyList<string> FieldValues { get; }
         /// <summary> The standard resource functions (subscription and/or resourceGroup). </summary>
         public IReadOnlyList<string> Standard { get; }
         /// <summary> An array of data manifest custom resource definition. </summary>
-        public IReadOnlyList<DataManifestCustomResourceFunctionDefinition> Custom { get; }
+        public IReadOnlyList<DataManifestCustomResourceFunctionDefinition> CustomDefinitions { get; }
     }
 }

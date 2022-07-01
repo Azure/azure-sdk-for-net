@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNameAvailabilityAsync(new CheckNameAvailability(namespaceName));
+                ServiceBusNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNamespaceNameAvailabilityAsync(new ServiceBusNameAvailabilityContent(namespaceName));
                 if (res.NameAvailable == true)
                 {
                     return namespaceName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             Assert.NotNull(sBNamespace.Id.Name);
             Assert.NotNull(sBNamespace.Data);
             Assert.NotNull(sBNamespace.Data.Location);
-            Assert.NotNull(sBNamespace.Data.CreatedAt);
+            Assert.NotNull(sBNamespace.Data.CreatedOn);
             Assert.NotNull(sBNamespace.Data.Sku);
             if (useDefaults)
             {

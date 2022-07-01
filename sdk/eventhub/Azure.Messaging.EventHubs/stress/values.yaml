@@ -1,0 +1,6 @@
+scenarios:
+- "Consumer"
+- "EventProd"
+- "BuffProd"
+- "BurstBuffProd"
+- "Processor"

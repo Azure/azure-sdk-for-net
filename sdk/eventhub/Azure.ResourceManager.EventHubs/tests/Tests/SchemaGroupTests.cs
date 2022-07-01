@@ -18,30 +18,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
         }
         private ResourceGroupResource _resourceGroup;
-        private SchemaGroupCollection _schemaGroupCollection;
+        private EventHubsSchemaGroupCollection _schemaGroupCollection;
         [SetUp]
         public async Task CreateNamespaceAndGetEventhubCollection()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
-            _schemaGroupCollection = eHNamespace.GetSchemaGroups();
-        }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            _schemaGroupCollection = eHNamespace.GetEventHubsSchemaGroups();
         }
 
         [Test]
@@ -51,25 +36,24 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create schema group
             string schemaGroupName = Recording.GenerateAssetName("schemagroup");
-            SchemaGroupData parameters = new SchemaGroupData()
+            EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
                 SchemaType = SchemaType.Avro
             };
-            SchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
+            EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
             Assert.NotNull(schemaGroup);
             Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
 
             //validate if created successfully
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.NotNull(schemaGroup);
             Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
+            schemaGroup = await _schemaGroupCollection.GetAsync(schemaGroupName);
 
             //delete eventhub
             await schemaGroup.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.Null(schemaGroup);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _schemaGroupCollection.GetAsync(schemaGroupName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 
@@ -80,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create a schema group
             string schemaGroupName1 = Recording.GenerateAssetName("schemagroup1");
-            SchemaGroupData parameters = new SchemaGroupData()
+            EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
                 SchemaType = SchemaType.Avro
             };
@@ -88,8 +72,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate
             int count = 0;
-            SchemaGroupResource schemaGroup1 = null;
-            await foreach (SchemaGroupResource schemaGroup in _schemaGroupCollection.GetAllAsync())
+            EventHubsSchemaGroupResource schemaGroup1 = null;
+            await foreach (EventHubsSchemaGroupResource schemaGroup in _schemaGroupCollection.GetAllAsync())
             {
                 count++;
                 if (schemaGroup.Id.Name == schemaGroupName1)

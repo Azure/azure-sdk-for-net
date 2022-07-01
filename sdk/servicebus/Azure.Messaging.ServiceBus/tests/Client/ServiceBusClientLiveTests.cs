@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());
@@ -265,7 +265,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await client.DisposeAsync();
                 // The close frame does not come back from the service before the DisposeAsync
                 // call is returned.
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 metrics = client.GetTransportMetrics();
                 Assert.Greater(metrics.LastConnectionClose, thirdOpen);
                 Assert.Greater(metrics.LastHeartBeat, firstHeartBeat);
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var metrics = client.GetTransportMetrics();
                 var firstHeartBeat = metrics.LastHeartBeat;
                 var firstOpen = metrics.LastConnectionOpen;
-                Assert.Greater(firstOpen, firstHeartBeat);
+                Assert.GreaterOrEqual(firstOpen, firstHeartBeat);
 
                 SimulateNetworkFailure(client);
                 await sender.SendMessageAsync(new ServiceBusMessage());

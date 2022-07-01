@@ -16,11 +16,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerJobAgentJobExecutionStepTargetResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerJobAgentJobExecutionStepTarget along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerJobAgentJobExecutionStepTargetResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerJobAgentJobExecutionStepTargetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerJobAgentJobExecutionStepResource" /> using the GetServerJobAgentJobExecutionStepTarget method.
+    /// </summary>
     public partial class ServerJobAgentJobExecutionStepTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobExecutionStepTargetResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobExecutionId, string stepName, string targetId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}";
             return new ResourceIdentifier(resourceId);

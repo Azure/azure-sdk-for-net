@@ -22,10 +22,10 @@ pr:
     - sdk/resourcemanager/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: machinelearningservices
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.MachineLearningServices
-      safeName: AzureResourceManagerMachineLearningServices
+    - name: Azure.ResourceManager.MachineLearning
+      safeName: AzureResourceManagerMachineLearning

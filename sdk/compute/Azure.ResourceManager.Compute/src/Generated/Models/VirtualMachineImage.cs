@@ -12,21 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Image. </summary>
-    public partial class VirtualMachineImage : VirtualMachineImageResource
+    public partial class VirtualMachineImage : VirtualMachineImageBase
     {
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="location"/> is null. </exception>
-        public VirtualMachineImage(string name, string location) : base(name, location)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public VirtualMachineImage(string name, AzureLocation location) : base(name, location)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
             }
 
             DataDiskImages = new ChangeTrackingList<DataDiskImage>();
@@ -46,7 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
-        internal VirtualMachineImage(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
+        /// <param name="architecture"> Specifies the Architecture Type. </param>
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -55,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGeneration = hyperVGeneration;
             Disallowed = disallowed;
             Features = features;
+            Architecture = architecture;
         }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
@@ -62,10 +60,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Contains the os disk image information. </summary>
         internal OSDiskImage OSDiskImage { get; set; }
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemTypes OSDiskImageOperatingSystem
+        public SupportedOperatingSystemType? OSDiskImageOperatingSystem
         {
-            get => OSDiskImage is null ? default : OSDiskImage.OperatingSystem;
-            set => OSDiskImage = new OSDiskImage(value);
+            get => OSDiskImage is null ? default(SupportedOperatingSystemType?) : OSDiskImage.OperatingSystem;
+            set
+            {
+                OSDiskImage = value.HasValue ? new OSDiskImage(value.Value) : null;
+            }
         }
 
         /// <summary> The list of data disk images information. </summary>
@@ -73,18 +74,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes automatic OS upgrade properties on the image. </summary>
         internal AutomaticOSUpgradeProperties AutomaticOSUpgradeProperties { get; set; }
         /// <summary> Specifies whether automatic OS upgrade is supported on the image. </summary>
-        public bool AutomaticOSUpgradeSupported
+        public bool? AutomaticOSUpgradeSupported
         {
-            get => AutomaticOSUpgradeProperties is null ? default : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
-            set => AutomaticOSUpgradeProperties = new AutomaticOSUpgradeProperties(value);
+            get => AutomaticOSUpgradeProperties is null ? default(bool?) : AutomaticOSUpgradeProperties.AutomaticOSUpgradeSupported;
+            set
+            {
+                AutomaticOSUpgradeProperties = value.HasValue ? new AutomaticOSUpgradeProperties(value.Value) : null;
+            }
         }
 
         /// <summary> Specifies the HyperVGeneration Type. </summary>
-        public HyperVGenerationTypes? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; set; }
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskTypes? DisallowedVmDiskType
+        public VmDiskType? DisallowedVmDiskType
         {
             get => Disallowed is null ? default : Disallowed.VmDiskType;
             set
@@ -97,5 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; }
+        /// <summary> Specifies the Architecture Type. </summary>
+        public ArchitectureType? Architecture { get; set; }
     }
 }
