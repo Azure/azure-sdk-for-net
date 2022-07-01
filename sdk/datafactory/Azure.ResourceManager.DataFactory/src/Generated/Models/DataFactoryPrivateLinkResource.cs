@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
-        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateLinkResourceProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateLinkResourceProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Core resource properties. </summary>
         public DataFactoryPrivateLinkResourceProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }

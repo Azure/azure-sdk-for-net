@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
-        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Managed private endpoint properties. </summary>
         public ManagedPrivateEndpoint Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, string eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

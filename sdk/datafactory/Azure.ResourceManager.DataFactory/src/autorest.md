@@ -15,10 +15,11 @@ skip-csproj: true
  
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'PurviewResourceId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -41,6 +42,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   MWS: Mws
+  Etag: ETag
 
 rename-mapping:
   DatasetDataElement.name: ColumnName
@@ -78,10 +80,6 @@ override-operation-name:
   Factories_ConfigureFactoryRepo: ConfigureFactoryRepo
 
 directive:
-  - from: datafactory.json
-    where: $.definitions
-    transform: >
-      $.PurviewConfiguration.properties.purviewResourceId['x-ms-format'] = 'arm-id';
   - from: datafactory.json
     where: $.paths
     transform: >

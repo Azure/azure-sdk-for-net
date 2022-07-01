@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element)
         {
             Optional<FactoryIdentity> identity = default;
-            Optional<string> eTag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -117,7 +118,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 if (property.NameEquals("eTag"))
                 {
-                    eTag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), eTag.Value, additionalProperties);
+            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
         }
     }
 }

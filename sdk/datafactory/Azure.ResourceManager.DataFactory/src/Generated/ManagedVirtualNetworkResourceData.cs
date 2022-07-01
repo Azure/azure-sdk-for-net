@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed Virtual Network properties. </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
-        internal ManagedVirtualNetworkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedVirtualNetwork properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal ManagedVirtualNetworkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedVirtualNetwork properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Managed Virtual Network properties. </summary>
         public ManagedVirtualNetwork Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.DateTimeOffset? CreateOn { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.EncryptionConfiguration Encryption { get { throw null; } set { } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.GlobalParameterSpecification> GlobalParameters { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.FactoryIdentity Identity { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryGlobalParameterData : Azure.ResourceManager.Models.ResourceData
     {
         public DataFactoryGlobalParameterData(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.GlobalParameterSpecification> properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.GlobalParameterSpecification> Properties { get { throw null; } }
     }
     public partial class DataFactoryGlobalParameterResource : Azure.ResourceManager.ArmResource
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory
         public int? Concurrency { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.BinaryData ElapsedTimeMetricDuration { get { throw null; } set { } }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public string FolderName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> RunDimensions { get { throw null; } }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public DataFactoryPrivateEndpointConnectionData() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.RemotePrivateEndpointConnection Properties { get { throw null; } set { } }
     }
     public partial class DataFactoryPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryTriggerData : Azure.ResourceManager.Models.ResourceData
     {
         public DataFactoryTriggerData(Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerProperties properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryTriggerProperties Properties { get { throw null; } set { } }
     }
     public partial class DataFactoryTriggerResource : Azure.ResourceManager.ArmResource
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFlowResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public DataFlowResourceData(Azure.ResourceManager.DataFactory.Models.DataFlow properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFlow Properties { get { throw null; } set { } }
     }
     public partial class DatasetResource : Azure.ResourceManager.ArmResource
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DatasetResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public DatasetResourceData(Azure.ResourceManager.DataFactory.Models.Dataset properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.Dataset Properties { get { throw null; } set { } }
     }
     public partial class IntegrationRuntimeResource : Azure.ResourceManager.ArmResource
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class IntegrationRuntimeResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public IntegrationRuntimeResourceData(Azure.ResourceManager.DataFactory.Models.IntegrationRuntime properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntime Properties { get { throw null; } set { } }
     }
     public partial class LinkedServiceResource : Azure.ResourceManager.ArmResource
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class LinkedServiceResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public LinkedServiceResourceData(Azure.ResourceManager.DataFactory.Models.LinkedService properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.LinkedService Properties { get { throw null; } set { } }
     }
     public partial class ManagedPrivateEndpointResource : Azure.ResourceManager.ArmResource
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class ManagedPrivateEndpointResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedPrivateEndpointResourceData(Azure.ResourceManager.DataFactory.Models.ManagedPrivateEndpoint properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.ManagedPrivateEndpoint Properties { get { throw null; } set { } }
     }
     public partial class ManagedVirtualNetworkResource : Azure.ResourceManager.ArmResource
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.DataFactory
     public partial class ManagedVirtualNetworkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public ManagedVirtualNetworkResourceData(Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetwork properties) { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetwork Properties { get { throw null; } set { } }
     }
 }
@@ -1980,13 +1980,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public DataFactoryPrivateEndpointConnectionCreateOrUpdateContent() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.PrivateLinkConnectionApprovalRequest Properties { get { throw null; } set { } }
     }
     public partial class DataFactoryPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         public DataFactoryPrivateLinkResource() { }
-        public Azure.ETag? Etag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryPrivateLinkResourceProperties Properties { get { throw null; } set { } }
     }
     public partial class DataFactoryPrivateLinkResourceProperties

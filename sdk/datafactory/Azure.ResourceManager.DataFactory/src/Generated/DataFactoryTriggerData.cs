@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.DataFactory
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
-        internal DataFactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryTriggerProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal DataFactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryTriggerProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         public DataFactoryTriggerProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
     }
 }
