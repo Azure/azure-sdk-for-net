@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = eTag;
             PrivateIPAddress = privateIPAddress;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
-        public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

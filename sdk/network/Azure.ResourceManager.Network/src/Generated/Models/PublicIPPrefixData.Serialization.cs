@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
+            Optional<NetworkIPVersion> publicIPAddressVersion = default;
             Optional<IList<IPTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            publicIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipTags"))
