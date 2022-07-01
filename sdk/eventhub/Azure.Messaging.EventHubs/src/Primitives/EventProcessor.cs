@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The task responsible for managing the operations of the processor when it is running.</summary>
         private Task _runningProcessorTask;
 
-        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.</summary>
+        /// <summary>A <see cref="CancellationTokenSource" /> instance to signal the request to cancel the current running task.</summary>
         private CancellationTokenSource _runningProcessorCancellationSource;
 
         /// <summary>
@@ -826,11 +826,21 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                     catch (DeveloperCodeException ex)
                     {
-                        // Record that an exception was observed in developer-provided code, but consider it fatal and take no further
-                        // steps to handle or dispatch it.
+                        // If an exception leaked from developer-provided code, the processor lacks the proper level of context and
+                        // insight to understand if it is safe to ignore and continue.  Instead, this will be thrown and allowed to
+                        // fault the partition processing task.  To ensure visibility, log the error with an explicit call-out to identify
+                        // it as originating in developer code.
 
                         var message = string.Format(CultureInfo.InvariantCulture, Resources.DeveloperCodeExceptionMessageMask, ex.InnerException.Message);
                         Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, message);
+
+                        // Because this can be non-obvious to developers who are not capturing logs, also surface an exception to the error handler
+                        // which offers guidance for error handling in developer code.
+
+                        var handlerException = new EventHubsException(false, EventHubName, Resources.DeveloperCodeEventProcessingError, EventHubsException.FailureReason.GeneralError, ex.InnerException);
+                        _  = InvokeOnProcessingErrorAsync(handlerException, partition, Resources.OperationEventProcessingDeveloperCode, CancellationToken.None);
+
+                        // Discard the wrapper and propagate just the source exception from developer code.
 
                         ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                     }
@@ -894,6 +904,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
+        /// </summary>
+        ///
+        /// <returns>The requested <see cref="EventHubConnection" />.</returns>
+        ///
+        protected internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
+
+        /// <summary>
         ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
         ///   the processor to function.
         /// </summary>
@@ -903,8 +921,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        internal virtual async Task ValidateStartupAsync(bool async,
-                                                         CancellationToken cancellationToken = default)
+        protected internal virtual async Task ValidateStartupAsync(bool async,
+                                                                   CancellationToken cancellationToken = default)
         {
             var validationTask = Task.WhenAll
             (
@@ -940,14 +958,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 validationTask.Wait(cancellationToken);
             }
         }
-
-        /// <summary>
-        ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
-        /// </summary>
-        ///
-        /// <returns>The requested <see cref="EventHubConnection" />.</returns>
-        ///
-        protected internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
@@ -1065,8 +1075,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   If <see cref="EventProcessorOptions.MaximumWaitTime"/> is <c>null</c>, the event processor will continue reading from the Event Hub
         ///   partition until a batch with at least one event could be formed and will not dispatch any empty batches to this method.
         ///
-        ///   Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
-        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
+        ///   Should an exception occur within the code for this method, the event processor will allow it to propagate up the stack without attempting to handle it in any way.
+        ///   On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.
+        ///   Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         ///
         ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
@@ -1094,7 +1105,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         ///   The exceptions surfaced to this method may be fatal or non-fatal; because the processor may not be able to accurately predict whether an
         ///   exception was fatal or whether its state was corrupted, this method has responsibility for making the determination as to whether processing
-        ///   should be terminated or restarted.  The method may do so by calling Stop on the processor instance and then, if desired, calling Start on the processor.
+        ///   should be terminated or restarted.  If desired, it is safe for this method to manage the processor by calling <see cref="StopProcessingAsync" />
+        ///   and/or <see cref="StartProcessingAsync" />.
         ///
         ///   It is recommended that, for production scenarios, the decision be made by considering observations made by this error handler, the method invoked
         ///   when initializing processing for a partition, and the method invoked when processing for a partition is stopped.  Many developers will also include
@@ -1103,6 +1115,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   As with event processing, should an exception occur in the code for the error handler, the event processor will allow it to bubble and will not attempt to handle
         ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         /// </remarks>
+        ///
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md">Troubleshoot Event Hubs issues</seealso>
         ///
         protected abstract Task OnProcessingErrorAsync(Exception exception,
                                                        TPartition partition,
@@ -1940,7 +1954,22 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var connection = CreateConnection();
             await using var connectionAwaiter = connection.ConfigureAwait(false);
-            await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+
+            var properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+
+            // To ensure validity of the requested consumer group and that at least one partition exists,
+            // attempt to read from a partition.
+
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], "validate", EventPosition.Earliest, connection, Options);
+
+            try
+            {
+                await consumer.ReceiveAsync(1, TimeSpan.FromMilliseconds(5), cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                await consumer.CloseAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>

@@ -265,7 +265,7 @@
     <value>The last enqueued event properties cannot be read when an event is not available.</value>
   </data>
   <data name="DeveloperCodeError" xml:space="preserve">
-    <value>An error was encountered while executing custom code, such as in an event handler.</value>
+    <value>An error was encountered while executing developer-provided code, such as in an event handler.</value>
   </data>
   <data name="DeveloperCodeExceptionMessageMask" xml:space="preserve">
     <value>[Developer Code Exception]: {0}.</value>
@@ -329,5 +329,11 @@
   </data>
   <data name="EventTooLargeMask" xml:space="preserve">
     <value>The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes.</value>
+  </data>
+  <data name="DeveloperCodeEventProcessingError" xml:space="preserve">
+    <value>An error was encountered while executing developer-provided to process events.  On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and ensure that no exceptions are allowed to propagate up the stack.  Exception details can be found in the inner exception.</value>
+  </data>
+  <data name="OperationEventProcessingDeveloperCode" xml:space="preserve">
+    <value>Executing developer-provided code to process events.</value>
   </data>
 </root>
