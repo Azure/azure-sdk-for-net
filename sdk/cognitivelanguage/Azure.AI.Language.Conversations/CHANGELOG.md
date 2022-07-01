@@ -1,14 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2022-07-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added conversation summarization and personally identifiable information (PII) extraction methods to `ConversationAnalysisClient`:
+  - `AnalyzeConversation` and `AnalyzeConversationAsync`
+  - `CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync`
+  - `GetAnalyzeConversationJobStatus` and `GetAnalyzeConversationJobStatusAsync`
+- Added support for service version 2022-05-15-preview.
 
 ## 1.0.0 (2022-06-27)
 
