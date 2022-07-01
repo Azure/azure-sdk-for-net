@@ -5061,34 +5061,34 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ApplicationGatewaySslCipherSuite(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_DSS_WITH_AES_128_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_DSS_WITH_AES_128_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_DSS_WITH_AES_256_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_RSA_WITH_AES_128_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_RSA_WITH_AES_256_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_3DES_EDE_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_128_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_128_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_128_GCM_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_256_CBC_SHA { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_256_CBC_SHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLS_RSA_WITH_AES_256_GCM_SHA384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDheDssWith3DesEdeCbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDheDssWithAes128CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDheDssWithAes128CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDheDssWithAes256CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDheDssWithAes256CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes128CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes128GcmSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes256CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes256GcmSha384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128GcmSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256GcmSha384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128GcmSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256GcmSha384 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWith3DesEdeCbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes128CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes128CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes128GcmSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes256CbcSha { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes256CbcSha256 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsRsaWithAes256GcmSha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
