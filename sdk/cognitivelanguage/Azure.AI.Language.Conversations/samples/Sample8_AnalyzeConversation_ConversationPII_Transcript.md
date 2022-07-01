@@ -144,7 +144,7 @@ var data = new
     },
 };
 
-Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
 analyzeConversationOperation.WaitForCompletion();
 
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
@@ -188,6 +188,6 @@ foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items"
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationPII_Transcript
-Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
+Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```

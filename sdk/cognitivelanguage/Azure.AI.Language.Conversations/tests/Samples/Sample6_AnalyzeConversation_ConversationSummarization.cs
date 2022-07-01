@@ -162,7 +162,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 },
             };
 
-            #region Snippet:AnalyzeConversation_ConversationSummarization
+            #region Snippet:AnalyzeConversationAsync_ConversationSummarization
             Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
             await analyzeConversationOperation.WaitForCompletionAsync();
             #endregion
