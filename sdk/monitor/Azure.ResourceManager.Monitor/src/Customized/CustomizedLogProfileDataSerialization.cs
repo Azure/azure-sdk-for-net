@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class LogProfileData
     {
+        // this customization method is here to fix the deserialization issue for some non-nullable properties
+        // they will return as nullable in the service response
         internal static LogProfileData DeserializeLogProfileData(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
@@ -33,7 +35,8 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        // change this to nullable since the service might send null value for tags in the response
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -46,7 +49,12 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    // enclosing this deserialization in this if since the service might return null value for this property
+                    // and we cannot resolve this using a directive since this property is inherited from base type ResourceData
+                    if (property.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        location = new AzureLocation(property.Value.GetString());
+                    }
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -92,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                storageAccountId = null;
                                 continue;
                             }
                             storageAccountId = new ResourceIdentifier(property0.Value.GetString());
@@ -102,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                serviceBusRuleId = null;
                                 continue;
                             }
                             serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());

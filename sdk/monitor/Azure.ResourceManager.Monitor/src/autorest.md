@@ -137,8 +137,11 @@ directive:
     where: $.definitions.AutoscaleSetting.properties.notifications
     transform: $["x-nullable"] = true;
   - from: swagger-document
-    where: $.definitions.Resource.properties.type
-    transform: $["x-nullable"] = true
+    where: $.definitions.LogProfileProperties.properties.storageAccountId
+    transform: $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.LogProfileProperties.properties.serviceBusRuleId
+    transform: $["x-nullable"] = true;
   # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
