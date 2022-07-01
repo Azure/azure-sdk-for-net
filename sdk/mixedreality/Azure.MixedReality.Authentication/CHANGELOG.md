@@ -2,6 +2,10 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Key Bug Fixes
+
+- Many dependencies were updated as well as updating `System.IdentityModel.Tokens.Jwt` to `6.21.0` to remove a dependency on a vulnerable version of `Newtonsoft.Json`.
+
 ## 1.0.1 (2021-05-25)
 
 ### Key Bug Fixes
