@@ -6,19 +6,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f5d15e0ff5a0a142a277bf8df31204cc-e00495dd758e0445-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220613.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c45dcadb9a3af1292064109a9d3a26a5",
+        "traceparent": "00-8ac95fc779b0204999bc52a8554e492c-153a85d7973fb84e-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c60761bf4a73f2173448c94ff0ca4691",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "384",
+        "Content-Length": "701",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 13 Jun 2022 20:52:37 GMT",
-        "mise-correlation-id": "7a9931b1-3f38-42ed-835f-477c18c500fa",
-        "traceparent": "00-f5d15e0ff5a0a142a277bf8df31204cc-e00495dd758e0445-00"
+        "Date": "Fri, 01 Jul 2022 21:48:00 GMT",
+        "mise-correlation-id": "481aa4d3-5732-4326-834a-49743e569bbe",
+        "traceparent": "00-8ac95fc779b0204999bc52a8554e492c-153a85d7973fb84e-00"
       },
       "ResponseBody": {
         "value": [
@@ -26,6 +26,10 @@
             "groupId": "$default",
             "groupType": "DefaultNoTag",
             "createdDateTime": "2022-06-08T23:58:17.7255595\u002B00:00",
+            "deviceCount": 0,
+            "subgroupsWithNewUpdatesAvailableCount": 0,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
             "deployments": []
           },
           {
@@ -33,6 +37,9 @@
             "groupType": "IoTHubTag",
             "createdDateTime": "2022-06-09T00:08:48.4487\u002B00:00",
             "deviceCount": 1,
+            "subgroupsWithNewUpdatesAvailableCount": 1,
+            "subgroupsWithUpdatesInProgressCount": 0,
+            "subgroupsWithOnLatestUpdateCount": 0,
             "deployments": []
           }
         ]
@@ -42,6 +49,6 @@
   "Variables": {
     "DEVICEUPDATE_ACCOUNT_ENDPOINT": "adu-sdk-testing.api.adu.microsoft.com",
     "DEVICEUPDATE_INSTANCE_ID": "sdkinstance",
-    "RandomSeed": "829368773"
+    "RandomSeed": "546641099"
   }
 }

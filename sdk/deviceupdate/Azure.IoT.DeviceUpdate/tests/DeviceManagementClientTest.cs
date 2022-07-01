@@ -85,8 +85,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
-        //  Temporary disabled because the service doesn't properly handle this method yet
-        // [RecordedTest]
+        [RecordedTest]
         public async Task GetDeviceClasses()
         {
             DeviceManagementClient client = CreateClient();
@@ -116,8 +115,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
-        //  Temporary disabled because the service doesn't properly handle this method yet
-        // [RecordedTest]
+        [RecordedTest]
         public async Task GetBestUpdatesForGroups()
         {
             DeviceManagementClient client = CreateClient();
