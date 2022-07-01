@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Perf.Options
             get => _initialTransferSize;
             set
             {
-                _maximumTransferSize = value;
+                _initialTransferSize = value;
                 UpdateStorageTransferOptions();
             }
         }
