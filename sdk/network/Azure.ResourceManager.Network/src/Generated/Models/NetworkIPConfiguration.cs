@@ -12,14 +12,14 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration. </summary>
-    public partial class IPConfiguration : NetworkResourceData
+    public partial class NetworkIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
-        public IPConfiguration()
+        /// <summary> Initializes a new instance of NetworkIPConfiguration. </summary>
+        public NetworkIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
+        /// <summary> Initializes a new instance of NetworkIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal IPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal NetworkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = eTag;
             PrivateIPAddress = privateIPAddress;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
-        public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> The reference to the subnet resource. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> The reference to the public IP resource. </summary>

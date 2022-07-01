@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName1,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp1.Id
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName2,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic2publicIp2.Id
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource()
                         {
                             Id = nic1publicIp.Id
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
             {
                 Name = ipConfigName1,
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = nic1publicIp1.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
             {
                 Name = ipConfigName2,
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = nic1publicIp2.Id },
                 Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
             };
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
             {
                 Name = gw1IpConfigName,
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = publicIPAddress.Id },
                 Subnet = new WritableSubResource() { Id = gw1Subnet.Value.Id }
             };
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.Network.Tests
             VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
             {
                 Name = gw2IpConfigName,
-                PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 PublicIPAddress = new WritableSubResource() { Id = gw2Ip.Id },
                 Subnet = new WritableSubResource() { Id = gw2Subnet.Value.Id }
             };
@@ -1777,7 +1777,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.Network.Tests
             VpnClientParameters vpnClientParameters = new VpnClientParameters()
             {
                 RadiusServerAuthCertificate = samplePublicCertData,
-                AuthenticationMethod = AuthenticationMethod.Eaptls
+                AuthenticationMethod = NetworkAuthenticationMethod.Eaptls
             };
 
             //TODO:Missing the value of a special environment variable, which is currently uncertain
@@ -1925,7 +1925,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new VirtualNetworkGatewayIPConfiguration()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id },
                         Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
