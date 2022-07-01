@@ -10,8 +10,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Workloads.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Tests.Tests
@@ -77,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
                 // Update
                 var patchJson = File.ReadAllText(Path.Combine(BasePath, "TestData", "PhpWorkloads", "PatchPhpWorkload.json"));
-                PhpWorkloadResourcePatch updatePayload = JsonConvert.DeserializeObject<PhpWorkloadResourcePatch>(patchJson);
+                PhpWorkloadResourcePatch updatePayload = JsonSerializer.Deserialize<PhpWorkloadResourcePatch>(patchJson);
                 Response<PhpWorkloadResource> updateResponse = await getResource.Value.UpdateAsync(updatePayload);
                 Assert.IsTrue(updateResponse.Value.Data.ProvisioningState ==
                     Models.PhpWorkloadProvisioningState.Succeeded);
