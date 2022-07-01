@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public string PostMigrationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetNamespace { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetServiceBusNamespace { get { throw null; } set { } }
     }
     public partial class MigrationConfigurationResource : Azure.ResourceManager.ArmResource
     {

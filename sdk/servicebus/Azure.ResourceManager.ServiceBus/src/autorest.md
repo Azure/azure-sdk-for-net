@@ -135,6 +135,7 @@ directive:
       where: $.definitions
       transform: >
         $.MigrationConfigProperties['x-ms-client-name'] = 'MigrationConfiguration';
+        $.MigrationConfigProperties.properties.properties.properties.targetNamespace['x-ms-client-name'] = 'targetServiceBusNamespace';
         $.MigrationConfigProperties.properties.properties.properties.targetNamespace['x-ms-format'] = 'arm-id';
     - from: AuthorizationRules.json
       where: $.definitions

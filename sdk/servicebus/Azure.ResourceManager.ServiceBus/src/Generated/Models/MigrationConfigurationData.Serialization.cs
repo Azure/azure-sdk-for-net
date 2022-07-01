@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ServiceBus
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetNamespace))
+            if (Optional.IsDefined(TargetServiceBusNamespace))
             {
                 writer.WritePropertyName("targetNamespace");
-                writer.WriteStringValue(TargetNamespace);
+                writer.WriteStringValue(TargetServiceBusNamespace);
             }
             if (Optional.IsDefined(PostMigrationName))
             {
