@@ -69,9 +69,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceClassAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -89,32 +91,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string,
-        ///   compatProperties: Dictionary&lt;string, string&gt;,
+        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
         ///   bestCompatibleUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
         /// }
         /// </code>
         /// 
@@ -139,9 +128,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceClass with required parameters and parse the result.
         /// <code><![CDATA[
@@ -159,32 +150,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceClass</c>:
         /// <code>{
-        ///   deviceClassId: string,
-        ///   compatProperties: Dictionary&lt;string, string&gt;,
+        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
         ///   bestCompatibleUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
         /// }
         /// </code>
         /// 
@@ -209,9 +187,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -249,54 +229,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Device</c>:
         /// <code>{
-        ///   deviceId: string,
-        ///   moduleId: string,
-        ///   deviceClassId: string,
-        ///   manufacturer: string,
-        ///   model: string,
-        ///   groupId: string,
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
         ///   lastAttemptedUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///   installedUpdateId: UpdateId,
-        ///   onLatestUpdate: boolean,
-        ///   lastDeploymentId: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
-        ///     resultCode: number,
-        ///     extendedResultCode: number,
-        ///     resultDetails: string,
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
         ///     stepResults: [
         ///       {
-        ///         updateId: UpdateId,
-        ///         description: string,
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -321,9 +288,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the device properties and latest deployment status for a device connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDevice with required parameters and parse the result.
         /// <code><![CDATA[
@@ -361,54 +330,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Device</c>:
         /// <code>{
-        ///   deviceId: string,
-        ///   moduleId: string,
-        ///   deviceClassId: string,
-        ///   manufacturer: string,
-        ///   model: string,
-        ///   groupId: string,
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
         ///   lastAttemptedUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///   installedUpdateId: UpdateId,
-        ///   onLatestUpdate: boolean,
-        ///   lastDeploymentId: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
-        ///     resultCode: number,
-        ///     extendedResultCode: number,
-        ///     resultDetails: string,
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
         ///     stepResults: [
         ///       {
-        ///         updateId: UpdateId,
-        ///         description: string,
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -434,9 +390,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceModuleAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -474,54 +432,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Device</c>:
         /// <code>{
-        ///   deviceId: string,
-        ///   moduleId: string,
-        ///   deviceClassId: string,
-        ///   manufacturer: string,
-        ///   model: string,
-        ///   groupId: string,
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
         ///   lastAttemptedUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///   installedUpdateId: UpdateId,
-        ///   onLatestUpdate: boolean,
-        ///   lastDeploymentId: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
-        ///     resultCode: number,
-        ///     extendedResultCode: number,
-        ///     resultDetails: string,
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
         ///     stepResults: [
         ///       {
-        ///         updateId: UpdateId,
-        ///         description: string,
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -548,9 +493,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the device module properties and latest deployment status for a device module connected to Device Update for IoT Hub. </summary>
         /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
         /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceModule with required parameters and parse the result.
         /// <code><![CDATA[
@@ -588,54 +535,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Device</c>:
         /// <code>{
-        ///   deviceId: string,
-        ///   moduleId: string,
-        ///   deviceClassId: string,
-        ///   manufacturer: string,
-        ///   model: string,
-        ///   groupId: string,
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
         ///   lastAttemptedUpdateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///   installedUpdateId: UpdateId,
-        ///   onLatestUpdate: boolean,
-        ///   lastDeploymentId: string,
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
         ///   lastInstallResult: {
-        ///     resultCode: number,
-        ///     extendedResultCode: number,
-        ///     resultDetails: string,
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
         ///     stepResults: [
         ///       {
-        ///         updateId: UpdateId,
-        ///         description: string,
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -660,7 +594,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetUpdateComplianceAsync and parse the result.
         /// <code><![CDATA[
@@ -677,29 +613,16 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateCompliance</c>:
         /// <code>{
-        ///   totalDeviceCount: number,
-        ///   onLatestUpdateDeviceCount: number,
-        ///   newUpdatesAvailableDeviceCount: number,
-        ///   updatesInProgressDeviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   totalDeviceCount: number, # Required. Total number of devices.
+        ///   onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+        ///   newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+        ///   updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
         /// }
         /// </code>
         /// 
@@ -721,7 +644,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetUpdateCompliance and parse the result.
         /// <code><![CDATA[
@@ -738,29 +663,16 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateCompliance</c>:
         /// <code>{
-        ///   totalDeviceCount: number,
-        ///   onLatestUpdateDeviceCount: number,
-        ///   newUpdatesAvailableDeviceCount: number,
-        ///   updatesInProgressDeviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   totalDeviceCount: number, # Required. Total number of devices.
+        ///   onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+        ///   newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+        ///   updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
         /// }
         /// </code>
         /// 
@@ -783,9 +695,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a count of how many devices have a device tag. </summary>
         /// <param name="tagName"> Tag name. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceTagAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -800,27 +714,14 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceTag</c>:
         /// <code>{
-        ///   tagName: string,
-        ///   deviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   tagName: string, # Required. Tag name.
+        ///   deviceCount: number, # Required. Number of devices with this tag.
         /// }
         /// </code>
         /// 
@@ -845,9 +746,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a count of how many devices have a device tag. </summary>
         /// <param name="tagName"> Tag name. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceTag with required parameters and parse the result.
         /// <code><![CDATA[
@@ -862,27 +765,14 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceTag</c>:
         /// <code>{
-        ///   tagName: string,
-        ///   deviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   tagName: string, # Required. Tag name.
+        ///   deviceCount: number, # Required. Number of devices with this tag.
         /// }
         /// </code>
         /// 
@@ -907,9 +797,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroupAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -929,32 +821,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string,
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///   tags: [string],
-        ///   createdDateTime: string,
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -979,9 +858,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the properties of a group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroup with required parameters and parse the result.
         /// <code><![CDATA[
@@ -1001,32 +882,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string,
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///   tags: [string],
-        ///   createdDateTime: string,
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -1051,10 +919,12 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Create or update a device group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CreateOrUpdateGroupAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -1108,43 +978,33 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string (required),
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot; (required),
-        ///   tags: [string] (required),
-        ///   createdDateTime: string (required),
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string,
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///   tags: [string],
-        ///   createdDateTime: string,
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -1170,10 +1030,12 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Create or update a device group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CreateOrUpdateGroup with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -1227,43 +1089,33 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string (required),
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot; (required),
-        ///   tags: [string] (required),
-        ///   createdDateTime: string (required),
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Group</c>:
         /// <code>{
-        ///   groupId: string,
-        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///   tags: [string],
-        ///   createdDateTime: string,
-        ///   deviceCount: number,
-        ///   deploymentId: string,
-        ///   deviceClassId: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -1289,9 +1141,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Deletes a device group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteGroupAsync with required parameters.
         /// <code><![CDATA[
@@ -1302,26 +1156,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -1342,9 +1176,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Deletes a device group. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteGroup with required parameters.
         /// <code><![CDATA[
@@ -1355,26 +1191,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteGroup(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -1395,9 +1211,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroupUpdateComplianceAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -1414,29 +1232,16 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateCompliance</c>:
         /// <code>{
-        ///   totalDeviceCount: number,
-        ///   onLatestUpdateDeviceCount: number,
-        ///   newUpdatesAvailableDeviceCount: number,
-        ///   updatesInProgressDeviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   totalDeviceCount: number, # Required. Total number of devices.
+        ///   onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+        ///   newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+        ///   updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
         /// }
         /// </code>
         /// 
@@ -1461,9 +1266,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get group update compliance information such as how many devices are on their latest update, how many need new updates, and how many are in progress on receiving a new update. </summary>
         /// <param name="groupId"> Group identity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroupUpdateCompliance with required parameters and parse the result.
         /// <code><![CDATA[
@@ -1480,29 +1287,16 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateCompliance</c>:
         /// <code>{
-        ///   totalDeviceCount: number,
-        ///   onLatestUpdateDeviceCount: number,
-        ///   newUpdatesAvailableDeviceCount: number,
-        ///   updatesInProgressDeviceCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   totalDeviceCount: number, # Required. Total number of devices.
+        ///   onLatestUpdateDeviceCount: number, # Required. Number of devices on the latest update.
+        ///   newUpdatesAvailableDeviceCount: number, # Required. Number of devices with a newer update available.
+        ///   updatesInProgressDeviceCount: number, # Required. Number of devices with update in-progress.
         /// }
         /// </code>
         /// 
@@ -1528,9 +1322,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the properties of a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -1551,35 +1347,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -1606,9 +1389,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the properties of a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeployment with required parameters and parse the result.
         /// <code><![CDATA[
@@ -1629,35 +1414,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -1684,10 +1456,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Creates or updates a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CreateOrUpdateDeploymentAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -1747,49 +1521,39 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string (required),
-        ///   startDateTime: string (ISO 8601 Format) (required),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string (required),
-        ///     name: string (required),
-        ///     version: string (required)
-        ///   } (required),
-        ///   groupId: string (required),
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -1817,10 +1581,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Creates or updates a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CreateOrUpdateDeployment with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -1880,49 +1646,39 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string (required),
-        ///   startDateTime: string (ISO 8601 Format) (required),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string (required),
-        ///     name: string (required),
-        ///     version: string (required)
-        ///   } (required),
-        ///   groupId: string (required),
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -1950,9 +1706,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Deletes a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteDeploymentAsync with required parameters.
         /// <code><![CDATA[
@@ -1963,26 +1721,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -2005,9 +1743,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Deletes a deployment. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteDeployment with required parameters.
         /// <code><![CDATA[
@@ -2018,26 +1758,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
@@ -2060,9 +1780,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2081,31 +1803,18 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentStatus</c>:
         /// <code>{
-        ///   deploymentState: &quot;Active&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;,
-        ///   totalDevices: number,
-        ///   devicesInProgressCount: number,
-        ///   devicesCompletedFailedCount: number,
-        ///   devicesCompletedSucceededCount: number,
-        ///   devicesCanceledCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deploymentState: &quot;Active&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the deployment.
+        ///   totalDevices: number, # Optional. The total number of devices in the deployment.
+        ///   devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
+        ///   devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
+        ///   devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
+        ///   devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
         /// }
         /// </code>
         /// 
@@ -2132,9 +1841,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets the status of a deployment including a breakdown of how many devices in the deployment are in progress, completed, or failed. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentStatus with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2153,31 +1864,18 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentStatus</c>:
         /// <code>{
-        ///   deploymentState: &quot;Active&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;,
-        ///   totalDevices: number,
-        ///   devicesInProgressCount: number,
-        ///   devicesCompletedFailedCount: number,
-        ///   devicesCompletedSucceededCount: number,
-        ///   devicesCanceledCount: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deploymentState: &quot;Active&quot; | &quot;Inactive&quot; | &quot;Canceled&quot;, # Required. The state of the deployment.
+        ///   totalDevices: number, # Optional. The total number of devices in the deployment.
+        ///   devicesInProgressCount: number, # Optional. The number of devices that are currently in deployment.
+        ///   devicesCompletedFailedCount: number, # Optional. The number of devices that have completed deployment with a failure.
+        ///   devicesCompletedSucceededCount: number, # Optional. The number of devices which have successfully completed deployment.
+        ///   devicesCanceledCount: number, # Optional. The number of devices which have had their deployment canceled.
         /// }
         /// </code>
         /// 
@@ -2204,9 +1902,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetOperationAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2245,44 +1945,31 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceOperation</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   },
-        ///   traceId: string,
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -2308,9 +1995,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Retrieve operation status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetOperation with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2349,44 +2038,31 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceOperation</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   },
-        ///   traceId: string,
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -2411,10 +2087,12 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Start the device diagnostics log collection operation on specified devices. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CollectLogsAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -2463,51 +2141,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string (required),
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ] (required),
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -2533,10 +2201,12 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Start the device diagnostics log collection operation on specified devices. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CollectLogs with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -2585,51 +2255,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string (required),
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ] (required),
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -2655,9 +2315,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get the device diagnostics log collection operation. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperationAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2677,36 +2339,23 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -2731,9 +2380,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get the device diagnostics log collection operation. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperation with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2753,36 +2404,23 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperation</c>:
         /// <code>{
-        ///   operationId: string,
+        ///   operationId: string, # Optional. The diagnostics operation id.
         ///   deviceList: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   description: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -2807,9 +2445,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get device diagnostics log collection operation with detailed status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperationDetailedStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2833,40 +2473,27 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperationDetailedStatus</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Optional. The device diagnostics operation id.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         ///   deviceStatus: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       resultCode: string,
-        ///       extendedResultCode: string,
-        ///       logLocation: string
+        ///       deviceId: string, # Required. Device id
+        ///       moduleId: string, # Optional. Module id.
+        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Log upload status
+        ///       resultCode: string, # Optional. Log upload result code
+        ///       extendedResultCode: string, # Optional. Log upload extended result code
+        ///       logLocation: string, # Optional. Log upload location
         ///     }
-        ///   ],
-        ///   description: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Optional. Status of the devices in the operation
+        ///   description: string, # Optional. Device diagnostics operation description.
         /// }
         /// </code>
         /// 
@@ -2891,9 +2518,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get device diagnostics log collection operation with detailed status. </summary>
         /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperationDetailedStatus with required parameters and parse the result.
         /// <code><![CDATA[
@@ -2917,40 +2546,27 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperationDetailedStatus</c>:
         /// <code>{
-        ///   operationId: string,
-        ///   createdDateTime: string,
-        ///   lastActionDateTime: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   operationId: string, # Optional. The device diagnostics operation id.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         ///   deviceStatus: [
         ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       resultCode: string,
-        ///       extendedResultCode: string,
-        ///       logLocation: string
+        ///       deviceId: string, # Required. Device id
+        ///       moduleId: string, # Optional. Module id.
+        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Log upload status
+        ///       resultCode: string, # Optional. Log upload result code
+        ///       extendedResultCode: string, # Optional. Log upload extended result code
+        ///       logLocation: string, # Optional. Log upload location
         ///     }
-        ///   ],
-        ///   description: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Optional. Status of the devices in the operation
+        ///   description: string, # Optional. Device diagnostics operation description.
         /// }
         /// </code>
         /// 
@@ -2977,9 +2593,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Cancel deployment action. Allowed values: &quot;cancel&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call StopDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3000,35 +2618,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -3057,9 +2662,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Cancel deployment action. Allowed values: &quot;cancel&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call StopDeployment with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3080,35 +2687,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -3137,9 +2731,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Retry deployment action. Allowed values: &quot;retry&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call RetryDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3160,35 +2756,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -3217,9 +2800,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="action"> Retry deployment action. Allowed values: &quot;retry&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call RetryDeployment with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3240,35 +2825,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Deployment</c>:
         /// <code>{
-        ///   deploymentId: string,
-        ///   startDateTime: string (ISO 8601 Format),
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
         ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   groupId: string,
-        ///   isCanceled: boolean,
-        ///   isRetried: boolean
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -3294,7 +2866,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceClassesAsync and parse the result.
         /// <code><![CDATA[
@@ -3313,37 +2887,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceClassesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceClassId: string,
-        ///       compatProperties: Dictionary&lt;string, string&gt;,
-        ///       bestCompatibleUpdateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
+        ///   bestCompatibleUpdateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
         /// }
         /// </code>
         /// 
@@ -3371,7 +2927,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceClasses and parse the result.
         /// <code><![CDATA[
@@ -3390,37 +2948,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceClassesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceClassId: string,
-        ///       compatProperties: Dictionary&lt;string, string&gt;,
-        ///       bestCompatibleUpdateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deviceClassId: string, # Required. The device class identifier.
+        ///   compatProperties: Dictionary&lt;string, string&gt;, # Required. The compat properties of the device class. This object can be thought of as a set of key-value pairs where the key is the name of the compatibility property and the value is the value of the compatibility property. There will always be at least 1 compat property
+        ///   bestCompatibleUpdateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
         /// }
         /// </code>
         /// 
@@ -3449,9 +2989,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of installable updates for a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3468,33 +3010,15 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateIdsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       provider: string,
-        ///       name: string,
-        ///       version: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   provider: string, # Required. Update provider.
+        ///   name: string, # Required. Update name.
+        ///   version: string, # Required. Update version.
         /// }
         /// </code>
         /// 
@@ -3525,9 +3049,11 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of installable updates for a device class. </summary>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetInstallableUpdatesForDeviceClasses with required parameters and parse the result.
         /// <code><![CDATA[
@@ -3544,33 +3070,15 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdateIdsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       provider: string,
-        ///       name: string,
-        ///       version: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   provider: string, # Required. Update provider.
+        ///   name: string, # Required. Update name.
+        ///   version: string, # Required. Update version.
         /// }
         /// </code>
         /// 
@@ -3601,7 +3109,9 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDevicesAsync and parse the result.
         /// <code><![CDATA[
@@ -3655,59 +3165,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DevicesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       deviceClassId: string,
-        ///       manufacturer: string,
-        ///       model: string,
-        ///       groupId: string,
-        ///       lastAttemptedUpdateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///       installedUpdateId: UpdateId,
-        ///       onLatestUpdate: boolean,
-        ///       lastDeploymentId: string,
-        ///       lastInstallResult: {
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string,
-        ///         stepResults: [
-        ///           {
-        ///             updateId: UpdateId,
-        ///             description: string,
-        ///             resultCode: number,
-        ///             extendedResultCode: number,
-        ///             resultDetails: string
-        ///           }
-        ///         ]
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
+        ///   lastAttemptedUpdateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
+        ///   lastInstallResult: {
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
+        ///     stepResults: [
+        ///       {
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -3736,7 +3228,9 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDevices and parse the result.
         /// <code><![CDATA[
@@ -3790,59 +3284,41 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DevicesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       deviceClassId: string,
-        ///       manufacturer: string,
-        ///       model: string,
-        ///       groupId: string,
-        ///       lastAttemptedUpdateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;,
-        ///       installedUpdateId: UpdateId,
-        ///       onLatestUpdate: boolean,
-        ///       lastDeploymentId: string,
-        ///       lastInstallResult: {
-        ///         resultCode: number,
-        ///         extendedResultCode: number,
-        ///         resultDetails: string,
-        ///         stepResults: [
-        ///           {
-        ///             updateId: UpdateId,
-        ///             description: string,
-        ///             resultCode: number,
-        ///             extendedResultCode: number,
-        ///             resultDetails: string
-        ///           }
-        ///         ]
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   deviceClassId: string, # Required. Device class identity.
+        ///   manufacturer: string, # Required. Device manufacturer.
+        ///   model: string, # Required. Device model.
+        ///   groupId: string, # Optional. Device group identity.
+        ///   lastAttemptedUpdateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Optional. Update identity.
+        ///   deploymentStatus: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Optional. State of the device in its last deployment.
+        ///   installedUpdateId: UpdateId, # Optional. Update identity.
+        ///   onLatestUpdate: boolean, # Required. Boolean flag indicating whether the latest update is installed on the device
+        ///   lastDeploymentId: string, # Optional. The deployment identifier for the last deployment to the device
+        ///   lastInstallResult: {
+        ///     resultCode: number, # Required. Install result code.
+        ///     extendedResultCode: number, # Required. Install extended result code
+        ///     resultDetails: string, # Optional. A string containing further details about the install result
+        ///     stepResults: [
+        ///       {
+        ///         updateId: UpdateId, # Optional. It is update id for update steps; otherwise it is null.
+        ///         description: string, # Optional. Step description. It might be null for update steps.
+        ///         resultCode: number, # Required. Install result code.
+        ///         extendedResultCode: number, # Required. Install extended result code
+        ///         resultDetails: string, # Optional. A string containing further details about the install result
         ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///     ], # Optional. Array of step results
+        ///   }, # Optional. Last install result.
         /// }
         /// </code>
         /// 
@@ -3870,7 +3346,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceTagsAsync and parse the result.
         /// <code><![CDATA[
@@ -3886,32 +3364,14 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceTagsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       tagName: string,
-        ///       deviceCount: number
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   tagName: string, # Required. Tag name.
+        ///   deviceCount: number, # Required. Number of devices with this tag.
         /// }
         /// </code>
         /// 
@@ -3939,7 +3399,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeviceTags and parse the result.
         /// <code><![CDATA[
@@ -3955,32 +3417,14 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceTagsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       tagName: string,
-        ///       deviceCount: number
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   tagName: string, # Required. Tag name.
+        ///   deviceCount: number, # Required. Number of devices with this tag.
         /// }
         /// </code>
         /// 
@@ -4008,7 +3452,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device groups. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroupsAsync and parse the result.
         /// <code><![CDATA[
@@ -4029,37 +3475,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>GroupsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       groupId: string,
-        ///       groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///       tags: [string],
-        ///       createdDateTime: string,
-        ///       deviceCount: number,
-        ///       deploymentId: string,
-        ///       deviceClassId: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -4087,7 +3515,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Gets a list of all device groups. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetGroups and parse the result.
         /// <code><![CDATA[
@@ -4108,37 +3538,19 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>GroupsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       groupId: string,
-        ///       groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;,
-        ///       tags: [string],
-        ///       createdDateTime: string,
-        ///       deviceCount: number,
-        ///       deploymentId: string,
-        ///       deviceClassId: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   groupId: string, # Required. Group identity.
+        ///   groupType: &quot;DeviceClassIdAndIoTHubTag&quot; | &quot;InvalidDeviceClassIdAndIoTHubTag&quot; | &quot;DefaultDeviceClassId&quot;, # Required. Group type.
+        ///   tags: [string], # Required. IoT Hub tags.
+        ///   createdDateTime: string, # Required. Date and time when the update was created.
+        ///   deviceCount: number, # Optional. The number of devices in the group.
+        ///   deploymentId: string, # Optional. The deployment Id for the group.
+        ///   deviceClassId: string, # Optional. The device class Id for the group.
         /// }
         /// </code>
         /// 
@@ -4168,9 +3580,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get the best available updates for a group and a count of how many devices need each update. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4202,36 +3616,18 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdatableDevicesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       deviceCount: number
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   deviceCount: number, # Required. Total number of devices for which the update is applicable.
         /// }
         /// </code>
         /// 
@@ -4263,9 +3659,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get the best available updates for a group and a count of how many devices need each update. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetBestUpdatesForGroups with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4297,36 +3695,18 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>UpdatableDevicesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       deviceCount: number
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   deviceCount: number, # Required. Total number of devices for which the update is applicable.
         /// }
         /// </code>
         /// 
@@ -4358,9 +3738,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of deployments for a group. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentsForGroupsAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4398,40 +3780,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentId: string,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       groupId: string,
-        ///       isCanceled: boolean,
-        ///       isRetried: boolean
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -4463,9 +3827,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of deployments for a group. </summary>
         /// <param name="groupId"> Group identity. </param>
         /// <param name="filter"> Restricts the set of deployments returned. You can filter on update Provider, Name and Version property. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentsForGroups with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4503,40 +3869,22 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deploymentId: string,
-        ///       startDateTime: string (ISO 8601 Format),
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
-        ///       },
-        ///       groupId: string,
-        ///       isCanceled: boolean,
-        ///       isRetried: boolean
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deploymentId: string, # Required. The deployment identifier.
+        ///   startDateTime: string (ISO 8601 Format), # Required. The deployment start datetime.
+        ///   updateId: {
+        ///     provider: string, # Required. Update provider.
+        ///     name: string, # Required. Update name.
+        ///     version: string, # Required. Update version.
+        ///   }, # Required. Update identity.
+        ///   groupId: string, # Required. The group identity
+        ///   isCanceled: boolean, # Optional. Boolean flag indicating whether the deployment was canceled.
+        ///   isRetried: boolean, # Optional. Boolean flag indicating whether the deployment has been retried.
         /// }
         /// </code>
         /// 
@@ -4569,9 +3917,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentDevicesAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4604,35 +3954,17 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentDeviceStatesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       retryCount: number,
-        ///       movedOnToNewDeployment: boolean,
-        ///       deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   retryCount: number, # Required. The number of times this deployment has been retried on this device.
+        ///   movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
+        ///   deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Required. Deployment device state.
         /// }
         /// </code>
         /// 
@@ -4666,9 +3998,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="groupId"> Group identity. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetDeploymentDevices with required parameters and parse the result.
         /// <code><![CDATA[
@@ -4701,35 +4035,17 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeploymentDeviceStatesListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       deviceId: string,
-        ///       moduleId: string,
-        ///       retryCount: number,
-        ///       movedOnToNewDeployment: boolean,
-        ///       deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   deviceId: string, # Required. Device identity.
+        ///   moduleId: string, # Optional. Device module identity.
+        ///   retryCount: number, # Required. The number of times this deployment has been retried on this device.
+        ///   movedOnToNewDeployment: boolean, # Required. Boolean flag indicating whether this device is in a newer deployment and can no longer retry this deployment.
+        ///   deviceState: &quot;Succeeded&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Canceled&quot; | &quot;Incompatible&quot;, # Required. Deployment device state.
         /// }
         /// </code>
         /// 
@@ -4762,7 +4078,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetOperationsAsync and parse the result.
         /// <code><![CDATA[
@@ -4803,49 +4121,31 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceOperationsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [Error],
-        ///         innererror: {
-        ///           code: string,
-        ///           message: string,
-        ///           errorDetail: string,
-        ///           innerError: InnerError
-        ///         },
-        ///         occurredDateTime: string (ISO 8601 Format)
-        ///       },
-        ///       traceId: string,
-        ///       lastActionDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -4875,7 +4175,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetOperations and parse the result.
         /// <code><![CDATA[
@@ -4916,49 +4218,31 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DeviceOperationsListValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [Error],
-        ///         innererror: {
-        ///           code: string,
-        ///           message: string,
-        ///           errorDetail: string,
-        ///           innerError: InnerError
-        ///         },
-        ///         occurredDateTime: string (ISO 8601 Format)
-        ///       },
-        ///       traceId: string,
-        ///       lastActionDateTime: string (ISO 8601 Format),
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       etag: string
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
+        ///   operationId: string, # Required. Operation Id.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Required. Operation status.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
+        ///     code: string, # Required. Server defined error code.
+        ///     message: string, # Required. A human-readable representation of the error.
+        ///     target: string, # Optional. The target of the error.
+        ///     details: [Error], # Optional. An array of errors that led to the reported error.
         ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///       code: string, # Required. A more specific error code than what was provided by the containing error.
+        ///       message: string, # Optional. A human-readable representation of the error.
+        ///       errorDetail: string, # Optional. The internal error or exception message.
+        ///       innerError: InnerError, # Optional. An object containing more specific information than the current object about the error.
+        ///     }, # Optional. An object containing more specific information than the current object about the error.
+        ///     occurredDateTime: string (ISO 8601 Format), # Optional. Date and time in UTC when the error occurred.
+        ///   }, # Optional. Operation error encountered, if any.
+        ///   traceId: string, # Optional. Operation correlation identity that can used by Microsoft Support for troubleshooting.
+        ///   lastActionDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation status was last updated.
+        ///   createdDateTime: string (ISO 8601 Format), # Required. Date and time in UTC when the operation was created.
+        ///   etag: string, # Optional. Operation ETag.
         /// }
         /// </code>
         /// 
@@ -4986,7 +4270,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get all device diagnostics log collection operations. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperationsAsync and parse the result.
         /// <code><![CDATA[
@@ -5007,41 +4293,23 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperationListValue</c>:
         /// <code>{
-        ///   value: [
+        ///   operationId: string, # Optional. The diagnostics operation id.
+        ///   deviceList: [
         ///     {
-        ///       operationId: string,
-        ///       deviceList: [
-        ///         {
-        ///           deviceId: string,
-        ///           moduleId: string
-        ///         }
-        ///       ],
-        ///       description: string,
-        ///       createdDateTime: string,
-        ///       lastActionDateTime: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -5069,7 +4337,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Get all device diagnostics log collection operations. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetLogCollectionOperations and parse the result.
         /// <code><![CDATA[
@@ -5090,41 +4360,23 @@ namespace Azure.IoT.DeviceUpdate
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>LogCollectionOperationListValue</c>:
         /// <code>{
-        ///   value: [
+        ///   operationId: string, # Optional. The diagnostics operation id.
+        ///   deviceList: [
         ///     {
-        ///       operationId: string,
-        ///       deviceList: [
-        ///         {
-        ///           deviceId: string,
-        ///           moduleId: string
-        ///         }
-        ///       ],
-        ///       description: string,
-        ///       createdDateTime: string,
-        ///       lastActionDateTime: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;
+        ///       deviceId: string, # Required. Device Id
+        ///       moduleId: string, # Optional. Module Id
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
+        ///   ], # Required. Array of Device Update agent ids
+        ///   description: string, # Optional. Description of the diagnostics operation.
+        ///   createdDateTime: string, # Optional. The timestamp when the operation was created.
+        ///   lastActionDateTime: string, # Optional. A timestamp for when the current state was entered.
+        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;, # Optional. Operation status.
         /// }
         /// </code>
         /// 
@@ -5154,9 +4406,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Import existing devices from IoT Hub. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Devices action. Allowed values: &quot;import&quot;. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <example>
         /// This sample shows how to call ImportDevicesAsync with required parameters and request content.
         /// <code><![CDATA[
@@ -5171,26 +4425,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Operation> ImportDevicesAsync(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
@@ -5213,9 +4447,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Import existing devices from IoT Hub. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="action"> Devices action. Allowed values: &quot;import&quot;. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <example>
         /// This sample shows how to call ImportDevices with required parameters and request content.
         /// <code><![CDATA[
@@ -5230,26 +4466,6 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(response.Status)
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       message: string,
-        ///       errorDetail: string,
-        ///       innerError: InnerError
-        ///     },
-        ///     occurredDateTime: string (ISO 8601 Format)
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Operation ImportDevices(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));

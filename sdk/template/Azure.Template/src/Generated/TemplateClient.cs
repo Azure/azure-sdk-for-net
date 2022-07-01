@@ -61,9 +61,11 @@ namespace Azure.Template
 
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetSecretAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -82,14 +84,18 @@ namespace Azure.Template
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 
@@ -114,9 +120,11 @@ namespace Azure.Template
 
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetSecret with required parameters and parse the result.
         /// <code><![CDATA[
@@ -135,14 +143,18 @@ namespace Azure.Template
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 

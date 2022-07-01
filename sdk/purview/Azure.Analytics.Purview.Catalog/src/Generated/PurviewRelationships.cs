@@ -46,9 +46,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call CreateAsync and parse the result.
         /// <code><![CDATA[
@@ -83,6 +85,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     end2 = new {
         ///         guid = "<AtlasObjectIdGuid>",
@@ -90,6 +118,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     guid = "<AtlasRelationshipGuid>",
         ///     homeId = "<AtlasRelationshipHomeId>",
@@ -126,57 +180,57 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
         /// 
@@ -200,9 +254,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call Create and parse the result.
         /// <code><![CDATA[
@@ -237,6 +293,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     end2 = new {
         ///         guid = "<AtlasObjectIdGuid>",
@@ -244,6 +326,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     guid = "<AtlasRelationshipGuid>",
         ///     homeId = "<AtlasRelationshipHomeId>",
@@ -280,57 +388,57 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
         /// 
@@ -354,9 +462,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateAsync and parse the result.
         /// <code><![CDATA[
@@ -391,6 +501,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     end2 = new {
         ///         guid = "<AtlasObjectIdGuid>",
@@ -398,6 +534,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     guid = "<AtlasRelationshipGuid>",
         ///     homeId = "<AtlasRelationshipHomeId>",
@@ -434,57 +596,57 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
         /// 
@@ -508,9 +670,11 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call Update and parse the result.
         /// <code><![CDATA[
@@ -545,6 +709,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     end2 = new {
         ///         guid = "<AtlasObjectIdGuid>",
@@ -552,6 +742,32 @@ namespace Azure.Analytics.Purview.Catalog
         ///         uniqueAttributes = new {
         ///             key = new {},
         ///         },
+        ///         displayText = "<AtlasRelatedObjectIdDisplayText>",
+        ///         entityStatus = "<ACTIVE>",
+        ///         relationshipType = "<AtlasRelatedObjectIdRelationshipType>",
+        ///         relationshipAttributes = new {
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<AtlasStructTypeName>",
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityGuid = "<AtlasClassificationEntityGuid>",
+        ///             entityStatus = "<ACTIVE>",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<TimeBoundaryEndTime>",
+        ///                     startTime = "<TimeBoundaryStartTime>",
+        ///                     timeZone = "<TimeBoundaryTimeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<AtlasClassificationSource>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         relationshipGuid = "<AtlasRelatedObjectIdRelationshipGuid>",
+        ///         relationshipStatus = "<ACTIVE>",
         ///     },
         ///     guid = "<AtlasRelationshipGuid>",
         ///     homeId = "<AtlasRelationshipHomeId>",
@@ -588,57 +804,57 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   createTime: number, # Optional. The created time of the record.
+        ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     guid: string, # Optional. The GUID of the object.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///   }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///   guid: string, # Optional. The GUID of the relationship.
+        ///   homeId: string, # Optional. The home ID of the relationship.
+        ///   label: string, # Optional. The label of the relationship.
+        ///   provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   updateTime: number, # Optional. The update time of the record.
+        ///   updatedBy: string, # Optional. The user who updated the record.
+        ///   version: number, # Optional. The version of the relationship.
         /// }
         /// </code>
         /// 
@@ -664,9 +880,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetPurviewRelationshipAsync with required parameters and parse the result.
         /// <code><![CDATA[
@@ -739,37 +957,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     createTime: number,
-        ///     createdBy: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
         ///     end1: {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///     },
-        ///     end2: AtlasObjectId,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     label: string,
-        ///     provenanceType: number,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///     }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///     end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///     guid: string, # Optional. The GUID of the relationship.
+        ///     homeId: string, # Optional. The home ID of the relationship.
+        ///     label: string, # Optional. The label of the relationship.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the relationship.
+        ///   }, # Optional. Atlas relationship instance.
         /// }
         /// </code>
         /// 
@@ -795,9 +1010,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get relationship information between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call GetPurviewRelationship with required parameters and parse the result.
         /// <code><![CDATA[
@@ -870,37 +1087,34 @@ namespace Azure.Analytics.Purview.Catalog
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AtlasRelationshipWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
+        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     createTime: number,
-        ///     createdBy: string,
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     createTime: number, # Optional. The created time of the record.
+        ///     createdBy: string, # Optional. The user who created the record.
         ///     end1: {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///     },
-        ///     end2: AtlasObjectId,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     label: string,
-        ///     provenanceType: number,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
+        ///     }, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///     end2: AtlasObjectId, # Optional. Reference to an object-instance of an Atlas type - like entity.
+        ///     guid: string, # Optional. The GUID of the relationship.
+        ///     homeId: string, # Optional. The home ID of the relationship.
+        ///     label: string, # Optional. The label of the relationship.
+        ///     provenanceType: number, # Optional. Used to record the provenance of an instance of an entity or relationship
+        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///     updateTime: number, # Optional. The update time of the record.
+        ///     updatedBy: string, # Optional. The user who updated the record.
+        ///     version: number, # Optional. The version of the relationship.
+        ///   }, # Optional. Atlas relationship instance.
         /// }
         /// </code>
         /// 
@@ -925,9 +1139,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
@@ -939,16 +1155,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -969,9 +1175,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete a relationship between entities by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         /// <example>
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
@@ -983,16 +1191,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response Delete(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
