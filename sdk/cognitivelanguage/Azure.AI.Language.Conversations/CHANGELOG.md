@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2022-07-01)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
   - `CancelAnalyzeConversationJob` and `CancelAnalyzeConversationJobAsync`
   - `GetAnalyzeConversationJobStatus` and `GetAnalyzeConversationJobStatusAsync`
 - Added support for service version 2022-05-15-preview.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2022-06-27)
 
