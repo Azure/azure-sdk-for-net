@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
             ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "Eest US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
+            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "East US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
             IList<ScaleRule> rules = new List<ScaleRule>()
             {
                 new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
