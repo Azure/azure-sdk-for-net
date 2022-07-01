@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
 using System.Security.Cryptography.X509Certificates;
@@ -17,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Threading;
 using System.Drawing.Design;
+using System.Reflection;
 
 namespace Azure.ResourceManager.Workloads.Tests.Tests
 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <summary>
         /// The Get Ops Extension Status Interval.
         /// </summary>
-        private const int GetOpsIntervalinMillis = 30000;
+        private const int GetStatusIntervalinMillis = 10000;
 
         /// <summary>
         /// The SVI CRUD test that creates and installs
@@ -93,23 +93,45 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         [RecordedTest]
         public async Task TestSVIStartStopOperations()
         {
-            string SviName = "C11";
+            string sviName = "E61";
+            string rgName = "svi-loop-test-register-30Jun-avzone-44";
 
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            var lro = await subscription.GetResourceGroups().GetAsync("E2E-SVI-DevBox-27Jun-avzone-SLES-SAP-12-sp4-gen2");
+            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
             ResourceGroupResource rg = lro.Value;
 
             // Stop operation
-            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync(SviName);
+            var sviObject1 = await lro.Value.GetSapVirtualInstanceAsync(sviName);
             await sviObject1.Value.StopAsync(WaitUntil.Completed);
-
-            var sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(SviName);
+            var sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(sviName);
             Assert.AreEqual(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Offline);
 
             // Start operation
             await sviObject1.Value.StartAsync(WaitUntil.Completed);
-            sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(SviName);
+            sviObjectstatus = await lro.Value.GetSapVirtualInstanceAsync(sviName);
             Assert.AreEqual(sviObjectstatus.Value.Data.Status, SapVirtualInstanceStatus.Running);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TestSVIPatchCall()
+        {
+            string sviName = "G80";
+            string rgName = "E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2";
+
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource rg = lro.Value;
+            var sviObject = await lro.Value.GetSapVirtualInstanceAsync(sviName);
+
+            // Patch call for SVI
+            await sviObject.Value.AddTagAsync("TestKey1", "TestValue1");
+
+            Thread.Sleep(GetStatusIntervalinMillis);
+            var firsttag = sviObject.Value.Data.Tags.Values.GetEnumerator();
+            firsttag.MoveNext();
+            Assert.AreEqual(firsttag.Current, "TestValue1");
+            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
         }
 
         /// <summary>
@@ -120,10 +142,15 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
-            var testSapWorkloadJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"tests\SingleServerInstall.json"));
-            var deploymentConfigurationJson = JsonDocument.Parse(testSapWorkloadJson).RootElement;
+            var testSapWorkloadJson = File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
+            var sapPayloadJson = JsonDocument.Parse(testSapWorkloadJson).RootElement;
+
+            SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
+                sapPayloadJson);
+
             DeploymentConfiguration deploymentConfiguration = DeploymentConfiguration.DeserializeDeploymentConfiguration(
-                deploymentConfigurationJson.GetProperty("properties").GetProperty("configuration"));
+                sapPayloadJson.GetProperty("properties").GetProperty("configuration"));
 
             deploymentConfiguration.InfrastructureConfiguration.AppResourceGroup = infraRgName;
 
@@ -132,42 +159,23 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 // Creating the installation payload after fetching the SshPrivateKey
                 ServiceInitiatedSoftwareConfiguration softwareConfiguration =
                     ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(
-                        deploymentConfigurationJson.GetProperty("properties").GetProperty("configuration").GetProperty("softwareConfiguration"));
-                softwareConfiguration.SshPrivateKey = this.GetKeyVaultSecret("E2ETestPrivatesshkey");
+                        sapPayloadJson.GetProperty("properties").GetProperty("configuration").GetProperty("softwareConfiguration"));
+
+                string sshPrivateKey = File.ReadAllText(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
+
+                softwareConfiguration.SshPrivateKey = sshPrivateKey;
                 deploymentConfiguration.SoftwareConfiguration = softwareConfiguration;
             }
+            // Create payload does not have Software Configuration
             else
             {
                 deploymentConfiguration.SoftwareConfiguration = null;
             }
 
-            SapVirtualInstanceData testSapWorkload = new SapVirtualInstanceData(
-                location: AzureLocation.EastUS2,
-                environment: SapEnvironmentType.NonProd,
-                sapProduct: SapProductType.S4Hana,
-                configuration: deploymentConfiguration);
+            testSapWorkload.Configuration = deploymentConfiguration;
 
             return testSapWorkload;
-        }
-
-        /// <summary>
-        /// Gets the secret from key vault.
-        /// </summary>
-        /// <param name="secretName">The secret name for install.</param>
-        /// <returns>The secret value.</returns>
-        private string GetKeyVaultSecret(string secretName)
-        {
-            var kvUri = "https://waas-service-ct-kv.vault.azure.net/";
-            var certificate = GetCertificateBySubjectName(
-                        "HRME2ANew");
-
-            var client = new SecretClient(new Uri(kvUri), new ClientCertificateCredential(
-                "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
-                certificate));
-
-            KeyVaultSecret secret = client.GetSecret(secretName);
-            return secret.Value;
         }
 
         /// <summary>

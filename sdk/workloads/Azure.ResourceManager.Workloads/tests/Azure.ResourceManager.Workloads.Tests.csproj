@@ -3,9 +3,16 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Workloads.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <Folder Include="SessionRecords\SviCRUDTests\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\SviCRUDTests\" />
+    <None Update="SingleServerInstall.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SshKeyPrivate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
