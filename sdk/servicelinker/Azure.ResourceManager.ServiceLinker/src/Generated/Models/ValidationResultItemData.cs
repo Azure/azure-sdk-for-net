@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The validation item for a linker. </summary>
-    public partial class ValidationResultItem
+    public partial class ValidationResultItemData
     {
-        /// <summary> Initializes a new instance of ValidationResultItem. </summary>
-        internal ValidationResultItem()
+        /// <summary> Initializes a new instance of ValidationResultItemData. </summary>
+        internal ValidationResultItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationResultItem. </summary>
+        /// <summary> Initializes a new instance of ValidationResultItemData. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
         /// <param name="errorMessage"> The error message of validation result. </param>
         /// <param name="errorCode"> The error code of validation result. </param>
-        internal ValidationResultItem(string name, string description, ValidationResultStatus? result, string errorMessage, string errorCode)
+        internal ValidationResultItemData(string name, string description, ValidationResultStatus? result, string errorMessage, string errorCode)
         {
             Name = name;
             Description = description;

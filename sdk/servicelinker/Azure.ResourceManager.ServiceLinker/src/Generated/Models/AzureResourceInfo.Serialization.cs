@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResource : IUtf8JsonSerializable
+    public partial class AzureResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,20 +33,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ServiceType.ToString());
+            writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static AzureResource DeserializeAzureResource(JsonElement element)
+        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<AzureResourcePropertiesBase> resourceProperties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceProperties"))
@@ -56,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourcePropertiesBase.DeserializeAzureResourcePropertiesBase(property.Value);
+                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new AzureResource(type, id.Value, resourceProperties.Value);
+            return new AzureResourceInfo(type, id.Value, resourceProperties.Value);
         }
     }
 }

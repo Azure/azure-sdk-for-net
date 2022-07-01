@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal static ValidateOperationResult DeserializeValidateOperationResult(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> status = default;
             Optional<string> linkerName = default;
             Optional<bool?> isConnectionAvailable = default;
             Optional<DateTimeOffset?> reportStartTimeUtc = default;
             Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Optional<string> sourceId = default;
-            Optional<string> targetId = default;
-            Optional<AuthType?> authType = default;
-            Optional<IReadOnlyList<ValidationResultItem>> validationDetail = default;
+            Optional<ResourceIdentifier> sourceId = default;
+            Optional<ResourceIdentifier> targetId = default;
+            Optional<LinkerAuthType?> authType = default;
+            Optional<IReadOnlyList<ValidationResultItemData>> validationDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceId = null;
                         continue;
                     }
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 sourceId = null;
                                 continue;
                             }
-                            sourceId = property0.Value.GetString();
+                            sourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetId"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 targetId = null;
                                 continue;
                             }
-                            targetId = property0.Value.GetString();
+                            targetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authType"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 authType = null;
                                 continue;
                             }
-                            authType = new AuthType(property0.Value.GetString());
+                            authType = new LinkerAuthType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("validationDetail"))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                                 validationDetail = null;
                                 continue;
                             }
-                            List<ValidationResultItem> array = new List<ValidationResultItem>();
+                            List<ValidationResultItemData> array = new List<ValidationResultItemData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ValidationResultItem.DeserializeValidationResultItem(item));
+                                array.Add(ValidationResultItemData.DeserializeValidationResultItemData(item));
                             }
                             validationDetail = array;
                             continue;

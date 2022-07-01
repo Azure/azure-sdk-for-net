@@ -5,24 +5,26 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> An option to store secret value in secure place. </summary>
-    internal partial class SecretStore
+    internal partial class LinkerSecretStore
     {
-        /// <summary> Initializes a new instance of SecretStore. </summary>
-        public SecretStore()
+        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
+        public LinkerSecretStore()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretStore. </summary>
+        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
         /// <param name="keyVaultId"> The key vault id to store secret. </param>
-        internal SecretStore(string keyVaultId)
+        internal LinkerSecretStore(ResourceIdentifier keyVaultId)
         {
             KeyVaultId = keyVaultId;
         }
 
         /// <summary> The key vault id to store secret. </summary>
-        public string KeyVaultId { get; set; }
+        public ResourceIdentifier KeyVaultId { get; set; }
     }
 }
