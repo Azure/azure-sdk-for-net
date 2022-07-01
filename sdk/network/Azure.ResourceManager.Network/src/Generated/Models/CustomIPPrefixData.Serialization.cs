@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
 
         internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, Optional.ToNullable(etag), Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
+            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
