@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
       public static readonly String GithubCommidId = "3c5a948022b2bb99facdcf60ddb2abe2b16615ae";
-      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead."
+      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
