@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
-        /// <param name="connectionState"> The connection state. </param>
+        /// <param name="networkConnectionState"> The connection state. </param>
         /// <param name="startOn"> The start time of the connection snapshot. </param>
         /// <param name="endOn"> The end time of the connection snapshot. </param>
         /// <param name="evaluationState"> Connectivity analysis evaluation state. </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probesSent"> The number of sent probes. </param>
         /// <param name="probesFailed"> The number of failed probes. </param>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        internal ConnectionStateSnapshot(ConnectionState? connectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHop> hops)
+        internal ConnectionStateSnapshot(ConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHop> hops)
         {
-            ConnectionState = connectionState;
+            NetworkConnectionState = networkConnectionState;
             StartOn = startOn;
             EndOn = endOn;
             EvaluationState = evaluationState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The connection state. </summary>
-        public ConnectionState? ConnectionState { get; }
+        public ConnectionState? NetworkConnectionState { get; }
         /// <summary> The start time of the connection snapshot. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the connection snapshot. </summary>
