@@ -6,6 +6,12 @@
 
 - Add `ExtendedLocation` to common type.
 
+## 1.1.2 (2022-07-01)
+
+### Features Added
+
+- Add `ExtendedLocation` to common type.
+
 ## 1.1.1 (2022-06-22)
 
 ### Features Added
