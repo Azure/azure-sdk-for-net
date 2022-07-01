@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             var migrationParameters = new MigrationConfigurationData()
             {
                 PostMigrationName = postMigrationName,
-                TargetNamespace = serviceBusNamespace1.Id
+                TargetServiceBusNamespace = serviceBusNamespace1.Id
             };
             _ = await serviceBusNamespace2.GetMigrationConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, MigrationConfigurationName.Default, migrationParameters);
 
