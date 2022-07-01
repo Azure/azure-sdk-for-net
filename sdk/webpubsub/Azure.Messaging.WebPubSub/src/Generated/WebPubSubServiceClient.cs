@@ -33,6 +33,34 @@ namespace Azure.Messaging.WebPubSub
         {
         }
 
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="hub"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        public WebPubSubServiceClient(string endpoint, string hub) : this(endpoint, hub, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="hub"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hub"/> is an empty string, and was expected to be non-empty. </exception>
+        public WebPubSubServiceClient(string endpoint, string hub, WebPubSubServiceClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
+            options ??= new WebPubSubServiceClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _hub = hub;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Generate token for the client to connect Azure Web PubSub service. </summary>
         /// <param name="userId"> User Id. </param>
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
@@ -778,6 +806,114 @@ namespace Azure.Messaging.WebPubSub
             try
             {
                 using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AddUserToGroupAsync(string userId, string group, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a user to the target group. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AddUserToGroup(string userId, string group, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddUserToGroupRequest(userId, group, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RemoveUserFromGroupAsync(string userId, string group, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove a user from the target group. </summary>
+        /// <param name="userId"> Target user Id. </param>
+        /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> or <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response RemoveUserFromGroup(string userId, string group, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveUserFromGroupRequest(userId, group, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary> The HealthApi service client. </summary>
-    internal partial class HealthApiClient
+    public partial class HealthApiClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
