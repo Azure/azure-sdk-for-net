@@ -82,7 +82,7 @@
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Common" Version="1.1.0" />
-    <PackageReference Update="Azure.Core" Version="1.24.0" />
+    <PackageReference Update="Azure.Core" Version="1.25.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
@@ -98,7 +98,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.10.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.1.1" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.1.2" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
@@ -178,7 +178,7 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0-beta.8" />
     <PackageReference Update="Azure.ResourceManager.Network" Version="1.0.0-beta.7" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-beta.8" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
