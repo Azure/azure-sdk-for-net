@@ -121,25 +121,24 @@ rename-mapping:
   RetentionPolicy.enabled: IsEnabled
   TimeWindow.start: StartOn
   TimeWindow.end: EndOn
-
+  
 directive:
   # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
-    transform: >
-        $["x-nullable"] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.MetricAlertProperties.properties.criteria
-    transform: >
-        $["x-nullable"] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.MetricTrigger.properties.dimensions
-    transform: >
-        $["x-nullable"] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.notifications
-    transform: >
-        $["x-nullable"] = true;
+    transform: $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Resource.properties.type
+    transform: $["x-nullable"] = true
   # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.Resource
