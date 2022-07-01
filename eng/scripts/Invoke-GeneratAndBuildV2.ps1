@@ -10,6 +10,7 @@ $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
 $swaggerDir = Resolve-Path $swaggerDir
 $swaggerDir = $swaggerDir -replace "\\", "/"
+[string[]] $inputFilePaths = $inputJson.changedFiles;
 $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
@@ -36,13 +37,11 @@ if ($autorestConfig -ne "") {
 
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
 
+$sdkPath =  (Join-Path $PSScriptRoot .. ..)
+$sdkPath = Resolve-Path $sdkPath
+$sdkPath = $sdkPath -replace "\\", "/"
 for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
     $readmeFile = $readmeFiles[$i] -replace "\\", "/"
-    $sdkPath =  (Join-Path $PSScriptRoot .. ..)
-    $sdkPath = Resolve-Path $sdkPath
-    $sdkPath = $sdkPath -replace "\\", "/"
-
-    
     $readme = ""
     if ( $swaggerDir -ne "") {
         $readme = (Join-Path $swaggerDir $readmeFile)
@@ -63,6 +62,22 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
     }
     Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -generatedSDKPackages $generatedSDKPackages
 }
+
+#update services without readme.md
+[System.Collections.ArrayList] $serviceWithReadme = @()
+foreach( $readme in $readmeFiles) {
+    $service, $serviceType = Get-ResourceProviderFromReadme $readme
+    $serviceWithReadme.Add($service)
+}
+[System.Collections.ArrayList] $inputFileToGen = @()
+foreach( $file in $inputFilePaths) {
+    $file -match "specification/(?<specName>.*)/data-plane|resource-manager"
+    if (!$serviceWithReadme.Contains($matches["specName"])) {
+        $inputFileToGen.Add($file)
+    }
+}
+
+UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -generatedSDKPackages $generatedSDKPackages
 
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages

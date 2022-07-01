@@ -493,6 +493,29 @@ function Invoke-GenerateAndBuildSDK () {
         Push-Location $sdkRootPath
         pwsh eng/scripts/Export-API.ps1 $service
 
+        # breaking change validation
+        $srcPath = Join-Path $projectFolder 'src'
+        $hasBreakingChange = $null
+        $content = $null
+        $logFilePath = Join-Path "$srcPath" 'log.txt'
+        if (!(Test-Path $logFilePath)) {
+            New-Item $logFilePath
+        }
+        dotnet build $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+        if (!$LASTEXITCODE) {
+            $hasBreakingChange = $false
+        }
+        else {
+            $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+            $breakingChanges = $logFile -join ",`n"
+            $content = "Breaking Changes: $breakingChanges"
+            $hasBreakingChange = $true
+        }
+
+        if (Test-Path $logFilePath) {
+            Remove-Item $logFilePath
+        }
+
         $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
         [string[]]$artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
         $apiViewArtifact = ""
@@ -501,7 +524,212 @@ function Invoke-GenerateAndBuildSDK () {
         } else {
             $apiViewArtifact = $artifacts[0]
         }
-        $generatedSDKPackages.Add(@{packageName="$service"; result='succeeded'; path=@("$path");packageFolder="$projectFolder";artifacts=$artifacts;apiViewArtifact=$apiViewArtifact;language=".Net"})
+
+        $changelog = [PSCustomObject]@{
+            content           = $content
+            hasBreakingChange = $hasBreakingChange
+        }
+        $generatedSDKPackages.Add(@{packageName="$service"; 
+                                    result='succeeded';
+                                    path=@("$path");
+                                    packageFolder="$projectFolder";
+                                    artifacts=$artifacts;
+                                    apiViewArtifact=$apiViewArtifact;
+                                    language=".Net";
+                                    changelog= $changelog})
         Pop-Location
     }
+}
+
+function GeneratePackage()
+{
+    param(
+        [string]$projectFolder,
+        [string]$sdkRootPath,
+        [string]$path,
+        [string]$downloadUrlPrefix="",
+        [object]$generatedSDKPackages
+    )
+
+    $packageName = Split-Path $projectFolder -Leaf
+    Write-Host "Generating code for " $packageName
+    $artifacts = @()
+    $apiViewArtifact = ""
+    $hasBreakingChange = $null
+    $content = $null
+    $result = ""
+    $srcPath = Join-Path $projectFolder 'src'
+    dotnet build /restore /t:GenerateCode $srcPath
+    if (!$LASTEXITCODE) {
+        $result = "succeeded"
+        Write-Host "Successfully generated code for" $packageName "`n"
+        
+        dotnet pack $srcPath /p:RunApiCompat=$false
+        if (!$LASTEXITCODE) {
+            $result = "succeeded"
+            $artifactsPath = "$sdkRootPath/artifacts/packages/Debug/$packageName"
+            $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+            if ( $artifacts.count -le 0) {
+                Write-Error "Failed to generate sdk artifact"
+            } else {
+                $apiViewArtifact = $artifacts[0]
+            }
+
+            $logFilePath = Join-Path "$srcPath" 'log.txt'
+            if (!(Test-Path $logFilePath)) {
+                New-Item $logFilePath
+            }
+            dotnet build $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+            if (!$LASTEXITCODE) {
+                $hasBreakingChange = $false
+            }
+            else {
+                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+                $breakingChanges = $logFile -join ",`n"
+                $content = "Breaking Changes: $breakingChanges"
+                $hasBreakingChange = $true
+            }
+    
+            if (Test-Path $logFilePath) {
+                Remove-Item $logFilePath
+            }
+        }
+        else {
+            $result = "failed"
+            Write-Error "Error occurred while generating artifacts for $packageName `n"
+        }
+    } 
+    else {
+        $result = "failed"
+        Write-Error "Error occurred while generating code for $packageName `n"
+    }
+    $changelog = [PSCustomObject]@{
+        content           = $content
+        hasBreakingChange = $hasBreakingChange
+    }
+    # $downloadUrlPrefix = $inputFileContent.installInstructionInput.downloadUrlPrefix
+    $full = $null
+    if ($artifacts.count -gt 0) {
+        $fileName = Split-Path $artifacts[0] -Leaf
+        $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+    }
+    $installInstructions = [PSCustomObject]@{
+        full = $full
+        lite = $full
+    }
+    $generatedSDKPackages.Add(@{packageName="$packageName"; 
+                                result=$result;
+                                path=@("$path");
+                                packageFolder="$projectFolder";
+                                artifacts=$artifacts;
+                                apiViewArtifact=$apiViewArtifact;
+                                language=".Net";
+                                changelog= $changelog;
+                                installInstructions = $installInstructions})
+}
+function UpdateExistingSDKByInputFiles()
+{
+    param(
+        [string[]]$inputFilePaths,
+        [string]$sdkRootPath,
+        [string]$headSha = "",
+        [string]$repoHttpsUrl,
+        [object]$generatedSDKPackages
+    )
+
+    $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
+    Write-Host "Updating autorest.md files for all the changed swaggers."
+    [System.Collections.ArrayList] $sdksInfo = @()
+    # $headSha = $inputFileContent.headSha
+    # $repoHttpsUrl = $inputFileContent.repoHttpsUrl
+    $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
+    foreach ($path in $autorestFilesPath) {
+        $fileContent = Get-Content $path
+        foreach ($inputFilePath in $inputFilePaths) {
+            $escapedInputFilePath = [System.Text.RegularExpressions.Regex]::Escape($inputFilePath)
+            $regexForMatchingShaAndPath = $regexToFindSha + $escapedInputFilePath
+
+            foreach ($line in $fileContent) {
+                if ($line -match $regexForMatchingShaAndPath) {
+                    $fileContent -replace $regexToFindSha, "$repoHttpsUrl/blob/$headSha/" | Set-Content -Path $path
+
+                    $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
+                    if (!$sdksInfo.Contains($sdkpath)) {
+                    # if (!$sdksInfo.ContainsKey($sdkpath)) {
+                        # $specReadmePath = $inputFileContent.relatedReadmeMdFiles -match $inputFilePath
+                        # $sdksInfo.Add($sdkpath, $specReadmePath)
+                        $sdksInfo.Add($sdkpath)
+                    }
+                    break
+                }
+            }
+        }
+    }
+
+    # generate SDK
+    # foreach ($sdkPath in $sdksInfo.Keys) {
+    foreach ($sdkpath in $sdksInfo) {
+        $path = , $sdkPath
+        $projectFolder = Join-Path $sdkRootPath $sdkPath
+        $projectFolder = Resolve-Path -Path $projectFolder
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -generatedSDKPackages $generatedSDKPackages
+        # $packageName = Split-Path $sdkPath -Leaf
+        # Write-Host "Generating code for " $packageName
+        # $artifacts = @()
+        # $hasBreakingChange = $null
+        # $content = $null
+        # $srcPath = Join-Path $sdkPath 'src'
+        # dotnet build /restore /t:GenerateCode $srcPath
+        # if (!$LASTEXITCODE) {
+        #     $result = "succeeded"
+        #     Write-Host "Successfully generated code for" $packageName "`n"
+            
+        #     dotnet pack $srcPath /p:RunApiCompat=$false
+        #     if (!$LASTEXITCODE) {
+        #       $result = "succeeded"
+        #       $artifactsPath = "$RepoRoot/artifacts/packages/Debug/$packageName"
+        #       $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+              
+        #       $logFilePath = Join-Path "$srcPath" 'log.txt'
+        #       if (!(Test-Path $logFilePath)) {
+        #         New-Item $logFilePath
+        #       }
+        #       dotnet build $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+        #       if (!$LASTEXITCODE) {
+        #         $hasBreakingChange = $false
+        #       }
+        #       else {
+        #         $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+        #         $breakingChanges = $logFile -join ",`n"
+        #         $content = "Breaking Changes: $breakingChanges"
+        #         $hasBreakingChange = $true
+        #       }
+        
+        #       if (Test-Path $logFilePath) {
+        #         Remove-Item $logFilePath
+        #       }
+        #     }
+        #     else {
+        #       $result = "failed"
+        #       Write-Error "Error occurred while generating artifacts for $packageName `n"
+        #     }
+        #   } 
+        #   else {
+        #     $result = "failed"
+        #     Write-Error "Error occurred while generating code for $packageName `n"
+        #   }
+        #   $changelog = [PSCustomObject]@{
+        #     content           = $content
+        #     hasBreakingChange = $hasBreakingChange
+        #   }
+        #   $generatedSDKPackages.Add(@{packageName="$service"; 
+        #                                 result=$result;
+        #                                 path=@("$path");
+        #                                 packageFolder="$projectFolder";
+        #                                 artifacts=$artifacts;
+        #                                 apiViewArtifact=$apiViewArtifact;
+        #                                 language=".Net";
+        #                                 changelog= $changelog})
+    }
+    
 }
