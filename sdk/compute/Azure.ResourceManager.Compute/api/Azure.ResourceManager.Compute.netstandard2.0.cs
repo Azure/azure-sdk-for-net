@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudServiceOSFamilyData() { }
         public string Label { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
+        public string ResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase> Versions { get { throw null; } }
     }
     public partial class CloudServiceOSFamilyResource : Azure.ResourceManager.ArmResource
@@ -721,7 +722,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DedicatedHostGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> DedicatedHosts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public bool? SupportAutomaticPlacement { get { throw null; } set { } }
@@ -5035,8 +5036,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UefiSettings
     {
         public UefiSettings() { }
-        public bool? SecureBootEnabled { get { throw null; } set { } }
-        public bool? VTpmEnabled { get { throw null; } set { } }
+        public bool? IsSecureBootEnabled { get { throw null; } set { } }
+        public bool? IsVirtualTpmEnabled { get { throw null; } set { } }
     }
     public partial class UpdateDomainIdentifier
     {
