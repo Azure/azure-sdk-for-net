@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -32,11 +33,11 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-01";
+            _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePointData parameters)
+        internal HttpMessage CreateCreateRequest(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
-            uri.AppendPath(restorePointCollectionName, true);
+            uri.AppendPath(restorePointGroupName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -56,30 +57,30 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> The operation to create the restore point. Updating properties of an existing restore point is not allowed. </summary>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
+        /// <param name="data"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePointData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName, parameters);
+            using var message = CreateCreateRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,23 +92,23 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to create the restore point. Updating properties of an existing restore point is not allowed. </summary>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
-        /// <param name="parameters"> Parameters supplied to the Create restore point operation. </param>
+        /// <param name="data"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="restorePointName"/> or <paramref name="parameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePointData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName, parameters);
+            using var message = CreateCreateRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName)
+        internal HttpMessage CreateDeleteRequest(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
-            uri.AppendPath(restorePointCollectionName, true);
+            uri.AppendPath(restorePointGroupName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -141,21 +142,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete the restore point. </summary>
+        /// <param name="restorePointGroupName"> The name of the Restore Point Collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the Restore Point Collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName);
+            using var message = CreateDeleteRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -169,21 +170,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to delete the restore point. </summary>
+        /// <param name="restorePointGroupName"> The name of the Restore Point Collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the Restore Point Collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName);
+            using var message = CreateDeleteRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName)
+        internal HttpMessage CreateGetRequest(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -208,9 +209,13 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
-            uri.AppendPath(restorePointCollectionName, true);
+            uri.AppendPath(restorePointGroupName, true);
             uri.AppendPath("/restorePoints/", false);
             uri.AppendPath(restorePointName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -219,21 +224,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to get the restore point. </summary>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RestorePointData>> GetAsync(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName);
+            using var message = CreateGetRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -252,21 +258,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The operation to get the restore point. </summary>
+        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorePointData> Get(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string restorePointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RestorePointData> Get(string restorePointGroupName, string subscriptionId, string resourceGroupName, string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointCollectionName, restorePointName);
+            using var message = CreateGetRequest(restorePointGroupName, subscriptionId, resourceGroupName, restorePointName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

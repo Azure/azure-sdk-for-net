@@ -11,7 +11,7 @@ The Question Answering service is a cloud-based API service that lets you create
 Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+dotnet add package Azure.AI.Language.QuestionAnswering
 ```
 
 ### Prerequisites

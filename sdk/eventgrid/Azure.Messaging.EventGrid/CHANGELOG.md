@@ -1,14 +1,28 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.11.0 (2022-07-07)
 
 ### Features Added
 
+- Added support for sending events to partner channels.
+
+## 4.11.0-beta.2 (2022-05-10)
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed `SendCloudEventsOptions` type in favor of a string parameter that can be used to specify the channel name.
 
-### Other Changes
+## 4.11.0-beta.1 (2022-04-07)
+
+### Features Added
+
+- Added Partner Topic support for channels
+
+## 4.10.0 (2022-04-05)
+
+### Features Added
+
+- Added Healthcare events
 
 ## 4.9.0 (2022-03-08)
 

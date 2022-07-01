@@ -1,18 +1,17 @@
+# cSpell:ignore changedfiles
+# cSpell:ignore Committish
+# cSpell:ignore LASTEXITCODE
+
 steps:
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - pwsh: |
-        Set-PsDebug -Trace 1
-        # Find the default branch of the repo
-        $defaultBranch = (git remote show origin | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
-        $targetBranch = "$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
+        # Find the default branch of the repo. The variable value sets in build step.
+        Write-Host "Default Branch: $(DefaultBranch)"
 
-        Write-Host "Default Branch: ${defaultBranch}"
-
-        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and $targetBranch -eq $defaultBranch)
+        if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and "$(System.PullRequest.TargetBranch)" -match "^(refs/heads/)?$(DefaultBranch)$")
         {
-
-          $filesInCommonDir = git diff "origin/${targetBranch}" HEAD --name-only -- 'eng/common/*'
-
+          $filesInCommonDir  = & "eng/common/scripts/get-changedfiles.ps1" -DiffPath 'eng/common/*'
           if (($LASTEXITCODE -eq 0) -and ($filesInCommonDir.Count -gt 0))
           {
             Write-Host "##vso[task.LogIssue type=error;]Changes to files under 'eng/common' directory should not be made in this Repo`n${filesInCommonDir}"

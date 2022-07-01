@@ -15,6 +15,17 @@ namespace Azure.Identity.Tests
     {
         public AzureCliCredentialTests(bool isAsync) : base(isAsync) { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var azCliOptions = new AzureCliCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), azCliOptions));
+        }
+
         [Test]
         public async Task AuthenticateWithCliCredential(
             [Values(null, TenantIdHint)] string tenantId,

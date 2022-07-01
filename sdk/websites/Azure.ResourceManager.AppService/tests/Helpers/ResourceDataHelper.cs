@@ -7,6 +7,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.AppService.Tests.Helpers
 {
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new SiteSourceControlData()
             {
-                RepoUrl = "https://github.com/00Kai0/azure-site-test",
+                RepoUri = new Uri("https://github.com/00Kai0/azure-site-test"),
                 Branch = "staging",
                 IsManualIntegration = true,
                 IsMercurial = false,
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             AssertTrackedResource(ssrd1, ssrd2);
             Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
-            Assert.AreEqual(ssrd1.RepositoryUrl, ssrd2.RepositoryUrl);
+            Assert.AreEqual(ssrd1.RepositoryUri, ssrd2.RepositoryUri);
             Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
         }
 
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     Name = "Free",
                     //Tier = "Basic"
                 },
-                RepositoryUrl = "https://github.com/00Kai0/html-docs-hello-world",
+                RepositoryUri = new Uri("https://github.com/00Kai0/html-docs-hello-world"),
                 Branch = "master",
                 RepositoryToken = "xxx",
                 BuildProperties = new StaticSiteBuildProperties()

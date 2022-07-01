@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
         /// <param name="creationTime"> Creation time of the deleted account. </param>
         /// <param name="deletionTime"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime) : base(id, name, resourceType, systemData)
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountResourceId, AzureLocation? location, string restoreReference, string creationTime, string deletionTime) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Full resource id of the original storage account. </summary>
         public string StorageAccountResourceId { get; }
         /// <summary> Location of the deleted account. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
         public string RestoreReference { get; }
         /// <summary> Creation time of the deleted account. </summary>

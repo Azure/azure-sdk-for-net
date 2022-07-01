@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,14 +15,19 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DomainControlCenterSsoRequest DeserializeDomainControlCenterSsoRequest(JsonElement element)
         {
-            Optional<string> url = default;
+            Optional<Uri> url = default;
             Optional<string> postParameterKey = default;
             Optional<string> postParameterValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("postParameterKey"))

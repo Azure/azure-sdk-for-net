@@ -7,13 +7,12 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the SourceControl data model. </summary>
-    public partial class SourceControlData : ProxyOnlyResource
+    public partial class SourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of SourceControlData. </summary>
         public SourceControlData()
@@ -25,17 +24,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="token"> OAuth access token. </param>
         /// <param name="tokenSecret"> OAuth access token secret. </param>
         /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expirationTime"> OAuth token expiration. </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationTime) : base(id, name, resourceType, systemData, kind)
+        /// <param name="expirationOn"> OAuth token expiration. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationOn, string kind) : base(id, name, resourceType, systemData)
         {
             Token = token;
             TokenSecret = tokenSecret;
             RefreshToken = refreshToken;
-            ExpirationTime = expirationTime;
+            ExpirationOn = expirationOn;
+            Kind = kind;
         }
 
         /// <summary> OAuth access token. </summary>
@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> OAuth refresh token. </summary>
         public string RefreshToken { get; set; }
         /// <summary> OAuth token expiration. </summary>
-        public DateTimeOffset? ExpirationTime { get; set; }
+        public DateTimeOffset? ExpirationOn { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

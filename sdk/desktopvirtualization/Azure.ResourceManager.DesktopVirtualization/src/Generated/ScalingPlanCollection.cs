@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of ScalingPlan and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ScalingPlanResource" /> and their operations.
+    /// Each <see cref="ScalingPlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ScalingPlanCollection" /> instance call the GetScalingPlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ScalingPlanCollection : ArmCollection, IEnumerable<ScalingPlanResource>, IAsyncEnumerable<ScalingPlanResource>
     {
         private readonly ClientDiagnostics _scalingPlanClientDiagnostics;
@@ -55,22 +59,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Create
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlan"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scalingPlanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken).ConfigureAwait(false);
+                var response = await _scalingPlanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -88,22 +92,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Create
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlan"> Object containing scaling plan definitions. </param>
+        /// <param name="data"> Object containing scaling plan definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scalingPlanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken);
+                var response = _scalingPlanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, data, cancellationToken);
                 var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(scalingPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,66 +306,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(scalingPlanName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
-        /// Operation Id: ScalingPlans_Get
-        /// </summary>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual async Task<Response<ScalingPlanResource>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ScalingPlanResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
-        /// Operation Id: ScalingPlans_Get
-        /// </summary>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual Response<ScalingPlanResource> GetIfExists(string scalingPlanName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ScalingPlanResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

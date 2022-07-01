@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -14,8 +13,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetIfExists", typeof(CancellationToken))]
-    [CodeGenSuppress("GetIfExistsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("Exists", typeof(CancellationToken))]
     [CodeGenSuppress("ExistsAsync", typeof(CancellationToken))]
     public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>

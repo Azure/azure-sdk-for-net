@@ -74,26 +74,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-
-            VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
-            if (virtualNetwork != null)
-            {
-                Console.WriteLine(virtualNetwork.Data.Name);
-            }
-
-            if (await virtualNetworkCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
         public async Task DeleteVirtualNetwork()
         {
             #region Snippet:Managing_Networks_DeleteAVirtualNetwork

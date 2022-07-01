@@ -3,13 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Graph.Rbac;
+using Azure.Identity;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Microsoft.Graph;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
@@ -18,19 +22,22 @@ namespace Azure.ResourceManager.KeyVault.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        private const string ObjectIdKey = "ObjectId";
+        protected const string ObjectIdKey = "ObjectId";
+        protected const int DefSoftDeleteRetentionInDays = 7;
+
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
 
         public string ObjectId { get; set; }
         //Could not use TestEnvironment.Location since Location is got dynamically
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         public SubscriptionResource Subscription { get; private set; }
-        public AccessPolicyEntry AccessPolicy { get; internal set; }
+        public VaultAccessPolicy AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
         public Guid TenantIdGuid { get; internal set; }
         public string VaultName { get; internal set; }
+        public string MHSMName { get; internal set; }
         public VaultProperties VaultProperties { get; internal set; }
         public ManagedHsmProperties ManagedHsmProperties { get; internal set; }
 
@@ -51,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
         protected async Task Initialize()
         {
-            Location = "westcentralus";
+            Location = AzureLocation.CanadaCentral;
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedVaults();
@@ -62,48 +69,56 @@ namespace Azure.ResourceManager.KeyVault.Tests
             }
             else if (Mode == RecordedTestMode.Record)
             {
-                var spClient = new RbacManagementClient(TestEnvironment.TenantId, TestEnvironment.Credential).ServicePrincipals;
-                var servicePrincipalList = spClient.ListAsync($"appId eq '{TestEnvironment.ClientId}'").ToEnumerableAsync().Result;
-                foreach (var servicePrincipal in servicePrincipalList)
+                // Get ObjectId of Service Principal
+                // [warning] Microsoft.Graph required corresponding api permission, Please make sure the service has these two api permissions as follows.
+                // 1. ServicePrincipalEndpoint.Read.All(TYPE-Application) 2.ServicePrincipalEndpoint.ReadWrite.All(TYPE-Application)
+                var scopes = new[] { "https://graph.microsoft.com/.default" };
+                var options = new TokenCredentialOptions
                 {
-                    this.ObjectId = servicePrincipal.ObjectId;
-                    Recording.GetVariable(ObjectIdKey, this.ObjectId);
-                    break;
-                }
+                    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
+                };
+                var clientSecretCredential = new ClientSecretCredential(TestEnvironment.TenantId, TestEnvironment.ClientId, TestEnvironment.ClientSecret, options);
+                var graphClient = new GraphServiceClient(clientSecretCredential, scopes);
+                var response = await graphClient.ServicePrincipals.Request().GetAsync();
+                var result = response.CurrentPage.Where(i => i.AppId == TestEnvironment.ClientId).FirstOrDefault();
+                this.ObjectId = result.Id;
+                Recording.GetVariable(ObjectIdKey, this.ObjectId);
             }
 
             ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ArmOperation<ResourceGroupResource> rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroupResource = rgResponse.Value;
 
             VaultCollection = ResourceGroupResource.GetVaults();
             VaultName = Recording.GenerateAssetName("sdktest-vault-");
+            MHSMName = Recording.GenerateAssetName("sdktest-mhsm-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new AccessPermissions
+            IdentityAccessPermissions permissions = new IdentityAccessPermissions
             {
-                Keys = { new KeyPermissions("all") },
-                Secrets = { new SecretPermissions("all") },
-                Certificates = { new CertificatePermissions("all") },
-                Storage = { new StoragePermissions("all") },
+                Keys = { new IdentityAccessKeyPermission("all") },
+                Secrets = { new IdentityAccessSecretPermission("all") },
+                Certificates = { new IdentityAccessCertificatePermission("all") },
+                Storage = { new IdentityAccessStoragePermission("all") },
             };
-            AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
+            AccessPolicy = new VaultAccessPolicy(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new VaultSku(VaultSkuFamily.A, VaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
+            VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkAcls = new NetworkRuleSet() {
+            VaultProperties.NetworkRuleSet = new VaultNetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =
                 {
-                    new IPRule("1.2.3.4/32"),
-                    new IPRule("1.0.0.0/25")
+                    new VaultIPRule("1.2.3.4/32"),
+                    new VaultIPRule("1.0.0.0/25")
                 }
             };
             VaultProperties.AccessPolicies.Add(AccessPolicy);
@@ -111,17 +126,25 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmCollection = ResourceGroupResource.GetManagedHsms();
             ManagedHsmProperties = new ManagedHsmProperties();
             ManagedHsmProperties.InitialAdminObjectIds.Add(ObjectId);
-            ManagedHsmProperties.CreateMode = CreateMode.Default;
-            ManagedHsmProperties.EnablePurgeProtection = false;
+            ManagedHsmProperties.CreateMode = ManagedHsmCreateMode.Default;
             ManagedHsmProperties.EnableSoftDelete = true;
-            ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
+            ManagedHsmProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
+            ManagedHsmProperties.EnablePurgeProtection = false;
+            ManagedHsmProperties.NetworkRuleSet = new ManagedHsmNetworkRuleSet()
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
             };
-            ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
-            ManagedHsmProperties.SoftDeleteRetentionInDays = 10;
+            ManagedHsmProperties.PublicNetworkAccess = ManagedHsmPublicNetworkAccess.Disabled;
             ManagedHsmProperties.TenantId = TenantIdGuid;
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
     }
 }

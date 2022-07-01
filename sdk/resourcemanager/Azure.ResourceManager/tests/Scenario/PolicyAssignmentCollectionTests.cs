@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.PolicyDefinitionId, getResult.Data.PolicyDefinitionId);
             Assert.AreEqual(model.Data.Scope, getResult.Data.Scope);
-            Assert.AreEqual(model.Data.NotScopes, getResult.Data.NotScopes);
+            Assert.AreEqual(model.Data.ExcludedScopes, getResult.Data.ExcludedScopes);
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);

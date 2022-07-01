@@ -50,9 +50,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            MongoDBCollectionResource collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
-            if (collection != null)
+            if (await MongoDBCollectionCollection.ExistsAsync(_collectionName))
             {
+                var id = MongoDBCollectionCollection.Id;
+                id = MongoDBCollectionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _collectionName);
+                MongoDBCollectionResource collection = this.ArmClient.GetMongoDBCollectionResource(id);
                 await collection.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            MongoDBCollectionCreateUpdateData updateOptions = new MongoDBCollectionCreateUpdateData(collection.Id, _collectionName, collection.Data.ResourceType, null,
+            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, collection.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -152,8 +154,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var collection = await CreateMongoDBCollection(null);
             await collection.DeleteAsync(WaitUntil.Completed);
 
-            collection = await MongoDBCollectionCollection.GetIfExistsAsync(_collectionName);
-            Assert.Null(collection);
+            bool exists = await MongoDBCollectionCollection.ExistsAsync(_collectionName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<MongoDBCollectionResource> CreateMongoDBCollection(AutoscaleSettings autoscale)
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<MongoDBCollectionResource> CreateMongoDBCollection(string name, AutoscaleSettings autoscale, MongoDBCollectionCollection mongoDBContainerCollection)
         {
-            MongoDBCollectionCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateUpdateData(AzureLocation.WestUS,
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBCollectionCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.MongoDBCollectionResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -179,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

@@ -38,16 +38,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task CreateQueue()
         {
-#if !SNIPPET
-            string queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
-#endif
+            string adminQueueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminConnectionString = TestEnvironment.ServiceBusConnectionString;
+
             try
             {
                 #region Snippet:CreateQueue
 #if SNIPPET
                 string connectionString = "<connection_string>";
                 string queueName = "<queue_name>";
+#else
+                string queueName = adminQueueName;
+                string connectionString = adminConnectionString;
 #endif
                 var client = new ServiceBusAdministrationClient(connectionString);
                 var options = new CreateQueueOptions(queueName)
@@ -78,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             finally
             {
-                await new ServiceBusAdministrationClient(connectionString).DeleteQueueAsync(queueName);
+                await new ServiceBusAdministrationClient(adminConnectionString).DeleteQueueAsync(adminQueueName);
             }
         }
 
@@ -111,20 +113,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Test]
         public async Task CreateTopicAndSubscription()
         {
-#if !SNIPPET
-            string topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            string connectionString = TestEnvironment.ServiceBusConnectionString;
-            var client = new ServiceBusAdministrationClient(connectionString);
-#endif
+            string adminTopicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminSubscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            string adminConnectionString = TestEnvironment.ServiceBusConnectionString;
+
             try
             {
                 #region Snippet:CreateTopicAndSubscription
 #if SNIPPET
                 string connectionString = "<connection_string>";
                 string topicName = "<topic_name>";
-                var client = new ServiceBusManagementClient(connectionString);
+#else
+                string connectionString = adminConnectionString;
+                string topicName = adminTopicName;
 #endif
+                var client = new ServiceBusAdministrationClient(connectionString);
                 var topicOptions = new CreateTopicOptions(topicName)
                 {
                     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -145,6 +148,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
 #if SNIPPET
                 string subscriptionName = "<subscription_name>";
+#else
+                string subscriptionName = adminSubscriptionName;
 #endif
                 var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
                 {
@@ -160,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             finally
             {
-                await client.DeleteTopicAsync(topicName);
+                await new ServiceBusAdministrationClient(adminConnectionString).DeleteTopicAsync(adminTopicName);
             }
         }
 

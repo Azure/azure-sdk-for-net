@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
-        /// <param name="managedIdentityType"> Represent the identity type: systemAssigned, userAssigned, None. </param>
+        /// <param name="identityType"> Represent the identity type: systemAssigned, userAssigned, None. </param>
         /// <param name="userAssignedIdentities"> Get or set the user assigned identities. </param>
         /// <param name="principalId">
         /// Get the principal id for the system assigned identity.
@@ -31,16 +32,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Get the tenant id for the system assigned identity.
         /// Only be used in response
         /// </param>
-        internal ManagedIdentity(ManagedIdentityType? managedIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, string tenantId)
+        internal ManagedIdentity(ManagedIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, Guid? tenantId)
         {
-            ManagedIdentityType = managedIdentityType;
+            IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
             TenantId = tenantId;
         }
 
         /// <summary> Represent the identity type: systemAssigned, userAssigned, None. </summary>
-        public ManagedIdentityType? ManagedIdentityType { get; set; }
+        public ManagedIdentityType? IdentityType { get; set; }
         /// <summary> Get or set the user assigned identities. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
         /// <summary>
@@ -52,6 +53,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Get the tenant id for the system assigned identity.
         /// Only be used in response
         /// </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
             // check for exists virtual network
-            vnet1 = await _virtualNetworkCollection.GetIfExistsAsync(vnetName);
-            Assert.AreEqual(vnet1.Id.Name, vnetName);
+            bool exists = await _virtualNetworkCollection.ExistsAsync(vnetName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

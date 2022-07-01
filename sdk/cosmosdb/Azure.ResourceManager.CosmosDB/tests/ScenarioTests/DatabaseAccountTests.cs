@@ -34,9 +34,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            DatabaseAccountResource account = await DatabaseAccountCollection.GetIfExistsAsync(_databaseAccountName);
-            if (account != null)
+            if (await DatabaseAccountCollection.ExistsAsync(_databaseAccountName))
             {
+                var id = DatabaseAccountCollection.Id;
+                id = DatabaseAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
+                DatabaseAccountResource account = this.ArmClient.GetDatabaseAccountResource(id);
                 await account.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
-            var updateOptions = new PatchableDatabaseAccountData()
+            var updateOptions = new DatabaseAccountPatch()
             {
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
@@ -72,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 }
             };
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
-            await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, new FailoverPolicies(failoverPolicyList));
+            await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, failoverPolicies);
 
             DatabaseAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account3, updateOptions);
@@ -122,10 +124,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsNotNull(readOnlyKeys.PrimaryReadonlyMasterKey);
             Assert.IsNotNull(readOnlyKeys.SecondaryReadonlyMasterKey);
 
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Primary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.Secondary));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.PrimaryReadonly));
-            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyData(KeyKind.SecondaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Primary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.Secondary));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.PrimaryReadonly));
+            await account.RegenerateKeyAsync(WaitUntil.Completed, new DatabaseAccountRegenerateKeyContent(KeyKind.SecondaryReadonly));
 
             DatabaseAccountKeyList regeneratedKeys = await account.GetKeysAsync();
             if (Mode != RecordedTestMode.Playback)
@@ -224,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, PatchableDatabaseAccountData parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, DatabaseAccountPatch parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);

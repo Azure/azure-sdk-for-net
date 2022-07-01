@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
     {
         public void Configure(IWebJobsBuilder builder)
         {
-            builder.AddAzureTables();
+            builder.AddTables();
         }
     }
 }

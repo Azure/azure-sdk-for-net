@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
+            IgnoreTestInNonWindowsAgent();
+
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
@@ -54,9 +56,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlUserDefinedFunctionResource userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            if (userDefinedFunction != null)
+            if (await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName))
             {
+                var id = SqlUserDefinedFunctionCollection.Id;
+                id = SqlUserDefinedFunctionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _userDefinedFunctionName);
+                SqlUserDefinedFunctionResource userDefinedFunction = this.ArmClient.GetSqlUserDefinedFunctionResource(id);
                 await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
-            SqlUserDefinedFunctionCreateUpdateData updateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS, new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            var updateOptions = new SqlUserDefinedFunctionCreateOrUpdateContent(AzureLocation.WestUS, new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -115,14 +119,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
             await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
 
-            userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            Assert.Null(userDefinedFunction);
+            bool exists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlUserDefinedFunctionResource> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateData(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
             Assert.AreEqual(expectedValue.Data.Resource.Body, actualValue.Data.Resource.Body);
         }
     }

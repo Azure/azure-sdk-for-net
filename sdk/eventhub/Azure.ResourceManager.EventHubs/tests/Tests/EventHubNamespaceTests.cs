@@ -23,21 +23,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public EventHubNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
-        }
 
         [Test]
         [RecordedTest]
@@ -46,8 +31,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace and wait for completion
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //validate if created successfully
@@ -59,8 +44,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            eventHubNamespace = await namespaceCollection.GetIfExistsAsync(namespaceName);
-            Assert.IsNull(eventHubNamespace);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
         }
 
@@ -71,8 +56,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(eventHubNamespace, true);
 
             //update namespace
@@ -98,15 +83,15 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt1");
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
-            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubsNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubsNamespaceData(DefaultLocation))).Value;
             int count = 0;
-            EventHubNamespaceResource namespace1 = null;
-            EventHubNamespaceResource namespace2 = null;
+            EventHubsNamespaceResource namespace1 = null;
+            EventHubsNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (EventHubNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
+            await foreach (EventHubsNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
             {
                 count++;
                 if (eventHubNamespace.Id.Name == namespaceName1)
@@ -128,16 +113,16 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
             _resourceGroup = await CreateResourceGroupAsync();
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection1 = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceCollection namespaceCollection2 = resourceGroup.GetEventHubNamespaces();
-            _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
-            _ = (await namespaceCollection2.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection1 = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceCollection namespaceCollection2 = resourceGroup.GetEventHubsNamespaces();
+            _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubsNamespaceData(DefaultLocation))).Value;
+            _ = (await namespaceCollection2.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubsNamespaceData(DefaultLocation))).Value;
             int count = 0;
-            EventHubNamespaceResource namespace1 = null;
-            EventHubNamespaceResource namespace2 = null;
+            EventHubsNamespaceResource namespace1 = null;
+            EventHubsNamespaceResource namespace2 = null;
 
             //validate
-            await foreach (EventHubNamespaceResource eventHubNamespace in DefaultSubscription.GetEventHubNamespacesAsync())
+            await foreach (EventHubsNamespaceResource eventHubNamespace in DefaultSubscription.GetEventHubsNamespacesAsync())
             {
                 count++;
                 if (eventHubNamespace.Id.Name == namespaceName1)
@@ -159,18 +144,18 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
-            NamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetNamespaceAuthorizationRules();
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetEventHubsNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            EventHubsAuthorizationRuleData parameter = new EventHubsAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -181,13 +166,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<EventHubsNamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
             bool isContainAuthorizationRuleName = false;
             bool isContainDefaultRuleName = false;
-            foreach (NamespaceAuthorizationRuleResource rule in rules)
+            foreach (EventHubsNamespaceAuthorizationRuleResource rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -202,7 +187,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.True(isContainAuthorizationRuleName);
 
             //update authorization rule
-            parameter.Rights.Add(AccessRights.Manage);
+            parameter.Rights.Add(EventHubsAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
@@ -223,13 +208,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceData parameter = new EventHubNamespaceData(DefaultLocation)
+            EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
                 KafkaEnabled = true
             };
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
             Assert.IsTrue(eventHubNamespace.Data.KafkaEnabled);
         }
@@ -240,34 +225,34 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
-            NamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetNamespaceAuthorizationRules();
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceAuthorizationRuleCollection ruleCollection = eventHubNamespace.GetEventHubsNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleData parameter = new AuthorizationRuleData()
+            EventHubsAuthorizationRuleData parameter = new EventHubsAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
-            AccessKeys keys1 = await authorizationRule.GetKeysAsync();
+            EventHubsAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.NotNull(keys1);
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
+            EventHubsAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
+            EventHubsAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
@@ -282,9 +267,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //prepare vnet
             string vnetName = Recording.GenerateAssetName("sdktestvnet");
@@ -320,28 +305,28 @@ namespace Azure.ResourceManager.EventHubs.Tests
             ResourceIdentifier subnetId1 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1");
             ResourceIdentifier subnetId2 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2");
             ResourceIdentifier subnetId3 = new ResourceIdentifier(subscriptionId + "/resourcegroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3");
-            NetworkRuleSetData parameter = new NetworkRuleSetData()
+            EventHubsNetworkRuleSetData parameter = new EventHubsNetworkRuleSetData()
             {
-                DefaultAction = DefaultAction.Deny,
+                DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
                 },
                 IPRules =
                     {
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
+                        new EventHubsNetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
+                        new EventHubsNetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
+                        new EventHubsNetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
+                        new EventHubsNetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
+                        new EventHubsNetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await eventHubNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Completed, parameter);
+            await eventHubNamespace.GetEventHubsNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Completed, parameter);
 
             //get the network rule set
-            NetworkRuleSetResource networkRuleSet = await eventHubNamespace.GetNetworkRuleSet().GetAsync();
+            EventHubsNetworkRuleSetResource networkRuleSet = await eventHubNamespace.GetEventHubsNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
             Assert.NotNull(networkRuleSet.Data.IPRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
@@ -358,9 +343,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
             eventHubNamespace = await eventHubNamespace.AddTagAsync("key", "value");
@@ -381,7 +366,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await GetSucceededNamespace(eventHubNamespace);
         }
 
-        public async Task<EventHubNamespaceResource> GetSucceededNamespace(EventHubNamespaceResource eventHubNamespace)
+        public async Task<EventHubsNamespaceResource> GetSucceededNamespace(EventHubsNamespaceResource eventHubNamespace)
         {
             int i = 0;
             while (!eventHubNamespace.Data.ProvisioningState.Equals("Succeeded") && i < 10)
@@ -399,13 +384,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Test]
         [RecordedTest]
         [Ignore("returned id is invalid")]
-        public async Task GetPrivateLinkResources()
+        public async Task GetEventHubPrivateLinkResources()
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //get private link resource
             await foreach (var _ in eventHubNamespace.GetPrivateLinkResourcesAsync())
@@ -413,7 +398,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 return;
             }
 
-            Assert.Fail($"{nameof(EventHubNamespaceResource)}.{nameof(EventHubNamespaceResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
+            Assert.Fail($"{nameof(EventHubsNamespaceResource)}.{nameof(EventHubsNamespaceResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(EventHubsPrivateLinkResourceData)}.");
         }
     }
 }

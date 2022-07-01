@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.Hosting
 {
     public static class TablesWebJobsBuilderExtensions
     {
-        public static IWebJobsBuilder AddAzureTables(this IWebJobsBuilder builder)
+        public static IWebJobsBuilder AddTables(this IWebJobsBuilder builder)
         {
             builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<TablesAccountProvider>();

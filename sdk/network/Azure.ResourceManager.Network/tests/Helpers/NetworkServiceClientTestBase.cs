@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     {
                          Name = ipConfigName,
                          PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };

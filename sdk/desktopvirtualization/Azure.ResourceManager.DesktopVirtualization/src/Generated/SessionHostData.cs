@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="osVersion"> The version of the OS on the session host. </param>
         /// <param name="sxSStackVersion"> The version of the side by side stack on the session host. </param>
         /// <param name="updateState"> Update state of a SessionHost. </param>
-        /// <param name="lastUpdateTime"> The timestamp of the last update. </param>
+        /// <param name="lastUpdateOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateTime, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeat = lastHeartBeat;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             OSVersion = osVersion;
             SxSStackVersion = sxSStackVersion;
             UpdateState = updateState;
-            LastUpdateTime = lastUpdateTime;
+            LastUpdateOn = lastUpdateOn;
             UpdateErrorMessage = updateErrorMessage;
             SessionHostHealthCheckResults = sessionHostHealthCheckResults;
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Update state of a SessionHost. </summary>
         public UpdateState? UpdateState { get; set; }
         /// <summary> The timestamp of the last update. </summary>
-        public DateTimeOffset? LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateOn { get; }
         /// <summary> The error message. </summary>
         public string UpdateErrorMessage { get; set; }
         /// <summary> List of SessionHostHealthCheckReports. </summary>

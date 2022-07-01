@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of OperationInformation. </summary>
         internal OperationInformation()
         {
-            Errors = new ChangeTrackingList<ErrorEntity>();
+            Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of OperationInformation. </summary>
@@ -25,19 +26,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> The current status of the operation. </param>
         /// <param name="errors"> Any errors associate with the operation. </param>
-        /// <param name="createdTime"> Time when operation has started. </param>
-        /// <param name="modifiedTime"> Time when operation has been updated. </param>
-        /// <param name="expirationTime"> Time when operation will expire. </param>
+        /// <param name="createdOn"> Time when operation has started. </param>
+        /// <param name="modifiedOn"> Time when operation has been updated. </param>
+        /// <param name="expirationOn"> Time when operation will expire. </param>
         /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
-        internal OperationInformation(string id, string name, OperationStatus? status, IReadOnlyList<ErrorEntity> errors, DateTimeOffset? createdTime, DateTimeOffset? modifiedTime, DateTimeOffset? expirationTime, Guid? geoMasterOperationId)
+        internal OperationInformation(string id, string name, OperationStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, DateTimeOffset? expirationOn, Guid? geoMasterOperationId)
         {
             Id = id;
             Name = name;
             Status = status;
             Errors = errors;
-            CreatedTime = createdTime;
-            ModifiedTime = modifiedTime;
-            ExpirationTime = expirationTime;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
+            ExpirationOn = expirationOn;
             GeoMasterOperationId = geoMasterOperationId;
         }
 
@@ -48,13 +49,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The current status of the operation. </summary>
         public OperationStatus? Status { get; }
         /// <summary> Any errors associate with the operation. </summary>
-        public IReadOnlyList<ErrorEntity> Errors { get; }
+        public IReadOnlyList<ResponseError> Errors { get; }
         /// <summary> Time when operation has started. </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Time when operation has been updated. </summary>
-        public DateTimeOffset? ModifiedTime { get; }
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Time when operation will expire. </summary>
-        public DateTimeOffset? ExpirationTime { get; }
+        public DateTimeOffset? ExpirationOn { get; }
         /// <summary> Applicable only for stamp operation ids. </summary>
         public Guid? GeoMasterOperationId { get; }
     }

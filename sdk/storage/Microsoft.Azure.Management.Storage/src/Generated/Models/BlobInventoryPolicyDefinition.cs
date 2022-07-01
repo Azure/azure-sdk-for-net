@@ -52,13 +52,26 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Content-Length, Content-MD5, BlobType, AccessTier,
         /// AccessTierChangeTime, AccessTierInferred, Tags, Expiry-Time,
         /// hdi_isfolder, Owner, Group, Permissions, Acl, Snapshot, VersionId,
-        /// IsCurrentVersion, Metadata, LastAccessTime'. The valid values for
-        /// 'Container' definition.objectType include 'Name, Last-Modified,
-        /// Metadata, LeaseStatus, LeaseState, LeaseDuration, PublicAccess,
-        /// HasImmutabilityPolicy, HasLegalHold'. Schema field values
-        /// 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl' are
-        /// valid only for Hns enabled accounts.'Tags' field is only valid for
-        /// non Hns accounts</param>
+        /// IsCurrentVersion, Metadata, LastAccessTime, Tags, Etag,
+        /// ContentType, ContentEncoding, ContentLanguage, ContentCRC64,
+        /// CacheControl, ContentDisposition, LeaseStatus, LeaseState,
+        /// LeaseDuration, ServerEncrypted, Deleted, DeletionId, DeletedTime,
+        /// RemainingRetentionDays, ImmutabilityPolicyUntilDate,
+        /// ImmutabilityPolicyMode, LegalHold, CopyId, CopyStatus, CopySource,
+        /// CopyProgress, CopyCompletionTime, CopyStatusDescription,
+        /// CustomerProvidedKeySha256, RehydratePriority, ArchiveStatus,
+        /// XmsBlobSequenceNumber, EncryptionScope, IncrementalCopy, TagCount'.
+        /// For Blob object type schema field value 'DeletedTime' is applicable
+        /// only for Hns enabled accounts. The valid values for 'Container'
+        /// definition.objectType include 'Name, Last-Modified, Metadata,
+        /// LeaseStatus, LeaseState, LeaseDuration, PublicAccess,
+        /// HasImmutabilityPolicy, HasLegalHold, Etag, DefaultEncryptionScope,
+        /// DenyEncryptionScopeOverride, ImmutableStorageWithVersioningEnabled,
+        /// Deleted, Version, DeletedTime, RemainingRetentionDays'. Schema
+        /// field values 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions,
+        /// Acl, DeletionId' are valid only for Hns enabled accounts.Schema
+        /// field values 'Tags, TagCount' are only valid for Non-Hns
+        /// accounts.</param>
         /// <param name="filters">An object that defines the filter
         /// set.</param>
         public BlobInventoryPolicyDefinition(string format, string schedule, string objectType, IList<string> schemaFields, BlobInventoryPolicyFilter filters = default(BlobInventoryPolicyFilter))
@@ -114,13 +127,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Content-MD5, BlobType, AccessTier, AccessTierChangeTime,
         /// AccessTierInferred, Tags, Expiry-Time, hdi_isfolder, Owner, Group,
         /// Permissions, Acl, Snapshot, VersionId, IsCurrentVersion, Metadata,
-        /// LastAccessTime'. The valid values for 'Container'
-        /// definition.objectType include 'Name, Last-Modified, Metadata,
-        /// LeaseStatus, LeaseState, LeaseDuration, PublicAccess,
-        /// HasImmutabilityPolicy, HasLegalHold'. Schema field values
-        /// 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl' are
-        /// valid only for Hns enabled accounts.'Tags' field is only valid for
-        /// non Hns accounts
+        /// LastAccessTime, Tags, Etag, ContentType, ContentEncoding,
+        /// ContentLanguage, ContentCRC64, CacheControl, ContentDisposition,
+        /// LeaseStatus, LeaseState, LeaseDuration, ServerEncrypted, Deleted,
+        /// DeletionId, DeletedTime, RemainingRetentionDays,
+        /// ImmutabilityPolicyUntilDate, ImmutabilityPolicyMode, LegalHold,
+        /// CopyId, CopyStatus, CopySource, CopyProgress, CopyCompletionTime,
+        /// CopyStatusDescription, CustomerProvidedKeySha256,
+        /// RehydratePriority, ArchiveStatus, XmsBlobSequenceNumber,
+        /// EncryptionScope, IncrementalCopy, TagCount'. For Blob object type
+        /// schema field value 'DeletedTime' is applicable only for Hns enabled
+        /// accounts. The valid values for 'Container' definition.objectType
+        /// include 'Name, Last-Modified, Metadata, LeaseStatus, LeaseState,
+        /// LeaseDuration, PublicAccess, HasImmutabilityPolicy, HasLegalHold,
+        /// Etag, DefaultEncryptionScope, DenyEncryptionScopeOverride,
+        /// ImmutableStorageWithVersioningEnabled, Deleted, Version,
+        /// DeletedTime, RemainingRetentionDays'. Schema field values
+        /// 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl,
+        /// DeletionId' are valid only for Hns enabled accounts.Schema field
+        /// values 'Tags, TagCount' are only valid for Non-Hns accounts.
         /// </summary>
         [JsonProperty(PropertyName = "schemaFields")]
         public IList<string> SchemaFields { get; set; }

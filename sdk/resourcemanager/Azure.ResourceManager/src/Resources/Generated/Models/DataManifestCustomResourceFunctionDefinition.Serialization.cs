@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> fullyQualifiedResourceType = default;
+            Optional<ResourceType> fullyQualifiedResourceType = default;
             Optional<IReadOnlyList<string>> defaultProperties = default;
             Optional<bool> allowCustomProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("fullyQualifiedResourceType"))
                 {
-                    fullyQualifiedResourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fullyQualifiedResourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultProperties"))
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, fullyQualifiedResourceType.Value, Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties));
+            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties));
         }
     }
 }

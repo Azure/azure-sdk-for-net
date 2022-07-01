@@ -775,12 +775,9 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
         ///
         /// <remarks>
-        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
+        ///   Should a partition not have a corresponding checkpoint, the default starting position set by the <see cref="PartitionInitializingAsync" /> handler
+        ///   will be applied.  If no partition-specific starting point was specified, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
         ///   be used to initialize the partition for processing.
-        ///
-        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
-        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
-        ///   starting location set.
         /// </remarks>
         ///
         protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)

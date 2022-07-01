@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await ConfigStore.DeleteAsync(WaitUntil.Completed);
-            ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(ConfigurationStoreName);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetAsync(ConfigurationStoreName); });
 
-            Assert.IsNull(configurationStore);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
             ApiKey orignalKey = keys.FirstOrDefault();
 
-            RegenerateKeyOptions regenerateKeyOptions = new RegenerateKeyOptions() { Id = orignalKey.Id };
+            RegenerateKeyContent regenerateKeyOptions = new RegenerateKeyContent() { Id = orignalKey.Id };
             ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
@@ -117,9 +117,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetKeyValueTest()
         {
-            ListKeyValueOptions listKeyValueOptions = new ListKeyValueOptions("Primary");
-            KeyValue keyValue = await ConfigStore.GetKeyValueAsync(listKeyValueOptions);
-            Assert.IsTrue(keyValue.Key.Equals("Primary"));
+            KeyValueResource keyValue = (await ConfigStore.GetKeyValues().ToEnumerableAsync()).FirstOrDefault();
+            Assert.IsTrue(keyValue.Data.Key.Equals("Primary"));
         }
 
         [Test]
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            PatchableConfigurationStoreData PatchableconfigurationStoreData = new PatchableConfigurationStoreData() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
+            ConfigurationStorePatch PatchableconfigurationStoreData = new ConfigurationStorePatch() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
             ConfigurationStoreResource configurationStore = (await ConfigStore.UpdateAsync(WaitUntil.Completed, PatchableconfigurationStoreData)).Value;
 
             Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);

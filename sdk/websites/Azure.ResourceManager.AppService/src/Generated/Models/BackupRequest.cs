@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a backup which will be performed. </summary>
-    public partial class BackupRequest : ProxyOnlyResource
+    public partial class BackupRequest : ResourceData
     {
         /// <summary> Initializes a new instance of BackupRequest. </summary>
         public BackupRequest()
@@ -25,19 +26,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupName"> Name of the backup. </param>
         /// <param name="enabled"> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </param>
-        /// <param name="storageAccountUrl"> SAS URL to the container. </param>
+        /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
-        internal BackupRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string backupName, bool? enabled, string storageAccountUrl, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal BackupRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupName, bool? enabled, Uri storageAccountUri, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases, string kind) : base(id, name, resourceType, systemData)
         {
             BackupName = backupName;
             Enabled = enabled;
-            StorageAccountUrl = storageAccountUrl;
+            StorageAccountUri = storageAccountUri;
             BackupSchedule = backupSchedule;
             Databases = databases;
+            Kind = kind;
         }
 
         /// <summary> Name of the backup. </summary>
@@ -45,10 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
         public bool? Enabled { get; set; }
         /// <summary> SAS URL to the container. </summary>
-        public string StorageAccountUrl { get; set; }
+        public Uri StorageAccountUri { get; set; }
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
         public BackupSchedule BackupSchedule { get; set; }
         /// <summary> Databases included in the backup. </summary>
         public IList<DatabaseBackupSetting> Databases { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

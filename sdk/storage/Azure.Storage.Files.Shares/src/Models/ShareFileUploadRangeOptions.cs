@@ -31,6 +31,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
+        /// <summary>
+        /// Optional MD5 hash of the range content.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="RequestFailedException"/>.
+        /// </summary>
+        public byte[] TransactionalContentHash { get; set; }
+
         ///// <summary>
         ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
         ///// hashing on uploads.

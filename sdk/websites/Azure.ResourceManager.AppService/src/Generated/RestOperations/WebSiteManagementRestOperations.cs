@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdatePublishingUserRequest(UserData userDetails)
+        internal HttpMessage CreateUpdatePublishingUserRequest(UserData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(userDetails);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData userDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePublishingUserRequest(userDetails);
+            using var message = CreateUpdatePublishingUserRequest(data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Updates publishing user. </summary>
-        /// <param name="userDetails"> Details of publishing user. </param>
+        /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userDetails"/> is null. </exception>
-        public Response<UserData> UpdatePublishingUser(UserData userDetails, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public Response<UserData> UpdatePublishingUser(UserData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(userDetails, nameof(userDetails));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePublishingUserRequest(userDetails);
+            using var message = CreateUpdatePublishingUserRequest(data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSourceControlRequest(string sourceControlType, SourceControlData requestMessage)
+        internal HttpMessage CreateUpdateSourceControlRequest(string sourceControlType, SourceControlData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(requestMessage);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -310,16 +310,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> UpdateSourceControlAsync(string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public async Task<Response<SourceControlData>> UpdateSourceControlAsync(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            Argument.AssertNotNull(requestMessage, nameof(requestMessage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(sourceControlType, requestMessage);
+            using var message = CreateUpdateSourceControlRequest(sourceControlType, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -337,16 +337,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> UpdateSourceControl(string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        public Response<SourceControlData> UpdateSourceControl(string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            Argument.AssertNotNull(requestMessage, nameof(requestMessage));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSourceControlRequest(sourceControlType, requestMessage);
+            using var message = CreateUpdateSourceControlRequest(sourceControlType, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ResourceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -455,31 +455,25 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new ResourceNameAvailabilityRequest(name, type)
-            {
-                IsFqdn = isFqdn
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -497,18 +491,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="type"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, string name, CheckNameResourceTypes type, bool? isFqdn = null, CancellationToken cancellationToken = default)
+        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, name, type, isFqdn);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -696,9 +688,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameIdentifier);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(nameIdentifier);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -891,7 +883,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateVerifyHostingEnvironmentVnetRequest(string subscriptionId, VnetParameters parameters)
+        internal HttpMessage CreateVerifyHostingEnvironmentVnetRequest(string subscriptionId, VnetContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -905,25 +897,25 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(string subscriptionId, VnetParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(string subscriptionId, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, parameters);
+            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -941,16 +933,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="parameters"> VNET information. </param>
+        /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(string subscriptionId, VnetParameters parameters, CancellationToken cancellationToken = default)
+        public Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(string subscriptionId, VnetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, parameters);
+            using var message = CreateVerifyHostingEnvironmentVnetRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -982,9 +974,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveResourceEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(moveResourceEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1037,7 +1029,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, ValidateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1053,9 +1045,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validateRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1063,17 +1055,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="validateRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateResponse>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<ValidateResponse>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, validateRequest);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1092,17 +1084,17 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="validateRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateResponse> Validate(string subscriptionId, string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public Response<ValidateResponse> Validate(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(validateRequest, nameof(validateRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, validateRequest);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1134,9 +1126,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveResourceEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(moveResourceEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }

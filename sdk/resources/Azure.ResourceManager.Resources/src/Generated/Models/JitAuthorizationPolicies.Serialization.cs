@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static JitAuthorizationPolicies DeserializeJitAuthorizationPolicies(JsonElement element)
         {
-            string principalId = default;
+            Guid principalId = default;
             string roleDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("roleDefinitionId"))

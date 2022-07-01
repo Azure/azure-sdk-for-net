@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of RestorableDatabaseAccount and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RestorableDatabaseAccountResource" /> and their operations.
+    /// Each <see cref="RestorableDatabaseAccountResource" /> in the collection will belong to the same instance of <see cref="CosmosDBLocationResource" />.
+    /// To get a <see cref="RestorableDatabaseAccountCollection" /> instance call the GetRestorableDatabaseAccounts method from an instance of <see cref="CosmosDBLocationResource" />.
+    /// </summary>
     public partial class RestorableDatabaseAccountCollection : ArmCollection, IEnumerable<RestorableDatabaseAccountResource>, IAsyncEnumerable<RestorableDatabaseAccountResource>
     {
         private readonly ClientDiagnostics _restorableDatabaseAccountClientDiagnostics;
@@ -66,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, Id.Name, instanceId, cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccountResource(Client, response.Value), response.GetRawResponse());
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, Id.Name, instanceId, cancellationToken);
+                var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccountResource(Client, response.Value), response.GetRawResponse());
@@ -122,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableDatabaseAccountRestClient.ListByLocationAsync(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableDatabaseAccountRestClient.ListByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableDatabaseAccountRestClient.ListByLocation(Id.SubscriptionId, Id.Name, cancellationToken: cancellationToken);
+                    var response = _restorableDatabaseAccountRestClient.ListByLocation(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,66 +209,8 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = GetIfExists(instanceId, cancellationToken: cancellationToken);
+                var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, new AzureLocation(Id.Name), instanceId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
-        /// </summary>
-        /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<Response<RestorableDatabaseAccountResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
-            using var scope = _restorableDatabaseAccountClientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RestorableDatabaseAccountResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorableDatabaseAccountResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}
-        /// Operation Id: RestorableDatabaseAccounts_GetByLocation
-        /// </summary>
-        /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<RestorableDatabaseAccountResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-
-            using var scope = _restorableDatabaseAccountClientDiagnostics.CreateScope("RestorableDatabaseAccountCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, Id.Name, instanceId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<RestorableDatabaseAccountResource>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorableDatabaseAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

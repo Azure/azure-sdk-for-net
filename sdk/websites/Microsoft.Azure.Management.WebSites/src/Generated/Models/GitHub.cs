@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the GitHub provider.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class GitHub : ProxyOnlyResource
+    public partial class GitHub
     {
         /// <summary>
         /// Initializes a new instance of the GitHub class.
@@ -32,10 +29,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the GitHub class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="enabled">&lt;code&gt;false&lt;/code&gt; if the GitHub
         /// provider should not be enabled despite the set registration;
         /// otherwise, &lt;code&gt;true&lt;/code&gt;.</param>
@@ -43,8 +36,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// registration for the GitHub provider.</param>
         /// <param name="login">The configuration settings of the login
         /// flow.</param>
-        public GitHub(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), ClientRegistration registration = default(ClientRegistration), LoginScopes login = default(LoginScopes))
-            : base(id, name, kind, type)
+        public GitHub(bool? enabled = default(bool?), ClientRegistration registration = default(ClientRegistration), LoginScopes login = default(LoginScopes))
         {
             Enabled = enabled;
             Registration = registration;
@@ -62,20 +54,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// GitHub provider should not be enabled despite the set registration;
         /// otherwise, &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
+        [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the app registration for
         /// the GitHub provider.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.registration")]
+        [JsonProperty(PropertyName = "registration")]
         public ClientRegistration Registration { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the login flow.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.login")]
+        [JsonProperty(PropertyName = "login")]
         public LoginScopes Login { get; set; }
 
     }

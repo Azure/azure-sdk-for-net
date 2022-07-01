@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="stageStatus"> Stage status. </param>
         /// <param name="stageName"> Stage name. </param>
         /// <param name="displayName"> Display name of the resource stage. </param>
-        /// <param name="startTime"> Stage start time. </param>
-        internal StageDetails(StageStatus? stageStatus, StageName? stageName, string displayName, DateTimeOffset? startTime)
+        /// <param name="startOn"> Stage start time. </param>
+        internal StageDetails(StageStatus? stageStatus, StageName? stageName, string displayName, DateTimeOffset? startOn)
         {
             StageStatus = stageStatus;
             StageName = stageName;
             DisplayName = displayName;
-            StartTime = startTime;
+            StartOn = startOn;
         }
 
         /// <summary> Stage status. </summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Display name of the resource stage. </summary>
         public string DisplayName { get; }
         /// <summary> Stage start time. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
     }
 }

@@ -18,14 +18,8 @@ namespace Azure.ResourceManager.Resources
     {
         /// <summary> Initializes a new instance of TemplateSpecData. </summary>
         /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public TemplateSpecData(string location)
+        public TemplateSpecData(AzureLocation location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
-
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
             Versions = new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>();
@@ -42,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> Template Spec display name. </param>
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </param>
-        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
+        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -53,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Template Spec description. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location. </param>
         public StorageAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountData. </summary>
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Storage
         /// <param name="primaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </param>
         /// <param name="primaryLocation"> Gets the location of the primary data center for the storage account. </param>
         /// <param name="statusOfPrimary"> Gets the status indicating whether the primary location of the storage account is available or unavailable. </param>
-        /// <param name="lastGeoFailoverTime"> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
+        /// <param name="lastGeoFailoverOn"> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
         /// <param name="secondaryLocation"> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
         /// <param name="statusOfSecondary"> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </param>
-        /// <param name="creationTime"> Gets the creation date and time of the storage account in UTC. </param>
+        /// <param name="creationOn"> Gets the creation date and time of the storage account in UTC. </param>
         /// <param name="customDomain"> Gets the custom domain the user assigned to this storage account. </param>
         /// <param name="sasPolicy"> SasPolicy assigned to the storage account. </param>
         /// <param name="keyPolicy"> KeyPolicy assigned to the storage account. </param>
         /// <param name="keyCreationTime"> Storage account keys creation time. </param>
         /// <param name="secondaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </param>
         /// <param name="encryption"> Encryption settings to be used for server-side encryption for the storage account. </param>
-        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </param>
+        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
         /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
         /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. </param>
         /// <param name="networkRuleSet"> Network rule set. </param>
@@ -70,7 +70,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverTime, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationTime, CustomDomain customDomain, SasPolicy sasPolicy, KeyPolicy keyPolicy, KeyCreationTime keyCreationTime, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, MinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, PublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
+        /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationOn, CustomDomain customDomain, SasPolicy sasPolicy, KeyPolicy keyPolicy, KeyCreationTime keyCreationTime, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, MinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, PublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, DnsEndpointType? dnsEndpointType) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -80,10 +82,10 @@ namespace Azure.ResourceManager.Storage
             PrimaryEndpoints = primaryEndpoints;
             PrimaryLocation = primaryLocation;
             StatusOfPrimary = statusOfPrimary;
-            LastGeoFailoverTime = lastGeoFailoverTime;
+            LastGeoFailoverOn = lastGeoFailoverOn;
             SecondaryLocation = secondaryLocation;
             StatusOfSecondary = statusOfSecondary;
-            CreationTime = creationTime;
+            CreationOn = creationOn;
             CustomDomain = customDomain;
             SasPolicy = sasPolicy;
             KeyPolicy = keyPolicy;
@@ -112,6 +114,8 @@ namespace Azure.ResourceManager.Storage
             PublicNetworkAccess = publicNetworkAccess;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             AllowedCopyScope = allowedCopyScope;
+            StorageAccountSkuConversionStatus = storageAccountSkuConversionStatus;
+            DnsEndpointType = dnsEndpointType;
         }
 
         /// <summary> Gets the SKU. </summary>
@@ -131,13 +135,13 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the status indicating whether the primary location of the storage account is available or unavailable. </summary>
         public AccountStatus? StatusOfPrimary { get; }
         /// <summary> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
-        public DateTimeOffset? LastGeoFailoverTime { get; }
+        public DateTimeOffset? LastGeoFailoverOn { get; }
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         public string SecondaryLocation { get; }
         /// <summary> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </summary>
         public AccountStatus? StatusOfSecondary { get; }
         /// <summary> Gets the creation date and time of the storage account in UTC. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> Gets the custom domain the user assigned to this storage account. </summary>
         public CustomDomain CustomDomain { get; }
         /// <summary> SasPolicy assigned to the storage account. </summary>
@@ -145,10 +149,9 @@ namespace Azure.ResourceManager.Storage
         /// <summary> KeyPolicy assigned to the storage account. </summary>
         internal KeyPolicy KeyPolicy { get; }
         /// <summary> The key expiration period in days. </summary>
-        public int KeyExpirationPeriodInDays
+        public int? KeyExpirationPeriodInDays
         {
-            get => KeyPolicy.KeyExpirationPeriodInDays;
-            set => KeyPolicy.KeyExpirationPeriodInDays = value;
+            get => KeyPolicy?.KeyExpirationPeriodInDays;
         }
 
         /// <summary> Storage account keys creation time. </summary>
@@ -157,7 +160,7 @@ namespace Azure.ResourceManager.Storage
         public Endpoints SecondaryEndpoints { get; }
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>
         public Encryption Encryption { get; }
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public AccessTier? AccessTier { get; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -178,7 +181,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
         /// <summary> Blob restore status. </summary>
@@ -201,5 +204,9 @@ namespace Azure.ResourceManager.Storage
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         public AllowedCopyScope? AllowedCopyScope { get; set; }
+        /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
+        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get; set; }
+        /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
+        public DnsEndpointType? DnsEndpointType { get; set; }
     }
 }

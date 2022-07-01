@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Certificate order action. </summary>
-    public partial class CertificateOrderAction : ProxyOnlyResource
+    public partial class CertificateOrderAction : ResourceData
     {
         /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
         public CertificateOrderAction()
@@ -24,18 +24,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="actionType"> Action type. </param>
-        /// <param name="createdAt"> Time at which the certificate action was performed. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, CertificateOrderActionType? actionType, DateTimeOffset? createdAt) : base(id, name, resourceType, systemData, kind)
+        /// <param name="createdOn"> Time at which the certificate action was performed. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, string kind) : base(id, name, resourceType, systemData)
         {
             ActionType = actionType;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
+            Kind = kind;
         }
 
         /// <summary> Action type. </summary>
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

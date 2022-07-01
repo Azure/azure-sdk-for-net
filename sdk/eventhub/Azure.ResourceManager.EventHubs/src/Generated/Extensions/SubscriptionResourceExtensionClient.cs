@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _eventHubClusterClustersClientDiagnostics;
-        private ClustersRestOperations _eventHubClusterClustersRestClient;
-        private ClientDiagnostics _eventHubNamespaceNamespacesClientDiagnostics;
-        private NamespacesRestOperations _eventHubNamespaceNamespacesRestClient;
+        private ClientDiagnostics _eventHubsClusterClustersClientDiagnostics;
+        private ClustersRestOperations _eventHubsClusterClustersRestClient;
+        private ClientDiagnostics _eventHubsNamespaceNamespacesClientDiagnostics;
+        private NamespacesRestOperations _eventHubsNamespaceNamespacesRestClient;
         private ClientDiagnostics _namespacesClientDiagnostics;
         private NamespacesRestOperations _namespacesRestClient;
 
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        private ClientDiagnostics EventHubClusterClustersClientDiagnostics => _eventHubClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations EventHubClusterClustersRestClient => _eventHubClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubClusterResource.ResourceType));
-        private ClientDiagnostics EventHubNamespaceNamespacesClientDiagnostics => _eventHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations EventHubNamespaceNamespacesRestClient => _eventHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubNamespaceResource.ResourceType));
+        private ClientDiagnostics EventHubsClusterClustersClientDiagnostics => _eventHubsClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations EventHubsClusterClustersRestClient => _eventHubsClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubsClusterResource.ResourceType));
+        private ClientDiagnostics EventHubsNamespaceNamespacesClientDiagnostics => _eventHubsNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
+        private NamespacesRestOperations EventHubsNamespaceNamespacesRestClient => _eventHubsNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubsNamespaceResource.ResourceType));
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.EventHubs
         {
             async Task<Page<AvailableCluster>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters");
                 scope.Start();
                 try
                 {
-                    var response = await EventHubClusterClustersRestClient.ListAvailableClusterRegionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventHubsClusterClustersRestClient.ListAvailableClusterRegionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.EventHubs
         {
             Page<AvailableCluster> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableClusterRegionClusters");
                 scope.Start();
                 try
                 {
-                    var response = EventHubClusterClustersRestClient.ListAvailableClusterRegion(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = EventHubsClusterClustersRestClient.ListAvailableClusterRegion(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubClusterResource> GetEventHubClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsClusterResource> GetEventHubsClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHubsClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await EventHubClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventHubsClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<EventHubClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventHubsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await EventHubClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventHubsClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Clusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubClusterResource> GetEventHubClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsClusterResource> GetEventHubsClusters(CancellationToken cancellationToken = default)
         {
-            Page<EventHubClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<EventHubsClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsClusters");
                 scope.Start();
                 try
                 {
-                    var response = EventHubClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventHubsClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<EventHubClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventHubsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventHubClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubClusters");
+                using var scope = EventHubsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsClusters");
                 scope.Start();
                 try
                 {
-                    var response = EventHubClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventHubsClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -196,17 +196,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubNamespaceResource> GetEventHubNamespacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubsNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsNamespaceResource> GetEventHubsNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubNamespaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHubsNamespaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubNamespaces");
+                using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsNamespaces");
                 scope.Start();
                 try
                 {
-                    var response = await EventHubNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventHubsNamespaceNamespacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<EventHubNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventHubsNamespaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubNamespaces");
+                using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsNamespaces");
                 scope.Start();
                 try
                 {
-                    var response = await EventHubNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await EventHubsNamespaceNamespacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,17 +238,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: Namespaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubNamespaceResource> GetEventHubNamespaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsNamespaceResource> GetEventHubsNamespaces(CancellationToken cancellationToken = default)
         {
-            Page<EventHubNamespaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<EventHubsNamespaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubNamespaces");
+                using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsNamespaces");
                 scope.Start();
                 try
                 {
-                    var response = EventHubNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventHubsNamespaceNamespacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<EventHubNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventHubsNamespaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventHubNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubNamespaces");
+                using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEventHubsNamespaces");
                 scope.Start();
                 try
                 {
-                    var response = EventHubNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = EventHubsNamespaceNamespacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubsNamespaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,15 +279,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubsNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await NamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -302,15 +302,15 @@ namespace Azure.ResourceManager.EventHubs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
-        /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckEventHubsNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, parameters, cancellationToken);
+                var response = NamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
             Optional<DateTimeOffset> recordingStartTime = default;
             Optional<long> recordingDurationMs = default;
-            Optional<RecordingContentType> recordingContentType = default;
-            Optional<RecordingChannelType> recordingChannelType = default;
-            Optional<RecordingFormatType> recordingFormatType = default;
+            Optional<AcsRecordingContentType> recordingContentType = default;
+            Optional<AcsRecordingChannelType> recordingChannelType = default;
+            Optional<AcsRecordingFormatType> recordingFormatType = default;
             Optional<string> sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +63,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recordingContentType = new RecordingContentType(property.Value.GetString());
+                    recordingContentType = new AcsRecordingContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingChannelType"))
@@ -74,7 +73,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recordingChannelType = new RecordingChannelType(property.Value.GetString());
+                    recordingChannelType = new AcsRecordingChannelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingFormatType"))
@@ -84,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recordingFormatType = new RecordingFormatType(property.Value.GetString());
+                    recordingFormatType = new AcsRecordingFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sessionEndReason"))

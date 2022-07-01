@@ -34,8 +34,8 @@ After we have the resource group created, we can create a namespace
 
 ```C# Snippet:Managing_EventHubs_CreateNamespace
 string namespaceName = "myNamespace";
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(location))).Value;
 EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
 ```
 
@@ -61,20 +61,6 @@ await foreach (EventHubResource eventHub in eventHubCollection.GetAllAsync())
 
 ```C# Snippet:Managing_EventHubs_GetEventHub
 EventHubResource eventHub = await eventHubCollection.GetAsync("myEventHub");
-```
-
-***Try to get an eventhub if it exists***
-
-```C# Snippet:Managing_EventHubs_GetEventHubIfExists
-EventHubResource eventHub = await eventHubCollection.GetIfExistsAsync("foo");
-if (eventHub != null)
-{
-    Console.WriteLine("eventHub 'foo' exists");
-}
-if (await eventHubCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("eventHub 'bar' exists");
-}
 ```
 
 ***Delete an eventhub***

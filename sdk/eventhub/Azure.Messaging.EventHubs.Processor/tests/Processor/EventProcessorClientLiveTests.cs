@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
@@ -852,6 +853,74 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await processor.StopProcessingAsync().IgnoreExceptions();
             cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> no longer dispatches events for
+        ///   processing once it has been stopped.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCeasesProcessingWhenStopping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Publish some events
+
+            var sentCount = await SendEvents(connectionString, EventGenerator.CreateSmallEvents(400), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(400), "All generated  events should have been published.");
+
+            // Attempt to read events using the longest possible TryTimeout.
+
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Greedy, MaximumWaitTime = null };
+            options.RetryOptions.TryTimeout = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.Add(TimeSpan.FromSeconds(30));
+
+            var processorStopped = false;
+            var eventsProcessedAfterStop = false;
+            var readCount = 0;
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            processor.ProcessEventAsync += args =>
+            {
+                if (args.HasEvent)
+                {
+                    if (processorStopped)
+                    {
+                        eventsProcessedAfterStop = true;
+                    }
+
+                    // Set the completion source once half of our published events
+                    // have been read.
+
+                    if (++readCount >= (sentCount / 2))
+                    {
+                        completionSource.TrySetResult(true);
+                    }
+                }
+
+                return Task.CompletedTask;
+            };
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            // Once enough events have been confirmed to have been read, stop the processor and validate that no
+            // additional events dispatched for processing.
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            processorStopped = true;
+
+            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(eventsProcessedAfterStop, Is.False, "Events should not have been dispatched for processing after the processor has stopped.");
         }
 
         /// <summary>

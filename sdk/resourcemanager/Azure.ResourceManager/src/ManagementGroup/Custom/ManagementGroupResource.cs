@@ -8,8 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups.Models;
 
 [assembly:CodeGenSuppressType("SearchOptions")]
 [assembly:CodeGenSuppressType("EntityViewOptions")]
@@ -18,7 +17,7 @@ using Azure.ResourceManager.Management.Models;
 [assembly:CodeGenSuppressType("ErrorResponse")]
 [assembly:CodeGenSuppressType("ErrorDetails")] // No target and additionalInfo properties, therefore it's not replaced by common type
 [assembly:CodeGenSuppressType("ManagementGroupUpdateOperation")]
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary> A Class representing a ManagementGroup along with the instance operations that can be performed on it. </summary>
     public partial class ManagementGroupResource : ArmResource

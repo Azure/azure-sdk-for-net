@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreationOn))
             {
                 writer.WritePropertyName("creationTime");
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreationOn.Value, "O");
             }
             if (Optional.IsDefined(RecommendationId))
             {
@@ -90,30 +90,30 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(NextNotificationTime))
+            if (Optional.IsDefined(NextNotificationOn))
             {
                 writer.WritePropertyName("nextNotificationTime");
-                writer.WriteStringValue(NextNotificationTime.Value, "O");
+                writer.WriteStringValue(NextNotificationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationExpirationTime))
+            if (Optional.IsDefined(NotificationExpirationOn))
             {
                 writer.WritePropertyName("notificationExpirationTime");
-                writer.WriteStringValue(NotificationExpirationTime.Value, "O");
+                writer.WriteStringValue(NotificationExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotifiedTime))
+            if (Optional.IsDefined(NotifiedOn))
             {
                 writer.WritePropertyName("notifiedTime");
-                writer.WriteStringValue(NotifiedTime.Value, "O");
+                writer.WriteStringValue(NotifiedOn.Value, "O");
             }
             if (Optional.IsDefined(Score))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<Guid> recommendationId = default;
             Optional<string> resourceId = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<string> message = default;
             Optional<NotificationLevel> level = default;
-            Optional<Channels> channels = default;
+            Optional<Channel> channels = default;
             Optional<IReadOnlyList<string>> categoryTags = default;
             Optional<string> actionName = default;
             Optional<int> enabled = default;
@@ -193,11 +193,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -277,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            channels = property0.Value.GetString().ToChannels();
+                            channels = property0.Value.GetString().ToChannel();
                             continue;
                         }
                         if (property0.NameEquals("categoryTags"))
@@ -414,7 +419,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceRecommendation(id, name, type, systemData, kind.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value);
+            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
         }
     }
 }

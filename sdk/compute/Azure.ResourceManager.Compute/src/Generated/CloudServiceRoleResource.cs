@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A Class representing a CloudServiceRoleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a CloudServiceRole along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudServiceRoleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceRoleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CloudServiceResource" /> using the GetCloudServiceRole method.
+    /// </summary>
     public partial class CloudServiceRoleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceRoleResource"/> instance. </summary>

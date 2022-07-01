@@ -28,6 +28,48 @@ namespace Azure.ResourceManager.AppConfiguration
             );
         }
 
+        /// <summary> Gets a collection of DeletedConfigurationStoreResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DeletedConfigurationStoreResources and their operations over a DeletedConfigurationStoreResource. </returns>
+        public static DeletedConfigurationStoreCollection GetDeletedConfigurationStores(this SubscriptionResource subscriptionResource)
+        {
+            return GetExtensionClient(subscriptionResource).GetDeletedConfigurationStores();
+        }
+
+        /// <summary>
+        /// Gets a deleted Azure app configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DeletedConfigurationStoreResource>> GetDeletedConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetDeletedConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deleted Azure app configuration store.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
+        /// Operation Id: ConfigurationStores_GetDeleted
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location in which uniqueness will be verified. </param>
+        /// <param name="configStoreName"> The name of the configuration store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DeletedConfigurationStoreResource> GetDeletedConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetDeletedConfigurationStores().Get(location, configStoreName, cancellationToken);
+        }
+
         /// <summary>
         /// Lists the configuration stores for a given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores
@@ -62,14 +104,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -78,14 +120,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(checkNameAvailabilityParameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -115,6 +157,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ConfigurationStoreResource>> GetConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
@@ -130,6 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ConfigurationStoreResource> GetConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetConfigurationStores().Get(configStoreName, cancellationToken);
@@ -154,39 +198,77 @@ namespace Azure.ResourceManager.AppConfiguration
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region DeletedConfigurationStoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeletedConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedConfigurationStoreResource" /> object. </returns>
+        public static DeletedConfigurationStoreResource GetDeletedConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                DeletedConfigurationStoreResource.ValidateResourceId(id);
+                return new DeletedConfigurationStoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateLinkResource
+        #region AppConfigurationPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource" /> object. </returns>
+        public static AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkResource.ValidateResourceId(id);
-                return new PrivateLinkResource(client, id);
+                AppConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new AppConfigurationPrivateEndpointConnectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region AppConfigurationPrivateLinkResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AppConfigurationPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource" /> object. </returns>
+        public static AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                AppConfigurationPrivateLinkResource.ValidateResourceId(id);
+                return new AppConfigurationPrivateLinkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region KeyValueResource
+        /// <summary>
+        /// Gets an object representing a <see cref="KeyValueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KeyValueResource.CreateResourceIdentifier" /> to create a <see cref="KeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KeyValueResource" /> object. </returns>
+        public static KeyValueResource GetKeyValueResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                KeyValueResource.ValidateResourceId(id);
+                return new KeyValueResource(client, id);
             }
             );
         }

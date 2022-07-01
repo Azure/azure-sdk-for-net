@@ -1,184 +1,217 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels:build?api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "71",
+        "Content-Length": "94",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-fdd017c5c15aa246b48055f48ec6cd22-e2238640ac9b9644-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "23075647e9147fb71bebcf07f8cb24b1",
+        "traceparent": "00-c9d9ec39da7615a33296b0b77f7af976-e8ec1f386ab8645f-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "496a0679dab35e529049f30fe06bb6c4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelId": "1464944107",
+        "modelId": "1584874394",
+        "buildMode": "template",
         "azureBlobSource": {
           "containerUrl": "Sanitized"
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "96d09ba7-ca43-44ee-b416-5af3d6ae3515",
+        "apim-request-id": "763f29ee-efef-4a0a-8f5e-7824038d3288",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 15:40:15 GMT",
-        "operation-location": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31533524387_96d09ba7-ca43-44ee-b416-5af3d6ae3515?api-version=2021-09-30-preview",
+        "Date": "Wed, 25 May 2022 22:31:49 GMT",
+        "operation-location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "2869"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "5313"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31533524387_96d09ba7-ca43-44ee-b416-5af3d6ae3515?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "35eb0a130ae1d9647944cb95f8e698ea",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0355d766a923a9961a1dd3181853a6a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4d31b7aa-a3dd-497f-bf72-242d97d68aa3",
+        "apim-request-id": "4b5b7a57-7346-4c28-9266-fdbf16cb09d4",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:15 GMT",
+        "Date": "Wed, 25 May 2022 22:31:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "45"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022operationId\u0022: \u002231533524387_96d09ba7-ca43-44ee-b416-5af3d6ae3515\u0022,\n",
-        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
-        "  \u0022status\u0022: \u0022running\u0022,\n",
-        "  \u0022createdDateTime\u0022: \u00222021-09-28T15:40:12Z\u0022,\n",
-        "  \u0022lastUpdatedDateTime\u0022: \u00222021-09-28T15:40:15Z\u0022,\n",
-        "  \u0022resourceLocation\u0022: \u0022https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107?api-version=2021-09-30-preview\u0022\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "operationId": "31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288",
+        "kind": "documentModelBuild",
+        "status": "notStarted",
+        "createdDateTime": "2022-05-25T22:31:44Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:44Z",
+        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394?api-version=2022-06-30-preview"
+      }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/operations/31533524387_96d09ba7-ca43-44ee-b416-5af3d6ae3515?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "edcd62000659436090d88e74c1463d6f",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a2847cb93b282e5622522c2df935dcf7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "77a66147-95d4-42e6-9045-73876c634fc4",
+        "apim-request-id": "a3ded410-af05-4694-95a9-5918852558cd",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:16 GMT",
+        "Date": "Wed, 25 May 2022 22:31:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "45"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022operationId\u0022: \u002231533524387_96d09ba7-ca43-44ee-b416-5af3d6ae3515\u0022,\n",
-        "  \u0022kind\u0022: \u0022documentModelBuild\u0022,\n",
-        "  \u0022status\u0022: \u0022succeeded\u0022,\n",
-        "  \u0022createdDateTime\u0022: \u00222021-09-28T15:40:12Z\u0022,\n",
-        "  \u0022lastUpdatedDateTime\u0022: \u00222021-09-28T15:40:16Z\u0022,\n",
-        "  \u0022resourceLocation\u0022: \u0022https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107?api-version=2021-09-30-preview\u0022,\n",
-        "  \u0022percentCompleted\u0022: 100,\n",
-        "  \u0022result\u0022: {\n",
-        "    \u0022docTypes\u0022: {\n",
-        "      \u00221464944107\u0022: {\n",
-        "        \u0022fieldSchema\u0022: {\n",
-        "          \u0022Merchant\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022PhoneNumber\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Website\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Email\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022PurchaseOrderNumber\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022DatedAs\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022VendorName\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022CompanyName\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022CompanyAddress\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022CompanyPhoneNumber\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Subtotal\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Tax\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Total\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Signature\u0022: {\n",
-        "            \u0022type\u0022: \u0022string\u0022\n",
-        "          },\n",
-        "          \u0022Quantity\u0022: {\n",
-        "            \u0022type\u0022: \u0022number\u0022\n",
-        "          }\n",
-        "        },\n",
-        "        \u0022fieldConfidence\u0022: {\n",
-        "          \u0022CompanyAddress\u0022: 0.8,\n",
-        "          \u0022CompanyName\u0022: 0.95,\n",
-        "          \u0022CompanyPhoneNumber\u0022: 0.95,\n",
-        "          \u0022DatedAs\u0022: 0.95,\n",
-        "          \u0022Email\u0022: 0.8,\n",
-        "          \u0022Merchant\u0022: 0.95,\n",
-        "          \u0022PhoneNumber\u0022: 0.95,\n",
-        "          \u0022PurchaseOrderNumber\u0022: 0.95,\n",
-        "          \u0022Quantity\u0022: 0.95,\n",
-        "          \u0022Signature\u0022: 0.6,\n",
-        "          \u0022Subtotal\u0022: 0.95,\n",
-        "          \u0022Tax\u0022: 0.95,\n",
-        "          \u0022Total\u0022: 0.95,\n",
-        "          \u0022VendorName\u0022: 0.95,\n",
-        "          \u0022Website\u0022: 0.95\n",
-        "        }\n",
-        "      }\n",
-        "    },\n",
-        "    \u0022modelId\u0022: \u00221464944107\u0022,\n",
-        "    \u0022createdDateTime\u0022: \u00222021-09-28T15:40:16Z\u0022\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "operationId": "31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288",
+        "kind": "documentModelBuild",
+        "status": "running",
+        "createdDateTime": "2022-05-25T22:31:44Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:50Z",
+        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394?api-version=2022-06-30-preview"
+      }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/operations/31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288?api-version=2022-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a49d673a1980d07770c12e960739463c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "68f1762c-c4f6-4f02-846a-45e287b7e624",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 22:31:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "operationId": "31512850095_763f29ee-efef-4a0a-8f5e-7824038d3288",
+        "kind": "documentModelBuild",
+        "status": "succeeded",
+        "createdDateTime": "2022-05-25T22:31:44Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:52Z",
+        "resourceLocation": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394?api-version=2022-06-30-preview",
+        "percentCompleted": 100,
+        "result": {
+          "docTypes": {
+            "1584874394": {
+              "fieldSchema": {
+                "Merchant": {
+                  "type": "string"
+                },
+                "PhoneNumber": {
+                  "type": "string"
+                },
+                "Website": {
+                  "type": "string"
+                },
+                "Email": {
+                  "type": "string"
+                },
+                "PurchaseOrderNumber": {
+                  "type": "string"
+                },
+                "DatedAs": {
+                  "type": "string"
+                },
+                "VendorName": {
+                  "type": "string"
+                },
+                "CompanyName": {
+                  "type": "string"
+                },
+                "CompanyAddress": {
+                  "type": "string"
+                },
+                "CompanyPhoneNumber": {
+                  "type": "string"
+                },
+                "Subtotal": {
+                  "type": "string"
+                },
+                "Tax": {
+                  "type": "string"
+                },
+                "Total": {
+                  "type": "string"
+                },
+                "Signature": {
+                  "type": "string"
+                },
+                "Quantity": {
+                  "type": "number"
+                },
+                "FullSignature": {
+                  "type": "signature"
+                }
+              },
+              "buildMode": "template",
+              "fieldConfidence": {
+                "CompanyAddress": 0.8,
+                "CompanyName": 0.995,
+                "CompanyPhoneNumber": 0.995,
+                "DatedAs": 0.995,
+                "Email": 0.8,
+                "FullSignature": 0.6,
+                "Merchant": 0.995,
+                "PhoneNumber": 0.995,
+                "PurchaseOrderNumber": 0.995,
+                "Quantity": 0.995,
+                "Signature": 0.995,
+                "Subtotal": 0.995,
+                "Tax": 0.995,
+                "Total": 0.995,
+                "VendorName": 0.995,
+                "Website": 0.995
+              }
+            }
+          },
+          "modelId": "1584874394",
+          "createdDateTime": "2022-05-25T22:31:52Z",
+          "apiVersion": "2022-06-30-preview"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "157",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-085ca73d669ea34b84e5187788a7b941-06e21060be6e7f46-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c75ad4dd57c63d0af22ea9d01e218734",
+        "traceparent": "00-60f8ad65ec6a04816c7df8b8390e9278-105526b33ebf311f-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "635550a313e72b9b8026e0d17c68afe4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -186,154 +219,181 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "81021f70-ee37-49e9-9078-1a600d681249",
+        "apim-request-id": "2116efb3-bd8f-4cc4-a4a6-bfe351115a3e",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 15:40:17 GMT",
-        "Operation-Location": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+        "Date": "Wed, 25 May 2022 22:31:52 GMT",
+        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "764"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "394"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "9506e55337fd0c58aaa7a5097cef1733",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b1dedc4002b69f2205b332670cc027e8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0f0626f7-840d-45d0-8ed7-bb818a631193",
+        "apim-request-id": "07b93287-a22c-4f0d-bdd7-5754a45edb04",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:17 GMT",
+        "Date": "Wed, 25 May 2022 22:31:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "90"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T15:40:17Z",
-        "lastUpdatedDateTime": "2021-09-28T15:40:17Z"
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "23b85b06d08ca8235890fb2b5c90256e",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a88aef0c79df260fcc71235938a65307",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8090268d-a7d2-4ed6-98b5-e3572df96ee6",
+        "apim-request-id": "38d3495a-779f-4dcf-a39b-6e1aab37ab59",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:18 GMT",
+        "Date": "Wed, 25 May 2022 22:31:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "82"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T15:40:17Z",
-        "lastUpdatedDateTime": "2021-09-28T15:40:17Z"
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "db215951a83fa5727c4d1d1eb101c103",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2a564a11945ba0862eb65e33e0331ec0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "58e45b24-ecbf-4ac0-aec0-d37c305281a9",
+        "apim-request-id": "5232870f-cb42-4f3d-925f-0461f746879d",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:20 GMT",
+        "Date": "Wed, 25 May 2022 22:31:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "86"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T15:40:17Z",
-        "lastUpdatedDateTime": "2021-09-28T15:40:17Z"
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c3c97616636882a7c15e3c6d3c2caf19",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8cc4f8fe07dec705ccb7e444dfc8665f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f4b037ae-d0fd-4e90-ace1-ce2b6cd537b5",
+        "apim-request-id": "9a7e6634-fd98-48e4-87d7-cf478aade233",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:21 GMT",
+        "Date": "Wed, 25 May 2022 22:31:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "97"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T15:40:17Z",
-        "lastUpdatedDateTime": "2021-09-28T15:40:17Z"
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107/analyzeResults/81021f70-ee37-49e9-9078-1a600d681249?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "22b837823bcd5ef3e813a73fb205f657",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c2562a60fd6a778d69e97a291bdc4598",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "77b7dc3a-a6fa-4887-a6ce-d83064cf0786",
+        "apim-request-id": "e74c3bc1-d6f4-4a27-9224-00a5bc357694",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 15:40:22 GMT",
+        "Date": "Wed, 25 May 2022 22:31:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "373"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:53Z"
+      }
+    },
+    {
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394/analyzeResults/2116efb3-bd8f-4cc4-a4a6-bfe351115a3e?api-version=2022-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "405a6353c6e10929448f5ea3af41c165",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "45380919-6216-403f-9389-a6f585e74a01",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 22:31:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T15:40:17Z",
-        "lastUpdatedDateTime": "2021-09-28T15:40:21Z",
+        "createdDateTime": "2022-05-25T22:31:53Z",
+        "lastUpdatedDateTime": "2022-05-25T22:31:58Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
-          "modelId": "1464944107",
+          "apiVersion": "2022-06-30-preview",
+          "modelId": "1584874394",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Company A Invoice\nInvoice For:\nAddress:\n567 Main St.\nRedmond, WA\n555-555-5555\nBilbo Baggins\n123 Hobbit Lane\nRedmond, WA\n555-555-5555\nItem\nQuantity\nPrice\nA\n1\n10.99\nB\n2\n14.67\nC\n4\n15.66\nD\n1\n12.00\nE\n4\n10.00\nF\n6\n12.00\nG\n8\n22.00\nSubtotal: 300.00\nTax: 30.00\nTip: 100.00\nTotal: 430.00\nSignature: ____Bilbo Baggins__________\n:unselected:\nCompany B Invoice\nInvoice For:\nAddress:\n567 Main St.\nRedmond, WA\n555-555-5555\nFrodo Baggins\n123 Hobbit Lane\nRedmond, WA\n555-555-5555\nItem\nQuantity\nPrice\nA\n10\n100.99\nB\n20\n140.67\nC\n40\n150.66\nD\n10\n120.00\nE\n40\n100.00\nF\n60\n120.00\nG\n80\n220.00\nSubtotal: 3000.00\nTax: 300.00\nTip: 1000.00\nTotal: 4300.00\nSignature: ____Frodo Baggins__________",
+          "content": "Company A Invoice\nInvoice For:\nAddress: 567 Main St. Redmond, WA 555-555-5555\nBilbo Baggins 123 Hobbit Lane Redmond, WA 555-555-5555\nItem\nQuantity\nPrice\nA\n1\n10.99\nB\n2\n14.67\nC\n4\n15.66\nD\n1\n12.00\nE\n4\n10.00\nF\n6\n12.00\nG\n8\n22.00\nSubtotal: 300.00 Tax: 30.00 Tip: 100.00 Total: 430.00\nSignature: ____Bilbo Baggins__________\nCompany B Invoice\nInvoice For:\nAddress: 567 Main St. Redmond, WA 555-555-5555\nFrodo Baggins 123 Hobbit Lane Redmond, WA 555-555-5555\nItem\nQuantity\nPrice\nA\n10\n100.99\nB\n20\n140.67\nC\n40\n150.66\nD\n10\n120.00\nE\n40\n100.00\nF\n60\n120.00\nG\n80\n220.00\nSubtotal: 3000.00 Tax: 300.00 Tip: 1000.00 Total: 4300.00\nSignature: ____Frodo Baggins__________",
           "pages": [
             {
               "pageNumber": 1,
@@ -344,7 +404,7 @@
               "words": [
                 {
                   "content": "Company",
-                  "boundingBox": [
+                  "polygon": [
                     0.8861,
                     1.1232,
                     1.6203,
@@ -362,7 +422,7 @@
                 },
                 {
                   "content": "A",
-                  "boundingBox": [
+                  "polygon": [
                     1.6696,
                     1.1242,
                     1.7749,
@@ -380,7 +440,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     1.8389,
                     1.1217,
                     2.3783,
@@ -398,7 +458,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     6.0211,
                     1.0656,
                     6.6362,
@@ -416,7 +476,7 @@
                 },
                 {
                   "content": "For:",
-                  "boundingBox": [
+                  "polygon": [
                     6.7147,
                     1.0691,
                     7.0357,
@@ -434,7 +494,7 @@
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8791,
                     1.4825,
                     1.5657,
@@ -452,7 +512,7 @@
                 },
                 {
                   "content": "567",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     1.8472,
                     1.1203,
@@ -470,7 +530,7 @@
                 },
                 {
                   "content": "Main",
-                  "boundingBox": [
+                  "polygon": [
                     1.1777,
                     1.846,
                     1.5022,
@@ -488,7 +548,7 @@
                 },
                 {
                   "content": "St.",
-                  "boundingBox": [
+                  "polygon": [
                     1.5558,
                     1.8472,
                     1.713,
@@ -506,7 +566,7 @@
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
+                  "polygon": [
                     0.891,
                     2.061,
                     1.5605,
@@ -524,7 +584,7 @@
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     1.6152,
                     2.0682,
                     1.8537,
@@ -542,7 +602,7 @@
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     2.2887,
                     1.8119,
@@ -560,7 +620,7 @@
                 },
                 {
                   "content": "Bilbo",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.4503,
                     6.3392,
@@ -578,7 +638,7 @@
                 },
                 {
                   "content": "Baggins",
-                  "boundingBox": [
+                  "polygon": [
                     6.396,
                     1.4556,
                     6.8967,
@@ -596,7 +656,7 @@
                 },
                 {
                   "content": "123",
-                  "boundingBox": [
+                  "polygon": [
                     6.0165,
                     1.6772,
                     6.2434,
@@ -614,7 +674,7 @@
                 },
                 {
                   "content": "Hobbit",
-                  "boundingBox": [
+                  "polygon": [
                     6.3033,
                     1.6707,
                     6.7463,
@@ -632,7 +692,7 @@
                 },
                 {
                   "content": "Lane",
-                  "boundingBox": [
+                  "polygon": [
                     6.803,
                     1.6782,
                     7.1006,
@@ -650,7 +710,7 @@
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.891,
                     6.6861,
@@ -668,7 +728,7 @@
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     6.7408,
                     1.8982,
                     6.9793,
@@ -686,7 +746,7 @@
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     6.0105,
                     2.1187,
                     6.9371,
@@ -704,7 +764,7 @@
                 },
                 {
                   "content": "Item",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.0018,
                     1.3842,
@@ -722,7 +782,7 @@
                 },
                 {
                   "content": "Quantity",
-                  "boundingBox": [
+                  "polygon": [
                     3.2527,
                     2.9996,
                     3.8367,
@@ -740,7 +800,7 @@
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.423,
                     2.9996,
                     5.7372,
@@ -758,7 +818,7 @@
                 },
                 {
                   "content": "A",
-                  "boundingBox": [
+                  "polygon": [
                     1.0832,
                     3.2118,
                     1.174,
@@ -776,7 +836,7 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.2116,
                     3.3202,
@@ -794,7 +854,7 @@
                 },
                 {
                   "content": "10.99",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.2108,
                     5.7784,
@@ -812,7 +872,7 @@
                 },
                 {
                   "content": "B",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.4256,
                     1.1637,
@@ -830,7 +890,7 @@
                 },
                 {
                   "content": "2",
-                  "boundingBox": [
+                  "polygon": [
                     3.2541,
                     3.4241,
                     3.3199,
@@ -848,7 +908,7 @@
                 },
                 {
                   "content": "14.67",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.4241,
                     5.7789,
@@ -866,7 +926,7 @@
                 },
                 {
                   "content": "C",
-                  "boundingBox": [
+                  "polygon": [
                     1.0882,
                     3.6343,
                     1.1647,
@@ -884,7 +944,7 @@
                 },
                 {
                   "content": "4",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     3.6351,
                     3.3244,
@@ -902,7 +962,7 @@
                 },
                 {
                   "content": "15.66",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.6341,
                     5.78,
@@ -920,7 +980,7 @@
                 },
                 {
                   "content": "D",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.8456,
                     1.1753,
@@ -938,7 +998,7 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.845,
                     3.3202,
@@ -956,7 +1016,7 @@
                 },
                 {
                   "content": "12.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.8441,
                     5.7809,
@@ -974,7 +1034,7 @@
                 },
                 {
                   "content": "E",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.0561,
                     1.153,
@@ -992,7 +1052,7 @@
                 },
                 {
                   "content": "4",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     4.0556,
                     3.3244,
@@ -1010,7 +1070,7 @@
                 },
                 {
                   "content": "10.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.0546,
                     5.781,
@@ -1028,7 +1088,7 @@
                 },
                 {
                   "content": "F",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.2661,
                     1.1497,
@@ -1046,7 +1106,7 @@
                 },
                 {
                   "content": "6",
-                  "boundingBox": [
+                  "polygon": [
                     3.2534,
                     4.2646,
                     3.3226,
@@ -1064,7 +1124,7 @@
                 },
                 {
                   "content": "12.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.2646,
                     5.7809,
@@ -1082,7 +1142,7 @@
                 },
                 {
                   "content": "G",
-                  "boundingBox": [
+                  "polygon": [
                     1.0877,
                     4.4746,
                     1.1735,
@@ -1100,7 +1160,7 @@
                 },
                 {
                   "content": "8",
-                  "boundingBox": [
+                  "polygon": [
                     3.2514,
                     4.4746,
                     3.3224,
@@ -1118,7 +1178,7 @@
                 },
                 {
                   "content": "22.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4184,
                     4.4746,
                     5.781,
@@ -1136,7 +1196,7 @@
                 },
                 {
                   "content": "Subtotal:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5075,
                     4.8981,
                     6.1249,
@@ -1154,7 +1214,7 @@
                 },
                 {
                   "content": "300.00",
-                  "boundingBox": [
+                  "polygon": [
                     6.1794,
                     4.9042,
                     6.632,
@@ -1172,7 +1232,7 @@
                 },
                 {
                   "content": "Tax:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.1263,
                     5.7812,
@@ -1190,7 +1250,7 @@
                 },
                 {
                   "content": "30.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.836,
                     5.1245,
                     6.2022,
@@ -1208,7 +1268,7 @@
                 },
                 {
                   "content": "Tip:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.3412,
                     5.7515,
@@ -1226,7 +1286,7 @@
                 },
                 {
                   "content": "100.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.811,
                     5.3445,
                     6.2587,
@@ -1244,7 +1304,7 @@
                 },
                 {
                   "content": "Total:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.5583,
                     5.8915,
@@ -1262,7 +1322,7 @@
                 },
                 {
                   "content": "430.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.942,
                     5.5645,
                     6.3987,
@@ -1280,7 +1340,7 @@
                 },
                 {
                   "content": "Signature:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0055,
                     6.6581,
                     1.6987,
@@ -1298,7 +1358,7 @@
                 },
                 {
                   "content": "____Bilbo",
-                  "boundingBox": [
+                  "polygon": [
                     1.747,
                     6.6553,
                     2.4278,
@@ -1316,7 +1376,7 @@
                 },
                 {
                   "content": "Baggins__________",
-                  "boundingBox": [
+                  "polygon": [
                     2.4823,
                     6.6581,
                     3.8342,
@@ -1333,30 +1393,10 @@
                   }
                 }
               ],
-              "selectionMarks": [
-                {
-                  "state": "unselected",
-                  "boundingBox": [
-                    1.7276,
-                    6.649,
-                    2.0719,
-                    6.649,
-                    2.0719,
-                    6.804,
-                    1.7276,
-                    6.804
-                  ],
-                  "confidence": 0.292,
-                  "span": {
-                    "offset": 316,
-                    "length": 12
-                  }
-                }
-              ],
               "lines": [
                 {
                   "content": "Company A Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     0.8861,
                     1.1217,
                     2.3783,
@@ -1375,7 +1415,7 @@
                 },
                 {
                   "content": "Invoice For:",
-                  "boundingBox": [
+                  "polygon": [
                     6.0211,
                     1.0656,
                     7.0357,
@@ -1394,7 +1434,7 @@
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8791,
                     1.4825,
                     1.5657,
@@ -1413,7 +1453,7 @@
                 },
                 {
                   "content": "567 Main St.",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     1.846,
                     1.713,
@@ -1432,7 +1472,7 @@
                 },
                 {
                   "content": "Redmond, WA",
-                  "boundingBox": [
+                  "polygon": [
                     0.891,
                     2.061,
                     1.8537,
@@ -1451,7 +1491,7 @@
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     2.2887,
                     1.8119,
@@ -1470,7 +1510,7 @@
                 },
                 {
                   "content": "Bilbo Baggins",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.4503,
                     6.8967,
@@ -1489,7 +1529,7 @@
                 },
                 {
                   "content": "123 Hobbit Lane",
-                  "boundingBox": [
+                  "polygon": [
                     6.0165,
                     1.6707,
                     7.1006,
@@ -1508,7 +1548,7 @@
                 },
                 {
                   "content": "Redmond, WA",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.891,
                     6.9793,
@@ -1527,7 +1567,7 @@
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     6.0105,
                     2.1187,
                     6.9371,
@@ -1546,7 +1586,7 @@
                 },
                 {
                   "content": "Item",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.0018,
                     1.3842,
@@ -1565,7 +1605,7 @@
                 },
                 {
                   "content": "Quantity",
-                  "boundingBox": [
+                  "polygon": [
                     3.2527,
                     2.9996,
                     3.8367,
@@ -1584,7 +1624,7 @@
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.423,
                     2.9996,
                     5.7372,
@@ -1603,7 +1643,7 @@
                 },
                 {
                   "content": "A",
-                  "boundingBox": [
+                  "polygon": [
                     1.0832,
                     3.2118,
                     1.174,
@@ -1622,7 +1662,7 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.2116,
                     3.3202,
@@ -1641,7 +1681,7 @@
                 },
                 {
                   "content": "10.99",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.2108,
                     5.7784,
@@ -1660,7 +1700,7 @@
                 },
                 {
                   "content": "B",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.4256,
                     1.1637,
@@ -1679,7 +1719,7 @@
                 },
                 {
                   "content": "2",
-                  "boundingBox": [
+                  "polygon": [
                     3.2541,
                     3.4241,
                     3.3199,
@@ -1698,7 +1738,7 @@
                 },
                 {
                   "content": "14.67",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.4241,
                     5.7789,
@@ -1717,7 +1757,7 @@
                 },
                 {
                   "content": "C",
-                  "boundingBox": [
+                  "polygon": [
                     1.0882,
                     3.6343,
                     1.1647,
@@ -1736,7 +1776,7 @@
                 },
                 {
                   "content": "4",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     3.6351,
                     3.3244,
@@ -1755,7 +1795,7 @@
                 },
                 {
                   "content": "15.66",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.6341,
                     5.78,
@@ -1774,7 +1814,7 @@
                 },
                 {
                   "content": "D",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.8456,
                     1.1753,
@@ -1793,7 +1833,7 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.845,
                     3.3202,
@@ -1812,7 +1852,7 @@
                 },
                 {
                   "content": "12.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.8441,
                     5.7809,
@@ -1831,7 +1871,7 @@
                 },
                 {
                   "content": "E",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.0561,
                     1.153,
@@ -1850,7 +1890,7 @@
                 },
                 {
                   "content": "4",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     4.0556,
                     3.3244,
@@ -1869,7 +1909,7 @@
                 },
                 {
                   "content": "10.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.0546,
                     5.781,
@@ -1888,7 +1928,7 @@
                 },
                 {
                   "content": "F",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.2661,
                     1.1497,
@@ -1907,7 +1947,7 @@
                 },
                 {
                   "content": "6",
-                  "boundingBox": [
+                  "polygon": [
                     3.2534,
                     4.2646,
                     3.3226,
@@ -1926,7 +1966,7 @@
                 },
                 {
                   "content": "12.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.2646,
                     5.7809,
@@ -1945,7 +1985,7 @@
                 },
                 {
                   "content": "G",
-                  "boundingBox": [
+                  "polygon": [
                     1.0877,
                     4.4746,
                     1.1735,
@@ -1964,7 +2004,7 @@
                 },
                 {
                   "content": "8",
-                  "boundingBox": [
+                  "polygon": [
                     3.2514,
                     4.4746,
                     3.3224,
@@ -1983,7 +2023,7 @@
                 },
                 {
                   "content": "22.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4184,
                     4.4746,
                     5.781,
@@ -2002,7 +2042,7 @@
                 },
                 {
                   "content": "Subtotal: 300.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5075,
                     4.8981,
                     6.632,
@@ -2021,7 +2061,7 @@
                 },
                 {
                   "content": "Tax: 30.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.1245,
                     6.2022,
@@ -2040,7 +2080,7 @@
                 },
                 {
                   "content": "Tip: 100.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.3412,
                     6.2587,
@@ -2059,7 +2099,7 @@
                 },
                 {
                   "content": "Total: 430.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.5583,
                     6.3987,
@@ -2078,7 +2118,7 @@
                 },
                 {
                   "content": "Signature: ____Bilbo Baggins__________",
-                  "boundingBox": [
+                  "polygon": [
                     1.0055,
                     6.6553,
                     3.8342,
@@ -2099,9 +2139,10 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 328
+                  "length": 315
                 }
-              ]
+              ],
+              "kind": "document"
             },
             {
               "pageNumber": 2,
@@ -2110,14 +2151,14 @@
               "height": 11,
               "unit": "inch",
               "words": [],
-              "selectionMarks": [],
               "lines": [],
               "spans": [
                 {
-                  "offset": 328,
+                  "offset": 315,
                   "length": 0
                 }
-              ]
+              ],
+              "kind": "document"
             },
             {
               "pageNumber": 3,
@@ -2128,7 +2169,7 @@
               "words": [
                 {
                   "content": "Company",
-                  "boundingBox": [
+                  "polygon": [
                     0.8861,
                     1.1232,
                     1.6203,
@@ -2140,13 +2181,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 329,
+                    "offset": 316,
                     "length": 7
                   }
                 },
                 {
                   "content": "B",
-                  "boundingBox": [
+                  "polygon": [
                     1.6836,
                     1.1248,
                     1.764,
@@ -2158,13 +2199,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 337,
+                    "offset": 324,
                     "length": 1
                   }
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     1.8336,
                     1.1217,
                     2.3734,
@@ -2176,13 +2217,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 339,
+                    "offset": 326,
                     "length": 7
                   }
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     6.0211,
                     1.0656,
                     6.6362,
@@ -2194,13 +2235,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 347,
+                    "offset": 334,
                     "length": 7
                   }
                 },
                 {
                   "content": "For:",
-                  "boundingBox": [
+                  "polygon": [
                     6.7147,
                     1.0691,
                     7.0357,
@@ -2212,13 +2253,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 355,
+                    "offset": 342,
                     "length": 4
                   }
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8791,
                     1.4825,
                     1.5657,
@@ -2230,13 +2271,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 360,
+                    "offset": 347,
                     "length": 8
                   }
                 },
                 {
                   "content": "567",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     1.8472,
                     1.1203,
@@ -2248,13 +2289,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 369,
+                    "offset": 356,
                     "length": 3
                   }
                 },
                 {
                   "content": "Main",
-                  "boundingBox": [
+                  "polygon": [
                     1.1777,
                     1.846,
                     1.5022,
@@ -2266,13 +2307,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 373,
+                    "offset": 360,
                     "length": 4
                   }
                 },
                 {
                   "content": "St.",
-                  "boundingBox": [
+                  "polygon": [
                     1.5558,
                     1.8472,
                     1.713,
@@ -2284,13 +2325,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 378,
+                    "offset": 365,
                     "length": 3
                   }
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
+                  "polygon": [
                     0.891,
                     2.061,
                     1.5605,
@@ -2302,13 +2343,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 382,
+                    "offset": 369,
                     "length": 8
                   }
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     1.6152,
                     2.0682,
                     1.8537,
@@ -2320,13 +2361,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 391,
+                    "offset": 378,
                     "length": 2
                   }
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     2.2887,
                     1.8119,
@@ -2338,13 +2379,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 394,
+                    "offset": 381,
                     "length": 12
                   }
                 },
                 {
                   "content": "Frodo",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.4506,
                     6.3895,
@@ -2356,13 +2397,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 407,
+                    "offset": 394,
                     "length": 5
                   }
                 },
                 {
                   "content": "Baggins",
-                  "boundingBox": [
+                  "polygon": [
                     6.45,
                     1.4556,
                     6.9506,
@@ -2374,13 +2415,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 413,
+                    "offset": 400,
                     "length": 7
                   }
                 },
                 {
                   "content": "123",
-                  "boundingBox": [
+                  "polygon": [
                     6.0165,
                     1.6772,
                     6.2434,
@@ -2392,13 +2433,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 421,
+                    "offset": 408,
                     "length": 3
                   }
                 },
                 {
                   "content": "Hobbit",
-                  "boundingBox": [
+                  "polygon": [
                     6.3033,
                     1.6707,
                     6.7463,
@@ -2410,13 +2451,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 425,
+                    "offset": 412,
                     "length": 6
                   }
                 },
                 {
                   "content": "Lane",
-                  "boundingBox": [
+                  "polygon": [
                     6.803,
                     1.6782,
                     7.1006,
@@ -2428,13 +2469,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 432,
+                    "offset": 419,
                     "length": 4
                   }
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.891,
                     6.6861,
@@ -2446,13 +2487,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 437,
+                    "offset": 424,
                     "length": 8
                   }
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     6.7408,
                     1.8982,
                     6.9793,
@@ -2464,13 +2505,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 446,
+                    "offset": 433,
                     "length": 2
                   }
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     6.0105,
                     2.1187,
                     6.9371,
@@ -2482,13 +2523,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 449,
+                    "offset": 436,
                     "length": 12
                   }
                 },
                 {
                   "content": "Item",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.0018,
                     1.3842,
@@ -2500,13 +2541,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 462,
+                    "offset": 449,
                     "length": 4
                   }
                 },
                 {
                   "content": "Quantity",
-                  "boundingBox": [
+                  "polygon": [
                     3.2527,
                     2.9996,
                     3.8367,
@@ -2518,13 +2559,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 467,
+                    "offset": 454,
                     "length": 8
                   }
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.423,
                     2.9996,
                     5.7372,
@@ -2536,13 +2577,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 476,
+                    "offset": 463,
                     "length": 5
                   }
                 },
                 {
                   "content": "A",
-                  "boundingBox": [
+                  "polygon": [
                     1.0832,
                     3.2118,
                     1.174,
@@ -2554,13 +2595,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 482,
+                    "offset": 469,
                     "length": 1
                   }
                 },
                 {
                   "content": "10",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.2108,
                     3.4067,
@@ -2572,13 +2613,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 484,
+                    "offset": 471,
                     "length": 2
                   }
                 },
                 {
                   "content": "100.99",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.2108,
                     5.8617,
@@ -2590,13 +2631,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 487,
+                    "offset": 474,
                     "length": 6
                   }
                 },
                 {
                   "content": "B",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.4256,
                     1.1637,
@@ -2608,13 +2649,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 494,
+                    "offset": 481,
                     "length": 1
                   }
                 },
                 {
                   "content": "20",
-                  "boundingBox": [
+                  "polygon": [
                     3.2541,
                     3.4241,
                     3.4067,
@@ -2626,13 +2667,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 496,
+                    "offset": 483,
                     "length": 2
                   }
                 },
                 {
                   "content": "140.67",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.4241,
                     5.8622,
@@ -2644,13 +2685,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 499,
+                    "offset": 486,
                     "length": 6
                   }
                 },
                 {
                   "content": "C",
-                  "boundingBox": [
+                  "polygon": [
                     1.0882,
                     3.6343,
                     1.1647,
@@ -2662,13 +2703,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 506,
+                    "offset": 493,
                     "length": 1
                   }
                 },
                 {
                   "content": "40",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     3.6341,
                     3.4067,
@@ -2680,13 +2721,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 508,
+                    "offset": 495,
                     "length": 2
                   }
                 },
                 {
                   "content": "150.66",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.6341,
                     5.8634,
@@ -2698,13 +2739,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 511,
+                    "offset": 498,
                     "length": 6
                   }
                 },
                 {
                   "content": "D",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.8456,
                     1.1753,
@@ -2716,13 +2757,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 518,
+                    "offset": 505,
                     "length": 1
                   }
                 },
                 {
                   "content": "10",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.8441,
                     3.4067,
@@ -2734,13 +2775,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 520,
+                    "offset": 507,
                     "length": 2
                   }
                 },
                 {
                   "content": "120.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.8441,
                     5.8642,
@@ -2752,13 +2793,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 523,
+                    "offset": 510,
                     "length": 6
                   }
                 },
                 {
                   "content": "E",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.0561,
                     1.153,
@@ -2770,13 +2811,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 530,
+                    "offset": 517,
                     "length": 1
                   }
                 },
                 {
                   "content": "40",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     4.0546,
                     3.4067,
@@ -2788,13 +2829,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 532,
+                    "offset": 519,
                     "length": 2
                   }
                 },
                 {
                   "content": "100.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.0546,
                     5.8644,
@@ -2806,13 +2847,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 535,
+                    "offset": 522,
                     "length": 6
                   }
                 },
                 {
                   "content": "F",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.2661,
                     1.1497,
@@ -2824,13 +2865,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 542,
+                    "offset": 529,
                     "length": 1
                   }
                 },
                 {
                   "content": "60",
-                  "boundingBox": [
+                  "polygon": [
                     3.2534,
                     4.2646,
                     3.4067,
@@ -2842,13 +2883,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 544,
+                    "offset": 531,
                     "length": 2
                   }
                 },
                 {
                   "content": "120.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.2646,
                     5.8642,
@@ -2860,13 +2901,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 547,
+                    "offset": 534,
                     "length": 6
                   }
                 },
                 {
                   "content": "G",
-                  "boundingBox": [
+                  "polygon": [
                     1.0877,
                     4.4746,
                     1.1735,
@@ -2878,13 +2919,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 554,
+                    "offset": 541,
                     "length": 1
                   }
                 },
                 {
                   "content": "80",
-                  "boundingBox": [
+                  "polygon": [
                     3.2514,
                     4.4746,
                     3.4067,
@@ -2896,13 +2937,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 556,
+                    "offset": 543,
                     "length": 2
                   }
                 },
                 {
                   "content": "220.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4184,
                     4.4746,
                     5.8644,
@@ -2914,13 +2955,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 559,
+                    "offset": 546,
                     "length": 6
                   }
                 },
                 {
                   "content": "Subtotal:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5075,
                     4.8981,
                     6.1249,
@@ -2932,13 +2973,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 566,
+                    "offset": 553,
                     "length": 9
                   }
                 },
                 {
                   "content": "3000.00",
-                  "boundingBox": [
+                  "polygon": [
                     6.1794,
                     4.9042,
                     6.7158,
@@ -2950,13 +2991,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 576,
+                    "offset": 563,
                     "length": 7
                   }
                 },
                 {
                   "content": "Tax:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.1263,
                     5.7812,
@@ -2968,13 +3009,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 584,
+                    "offset": 571,
                     "length": 4
                   }
                 },
                 {
                   "content": "300.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.836,
                     5.1245,
                     6.2887,
@@ -2986,13 +3027,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 589,
+                    "offset": 576,
                     "length": 6
                   }
                 },
                 {
                   "content": "Tip:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.3412,
                     5.7515,
@@ -3004,13 +3045,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 596,
+                    "offset": 583,
                     "length": 4
                   }
                 },
                 {
                   "content": "1000.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.811,
                     5.3445,
                     6.3422,
@@ -3022,13 +3063,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 601,
+                    "offset": 588,
                     "length": 7
                   }
                 },
                 {
                   "content": "Total:",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.5583,
                     5.8915,
@@ -3040,13 +3081,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 609,
+                    "offset": 596,
                     "length": 6
                   }
                 },
                 {
                   "content": "4300.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.942,
                     5.5645,
                     6.4825,
@@ -3058,13 +3099,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 616,
+                    "offset": 603,
                     "length": 7
                   }
                 },
                 {
                   "content": "Signature:",
-                  "boundingBox": [
+                  "polygon": [
                     1.0055,
                     6.6581,
                     1.6987,
@@ -3076,13 +3117,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 624,
+                    "offset": 611,
                     "length": 10
                   }
                 },
                 {
                   "content": "____Frodo",
-                  "boundingBox": [
+                  "polygon": [
                     1.747,
                     6.6556,
                     2.4778,
@@ -3094,13 +3135,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 635,
+                    "offset": 622,
                     "length": 9
                   }
                 },
                 {
                   "content": "Baggins__________",
-                  "boundingBox": [
+                  "polygon": [
                     2.5325,
                     6.6581,
                     3.8842,
@@ -3112,16 +3153,15 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 645,
+                    "offset": 632,
                     "length": 17
                   }
                 }
               ],
-              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Company B Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     0.8861,
                     1.1217,
                     2.3734,
@@ -3133,14 +3173,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 329,
+                      "offset": 316,
                       "length": 17
                     }
                   ]
                 },
                 {
                   "content": "Invoice For:",
-                  "boundingBox": [
+                  "polygon": [
                     6.0211,
                     1.0656,
                     7.0357,
@@ -3152,14 +3192,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 347,
+                      "offset": 334,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8791,
                     1.4825,
                     1.5657,
@@ -3171,14 +3211,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 360,
+                      "offset": 347,
                       "length": 8
                     }
                   ]
                 },
                 {
                   "content": "567 Main St.",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     1.846,
                     1.713,
@@ -3190,14 +3230,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 369,
+                      "offset": 356,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Redmond, WA",
-                  "boundingBox": [
+                  "polygon": [
                     0.891,
                     2.061,
                     1.8537,
@@ -3209,14 +3249,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 382,
+                      "offset": 369,
                       "length": 11
                     }
                   ]
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     0.8852,
                     2.2887,
                     1.8119,
@@ -3228,14 +3268,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 394,
+                      "offset": 381,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Frodo Baggins",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.4506,
                     6.9506,
@@ -3247,14 +3287,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 407,
+                      "offset": 394,
                       "length": 13
                     }
                   ]
                 },
                 {
                   "content": "123 Hobbit Lane",
-                  "boundingBox": [
+                  "polygon": [
                     6.0165,
                     1.6707,
                     7.1006,
@@ -3266,14 +3306,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 421,
+                      "offset": 408,
                       "length": 15
                     }
                   ]
                 },
                 {
                   "content": "Redmond, WA",
-                  "boundingBox": [
+                  "polygon": [
                     6.0164,
                     1.891,
                     6.9793,
@@ -3285,14 +3325,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 437,
+                      "offset": 424,
                       "length": 11
                     }
                   ]
                 },
                 {
                   "content": "555-555-5555",
-                  "boundingBox": [
+                  "polygon": [
                     6.0105,
                     2.1187,
                     6.9371,
@@ -3304,14 +3344,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 449,
+                      "offset": 436,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Item",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.0018,
                     1.3842,
@@ -3323,14 +3363,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 462,
+                      "offset": 449,
                       "length": 4
                     }
                   ]
                 },
                 {
                   "content": "Quantity",
-                  "boundingBox": [
+                  "polygon": [
                     3.2527,
                     2.9996,
                     3.8367,
@@ -3342,14 +3382,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 467,
+                      "offset": 454,
                       "length": 8
                     }
                   ]
                 },
                 {
                   "content": "Price",
-                  "boundingBox": [
+                  "polygon": [
                     5.423,
                     2.9996,
                     5.7372,
@@ -3361,14 +3401,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 476,
+                      "offset": 463,
                       "length": 5
                     }
                   ]
                 },
                 {
                   "content": "A",
-                  "boundingBox": [
+                  "polygon": [
                     1.0832,
                     3.2118,
                     1.174,
@@ -3380,14 +3420,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 482,
+                      "offset": 469,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "10",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.2108,
                     3.4067,
@@ -3399,14 +3439,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 484,
+                      "offset": 471,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "100.99",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.2108,
                     5.8617,
@@ -3418,14 +3458,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 487,
+                      "offset": 474,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "B",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.4256,
                     1.1637,
@@ -3437,14 +3477,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 494,
+                      "offset": 481,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "20",
-                  "boundingBox": [
+                  "polygon": [
                     3.2541,
                     3.4241,
                     3.4067,
@@ -3456,14 +3496,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 496,
+                      "offset": 483,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "140.67",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.4241,
                     5.8622,
@@ -3475,14 +3515,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 499,
+                      "offset": 486,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "C",
-                  "boundingBox": [
+                  "polygon": [
                     1.0882,
                     3.6343,
                     1.1647,
@@ -3494,14 +3534,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 506,
+                      "offset": 493,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "40",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     3.6341,
                     3.4067,
@@ -3513,14 +3553,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 508,
+                      "offset": 495,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "150.66",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.6341,
                     5.8634,
@@ -3532,14 +3572,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 511,
+                      "offset": 498,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "D",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     3.8456,
                     1.1753,
@@ -3551,14 +3591,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 518,
+                      "offset": 505,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "10",
-                  "boundingBox": [
+                  "polygon": [
                     3.2589,
                     3.8441,
                     3.4067,
@@ -3570,14 +3610,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 520,
+                      "offset": 507,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "120.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     3.8441,
                     5.8642,
@@ -3589,14 +3629,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 523,
+                      "offset": 510,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "E",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.0561,
                     1.153,
@@ -3608,14 +3648,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 530,
+                      "offset": 517,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "40",
-                  "boundingBox": [
+                  "polygon": [
                     3.2486,
                     4.0546,
                     3.4067,
@@ -3627,14 +3667,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 532,
+                      "offset": 519,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "100.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.0546,
                     5.8644,
@@ -3646,14 +3686,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 535,
+                      "offset": 522,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "F",
-                  "boundingBox": [
+                  "polygon": [
                     1.0943,
                     4.2661,
                     1.1497,
@@ -3665,14 +3705,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 542,
+                      "offset": 529,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "60",
-                  "boundingBox": [
+                  "polygon": [
                     3.2534,
                     4.2646,
                     3.4067,
@@ -3684,14 +3724,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 544,
+                      "offset": 531,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "120.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4232,
                     4.2646,
                     5.8642,
@@ -3703,14 +3743,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 547,
+                      "offset": 534,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "G",
-                  "boundingBox": [
+                  "polygon": [
                     1.0877,
                     4.4746,
                     1.1735,
@@ -3722,14 +3762,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 554,
+                      "offset": 541,
                       "length": 1
                     }
                   ]
                 },
                 {
                   "content": "80",
-                  "boundingBox": [
+                  "polygon": [
                     3.2514,
                     4.4746,
                     3.4067,
@@ -3741,14 +3781,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 556,
+                      "offset": 543,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "220.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.4184,
                     4.4746,
                     5.8644,
@@ -3760,14 +3800,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 559,
+                      "offset": 546,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "Subtotal: 3000.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5075,
                     4.8981,
                     6.7158,
@@ -3779,14 +3819,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 566,
+                      "offset": 553,
                       "length": 17
                     }
                   ]
                 },
                 {
                   "content": "Tax: 300.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.1245,
                     6.2887,
@@ -3798,14 +3838,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 584,
+                      "offset": 571,
                       "length": 11
                     }
                   ]
                 },
                 {
                   "content": "Tip: 1000.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.3412,
                     6.3422,
@@ -3817,14 +3857,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 596,
+                      "offset": 583,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Total: 4300.00",
-                  "boundingBox": [
+                  "polygon": [
                     5.5034,
                     5.5583,
                     6.4825,
@@ -3836,14 +3876,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 609,
+                      "offset": 596,
                       "length": 14
                     }
                   ]
                 },
                 {
                   "content": "Signature: ____Frodo Baggins__________",
-                  "boundingBox": [
+                  "polygon": [
                     1.0055,
                     6.6556,
                     3.8842,
@@ -3855,7 +3895,7 @@
                   ],
                   "spans": [
                     {
-                      "offset": 624,
+                      "offset": 611,
                       "length": 38
                     }
                   ]
@@ -3863,10 +3903,11 @@
               ],
               "spans": [
                 {
-                  "offset": 328,
-                  "length": 334
+                  "offset": 316,
+                  "length": 333
                 }
-              ]
+              ],
+              "kind": "document"
             }
           ],
           "tables": [
@@ -3878,21 +3919,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Item",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        2.9412,
-                        3.1638,
-                        2.9412,
-                        3.1638,
-                        3.1475,
-                        0.9971,
-                        3.1537
+                      "polygon": [
+                        0.988,
+                        2.9481,
+                        3.1653,
+                        2.9416,
+                        3.1653,
+                        3.1493,
+                        0.988,
+                        3.1493
                       ]
                     }
                   ],
@@ -3907,21 +3946,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Quantity",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        2.9412,
-                        5.3238,
-                        2.9412,
-                        5.3238,
-                        3.1537,
-                        3.1638,
-                        3.1475
+                      "polygon": [
+                        3.1653,
+                        2.9416,
+                        5.3291,
+                        2.9416,
+                        5.3291,
+                        3.1493,
+                        3.1653,
+                        3.1493
                       ]
                     }
                   ],
@@ -3936,21 +3973,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Price",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3238,
-                        2.9412,
-                        7.5038,
-                        2.9474,
-                        7.5038,
-                        3.1537,
-                        5.3238,
-                        3.1537
+                      "polygon": [
+                        5.3291,
+                        2.9416,
+                        7.4862,
+                        2.9416,
+                        7.4862,
+                        3.1493,
+                        5.3291,
+                        3.1493
                       ]
                     }
                   ],
@@ -3964,21 +3999,19 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "A",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        3.1537,
-                        3.1638,
-                        3.1475,
-                        3.1638,
-                        3.36,
-                        0.9971,
-                        3.36
+                      "polygon": [
+                        0.988,
+                        3.1493,
+                        3.1653,
+                        3.1493,
+                        3.1653,
+                        3.3635,
+                        0.9948,
+                        3.3635
                       ]
                     }
                   ],
@@ -3992,21 +4025,19 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "1",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        3.1475,
-                        5.3238,
-                        3.1537,
-                        5.3305,
-                        3.36,
-                        3.1638,
-                        3.36
+                      "polygon": [
+                        3.1653,
+                        3.1493,
+                        5.3291,
+                        3.1493,
+                        5.3291,
+                        3.3635,
+                        3.1653,
+                        3.3635
                       ]
                     }
                   ],
@@ -4020,21 +4051,19 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "10.99",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3238,
-                        3.1537,
-                        7.5038,
-                        3.1537,
-                        7.4971,
-                        3.36,
-                        5.3305,
-                        3.36
+                      "polygon": [
+                        5.3291,
+                        3.1493,
+                        7.4862,
+                        3.1493,
+                        7.4929,
+                        3.3635,
+                        5.3291,
+                        3.3635
                       ]
                     }
                   ],
@@ -4048,21 +4077,19 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "B",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        3.36,
-                        3.1638,
-                        3.36,
-                        3.1638,
-                        3.5726,
-                        0.9971,
-                        3.5726
+                      "polygon": [
+                        0.9948,
+                        3.3635,
+                        3.1653,
+                        3.3635,
+                        3.1653,
+                        3.5712,
+                        0.9948,
+                        3.5712
                       ]
                     }
                   ],
@@ -4076,21 +4103,19 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "2",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        3.36,
-                        5.3305,
-                        3.36,
-                        5.3305,
-                        3.5726,
-                        3.1638,
-                        3.5726
+                      "polygon": [
+                        3.1653,
+                        3.3635,
+                        5.3291,
+                        3.3635,
+                        5.3291,
+                        3.5712,
+                        3.1653,
+                        3.5712
                       ]
                     }
                   ],
@@ -4104,21 +4129,19 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "14.67",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
-                        3.36,
-                        7.4971,
-                        3.36,
-                        7.4971,
-                        3.5726,
-                        5.3305,
-                        3.5726
+                      "polygon": [
+                        5.3291,
+                        3.3635,
+                        7.4929,
+                        3.3635,
+                        7.4929,
+                        3.5712,
+                        5.3291,
+                        3.5712
                       ]
                     }
                   ],
@@ -4132,21 +4155,19 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "C",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        3.5726,
-                        3.1638,
-                        3.5726,
-                        3.1638,
+                      "polygon": [
+                        0.9948,
+                        3.5712,
+                        3.1653,
+                        3.5712,
+                        3.1653,
                         3.7789,
-                        0.9971,
-                        3.7851
+                        0.9948,
+                        3.7789
                       ]
                     }
                   ],
@@ -4160,20 +4181,18 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "4",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        3.5726,
-                        5.3305,
-                        3.5726,
-                        5.3305,
+                      "polygon": [
+                        3.1653,
+                        3.5712,
+                        5.3291,
+                        3.5712,
+                        5.3291,
                         3.7789,
-                        3.1638,
+                        3.1653,
                         3.7789
                       ]
                     }
@@ -4188,20 +4207,18 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "15.66",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
-                        3.5726,
-                        7.4971,
-                        3.5726,
-                        7.4971,
+                      "polygon": [
+                        5.3291,
+                        3.5712,
+                        7.4929,
+                        3.5712,
+                        7.4929,
                         3.7789,
-                        5.3305,
+                        5.3291,
                         3.7789
                       ]
                     }
@@ -4216,21 +4233,19 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "D",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        3.7851,
-                        3.1638,
+                      "polygon": [
+                        0.9948,
                         3.7789,
-                        3.1638,
-                        3.9914,
-                        0.9971,
-                        3.9914
+                        3.1653,
+                        3.7789,
+                        3.1653,
+                        3.993,
+                        0.9948,
+                        3.993
                       ]
                     }
                   ],
@@ -4244,21 +4259,19 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "1",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
+                      "polygon": [
+                        3.1653,
                         3.7789,
-                        5.3305,
+                        5.3291,
                         3.7789,
-                        5.3305,
-                        3.9914,
-                        3.1638,
-                        3.9914
+                        5.3291,
+                        3.993,
+                        3.1653,
+                        3.993
                       ]
                     }
                   ],
@@ -4272,21 +4285,19 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "12.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
+                      "polygon": [
+                        5.3291,
                         3.7789,
-                        7.4971,
+                        7.4929,
                         3.7789,
-                        7.4971,
-                        3.9914,
-                        5.3305,
-                        3.9914
+                        7.4929,
+                        3.993,
+                        5.3291,
+                        3.993
                       ]
                     }
                   ],
@@ -4300,21 +4311,19 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "E",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        3.9914,
-                        3.1638,
-                        3.9914,
-                        3.1638,
-                        4.204,
-                        0.9971,
-                        4.204
+                      "polygon": [
+                        0.9948,
+                        3.993,
+                        3.1653,
+                        3.993,
+                        3.1653,
+                        4.2007,
+                        0.9948,
+                        4.2007
                       ]
                     }
                   ],
@@ -4328,21 +4337,19 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "4",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        3.9914,
-                        5.3305,
-                        3.9914,
-                        5.3305,
-                        4.204,
-                        3.1638,
-                        4.204
+                      "polygon": [
+                        3.1653,
+                        3.993,
+                        5.3291,
+                        3.993,
+                        5.3291,
+                        4.2007,
+                        3.1653,
+                        4.2007
                       ]
                     }
                   ],
@@ -4356,21 +4363,19 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "10.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
-                        3.9914,
-                        7.4971,
-                        3.9914,
-                        7.4971,
-                        4.204,
-                        5.3305,
-                        4.204
+                      "polygon": [
+                        5.3291,
+                        3.993,
+                        7.4929,
+                        3.993,
+                        7.4929,
+                        4.2007,
+                        5.3291,
+                        4.2007
                       ]
                     }
                   ],
@@ -4384,21 +4389,19 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "F",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9971,
-                        4.204,
-                        3.1638,
-                        4.204,
-                        3.1638,
-                        4.4103,
-                        0.9904,
-                        4.4165
+                      "polygon": [
+                        0.9948,
+                        4.2007,
+                        3.1653,
+                        4.2007,
+                        3.1653,
+                        4.4149,
+                        0.9948,
+                        4.4084
                       ]
                     }
                   ],
@@ -4412,21 +4415,19 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "6",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        4.204,
-                        5.3305,
-                        4.204,
-                        5.3305,
-                        4.4103,
-                        3.1638,
-                        4.4103
+                      "polygon": [
+                        3.1653,
+                        4.2007,
+                        5.3291,
+                        4.2007,
+                        5.3291,
+                        4.4084,
+                        3.1653,
+                        4.4149
                       ]
                     }
                   ],
@@ -4440,21 +4441,19 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "12.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
-                        4.204,
-                        7.4971,
-                        4.204,
-                        7.4971,
-                        4.4165,
-                        5.3305,
-                        4.4103
+                      "polygon": [
+                        5.3291,
+                        4.2007,
+                        7.4929,
+                        4.2007,
+                        7.4929,
+                        4.4084,
+                        5.3291,
+                        4.4084
                       ]
                     }
                   ],
@@ -4468,21 +4467,19 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "G",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.9904,
-                        4.4165,
-                        3.1638,
-                        4.4103,
-                        3.1638,
-                        4.6228,
-                        0.9904,
-                        4.6228
+                      "polygon": [
+                        0.9948,
+                        4.4084,
+                        3.1653,
+                        4.4149,
+                        3.1653,
+                        4.6226,
+                        0.9948,
+                        4.6226
                       ]
                     }
                   ],
@@ -4496,21 +4493,19 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "8",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.1638,
-                        4.4103,
-                        5.3305,
-                        4.4103,
-                        5.3305,
-                        4.6228,
-                        3.1638,
-                        4.6228
+                      "polygon": [
+                        3.1653,
+                        4.4149,
+                        5.3291,
+                        4.4084,
+                        5.3291,
+                        4.6226,
+                        3.1653,
+                        4.6226
                       ]
                     }
                   ],
@@ -4524,21 +4519,19 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "22.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        5.3305,
-                        4.4103,
-                        7.4971,
-                        4.4165,
-                        7.4971,
-                        4.6228,
-                        5.3305,
-                        4.6228
+                      "polygon": [
+                        5.3291,
+                        4.4084,
+                        7.4929,
+                        4.4084,
+                        7.4929,
+                        4.6226,
+                        5.3291,
+                        4.6226
                       ]
                     }
                   ],
@@ -4553,15 +4546,15 @@
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
-                    0.983,
-                    2.9323,
-                    7.5022,
-                    2.9324,
-                    7.5016,
-                    4.6275,
-                    0.9822,
-                    4.6276
+                  "polygon": [
+                    0.9827,
+                    2.9329,
+                    7.5009,
+                    2.9341,
+                    7.502,
+                    4.6285,
+                    0.9832,
+                    4.6275
                   ]
                 }
               ],
@@ -4580,27 +4573,25 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Item",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9977,
-                        2.9412,
-                        3.1599,
-                        2.9412,
-                        3.1599,
-                        3.1475,
-                        0.9977,
-                        3.1537
+                      "polygon": [
+                        0.988,
+                        2.9481,
+                        3.1653,
+                        2.9416,
+                        3.1653,
+                        3.1493,
+                        0.988,
+                        3.1493
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 462,
+                      "offset": 449,
                       "length": 4
                     }
                   ]
@@ -4609,27 +4600,25 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Quantity",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        2.9412,
-                        5.3287,
-                        2.9412,
-                        5.3287,
-                        3.1537,
-                        3.1599,
-                        3.1475
+                      "polygon": [
+                        3.1653,
+                        2.9416,
+                        5.3223,
+                        2.9416,
+                        5.3223,
+                        3.1493,
+                        3.1653,
+                        3.1493
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 467,
+                      "offset": 454,
                       "length": 8
                     }
                   ]
@@ -4638,27 +4627,25 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Price",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        2.9412,
-                        7.5042,
-                        2.9474,
-                        7.5042,
-                        3.1537,
-                        5.3287,
-                        3.1537
+                      "polygon": [
+                        5.3223,
+                        2.9416,
+                        7.4862,
+                        2.9416,
+                        7.4862,
+                        3.1493,
+                        5.3223,
+                        3.1493
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 476,
+                      "offset": 463,
                       "length": 5
                     }
                   ]
@@ -4666,27 +4653,25 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "A",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9977,
-                        3.1537,
-                        3.1599,
-                        3.1475,
-                        3.1599,
-                        3.36,
-                        0.9911,
-                        3.36
+                      "polygon": [
+                        0.988,
+                        3.1493,
+                        3.1653,
+                        3.1493,
+                        3.1653,
+                        3.3635,
+                        0.9948,
+                        3.3635
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 482,
+                      "offset": 469,
                       "length": 1
                     }
                   ]
@@ -4694,27 +4679,25 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "10",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        3.1475,
-                        5.3287,
-                        3.1537,
-                        5.3287,
-                        3.36,
-                        3.1599,
-                        3.36
+                      "polygon": [
+                        3.1653,
+                        3.1493,
+                        5.3223,
+                        3.1493,
+                        5.3291,
+                        3.3635,
+                        3.1653,
+                        3.3635
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 484,
+                      "offset": 471,
                       "length": 2
                     }
                   ]
@@ -4722,27 +4705,25 @@
                 {
                   "rowIndex": 1,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "100.99",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        3.1537,
-                        7.5042,
-                        3.1537,
-                        7.4975,
-                        3.36,
-                        5.3287,
-                        3.36
+                      "polygon": [
+                        5.3223,
+                        3.1493,
+                        7.4862,
+                        3.1493,
+                        7.4929,
+                        3.3635,
+                        5.3291,
+                        3.3635
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 487,
+                      "offset": 474,
                       "length": 6
                     }
                   ]
@@ -4750,27 +4731,25 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "B",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
-                        3.36,
-                        3.1599,
-                        3.36,
-                        3.1599,
-                        3.5726,
-                        0.9911,
-                        3.5726
+                      "polygon": [
+                        0.9948,
+                        3.3635,
+                        3.1653,
+                        3.3635,
+                        3.1653,
+                        3.5712,
+                        0.9948,
+                        3.5712
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 494,
+                      "offset": 481,
                       "length": 1
                     }
                   ]
@@ -4778,27 +4757,25 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "20",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        3.36,
-                        5.3287,
-                        3.36,
-                        5.3287,
-                        3.5726,
-                        3.1599,
-                        3.5726
+                      "polygon": [
+                        3.1653,
+                        3.3635,
+                        5.3291,
+                        3.3635,
+                        5.3291,
+                        3.5712,
+                        3.1653,
+                        3.5712
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 496,
+                      "offset": 483,
                       "length": 2
                     }
                   ]
@@ -4806,27 +4783,25 @@
                 {
                   "rowIndex": 2,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "140.67",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        3.36,
-                        7.4975,
-                        3.36,
-                        7.4975,
-                        3.5726,
-                        5.3287,
-                        3.5726
+                      "polygon": [
+                        5.3291,
+                        3.3635,
+                        7.4929,
+                        3.3635,
+                        7.4929,
+                        3.5712,
+                        5.3291,
+                        3.5712
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 499,
+                      "offset": 486,
                       "length": 6
                     }
                   ]
@@ -4834,27 +4809,25 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "C",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
-                        3.5726,
-                        3.1599,
-                        3.5726,
-                        3.1599,
+                      "polygon": [
+                        0.9948,
+                        3.5712,
+                        3.1653,
+                        3.5712,
+                        3.1653,
                         3.7789,
-                        0.9911,
+                        0.9948,
                         3.7789
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 506,
+                      "offset": 493,
                       "length": 1
                     }
                   ]
@@ -4862,27 +4835,25 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "40",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        3.5726,
-                        5.3287,
-                        3.5726,
-                        5.3287,
+                      "polygon": [
+                        3.1653,
+                        3.5712,
+                        5.3291,
+                        3.5712,
+                        5.3291,
                         3.7789,
-                        3.1599,
+                        3.1653,
                         3.7789
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 508,
+                      "offset": 495,
                       "length": 2
                     }
                   ]
@@ -4890,27 +4861,25 @@
                 {
                   "rowIndex": 3,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "150.66",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        3.5726,
-                        7.4975,
-                        3.5726,
-                        7.4975,
+                      "polygon": [
+                        5.3291,
+                        3.5712,
+                        7.4929,
+                        3.5712,
+                        7.4929,
                         3.7789,
-                        5.3287,
+                        5.3291,
                         3.7789
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 511,
+                      "offset": 498,
                       "length": 6
                     }
                   ]
@@ -4918,27 +4887,25 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "D",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
+                      "polygon": [
+                        0.9948,
                         3.7789,
-                        3.1599,
+                        3.1653,
                         3.7789,
-                        3.1599,
-                        3.9914,
-                        0.9911,
-                        3.9914
+                        3.1653,
+                        3.993,
+                        0.9948,
+                        3.993
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 518,
+                      "offset": 505,
                       "length": 1
                     }
                   ]
@@ -4946,27 +4913,25 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "10",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
+                      "polygon": [
+                        3.1653,
                         3.7789,
-                        5.3287,
+                        5.3291,
                         3.7789,
-                        5.3287,
-                        3.9914,
-                        3.1599,
-                        3.9914
+                        5.3291,
+                        3.993,
+                        3.1653,
+                        3.993
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 520,
+                      "offset": 507,
                       "length": 2
                     }
                   ]
@@ -4974,27 +4939,25 @@
                 {
                   "rowIndex": 4,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "120.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
+                      "polygon": [
+                        5.3291,
                         3.7789,
-                        7.4975,
+                        7.4929,
                         3.7789,
-                        7.4975,
-                        3.9914,
-                        5.3287,
-                        3.9914
+                        7.4929,
+                        3.993,
+                        5.3291,
+                        3.993
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 523,
+                      "offset": 510,
                       "length": 6
                     }
                   ]
@@ -5002,27 +4965,25 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "E",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
-                        3.9914,
-                        3.1599,
-                        3.9914,
-                        3.1599,
-                        4.204,
-                        0.9911,
-                        4.204
+                      "polygon": [
+                        0.9948,
+                        3.993,
+                        3.1653,
+                        3.993,
+                        3.1653,
+                        4.2007,
+                        0.9948,
+                        4.2007
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 530,
+                      "offset": 517,
                       "length": 1
                     }
                   ]
@@ -5030,27 +4991,25 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "40",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        3.9914,
-                        5.3287,
-                        3.9914,
-                        5.3287,
-                        4.204,
-                        3.1599,
-                        4.204
+                      "polygon": [
+                        3.1653,
+                        3.993,
+                        5.3291,
+                        3.993,
+                        5.3291,
+                        4.2007,
+                        3.1653,
+                        4.2007
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 532,
+                      "offset": 519,
                       "length": 2
                     }
                   ]
@@ -5058,27 +5017,25 @@
                 {
                   "rowIndex": 5,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "100.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        3.9914,
-                        7.4975,
-                        3.9914,
-                        7.4975,
-                        4.204,
-                        5.3287,
-                        4.204
+                      "polygon": [
+                        5.3291,
+                        3.993,
+                        7.4929,
+                        3.993,
+                        7.4929,
+                        4.2007,
+                        5.3291,
+                        4.2007
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 535,
+                      "offset": 522,
                       "length": 6
                     }
                   ]
@@ -5086,27 +5043,25 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "F",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
-                        4.204,
-                        3.1599,
-                        4.204,
-                        3.1599,
-                        4.4103,
-                        0.9911,
-                        4.4103
+                      "polygon": [
+                        0.9948,
+                        4.2007,
+                        3.1653,
+                        4.2007,
+                        3.1653,
+                        4.4149,
+                        0.9948,
+                        4.4084
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 542,
+                      "offset": 529,
                       "length": 1
                     }
                   ]
@@ -5114,27 +5069,25 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "60",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        4.204,
-                        5.3287,
-                        4.204,
-                        5.3287,
-                        4.4103,
-                        3.1599,
-                        4.4103
+                      "polygon": [
+                        3.1653,
+                        4.2007,
+                        5.3291,
+                        4.2007,
+                        5.3291,
+                        4.4084,
+                        3.1653,
+                        4.4149
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 544,
+                      "offset": 531,
                       "length": 2
                     }
                   ]
@@ -5142,27 +5095,25 @@
                 {
                   "rowIndex": 6,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "120.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        4.204,
-                        7.4975,
-                        4.204,
-                        7.4975,
-                        4.4165,
-                        5.3287,
-                        4.4103
+                      "polygon": [
+                        5.3291,
+                        4.2007,
+                        7.4929,
+                        4.2007,
+                        7.4929,
+                        4.4084,
+                        5.3291,
+                        4.4084
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 547,
+                      "offset": 534,
                       "length": 6
                     }
                   ]
@@ -5170,27 +5121,25 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "G",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        0.9911,
-                        4.4103,
-                        3.1599,
-                        4.4103,
-                        3.1599,
-                        4.6228,
-                        0.9911,
-                        4.6228
+                      "polygon": [
+                        0.9948,
+                        4.4084,
+                        3.1653,
+                        4.4149,
+                        3.1653,
+                        4.6226,
+                        0.9948,
+                        4.6226
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 554,
+                      "offset": 541,
                       "length": 1
                     }
                   ]
@@ -5198,27 +5147,25 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "80",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        3.1599,
-                        4.4103,
-                        5.3287,
-                        4.4103,
-                        5.3287,
-                        4.6228,
-                        3.1599,
-                        4.6228
+                      "polygon": [
+                        3.1653,
+                        4.4149,
+                        5.3291,
+                        4.4084,
+                        5.3291,
+                        4.6226,
+                        3.1653,
+                        4.6226
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 556,
+                      "offset": 543,
                       "length": 2
                     }
                   ]
@@ -5226,27 +5173,25 @@
                 {
                   "rowIndex": 7,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "220.00",
                   "boundingRegions": [
                     {
                       "pageNumber": 3,
-                      "boundingBox": [
-                        5.3287,
-                        4.4103,
-                        7.4975,
-                        4.4165,
-                        7.4975,
-                        4.6228,
-                        5.3287,
-                        4.6228
+                      "polygon": [
+                        5.3291,
+                        4.4084,
+                        7.4929,
+                        4.4084,
+                        7.4929,
+                        4.6226,
+                        5.3291,
+                        4.6226
                       ]
                     }
                   ],
                   "spans": [
                     {
-                      "offset": 559,
+                      "offset": 546,
                       "length": 6
                     }
                   ]
@@ -5255,33 +5200,34 @@
               "boundingRegions": [
                 {
                   "pageNumber": 3,
-                  "boundingBox": [
-                    0.9942,
-                    2.9332,
-                    7.5018,
-                    2.9333,
-                    7.5015,
-                    4.6271,
-                    0.9938,
-                    4.6273
+                  "polygon": [
+                    0.9825,
+                    2.9329,
+                    7.5009,
+                    2.9339,
+                    7.5021,
+                    4.6286,
+                    0.9831,
+                    4.6277
                   ]
                 }
               ],
               "spans": [
                 {
-                  "offset": 462,
+                  "offset": 449,
                   "length": 103
                 }
               ]
             }
           ],
+          "styles": [],
           "documents": [
             {
-              "docType": "1464944107:1464944107",
+              "docType": "1584874394:1584874394",
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     8.5,
@@ -5294,7 +5240,7 @@
                 },
                 {
                   "pageNumber": 2,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     8.5,
@@ -5307,7 +5253,7 @@
                 },
                 {
                   "pageNumber": 3,
-                  "boundingBox": [
+                  "polygon": [
                     0,
                     0,
                     8.5,
@@ -5320,150 +5266,26 @@
                 }
               ],
               "fields": {
-                "Signature": {
-                  "type": "string",
-                  "valueString": "Signature:",
-                  "content": "Signature:",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        1.0050000000000001,
-                        6.66,
-                        1.7,
-                        6.66,
-                        1.7,
-                        6.8,
-                        1.0050000000000001,
-                        6.8
-                      ]
-                    }
-                  ],
-                  "confidence": 0.064,
-                  "spans": [
-                    {
-                      "offset": 277,
-                      "length": 10
-                    }
-                  ]
-                },
-                "Tax": {
-                  "type": "string",
-                  "confidence": 0.936
-                },
-                "CompanyName": {
-                  "type": "string",
-                  "valueString": "Bilbo Baggins",
-                  "content": "Bilbo Baggins",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        2.05,
-                        6.655,
-                        3.04,
-                        6.655,
-                        3.04,
-                        6.8,
-                        2.05,
-                        6.8
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 288,
-                      "length": 27
-                    }
-                  ]
-                },
-                "Email": {
-                  "type": "string",
-                  "confidence": 0.398
-                },
                 "VendorName": {
-                  "type": "string",
-                  "valueString": "D",
-                  "content": "D",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        1.095,
-                        3.845,
-                        1.175,
-                        3.845,
-                        1.175,
-                        3.95,
-                        1.095,
-                        3.95
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 183,
-                      "length": 1
-                    }
-                  ]
-                },
-                "Total": {
-                  "type": "string",
-                  "confidence": 0.936
-                },
-                "Subtotal": {
-                  "type": "string",
-                  "confidence": 0.561
-                },
-                "CompanyPhoneNumber": {
-                  "type": "string",
-                  "valueString": "220.00",
-                  "content": "220.00",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 3,
-                      "boundingBox": [
-                        5.42,
-                        4.4750000000000005,
-                        5.865,
-                        4.4750000000000005,
-                        5.865,
-                        4.585,
-                        5.42,
-                        4.585
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 559,
-                      "length": 6
-                    }
-                  ]
-                },
-                "Merchant": {
                   "type": "string",
                   "valueString": "Invoice For:",
                   "content": "Invoice For:",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        6.0200000000000005,
+                      "polygon": [
+                        6.02,
                         1.065,
                         7.035,
                         1.065,
                         7.035,
                         1.21,
-                        6.0200000000000005,
+                        6.02,
                         1.21
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.986,
                   "spans": [
                     {
                       "offset": 18,
@@ -5471,72 +5293,18 @@
                     }
                   ]
                 },
-                "PurchaseOrderNumber": {
+                "Signature": {
                   "type": "string",
-                  "valueString": "555-555-5555",
-                  "content": "555-555-5555",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        6.01,
-                        2.12,
-                        6.9350000000000005,
-                        2.12,
-                        6.9350000000000005,
-                        2.225,
-                        6.01,
-                        2.225
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 120,
-                      "length": 12
-                    }
-                  ]
-                },
-                "PhoneNumber": {
-                  "type": "string",
-                  "valueString": "555-555-5555",
-                  "content": "555-555-5555",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        0.885,
-                        2.29,
-                        1.81,
-                        2.29,
-                        1.81,
-                        2.395,
-                        0.885,
-                        2.395
-                      ]
-                    }
-                  ],
-                  "confidence": 0.95,
-                  "spans": [
-                    {
-                      "offset": 65,
-                      "length": 12
-                    }
-                  ]
-                },
-                "Website": {
-                  "type": "string",
-                  "confidence": 0.58
+                  "confidence": 0.925
                 },
                 "CompanyAddress": {
                   "type": "string",
                   "valueString": "F G",
-                  "content": "F G",
+                  "content": "F\nG",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
+                      "polygon": [
                         1.09,
                         4.265,
                         1.175,
@@ -5548,7 +5316,7 @@
                       ]
                     }
                   ],
-                  "confidence": 0.117,
+                  "confidence": 0.159,
                   "spans": [
                     {
                       "offset": 203,
@@ -5560,9 +5328,9 @@
                     }
                   ]
                 },
-                "Quantity": {
-                  "type": "number",
-                  "confidence": 0.389
+                "Merchant": {
+                  "type": "string",
+                  "confidence": 0.551
                 },
                 "DatedAs": {
                   "type": "string",
@@ -5570,24 +5338,136 @@
                   "content": "555-555-5555",
                   "boundingRegions": [
                     {
-                      "pageNumber": 3,
-                      "boundingBox": [
+                      "pageNumber": 1,
+                      "polygon": [
                         6.01,
                         2.12,
-                        6.9350000000000005,
+                        6.935,
                         2.12,
-                        6.9350000000000005,
+                        6.935,
                         2.225,
                         6.01,
                         2.225
                       ]
                     }
                   ],
-                  "confidence": 0.95,
+                  "confidence": 0.988,
                   "spans": [
                     {
-                      "offset": 449,
+                      "offset": 120,
                       "length": 12
+                    }
+                  ]
+                },
+                "CompanyName": {
+                  "type": "string",
+                  "confidence": 0.563
+                },
+                "Email": {
+                  "type": "string",
+                  "valueString": "Redmond, WA",
+                  "content": "Redmond, WA",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        0.89,
+                        2.06,
+                        1.855,
+                        2.06,
+                        1.855,
+                        2.2,
+                        0.89,
+                        2.2
+                      ]
+                    }
+                  ],
+                  "confidence": 0.129,
+                  "spans": [
+                    {
+                      "offset": 53,
+                      "length": 11
+                    }
+                  ]
+                },
+                "Subtotal": {
+                  "type": "string",
+                  "confidence": 0.925
+                },
+                "PhoneNumber": {
+                  "type": "string",
+                  "confidence": 0.632
+                },
+                "PurchaseOrderNumber": {
+                  "type": "string",
+                  "valueString": "100.99",
+                  "content": "00.99\n",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 3,
+                      "polygon": [
+                        5.425,
+                        3.21,
+                        5.86,
+                        3.21,
+                        5.86,
+                        3.32,
+                        5.425,
+                        3.32
+                      ]
+                    }
+                  ],
+                  "confidence": 0.988,
+                  "spans": [
+                    {
+                      "offset": 475,
+                      "length": 6
+                    }
+                  ]
+                },
+                "FullSignature": {
+                  "type": "signature"
+                },
+                "Website": {
+                  "type": "string",
+                  "confidence": 0.591
+                },
+                "Quantity": {
+                  "type": "number",
+                  "confidence": 0.636
+                },
+                "Total": {
+                  "type": "string",
+                  "confidence": 0.925
+                },
+                "Tax": {
+                  "type": "string",
+                  "confidence": 0.925
+                },
+                "CompanyPhoneNumber": {
+                  "type": "string",
+                  "valueString": "30.00",
+                  "content": "30.00",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        5.835,
+                        5.125,
+                        6.2,
+                        5.125,
+                        6.2,
+                        5.235,
+                        5.835,
+                        5.235
+                      ]
+                    }
+                  ],
+                  "confidence": 0.99,
+                  "spans": [
+                    {
+                      "offset": 245,
+                      "length": 5
                     }
                   ]
                 }
@@ -5596,7 +5476,7 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 662
+                  "length": 650
                 }
               ]
             }
@@ -5605,33 +5485,33 @@
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/documentModels/1464944107?api-version=2021-09-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/1584874394?api-version=2022-06-30-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1caccb68526a644ead35755bf4fcf356-15f47e425eb6224d-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "e615f8cf62c7ed05b19e19e16b05694f",
+        "traceparent": "00-33529b4fed05ee65ca0ebee7377132fd-cc2d56271c055e4c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b6d2fe4f5cdc01556b4d23f48cdbabef",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "41903dd3-52bc-424d-a39a-fe485a8c0fbb",
+        "apim-request-id": "fbf8a5a2-489f-47b9-bd2b-891f7da1cef2",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 15:40:22 GMT",
+        "Date": "Wed, 25 May 2022 22:31:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "176"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "63"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
-    "RandomSeed": "2127746887"
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "122364819"
   }
 }

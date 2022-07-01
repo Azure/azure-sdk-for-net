@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The CloudServiceVaultAndSecretReference. </summary>
+    /// <summary> Protected settings for the extension, referenced using KeyVault which are encrypted before sent to the role instance. </summary>
     public partial class CloudServiceVaultAndSecretReference
     {
         /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
@@ -19,15 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
-        /// <param name="sourceVault"></param>
-        /// <param name="secretUrl"></param>
-        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, string secretUrl)
+        /// <param name="sourceVault"> The ARM Resource ID of the Key Vault. </param>
+        /// <param name="secretUri"> Secret URL which contains the protected settings of the extension. </param>
+        internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri)
         {
             SourceVault = sourceVault;
-            SecretUrl = secretUrl;
+            SecretUri = secretUri;
         }
 
-        /// <summary> Gets or sets the source vault. </summary>
+        /// <summary> The ARM Resource ID of the Key Vault. </summary>
         internal WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SourceVaultId
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Gets or sets the secret url. </summary>
-        public string SecretUrl { get; set; }
+        /// <summary> Secret URL which contains the protected settings of the extension. </summary>
+        public Uri SecretUri { get; set; }
     }
 }

@@ -49,9 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            SqlDatabaseResource database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
-            if (database != null)
+            if (await SqlDatabaseContainer.ExistsAsync(_databaseName))
             {
+                var id = SqlDatabaseContainer.Id;
+                id = SqlDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                SqlDatabaseResource database = this.ArmClient.GetSqlDatabaseResource(id);
                 await database.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyDatabases(database, database2);
 
-            SqlDatabaseCreateUpdateData updateOptions = new SqlDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.ResourceType, null,
+            var updateOptions = new SqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
@@ -151,8 +153,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateSqlDatabase(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await SqlDatabaseContainer.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<SqlDatabaseResource> CreateSqlDatabase(AutoscaleSettings autoscale)
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<SqlDatabaseResource> CreateSqlDatabase(string name, AutoscaleSettings autoscale, SqlDatabaseCollection collection)
         {
-            SqlDatabaseCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlDatabaseCreateUpdateData(AzureLocation.WestUS,
+            var sqlDatabaseCreateUpdateOptions = new SqlDatabaseCreateOrUpdateContent(AzureLocation.WestUS,
                 new Models.SqlDatabaseResource(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
@@ -179,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
             Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
             Assert.AreEqual(expectedValue.Data.Resource.Colls, actualValue.Data.Resource.Colls);
             Assert.AreEqual(expectedValue.Data.Resource.Users, actualValue.Data.Resource.Users);
         }

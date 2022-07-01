@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                     scope = "workspaces/" + testEnvironment.WorkspaceName
                 };
 
-                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, RequestContent.Create(roleAssignmentDetails));
+                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
             }
 
             public async ValueTask DisposeAsync()
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            // TODO: This will change to pageable with next LLC Generator update
+            // TODO: This will change to pageable with next (Data Plane) client generator update
             Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(new());
             var listContent = listReponse.Content;
             using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 }
             };
 
-            var response = await assignmentsClient.CheckPrincipalAccessAsync(RequestContent.Create(accessRequest));
+            var response = await assignmentsClient.CheckPrincipalAccessAsync(RequestContent.Create(accessRequest), ContentType.ApplicationJson);
 
             // Assert
             var content = response.Content;

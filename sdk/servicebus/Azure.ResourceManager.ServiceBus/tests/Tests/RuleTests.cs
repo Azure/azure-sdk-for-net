@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public RuleTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteRule()
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //update rule with sql filter and action
             ServiceBusRuleData updateParameters = new ServiceBusRuleData()
             {
-                Action = new SqlRuleAction()
+                Action = new FilterAction()
                 {
                     RequiresPreprocessing = true,
                     SqlExpression = "SET " + strSqlExp,

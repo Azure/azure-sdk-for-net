@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
-            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id.ToString();
-            string backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName2)).Value.Data.Id.ToString();
+            ResourceIdentifier primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id;
+            ResourceIdentifier backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName2)).Value.Data.Id;
 
             // create ServerTrustGroup
             ServerTrustGroupData data = new ServerTrustGroupData()

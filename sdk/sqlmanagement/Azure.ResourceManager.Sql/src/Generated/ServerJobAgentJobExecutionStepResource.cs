@@ -16,11 +16,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerJobAgentJobExecutionStepResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerJobAgentJobExecutionStep along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerJobAgentJobExecutionStepResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerJobAgentJobExecutionStepResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerJobAgentJobExecutionResource" /> using the GetServerJobAgentJobExecutionStep method.
+    /// </summary>
     public partial class ServerJobAgentJobExecutionStepResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobExecutionStepResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobExecutionId, string stepName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}";
             return new ResourceIdentifier(resourceId);
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerJobAgentJobExecutionStepTargetResource>> GetServerJobAgentJobExecutionStepTargetAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
             return await GetServerJobAgentJobExecutionStepTargets().GetAsync(targetId, cancellationToken).ConfigureAwait(false);
@@ -107,6 +113,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetId"> The target id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ServerJobAgentJobExecutionStepTargetResource> GetServerJobAgentJobExecutionStepTarget(Guid targetId, CancellationToken cancellationToken = default)
         {
             return GetServerJobAgentJobExecutionStepTargets().Get(targetId, cancellationToken);

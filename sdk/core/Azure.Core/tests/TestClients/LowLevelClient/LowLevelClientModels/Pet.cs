@@ -18,7 +18,6 @@ namespace Azure.Core.Experimental.Tests.Models
         }
 
         /// <summary> Initializes a new instance of Pet. </summary>
-        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="species"></param>
         internal Pet(string name, string species)
@@ -33,7 +32,7 @@ namespace Azure.Core.Experimental.Tests.Models
         // Cast from Response to Pet
         public static implicit operator Pet(Response response)
         {
-            // [X] TODO: Add in HLC error semantics
+            // [X] TODO: Add in (Gen 1) convenience client error semantics
             // [X] TODO: Use response.IsError
             // [X] TODO: Use throw new ResponseFailedException(response);
 

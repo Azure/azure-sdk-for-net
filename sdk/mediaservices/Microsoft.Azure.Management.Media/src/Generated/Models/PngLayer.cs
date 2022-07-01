@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Describes the settings to produce a PNG image from the input video.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.PngLayer")]
     public partial class PngLayer : Layer
     {
         /// <summary>

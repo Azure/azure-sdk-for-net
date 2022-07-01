@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;
             string location = "westus2";
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+            StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
             //now we can create a storage account with defined account name and parameters
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
@@ -70,23 +70,6 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             StorageAccountResource storageAccount = await accountCollection.GetAsync("myAccount");
             Console.WriteLine(storageAccount.Id.Name);
-            #endregion
-        }
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
-            StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccountResource storageAccount = await accountCollection.GetIfExistsAsync("foo");
-            if (storageAccount != null)
-            {
-                Console.WriteLine(storageAccount.Id.Name);
-            }
-            if (await accountCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("storage account 'bar' exists");
-            }
             #endregion
         }
         [Test]

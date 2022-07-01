@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// Operation Id: ListProductFamilies
         /// </summary>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ProductFamily>> FirstPageFunc(int? pageSizeHint)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListProductFamiliesAsync(Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListProductFamiliesAsync(Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListProductFamiliesNextPageAsync(nextLink, Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListProductFamiliesNextPageAsync(nextLink, Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listProductFamilies
         /// Operation Id: ListProductFamilies
         /// </summary>
-        /// <param name="productFamiliesRequest"> Filters for showing the product families. </param>
+        /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesRequest productFamiliesRequest, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Page<ProductFamily> FirstPageFunc(int? pageSizeHint)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListProductFamilies(Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListProductFamilies(Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListProductFamiliesNextPage(nextLink, Id.SubscriptionId, productFamiliesRequest, expand, skipToken, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListProductFamiliesNextPage(nextLink, Id.SubscriptionId, content, expand, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// Operation Id: ListConfigurations
         /// </summary>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ProductConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListConfigurationsAsync(Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListConfigurationsAsync(Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListConfigurationsNextPageAsync(nextLink, Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/listConfigurations
         /// Operation Id: ListConfigurations
         /// </summary>
-        /// <param name="configurationsRequest"> Filters for showing the configurations. </param>
+        /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsRequest configurationsRequest, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Page<ProductConfiguration> FirstPageFunc(int? pageSizeHint)
             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListConfigurations(Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListConfigurations(Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, configurationsRequest, skipToken, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListConfigurationsNextPage(nextLink, Id.SubscriptionId, content, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

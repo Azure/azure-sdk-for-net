@@ -19,11 +19,10 @@ namespace Azure.Identity.Tests.samples
         {
             #region Snippet:TokenCredentialCreateUsage
             AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
-#if SNIPPET
-            var credential = TokenCredential.Create((_, _) => token);
+
+            var credential = DelegatedTokenCredential.Create((_, _) => token);
 
             var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
-#endif
             #endregion
         }
 

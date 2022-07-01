@@ -729,6 +729,46 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Transfer out domain to another registrar
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of domain.
+            /// </param>
+            public static Domain TransferOut(this IDomainsOperations operations, string resourceGroupName, string domainName)
+            {
+                return operations.TransferOutAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Transfer out domain to another registrar
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='domainName'>
+            /// Name of domain.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Domain> TransferOutAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TransferOutWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>

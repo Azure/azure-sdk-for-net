@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
@@ -25,6 +26,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_10_02)]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task UploadRangeFromUriAsync_SourceBearerToken()
         {
             // Arrange

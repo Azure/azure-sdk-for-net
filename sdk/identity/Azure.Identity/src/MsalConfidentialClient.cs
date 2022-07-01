@@ -105,6 +105,17 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
+            var result = await AcquireTokenForClientCoreAsync(scopes, tenantId, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForClientCoreAsync(
+            string[] scopes,
+            string tenantId,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client
@@ -121,6 +132,19 @@ namespace Azure.Identity
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(
+            string[] scopes,
+            AuthenticationAccount account,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var result = await AcquireTokenSilentCoreAsync(scopes, account, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
             string[] scopes,
             AuthenticationAccount account,
             string tenantId,
@@ -148,6 +172,19 @@ namespace Azure.Identity
             bool async,
             CancellationToken cancellationToken)
         {
+            var result = await AcquireTokenByAuthorizationCodeCoreAsync(scopes, code, tenantId, redirectUri, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenByAuthorizationCodeCoreAsync(
+            string[] scopes,
+            string code,
+            string tenantId,
+            string redirectUri,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenByAuthorizationCode(scopes, code);
@@ -161,7 +198,19 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
         }
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOf(
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOfAsync(
+            string[] scopes,
+            string tenantId,
+            UserAssertion userAssertionValue,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            var result = await AcquireTokenOnBehalfOfCoreAsync(scopes, tenantId, userAssertionValue, async, cancellationToken).ConfigureAwait(false);
+            LogAccountDetails(result);
+            return result;
+        }
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenOnBehalfOfCoreAsync(
             string[] scopes,
             string tenantId,
             UserAssertion userAssertionValue,
@@ -170,7 +219,9 @@ namespace Azure.Identity
         {
             IConfidentialClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
-            var builder = client.AcquireTokenOnBehalfOf(scopes, userAssertionValue);
+            var builder = client
+                .AcquireTokenOnBehalfOf(scopes, userAssertionValue)
+                .WithSendX5C(_includeX5CClaimHeader);
 
             if (!string.IsNullOrEmpty(tenantId))
             {

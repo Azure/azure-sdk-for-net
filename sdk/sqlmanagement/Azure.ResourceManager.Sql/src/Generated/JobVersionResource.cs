@@ -16,11 +16,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a JobVersionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a JobVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JobVersionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetJobVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlJobResource" /> using the GetJobVersion method.
+    /// </summary>
     public partial class JobVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JobVersionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobVersion)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}";
             return new ResourceIdentifier(resourceId);
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerJobAgentJobVersionStepResource>> GetServerJobAgentJobVersionStepAsync(string stepName, CancellationToken cancellationToken = default)
         {
             return await GetServerJobAgentJobVersionSteps().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServerJobAgentJobVersionStepResource> GetServerJobAgentJobVersionStep(string stepName, CancellationToken cancellationToken = default)
         {
             return GetServerJobAgentJobVersionSteps().Get(stepName, cancellationToken);

@@ -9,5 +9,8 @@
     "initScript": {
       "path": "pwsh ./eng/scripts/Automation-Sdk-Init.ps1"
     }
+  },
+  "packageOptions": {
+    "packageFolderFromFileSearch": false
   }
 }

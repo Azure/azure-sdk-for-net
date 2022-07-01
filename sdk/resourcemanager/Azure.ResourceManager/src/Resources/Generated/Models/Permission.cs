@@ -16,32 +16,32 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Permission. </summary>
         internal Permission()
         {
-            Actions = new ChangeTrackingList<string>();
-            NotActions = new ChangeTrackingList<string>();
-            DataActions = new ChangeTrackingList<string>();
-            NotDataActions = new ChangeTrackingList<string>();
+            AllowedActions = new ChangeTrackingList<string>();
+            DeniedActions = new ChangeTrackingList<string>();
+            AllowedDataActions = new ChangeTrackingList<string>();
+            DeniedDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Permission. </summary>
-        /// <param name="actions"> Allowed actions. </param>
-        /// <param name="notActions"> Denied actions. </param>
-        /// <param name="dataActions"> Allowed Data actions. </param>
-        /// <param name="notDataActions"> Denied Data actions. </param>
-        internal Permission(IReadOnlyList<string> actions, IReadOnlyList<string> notActions, IReadOnlyList<string> dataActions, IReadOnlyList<string> notDataActions)
+        /// <param name="allowedActions"> Allowed actions. </param>
+        /// <param name="deniedActions"> Denied actions. </param>
+        /// <param name="allowedDataActions"> Allowed Data actions. </param>
+        /// <param name="deniedDataActions"> Denied Data actions. </param>
+        internal Permission(IReadOnlyList<string> allowedActions, IReadOnlyList<string> deniedActions, IReadOnlyList<string> allowedDataActions, IReadOnlyList<string> deniedDataActions)
         {
-            Actions = actions;
-            NotActions = notActions;
-            DataActions = dataActions;
-            NotDataActions = notDataActions;
+            AllowedActions = allowedActions;
+            DeniedActions = deniedActions;
+            AllowedDataActions = allowedDataActions;
+            DeniedDataActions = deniedDataActions;
         }
 
         /// <summary> Allowed actions. </summary>
-        public IReadOnlyList<string> Actions { get; }
+        public IReadOnlyList<string> AllowedActions { get; }
         /// <summary> Denied actions. </summary>
-        public IReadOnlyList<string> NotActions { get; }
+        public IReadOnlyList<string> DeniedActions { get; }
         /// <summary> Allowed Data actions. </summary>
-        public IReadOnlyList<string> DataActions { get; }
+        public IReadOnlyList<string> AllowedDataActions { get; }
         /// <summary> Denied Data actions. </summary>
-        public IReadOnlyList<string> NotDataActions { get; }
+        public IReadOnlyList<string> DeniedDataActions { get; }
     }
 }

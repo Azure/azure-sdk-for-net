@@ -1,5 +1,25 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 24.0.0
+- Upgrade to rest api version 2021-09-01.
+- Support create/update Storage account with new property dnsEndpointType.
+- Support Storage account new access tier Premium.
+- Support Storage account new readonly property storageAccountSkuConversionStatus.
+- Support Storage account new readonly property Encryption.KeyVaultProperties.CurrentVersionedKeyExpirationTimestamp.
+- Support ManagementPolicy action condition daysAfterCreationGreaterThan on base blob.
+- Support ManagementPolicy action condition daysAfterLastTierChangeTimeGreaterThan, only apply to tierToArchive action.
+- Support Blob service new property DeleteRetentionPolicy.AllowPermanentDelete.
+- Support CORS rule AllowedMethods Patch. 
+- Support table new property SignedIdentifiers.
+- Support output BlobInventoryPolicySchema property Destination which can be input from old API version.
+- Support blob inventory new filter IncludeDeleted, ExcludePrefix.
+- Support blob inventory new blob SchemaFields: Tags, Etag, ContentType, ContentEncoding, ContentLanguage, ContentCRC64, CacheControl, ContentDisposition, LeaseStatus, LeaseState, LeaseDuration, ServerEncrypted, Deleted, DeletionId, DeletedTime, RemainingRetentionDays, ImmutabilityPolicyUntilDate, ImmutabilityPolicyMode, LegalHold, CopyId, CopyStatus, CopySource, CopyProgress, CopyCompletionTime, CopyStatusDescription, CustomerProvidedKeySha256, RehydratePriority, ArchiveStatus, XmsBlobSequenceNumber, EncryptionScope, IncrementalCopy, TagCount.
+- Support blob inventory new container SchemaFields: Etag, DefaultEncryptionScope, DenyEncryptionScopeOverride, ImmutableStorageWithVersioningEnabled, Deleted, Version, DeletedTime, RemainingRetentionDays.
+
+**Breaking changes**
+
+- StorageManagementClient.LocalUsers.List() output type change from LocalUsers to IEnumerable<LocalUser>.
+
 ### Changes in 23.1.0
 - Upgrade to rest api version 2021-08-01.
 - Support create/update Storage account with enable/disable Sftp and Localuser.

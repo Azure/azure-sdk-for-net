@@ -49,16 +49,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         public static DataLakeServiceClient GetServiceClient_Hns(this DataLakeClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigHierarchicalNamespace);
 
+        public static DataLakeServiceClient GetServiceClient_NonHns(this DataLakeClientBuilder clientBuilder) =>
+            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault);
+
         public static async Task<DisposingFileSystem> GetNewFileSystem(
             this DataLakeClientBuilder clientBuilder,
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
+            bool premium = default,
+            bool hnsEnabled = true)
         {
             fileSystemName ??= clientBuilder.GetNewFileSystemName();
-            service ??= clientBuilder.GetServiceClient_Hns();
+            service ??= hnsEnabled ? clientBuilder.GetServiceClient_Hns() : clientBuilder.GetServiceClient_NonHns();
 
             if (publicAccessType == default)
             {

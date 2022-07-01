@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasUrl))
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl");
-                writer.WriteStringValue(SasUrl);
+                writer.WriteStringValue(SasUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -35,14 +36,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AzureBlobStorageHttpLogsConfig DeserializeAzureBlobStorageHttpLogsConfig(JsonElement element)
         {
-            Optional<string> sasUrl = default;
+            Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"))
                 {
-                    sasUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sasUrl = null;
+                        continue;
+                    }
+                    sasUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("retentionInDays"))

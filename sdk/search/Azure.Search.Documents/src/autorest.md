@@ -13,6 +13,7 @@ title: SearchServiceClient
 input-file:
  - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchindex.json
  - https://github.com/Azure/azure-rest-api-specs/blob/d850f41f89530917000d8e6bb463f42bb745b930/specification/search/data-plane/Azure.Search/preview/2021-04-30-Preview/searchservice.json
+generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

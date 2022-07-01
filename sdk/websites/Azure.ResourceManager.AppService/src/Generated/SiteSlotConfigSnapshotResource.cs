@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotConfigSnapshotResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotConfigSnapshot along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotConfigSnapshotResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotConfigSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotConfigResource" /> using the GetSiteSlotConfigSnapshot method.
+    /// </summary>
     public partial class SiteSlotConfigSnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotConfigSnapshotResource"/> instance. </summary>

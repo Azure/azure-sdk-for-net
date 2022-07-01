@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteResourceHealthMetadataResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteResourceHealthMetadata along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteResourceHealthMetadataResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteResourceHealthMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteResourceHealthMetadata method.
+    /// </summary>
     public partial class SiteResourceHealthMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteResourceHealthMetadataResource"/> instance. </summary>

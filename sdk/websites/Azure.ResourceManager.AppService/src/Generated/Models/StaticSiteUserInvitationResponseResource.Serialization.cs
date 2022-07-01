@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> expiresOn = default;
-            Optional<string> invitationUrl = default;
+            Optional<Uri> invitationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -56,11 +56,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -85,14 +90,19 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("invitationUrl"))
                         {
-                            invitationUrl = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                invitationUrl = null;
+                                continue;
+                            }
+                            invitationUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new StaticSiteUserInvitationResponseResource(id, name, type, systemData, kind.Value, Optional.ToNullable(expiresOn), invitationUrl.Value);
+            return new StaticSiteUserInvitationResponseResource(id, name, type, systemData.Value, Optional.ToNullable(expiresOn), invitationUrl.Value, kind.Value);
         }
     }
 }

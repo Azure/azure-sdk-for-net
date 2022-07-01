@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotWebJobResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotWebJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotWebJobResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotWebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotWebJob method.
+    /// </summary>
     public partial class SiteSlotWebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotWebJobResource"/> instance. </summary>

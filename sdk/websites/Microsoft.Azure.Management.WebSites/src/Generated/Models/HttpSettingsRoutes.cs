@@ -10,16 +10,13 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The configuration settings of the paths HTTP requests.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class HttpSettingsRoutes : ProxyOnlyResource
+    public partial class HttpSettingsRoutes
     {
         /// <summary>
         /// Initializes a new instance of the HttpSettingsRoutes class.
@@ -32,14 +29,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the HttpSettingsRoutes class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="apiPrefix">The prefix that should precede all the
         /// authentication/authorization paths.</param>
-        public HttpSettingsRoutes(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), string apiPrefix = default(string))
-            : base(id, name, kind, type)
+        public HttpSettingsRoutes(string apiPrefix = default(string))
         {
             ApiPrefix = apiPrefix;
             CustomInit();
@@ -54,7 +46,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets the prefix that should precede all the
         /// authentication/authorization paths.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.apiPrefix")]
+        [JsonProperty(PropertyName = "apiPrefix")]
         public string ApiPrefix { get; set; }
 
     }

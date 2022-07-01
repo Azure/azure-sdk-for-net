@@ -16,11 +16,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceOperationResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceOperation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceOperationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceOperation method.
+    /// </summary>
     public partial class ManagedInstanceOperationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceOperationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string operationId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}";
             return new ResourceIdentifier(resourceId);

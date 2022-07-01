@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CosmosDB
     {
         internal static RestorableDatabaseAccountData DeserializeRestorableDatabaseAccountData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> accountName = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> deletionTime = default;
@@ -32,7 +32,12 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -47,11 +52,16 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -118,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new RestorableDatabaseAccountData(id, name, type, systemData, location.Value, accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
+            return new RestorableDatabaseAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
         }
     }
 }

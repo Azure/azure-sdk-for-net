@@ -75,7 +75,7 @@ namespace AzureRedisEnterpriseCache.Tests
                                                 },
                                                 Modules = new List<Module>()
                                                 {
-                                                    new Module(name: "RedisBloom", args: "ERROR_RATE 0.00 INITIAL_SIZE 400"),
+                                                    new Module(name: "RedisBloom", args: "ERROR_RATE 0.01 INITIAL_SIZE 400"),
                                                     new Module(name: "RedisTimeSeries", args: "RETENTION_POLICY 20"),
                                                     new Module(name: "RediSearch")
                                                 },

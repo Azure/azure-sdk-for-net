@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
         /// <param name="accountName"> The name of the global database account. </param>
-        /// <param name="creationTime"> The creation time of the restorable database account (ISO-8601 format). </param>
-        /// <param name="deletionTime"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
+        /// <param name="creationOn"> The creation time of the restorable database account (ISO-8601 format). </param>
+        /// <param name="deletionOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        internal RestorableDatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string accountName, DateTimeOffset? creationTime, DateTimeOffset? deletionTime, ApiType? apiType, IReadOnlyList<RestorableLocationResource> restorableLocations) : base(id, name, resourceType, systemData)
+        internal RestorableDatabaseAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string accountName, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, ApiType? apiType, IReadOnlyList<RestorableLocationResource> restorableLocations) : base(id, name, resourceType, systemData)
         {
             Location = location;
             AccountName = accountName;
-            CreationTime = creationTime;
-            DeletionTime = deletionTime;
+            CreationOn = creationOn;
+            DeletionOn = deletionOn;
             ApiType = apiType;
             RestorableLocations = restorableLocations;
         }
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The name of the global database account. </summary>
         public string AccountName { get; }
         /// <summary> The creation time of the restorable database account (ISO-8601 format). </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreationOn { get; }
         /// <summary> The time at which the restorable database account has been deleted (ISO-8601 format). </summary>
-        public DateTimeOffset? DeletionTime { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The API type of the restorable database account. </summary>
         public ApiType? ApiType { get; }
         /// <summary> List of regions where the of the database account can be restored from. </summary>

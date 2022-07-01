@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> functionAppId = default;
             Optional<string> scriptRootPathHref = default;
             Optional<string> scriptHref = default;
@@ -143,11 +143,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -249,7 +254,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new FunctionEnvelopeData(id, name, type, systemData, kind.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled));
+            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value);
         }
     }
 }

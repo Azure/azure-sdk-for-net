@@ -1,16 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleAssignments/25a67e4b-a17f-ff6f-6ba3-d84fa74d6ed7?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleAssignments/8337f5f7-a008-d421-ff42-2b245e91260a?api-version=7.3",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-63e9fbf1e7f4d6479f20062b4b7db219-34779226627c4546-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "1144b7fc28a512bbab6572239a20b170",
+        "traceparent": "00-1c18f19d6961cbebfa15fee80d00b08e-3c616326e5467845-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.1.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e1c5f9c05f22bfad8e874a394be19ac4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -24,23 +21,20 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "be8a04fa-e4bd-11eb-b193-000d3a72214d",
+        "x-ms-request-id": "ea1c614c-aada-11ec-a830-000d3aeeda4b",
         "x-ms-server-latency": "0"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://heathskvtesthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleAssignments/25a67e4b-a17f-ff6f-6ba3-d84fa74d6ed7?api-version=7.3-preview",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleAssignments/8337f5f7-a008-d421-ff42-2b245e91260a?api-version=7.3",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-63e9fbf1e7f4d6479f20062b4b7db219-34779226627c4546-00",
-        "User-Agent": [
-          "azsdk-net-Security.KeyVault.Administration/4.1.0-alpha.20210713.1",
-          "(.NET 5.0.8; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "1144b7fc28a512bbab6572239a20b170",
+        "traceparent": "00-1c18f19d6961cbebfa15fee80d00b08e-3c616326e5467845-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.1.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e1c5f9c05f22bfad8e874a394be19ac4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -53,19 +47,19 @@
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "beaba47a-e4bd-11eb-b193-000d3a72214d",
-        "x-ms-server-latency": "0"
+        "x-ms-request-id": "ea47afe6-aada-11ec-a830-000d3aeeda4b",
+        "x-ms-server-latency": "1"
       },
       "ResponseBody": {
         "error": {
           "code": "RoleAssignmentNotFound",
-          "message": "Requested role assignment not found (Activity ID: beaba47a-e4bd-11eb-b193-000d3a72214d)"
+          "message": "Requested role assignment not found (Activity ID: ea47afe6-aada-11ec-a830-000d3aeeda4b)"
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_MANAGEDHSM_URL": "https://heathskvtesthsm.managedhsm.azure.net/",
-    "RandomSeed": "716816795"
+    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
+    "RandomSeed": "1283584949"
   }
 }

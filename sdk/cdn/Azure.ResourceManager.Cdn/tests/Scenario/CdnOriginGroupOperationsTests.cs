@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             string cdnOriginGroupName = Recording.GenerateAssetName("origingroup-");
             CdnOriginGroupResource cdnOriginGroup = await CreateCdnOriginGroup(cdnEndpoint, cdnOriginGroupName, cdnEndpoint.Data.Origins[0].Name);
-            PatchableCdnOriginGroupData updateOptions = new PatchableCdnOriginGroupData()
+            CdnOriginGroupPatch updateOptions = new CdnOriginGroupPatch()
             {
-                HealthProbeSettings = new HealthProbeParameters
+                HealthProbeSettings = new HealthProbeSettings
                 {
                     ProbePath = "/healthz",
                     ProbeRequestType = HealthProbeRequestType.Head,
-                    ProbeProtocol = ProbeProtocol.Https,
+                    ProbeProtocol = HealthProbeProtocol.Https,
                     ProbeIntervalInSeconds = 60
                 }
             };

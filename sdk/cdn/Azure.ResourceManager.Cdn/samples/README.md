@@ -12,4 +12,4 @@ description: Samples for the Azure.ResourceManager.Cdn client library
 # Azure.ResourceManager.Cdn Samples
 
 - [Managing Cdn Origin Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample1_ManagingCdnOriginGroups.md)
-- [Managing Cdn Web Application Firewall Policies](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingCdnWebApplicationFirewallPolicies.md)
+- [Managing Azure Front Door Rules](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cdn/Azure.ResourceManager.Cdn/samples/Sample2_ManagingFrontDoorRules.md)

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
-            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            DeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             int count = 0;
             await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Resources.Tests
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
-            DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            DeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
-                DeploymentOperation getDeploymentOperation = await deployment.GetDeploymentOperationAsync(tempDeploymentOperation.OperationId);
+                var getDeploymentOperation = await deployment.GetDeploymentOperationAsync(tempDeploymentOperation.OperationId);
                 AssertValidDeploymentOperation(tempDeploymentOperation, getDeploymentOperation);
             }
         }
 
-        private static void AssertValidDeploymentOperation(DeploymentOperation model, DeploymentOperation getResult)
+        private static void AssertValidDeploymentOperation(ArmDeploymentOperation model, ArmDeploymentOperation getResult)
         {
             Assert.AreEqual(model.Id, getResult.Id);
             Assert.AreEqual(model.OperationId, getResult.OperationId);

@@ -21,7 +21,8 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Options tags to set for this append blob.
+        /// Options tags to set on the destination blob.
+        /// Not valid if <see cref="CopySourceTagsMode"/> is set to <see cref="BlobCopySourceTagsMode.Copy"/>.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Tags Tags { get; set; }
@@ -83,8 +84,9 @@ namespace Azure.Storage.Blobs.Models
         public HttpAuthorization SourceAuthentication { get; set; }
 
         /// <summary>
-        /// Optional.  Indicates if the source blob's tags should be copied to the destination blob,
-        /// or replaced on the destination blob with the tags specified by <see cref="Tags"/>.
+        /// Optional.
+        /// If <see cref="BlobCopySourceTagsMode.Replace"/>, the tags on the destination blob will be set to <see cref="Tags"/>.
+        /// If <see cref="BlobCopySourceTagsMode.Copy"/>, the tags on the source blob will be copied to the destination blob.
         /// Default is to replace.
         /// </summary>
         public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }

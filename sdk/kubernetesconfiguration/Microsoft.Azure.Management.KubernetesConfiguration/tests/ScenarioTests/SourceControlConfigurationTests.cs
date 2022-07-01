@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteSourceControlConfiguration()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "kctestcluster",
+                name: "arc-cluster",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "kubernetesconfiguration"
+                resourceGroup: "dotnet-sdk-tests"
             );
 
             SourceControlConfiguration configuration = new SourceControlConfiguration(

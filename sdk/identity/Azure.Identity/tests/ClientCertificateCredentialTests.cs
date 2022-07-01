@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
@@ -16,6 +17,17 @@ namespace Azure.Identity.Tests
     {
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
+
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var context = new TokenRequestContext(new[] { Scope });
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
 
         [Test]
         public void VerifyCtorParametersValidation()
@@ -72,6 +84,25 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unknownFormatCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await encryptedCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unsupportedCertCredential.GetTokenAsync(tokenContext));
+        }
+
+        public async Task ExceptionContainsTroubleshootingLink()
+        {
+            var response = new MockResponse(400);
+            response.SetContent($"{{ \"error_code\": \"InvalidSecret\", \"message\": \"The specified client_secret is incorrect\" }}");
+            var mockTransport = new MockTransport(response);
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var expectedTenantId = Guid.NewGuid().ToString();
+            var expectedClientId = Guid.NewGuid().ToString();
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+
+            var exception = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(exception.Message, Does.Contain(ClientCertificateCredential.Troubleshooting));
+            await Task.CompletedTask;
         }
 
         [TestCase(true)]
@@ -153,6 +184,33 @@ namespace Azure.Identity.Tests
                 usePemFile
                     ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockConfidentialMsalClient)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+
+            var token = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public async Task SendCertificateChain([Values(true, false)] bool usePemFile, [Values(true)] bool sendCertChain)
+        {
+            TestSetup();
+            var _transport = Createx5cValidatingTransport(sendCertChain);
+            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
+            var mockCert = new X509Certificate2(certificatePath);
+            options = new ClientCertificateCredentialOptions();
+            ((ClientCertificateCredentialOptions)options).SendCertificateChain = sendCertChain;
+
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options,
+                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
+                    : new ClientCertificateCredential(TenantId, ClientId, mockCert, options,
+                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
             );
 
             var token = await credential.GetTokenAsync(context);

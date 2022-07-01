@@ -17,11 +17,16 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedDatabaseRestoreDetailsResultResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedDatabaseRestoreDetailsResult along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseRestoreDetailsResultResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseRestoreDetailsResultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseRestoreDetailsResult method.
+    /// </summary>
     public partial class ManagedDatabaseRestoreDetailsResultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseRestoreDetailsResultResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string restoreDetailsName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RestoreDetailsName restoreDetailsName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}";
             return new ResourceIdentifier(resourceId);

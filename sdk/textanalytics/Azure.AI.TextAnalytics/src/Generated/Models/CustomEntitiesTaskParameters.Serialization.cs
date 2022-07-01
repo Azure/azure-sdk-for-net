@@ -15,21 +15,63 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("project-name");
+            if (Optional.IsDefined(StringIndexType))
+            {
+                writer.WritePropertyName("stringIndexType");
+                writer.WriteStringValue(StringIndexType.Value.ToString());
+            }
+            writer.WritePropertyName("projectName");
             writer.WriteStringValue(ProjectName);
-            writer.WritePropertyName("deployment-name");
+            writer.WritePropertyName("deploymentName");
             writer.WriteStringValue(DeploymentName);
             if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut");
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Optional.IsDefined(StringIndexType))
-            {
-                writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.Value.ToString());
-            }
             writer.WriteEndObject();
+        }
+
+        internal static CustomEntitiesTaskParameters DeserializeCustomEntitiesTaskParameters(JsonElement element)
+        {
+            Optional<StringIndexType> stringIndexType = default;
+            string projectName = default;
+            string deploymentName = default;
+            Optional<bool> loggingOptOut = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("stringIndexType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("projectName"))
+                {
+                    projectName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentName"))
+                {
+                    deploymentName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+            }
+            return new CustomEntitiesTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName, Optional.ToNullable(stringIndexType));
         }
     }
 }

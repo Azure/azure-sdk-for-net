@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -12,7 +13,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CosmosDBManagementClientBase : ManagementRecordedTestBase<CosmosDBManagementTestEnvironment>
     {
         protected const int MaxStalenessPrefix = 300;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createParameters = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS2, locations)
+            var createParameters = new DatabaseAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -103,6 +103,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
             Assert.IsNull(throughput.Resource.AutoscaleSettings);
+        }
+
+        // This is used to skip the tests in Unix platform when the test records contains newline.
+        protected void IgnoreTestInNonWindowsAgent()
+        {
+            if (Mode == RecordedTestMode.Playback && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Assert.Ignore();
+            }
         }
     }
 }

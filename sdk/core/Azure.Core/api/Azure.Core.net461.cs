@@ -203,6 +203,7 @@ namespace Azure
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
@@ -351,6 +352,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -388,7 +390,7 @@ namespace Azure.Core
     }
     public partial class DiagnosticsOptions
     {
-        internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
@@ -463,6 +465,11 @@ namespace Azure.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
+    public static partial class MultipartResponse
+    {
+        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
@@ -497,6 +504,11 @@ namespace Azure.Core
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+    }
+    public abstract partial class RequestFailedDetailsParser
+    {
+        protected RequestFailedDetailsParser() { }
+        public abstract bool TryParse(Azure.Response response, out Azure.ResponseError? error, out System.Collections.Generic.IDictionary<string, string>? data);
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestHeaders : System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader>, System.Collections.IEnumerable
@@ -931,6 +943,17 @@ namespace Azure.Core.Pipeline
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options) { throw null; }
+        public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.Pipeline.HttpPipelineOptions options, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { throw null; }
+    }
+    public partial class HttpPipelineOptions
+    {
+        public HttpPipelineOptions(Azure.Core.ClientOptions options) { }
+        public Azure.Core.ClientOptions ClientOptions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.Pipeline.HttpPipelinePolicy> PerCallPolicies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.Pipeline.HttpPipelinePolicy> PerRetryPolicies { get { throw null; } }
+        public Azure.Core.RequestFailedDetailsParser RequestFailedDetailsParser { get { throw null; } set { } }
+        public Azure.Core.ResponseClassifier? ResponseClassifier { get { throw null; } set { } }
     }
     public abstract partial class HttpPipelinePolicy
     {
@@ -958,6 +981,7 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipelineTransportOptions
     {
         public HttpPipelineTransportOptions() { }
+        public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
     }
     public partial class ServerCertificateCustomValidationArgs
@@ -1020,5 +1044,14 @@ namespace Azure.Messaging
     {
         Binary = 0,
         Json = 1,
+    }
+    public partial class MessageContent
+    {
+        public MessageContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }

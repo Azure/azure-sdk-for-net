@@ -34,14 +34,6 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task GetSubscriptionOperation()
-        {
-            SubscriptionResource sub = await Client.GetSubscriptions().GetIfExistsAsync(TestEnvironment.SubscriptionId);
-            Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
-        }
-
         [TestCase(null)]
         [RecordedTest]
         public async Task TestGetResourceGroupOpsArgNullException(string resourceGroupName)
@@ -189,39 +181,40 @@ namespace Azure.ResourceManager.Tests
             //Assert.IsNotNull(testFeature.Data.Type);
         }
 
-        [Ignore("Need to resolve before GA")]
         [RecordedTest]
-        public async Task AddTag()
+        public async Task ValidateResourceInRestApi()
         {
+            var namespacesToSkip = new HashSet<string>
+            {
+                "Microsoft.MarketplaceNotifications",
+                "Microsoft.Notebooks",
+                "Microsoft.App",
+                "Microsoft.ClassicSubscription",
+                "Microsoft.AVS",
+                "Microsoft.DataReplication",
+                "Microsoft.ImportExport",
+                "Microsoft.NetworkFunction",
+                "Microsoft.ProjectBabylon",
+                "Microsoft.Scheduler",
+                "Microsoft.ServicesHub",
+                "Microsoft.SoftwarePlan",
+                "Microsoft.TimeSeriesInsights",
+            };
             var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.AddTagAsync(TagKey, TagValue);
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.AreEqual(subscription2.Value.Data.Tags[TagKey], TagValue);
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.RemoveTagAsync(TagKey);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var key = Recording.GenerateAssetName("TagKey-");
-            var value = Recording.GenerateAssetName("TagValue-");
-            var tags = new Dictionary<string, string>();
-            var subscription2 = await subscription.SetTagsAsync(tags);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
+            await foreach (var provider in subscription.GetResourceProviders())
+            {
+                if (namespacesToSkip.Contains(provider.Data.Namespace))
+                    continue;
+                if (!provider.Data.ResourceTypes.Any(rt => rt.ResourceType == "operations"))
+                    continue;
+                Assert.DoesNotThrowAsync(async () =>
+                {
+                    await foreach (var restApi in subscription.GetArmRestApis(provider.Data.Namespace))
+                    {
+                        Assert.IsNotNull(restApi);
+                    }
+                }, $"Error getting rest apis for {provider.Data.Namespace}");
+            }
         }
     }
 }

@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The object representing the policy for taking backups on an account. </summary>
+    /// <summary>
+    /// The object representing the policy for taking backups on an account.
+    /// Please note <see cref="BackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
+    /// </summary>
     public partial class BackupPolicy
     {
         /// <summary> Initializes a new instance of BackupPolicy. </summary>
@@ -16,16 +20,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of BackupPolicy. </summary>
-        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
+        /// <param name="policyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        internal BackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState)
+        internal BackupPolicy(BackupPolicyType policyType, BackupPolicyMigrationState migrationState)
         {
-            BackupPolicyType = backupPolicyType;
+            PolicyType = policyType;
             MigrationState = migrationState;
         }
 
         /// <summary> Describes the mode of backups. </summary>
-        internal BackupPolicyType BackupPolicyType { get; set; }
+        internal BackupPolicyType PolicyType { get; set; }
         /// <summary> The object representing the state of the migration between the backup policies. </summary>
         public BackupPolicyMigrationState MigrationState { get; set; }
     }

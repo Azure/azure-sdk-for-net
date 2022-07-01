@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteBackup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteBackupResource" /> and their operations.
+    /// Each <see cref="SiteBackupResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteBackupCollection" /> instance call the GetSiteBackups method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteBackupCollection : ArmCollection, IEnumerable<SiteBackupResource>, IAsyncEnumerable<SiteBackupResource>
     {
         private readonly ClientDiagnostics _siteBackupWebAppsClientDiagnostics;
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,66 +239,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(backupId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
-        /// Operation Id: WebApps_GetBackupStatus
-        /// </summary>
-        /// <param name="backupId"> ID of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual async Task<Response<SiteBackupResource>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-
-            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteBackupWebAppsRestClient.GetBackupStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteBackupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
-        /// Operation Id: WebApps_GetBackupStatus
-        /// </summary>
-        /// <param name="backupId"> ID of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<SiteBackupResource> GetIfExists(string backupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-
-            using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _siteBackupWebAppsRestClient.GetBackupStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteBackupResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

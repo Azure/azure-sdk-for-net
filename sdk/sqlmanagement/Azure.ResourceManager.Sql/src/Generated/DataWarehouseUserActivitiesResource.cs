@@ -17,11 +17,16 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a DataWarehouseUserActivitiesResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a DataWarehouseUserActivities along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataWarehouseUserActivitiesResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataWarehouseUserActivitiesResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDataWarehouseUserActivities method.
+    /// </summary>
     public partial class DataWarehouseUserActivitiesResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataWarehouseUserActivitiesResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataWarehouseUserActivityName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, DataWarehouseUserActivityName dataWarehouseUserActivityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}";
             return new ResourceIdentifier(resourceId);
