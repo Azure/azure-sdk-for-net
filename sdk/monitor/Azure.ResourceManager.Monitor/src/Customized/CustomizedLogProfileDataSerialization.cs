@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Azure.ResourceManager.Models.SystemData systemData = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> serviceBusRuleId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> serviceBusRuleId = default;
             IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("storageAccountId"))
                         {
-                            storageAccountId = property0.Value.GetString();
+                            storageAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceBusRuleId"))
                         {
-                            serviceBusRuleId = property0.Value.GetString();
+                            serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("locations"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogProfileData(id, name, type, systemData, tags, location, new ResourceIdentifier(storageAccountId.Value), new ResourceIdentifier(serviceBusRuleId.Value), locations, categories, retentionPolicy);
+            return new LogProfileData(id, name, type, systemData, tags, location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
         }
     }
 }
