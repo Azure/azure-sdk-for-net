@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.DigitalTwins.Core;
 
-namespace Azure.DigitalTwins.Core.Models
+namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureDigitalTwinsAPIModelFactory
