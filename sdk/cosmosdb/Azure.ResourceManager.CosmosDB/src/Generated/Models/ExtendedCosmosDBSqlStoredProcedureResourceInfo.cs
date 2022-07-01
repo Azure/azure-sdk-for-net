@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string id, string body, string rid, float? ts, ETag? eTag) : base(id, body)
+        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string id, string body, string rid, float? timestamp, ETag? eTag) : base(id, body)
         {
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public ETag? ETag { get; }
     }

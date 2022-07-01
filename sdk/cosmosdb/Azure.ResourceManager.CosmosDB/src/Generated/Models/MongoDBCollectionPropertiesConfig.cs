@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The MongoDBCollectionPropertiesConfig. </summary>
-    public partial class MongoDBCollectionPropertiesConfig : BaseConfig
+    public partial class MongoDBCollectionPropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of MongoDBCollectionPropertiesConfig. </summary>
         public MongoDBCollectionPropertiesConfig()

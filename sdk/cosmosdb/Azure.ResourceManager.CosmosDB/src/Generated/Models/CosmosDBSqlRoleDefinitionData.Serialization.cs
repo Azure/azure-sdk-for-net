@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> roleName = default;
-            Optional<RoleDefinitionType> type0 = default;
+            Optional<CosmosDBSqlRoleDefinitionType> type0 = default;
             Optional<IList<string>> assignableScopes = default;
-            Optional<IList<Permission>> permissions = default;
+            Optional<IList<CosmosDBSqlRolePermission>> permissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = property0.Value.GetString().ToRoleDefinitionType();
+                            type0 = property0.Value.GetString().ToCosmosDBSqlRoleDefinitionType();
                             continue;
                         }
                         if (property0.NameEquals("assignableScopes"))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Permission> array = new List<Permission>();
+                            List<CosmosDBSqlRolePermission> array = new List<CosmosDBSqlRolePermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Permission.DeserializePermission(item));
+                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item));
                             }
                             permissions = array;
                             continue;

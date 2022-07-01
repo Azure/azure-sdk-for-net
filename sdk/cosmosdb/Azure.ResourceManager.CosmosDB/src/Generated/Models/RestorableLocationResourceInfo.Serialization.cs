@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableLocationResourceInfo DeserializeRestorableLocationResourceInfo(JsonElement element)
         {
-            Optional<string> locationName = default;
+            Optional<AzureLocation> locationName = default;
             Optional<string> regionalDatabaseAccountInstanceId = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> deletionTime = default;
@@ -23,7 +23,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("locationName"))
                 {
-                    locationName = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    locationName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("regionalDatabaseAccountInstanceId"))
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableLocationResourceInfo(locationName.Value, regionalDatabaseAccountInstanceId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime));
+            return new RestorableLocationResourceInfo(Optional.ToNullable(locationName), regionalDatabaseAccountInstanceId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime));
         }
     }
 }

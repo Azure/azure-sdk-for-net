@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
-    public partial class ExtendedRestorableMongodbCollectionResourceInfo
+    public partial class ExtendedRestorableMongoDBCollectionResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableMongodbCollectionResourceInfo. </summary>
-        internal ExtendedRestorableMongodbCollectionResourceInfo()
+        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBCollectionResourceInfo. </summary>
+        internal ExtendedRestorableMongoDBCollectionResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableMongodbCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBCollectionResourceInfo. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this collection event. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
         /// <param name="ownerId"> The name of this MongoDB collection. </param>
         /// <param name="ownerResourceId"> The resource ID of this MongoDB collection. </param>
-        internal ExtendedRestorableMongodbCollectionResourceInfo(string rid, OperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId)
+        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId)
         {
             Rid = rid;
             OperationType = operationType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> The operation type of this collection event. </summary>
-        public OperationType? OperationType { get; }
+        public CosmosDBOperationType? OperationType { get; }
         /// <summary> The time when this collection event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this MongoDB collection. </summary>

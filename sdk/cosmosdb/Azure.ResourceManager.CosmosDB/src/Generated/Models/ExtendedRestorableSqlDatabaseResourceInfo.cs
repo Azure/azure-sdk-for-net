@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="ownerId"> The name of the SQL database. </param>
         /// <param name="ownerResourceId"> The resource ID of the SQL database. </param>
         /// <param name="database"> Cosmos DB SQL database resource object. </param>
-        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, OperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlDatabasePropertiesResourceDatabase database)
+        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlDatabasePropertiesResourceDatabase database)
         {
             Rid = rid;
             OperationType = operationType;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> The operation type of this database event. </summary>
-        public OperationType? OperationType { get; }
+        public CosmosDBOperationType? OperationType { get; }
         /// <summary> The time when this database event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of the SQL database. </summary>

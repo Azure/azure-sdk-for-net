@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The GremlinGraphPropertiesConfig. </summary>
-    public partial class GremlinGraphPropertiesConfig : BaseConfig
+    public partial class GremlinGraphPropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of GremlinGraphPropertiesConfig. </summary>
         public GremlinGraphPropertiesConfig()

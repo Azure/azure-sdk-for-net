@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ExtendedGremlinDatabaseResourceInfo. </summary>
         /// <param name="id"> Name of the Cosmos DB Gremlin database. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ExtendedGremlinDatabaseResourceInfo(string id, string rid, float? ts, ETag? eTag) : base(id)
+        internal ExtendedGremlinDatabaseResourceInfo(string id, string rid, float? timestamp, ETag? eTag) : base(id)
         {
             if (id == null)
             {
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public ETag? ETag { get; }
     }

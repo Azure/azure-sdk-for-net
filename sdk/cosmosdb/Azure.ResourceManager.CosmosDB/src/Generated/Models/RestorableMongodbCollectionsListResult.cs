@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the MongoDB collection events and their properties. </summary>
-    internal partial class RestorableMongodbCollectionsListResult
+    internal partial class RestorableMongoDBCollectionsListResult
     {
-        /// <summary> Initializes a new instance of RestorableMongodbCollectionsListResult. </summary>
-        internal RestorableMongodbCollectionsListResult()
+        /// <summary> Initializes a new instance of RestorableMongoDBCollectionsListResult. </summary>
+        internal RestorableMongoDBCollectionsListResult()
         {
-            Value = new ChangeTrackingList<RestorableMongodbCollection>();
+            Value = new ChangeTrackingList<RestorableMongoDBCollection>();
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbCollectionsListResult. </summary>
+        /// <summary> Initializes a new instance of RestorableMongoDBCollectionsListResult. </summary>
         /// <param name="value"> List of MongoDB collection events and their properties. </param>
-        internal RestorableMongodbCollectionsListResult(IReadOnlyList<RestorableMongodbCollection> value)
+        internal RestorableMongoDBCollectionsListResult(IReadOnlyList<RestorableMongoDBCollection> value)
         {
             Value = value;
         }
 
         /// <summary> List of MongoDB collection events and their properties. </summary>
-        public IReadOnlyList<RestorableMongodbCollection> Value { get; }
+        public IReadOnlyList<RestorableMongoDBCollection> Value { get; }
     }
 }

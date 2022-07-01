@@ -33,19 +33,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlContainerResourceInfo(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string rid, float? ts, ETag? eTag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
+        internal ExtendedCosmosDBSqlContainerResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, string rid, float? timestamp, ETag? eTag) : base(id, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl)
         {
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public ETag? ETag { get; }
     }

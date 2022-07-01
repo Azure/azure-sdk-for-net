@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
         /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
         /// <param name="deletedOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
-        internal RestorableLocationResourceInfo(string locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? createdOn, DateTimeOffset? deletedOn)
+        internal RestorableLocationResourceInfo(AzureLocation? locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? createdOn, DateTimeOffset? deletedOn)
         {
             LocationName = locationName;
             RegionalDatabaseAccountInstanceId = regionalDatabaseAccountInstanceId;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The location of the regional restorable account. </summary>
-        public string LocationName { get; }
+        public AzureLocation? LocationName { get; }
         /// <summary> The instance id of the regional restorable account. </summary>
         public string RegionalDatabaseAccountInstanceId { get; }
         /// <summary> The creation time of the regional restorable database account (ISO-8601 format). </summary>

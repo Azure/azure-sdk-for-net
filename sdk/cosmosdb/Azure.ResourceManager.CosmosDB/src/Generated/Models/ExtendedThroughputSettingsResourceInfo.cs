@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? ts, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
+        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string rid, float? timestamp, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending)
         {
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public ETag? ETag { get; }
     }

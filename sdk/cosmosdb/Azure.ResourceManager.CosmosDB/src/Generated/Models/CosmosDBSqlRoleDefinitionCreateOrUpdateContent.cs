@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBSqlRoleDefinitionCreateOrUpdateContent()
         {
             AssignableScopes = new ChangeTrackingList<string>();
-            Permissions = new ChangeTrackingList<Permission>();
+            Permissions = new ChangeTrackingList<CosmosDBSqlRolePermission>();
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
         public string RoleName { get; set; }
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
-        public RoleDefinitionType? RoleDefinitionType { get; set; }
+        public CosmosDBSqlRoleDefinitionType? RoleDefinitionType { get; set; }
         /// <summary> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
         public IList<string> AssignableScopes { get; }
         /// <summary> The set of operations allowed through this Role Definition. </summary>
-        public IList<Permission> Permissions { get; }
+        public IList<CosmosDBSqlRolePermission> Permissions { get; }
     }
 }

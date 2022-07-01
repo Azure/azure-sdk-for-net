@@ -11,25 +11,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB MongoDB collection event. </summary>
-    public partial class RestorableMongodbCollection : ResourceData
+    public partial class RestorableMongoDBCollection : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableMongodbCollection. </summary>
-        internal RestorableMongodbCollection()
+        /// <summary> Initializes a new instance of RestorableMongoDBCollection. </summary>
+        internal RestorableMongoDBCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbCollection. </summary>
+        /// <summary> Initializes a new instance of RestorableMongoDBCollection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
-        internal RestorableMongodbCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongodbCollectionResourceInfo resource) : base(id, name, resourceType, systemData)
+        internal RestorableMongoDBCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBCollectionResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
-        public ExtendedRestorableMongodbCollectionResourceInfo Resource { get; }
+        public ExtendedRestorableMongoDBCollectionResourceInfo Resource { get; }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class RestorableMongodbResourcesListResult
+    internal partial class RestorableMongoDBResourcesListResult
     {
-        internal static RestorableMongodbResourcesListResult DeserializeRestorableMongodbResourcesListResult(JsonElement element)
+        internal static RestorableMongoDBResourcesListResult DeserializeRestorableMongoDBResourcesListResult(JsonElement element)
         {
             Optional<IReadOnlyList<DatabaseRestoreResourceInfo>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableMongodbResourcesListResult(Optional.ToList(value));
+            return new RestorableMongoDBResourcesListResult(Optional.ToList(value));
         }
     }
 }

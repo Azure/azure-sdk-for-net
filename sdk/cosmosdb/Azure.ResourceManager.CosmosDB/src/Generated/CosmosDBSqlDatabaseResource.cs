@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a CosmosDBSqlDatabase along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlDatabaseResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountResource" /> using the GetCosmosDBSqlDatabase method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBSqlDatabase method.
     /// </summary>
     public partial class CosmosDBSqlDatabaseResource : ArmResource
     {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the CosmosDBSqlDatabase. </summary>
-        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> object. </returns>
-        public virtual DatabaseAccountSqlDatabaseThroughputSettingResource GetDatabaseAccountSqlDatabaseThroughputSetting()
+        /// <summary> Gets an object representing a CosmosDBSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the CosmosDBSqlDatabase. </summary>
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
+        public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSetting()
         {
-            return new DatabaseAccountSqlDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CosmosDBSqlDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
         /// <summary> Gets a collection of CosmosDBSqlContainerResources in the CosmosDBSqlDatabase. </summary>

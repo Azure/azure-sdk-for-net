@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
-    public partial class ExtendedRestorableMongodbDatabaseResourceInfo
+    public partial class ExtendedRestorableMongoDBDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableMongodbDatabaseResourceInfo. </summary>
-        internal ExtendedRestorableMongodbDatabaseResourceInfo()
+        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
+        internal ExtendedRestorableMongoDBDatabaseResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableMongodbDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="ownerId"> The name of this MongoDB database. </param>
         /// <param name="ownerResourceId"> The resource ID of this MongoDB database. </param>
-        internal ExtendedRestorableMongodbDatabaseResourceInfo(string rid, OperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId)
+        internal ExtendedRestorableMongoDBDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId)
         {
             Rid = rid;
             OperationType = operationType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> The operation type of this database event. </summary>
-        public OperationType? OperationType { get; }
+        public CosmosDBOperationType? OperationType { get; }
         /// <summary> The time when this database event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this MongoDB database. </summary>

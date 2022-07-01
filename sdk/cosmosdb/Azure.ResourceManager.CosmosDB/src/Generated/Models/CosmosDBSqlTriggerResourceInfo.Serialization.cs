@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             string id = default;
             Optional<string> body = default;
-            Optional<TriggerType> triggerType = default;
-            Optional<TriggerOperation> triggerOperation = default;
+            Optional<CosmosDBSqlTriggerType> triggerType = default;
+            Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    triggerType = new TriggerType(property.Value.GetString());
+                    triggerType = new CosmosDBSqlTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("triggerOperation"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    triggerOperation = new TriggerOperation(property.Value.GetString());
+                    triggerOperation = new CosmosDBSqlTriggerOperation(property.Value.GetString());
                     continue;
                 }
             }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
         /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
         /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
-        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleDefinitionId, string scope, Guid? principalId) : base(id, name, resourceType, systemData)
+        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier roleDefinitionId, string scope, Guid? principalId) : base(id, name, resourceType, systemData)
         {
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The data plane resource path for which access is being granted through this Role Assignment. </summary>
         public string Scope { get; set; }
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>

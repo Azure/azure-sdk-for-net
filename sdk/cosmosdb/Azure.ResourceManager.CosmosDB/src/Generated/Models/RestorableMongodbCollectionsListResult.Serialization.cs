@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class RestorableMongodbCollectionsListResult
+    internal partial class RestorableMongoDBCollectionsListResult
     {
-        internal static RestorableMongodbCollectionsListResult DeserializeRestorableMongodbCollectionsListResult(JsonElement element)
+        internal static RestorableMongoDBCollectionsListResult DeserializeRestorableMongoDBCollectionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorableMongodbCollection>> value = default;
+            Optional<IReadOnlyList<RestorableMongoDBCollection>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorableMongodbCollection> array = new List<RestorableMongodbCollection>();
+                    List<RestorableMongoDBCollection> array = new List<RestorableMongoDBCollection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableMongodbCollection.DeserializeRestorableMongodbCollection(item));
+                        array.Add(RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new RestorableMongodbCollectionsListResult(Optional.ToList(value));
+            return new RestorableMongoDBCollectionsListResult(Optional.ToList(value));
         }
     }
 }

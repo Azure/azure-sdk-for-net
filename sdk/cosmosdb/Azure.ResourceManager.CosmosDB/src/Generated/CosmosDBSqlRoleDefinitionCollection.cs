@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A class representing a collection of <see cref="CosmosDBSqlRoleDefinitionResource" /> and their operations.
-    /// Each <see cref="CosmosDBSqlRoleDefinitionResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
-    /// To get a <see cref="CosmosDBSqlRoleDefinitionCollection" /> instance call the GetCosmosDBSqlRoleDefinitions method from an instance of <see cref="DatabaseAccountResource" />.
+    /// Each <see cref="CosmosDBSqlRoleDefinitionResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
+    /// To get a <see cref="CosmosDBSqlRoleDefinitionCollection" /> instance call the GetCosmosDBSqlRoleDefinitions method from an instance of <see cref="CosmosDBAccountResource" />.
     /// </summary>
     public partial class CosmosDBSqlRoleDefinitionCollection : ArmCollection, IEnumerable<CosmosDBSqlRoleDefinitionResource>, IAsyncEnumerable<CosmosDBSqlRoleDefinitionResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountResource.ResourceType), nameof(id));
+            if (id.ResourceType != CosmosDBAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>

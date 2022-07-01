@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a MongoDB collection. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        internal MongoDBCollectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBCollectionResourceInfo resource, CreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
+        internal MongoDBCollectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBCollectionResourceInfo resource, CosmosDBCreateUpdateConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a MongoDB collection. </summary>
         public MongoDBCollectionResourceInfo Resource { get; set; }
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
-        public CreateUpdateConfig Options { get; set; }
+        public CosmosDBCreateUpdateConfig Options { get; set; }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedRestorableMongodbCollectionResourceInfo
+    public partial class ExtendedRestorableMongoDBCollectionResourceInfo
     {
-        internal static ExtendedRestorableMongodbCollectionResourceInfo DeserializeExtendedRestorableMongodbCollectionResourceInfo(JsonElement element)
+        internal static ExtendedRestorableMongoDBCollectionResourceInfo DeserializeExtendedRestorableMongoDBCollectionResourceInfo(JsonElement element)
         {
             Optional<string> rid = default;
-            Optional<OperationType> operationType = default;
+            Optional<CosmosDBOperationType> operationType = default;
             Optional<string> eventTimestamp = default;
             Optional<string> ownerId = default;
             Optional<string> ownerResourceId = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationType = new OperationType(property.Value.GetString());
+                    operationType = new CosmosDBOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedRestorableMongodbCollectionResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
+            return new ExtendedRestorableMongoDBCollectionResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
         }
     }
 }

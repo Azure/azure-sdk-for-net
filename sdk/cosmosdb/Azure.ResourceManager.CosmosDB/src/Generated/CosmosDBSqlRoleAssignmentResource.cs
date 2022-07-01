@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a CosmosDBSqlRoleAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlRoleAssignmentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlRoleAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountResource" /> using the GetCosmosDBSqlRoleAssignment method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosDBSqlRoleAssignment method.
     /// </summary>
     public partial class CosmosDBSqlRoleAssignmentResource : ArmResource
     {

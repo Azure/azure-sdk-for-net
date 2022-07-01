@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="ownerId"> The name of this SQL container. </param>
         /// <param name="ownerResourceId"> The resource ID of this SQL container. </param>
         /// <param name="container"> Cosmos DB SQL container resource object. </param>
-        internal ExtendedRestorableSqlContainerResourceInfo(string rid, OperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlContainerPropertiesResourceContainer container)
+        internal ExtendedRestorableSqlContainerResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlContainerPropertiesResourceContainer container)
         {
             Rid = rid;
             OperationType = operationType;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> The operation type of this container event. </summary>
-        public OperationType? OperationType { get; }
+        public CosmosDBOperationType? OperationType { get; }
         /// <summary> The when this container event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this SQL container. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraKeyspacePropertiesConfig. </summary>
-    public partial class CassandraKeyspacePropertiesConfig : BaseConfig
+    public partial class CassandraKeyspacePropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of CassandraKeyspacePropertiesConfig. </summary>
         public CassandraKeyspacePropertiesConfig()

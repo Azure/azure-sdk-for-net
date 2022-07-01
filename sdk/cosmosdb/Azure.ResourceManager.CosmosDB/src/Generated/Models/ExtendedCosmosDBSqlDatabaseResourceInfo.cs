@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string id, string colls, string users, string rid, float? ts, ETag? eTag) : base(id)
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string id, string colls, string users, string rid, float? timestamp, ETag? eTag) : base(id)
         {
             if (id == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Colls = colls;
             Users = users;
             Rid = rid;
-            Ts = ts;
+            Timestamp = timestamp;
             ETag = eTag;
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         public ETag? ETag { get; }
     }

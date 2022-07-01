@@ -18,48 +18,60 @@ modelerfour:
   flatten-payloads: false
 model-namespae: true
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default: CassandraTableThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default: CosmosTableThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default: GremlinDatabaseThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}/throughputSettings/default: GremlinGraphThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default: MongoDBDatabaseThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default: MongoDBCollectionThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default: CosmosDBSqlDatabaseThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default: CosmosDBSqlContainerThroughputSetting
 operation-id-mappings:
-  DatabaseAccountCassandraKeyspaceThroughputSetting:
+  CassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
-  DatabaseAccountCassandraKeyspaceTableThroughputSetting:
+  CassandraTableThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       keyspaceName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces
       tableName: Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables
-  DatabaseAccountTableThroughputSetting:
+  CosmosTableThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       tableName: Microsoft.DocumentDB/databaseAccounts/tables
-  DatabaseAccountGremlinDatabaseThroughputSetting:
+  GremlinDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
-  DatabaseAccountGremlinDatabaseGraphThroughputSetting:
+  GremlinGraphThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
       graphName: Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs
-  DatabaseAccountMongodbDatabaseCollectionThroughputSetting:
+  MongoDBCollectionThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
       collectionName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections
-  DatabaseAccountMongodbDatabaseThroughputSetting:
+  MongoDBDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
-  DatabaseAccountSqlDatabaseContainerThroughputSetting:
+  CosmosDBSqlContainerThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
       containerName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers
-  DatabaseAccountSqlDatabaseThroughputSetting:
+  CosmosDBSqlDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
-no-property-type-replacement: SqlDatabaseResource;MongoDBDatabaseResource;TableResource;CassandraKeyspaceResource;CassandraColumn;GremlinDatabaseResource;PrivateEndpointProperty
+no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'principalId': 'uuid'
   '*SubnetId': 'arm-id'
+  'networkAclBypassResourceIds': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -83,12 +95,17 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag
+  Mongodb: MongoDB
+override-operation-name:
+  RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
+  RestorableMongodbCollections_List: GetRestorableMongoDBCollections
+  RestorableMongodbResources_List: GetRestorableMongoDBResources
 rename-mapping:
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
   CosmosTablePropertiesOptions: CosmosTablePropertiesConfig
-  CreateUpdateOptions: CreateUpdateConfig
+  CreateUpdateOptions: CosmosDBCreateUpdateConfig
   GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
   MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
@@ -112,15 +129,14 @@ rename-mapping:
   MongoDBCollectionResource: MongoDBCollectionResourceInfo
   MongoDBDatabasePropertiesResource: ExtendedMongoDBDatabaseResourceInfo
   MongoDBDatabaseResource: MongoDBDatabaseResourceInfo
-  OptionsResource: BaseConfig
+  OptionsResource: CosmosDBBaseConfig
   RestorableLocationResource: RestorableLocationResourceInfo
-  RestorableMongodbCollectionPropertiesResource: ExtendedRestorableMongodbCollectionResourceInfo
-  RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongodbDatabaseResourceInfo
+  RestorableMongodbCollectionPropertiesResource: ExtendedRestorableMongoDBCollectionResourceInfo
+  RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
   RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
   RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
-#   SqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
   SqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
   SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
@@ -140,10 +156,68 @@ rename-mapping:
   AutoUpgradePolicyResource: AutoUpgradePolicyResourceInfo
   CosmosDBSqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
   CosmosDBSqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
+  DatabaseAccountConnectionString: CosmosDBAccountConnectionString
+  DatabaseAccountKind: CosmosDBAccountKind
+  DatabaseAccountOfferType: CosmosDBAccountOfferType
+  ClusterResource: CassandraCluster
+  ClusterKey: CassandraClusterKey
+  ClusterResourceProperties: CassandraClusterProperties
+  DataCenterResource: CassandraDataCenter
+  DataCenterResourceProperties: CassandraDataCenterProperties
+  ListDataCenters: CassandraDataCenterListResult
+  ListClusters: CassandraClusterListResult
+  SeedNode: CassandraDataCenterSeedNode
+  ConnectionError: CassandraConnectionError
+  CommandPostBody: CassandraCommandPostBody
+  CommandOutput: CassandraCommandOutput
+  Certificate: CassandraCertificate
+  RestorableMongodbCollectionGetResult: RestorableMongoDBCollection
+  Usage: CosmosDBBaseUsage
+  AuthenticationMethod: CassandraAuthenticationMethod
+  BackupPolicy: CosmosDBAccountBackupPolicy
+  CorsPolicy: CosmosDBAccountCorsPolicy
+  Capacity: CosmosDBAccountCapacity
+  ConnectionState: CassandraConnectionState
+  CreateMode: CosmosDBAccountCreateMode
+  KeyKind: CosmosDBAccountKeyKind
+  NodeState: CassandraNodeState
+  Permission: CosmosDBSqlRolePermission
+  RestoreMode: CosmosDBAccountRestoreMode
+  RestoreParameters: CosmosDBAccountRestoreParameters
+  RoleDefinitionType: CosmosDBSqlRoleDefinitionType
+  TableListResult: CosmosTableListResult
+  TriggerOperation: CosmosDBSqlTriggerOperation
+  TriggerType: CosmosDBSqlTriggerType
+  UnitType: CosmosDBMetricUnitType
+prepend-rp-prefix:
+- UniqueKey
+- UniqueKeyPolicy
+- ServerVersion
+- OperationType
+- MetricValue
+- MetricName
+- MetricListResult
+- MetricDefinitionsListResult
+- MetricDefinition
+- MetricAvailability
+- LocationProperties
+- LocationListResult
+- IPAddressOrRange
+- DataType
+- IndexingPolicy
+- ExcludedPath
+- IncludedPath
+- IndexingMode
+- IndexKind
+- ApiType
+- UsagesResult
+- VirtualNetworkRule
 directive:
 - from: cosmos-db.json
   where: $.definitions.MetricDefinition.properties.resourceUri
-  transform: $["x-ms-client-name"] = "ResourceId"
+  transform: >
+    $["x-ms-client-name"] = "ResourceId";
+    $["x-ms-format"] = "arm-id";
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
@@ -156,7 +230,7 @@ directive:
     to: CosmosDBLocation
 - rename-model:
     from: DatabaseAccountGetResults
-    to: DatabaseAccount
+    to: CosmosDBAccount
 - rename-model:
     from: ThroughputSettingsGetResults
     to: ThroughputSettings
@@ -237,13 +311,13 @@ directive:
     to: GremlinGraphProperties
 - rename-model:
     from: DatabaseAccountGetProperties
-    to: DatabaseAccountProperties
+    to: CosmosDBAccountProperties
 - rename-model:
     from: DatabaseAccountListReadOnlyKeysResult
-    to: DatabaseAccountReadOnlyKeyList
+    to: CosmosDBAccountReadOnlyKeyList
 - rename-model:
     from: DatabaseAccountListKeysResult
-    to: DatabaseAccountKeyList
+    to: CosmosDBAccountKeyList
 - rename-model:
     from: SqlRoleAssignmentListResult
     to: CosmosDBSqlRoleAssignmentList
@@ -266,7 +340,7 @@ directive:
     to: CosmosDBSqlRoleAssignment
 - rename-model:
     from: RestorableDatabaseAccountGetResult
-    to: RestorableDatabaseAccount
+    to: RestorableCosmosDBAccount
 - rename-model:
     from: RestorableSqlDatabaseGetResult
     to: RestorableSqlDatabase
@@ -275,31 +349,24 @@ directive:
     to: RestorableSqlContainer
 - rename-model:
     from: RestorableMongodbDatabaseGetResult
-    to: RestorableMongodbDatabase
-- rename-model:
-    from: RestorableMongodbCollectionGetResult
-    to: RestorableMongodbCollection
+    to: RestorableMongoDBDatabase
 # rename for CSharp naming convention
-# `Usage` is used in a few places which are not specific to one type of resources, and it has a child definition `PartitionUsage`.
-- rename-model:
-    from: Usage
-    to: BaseUsage
 # same as `Metric`
 - rename-model:
     from: Metric
-    to: BaseMetric
+    to: CosmosDBBaseMetric
 # `Location` is single word and we already have a common type `Location`
 - rename-model:
     from: Location
-    to: DatabaseAccountLocation
+    to: CosmosDBAccountLocation
 # `Capability` is single word
 - rename-model:
     from: Capability
-    to: DatabaseAccountCapability
+    to: CosmosDBAccountCapability
 # `Indexes` is single word
 - rename-model:
     from: Indexes
-    to: PathIndexes
+    to: CosmosDBPathIndexes
 # `Column` is a single workd, and it's only used in CassandraSchema
 - rename-model:
     from: Column
@@ -308,7 +375,7 @@ directive:
 # rename parametes for cosmos-db.json
 - rename-model:
     from: DatabaseAccountRegenerateKeyParameters
-    to: DatabaseAccountRegenerateKeyInfo
+    to: CosmosDBAccountRegenerateKeyInfo
 - rename-model:
     from: ThroughputSettingsUpdateParameters
     to: ThroughputSettingsUpdateData
@@ -375,6 +442,26 @@ directive:
   where: $.definitions.SqlRoleDefinitionResource
   transform: >
     $.properties.type['x-ms-client-name'] = 'RoleDefinitionType';
+- from: managedCassandra.json
+  where: $.definitions.CassandraClusterPublicStatus
+  transform: >
+    $.properties.dataCenters.items.properties.nodes.items['x-ms-client-name'] = 'CassandraClusterDataCenterNodeItem';
+- from: swagger-document
+  where: $.definitions.._ts
+  transform: >
+    $['x-ms-client-name'] = 'Timestamp';
+- from: privateEndpointConnection.json
+  where: $.definitions.PrivateEndpointProperty
+  transform: >
+    $.properties.id['x-ms-format'] = 'arm-id';
+- from: rbac.json
+  where: $.definitions.SqlRoleAssignmentResource
+  transform: >
+    $.properties.roleDefinitionId['x-ms-format'] = 'arm-id';
+- from: restorable.json
+  where: $.definitions.ContinuousBackupInformation
+  transform: >
+    $.properties.latestRestorableTimestamp['format'] = 'date-time';
 ```
 
 ### Tag: package-2021-10-csharp
@@ -382,7 +469,6 @@ directive:
 These settings apply only when `--tag=package-2021-10-csharp` is specified on the command line. We have to remove the following files:
 
 - `notebook.json`: that feature is offline due to security issues
-- `rbac.json`: a [bug](https://github.com/Azure/azure-rest-api-specs/issues/16560) is blocking SDK
 
 ```yaml $(tag) == 'package-2021-10-csharp'
 input-file:

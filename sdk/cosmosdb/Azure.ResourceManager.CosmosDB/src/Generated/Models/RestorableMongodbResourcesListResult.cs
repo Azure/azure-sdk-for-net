@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the restorable MongoDB resources. </summary>
-    internal partial class RestorableMongodbResourcesListResult
+    internal partial class RestorableMongoDBResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableMongodbResourcesListResult. </summary>
-        internal RestorableMongodbResourcesListResult()
+        /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
+        internal RestorableMongoDBResourcesListResult()
         {
             Value = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of RestorableMongoDBResourcesListResult. </summary>
         /// <param name="value"> List of restorable MongoDB resources, including the database and collection names. </param>
-        internal RestorableMongodbResourcesListResult(IReadOnlyList<DatabaseRestoreResourceInfo> value)
+        internal RestorableMongoDBResourcesListResult(IReadOnlyList<DatabaseRestoreResourceInfo> value)
         {
             Value = value;
         }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             CosmosDBSqlContainerResourceInfo resource = default;
-            Optional<CreateUpdateConfig> options = default;
+            Optional<CosmosDBCreateUpdateConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = CreateUpdateConfig.DeserializeCreateUpdateConfig(property0.Value);
+                            options = CosmosDBCreateUpdateConfig.DeserializeCosmosDBCreateUpdateConfig(property0.Value);
                             continue;
                         }
                     }

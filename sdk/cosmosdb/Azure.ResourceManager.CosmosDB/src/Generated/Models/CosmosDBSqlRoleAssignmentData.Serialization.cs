@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> roleDefinitionId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<string> scope = default;
             Optional<Guid> principalId = default;
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,12 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         if (property0.NameEquals("roleDefinitionId"))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scope"))

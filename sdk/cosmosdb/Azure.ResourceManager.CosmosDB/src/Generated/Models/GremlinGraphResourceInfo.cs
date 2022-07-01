@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultTtl"> Default time to live. </param>
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
-        internal GremlinGraphResourceInfo(string id, IndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, UniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
+        internal GremlinGraphResourceInfo(string id, CosmosDBIndexingPolicy indexingPolicy, ContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
         {
             Id = id;
             IndexingPolicy = indexingPolicy;
@@ -46,20 +46,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Name of the Cosmos DB Gremlin graph. </summary>
         public string Id { get; set; }
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </summary>
-        public IndexingPolicy IndexingPolicy { get; set; }
+        public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
         public ContainerPartitionKey PartitionKey { get; set; }
         /// <summary> Default time to live. </summary>
         public int? DefaultTtl { get; set; }
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
-        internal UniqueKeyPolicy UniqueKeyPolicy { get; set; }
+        internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy { get; set; }
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
-        public IList<UniqueKey> UniqueKeys
+        public IList<CosmosDBUniqueKey> UniqueKeys
         {
             get
             {
                 if (UniqueKeyPolicy is null)
-                    UniqueKeyPolicy = new UniqueKeyPolicy();
+                    UniqueKeyPolicy = new CosmosDBUniqueKeyPolicy();
                 return UniqueKeyPolicy.UniqueKeys;
             }
         }

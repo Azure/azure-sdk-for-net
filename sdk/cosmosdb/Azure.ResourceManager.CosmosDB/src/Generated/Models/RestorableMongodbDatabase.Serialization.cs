@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableMongodbDatabase
+    public partial class RestorableMongoDBDatabase
     {
-        internal static RestorableMongodbDatabase DeserializeRestorableMongodbDatabase(JsonElement element)
+        internal static RestorableMongoDBDatabase DeserializeRestorableMongoDBDatabase(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ExtendedRestorableMongodbDatabaseResourceInfo> resource = default;
+            Optional<ExtendedRestorableMongoDBDatabaseResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = ExtendedRestorableMongodbDatabaseResourceInfo.DeserializeExtendedRestorableMongodbDatabaseResourceInfo(property0.Value);
+                            resource = ExtendedRestorableMongoDBDatabaseResourceInfo.DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableMongodbDatabase(id, name, type, systemData.Value, resource.Value);
+            return new RestorableMongoDBDatabase(id, name, type, systemData.Value, resource.Value);
         }
     }
 }

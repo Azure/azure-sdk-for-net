@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CosmosTablePropertiesConfig. </summary>
-    public partial class CosmosTablePropertiesConfig : BaseConfig
+    public partial class CosmosTablePropertiesConfig : CosmosDBBaseConfig
     {
         /// <summary> Initializes a new instance of CosmosTablePropertiesConfig. </summary>
         public CosmosTablePropertiesConfig()

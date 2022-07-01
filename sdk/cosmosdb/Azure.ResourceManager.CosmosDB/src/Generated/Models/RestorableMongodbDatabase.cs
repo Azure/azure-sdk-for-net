@@ -11,25 +11,25 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB MongoDB database event. </summary>
-    public partial class RestorableMongodbDatabase : ResourceData
+    public partial class RestorableMongoDBDatabase : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableMongodbDatabase. </summary>
-        internal RestorableMongodbDatabase()
+        /// <summary> Initializes a new instance of RestorableMongoDBDatabase. </summary>
+        internal RestorableMongoDBDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbDatabase. </summary>
+        /// <summary> Initializes a new instance of RestorableMongoDBDatabase. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB database event. </param>
-        internal RestorableMongodbDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongodbDatabaseResourceInfo resource) : base(id, name, resourceType, systemData)
+        internal RestorableMongoDBDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBDatabaseResourceInfo resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
-        public ExtendedRestorableMongodbDatabaseResourceInfo Resource { get; }
+        public ExtendedRestorableMongoDBDatabaseResourceInfo Resource { get; }
     }
 }
