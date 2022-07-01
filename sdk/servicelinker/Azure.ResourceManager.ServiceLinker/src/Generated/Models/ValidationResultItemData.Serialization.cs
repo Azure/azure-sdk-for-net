@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ValidationResultItem
+    public partial class ValidationResultItemData
     {
-        internal static ValidationResultItem DeserializeValidationResultItem(JsonElement element)
+        internal static ValidationResultItemData DeserializeValidationResultItemData(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> description = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new ValidationResultItem(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
+            return new ValidationResultItemData(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SecretInfoBase : IUtf8JsonSerializable
+    public partial class SecretBaseInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretInfoBase DeserializeSecretInfoBase(JsonElement element)
+        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
         {
             if (element.TryGetProperty("secretType", out JsonElement discriminator))
             {
@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element);
                     case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element);
-                    case "rawValue": return ValueSecretInfo.DeserializeValueSecretInfo(element);
+                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
                 }
             }
-            SecretType secretType = default;
+            LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretType"))
                 {
-                    secretType = new SecretType(property.Value.GetString());
+                    secretType = new LinkerSecretType(property.Value.GetString());
                     continue;
                 }
             }
-            return new SecretInfoBase(secretType);
+            return new SecretBaseInfo(secretType);
         }
     }
 }

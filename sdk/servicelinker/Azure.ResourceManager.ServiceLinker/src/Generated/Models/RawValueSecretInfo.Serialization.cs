@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ValueSecretInfo : IUtf8JsonSerializable
+    public partial class RawValueSecretInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteEndObject();
         }
 
-        internal static ValueSecretInfo DeserializeValueSecretInfo(JsonElement element)
+        internal static RawValueSecretInfo DeserializeRawValueSecretInfo(JsonElement element)
         {
             Optional<string> value = default;
-            SecretType secretType = default;
+            LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("secretType"))
                 {
-                    secretType = new SecretType(property.Value.GetString());
+                    secretType = new LinkerSecretType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ValueSecretInfo(secretType, value.Value);
+            return new RawValueSecretInfo(secretType, value.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class ConfluentBootstrapServer : IUtf8JsonSerializable
+    public partial class ConfluentSchemaRegistryInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStringValue(Endpoint);
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ServiceType.ToString());
+            writer.WriteStringValue(TargetServiceType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static ConfluentBootstrapServer DeserializeConfluentBootstrapServer(JsonElement element)
+        internal static ConfluentSchemaRegistryInfo DeserializeConfluentSchemaRegistryInfo(JsonElement element)
         {
             Optional<string> endpoint = default;
             TargetServiceType type = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new ConfluentBootstrapServer(type, endpoint.Value);
+            return new ConfluentSchemaRegistryInfo(type, endpoint.Value);
         }
     }
 }
