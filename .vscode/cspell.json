@@ -180,6 +180,38 @@
       ]
     },
     {
+      "filename": "**/sdk/datafactory/**/*.cs",
+      "words": [
+        "Ssis",
+        "Asana",
+        "Adls",
+        "Usql",
+        "Distcp",
+        "Eloqua",
+        "Vsts",
+        "Byoa",
+        "Hdfs",
+        "Distcp",
+        "Hcatalog",
+        "Oozie",
+        "Sasl",
+        "Informix",
+        "Exprired",
+        "Magento",
+        "Fqdns",
+        "Netezza",
+        "Responsys",
+        "Hana",
+        "Ssisdb",
+        "Sybase",
+        "Teradata",
+        "Inprogress",
+        "Twilio",
+        "Vertica",
+        "Xero"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",

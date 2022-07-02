@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id

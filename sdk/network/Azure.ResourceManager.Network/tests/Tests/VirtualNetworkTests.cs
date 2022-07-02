@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.1.9",
                         Subnet = new SubnetData()
                         {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.1.9",
                         Subnet = new SubnetData()
                         {

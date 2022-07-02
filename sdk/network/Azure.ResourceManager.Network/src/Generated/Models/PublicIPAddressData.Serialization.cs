@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IPAllocationMethod> publicIPAllocationMethod = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<IPConfiguration> ipConfiguration = default;
+            Optional<NetworkIPAllocationMethod> publicIPAllocationMethod = default;
+            Optional<NetworkIPVersion> publicIPAddressVersion = default;
+            Optional<NetworkIPConfiguration> ipConfiguration = default;
             Optional<PublicIPAddressDnsSettings> dnsSettings = default;
             Optional<DdosSettings> ddosSettings = default;
             Optional<IList<IPTag>> ipTags = default;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            publicIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressVersion"))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            publicIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipConfiguration"))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipConfiguration = IPConfiguration.DeserializeIPConfiguration(property0.Value);
+                            ipConfiguration = NetworkIPConfiguration.DeserializeNetworkIPConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))

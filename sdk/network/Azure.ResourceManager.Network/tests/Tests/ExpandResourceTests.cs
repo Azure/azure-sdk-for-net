@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network.Tests
                 subnetName,
                 "IPConfigurations");
 
-            foreach (IPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
+            foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
             {
                 Assert.NotNull(ipconfig.Id);
                 //Assert.NotNull(ipconfig.Name);

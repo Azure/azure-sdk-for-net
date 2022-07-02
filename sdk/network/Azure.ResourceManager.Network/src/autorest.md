@@ -58,7 +58,7 @@ rename-mapping:
   DeleteOptions: IPAddressDeleteOption
   TransportProtocol: LoadBalancingTransportProtocol
   UsageUnit: NetworkUsageUnit
-  Direction: TrafficDirection
+  Direction: NetworkTrafficDirection
   Origin: IssueOrigin
   Severity: IssueSeverity
   Protocol: NetworkWatcherProtocol
@@ -68,6 +68,16 @@ rename-mapping:
   VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
   VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
+  ConnectivityIssue.type: ConnectivityIssueType
+  HTTPHeader: NetworkWatcherHTTPHeader
+  IPVersion: NetworkIPVersion
+  IPConfiguration: NetworkIPConfiguration
+  IPAllocationMethod: NetworkIPAllocationMethod
+  AuthenticationMethod: NetworkAuthenticationMethod
+  ConnectionStateSnapshot.connectionState: NetworkConnectionState
+  ConnectivityInformation.connectionStatus: NetworkConnectionStatus
+  DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
