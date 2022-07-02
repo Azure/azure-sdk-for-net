@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Storage
         public bool? EnableHttpsTrafficOnly { get { throw null; } set { } }
         public bool? EnableNfsV3 { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Encryption Encryption { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public bool? FailoverInProgress { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.GeoReplicationStats GeoReplicationStats { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -1202,29 +1202,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ExpirationAction left, Azure.ResourceManager.Storage.Models.ExpirationAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ExpirationAction (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ExpirationAction left, Azure.ResourceManager.Storage.Models.ExpirationAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ExtendedLocation
-    {
-        public ExtendedLocation() { }
-        public Azure.ResourceManager.Storage.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Storage.Models.ExtendedLocationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExtendedLocationType(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.ExtendedLocationType EdgeZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.ExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.ExtendedLocationType left, Azure.ResourceManager.Storage.Models.ExtendedLocationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.ExtendedLocationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.ExtendedLocationType left, Azure.ResourceManager.Storage.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2181,7 +2158,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? EnableHttpsTrafficOnly { get { throw null; } set { } }
         public bool? EnableNfsV3 { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.Encryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutableStorageAccount ImmutableStorageWithVersioning { get { throw null; } set { } }
         public bool? IsHnsEnabled { get { throw null; } set { } }
