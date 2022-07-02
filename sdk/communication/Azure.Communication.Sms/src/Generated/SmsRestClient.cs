@@ -97,7 +97,7 @@ namespace Azure.Communication.Sms
                         return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message0.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message0.Response);
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Communication.Sms
                         return Response.FromValue(value, message0.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message0.Response);
+                    throw new RequestFailedException(message0.Response);
             }
         }
     }
