@@ -9,6 +9,8 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
+// this is required, the generator will generate another SystemData in Azure.ResourceManager.Monitor.Models under the hood and remove it in the last step if it is unused. If we did not specify that, it will have ambiguity while determining if that SystemData is truly unused
+using SystemData = Azure.ResourceManager.Models.SystemData;
 
 namespace Azure.ResourceManager.Monitor
 {
