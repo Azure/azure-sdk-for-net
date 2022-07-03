@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> seedNodes = default;
-            Optional<IReadOnlyList<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems>> nodes = default;
+            Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems> array = new List<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems>();
+                    List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems.DeserializeComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems(item));
+                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item));
                     }
                     nodes = array;
                     continue;
