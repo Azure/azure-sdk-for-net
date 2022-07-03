@@ -188,6 +188,7 @@
         "kube",
         "kubeconfigs",
         "kubelet",
+        "Kubenet",
         "ossku",
         "pids",
         "somaxconn",
