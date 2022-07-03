@@ -97,7 +97,7 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
     },
-	{
+    {
       "filename": "**/sdk/alertsmanagement/**/*.cs",
       "words": [
         "groupby",
@@ -177,6 +177,24 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerservice/**/*",
+      "words": [
+        "gmsa",
+        "inotify",
+        "intvl",
+        "kube",
+        "kubeconfigs",
+        "kubelet",
+        "ossku",
+        "pids",
+        "somaxconn",
+        "sysctls",
+        "tcpkeepalive",
+        "wasi",
+        "wmem"
       ]
     },
     {
@@ -291,7 +309,7 @@
         "mhsmip"
       ]
     },
-	{
+    {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
@@ -428,7 +446,7 @@
         "Vstsrm"
       ]
     },
-	{
+    {
       "filename": "**/sdk/workloads/**/*.cs",
       "words": [
         "ascs",
