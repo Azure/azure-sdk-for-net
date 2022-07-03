@@ -14,6 +14,7 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Microsoft.CSharp.RuntimeBinder;
 using System.Threading;
 using System.Drawing.Design;
 using System.Reflection;
@@ -116,19 +117,46 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         [RecordedTest]
         public async Task TestSVIPatchCall()
         {
-            string sviName = "G80";
-            string rgName = "E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2";
+            string sviName = "B83";
+            string rgName = "svi-loop-test-register-02Jul-singleserver-88";
 
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var lro = await subscription.GetResourceGroups().GetAsync(rgName);
             ResourceGroupResource rg = lro.Value;
             var sviObject = await lro.Value.GetSapVirtualInstanceAsync(sviName);
+            var appServer = await sviObject.Value.GetSapApplicationServerInstanceAsync("app0");
+            var dbServer = await sviObject.Value.GetSapDatabaseInstanceAsync("db0");
+            var csServer = await sviObject.Value.GetSapCentralServerInstanceAsync("cs0");
 
             // Patch call for SVI
             await sviObject.Value.AddTagAsync("TestKey1", "TestValue1");
+            await appServer.Value.AddTagAsync("TestKey1", "TestValue1");
+            await dbServer.Value.AddTagAsync("TestKey1", "TestValue1");
+            await csServer.Value.AddTagAsync("TestKey1", "TestValue1");
 
             Thread.Sleep(GetStatusIntervalinMillis);
+
+            sviObject = await lro.Value.GetSapVirtualInstanceAsync(sviName);
+            appServer = await sviObject.Value.GetSapApplicationServerInstanceAsync("app0");
+            dbServer = await sviObject.Value.GetSapDatabaseInstanceAsync("db0");
+            csServer = await sviObject.Value.GetSapCentralServerInstanceAsync("cs0");
+
             var firsttag = sviObject.Value.Data.Tags.Values.GetEnumerator();
+            firsttag.MoveNext();
+            Assert.AreEqual(firsttag.Current, "TestValue1");
+            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+
+            firsttag = appServer.Value.Data.Tags.Values.GetEnumerator();
+            firsttag.MoveNext();
+            Assert.AreEqual(firsttag.Current, "TestValue1");
+            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+
+            firsttag = dbServer.Value.Data.Tags.Values.GetEnumerator();
+            firsttag.MoveNext();
+            Assert.AreEqual(firsttag.Current, "TestValue1");
+            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+
+            firsttag = csServer.Value.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
             Assert.AreEqual(firsttag.Current, "TestValue1");
             await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
@@ -142,77 +170,41 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
+            // Reading the constants files.
             var testSapWorkloadJson = File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
-            var sapPayloadJson = JsonDocument.Parse(testSapWorkloadJson).RootElement;
+
+            string sshPrivateKey = File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
+
+            string sshPublicKey = File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPublic.txt"));
+
+            // Editing the payload at runtime.
+            dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+
+            DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                infraRgName;
+            DynamicObject.properties.configuration.infrastructureConfiguration.
+                virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
+                    sshPublicKey;
+
+            if (isInstall)
+            {
+                DynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
+                    sshPrivateKey;
+            }
+            else
+            {
+                DynamicObject.properties.configuration.softwareConfiguration = null;
+            }
+
+            var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
 
             SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
                 sapPayloadJson);
 
-            DeploymentConfiguration deploymentConfiguration = DeploymentConfiguration.DeserializeDeploymentConfiguration(
-                sapPayloadJson.GetProperty("properties").GetProperty("configuration"));
-
-            deploymentConfiguration.InfrastructureConfiguration.AppResourceGroup = infraRgName;
-
-            if (isInstall)
-            {
-                // Creating the installation payload after fetching the SshPrivateKey
-                ServiceInitiatedSoftwareConfiguration softwareConfiguration =
-                    ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(
-                        sapPayloadJson.GetProperty("properties").GetProperty("configuration").GetProperty("softwareConfiguration"));
-
-                string sshPrivateKey = File.ReadAllText(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
-
-                softwareConfiguration.SshPrivateKey = sshPrivateKey;
-                deploymentConfiguration.SoftwareConfiguration = softwareConfiguration;
-            }
-            // Create payload does not have Software Configuration
-            else
-            {
-                deploymentConfiguration.SoftwareConfiguration = null;
-            }
-
-            testSapWorkload.Configuration = deploymentConfiguration;
-
             return testSapWorkload;
-        }
-
-        /// <summary>
-        /// Gets the certificate from local store.
-        /// </summary>
-        /// <param name="certSubjectName">Certificate subject name.</param>
-        /// <returns>Certificate object.</returns>
-        public static X509Certificate2 GetCertificateBySubjectName(string certSubjectName)
-        {
-            using (var machineCertStore = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-            {
-                machineCertStore.Open(OpenFlags.ReadOnly);
-
-                var certCollection = machineCertStore.Certificates.Find(
-                    X509FindType.FindBySubjectName,
-                    certSubjectName,
-                    false);
-                if (certCollection.Count == 0)
-                {
-                    throw new ArgumentException(
-                        $"Certificate with subject name: {certSubjectName} is not present in local " +
-                        $"machine store.");
-                }
-                else
-                {
-                    X509Certificate2 selectedCert = certCollection[0];
-                    foreach (X509Certificate2 cert in certCollection)
-                    {
-                        if (cert.NotBefore > selectedCert.NotBefore)
-                        {
-                            selectedCert = cert;
-                        }
-                    }
-
-                    return selectedCert;
-                }
-            }
         }
     }
 }
