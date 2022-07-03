@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ThroughputSettingsPropertiesResource> resource = default;
+            Optional<ExtendedThroughputSettingsResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = ThroughputSettingsPropertiesResource.DeserializeThroughputSettingsPropertiesResource(property0.Value);
+                            resource = ExtendedThroughputSettingsResourceInfo.DeserializeExtendedThroughputSettingsResourceInfo(property0.Value);
                             continue;
                         }
                     }
