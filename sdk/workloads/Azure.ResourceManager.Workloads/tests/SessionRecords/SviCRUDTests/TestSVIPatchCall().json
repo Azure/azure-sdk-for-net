@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-03867c23568dd4408c995db1c1f7aaa3-d4e94e96916e6a4b-00",
+        "traceparent": "00-6ecd9fdf086b584e9678e195f0169c9e-1864f9d6ca151049-00",
         "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "768d4a1b2ade7ee348fcf4ef39d2378c",
+        "x-ms-client-request-id": "babcd3fcf8f970792e27f787c0ea52af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "445",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:41 GMT",
+        "Date": "Sun, 03 Jul 2022 22:27:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "41f366b5-5149-4e71-bd14-678b2459d713",
+        "x-ms-correlation-request-id": "1c27c983-c718-426c-983d-c63ef5b8cf38",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "41f366b5-5149-4e71-bd14-678b2459d713",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065741Z:41f366b5-5149-4e71-bd14-678b2459d713"
+        "x-ms-request-id": "1c27c983-c718-426c-983d-c63ef5b8cf38",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222745Z:1c27c983-c718-426c-983d-c63ef5b8cf38"
       },
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c",
@@ -48,39 +48,39 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/svi-loop-test-register-02Jul-singleserver-88?api-version=2021-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6f0d1378d581c143b51717f901b65df6-9e7eaaddf6703740-00",
+        "traceparent": "00-7f13e7533dd53642af0a00400a4ef9bc-47cf17656e82a248-00",
         "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "40d8c491bb34cd65e1a341f200ab82a3",
+        "x-ms-client-request-id": "0f3b66a0fcc0898eff5e6d00f273c263",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "338",
+        "Content-Length": "320",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:41 GMT",
+        "Date": "Sun, 03 Jul 2022 22:27:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "eea84b7b-af6d-4254-b5c9-4ea171705c79",
+        "x-ms-correlation-request-id": "cd50bd1e-5864-4ef0-a08b-90f81695fe97",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "eea84b7b-af6d-4254-b5c9-4ea171705c79",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065742Z:eea84b7b-af6d-4254-b5c9-4ea171705c79"
+        "x-ms-request-id": "cd50bd1e-5864-4ef0-a08b-90f81695fe97",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222745Z:cd50bd1e-5864-4ef0-a08b-90f81695fe97"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2",
-        "name": "E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88",
+        "name": "svi-loop-test-register-02Jul-singleserver-88",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2euap",
         "tags": {
-          "Created": "20220629"
+          "Created": "20220702"
         },
         "properties": {
           "provisioningState": "Succeeded"
@@ -88,49 +88,47 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80?api-version=2021-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83?api-version=2021-12-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-edb72be01d70704fb157c73a47fea22a-fc42e905215d114b-00",
-        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1da11b7a8d324cc2c931681327a1ce12",
+        "traceparent": "00-f872babb6300ff48bee5a1a142197bd8-1619d4facd01934e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "fcea8374e1bb05380de398eafba75451",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4753",
+        "Content-Length": "2486",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:42 GMT",
-        "ETag": "\u002202008232-0000-3400-0000-62be9ac40000\u0022",
+        "Date": "Sun, 03 Jul 2022 22:27:46 GMT",
+        "ETag": "\u002202001bc2-0000-3400-0000-62c217580000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bbfc8181-3cc3-4e2a-9178-0b4965f95269",
+        "x-ms-correlation-request-id": "c4044a90-12c9-4753-9d8d-35b128bdb290",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "a3364ac4-80df-4293-853b-05bf184e00c6",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065743Z:bbfc8181-3cc3-4e2a-9178-0b4965f95269"
+        "x-ms-request-id": "d04b9097-a0e4-4244-8e15-69187fa0c824",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222746Z:c4044a90-12c9-4753-9d8d-35b128bdb290"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80",
-        "name": "G80",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83",
+        "name": "B83",
         "type": "microsoft.workloads/sapvirtualinstances",
         "location": "eastus2euap",
-        "tags": {
-          "TestKey1": "TestValue1"
-        },
+        "tags": {},
         "systemData": {
           "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
           "createdByType": "Application",
-          "createdAt": "2022-06-29T22:38:47.0954761Z",
-          "lastModifiedBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdAt": "2022-07-02T02:29:13.5958162Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-07-01T06:57:08.4501589Z"
+          "lastModifiedAt": "2022-07-03T22:25:27.9671783Z"
         },
         "properties": {
           "environment": "NonProd",
@@ -139,100 +137,43 @@
             "configurationType": "Deployment",
             "appLocation": "eastus",
             "infrastructureConfiguration": {
-              "deploymentType": "ThreeTier",
-              "centralServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_E8ds_v4",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
+              "deploymentType": "SingleServer",
+              "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+              "virtualMachineConfiguration": {
+                "vmSize": "Standard_E32ds_v4",
+                "imageReference": {
+                  "sku": "gen2",
+                  "publisher": "SUSE",
+                  "version": "2022.01.26",
+                  "offer": "sles-sap-15-sp3"
+                },
+                "osProfile": {
+                  "adminUsername": "adminuser",
+                  "osConfiguration": {
+                    "osType": "Linux",
+                    "disablePasswordAuthentication": true,
+                    "ssh": {
+                      "publicKeys": [
+                        {
+                          "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
+                        }
+                      ]
                     }
                   }
-                },
-                "instanceCount": 1
+                }
               },
-              "applicationServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_E4ds_v4",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "instanceCount": 2
-              },
-              "databaseServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet-db",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_M32ts",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "instanceCount": 1
-              },
-              "appResourceGroup": "E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2-infra"
+              "appResourceGroup": "svi-loop-test-register-02Jul-singleserver-88-infra"
             },
             "softwareConfiguration": {
               "softwareInstallationType": "ServiceInitiated",
-              "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits7/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
+              "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits8/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
               "softwareVersion": "SAP S/4HANA 1909 SPS 03",
               "sapFqdn": "sap.e2e.com",
               "sapBitsStorageAccountId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/yb-SapInstall/providers/Microsoft.Storage/storageAccounts/ybteststorageaccount"
             }
           },
           "managedResourceGroupConfiguration": {
-            "name": "mrg-G80-c5441e"
+            "name": "mrg-B83-60c618"
           },
           "status": "Running",
           "health": "Healthy",
@@ -242,54 +183,249 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0?api-version=2021-12-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3d065b8455368b458204a3423418b63d-d5859345557cb642-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "6d09af0681505f06e5c0953be9f07e9c",
+        "traceparent": "00-1a75042e269958498b42c076e7a07f12-926fdba904d4b44f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "32cff91cc8d9ff2d4532bb9a8a787dba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "325",
+        "Content-Length": "1183",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:43 GMT",
+        "Date": "Sun, 03 Jul 2022 22:27:47 GMT",
+        "ETag": "\u002201001b71-0000-3400-0000-62c217960000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "31f9e556-09a6-41a2-9c9d-e43703b27de8",
+        "x-ms-correlation-request-id": "462bb260-925e-4196-9e3a-65c2b15d11d6",
+        "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "31f9e556-09a6-41a2-9c9d-e43703b27de8",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065744Z:31f9e556-09a6-41a2-9c9d-e43703b27de8"
+        "x-ms-request-id": "1fdd22f9-a637-4a98-ad63-a7ad90fd9f9c",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222747Z:462bb260-925e-4196-9e3a-65c2b15d11d6"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80/providers/Microsoft.Resources/tags/default",
-        "name": "default",
-        "type": "Microsoft.Resources/tags",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0",
+        "name": "app0",
+        "type": "microsoft.workloads/sapvirtualinstances/applicationinstances",
+        "location": "eastus2euap",
+        "tags": {},
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:23.8503678Z",
+          "lastModifiedBy": "skottukkal@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-03T22:26:30.4753443Z"
+        },
         "properties": {
-          "tags": {
-            "TestKey1": "TestValue1"
-          }
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+          "status": "Running",
+          "health": "Healthy",
+          "provisioningState": "Succeeded",
+          "instanceNo": "02",
+          "hostname": "b83vm",
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300",
+          "gatewayPort": 3302,
+          "icmHttpPort": 0,
+          "icmHttpsPort": 0
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2e992eaed0c2a64a810b67f0d9bd1cd8-d22a6a3e1b499e4a-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3d13946456ffbef32e3601dc64a38e57",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1095",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:47 GMT",
+        "ETag": "\u00220000ca21-0000-3400-0000-62c2179d0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dcc81be2-5386-4c9a-9248-30deb1680e3b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "a1ca3214-65d4-405b-b13e-41e778e17dd3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222748Z:dcc81be2-5386-4c9a-9248-30deb1680e3b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0",
+        "name": "db0",
+        "type": "microsoft.workloads/sapvirtualinstances/databaseinstances",
+        "location": "eastus2euap",
+        "tags": {},
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.5229293Z",
+          "lastModifiedBy": "skottukkal@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-03T22:26:37.2470444Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "status": "Running",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "status": "Running"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "databaseSid": "D83",
+          "databaseType": "hdb"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a79fe6bd997504eb2694a2a76986c9e-257e74fa0b94fb47-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f9e31c0a8fa4ac8a55eab689269e7a94",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:48 GMT",
+        "ETag": "\u0022000098c4-0000-3400-0000-62c217be0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2ff48a65-06c1-452d-8a1c-5d3983c4ca71",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "f69a90f6-3aad-454c-a329-0a257f3e60d8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222748Z:2ff48a65-06c1-452d-8a1c-5d3983c4ca71"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0",
+        "name": "cs0",
+        "type": "microsoft.workloads/sapvirtualinstances/centralinstances",
+        "location": "eastus2euap",
+        "tags": {},
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.2416458Z",
+          "lastModifiedBy": "skottukkal@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-07-03T22:27:10.359102Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "status": "Running",
+          "health": "Healthy",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "type": "Primary"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "instanceNo": "1",
+          "messageServerProperties": {
+            "msPort": 3601,
+            "internalMsPort": 3901,
+            "httpPort": 8101,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "enqueueServerProperties": {
+            "port": 3201,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "gatewayServerProperties": {
+            "port": 3301,
+            "health": "Healthy"
+          },
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f4b24ec98e4a404d99654d10c0c03e26-a6725edc8a1f2148-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "6685de651694c651051004a2c6509ba1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "293",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1874b24e-fe1d-43de-a0f0-b6bc92a7416a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "1874b24e-fe1d-43de-a0f0-b6bc92a7416a",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222748Z:1874b24e-fe1d-43de-a0f0-b6bc92a7416a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "49",
         "Content-Type": "application/json",
-        "traceparent": "00-3d065b8455368b458204a3423418b63d-9a4e424cebaf2245-00",
+        "traceparent": "00-f4b24ec98e4a404d99654d10c0c03e26-8933af6cb1ff194c-00",
         "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "1e75507919300459028c76035351a63f",
+        "x-ms-client-request-id": "6e8f63a38494d5150a67e7149f6a9890",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -302,20 +438,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "325",
+        "Content-Length": "316",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:51 GMT",
+        "Date": "Sun, 03 Jul 2022 22:27:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "63c4d1b6-f5bc-4aef-9a92-cee295b72b99",
+        "x-ms-correlation-request-id": "72b8ae0c-387e-49e6-af5a-bdaac0cf6fd5",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "63c4d1b6-f5bc-4aef-9a92-cee295b72b99",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065751Z:63c4d1b6-f5bc-4aef-9a92-cee295b72b99"
+        "x-ms-request-id": "72b8ae0c-387e-49e6-af5a-bdaac0cf6fd5",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222754Z:72b8ae0c-387e-49e6-af5a-bdaac0cf6fd5"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80/providers/Microsoft.Resources/tags/default",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default",
         "name": "default",
         "type": "Microsoft.Resources/tags",
         "properties": {
@@ -326,37 +462,37 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80?api-version=2021-12-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83?api-version=2021-12-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3d065b8455368b458204a3423418b63d-1319a638f20c8148-00",
-        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "51eb2ed515a1f85315423872f78663d8",
+        "traceparent": "00-f4b24ec98e4a404d99654d10c0c03e26-e4cde3751149824c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "85776cbb281ef3c3ca1df3938be7e504",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4753",
+        "Content-Length": "2508",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Jul 2022 06:57:51 GMT",
-        "ETag": "\u002202008b32-0000-3400-0000-62be9aeb0000\u0022",
+        "Date": "Sun, 03 Jul 2022 22:27:54 GMT",
+        "ETag": "\u0022020028c2-0000-3400-0000-62c217e70000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "db8cd8c4-40e3-475f-9baf-fd318546a81e",
+        "x-ms-correlation-request-id": "4ddd04df-c0c6-40ea-b88f-d37d1ba6d398",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "adb3c255-5055-4ec4-b895-fdd8c2b8ce7f",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065752Z:db8cd8c4-40e3-475f-9baf-fd318546a81e"
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "be83473d-17d0-4448-b120-3bb2e57bd0de",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222754Z:4ddd04df-c0c6-40ea-b88f-d37d1ba6d398"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80",
-        "name": "G80",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83",
+        "name": "B83",
         "type": "microsoft.workloads/sapvirtualinstances",
         "location": "eastus2euap",
         "tags": {
@@ -365,10 +501,10 @@
         "systemData": {
           "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
           "createdByType": "Application",
-          "createdAt": "2022-06-29T22:38:47.0954761Z",
+          "createdAt": "2022-07-02T02:29:13.5958162Z",
           "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2022-07-01T06:57:47.0161281Z"
+          "lastModifiedAt": "2022-07-03T22:27:51.075333Z"
         },
         "properties": {
           "environment": "NonProd",
@@ -377,100 +513,43 @@
             "configurationType": "Deployment",
             "appLocation": "eastus",
             "infrastructureConfiguration": {
-              "deploymentType": "ThreeTier",
-              "centralServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_E8ds_v4",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
+              "deploymentType": "SingleServer",
+              "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+              "virtualMachineConfiguration": {
+                "vmSize": "Standard_E32ds_v4",
+                "imageReference": {
+                  "sku": "gen2",
+                  "publisher": "SUSE",
+                  "version": "2022.01.26",
+                  "offer": "sles-sap-15-sp3"
+                },
+                "osProfile": {
+                  "adminUsername": "adminuser",
+                  "osConfiguration": {
+                    "osType": "Linux",
+                    "disablePasswordAuthentication": true,
+                    "ssh": {
+                      "publicKeys": [
+                        {
+                          "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
+                        }
+                      ]
                     }
                   }
-                },
-                "instanceCount": 1
+                }
               },
-              "applicationServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_E4ds_v4",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "instanceCount": 2
-              },
-              "databaseServer": {
-                "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet-db",
-                "virtualMachineConfiguration": {
-                  "vmSize": "Standard_M32ts",
-                  "imageReference": {
-                    "sku": "12-sp4-gen2",
-                    "publisher": "SUSE",
-                    "version": "2022.02.01",
-                    "offer": "SLES-SAP"
-                  },
-                  "osProfile": {
-                    "adminUsername": "adminuser",
-                    "osConfiguration": {
-                      "osType": "Linux",
-                      "disablePasswordAuthentication": true,
-                      "ssh": {
-                        "publicKeys": [
-                          {
-                            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "instanceCount": 1
-              },
-              "appResourceGroup": "E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2-infra"
+              "appResourceGroup": "svi-loop-test-register-02Jul-singleserver-88-infra"
             },
             "softwareConfiguration": {
               "softwareInstallationType": "ServiceInitiated",
-              "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits7/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
+              "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits8/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
               "softwareVersion": "SAP S/4HANA 1909 SPS 03",
               "sapFqdn": "sap.e2e.com",
               "sapBitsStorageAccountId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/yb-SapInstall/providers/Microsoft.Storage/storageAccounts/ybteststorageaccount"
             }
           },
           "managedResourceGroupConfiguration": {
-            "name": "mrg-G80-c5441e"
+            "name": "mrg-B83-60c618"
           },
           "status": "Running",
           "health": "Healthy",
@@ -480,14 +559,763 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/E2E-SVI-DevBox-29Jun-distributed-SLES-SAP-12-sp4-gen2/providers/Microsoft.Workloads/sapVirtualInstances/G80/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-519456e19a291c49a2128ad1d07edfa6-ecd822d8217fe742-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c3e5144f0c0ee0ffc8b05b2d2f3c279a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "319",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cb9dc5dd-c41e-4346-8728-638bcc5b52a4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "cb9dc5dd-c41e-4346-8728-638bcc5b52a4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222755Z:cb9dc5dd-c41e-4346-8728-638bcc5b52a4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "traceparent": "00-519456e19a291c49a2128ad1d07edfa6-43c05d47b6218b44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5ae6747815d97b839f9ba37790824923",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "342",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8e3819fb-b163-4db9-a1db-3c35c1ad2051",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "8e3819fb-b163-4db9-a1db-3c35c1ad2051",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222757Z:8e3819fb-b163-4db9-a1db-3c35c1ad2051"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-519456e19a291c49a2128ad1d07edfa6-8cc7af94ed042c42-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8ac5e281d585af816c96bd6dcc96c48e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:57 GMT",
+        "ETag": "\u002201002671-0000-3400-0000-62c217eb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f65d2eae-d55c-4e93-ae03-c7230a692953",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "9aae1be9-1df6-41a1-9f2c-d6b1a140cea6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222757Z:f65d2eae-d55c-4e93-ae03-c7230a692953"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0",
+        "name": "app0",
+        "type": "microsoft.workloads/sapvirtualinstances/applicationinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:23.8503678Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:27:55.6888168Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+          "status": "Running",
+          "health": "Healthy",
+          "provisioningState": "Succeeded",
+          "instanceNo": "02",
+          "hostname": "b83vm",
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300",
+          "gatewayPort": 3302,
+          "icmHttpPort": 0,
+          "icmHttpsPort": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e2c0dc12ecf5d341b9bc8055193a2fcd-79ce045bd940a049-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "171b59f58a00392b9169237268885046",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "315",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:27:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a50014a-5b29-4256-8cd3-0840276c3834",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "3a50014a-5b29-4256-8cd3-0840276c3834",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222758Z:3a50014a-5b29-4256-8cd3-0840276c3834"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "traceparent": "00-e2c0dc12ecf5d341b9bc8055193a2fcd-f755819dbef3c642-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4cab38669d77a315f237ed425815af09",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "338",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "890275d9-83ba-4da9-9955-966ddc4a241f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "890275d9-83ba-4da9-9955-966ddc4a241f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222801Z:890275d9-83ba-4da9-9955-966ddc4a241f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e2c0dc12ecf5d341b9bc8055193a2fcd-5cc961da6a1e824f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "378215d73266f622b68cf91cb10f46e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1137",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:01 GMT",
+        "ETag": "\u00220000cc21-0000-3400-0000-62c217ee0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "38818587-795d-402a-af34-e17386452cfa",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "2c1bcbeb-4b36-4d03-b053-886cba870bcb",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222801Z:38818587-795d-402a-af34-e17386452cfa"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0",
+        "name": "db0",
+        "type": "microsoft.workloads/sapvirtualinstances/databaseinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.5229293Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:27:58.6739007Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "status": "Running",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "status": "Running"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "databaseSid": "D83",
+          "databaseType": "hdb"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d3a2e33cd9e6d44bab2969a8a4defa63-f518ac020552d047-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9407764678ea5816437724c99de9e07b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "314",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a58c1c12-6c7b-4fe3-be95-bced5a65f8d8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "a58c1c12-6c7b-4fe3-be95-bced5a65f8d8",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222801Z:a58c1c12-6c7b-4fe3-be95-bced5a65f8d8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "traceparent": "00-d3a2e33cd9e6d44bab2969a8a4defa63-8c0501e70e8c0949-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "539b19b9180534df15b495eaa4f8f1e3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "337",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5c450a8e-3c1d-4d77-9a30-5b44b36c8c4f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "5c450a8e-3c1d-4d77-9a30-5b44b36c8c4f",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222804Z:5c450a8e-3c1d-4d77-9a30-5b44b36c8c4f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0/providers/Microsoft.Resources/tags/default",
+        "name": "default",
+        "type": "Microsoft.Resources/tags",
+        "properties": {
+          "tags": {
+            "TestKey1": "TestValue1"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d3a2e33cd9e6d44bab2969a8a4defa63-966d8311aa1bad40-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e1fb09f11b0e5e1efe29f3ef0d5959cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:04 GMT",
+        "ETag": "\u002200009bc4-0000-3400-0000-62c217f20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2766d7cb-820c-4e02-8711-a3615cb866b9",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "f8b33dac-a3d1-4ad9-b754-0611b68f014b",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222804Z:2766d7cb-820c-4e02-8711-a3615cb866b9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0",
+        "name": "cs0",
+        "type": "microsoft.workloads/sapvirtualinstances/centralinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.2416458Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:28:02.3330714Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "status": "Running",
+          "health": "Healthy",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "type": "Primary"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "instanceNo": "1",
+          "messageServerProperties": {
+            "msPort": 3601,
+            "internalMsPort": 3901,
+            "httpPort": 8101,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "enqueueServerProperties": {
+            "port": 3201,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "gatewayServerProperties": {
+            "port": 3301,
+            "health": "Healthy"
+          },
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-df4d75c6c326c14bbc8912989fdcbcf6-62a57b61518ba448-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "98627dabf2732ede97d37e35e22cb44b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2508",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:14 GMT",
+        "ETag": "\u0022020028c2-0000-3400-0000-62c217e70000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "98d87e02-4144-4356-9533-a7a30fc2070b",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "0b732836-794c-4671-8e3e-0a54ac26e54d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222815Z:98d87e02-4144-4356-9533-a7a30fc2070b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83",
+        "name": "B83",
+        "type": "microsoft.workloads/sapvirtualinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "d4b3c6a3-2fd1-4f46-b0c1-37220ff8d54d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:29:13.5958162Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:27:51.075333Z"
+        },
+        "properties": {
+          "environment": "NonProd",
+          "sapProduct": "S4HANA",
+          "configuration": {
+            "configurationType": "Deployment",
+            "appLocation": "eastus",
+            "infrastructureConfiguration": {
+              "deploymentType": "SingleServer",
+              "subnetId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+              "virtualMachineConfiguration": {
+                "vmSize": "Standard_E32ds_v4",
+                "imageReference": {
+                  "sku": "gen2",
+                  "publisher": "SUSE",
+                  "version": "2022.01.26",
+                  "offer": "sles-sap-15-sp3"
+                },
+                "osProfile": {
+                  "adminUsername": "adminuser",
+                  "osConfiguration": {
+                    "osType": "Linux",
+                    "disablePasswordAuthentication": true,
+                    "ssh": {
+                      "publicKeys": [
+                        {
+                          "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPasKQ7pRBFzDsyM3y8UiH\u002BZvhDeGzqUsuTPktiz/YJeufmgjWnKqYTuZX/tLhSAtX/imG9dBDCLEe5bxLtOn1m2i1vRCfsh2NxNqVxSl2GRXTnsC9Ehw5PHqXQhxSHNItDD1K6vKlydVw7DhmJgkl\u002B1Og7WPdxeO/D6YQr1ogmaQHoK2A0AJyH9HXGbNtIiFUuPers8sKhzYztPSZCO9EZvYTB7quNSa7usgv6CByiJ2MOre/RuLaE7B7lRKhysjeIn1M\u002BfQ3xKxW9cXsJhAHTgbqO2peydz5TLpP0S9XuIna0O5pQEXFgUnfdX/W6NT94Vl/Cqs8obSfQntZ/QmGvr1Qb27ZBSQ24eIsYDfr1mI423TuXwUr\u002B1AEvaSCapgRBnDaV3nBzk9qp1kIIGWRGpaz6qb3ahYpDGP\u002BA8lABy19rBk\u002B/Kmfb9N8qkUK7kdNytHeusKoR0kzhW8xpctCnd/13oN3gXbps0Tx8O2E5w7n\u002BBIDNodxEGxzdYD1hh0= generated-by-azure"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "appResourceGroup": "svi-loop-test-register-02Jul-singleserver-88-infra"
+            },
+            "softwareConfiguration": {
+              "softwareInstallationType": "ServiceInitiated",
+              "bomUrl": "https://ybteststorageaccount.blob.core.windows.net/sapbits8/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml",
+              "softwareVersion": "SAP S/4HANA 1909 SPS 03",
+              "sapFqdn": "sap.e2e.com",
+              "sapBitsStorageAccountId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/yb-SapInstall/providers/Microsoft.Storage/storageAccounts/ybteststorageaccount"
+            }
+          },
+          "managedResourceGroupConfiguration": {
+            "name": "mrg-B83-60c618"
+          },
+          "status": "Running",
+          "health": "Healthy",
+          "state": "RegistrationComplete",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4aeeed19552f9b458aaa4bf9c0fc15df-8a3ad184f0935549-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "93d84186feed9e6cfa3c55dc24f026bc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1225",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:14 GMT",
+        "ETag": "\u002201002671-0000-3400-0000-62c217eb0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dced9a97-7416-45e0-b7d8-fd036df92d74",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "b94205f1-5eac-4178-8927-b87578fb3216",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222815Z:dced9a97-7416-45e0-b7d8-fd036df92d74"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/applicationInstances/app0",
+        "name": "app0",
+        "type": "microsoft.workloads/sapvirtualinstances/applicationinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:23.8503678Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:27:55.6888168Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+          "status": "Running",
+          "health": "Healthy",
+          "provisioningState": "Succeeded",
+          "instanceNo": "02",
+          "hostname": "b83vm",
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300",
+          "gatewayPort": 3302,
+          "icmHttpPort": 0,
+          "icmHttpsPort": 0
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-649ee6c36cc5af43831209b6e4f1fc07-d058581ba5676647-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "263ec85b5995fe6f2acd4a3b9ce97bd2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1137",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:15 GMT",
+        "ETag": "\u00220000cc21-0000-3400-0000-62c217ee0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3628081e-9559-4d96-b89a-28abfe781c5d",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "1209e715-c4bf-4d24-97d3-ed05e79f15f6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222816Z:3628081e-9559-4d96-b89a-28abfe781c5d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/databaseInstances/db0",
+        "name": "db0",
+        "type": "microsoft.workloads/sapvirtualinstances/databaseinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.5229293Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:27:58.6739007Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "ipAddress": "10.0.0.5",
+          "status": "Running",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "status": "Running"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "databaseSid": "D83",
+          "databaseType": "hdb"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0?api-version=2021-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a39f92ad1299aa45a93881e52d251379-2e2dbd25e6b1234c-00",
+        "User-Agent": "azsdk-net-ResourceManager.Workloads/1.0.0-alpha.20220701.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "cc68a875c581addf10c49d379d0209a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 03 Jul 2022 22:28:15 GMT",
+        "ETag": "\u002200009bc4-0000-3400-0000-62c217f20000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "13f4b5e6-6875-4fd6-8a7e-538b68518507",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "9edd89e2-7c19-4dc1-9e1b-763a3ce7b3a0",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222816Z:13f4b5e6-6875-4fd6-8a7e-538b68518507"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/centralInstances/cs0",
+        "name": "cs0",
+        "type": "microsoft.workloads/sapvirtualinstances/centralinstances",
+        "location": "eastus2euap",
+        "tags": {
+          "TestKey1": "TestValue1"
+        },
+        "systemData": {
+          "createdBy": "ea21b132-560f-4b0b-9876-903b6bca7b9d",
+          "createdByType": "Application",
+          "createdAt": "2022-07-02T02:31:24.2416458Z",
+          "lastModifiedBy": "98f50aef-4bc8-4929-bba1-7d6928d5465a",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-07-03T22:28:02.3330714Z"
+        },
+        "properties": {
+          "subnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/SAP-E2ETest-rg/providers/Microsoft.Network/virtualNetworks/loop-test-vnet/subnets/loopsubnet",
+          "status": "Running",
+          "health": "Healthy",
+          "vmDetails": [
+            {
+              "virtualMachineId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88-infra/providers/Microsoft.Compute/virtualMachines/b83vm",
+              "type": "Primary"
+            }
+          ],
+          "provisioningState": "Succeeded",
+          "instanceNo": "1",
+          "messageServerProperties": {
+            "msPort": 3601,
+            "internalMsPort": 3901,
+            "httpPort": 8101,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "enqueueServerProperties": {
+            "port": 3201,
+            "ipAddress": "10.0.0.5",
+            "hostname": "b83vm",
+            "health": "Healthy"
+          },
+          "gatewayServerProperties": {
+            "port": 3301,
+            "health": "Healthy"
+          },
+          "kernelVersion": "777",
+          "kernelPatch": "patch 300"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2ec1c6abbfb85d48bc458e7b5ed19017-8a90c2c263834f44-00",
+        "traceparent": "00-1c734076af66354cac7684d3b18ff5d7-57f0cb6a59c9b542-00",
         "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "d699cbb3af2cece255046bc40a020c93",
+        "x-ms-client-request-id": "1adac2ac8ded2cb5d1d9691fb4310111",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -495,22 +1323,106 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Fri, 01 Jul 2022 06:58:04 GMT",
+        "Date": "Sun, 03 Jul 2022 22:28:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d793d5cc-a8ef-4b84-bc44-89182530d67a",
+        "x-ms-correlation-request-id": "b4364fa5-b894-499c-b5c9-88b5f6ddde04",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "d793d5cc-a8ef-4b84-bc44-89182530d67a",
-        "x-ms-routing-request-id": "SOUTHINDIA:20220701T065805Z:d793d5cc-a8ef-4b84-bc44-89182530d67a"
+        "x-ms-request-id": "b4364fa5-b894-499c-b5c9-88b5f6ddde04",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222819Z:b4364fa5-b894-499c-b5c9-88b5f6ddde04"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-25e22b2ad9a1c646a016397531eaae00-03bb2a665982dd41-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7b6682c05987953be89115d1bc386028",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Sun, 03 Jul 2022 22:28:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0a317683-9ce8-46d7-a059-5789c671d304",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "0a317683-9ce8-46d7-a059-5789c671d304",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222821Z:0a317683-9ce8-46d7-a059-5789c671d304"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e5b15612f9e80644a02736df469020af-bdd97c36314c2f4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "da8ea2c3600ee7e5f33cfaa75cbff8df",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Sun, 03 Jul 2022 22:28:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1025dc98-ace9-42a3-9474-d9819f9d4ae6",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14997",
+        "x-ms-request-id": "1025dc98-ace9-42a3-9474-d9819f9d4ae6",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222824Z:1025dc98-ace9-42a3-9474-d9819f9d4ae6"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/svi-loop-test-register-02Jul-singleserver-88/providers/Microsoft.Workloads/sapVirtualInstances/B83/providers/Microsoft.Resources/tags/default?api-version=2021-04-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6d8a4f5f66879146ac2983b5715d6fb9-fa7ad5aebb6ac64f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1a768bc38d9b531f8644325b78e47099",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Sun, 03 Jul 2022 22:28:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3532a604-6232-4474-ab8d-fa4201a5cb8d",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
+        "x-ms-request-id": "3532a604-6232-4474-ab8d-fa4201a5cb8d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20220703T222826Z:3532a604-6232-4474-ab8d-fa4201a5cb8d"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "273649444",
+    "RandomSeed": "1414861345",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "49d64d54-e966-4c46-a868-1999802b762c"
   }
