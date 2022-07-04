@@ -14353,7 +14353,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data));
         /// if (response.ContentStream != null)
         /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<binary.data>")
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
@@ -14372,7 +14372,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data), true);
         /// if (response.ContentStream != null)
         /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<binary.data>")
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
@@ -14421,7 +14421,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data));
         /// if (response.ContentStream != null)
         /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<binary.data>")
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
@@ -14440,7 +14440,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data), true);
         /// if (response.ContentStream != null)
         /// {
-        ///     using(Stream outFileStream = File.OpenWrite("<binary.data>")
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
         ///     {
         ///         response.ContentStream.CopyTo(outFileStream);
         ///     }
@@ -15111,7 +15111,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
         /// 
@@ -15125,7 +15125,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
         /// 
@@ -15200,7 +15200,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
         /// 
@@ -15214,7 +15214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
         /// 
@@ -15289,7 +15289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
         /// 
@@ -15303,7 +15303,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
         /// 
@@ -15378,7 +15378,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
         /// 
@@ -15392,7 +15392,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
         /// 

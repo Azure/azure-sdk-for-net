@@ -224,7 +224,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 
@@ -300,7 +300,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var endpoint = new Uri("<https://my-account-name.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
         /// 

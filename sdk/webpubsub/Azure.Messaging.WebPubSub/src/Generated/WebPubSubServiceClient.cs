@@ -232,7 +232,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -241,7 +241,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
         /// Console.WriteLine(response.Status);
@@ -278,7 +278,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -287,7 +287,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
         /// Console.WriteLine(response.Status);
@@ -477,7 +477,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToConnectionAsync("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -516,7 +516,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToConnection("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -710,7 +710,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -719,7 +719,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
         /// Console.WriteLine(response.Status);
@@ -759,7 +759,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -768,7 +768,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
         /// Console.WriteLine(response.Status);
@@ -1105,7 +1105,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = await client.SendToUserAsync("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);
@@ -1144,7 +1144,7 @@ namespace Azure.Messaging.WebPubSub
         /// <code><![CDATA[
         /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
         /// 
-        /// var data = File.OpenRead("<binary.data>");
+        /// var data = File.OpenRead("<filePath>");
         /// 
         /// Response response = client.SendToUser("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
         /// Console.WriteLine(response.Status);

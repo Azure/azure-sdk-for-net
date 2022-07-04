@@ -318,7 +318,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 var data = new {
-    kind = "&lt;System&gt;",
+    kind = "System",
 };
 
 Response response = client.CreateOrUpdate(RequestContent.Create(data));
@@ -333,7 +333,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 var data = new {
-    kind = "&lt;System&gt;",
+    kind = "System",
     properties = new {
         description = "&lt;SystemClassificationRulePropertiesDescription&gt;",
         classificationName = "&lt;SystemClassificationRulePropertiesClassificationName&gt;",
@@ -506,7 +506,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 var data = new {
-    kind = "&lt;System&gt;",
+    kind = "System",
 };
 
 Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -521,7 +521,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("&lt;classificationRuleName&gt;");
 
 var data = new {
-    kind = "&lt;System&gt;",
+    kind = "System",
     properties = new {
         description = "&lt;SystemClassificationRulePropertiesDescription&gt;",
         classificationName = "&lt;SystemClassificationRulePropertiesClassificationName&gt;",

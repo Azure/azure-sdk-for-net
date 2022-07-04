@@ -12,7 +12,7 @@
           "hash": "Df3tZGty7F7IyOFoCRQUMvR99mCK2f9JMSiiqEqmqOI="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewClassificationRule.html",
-          "hash": "+4A4bvR2qGhssUUw1v2avvsqyiG0bcF9c4eyMfPpvGw="
+          "hash": "jQa0DZgNKtjj2ZPV6pXOaa1EPNZBsyN+9hjOKMroPIo="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewDataSource.html",
-          "hash": "R1fNmxbWStrGQMdsH9dvyjmSfr6suIAF+wCJ0FhXDHw="
+          "hash": "fyal3Q8mkQCQtaadZ71P3oW6QguOgO+02aS7EOEXmIo="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScan.html",
-          "hash": "badQDpsxPlby1PQMG5wxz4nrhG6ru/Or8dUUByU1TOI="
+          "hash": "7VPsYdGKEO8IOm9WVX2VmiobYKko9VageK6bdb4yldM="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.html",
-          "hash": "jhOJoGg7ReAGjNy7nlw3jlOUBPZLq4Jp1lgbT0VEMkc="
+          "hash": "zceZEA0BTyQWc3MrPXLb3vy49bNWHt400CCBvXPDf9E="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -155,7 +155,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 3
+          "skipped_file_count": 7
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

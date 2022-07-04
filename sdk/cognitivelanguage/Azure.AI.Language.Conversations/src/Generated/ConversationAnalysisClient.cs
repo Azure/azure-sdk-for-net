@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<Conversation>",
+        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
         ///             id = "<ConversationItemBaseId>",
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<Conversation>",
+        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
         ///             id = "<ConversationItemBaseId>",
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations
         ///         directTarget = "<CustomConversationTaskParametersDirectTarget>",
         ///         targetProjectParameters = new {
         ///             key = new {
-        ///                 targetProjectKind = "<Luis>",
+        ///                 targetProjectKind = "Luis",
         ///                 apiVersion = "<AnalysisParametersApiVersion>",
         ///                 query = "<LuisParametersQuery>",
         ///                 callingOptions = new {
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<Conversation>",
+        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
         ///             id = "<ConversationItemBaseId>",
@@ -216,7 +216,7 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<Conversation>",
+        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
         ///             id = "<ConversationItemBaseId>",
@@ -236,7 +236,7 @@ namespace Azure.AI.Language.Conversations
         ///         directTarget = "<CustomConversationTaskParametersDirectTarget>",
         ///         targetProjectParameters = new {
         ///             key = new {
-        ///                 targetProjectKind = "<Luis>",
+        ///                 targetProjectKind = "Luis",
         ///                 apiVersion = "<AnalysisParametersApiVersion>",
         ///                 query = "<LuisParametersQuery>",
         ///                 callingOptions = new {
@@ -622,7 +622,7 @@ namespace Azure.AI.Language.Conversations
         ///             new {
         ///                 id = "<ConversationId>",
         ///                 language = "<ConversationLanguage>",
-        ///                 modality = "<transcript>",
+        ///                 modality = "text",
         ///                 conversationItems = new[] {
         ///                     new {
         ///                         id = "<ConversationItemBaseId>",
@@ -635,7 +635,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "<ConversationalPIITask>",
+        ///             kind = "ConversationalPIITask",
         ///         }
         ///     },
         /// };
@@ -658,7 +658,7 @@ namespace Azure.AI.Language.Conversations
         ///             new {
         ///                 id = "<ConversationId>",
         ///                 language = "<ConversationLanguage>",
-        ///                 modality = "<transcript>",
+        ///                 modality = "text",
         ///                 domain = "<finance>",
         ///                 conversationItems = new[] {
         ///                     new {
@@ -675,7 +675,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "<ConversationalPIITask>",
+        ///             kind = "ConversationalPIITask",
         ///             taskName = "<TaskIdentifierTaskName>",
         ///             parameters = new {
         ///                 modelVersion = "<latest>",
@@ -762,7 +762,7 @@ namespace Azure.AI.Language.Conversations
         ///             new {
         ///                 id = "<ConversationId>",
         ///                 language = "<ConversationLanguage>",
-        ///                 modality = "<transcript>",
+        ///                 modality = "text",
         ///                 conversationItems = new[] {
         ///                     new {
         ///                         id = "<ConversationItemBaseId>",
@@ -775,7 +775,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "<ConversationalPIITask>",
+        ///             kind = "ConversationalPIITask",
         ///         }
         ///     },
         /// };
@@ -798,7 +798,7 @@ namespace Azure.AI.Language.Conversations
         ///             new {
         ///                 id = "<ConversationId>",
         ///                 language = "<ConversationLanguage>",
-        ///                 modality = "<transcript>",
+        ///                 modality = "text",
         ///                 domain = "<finance>",
         ///                 conversationItems = new[] {
         ///                     new {
@@ -815,7 +815,7 @@ namespace Azure.AI.Language.Conversations
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "<ConversationalPIITask>",
+        ///             kind = "ConversationalPIITask",
         ///             taskName = "<TaskIdentifierTaskName>",
         ///             parameters = new {
         ///                 modelVersion = "<latest>",

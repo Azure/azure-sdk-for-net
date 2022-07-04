@@ -420,7 +420,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {
         ///     parentId = "<BoundaryParentId>",
         ///     geometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {
@@ -566,7 +566,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {
         ///     parentId = "<BoundaryParentId>",
         ///     geometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {
@@ -1174,7 +1174,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     minAcreage = 1234,
         ///     maxAcreage = 1234,
         ///     intersectsWithGeometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {
@@ -1344,7 +1344,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     minAcreage = 1234,
         ///     maxAcreage = 1234,
         ///     intersectsWithGeometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {
@@ -1743,7 +1743,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     minAcreage = 1234,
         ///     maxAcreage = 1234,
         ///     intersectsWithGeometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {
@@ -1908,7 +1908,7 @@ namespace Azure.Verticals.AgriFood.Farming
         ///     minAcreage = 1234,
         ///     maxAcreage = 1234,
         ///     intersectsWithGeometry = new {
-        ///         type = "<Point>",
+        ///         type = "MultiPolygon",
         ///         coordinates = new[] {
         ///             new[] {
         ///                 new[] {

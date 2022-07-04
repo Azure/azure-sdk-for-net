@@ -3632,7 +3632,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("&lt;dataSourceName&gt;");
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
 };
 
 Response response = client.CreateOrUpdate(RequestContent.Create(data));
@@ -3647,7 +3647,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("&lt;dataSourceName&gt;");
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
     properties = new {
         subscriptionId = "&lt;AzureSubscriptionPropertiesSubscriptionId&gt;",
         collection = new {
@@ -7163,7 +7163,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("&lt;dataSourceName&gt;");
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
 };
 
 Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -7178,7 +7178,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("&lt;dataSourceName&gt;");
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
     properties = new {
         subscriptionId = "&lt;AzureSubscriptionPropertiesSubscriptionId&gt;",
         collection = new {

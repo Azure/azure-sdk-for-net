@@ -12,7 +12,7 @@
           "hash": "K7CkyieXTerjwIHFTdYTpRK/a9KQ0Isn6zC3Tod52dU="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Messaging.WebPubSub/Azure.Messaging.WebPubSub.WebPubSubServiceClient.html",
-          "hash": "jXwygd7e5/qkNuHDAe0Ae9uYk++iZ8JdC1AkJWExSZA="
+          "hash": "hsGE+zCVFHgNUQvlGf1Aqe1V8x3M1CgUDNPMF8rZYGI="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -72,7 +72,7 @@
           "hash": "itHIVMiQEZKAF820C7HPC+559U/uaZG+NHbteu9b1ZQ="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -84,7 +84,7 @@
           "hash": "CSk4K3KtxjZpao5+lWl4Lh07how6lzsfAuduW/oc214="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -155,7 +155,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 7,
-          "skipped_file_count": 6
+          "skipped_file_count": 7
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
-        ///     kind = "<System>",
+        ///     kind = "System",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
-        ///     kind = "<System>",
+        ///     kind = "System",
         ///     properties = new {
         ///         description = "<SystemClassificationRulePropertiesDescription>",
         ///         classificationName = "<SystemClassificationRulePropertiesClassificationName>",
@@ -389,7 +389,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
-        ///     kind = "<System>",
+        ///     kind = "System",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
@@ -404,7 +404,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewClassificationRuleClient("<classificationRuleName>");
         /// 
         /// var data = new {
-        ///     kind = "<System>",
+        ///     kind = "System",
         ///     properties = new {
         ///         description = "<SystemClassificationRulePropertiesDescription>",
         ///         classificationName = "<SystemClassificationRulePropertiesClassificationName>",

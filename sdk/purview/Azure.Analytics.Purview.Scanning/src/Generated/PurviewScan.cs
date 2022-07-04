@@ -359,7 +359,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
-        ///     kind = "<AzureSubscriptionCredential>",
+        ///     kind = "AzureSubscriptionCredential",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
@@ -374,7 +374,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
-        ///     kind = "<AzureSubscriptionCredential>",
+        ///     kind = "AzureSubscriptionCredential",
         ///     properties = new {
         ///         resourceTypes = new {
         ///             None = new {
@@ -7663,7 +7663,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
-        ///     kind = "<AzureSubscriptionCredential>",
+        ///     kind = "AzureSubscriptionCredential",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
@@ -7678,7 +7678,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential).GetPurviewDataSourceClient("<dataSourceName>").GetPurviewScanClient("<scanName>");
         /// 
         /// var data = new {
-        ///     kind = "<AzureSubscriptionCredential>",
+        ///     kind = "AzureSubscriptionCredential",
         ///     properties = new {
         ///         resourceTypes = new {
         ///             None = new {

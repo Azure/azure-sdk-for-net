@@ -3655,7 +3655,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; RevokePermissio
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -3664,7 +3664,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"&lt;excluded&gt;"});
 Console.WriteLine(response.Status);
@@ -3780,7 +3780,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -3789,7 +3789,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"&lt;excluded&gt;"});
 Console.WriteLine(response.Status);
@@ -4025,7 +4025,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToAllAsync 
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToConnection("&lt;connectionId&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -4213,7 +4213,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToConnectio
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToConnectionAsync("&lt;connectionId&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -4407,7 +4407,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToGroup("&lt;group&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -4416,7 +4416,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToGroup("&lt;group&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"&lt;excluded&gt;"});
 Console.WriteLine(response.Status);
@@ -4612,7 +4612,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToGroupAsyn
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToGroupAsync("&lt;group&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -4621,7 +4621,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToGroupAsync("&lt;group&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"&lt;excluded&gt;"});
 Console.WriteLine(response.Status);
@@ -4807,7 +4807,7 @@ Console.WriteLine(response.Status);
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = client.SendToUser("&lt;userId&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);
@@ -4995,7 +4995,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; SendToUserAsync
 <pre><code>
 var client = new WebPubSubServiceClient("&lt;https://my-account-name.azure.com&gt;", "&lt;hub&gt;");
 
-var data = File.OpenRead("&lt;binary.data&gt;");
+var data = File.OpenRead("&lt;filePath&gt;");
 
 Response response = await client.SendToUserAsync("&lt;userId&gt;", RequestContent.Create(data), ContentType.ApplicationOctetStream);
 Console.WriteLine(response.Status);

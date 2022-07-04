@@ -1640,7 +1640,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<None>",
+        ///     kind = "AzureSubscription",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
@@ -1655,7 +1655,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<None>",
+        ///     kind = "AzureSubscription",
         ///     scanRulesetType = "<Custom>",
         ///     properties = new {
         ///         description = "<ScanRulesetPropertiesDescription>",
@@ -2767,7 +2767,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<None>",
+        ///     kind = "AzureSubscription",
         /// };
         /// 
         /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
@@ -2782,7 +2782,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "<None>",
+        ///     kind = "AzureSubscription",
         ///     scanRulesetType = "<Custom>",
         ///     properties = new {
         ///         description = "<ScanRulesetPropertiesDescription>",

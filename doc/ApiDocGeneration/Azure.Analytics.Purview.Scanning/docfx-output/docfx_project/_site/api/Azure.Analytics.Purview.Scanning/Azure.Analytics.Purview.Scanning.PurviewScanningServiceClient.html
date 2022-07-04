@@ -1617,7 +1617,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
 };
 
 Response response = client.CreateOrUpdateScanRuleset("&lt;scanRulesetName&gt;", RequestContent.Create(data));
@@ -1632,7 +1632,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
     scanRulesetType = "&lt;Custom&gt;",
     properties = new {
         description = "&lt;ScanRulesetPropertiesDescription&gt;",
@@ -2703,7 +2703,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
 };
 
 Response response = await client.CreateOrUpdateScanRulesetAsync("&lt;scanRulesetName&gt;", RequestContent.Create(data));
@@ -2718,7 +2718,7 @@ var endpoint = new Uri("&lt;https://my-account-name.azure.com&gt;");
 var client = new PurviewScanningServiceClient(endpoint, credential);
 
 var data = new {
-    kind = "&lt;None&gt;",
+    kind = "AzureSubscription",
     scanRulesetType = "&lt;Custom&gt;",
     properties = new {
         description = "&lt;ScanRulesetPropertiesDescription&gt;",
