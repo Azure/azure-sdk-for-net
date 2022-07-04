@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
         public SviCRUDTests(bool isAsync) : base(isAsync)
-        { }
+        {  }
 
         [OneTimeTearDown]
         public void Cleanup()
@@ -119,47 +119,59 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         {
             string sviName = "B83";
             string rgName = "svi-loop-test-register-02Jul-singleserver-88";
+            string subID = "49d64d54-e966-4c46-a868-1999802b762c";
 
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
-            ResourceGroupResource rg = lro.Value;
-            var sviObject = await lro.Value.GetSapVirtualInstanceAsync(sviName);
-            var appServer = await sviObject.Value.GetSapApplicationServerInstanceAsync("app0");
-            var dbServer = await sviObject.Value.GetSapDatabaseInstanceAsync("db0");
-            var csServer = await sviObject.Value.GetSapCentralServerInstanceAsync("cs0");
+            ResourceIdentifier SviResourceID = SapVirtualInstanceResource.CreateResourceIdentifier(subID, rgName, sviName);
+            ResourceIdentifier AppServerResourceID =
+                SapApplicationServerInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "app0");
+            ResourceIdentifier DbServerResourceID =
+                SapDatabaseInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "db0");
+            ResourceIdentifier CsServerResourceID =
+                SapCentralServerInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "cs0");
 
-            // Patch call for SVI
-            await sviObject.Value.AddTagAsync("TestKey1", "TestValue1");
-            await appServer.Value.AddTagAsync("TestKey1", "TestValue1");
-            await dbServer.Value.AddTagAsync("TestKey1", "TestValue1");
-            await csServer.Value.AddTagAsync("TestKey1", "TestValue1");
+            SapVirtualInstanceResource sapVirtualInstance = await Client.GetSapVirtualInstanceResource(SviResourceID).GetAsync();
+            SapDatabaseInstanceResource sapDatabaseInstanceResource =
+                await Client.GetSapDatabaseInstanceResource(DbServerResourceID).GetAsync();
+            SapApplicationServerInstanceResource sapApplicationServerInstanceResource =
+                await Client.GetSapApplicationServerInstanceResource(AppServerResourceID).GetAsync();
+            SapCentralServerInstanceResource sapCentralServerInstanceResource =
+                await Client.GetSapCentralServerInstanceResource(CsServerResourceID).GetAsync();
+
+            // Patch call for SVI and child resources
+            await sapVirtualInstance.AddTagAsync("TestKey1", "TestValue1");
+            await sapApplicationServerInstanceResource.AddTagAsync("TestKey1", "TestValue1");
+            await sapCentralServerInstanceResource.AddTagAsync("TestKey1", "TestValue1");
+            await sapDatabaseInstanceResource.AddTagAsync("TestKey1", "TestValue1");
 
             Thread.Sleep(GetStatusIntervalinMillis);
 
-            sviObject = await lro.Value.GetSapVirtualInstanceAsync(sviName);
-            appServer = await sviObject.Value.GetSapApplicationServerInstanceAsync("app0");
-            dbServer = await sviObject.Value.GetSapDatabaseInstanceAsync("db0");
-            csServer = await sviObject.Value.GetSapCentralServerInstanceAsync("cs0");
+            sapVirtualInstance =
+                await Client.GetSapVirtualInstanceResource(SviResourceID).GetAsync();
+            sapDatabaseInstanceResource =
+                await Client.GetSapDatabaseInstanceResource(DbServerResourceID).GetAsync();
+            sapApplicationServerInstanceResource =
+                await Client.GetSapApplicationServerInstanceResource(AppServerResourceID).GetAsync();
+            sapCentralServerInstanceResource =
+                await Client.GetSapCentralServerInstanceResource(CsServerResourceID).GetAsync();
 
-            var firsttag = sviObject.Value.Data.Tags.Values.GetEnumerator();
+            var firsttag = sapVirtualInstance.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
             Assert.AreEqual(firsttag.Current, "TestValue1");
-            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
 
-            firsttag = appServer.Value.Data.Tags.Values.GetEnumerator();
+            firsttag = sapDatabaseInstanceResource.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
             Assert.AreEqual(firsttag.Current, "TestValue1");
-            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+            await sapDatabaseInstanceResource.GetTagResource().DeleteAsync(WaitUntil.Completed);
 
-            firsttag = dbServer.Value.Data.Tags.Values.GetEnumerator();
+            firsttag = sapCentralServerInstanceResource.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
             Assert.AreEqual(firsttag.Current, "TestValue1");
-            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+            await sapCentralServerInstanceResource.GetTagResource().DeleteAsync(WaitUntil.Completed);
 
-            firsttag = csServer.Value.Data.Tags.Values.GetEnumerator();
+            firsttag = sapApplicationServerInstanceResource.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
             Assert.AreEqual(firsttag.Current, "TestValue1");
-            await sviObject.Value.GetTagResource().DeleteAsync(WaitUntil.Completed);
+            await sapApplicationServerInstanceResource.GetTagResource().DeleteAsync(WaitUntil.Completed);
         }
 
         /// <summary>
