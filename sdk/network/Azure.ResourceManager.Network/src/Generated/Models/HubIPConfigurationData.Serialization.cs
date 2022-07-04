@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<string> privateIPAddress = default;
-            Optional<IPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubnetData> subnet = default;
             Optional<PublicIPAddressData> publicIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateIPAllocationMethod = new IPAllocationMethod(property0.Value.GetString());
+                            privateIPAllocationMethod = new NetworkIPAllocationMethod(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("subnet"))

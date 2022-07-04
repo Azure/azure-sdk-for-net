@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PublicIPPrefixData DeserializePublicIPPrefixData(JsonElement element)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPPrefixSku> sku = default;
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
+            Optional<NetworkIPVersion> publicIPAddressVersion = default;
             Optional<IList<IPTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddressVersion = new IPVersion(property0.Value.GetString());
+                            publicIPAddressVersion = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipTags"))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         Name = "Primary",
                         Primary = true,
                         Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                     }
                 }
             };

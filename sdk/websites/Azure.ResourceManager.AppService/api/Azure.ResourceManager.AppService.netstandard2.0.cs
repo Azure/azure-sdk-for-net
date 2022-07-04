@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppService
     {
         public AppServicePlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public bool? ElasticScaleEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.DateTimeOffset? FreeOfferExpirationOn { get { throw null; } set { } }
         public string GeoRegion { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public bool? InternalLoadBalancerEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
@@ -4082,7 +4082,7 @@ namespace Azure.ResourceManager.AppService
         public string DefaultHostName { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledHostNames { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> HostNames { get { throw null; } }
         public bool? HostNamesDisabled { get { throw null; } set { } }
@@ -5702,12 +5702,6 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
-    }
-    public partial class ExtendedLocation
-    {
-        public ExtendedLocation() { }
-        public string ExtendedLocationType { get { throw null; } }
-        public string Name { get { throw null; } set { } }
     }
     public partial class Facebook
     {

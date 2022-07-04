@@ -132,6 +132,8 @@ rename-mapping:
   CreationData: DiskCreationData
   Architecture: ArchitectureType
   OSFamily: CloudServiceOSFamily
+  OSFamily.name: ResourceName
+  OSFamily.properties.name: OSFamilyName
   OSVersion: CloudServiceOSVersion
   UpdateDomain: UpdateDomainIdentifier
   Extension: CloudServiceExtension
@@ -147,6 +149,9 @@ rename-mapping:
   PirCommunityGalleryResource.type: ResourceType
   ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
   ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
+  DedicatedHostGroup.properties.hosts: DedicatedHosts
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

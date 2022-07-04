@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentFootnote
+    internal partial class DocumentFootnote
     {
         internal static DocumentFootnote DeserializeDocumentFootnote(JsonElement element)
         {
