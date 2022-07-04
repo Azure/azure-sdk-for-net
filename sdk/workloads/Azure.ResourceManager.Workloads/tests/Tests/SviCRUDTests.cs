@@ -24,7 +24,14 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
         public SviCRUDTests(bool isAsync) : base(isAsync)
-        {  }
+        {
+            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "98f50aef-4bc8-4929-bba1-7d6928d5465a");
+            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "pqh8Q~dfnHiHb0HwNAOeJ~tu_0QCSD5UFp1NtalD");
+            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "72f988bf-86f1-41af-91ab-2d7cd011db47");
+            Environment.SetEnvironmentVariable("AZURE_SUBSCRIPTION_ID", "49d64d54-e966-4c46-a868-1999802b762c");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            Environment.SetEnvironmentVariable("AZURE_AUTHORITY_HOST", "https://login.microsoftonline.com");
+        }
 
         [OneTimeTearDown]
         public void Cleanup()
@@ -121,21 +128,21 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             string rgName = "svi-loop-test-register-02Jul-singleserver-88";
             string subID = "49d64d54-e966-4c46-a868-1999802b762c";
 
-            ResourceIdentifier SviResourceID = SapVirtualInstanceResource.CreateResourceIdentifier(subID, rgName, sviName);
-            ResourceIdentifier AppServerResourceID =
+            ResourceIdentifier sviResourceID = SapVirtualInstanceResource.CreateResourceIdentifier(subID, rgName, sviName);
+            ResourceIdentifier appServerResourceID =
                 SapApplicationServerInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "app0");
-            ResourceIdentifier DbServerResourceID =
+            ResourceIdentifier dbServerResourceID =
                 SapDatabaseInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "db0");
-            ResourceIdentifier CsServerResourceID =
+            ResourceIdentifier csServerResourceID =
                 SapCentralServerInstanceResource.CreateResourceIdentifier(subID, rgName, sviName, "cs0");
 
-            SapVirtualInstanceResource sapVirtualInstance = await Client.GetSapVirtualInstanceResource(SviResourceID).GetAsync();
+            SapVirtualInstanceResource sapVirtualInstance = await Client.GetSapVirtualInstanceResource(sviResourceID).GetAsync();
             SapDatabaseInstanceResource sapDatabaseInstanceResource =
-                await Client.GetSapDatabaseInstanceResource(DbServerResourceID).GetAsync();
+                await Client.GetSapDatabaseInstanceResource(dbServerResourceID).GetAsync();
             SapApplicationServerInstanceResource sapApplicationServerInstanceResource =
-                await Client.GetSapApplicationServerInstanceResource(AppServerResourceID).GetAsync();
+                await Client.GetSapApplicationServerInstanceResource(appServerResourceID).GetAsync();
             SapCentralServerInstanceResource sapCentralServerInstanceResource =
-                await Client.GetSapCentralServerInstanceResource(CsServerResourceID).GetAsync();
+                await Client.GetSapCentralServerInstanceResource(csServerResourceID).GetAsync();
 
             // Patch call for SVI and child resources
             await sapVirtualInstance.AddTagAsync("TestKey1", "TestValue1");
@@ -146,13 +153,13 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             Thread.Sleep(GetStatusIntervalinMillis);
 
             sapVirtualInstance =
-                await Client.GetSapVirtualInstanceResource(SviResourceID).GetAsync();
+                await Client.GetSapVirtualInstanceResource(sviResourceID).GetAsync();
             sapDatabaseInstanceResource =
-                await Client.GetSapDatabaseInstanceResource(DbServerResourceID).GetAsync();
+                await Client.GetSapDatabaseInstanceResource(dbServerResourceID).GetAsync();
             sapApplicationServerInstanceResource =
-                await Client.GetSapApplicationServerInstanceResource(AppServerResourceID).GetAsync();
+                await Client.GetSapApplicationServerInstanceResource(appServerResourceID).GetAsync();
             sapCentralServerInstanceResource =
-                await Client.GetSapCentralServerInstanceResource(CsServerResourceID).GetAsync();
+                await Client.GetSapCentralServerInstanceResource(csServerResourceID).GetAsync();
 
             var firsttag = sapVirtualInstance.Data.Tags.Values.GetEnumerator();
             firsttag.MoveNext();
@@ -193,17 +200,17 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 var testSapWorkloadJson = File.ReadAllText(Path.Combine(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
 
-                dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+                dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
 
-                DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
                     infraRgName;
-                DynamicObject.properties.configuration.infrastructureConfiguration.
+                dynamicObject.properties.configuration.infrastructureConfiguration.
                     virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
                         sshPublicKey;
-                DynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
+                dynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
                     sshPrivateKey;
 
-                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
+                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
 
                 SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
                     sapPayloadJson);
@@ -215,15 +222,15 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 var testSapWorkloadJson = File.ReadAllText(Path.Combine(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerCreate.json"));
 
-                dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+                dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
 
-                DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
                     infraRgName;
-                DynamicObject.properties.configuration.infrastructureConfiguration.
+                dynamicObject.properties.configuration.infrastructureConfiguration.
                     virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
                         sshPublicKey;
 
-                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
+                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
 
                 SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
                     sapPayloadJson);
