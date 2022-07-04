@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<ETag> eTag = default;
             Optional<ManagedCassandraReaperStatus> reaperStatus = default;
-            Optional<IReadOnlyList<ConnectionError>> connectionErrors = default;
+            Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectionError> array = new List<ConnectionError>();
+                    List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionError.DeserializeConnectionError(item));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
                     }
                     connectionErrors = array;
                     continue;

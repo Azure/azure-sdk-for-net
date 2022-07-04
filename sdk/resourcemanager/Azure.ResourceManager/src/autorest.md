@@ -281,6 +281,10 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - from: swagger-document
+    where: $.definitions.ExtendedLocation
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'

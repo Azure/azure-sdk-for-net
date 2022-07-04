@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeOperationStatusResult(item));
+                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.ToString()));
                     }
                     operations = array;
                     continue;

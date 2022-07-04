@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="properties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="to"> Address to send to. </param>
+        /// <param name="sendTo"> Address to send to. </param>
         /// <param name="replyTo"> Address of the queue to reply to. </param>
         /// <param name="label"> Application specific label. </param>
         /// <param name="sessionId"> Session identifier. </param>
         /// <param name="replyToSessionId"> Session identifier to reply to. </param>
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal CorrelationFilter(IDictionary<string, string> properties, string correlationId, string messageId, string to, string replyTo, string label, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing)
+        internal CorrelationFilter(IDictionary<string, string> properties, string correlationId, string messageId, string sendTo, string replyTo, string label, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing)
         {
             Properties = properties;
             CorrelationId = correlationId;
             MessageId = messageId;
-            To = to;
+            SendTo = sendTo;
             ReplyTo = replyTo;
             Label = label;
             SessionId = sessionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Identifier of the message. </summary>
         public string MessageId { get; set; }
         /// <summary> Address to send to. </summary>
-        public string To { get; set; }
+        public string SendTo { get; set; }
         /// <summary> Address of the queue to reply to. </summary>
         public string ReplyTo { get; set; }
         /// <summary> Application specific label. </summary>

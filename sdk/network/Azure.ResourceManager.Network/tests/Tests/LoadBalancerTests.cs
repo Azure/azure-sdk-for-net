@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = vnet.Data.Subnets[0]
                     }
                 },
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {
                         Name = frontendIpConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
                         Subnet = vnet.Data.Subnets[0]
                     }

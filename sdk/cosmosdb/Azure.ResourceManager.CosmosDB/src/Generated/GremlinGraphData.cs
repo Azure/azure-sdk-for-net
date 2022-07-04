@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinGraphPropertiesResource resource, GremlinGraphPropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public GremlinGraphPropertiesResource Resource { get; set; }
+        public ExtendedGremlinGraphResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public GremlinGraphPropertiesOptions Options { get; set; }
+        public GremlinGraphPropertiesConfig Options { get; set; }
     }
 }
