@@ -43,10 +43,10 @@ $sdkPath = $sdkPath -replace "\\", "/"
 for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
     $readmeFile = $readmeFiles[$i] -replace "\\", "/"
     $readme = ""
-    if ( $swaggerDir -ne "") {
+    if ( $swaggerDir) {
         $readme = (Join-Path $swaggerDir $readmeFile)
-    } elseif ( $commitid -ne "") {
-        if ($repoHttpsUrl -ne "") {
+    } elseif ( $commitid) {
+        if ($repoHttpsUrl) {
             $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
         } else {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
@@ -56,7 +56,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         exit 1
     }
 
-    if ($autorestConfigYaml -ne "") {
+    if ($autorestConfigYaml) {
         $readmeFiles[$i] = $readme
         $autorestConfigYaml = ConvertTo-YAML $yml
     }

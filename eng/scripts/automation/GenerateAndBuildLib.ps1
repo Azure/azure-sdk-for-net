@@ -2,7 +2,13 @@
 $CI_YAML_FILE = "ci.yml"
 
 #mgmt: resourceProvider to sdk package name map
-$packageNameHash = [ordered]@{"vmware" = "avs"; "azure-kusto"="kusto"; "cosmos-db"="cosmosdb";"customer-insights"="customerinsights";"monitor"="insights";"msi"="managedserviceidentity";"web"="appservice"}
+$packageNameHash = [ordered]@{"vmware" = "avs"; 
+                            "azure-kusto"="kusto";
+                            "cosmos-db"="cosmosdb";
+                            "customer-insights"="customerinsights";
+                            "monitor"="insights";
+                            "msi"="managedserviceidentity";
+                            "web"="appservice"}
 
 function Get-SwaggerInfo()
 {
@@ -10,26 +16,23 @@ function Get-SwaggerInfo()
         [string]$dir,
         [string]$AUTOREST_CONFIG_FILE = "autorest.md"
     )
-    Push-Location $dir
     $swaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/blob\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $rawSwaggerInfoRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(?<commitID>[0-9a-f]{40})\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     $swaggerNoCommitRegex = ".*github.*.com\/(?<org>.*)\/azure-rest-api-specs\/(blob\/)?(?<branch>.*)\/specification\/(?<specName>.*)\/resource-manager\/readme.md"
     try
     {
-        $content = Get-Content .\$AUTOREST_CONFIG_FILE -Raw
+        $autorestfile = (Join-Path $dir $AUTOREST_CONFIG_FILE)
+        $content = Get-Content $autorestfile -Raw
         if ($content -match $swaggerInfoRegex)
         {
-            Pop-Location
             return $matches["org"], $matches["specName"], $matches["commitID"]
         }
         if ($content -match $rawSwaggerInfoRegex)
         {
-            Pop-Location
             return $matches["org"], $matches["specName"], $matches["commitID"]
         }
         if ($content -match $swaggerNoCommitRegex)
         {
-            Pop-Location
             return $matches["org"], $matches["specName"], ""
         }
     }
@@ -39,7 +42,6 @@ function Get-SwaggerInfo()
         Write-Error $_
     }
     Write-Host "Cannot find swagger info"
-    Pop-Location
     exit 1
 }
 
@@ -286,7 +288,8 @@ function New-MgmtPackageFolder() {
     } else {
       Write-Host "Path doesn't exist. create template."
       dotnet new -i $sdkPath/eng/templates/Azure.ResourceManager.Template
-      $CaptizedPackageName = (Get-Culture ).TextInfo.ToTitleCase($packageName)
+    #   $CaptizedPackageName = (Get-Culture ).TextInfo.ToTitleCase($packageName)
+      $CaptizedPackageName = [System.Globalization.CultureInfo]::InvariantCulture.TextInfo.ToTitleCase($packageName)
       $mgmtPackageName = "Azure.ResourceManager.$CaptizedPackageName"
       $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$CaptizedPackageName"
       Write-Host "Create project folder $projectFolder"
