@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
-        internal ResourceNavigationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string linkedResourceType, string link, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ResourceNavigationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, ResourceType? linkedResourceType, string link, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = eTag;
             LinkedResourceType = linkedResourceType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> Resource type of the linked resource. </summary>
-        public string LinkedResourceType { get; set; }
+        public ResourceType? LinkedResourceType { get; set; }
         /// <summary> Link to the external resource. </summary>
         public string Link { get; set; }
         /// <summary> The provisioning state of the resource navigation link resource. </summary>

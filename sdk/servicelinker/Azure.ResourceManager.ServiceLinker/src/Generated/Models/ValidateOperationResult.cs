@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
         internal ValidateOperationResult()
         {
-            ValidationDetail = new ChangeTrackingList<ValidationResultItem>();
+            ValidationDetail = new ChangeTrackingList<ValidationResultItemData>();
         }
 
         /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
         /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
-        /// <param name="reportStartTimeUtc"> The start time of the validation report. </param>
-        /// <param name="reportEndTimeUtc"> The end time of the validation report. </param>
+        /// <param name="reportStartOn"> The start time of the validation report. </param>
+        /// <param name="reportEndOn"> The end time of the validation report. </param>
         /// <param name="sourceId"> The resource id of the linker source application. </param>
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
-        internal ValidateOperationResult(string resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartTimeUtc, DateTimeOffset? reportEndTimeUtc, string sourceId, string targetId, AuthType? authType, IReadOnlyList<ValidationResultItem> validationDetail)
+        internal ValidateOperationResult(ResourceIdentifier resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<ValidationResultItemData> validationDetail)
         {
             ResourceId = resourceId;
             Status = status;
             LinkerName = linkerName;
             IsConnectionAvailable = isConnectionAvailable;
-            ReportStartTimeUtc = reportStartTimeUtc;
-            ReportEndTimeUtc = reportEndTimeUtc;
+            ReportStartOn = reportStartOn;
+            ReportEndOn = reportEndOn;
             SourceId = sourceId;
             TargetId = targetId;
             AuthType = authType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> Validated linker id. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Validation operation status. </summary>
         public string Status { get; }
         /// <summary> The linker name. </summary>
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> A boolean value indicating whether the connection is available or not. </summary>
         public bool? IsConnectionAvailable { get; }
         /// <summary> The start time of the validation report. </summary>
-        public DateTimeOffset? ReportStartTimeUtc { get; }
+        public DateTimeOffset? ReportStartOn { get; }
         /// <summary> The end time of the validation report. </summary>
-        public DateTimeOffset? ReportEndTimeUtc { get; }
+        public DateTimeOffset? ReportEndOn { get; }
         /// <summary> The resource id of the linker source application. </summary>
-        public string SourceId { get; }
+        public ResourceIdentifier SourceId { get; }
         /// <summary> The resource Id of target service. </summary>
-        public string TargetId { get; }
+        public ResourceIdentifier TargetId { get; }
         /// <summary> The authentication type. </summary>
-        public AuthType? AuthType { get; }
+        public LinkerAuthType? AuthType { get; }
         /// <summary> The detail of validation result. </summary>
-        public IReadOnlyList<ValidationResultItem> ValidationDetail { get; }
+        public IReadOnlyList<ValidationResultItemData> ValidationDetail { get; }
     }
 }

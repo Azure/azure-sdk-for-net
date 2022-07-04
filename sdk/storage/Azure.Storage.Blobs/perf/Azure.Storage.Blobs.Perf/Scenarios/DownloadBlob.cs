@@ -4,7 +4,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf.Scenarios
 {
@@ -12,9 +11,9 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
     /// The performance test scenario focused on downloading blobs from the Azure blobs storage.
     /// </summary>
     /// <seealso cref="Azure.Test.Perf.PerfTest{StorageTransferOptionsOptions}" />
-    public sealed class DownloadBlob : BlobTest<StorageTransferOptionsOptions>
+    public sealed class DownloadBlob : BlobTest<Options.PartitionedTransferOptions>
     {
-        public DownloadBlob(StorageTransferOptionsOptions options)
+        public DownloadBlob(Options.PartitionedTransferOptions options)
             : base(options, createBlob: true, singletonBlob: true)
         {
         }

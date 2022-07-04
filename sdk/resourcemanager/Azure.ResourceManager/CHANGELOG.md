@@ -1,14 +1,16 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.2 (2022-07-01)
 
 ### Features Added
 
-### Breaking Changes
+- Add `ExtendedLocation` to common type.
 
-### Bugs Fixed
+## 1.1.2 (2022-07-01)
 
-### Other Changes
+### Features Added
+
+- Add `ExtendedLocation` to common type.
 
 ## 1.1.1 (2022-06-22)
 

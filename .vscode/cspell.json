@@ -97,6 +97,15 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
     },
+	{
+      "filename": "**/sdk/alertsmanagement/**/*.cs",
+      "words": [
+        "groupby",
+        "groupedby",
+        "scom",
+        "zabbix"
+      ]
+    },
     {
       "filename": "**/sdk/appplatform/**/*.cs",
       "words": [
@@ -171,6 +180,38 @@
       ]
     },
     {
+      "filename": "**/sdk/datafactory/**/*.cs",
+      "words": [
+        "Ssis",
+        "Asana",
+        "Adls",
+        "Usql",
+        "Distcp",
+        "Eloqua",
+        "Vsts",
+        "Byoa",
+        "Hdfs",
+        "Distcp",
+        "Hcatalog",
+        "Oozie",
+        "Sasl",
+        "Informix",
+        "Exprired",
+        "Magento",
+        "Fqdns",
+        "Netezza",
+        "Responsys",
+        "Hana",
+        "Ssisdb",
+        "Sybase",
+        "Teradata",
+        "Inprogress",
+        "Twilio",
+        "Vertica",
+        "Xero"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -217,6 +258,7 @@
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
+        "ikev",
         "Ipconfiguration",
         "Mbps",
         "Nics",

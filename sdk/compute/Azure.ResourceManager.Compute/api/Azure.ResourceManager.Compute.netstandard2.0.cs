@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.Compute
         internal CloudServiceOSFamilyData() { }
         public string Label { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
+        public string ResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.OSVersionPropertiesBase> Versions { get { throw null; } }
     }
     public partial class CloudServiceOSFamilyResource : Azure.ResourceManager.ArmResource
@@ -721,7 +722,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DedicatedHostGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Hosts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> DedicatedHosts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public bool? SupportAutomaticPlacement { get { throw null; } set { } }
@@ -791,7 +792,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskAccessData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DiskAccessData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
@@ -1180,7 +1181,7 @@ namespace Azure.ResourceManager.Compute
     public partial class ImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
@@ -1238,7 +1239,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.DiskState? DiskState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedBy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ManagedByExtended { get { throw null; } }
@@ -1545,7 +1546,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.DiskState? DiskState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.EncryptionSettingsGroup EncryptionSettingsGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public bool? Incremental { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } }
@@ -1651,7 +1652,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGalleryApplication> GalleryApplications { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HardwareProfile HardwareProfile { get { throw null; } set { } }
@@ -1901,7 +1902,7 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HostGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OrchestrationMode? OrchestrationMode { get { throw null; } set { } }
@@ -3272,12 +3273,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.ExecutionState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ExecutionState left, Azure.ResourceManager.Compute.Models.ExecutionState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ExtendedLocation
-    {
-        public ExtendedLocation() { }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Compute.Models.ExtendedLocationType>
@@ -5035,8 +5030,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class UefiSettings
     {
         public UefiSettings() { }
-        public bool? SecureBootEnabled { get { throw null; } set { } }
-        public bool? VTpmEnabled { get { throw null; } set { } }
+        public bool? IsSecureBootEnabled { get { throw null; } set { } }
+        public bool? IsVirtualTpmEnabled { get { throw null; } set { } }
     }
     public partial class UpdateDomainIdentifier
     {
@@ -5222,7 +5217,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineImageBase : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public VirtualMachineImageBase(string name, Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
