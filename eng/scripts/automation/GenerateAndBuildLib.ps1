@@ -413,7 +413,6 @@ function Invoke-GenerateAndBuildSDK () {
     } else {
         Write-Host "Generate data-plane SDK client library."
         $namespace = ""
-        $service = ""
         if ( $autorestConfigYaml -ne "") {
             # support single package
             $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
@@ -442,7 +441,7 @@ function Invoke-GenerateAndBuildSDK () {
             $packagesToGen = $packagesToGen + @($newpackageoutputJson)
             Remove-Item $newpackageoutput
         } else {
-            npx autorest --version=3.7.3 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
+            npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
             $serviceSDKDirectory = (Join-Path $sdkPath sdk $service)
             $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
             $folders |ForEach-Object {

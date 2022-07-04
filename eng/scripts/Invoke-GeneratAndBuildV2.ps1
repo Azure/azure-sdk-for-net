@@ -14,10 +14,10 @@ $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
-$autorestConfig = $inputJson.autorestConfig
+[string] $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfigYaml = ""
-if ($autorestConfig -ne "") {
+if ( $null -ne $autorestConfig -and $autorestConfig -ne "") {
     $autorestConfig | Set-Content "config.md"
     $autorestConfigYaml = Get-Content -Path .\config.md
     $range = ($autorestConfigYaml | Select-String -Pattern '```').LineNumber
