@@ -9,7 +9,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     [CodeGenClient("SIPRoutingServiceRestClient")]
     internal partial class SipRoutingRestClient
     {
-        internal HttpMessage CreatePatchSipConfigurationRequest(SipConfiguration body)
+        internal HttpMessage CreatePatchRequest(SipConfiguration body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

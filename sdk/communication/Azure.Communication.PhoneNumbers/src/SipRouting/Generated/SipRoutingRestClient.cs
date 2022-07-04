@@ -90,28 +90,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        internal HttpMessage CreatePatchRequest(SipConfiguration body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/sip", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/merge-patch+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
-            return message;
-        }
+        }       
 
         /// <summary> Patches SIP configuration for resource. </summary>
         /// <param name="body"> Configuration patch. </param>
