@@ -50,9 +50,9 @@ rename-rules:
 directive:
   - rename-operation:
       from: Registries_GetBuildSourceUploadUrl
-      to: Build_GetBuildSourceUploadUrl
+      to: Builds_GetBuildSourceUploadUrl
   - rename-operation:
       from: Registries_ScheduleRun
-      to: Build_ScheduleRun
+      to: Schedules_ScheduleRun
 
 ```

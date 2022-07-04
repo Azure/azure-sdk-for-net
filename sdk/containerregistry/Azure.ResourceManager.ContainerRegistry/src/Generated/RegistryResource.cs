@@ -36,8 +36,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         private readonly ClientDiagnostics _registryClientDiagnostics;
         private readonly RegistriesRestOperations _registryRestClient;
-        private readonly ClientDiagnostics _buildClientDiagnostics;
-        private readonly BuildRestOperations _buildRestClient;
+        private readonly ClientDiagnostics _schedulesClientDiagnostics;
+        private readonly SchedulesRestOperations _schedulesRestClient;
+        private readonly ClientDiagnostics _buildsClientDiagnostics;
+        private readonly BuildsRestOperations _buildsRestClient;
         private readonly RegistryData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RegistryResource"/> class for mocking. </summary>
@@ -62,8 +64,10 @@ namespace Azure.ResourceManager.ContainerRegistry
             _registryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string registryApiVersion);
             _registryRestClient = new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, registryApiVersion);
-            _buildClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _buildRestClient = new BuildRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _schedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _schedulesRestClient = new SchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _buildsRestClient = new BuildsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -762,22 +766,22 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scheduleRun
-        /// Operation Id: Build_ScheduleRun
+        /// Operation Id: Schedules_ScheduleRun
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameters of a run that needs to scheduled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RunResource>> ScheduleRunBuildAsync(WaitUntil waitUntil, RunContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RunResource>> ScheduleRunScheduleAsync(WaitUntil waitUntil, RunContent content, CancellationToken cancellationToken = default)
         {
             Core.Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _buildClientDiagnostics.CreateScope("RegistryResource.ScheduleRunBuild");
+            using var scope = _schedulesClientDiagnostics.CreateScope("RegistryResource.ScheduleRunSchedule");
             scope.Start();
             try
             {
-                var response = await _buildRestClient.ScheduleRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<RunResource>(new RunOperationSource(Client), _buildClientDiagnostics, Pipeline, _buildRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _schedulesRestClient.ScheduleRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerRegistryArmOperation<RunResource>(new RunOperationSource(Client), _schedulesClientDiagnostics, Pipeline, _schedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -792,22 +796,22 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scheduleRun
-        /// Operation Id: Build_ScheduleRun
+        /// Operation Id: Schedules_ScheduleRun
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameters of a run that needs to scheduled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RunResource> ScheduleRunBuild(WaitUntil waitUntil, RunContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RunResource> ScheduleRunSchedule(WaitUntil waitUntil, RunContent content, CancellationToken cancellationToken = default)
         {
             Core.Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _buildClientDiagnostics.CreateScope("RegistryResource.ScheduleRunBuild");
+            using var scope = _schedulesClientDiagnostics.CreateScope("RegistryResource.ScheduleRunSchedule");
             scope.Start();
             try
             {
-                var response = _buildRestClient.ScheduleRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<RunResource>(new RunOperationSource(Client), _buildClientDiagnostics, Pipeline, _buildRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _schedulesRestClient.ScheduleRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ContainerRegistryArmOperation<RunResource>(new RunOperationSource(Client), _schedulesClientDiagnostics, Pipeline, _schedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -822,16 +826,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// Get the upload location for the user to be able to upload the source.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/listBuildSourceUploadUrl
-        /// Operation Id: Build_GetBuildSourceUploadUrl
+        /// Operation Id: Builds_GetBuildSourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SourceUploadDefinition>> GetBuildSourceUploadUrlBuildAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _buildClientDiagnostics.CreateScope("RegistryResource.GetBuildSourceUploadUrlBuild");
+            using var scope = _buildsClientDiagnostics.CreateScope("RegistryResource.GetBuildSourceUploadUrlBuild");
             scope.Start();
             try
             {
-                var response = await _buildRestClient.GetBuildSourceUploadUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _buildsRestClient.GetBuildSourceUploadUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -844,16 +848,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary>
         /// Get the upload location for the user to be able to upload the source.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/listBuildSourceUploadUrl
-        /// Operation Id: Build_GetBuildSourceUploadUrl
+        /// Operation Id: Builds_GetBuildSourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceUploadDefinition> GetBuildSourceUploadUrlBuild(CancellationToken cancellationToken = default)
         {
-            using var scope = _buildClientDiagnostics.CreateScope("RegistryResource.GetBuildSourceUploadUrlBuild");
+            using var scope = _buildsClientDiagnostics.CreateScope("RegistryResource.GetBuildSourceUploadUrlBuild");
             scope.Start();
             try
             {
-                var response = _buildRestClient.GetBuildSourceUploadUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _buildsRestClient.GetBuildSourceUploadUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
