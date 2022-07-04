@@ -24,14 +24,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
         public SviCRUDTests(bool isAsync) : base(isAsync)
-        {
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "98f50aef-4bc8-4929-bba1-7d6928d5465a");
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "pqh8Q~dfnHiHb0HwNAOeJ~tu_0QCSD5UFp1NtalD");
-            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "72f988bf-86f1-41af-91ab-2d7cd011db47");
-            Environment.SetEnvironmentVariable("AZURE_SUBSCRIPTION_ID", "49d64d54-e966-4c46-a868-1999802b762c");
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-            Environment.SetEnvironmentVariable("AZURE_AUTHORITY_HOST", "https://login.microsoftonline.com");
-        }
+        {  }
 
         [OneTimeTearDown]
         public void Cleanup()
@@ -189,54 +182,35 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
-            string sshPrivateKey = File.ReadAllText(Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
-
+            // Reading constants from files.
             string sshPublicKey = File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPublic.txt"));
+            string fileName = isInstall ? "SingleServerInstall.json" : "SingleServerCreate.json";
+
+            var testSapWorkloadJson = File.ReadAllText(Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName));
+
+            // Updating payload at runtme.
+            dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+
+            dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                infraRgName;
+            dynamicObject.properties.configuration.infrastructureConfiguration.
+                virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
+                    sshPublicKey;
 
             if (isInstall)
             {
-                var testSapWorkloadJson = File.ReadAllText(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
-
-                dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
-
-                dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
-                    infraRgName;
-                dynamicObject.properties.configuration.infrastructureConfiguration.
-                    virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
-                        sshPublicKey;
+                string sshPrivateKey = File.ReadAllText(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
                 dynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
                     sshPrivateKey;
-
-                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
-
-                SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
-                    sapPayloadJson);
-
-                return testSapWorkload;
             }
-            else
-            {
-                var testSapWorkloadJson = File.ReadAllText(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerCreate.json"));
 
-                dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+            // Converting Json payload to SVI Payload.
+            var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
 
-                dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
-                    infraRgName;
-                dynamicObject.properties.configuration.infrastructureConfiguration.
-                    virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
-                        sshPublicKey;
-
-                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
-
-                SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
-                    sapPayloadJson);
-
-                return testSapWorkload;
-            }
+            return SapVirtualInstanceData.DeserializeSapVirtualInstanceData(sapPayloadJson);
         }
     }
 }
