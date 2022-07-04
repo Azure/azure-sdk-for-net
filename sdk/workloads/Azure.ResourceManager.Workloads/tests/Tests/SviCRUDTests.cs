@@ -182,41 +182,54 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <returns>PHP Workload Resource.</returns>
         private SapVirtualInstanceData GetSingleServerPayloadToPut(string infraRgName, bool isInstall)
         {
-            // Reading the constants files.
-            var testSapWorkloadJson = File.ReadAllText(Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
-
             string sshPrivateKey = File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
 
             string sshPublicKey = File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPublic.txt"));
 
-            // Editing the payload at runtime.
-            dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
-
-            DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
-                infraRgName;
-            DynamicObject.properties.configuration.infrastructureConfiguration.
-                virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
-                    sshPublicKey;
-
             if (isInstall)
             {
+                var testSapWorkloadJson = File.ReadAllText(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerInstall.json"));
+
+                dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+
+                DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                    infraRgName;
+                DynamicObject.properties.configuration.infrastructureConfiguration.
+                    virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
+                        sshPublicKey;
                 DynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
                     sshPrivateKey;
+
+                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
+
+                SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
+                    sapPayloadJson);
+
+                return testSapWorkload;
             }
             else
             {
-                DynamicObject.properties.configuration.softwareConfiguration = null;
+                var testSapWorkloadJson = File.ReadAllText(Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SingleServerCreate.json"));
+
+                dynamic DynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+
+                DynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
+                    infraRgName;
+                DynamicObject.properties.configuration.infrastructureConfiguration.
+                    virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
+                        sshPublicKey;
+
+                var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
+
+                SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
+                    sapPayloadJson);
+
+                return testSapWorkload;
             }
-
-            var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(DynamicObject)).RootElement;
-
-            SapVirtualInstanceData testSapWorkload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
-                sapPayloadJson);
-
-            return testSapWorkload;
         }
     }
 }
