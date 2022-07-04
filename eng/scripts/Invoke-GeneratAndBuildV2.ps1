@@ -77,7 +77,9 @@ foreach( $file in $inputFilePaths) {
     }
 }
 
-UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -generatedSDKPackages $generatedSDKPackages
+if ($inputFileToGen.Count -gt 0 ) {
+    UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -generatedSDKPackages $generatedSDKPackages
+}
 
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages

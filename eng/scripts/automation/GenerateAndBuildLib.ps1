@@ -239,6 +239,9 @@ function New-DataPlanePackageFolder() {
     Write-Host "Updating configuration file: $file"
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Pop-Location
+
+    $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
+    (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | Set-Content $projFile
     # dotnet sln
     Push-Location $projectFolder
     dotnet sln remove src\$namespace.csproj
