@@ -64,13 +64,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
+            // This will cause Statsbeat static constructor to be executed
+            // which may fail if the options are not properly configured for exporter
             // Race condition is not taken in to account here
             // If the exporters have different resources
             // only one of them will be used.
             // Also, no statsbeat can be sent before the first export
             // as the resource is initialized at that time.
-            // This will cause Statsbeat static constructor to be executed
-            // which may fail if the options are not properly configured for exporter
             try
             {
                 if (StatsBeat.s_roleName == null && StatsBeat.s_roleInstance == null)
