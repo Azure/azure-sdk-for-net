@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CassandraTablePropertiesResource> resource = default;
-            Optional<CassandraTablePropertiesOptions> options = default;
+            Optional<ExtendedCassandraTableResourceInfo> resource = default;
+            Optional<CassandraTablePropertiesConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = CassandraTablePropertiesResource.DeserializeCassandraTablePropertiesResource(property0.Value);
+                            resource = ExtendedCassandraTableResourceInfo.DeserializeExtendedCassandraTableResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = CassandraTablePropertiesOptions.DeserializeCassandraTablePropertiesOptions(property0.Value);
+                            options = CassandraTablePropertiesConfig.DeserializeCassandraTablePropertiesConfig(property0.Value);
                             continue;
                         }
                     }
