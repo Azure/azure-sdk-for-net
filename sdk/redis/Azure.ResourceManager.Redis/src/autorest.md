@@ -45,6 +45,10 @@ rename-rules:
   URI: Uri
   Etag: ETag
 
+override-operation-name:
+  Redis_CheckNameAvailability: CheckRedisNameAvailability
+  AsyncOperationStatus_Get: GetAsyncOperationStatus
+
 directive:
   - from: redis.json
     where: $.paths..parameters[?(@.name === 'default')]

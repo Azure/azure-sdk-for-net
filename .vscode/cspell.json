@@ -323,11 +323,17 @@
         "ipfix"
       ]
     },
-    {
-      "filename": "**/sdk/reservations/**/*.cs",
+	{
+      "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "msrp",
         "hana"
+      ]
+    },
+    {
+      "filename": "**/sdk/reservations/**/*.cs",
+      "words": [
+        "Unprovisioning"
       ]
     },
     {
