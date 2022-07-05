@@ -73,10 +73,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // as the resource is initialized at that time.
             try
             {
-                if (StatsBeat.s_roleName == null && StatsBeat.s_roleInstance == null)
+                if (StatsBeat.Statsbeat_RoleName == null && StatsBeat.Statsbeat_RoleInstance == null)
                 {
-                    StatsBeat.s_roleInstance = RoleInstance;
-                    StatsBeat.s_roleName = RoleName;
+                    StatsBeat.Statsbeat_RoleInstance = RoleInstance;
+                    StatsBeat.Statsbeat_RoleName = RoleName;
                 }
             }
             catch (Exception)

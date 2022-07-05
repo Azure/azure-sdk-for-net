@@ -9,16 +9,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         internal static void InitializeStatsBeat(string connectionString)
         {
-            // initialize statsbeat by accessing singleton instance
-            _ = StatsBeat.StatsBeatInstance;
-
             // Race condition is not taken in to account here
             // If the exporters have different connection string
             // only one of them will be used.
-            if (StatsBeat.s_ikey == null)
+            if (StatsBeat.Customer_Ikey == null)
             {
                 ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out _);
-                StatsBeat.s_ikey = instrumentationKey;
+                StatsBeat.Customer_Ikey = instrumentationKey;
             }
         }
     }

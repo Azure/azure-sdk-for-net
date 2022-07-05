@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.Metrics;
+using System.Threading;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -16,11 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string ConnectionString = "<ConnectionString>";
 
-        internal static string s_roleName;
+        private static string s_roleName;
 
-        internal static string s_roleInstance;
+        private static string s_roleInstance;
 
-        internal static string s_ikey;
+        private static string s_ikey;
 
         internal static string s_os = StorageHelper.IsWindowsOS() ? "windows" : "linux";
 
@@ -45,10 +46,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public static StatsBeat StatsBeatInstance { get; } = new();
 
+        internal static string Customer_Ikey { get => s_ikey; set => s_ikey = value; }
+        internal static string Statsbeat_RoleName { get => s_roleName; set => s_roleName = value; }
+        internal static string Statsbeat_RoleInstance { get => s_roleInstance; set => s_roleInstance = value; }
+
         private static Measurement<int> GetAttachStatsBeat()
         {
             // TODO: Add additional properties required for statbeat
-            return new((int)1, new("ikey", s_ikey), new("language", "DotNet"), new("os", s_os));
+            return new((int)1, new("ikey", Customer_Ikey), new("language", "DotNet"), new("os", s_os));
         }
 
         public void Dispose()
