@@ -5,14 +5,14 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.WebPubSub.Models;
 
-namespace Azure.ResourceManager.WebPubSub.Models
+namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class PrivateLink : IUtf8JsonSerializable
+    public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,50 +24,31 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("groupId");
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("requiredMembers");
-                writer.WriteStartArray();
-                foreach (var item in RequiredMembers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("privateLinkResourceId");
+                writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsDefined(RequestMessage))
             {
-                writer.WritePropertyName("requiredZoneNames");
-                writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkTypes))
-            {
-                writer.WritePropertyName("shareablePrivateLinkResourceTypes");
-                writer.WriteStartArray();
-                foreach (var item in ShareablePrivateLinkTypes)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("requestMessage");
+                writer.WriteStringValue(RequestMessage);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static PrivateLink DeserializePrivateLink(JsonElement element)
+        internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
-            Optional<IList<ShareablePrivateLinkType>> shareablePrivateLinkResourceTypes = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Optional<WebPubSubProvisioningState> provisioningState = default;
+            Optional<string> requestMessage = default;
+            Optional<SharedPrivateLinkStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -109,56 +90,46 @@ namespace Azure.ResourceManager.WebPubSub.Models
                             groupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requiredMembers"))
+                        if (property0.NameEquals("privateLinkResourceId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            requiredMembers = array;
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requiredZoneNames"))
+                        if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            requiredZoneNames = array;
+                            provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("shareablePrivateLinkResourceTypes"))
+                        if (property0.NameEquals("requestMessage"))
+                        {
+                            requestMessage = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ShareablePrivateLinkType> array = new List<ShareablePrivateLinkType>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
-                            }
-                            shareablePrivateLinkResourceTypes = array;
+                            status = new SharedPrivateLinkStatus(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PrivateLink(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes));
+            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
         }
     }
 }

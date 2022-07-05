@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Private link resource. </summary>
-    public partial class PrivateLink : ResourceData
+    public partial class WebPubSubPrivateLink : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLink. </summary>
-        public PrivateLink()
+        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        public WebPubSubPrivateLink()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
             ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLink. </summary>
+        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
         /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
-        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes) : base(id, name, resourceType, systemData)
+        internal WebPubSubPrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

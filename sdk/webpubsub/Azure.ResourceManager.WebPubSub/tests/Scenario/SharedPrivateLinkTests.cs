@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             return webPubSub.Value;
         }
 
-        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
+        public async Task<WebPubSubSharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
         {
             //1. create vnet
             var vnetData = new VirtualNetworkData()
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             //3 create SharedPrivateLink
             //TODO: Creating a SharedPrivateLink inevitably requires manual approval on the portal.
-            var container = _webPubSub.GetSharedPrivateLinks();
-            SharedPrivateLinkData data = new SharedPrivateLinkData()
+            var container = _webPubSub.GetWebPubSubSharedPrivateLinks();
+            WebPubSubSharedPrivateLinkData data = new WebPubSubSharedPrivateLinkData()
             {
                 PrivateLinkResourceId =new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}") ,
                 GroupId = "webPubSub",
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             _webPubSub = await CreateWebPubSub();
-            var list = await _webPubSub.GetSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetWebPubSubSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }

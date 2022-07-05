@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub
         public WebPubSubData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubData. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The managed identity response. </summary>
         public ManagedIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>
         public string ExternalIP { get; }
         /// <summary> FQDN of the service instance. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Private endpoint connections to the resource. </summary>
         public IReadOnlyList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
-        public IReadOnlyList<SharedPrivateLinkData> SharedPrivateLinkResources { get; }
+        public IReadOnlyList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings. </summary>
         internal WebPubSubTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
