@@ -531,7 +531,7 @@ function GeneratePackage()
     if (!(Test-Path $logFilePath)) {
         New-Item $logFilePath
     }
-    dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath`
+    dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
     if (!$LASTEXITCODE) {
         $hasBreakingChange = $false
     }
