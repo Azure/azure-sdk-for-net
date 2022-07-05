@@ -17,12 +17,10 @@
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>$(requiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
-    <PackageReference Include="WindowsAzure.Storage" />
     <PackageReference Include="Microsoft.Azure.Batch" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
