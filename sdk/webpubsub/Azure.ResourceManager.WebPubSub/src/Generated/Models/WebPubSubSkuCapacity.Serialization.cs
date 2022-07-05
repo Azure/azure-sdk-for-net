@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class SkuCapacity
+    public partial class WebPubSubSkuCapacity
     {
-        internal static SkuCapacity DeserializeSkuCapacity(JsonElement element)
+        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element)
         {
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;
             Optional<IReadOnlyList<int>> allowedValues = default;
-            Optional<ScaleType> scaleType = default;
+            Optional<WebPubSubScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"))
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleType = new ScaleType(property.Value.GetString());
+                    scaleType = new WebPubSubScaleType(property.Value.GetString());
                     continue;
                 }
             }
-            return new SkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
+            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
         }
     }
 }

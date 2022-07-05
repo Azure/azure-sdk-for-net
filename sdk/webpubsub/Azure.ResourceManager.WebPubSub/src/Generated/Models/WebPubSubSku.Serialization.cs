@@ -10,58 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubSku : IUtf8JsonSerializable
+    public partial class WebPubSubSku
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
-            {
-                writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier.Value.ToString());
-            }
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity");
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static WebPubSubSku DeserializeWebPubSubSku(JsonElement element)
         {
-            string name = default;
-            Optional<WebPubSubSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            Optional<string> resourceType = default;
+            Optional<BillingInfoSku> sku = default;
+            Optional<WebPubSubSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("resourceType"))
                 {
-                    name = property.Value.GetString();
+                    resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("sku"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = new WebPubSubSkuTier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("size"))
-                {
-                    size = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("family"))
-                {
-                    family = property.Value.GetString();
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"))
@@ -71,11 +41,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = property.Value.GetInt32();
+                    capacity = WebPubSubSkuCapacity.DeserializeWebPubSubSkuCapacity(property.Value);
                     continue;
                 }
             }
-            return new WebPubSubSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new WebPubSubSku(resourceType.Value, sku.Value, capacity.Value);
         }
     }
 }
