@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class TestAllRoutesResult
+    public partial class IotHubTestAllRoutesResult
     {
-        internal static TestAllRoutesResult DeserializeTestAllRoutesResult(JsonElement element)
+        internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element)
         {
             Optional<IReadOnlyList<MatchedRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new TestAllRoutesResult(Optional.ToList(routes));
+            return new IotHubTestAllRoutesResult(Optional.ToList(routes));
         }
     }
 }

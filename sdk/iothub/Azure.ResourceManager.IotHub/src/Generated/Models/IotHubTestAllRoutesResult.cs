@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Result of testing all routes. </summary>
-    public partial class TestAllRoutesResult
+    public partial class IotHubTestAllRoutesResult
     {
-        /// <summary> Initializes a new instance of TestAllRoutesResult. </summary>
-        internal TestAllRoutesResult()
+        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        internal IotHubTestAllRoutesResult()
         {
             Routes = new ChangeTrackingList<MatchedRoute>();
         }
 
-        /// <summary> Initializes a new instance of TestAllRoutesResult. </summary>
+        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
         /// <param name="routes"> JSON-serialized array of matched routes. </param>
-        internal TestAllRoutesResult(IReadOnlyList<MatchedRoute> routes)
+        internal IotHubTestAllRoutesResult(IReadOnlyList<MatchedRoute> routes)
         {
             Routes = routes;
         }

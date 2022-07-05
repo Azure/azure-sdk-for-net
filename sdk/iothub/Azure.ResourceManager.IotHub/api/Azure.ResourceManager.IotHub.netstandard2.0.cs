@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.IotHub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.TestAllRoutesResult> TestAllRoutes(Azure.ResourceManager.IotHub.Models.TestAllRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.TestAllRoutesResult>> TestAllRoutesAsync(Azure.ResourceManager.IotHub.Models.TestAllRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.TestRouteResult> TestRoute(Azure.ResourceManager.IotHub.Models.TestRouteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.TestRouteResult>> TestRouteAsync(Azure.ResourceManager.IotHub.Models.TestRouteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubTestAllRoutesResult> TestAllRoutes(Azure.ResourceManager.IotHub.Models.TestAllRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubTestAllRoutesResult>> TestAllRoutesAsync(Azure.ResourceManager.IotHub.Models.TestAllRoutesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubTestRouteResult> TestRoute(Azure.ResourceManager.IotHub.Models.IotHubTestRouteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubTestRouteResult>> TestRouteAsync(Azure.ResourceManager.IotHub.Models.IotHubTestRouteContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.IotHub.IotHubDescriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.IotHub.Models.IotHubDescriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.IotHub.Models.IotHubDescriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -598,6 +598,43 @@ namespace Azure.ResourceManager.IotHub.Models
         Standard = 1,
         Basic = 2,
     }
+    public partial class IotHubTestAllRoutesResult
+    {
+        internal IotHubTestAllRoutesResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.MatchedRoute> Routes { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotHubTestResultStatus : System.IEquatable<Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotHubTestResultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus False { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus True { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus Undefined { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus left, Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus left, Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IotHubTestRouteContent
+    {
+        public IotHubTestRouteContent(Azure.ResourceManager.IotHub.Models.RouteProperties route) { }
+        public Azure.ResourceManager.IotHub.Models.RoutingMessage Message { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.RouteProperties Route { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.RoutingTwin Twin { get { throw null; } set { } }
+    }
+    public partial class IotHubTestRouteResult
+    {
+        internal IotHubTestRouteResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.RouteCompilationError> DetailsCompilationErrors { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.IotHubTestResultStatus? Result { get { throw null; } }
+    }
     public enum IPFilterActionType
     {
         Accept = 0,
@@ -963,43 +1000,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public Azure.ResourceManager.IotHub.Models.RoutingMessage Message { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.RoutingSource? RoutingSource { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.RoutingTwin Twin { get { throw null; } set { } }
-    }
-    public partial class TestAllRoutesResult
-    {
-        internal TestAllRoutesResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.MatchedRoute> Routes { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TestResultStatus : System.IEquatable<Azure.ResourceManager.IotHub.Models.TestResultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TestResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.TestResultStatus False { get { throw null; } }
-        public static Azure.ResourceManager.IotHub.Models.TestResultStatus True { get { throw null; } }
-        public static Azure.ResourceManager.IotHub.Models.TestResultStatus Undefined { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotHub.Models.TestResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotHub.Models.TestResultStatus left, Azure.ResourceManager.IotHub.Models.TestResultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotHub.Models.TestResultStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotHub.Models.TestResultStatus left, Azure.ResourceManager.IotHub.Models.TestResultStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TestRouteContent
-    {
-        public TestRouteContent(Azure.ResourceManager.IotHub.Models.RouteProperties route) { }
-        public Azure.ResourceManager.IotHub.Models.RoutingMessage Message { get { throw null; } set { } }
-        public Azure.ResourceManager.IotHub.Models.RouteProperties Route { get { throw null; } }
-        public Azure.ResourceManager.IotHub.Models.RoutingTwin Twin { get { throw null; } set { } }
-    }
-    public partial class TestRouteResult
-    {
-        internal TestRouteResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.RouteCompilationError> DetailsCompilationErrors { get { throw null; } }
-        public Azure.ResourceManager.IotHub.Models.TestResultStatus? Result { get { throw null; } }
     }
     public partial class UserSubscriptionQuota
     {

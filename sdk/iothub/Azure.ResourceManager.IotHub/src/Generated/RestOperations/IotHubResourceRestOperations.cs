@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestAllRoutesResult>> TestAllRoutesAsync(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1450,9 +1450,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        TestAllRoutesResult value = default;
+                        IotHubTestAllRoutesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestAllRoutesResult.DeserializeTestAllRoutesResult(document.RootElement);
+                        value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestAllRoutesResult> TestAllRoutes(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public Response<IotHubTestAllRoutesResult> TestAllRoutes(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1481,9 +1481,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        TestAllRoutesResult value = default;
+                        IotHubTestAllRoutesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestAllRoutesResult.DeserializeTestAllRoutesResult(document.RootElement);
+                        value = IotHubTestAllRoutesResult.DeserializeIotHubTestAllRoutesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        internal HttpMessage CreateTestRouteRequest(string subscriptionId, string resourceGroupName, string iotHubName, TestRouteContent content)
+        internal HttpMessage CreateTestRouteRequest(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1524,7 +1524,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestRouteResult>> TestRouteAsync(string subscriptionId, string resourceGroupName, string iotHubName, TestRouteContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubTestRouteResult>> TestRouteAsync(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1537,9 +1537,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        TestRouteResult value = default;
+                        IotHubTestRouteResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestRouteResult.DeserializeTestRouteResult(document.RootElement);
+                        value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestRouteResult> TestRoute(string subscriptionId, string resourceGroupName, string iotHubName, TestRouteContent content, CancellationToken cancellationToken = default)
+        public Response<IotHubTestRouteResult> TestRoute(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1568,9 +1568,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        TestRouteResult value = default;
+                        IotHubTestRouteResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestRouteResult.DeserializeTestRouteResult(document.RootElement);
+                        value = IotHubTestRouteResult.DeserializeIotHubTestRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

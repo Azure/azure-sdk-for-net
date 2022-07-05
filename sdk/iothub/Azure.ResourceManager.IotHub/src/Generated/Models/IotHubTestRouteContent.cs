@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Input for testing route. </summary>
-    public partial class TestRouteContent
+    public partial class IotHubTestRouteContent
     {
-        /// <summary> Initializes a new instance of TestRouteContent. </summary>
+        /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
         /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
-        public TestRouteContent(RouteProperties route)
+        public IotHubTestRouteContent(RouteProperties route)
         {
             if (route == null)
             {

@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Detailed result of testing a route. </summary>
-    internal partial class TestRouteResultDetails
+    internal partial class IotHubTestRouteResultDetails
     {
-        /// <summary> Initializes a new instance of TestRouteResultDetails. </summary>
-        internal TestRouteResultDetails()
+        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        internal IotHubTestRouteResultDetails()
         {
             CompilationErrors = new ChangeTrackingList<RouteCompilationError>();
         }
 
-        /// <summary> Initializes a new instance of TestRouteResultDetails. </summary>
+        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
         /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
-        internal TestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
+        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
         {
             CompilationErrors = compilationErrors;
         }

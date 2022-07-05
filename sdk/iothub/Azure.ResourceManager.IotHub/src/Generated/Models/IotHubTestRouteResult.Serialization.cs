@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class TestRouteResult
+    public partial class IotHubTestRouteResult
     {
-        internal static TestRouteResult DeserializeTestRouteResult(JsonElement element)
+        internal static IotHubTestRouteResult DeserializeIotHubTestRouteResult(JsonElement element)
         {
-            Optional<TestResultStatus> result = default;
-            Optional<TestRouteResultDetails> details = default;
+            Optional<IotHubTestResultStatus> result = default;
+            Optional<IotHubTestRouteResultDetails> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"))
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    result = new TestResultStatus(property.Value.GetString());
+                    result = new IotHubTestResultStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    details = TestRouteResultDetails.DeserializeTestRouteResultDetails(property.Value);
+                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value);
                     continue;
                 }
             }
-            return new TestRouteResult(Optional.ToNullable(result), details.Value);
+            return new IotHubTestRouteResult(Optional.ToNullable(result), details.Value);
         }
     }
 }

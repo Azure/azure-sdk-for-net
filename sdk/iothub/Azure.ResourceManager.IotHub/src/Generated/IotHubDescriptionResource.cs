@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Input for testing all routes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<TestAllRoutesResult>> TestAllRoutesAsync(TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Input for testing all routes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<TestAllRoutesResult> TestAllRoutes(TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubTestAllRoutesResult> TestAllRoutes(TestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Route that needs to be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<TestRouteResult>> TestRouteAsync(TestRouteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubTestRouteResult>> TestRouteAsync(IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="content"> Route that needs to be tested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<TestRouteResult> TestRoute(TestRouteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<IotHubTestRouteResult> TestRoute(IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

@@ -47,4 +47,13 @@ rename-rules:
   URI: Uri
   Etag: ETag
 
+directive:
+  - from: iothub.json
+    where: $.definitions
+    transform: >
+      $.TestAllRoutesResult['x-ms-client-name'] = 'IotHubTestAllRoutesResult';
+      $.TestRouteInput['x-ms-client-name'] = 'IotHubTestRouteInput';
+      $.TestRouteResult.properties.result['x-ms-enum']['name'] = 'IotHubTestResultStatus';
+      $.TestRouteResult['x-ms-client-name'] = 'IotHubTestRouteResult';
+      $.TestRouteResultDetails['x-ms-client-name'] = 'IotHubTestRouteResultDetails';
 ```

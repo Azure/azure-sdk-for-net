@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    internal partial class TestRouteResultDetails
+    internal partial class IotHubTestRouteResultDetails
     {
-        internal static TestRouteResultDetails DeserializeTestRouteResultDetails(JsonElement element)
+        internal static IotHubTestRouteResultDetails DeserializeIotHubTestRouteResultDetails(JsonElement element)
         {
             Optional<IReadOnlyList<RouteCompilationError>> compilationErrors = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new TestRouteResultDetails(Optional.ToList(compilationErrors));
+            return new IotHubTestRouteResultDetails(Optional.ToList(compilationErrors));
         }
     }
 }

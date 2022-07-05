@@ -326,8 +326,9 @@
 	{
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
+        "hana",
         "msrp",
-        "hana"
+        "unprovisioning"
       ]
     },
     {
