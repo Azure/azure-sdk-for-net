@@ -303,8 +303,4 @@ directive:
       $.required = ["frontendIpConfigurations"];
       $.properties.frontendIPConfigurations = undefined;
     reason: Service returns response with property name as frontendIpConfigurations.
-  - from: cloudService.json
-    where: $.paths
-    transform: >
-      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
 ```

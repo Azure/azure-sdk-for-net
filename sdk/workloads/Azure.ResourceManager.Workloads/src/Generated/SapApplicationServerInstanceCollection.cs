@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The SAP Application Server instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<SapApplicationServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SapApplicationServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The SAP Application Server instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
-        public virtual ArmOperation<SapApplicationServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SapApplicationServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapApplicationServerInstanceSAPApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.CreateOrUpdate");
             scope.Start();
