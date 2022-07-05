@@ -2,12 +2,15 @@ parameters:
   WorkingDirectory: '$(System.DefaultWorkingDirectory)'
 steps:
   - pwsh: |
-      $differByCaseFiles = git ls-files | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Group} 
+      $differByCaseFiles = git ls-files | Group-Object | Where-Object { $_.Count -gt 1 } 
 
       if ($differByCaseFiles) 
       {
-        Write-Host "Do NOT name the files which only differ in case. Please check and rename the following files:"
-        $differByCaseFiles | Write-Host
+        foreach ($fileGroup in $differByCaseFiles) {
+          Write-Host "Duplicated Files: "
+          Write-Host "[ $($fileGroup.Group) ]"
+        }
+        Write-Host "Do NOT name the files which only differ in case. Please check above files."
         exit 1
       }
       Write-Host "There are no file names that only differ in case."
