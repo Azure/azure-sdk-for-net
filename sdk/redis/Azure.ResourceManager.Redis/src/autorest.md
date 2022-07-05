@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-csharpgen:
-  attach: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -50,11 +47,16 @@ rename-rules:
 
 directive:
   - from: redis.json
+    where: $.paths..parameters[?(@.name === 'default')]
+    transform: >
+      $['x-ms-client-name'] = 'defaultName';
+  - from: redis.json
     where: $.definitions
     transform: >
       $.OperationStatus.allOf = [
         {
           "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/OperationStatusResult"
         }
-      ]
+      ];
+      $.RedisResource['x-ms-client-name'] = 'Redis';
 ```

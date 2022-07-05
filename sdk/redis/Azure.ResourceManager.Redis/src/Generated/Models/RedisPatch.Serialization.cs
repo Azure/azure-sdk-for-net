@@ -10,23 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisResourceCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class RedisPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
-            {
-                writer.WritePropertyName("zones");
-                writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -96,17 +84,10 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            writer.WritePropertyName("sku");
-            writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("subnetId");
-                writer.WriteStringValue(SubnetId);
-            }
-            if (Optional.IsDefined(StaticIP))
-            {
-                writer.WritePropertyName("staticIP");
-                writer.WriteStringValue(StaticIP);
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RedisResource> GetRedisBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RedisResource> GetRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRedisBySubscriptionAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRedisAsync(cancellationToken);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RedisResource> GetRedisBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<RedisResource> GetRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRedisBySubscription(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRedis(cancellationToken);
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Gets a collection of RedisResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
-        public static RedisResourceCollection GetRedisResources(this ResourceGroupResource resourceGroupResource)
+        public static RedisCollection GetRedis(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetRedisResources();
+            return GetExtensionClient(resourceGroupResource).GetRedis();
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RedisResource>> GetRedisResourceAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<RedisResource>> GetRedisAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRedisResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetRedis().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RedisResource> GetRedisResource(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<RedisResource> GetRedis(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRedisResources().Get(name, cancellationToken);
+            return resourceGroupResource.GetRedis().Get(name, cancellationToken);
         }
 
         #region RedisResource

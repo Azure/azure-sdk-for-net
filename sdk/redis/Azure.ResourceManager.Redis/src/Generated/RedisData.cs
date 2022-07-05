@@ -14,14 +14,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisResource data model. </summary>
-    public partial class RedisResourceData : TrackedResourceData
+    /// <summary> A class representing the Redis data model. </summary>
+    public partial class RedisData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RedisResourceData. </summary>
+        /// <summary> Initializes a new instance of RedisData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public RedisResourceData(AzureLocation location, RedisSku sku) : base(location)
+        public RedisData(AzureLocation location, RedisSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis
             PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisResourceData. </summary>
+        /// <summary> Initializes a new instance of RedisData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
-        internal RedisResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonPropertiesRedisConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, TlsVersion? minimumTlsVersion, PublicNetworkAccess? publicNetworkAccess, RedisSku sku, string subnetId, string staticIP, ProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonPropertiesRedisConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, TlsVersion? minimumTlsVersion, PublicNetworkAccess? publicNetworkAccess, RedisSku sku, string subnetId, string staticIP, ProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             Identity = identity;

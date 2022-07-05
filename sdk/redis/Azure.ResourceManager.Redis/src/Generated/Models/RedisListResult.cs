@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisListResult. </summary>
         internal RedisListResult()
         {
-            Value = new ChangeTrackingList<RedisResourceData>();
+            Value = new ChangeTrackingList<RedisData>();
         }
 
         /// <summary> Initializes a new instance of RedisListResult. </summary>
         /// <param name="value"> List of Redis cache instances. </param>
         /// <param name="nextLink"> Link for next page of results. </param>
-        internal RedisListResult(IReadOnlyList<RedisResourceData> value, string nextLink)
+        internal RedisListResult(IReadOnlyList<RedisData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Redis cache instances. </summary>
-        public IReadOnlyList<RedisResourceData> Value { get; }
+        public IReadOnlyList<RedisData> Value { get; }
         /// <summary> Link for next page of results. </summary>
         public string NextLink { get; }
     }

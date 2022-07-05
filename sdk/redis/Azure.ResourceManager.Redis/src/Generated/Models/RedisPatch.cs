@@ -5,38 +5,22 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> Parameters supplied to the Create Redis operation. </summary>
-    public partial class RedisResourceCreateOrUpdateContent
+    /// <summary> Parameters supplied to the Update Redis operation. </summary>
+    public partial class RedisPatch
     {
-        /// <summary> Initializes a new instance of RedisResourceCreateOrUpdateContent. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public RedisResourceCreateOrUpdateContent(AzureLocation location, RedisSku sku)
+        /// <summary> Initializes a new instance of RedisPatch. </summary>
+        public RedisPatch()
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-
-            Zones = new ChangeTrackingList<string>();
-            Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
             TenantSettings = new ChangeTrackingDictionary<string, string>();
-            Sku = sku;
         }
 
-        /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation Location { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
@@ -60,10 +44,6 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are the exclusive access method. Default value is &apos;Enabled&apos;. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
-        public RedisSku Sku { get; }
-        /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>
-        public string SubnetId { get; set; }
-        /// <summary> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </summary>
-        public string StaticIP { get; set; }
+        public RedisSku Sku { get; set; }
     }
 }

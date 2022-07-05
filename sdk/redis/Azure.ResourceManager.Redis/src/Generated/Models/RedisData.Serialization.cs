@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisResourceData : IUtf8JsonSerializable
+    public partial class RedisData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Redis
             writer.WriteEndObject();
         }
 
-        internal static RedisResourceData DeserializeRedisResourceData(JsonElement element)
+        internal static RedisData DeserializeRedisData(JsonElement element)
         {
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, Optional.ToList(linkedServers), Optional.ToList(instances), Optional.ToList(privateEndpointConnections));
+            return new RedisData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, Optional.ToList(linkedServers), Optional.ToList(instances), Optional.ToList(privateEndpointConnections));
         }
     }
 }
