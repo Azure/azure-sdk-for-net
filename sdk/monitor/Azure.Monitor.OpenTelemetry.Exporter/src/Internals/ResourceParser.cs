@@ -69,10 +69,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // only one of them will be used.
             // Also, no statsbeat can be sent before the first export
             // as the resource is initialized at that time.
-            if (StatsBeat.s_roleName == null && StatsBeat.s_roleInstance == null)
+            // This will cause Statsbeat static constructor to be executed
+            // which may fail if the options are not properly configured for exporter
+            try
             {
-                StatsBeat.s_roleInstance = RoleInstance;
-                StatsBeat.s_roleName = RoleName;
+                if (StatsBeat.s_roleName == null && StatsBeat.s_roleInstance == null)
+                {
+                    StatsBeat.s_roleInstance = RoleInstance;
+                    StatsBeat.s_roleName = RoleName;
+                }
+            }
+            catch (Exception)
+            {
+                // ignore?
             }
         }
     }
