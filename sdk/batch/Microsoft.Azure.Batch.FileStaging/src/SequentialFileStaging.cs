@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             // 1. form the credentail and initial client
             BlobServiceClient blobServiceClient = new BlobServiceClient(blobUri, new StorageSharedKeyCredential(account, key));
 
-            //// 2. create container if it doesn't exist
+            // 2. create container if it doesn't exist
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(container);
             containerClient.CreateIfNotExistsAsync().GetAwaiter().GetResult();
 
@@ -211,6 +211,10 @@ namespace Microsoft.Azure.Batch.FileStaging
             bool policyFound = false;
             bool updatePolicy = false;
 
+            /*
+             * Loop through signed identifiers to see if policy already exists
+             * Need to check and update policy in place to preserve the other access policies when setting at the end
+            */
             for (int index = 0; index < currentSignedIdentifiers.Count; index++)
             {
                 BlobSignedIdentifier identity = currentSignedIdentifiers.ElementAt(index);
