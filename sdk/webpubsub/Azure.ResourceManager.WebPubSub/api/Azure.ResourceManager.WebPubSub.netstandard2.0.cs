@@ -319,25 +319,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScaleType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ScaleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.ScaleType Automatic { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.ScaleType Manual { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.ScaleType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.ScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.ScaleType left, Azure.ResourceManager.WebPubSub.Models.ScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.ScaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.ScaleType left, Azure.ResourceManager.WebPubSub.Models.ScaleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ShareablePrivateLinkProperties
     {
         public ShareablePrivateLinkProperties() { }
@@ -525,6 +506,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebPubSubScaleType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebPubSubScaleType(string value) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType Manual { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WebPubSubSku
     {
         internal WebPubSubSku() { }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public int? Default { get { throw null; } }
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.ScaleType? ScaleType { get { throw null; } }
+        public Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType? ScaleType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubSkuTier : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier>
