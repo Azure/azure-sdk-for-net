@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkConfiguration. </summary>
-        /// <param name="vnetid"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
+        /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>
-        internal VirtualNetworkConfiguration(string vnetid, string subnetname, string subnetResourceId)
+        internal VirtualNetworkConfiguration(string vnetId, string subnetname, string subnetResourceId)
         {
-            Vnetid = vnetid;
+            VnetId = vnetId;
             Subnetname = subnetname;
             SubnetResourceId = subnetResourceId;
         }
 
         /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
-        public string Vnetid { get; }
+        public string VnetId { get; }
         /// <summary> The name of the subnet. </summary>
         public string Subnetname { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </summary>

@@ -49,6 +49,10 @@ rename-rules:
   URI: Uri
   Etag: ETag
 
+override-operation-name:
+  NetworkStatus_ListByLocation: GetNetworkStatusByLocation
+
+
 directive:
   - remove-operation: 'ApiManagementOperations_List'
   - from: definitions.json
@@ -56,9 +60,16 @@ directive:
     transform: >
       $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethodMode';
       $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethodContract';
+      $.OpenidConnectProviderContract['x-ms-client-name'] = 'OpenIdConnectProviderContract';
+      $.OpenidConnectProviderUpdateContract['x-ms-client-name'] = 'OpenIdConnectProviderUpdateContract';
   - from: apimdeployment.json
     where: $.definitions
     transform: >
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
+      $.VirtualNetworkConfiguration.properties.vnetid['x-ms-client-name'] = 'VnetId';
+  - from: apimanagement.json
+    where: $.parameters
+    transform: >
+      $.OpenIdConnectIdParameter['x-ms-client-name'] = 'OpenId';
 
 ```

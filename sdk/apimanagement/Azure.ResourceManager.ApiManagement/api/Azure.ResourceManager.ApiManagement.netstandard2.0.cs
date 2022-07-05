@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         public static Azure.ResourceManager.ApiManagement.LoggerContractResource GetLoggerContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiManagement.NamedValueContractResource GetNamedValueContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiManagement.NotificationContractResource GetNotificationContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource GetOpenidConnectProviderContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource GetOpenIdConnectProviderContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiManagement.OperationContractResource GetOperationContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PortalDelegationSettingsResource GetPortalDelegationSettingsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PortalRevisionContractResource GetPortalRevisionContractResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -312,8 +312,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.BackendContractResource> GetBackendContract(string backendId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.BackendContractResource>> GetBackendContractAsync(string backendId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.BackendContractCollection GetBackendContracts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract> GetByLocationNetworkStatu(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract>> GetByLocationNetworkStatuAsync(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.CacheContractResource> GetCacheContract(string cacheId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.CacheContractResource>> GetCacheContractAsync(string cacheId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.CacheContractCollection GetCacheContracts() { throw null; }
@@ -344,14 +342,16 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.NamedValueContractResource> GetNamedValueContract(string namedValueId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.NamedValueContractResource>> GetNamedValueContractAsync(string namedValueId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.NamedValueContractCollection GetNamedValueContracts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract> GetNetworkStatusByLocation(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract>> GetNetworkStatusByLocationAsync(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContractByLocation> GetNetworkStatusesByService(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContractByLocation> GetNetworkStatusesByServiceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.NotificationContractResource> GetNotificationContract(Azure.ResourceManager.ApiManagement.Models.NotificationName notificationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.NotificationContractResource>> GetNotificationContractAsync(Azure.ResourceManager.ApiManagement.Models.NotificationName notificationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.NotificationContractCollection GetNotificationContracts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> GetOpenidConnectProviderContract(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>> GetOpenidConnectProviderContractAsync(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractCollection GetOpenidConnectProviderContracts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> GetOpenIdConnectProviderContract(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>> GetOpenIdConnectProviderContractAsync(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractCollection GetOpenIdConnectProviderContracts() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsByService(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsByServiceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.PolicyDescriptionContract> GetPolicyDescriptionsByService(Azure.ResourceManager.ApiManagement.Models.PolicyScopeContract? scope = default(Azure.ResourceManager.ApiManagement.Models.PolicyScopeContract?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1393,47 +1393,47 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.NotificationContractResource> Update(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.NotificationContractResource>> UpdateAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OpenidConnectProviderContractCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>, System.Collections.IEnumerable
+    public partial class OpenIdConnectProviderContractCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>, System.Collections.IEnumerable
     {
-        protected OpenidConnectProviderContractCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string opid, Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string opid, Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> Get(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>> GetAsync(string opid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>.GetEnumerator() { throw null; }
+        protected OpenIdConnectProviderContractCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string openId, Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string openId, Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> Get(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>> GetAsync(string openId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OpenidConnectProviderContractData : Azure.ResourceManager.Models.ResourceData
+    public partial class OpenIdConnectProviderContractData : Azure.ResourceManager.Models.ResourceData
     {
-        public OpenidConnectProviderContractData() { }
+        public OpenIdConnectProviderContractData() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string MetadataEndpoint { get { throw null; } set { } }
     }
-    public partial class OpenidConnectProviderContractResource : Azure.ResourceManager.ArmResource
+    public partial class OpenIdConnectProviderContractResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected OpenidConnectProviderContractResource() { }
-        public virtual Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractData Data { get { throw null; } }
+        protected OpenIdConnectProviderContractResource() { }
+        public virtual Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string opid) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string openId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> GetEntityTag(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> GetEntityTagAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ClientSecretContract> GetSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ClientSecretContract>> GetSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource> Update(string ifMatch, Azure.ResourceManager.ApiManagement.Models.OpenidConnectProviderContractPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenidConnectProviderContractResource>> UpdateAsync(string ifMatch, Azure.ResourceManager.ApiManagement.Models.OpenidConnectProviderContractPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource> Update(string ifMatch, Azure.ResourceManager.ApiManagement.Models.OpenIdConnectProviderContractPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.OpenIdConnectProviderContractResource>> UpdateAsync(string ifMatch, Azure.ResourceManager.ApiManagement.Models.OpenIdConnectProviderContractPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OperationContractCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.OperationContractResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.OperationContractResource>, System.Collections.IEnumerable
     {
@@ -3679,9 +3679,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethodContract> BearerTokenSendingMethods { get { throw null; } }
         public string OpenidProviderId { get { throw null; } set { } }
     }
-    public partial class OpenidConnectProviderContractPatch
+    public partial class OpenIdConnectProviderContractPatch
     {
-        public OpenidConnectProviderContractPatch() { }
+        public OpenIdConnectProviderContractPatch() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -4587,7 +4587,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public VirtualNetworkConfiguration() { }
         public string Subnetname { get { throw null; } }
         public string SubnetResourceId { get { throw null; } set { } }
-        public string Vnetid { get { throw null; } }
+        public string VnetId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualNetworkType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.VirtualNetworkType>

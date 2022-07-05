@@ -10,15 +10,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the OpenidConnectProviderContract data model. </summary>
-    public partial class OpenidConnectProviderContractData : ResourceData
+    /// <summary> A class representing the OpenIdConnectProviderContract data model. </summary>
+    public partial class OpenIdConnectProviderContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of OpenidConnectProviderContractData. </summary>
-        public OpenidConnectProviderContractData()
+        /// <summary> Initializes a new instance of OpenIdConnectProviderContractData. </summary>
+        public OpenIdConnectProviderContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of OpenidConnectProviderContractData. </summary>
+        /// <summary> Initializes a new instance of OpenIdConnectProviderContractData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
         /// <param name="clientId"> Client ID of developer console which is the client application. </param>
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
-        internal OpenidConnectProviderContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        internal OpenIdConnectProviderContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;

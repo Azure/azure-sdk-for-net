@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Update OpenID Connect Provider operation. </summary>
-    public partial class OpenidConnectProviderContractPatch
+    public partial class OpenIdConnectProviderContractPatch
     {
-        /// <summary> Initializes a new instance of OpenidConnectProviderContractPatch. </summary>
-        public OpenidConnectProviderContractPatch()
+        /// <summary> Initializes a new instance of OpenIdConnectProviderContractPatch. </summary>
+        public OpenIdConnectProviderContractPatch()
         {
         }
 

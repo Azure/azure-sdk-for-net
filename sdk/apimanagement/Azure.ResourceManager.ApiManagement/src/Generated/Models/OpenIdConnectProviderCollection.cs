@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OpenIdConnectProviderCollection. </summary>
         internal OpenIdConnectProviderCollection()
         {
-            Value = new ChangeTrackingList<OpenidConnectProviderContractData>();
+            Value = new ChangeTrackingList<OpenIdConnectProviderContractData>();
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectProviderCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal OpenIdConnectProviderCollection(IReadOnlyList<OpenidConnectProviderContractData> value, long? count, string nextLink)
+        internal OpenIdConnectProviderCollection(IReadOnlyList<OpenIdConnectProviderContractData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<OpenidConnectProviderContractData> Value { get; }
+        public IReadOnlyList<OpenIdConnectProviderContractData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

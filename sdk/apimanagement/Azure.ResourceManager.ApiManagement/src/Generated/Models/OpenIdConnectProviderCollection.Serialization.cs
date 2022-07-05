@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static OpenIdConnectProviderCollection DeserializeOpenIdConnectProviderCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<OpenidConnectProviderContractData>> value = default;
+            Optional<IReadOnlyList<OpenIdConnectProviderContractData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OpenidConnectProviderContractData> array = new List<OpenidConnectProviderContractData>();
+                    List<OpenIdConnectProviderContractData> array = new List<OpenIdConnectProviderContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenidConnectProviderContractData.DeserializeOpenidConnectProviderContractData(item));
+                        array.Add(OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(item));
                     }
                     value = array;
                     continue;

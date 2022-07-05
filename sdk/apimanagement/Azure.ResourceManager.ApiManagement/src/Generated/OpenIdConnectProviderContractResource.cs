@@ -18,46 +18,46 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an OpenidConnectProviderContract along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OpenidConnectProviderContractResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOpenidConnectProviderContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetOpenidConnectProviderContract method.
+    /// A Class representing an OpenIdConnectProviderContract along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OpenIdConnectProviderContractResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetOpenIdConnectProviderContractResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetOpenIdConnectProviderContract method.
     /// </summary>
-    public partial class OpenidConnectProviderContractResource : ArmResource
+    public partial class OpenIdConnectProviderContractResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OpenidConnectProviderContractResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string opid)
+        /// <summary> Generate the resource identifier of a <see cref="OpenIdConnectProviderContractResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{openId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics;
-        private readonly OpenIdConnectProviderRestOperations _openidConnectProviderContractOpenIdConnectProviderRestClient;
-        private readonly OpenidConnectProviderContractData _data;
+        private readonly ClientDiagnostics _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics;
+        private readonly OpenIdConnectProviderRestOperations _openIdConnectProviderContractOpenIdConnectProviderRestClient;
+        private readonly OpenIdConnectProviderContractData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="OpenidConnectProviderContractResource"/> class for mocking. </summary>
-        protected OpenidConnectProviderContractResource()
+        /// <summary> Initializes a new instance of the <see cref="OpenIdConnectProviderContractResource"/> class for mocking. </summary>
+        protected OpenIdConnectProviderContractResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OpenidConnectProviderContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "OpenIdConnectProviderContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OpenidConnectProviderContractResource(ArmClient client, OpenidConnectProviderContractData data) : this(client, data.Id)
+        internal OpenIdConnectProviderContractResource(ArmClient client, OpenIdConnectProviderContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OpenidConnectProviderContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OpenIdConnectProviderContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OpenidConnectProviderContractResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal OpenIdConnectProviderContractResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string openidConnectProviderContractOpenIdConnectProviderApiVersion);
-            _openidConnectProviderContractOpenIdConnectProviderRestClient = new OpenIdConnectProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, openidConnectProviderContractOpenIdConnectProviderApiVersion);
+            _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string openIdConnectProviderContractOpenIdConnectProviderApiVersion);
+            _openIdConnectProviderContractOpenIdConnectProviderRestClient = new OpenIdConnectProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, openIdConnectProviderContractOpenIdConnectProviderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OpenidConnectProviderContractData Data
+        public virtual OpenIdConnectProviderContractData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: OpenIdConnectProvider_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OpenidConnectProviderContractResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenIdConnectProviderContractResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Get");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Get");
             scope.Start();
             try
             {
-                var response = await _openidConnectProviderContractOpenIdConnectProviderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _openIdConnectProviderContractOpenIdConnectProviderRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OpenidConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenIdConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: OpenIdConnectProvider_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OpenidConnectProviderContractResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<OpenIdConnectProviderContractResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Get");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Get");
             scope.Start();
             try
             {
-                var response = _openidConnectProviderContractOpenIdConnectProviderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _openIdConnectProviderContractOpenIdConnectProviderRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OpenidConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new OpenIdConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Delete");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Delete");
             scope.Start();
             try
             {
-                var response = await _openidConnectProviderContractOpenIdConnectProviderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _openIdConnectProviderContractOpenIdConnectProviderRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new ApiManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Delete");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Delete");
             scope.Start();
             try
             {
-                var response = _openidConnectProviderContractOpenIdConnectProviderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _openIdConnectProviderContractOpenIdConnectProviderRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, cancellationToken);
                 var operation = new ApiManagementArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -204,17 +204,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<OpenidConnectProviderContractResource>> UpdateAsync(string ifMatch, OpenidConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenIdConnectProviderContractResource>> UpdateAsync(string ifMatch, OpenIdConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Update");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Update");
             scope.Start();
             try
             {
-                var response = await _openidConnectProviderContractOpenIdConnectProviderRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new OpenidConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
+                var response = await _openIdConnectProviderContractOpenIdConnectProviderRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new OpenIdConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
-        public virtual Response<OpenidConnectProviderContractResource> Update(string ifMatch, OpenidConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<OpenIdConnectProviderContractResource> Update(string ifMatch, OpenIdConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.Update");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.Update");
             scope.Start();
             try
             {
-                var response = _openidConnectProviderContractOpenIdConnectProviderRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
-                return Response.FromValue(new OpenidConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
+                var response = _openIdConnectProviderContractOpenIdConnectProviderRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, patch, cancellationToken);
+                return Response.FromValue(new OpenIdConnectProviderContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ClientSecretContract>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.GetSecrets");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = await _openidConnectProviderContractOpenIdConnectProviderRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _openIdConnectProviderContractOpenIdConnectProviderRestClient.ListSecretsAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ClientSecretContract> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.GetSecrets");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = _openidConnectProviderContractOpenIdConnectProviderRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _openIdConnectProviderContractOpenIdConnectProviderRestClient.ListSecrets(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.GetEntityTag");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = await _openidConnectProviderContractOpenIdConnectProviderRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _openIdConnectProviderContractOpenIdConnectProviderRestClient.GetEntityTagAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
         {
-            using var scope = _openidConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenidConnectProviderContractResource.GetEntityTag");
+            using var scope = _openIdConnectProviderContractOpenIdConnectProviderClientDiagnostics.CreateScope("OpenIdConnectProviderContractResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = _openidConnectProviderContractOpenIdConnectProviderRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _openIdConnectProviderContractOpenIdConnectProviderRestClient.GetEntityTag(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

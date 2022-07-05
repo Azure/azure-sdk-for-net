@@ -956,20 +956,20 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region OpenidConnectProviderContractResource
+        #region OpenIdConnectProviderContractResource
         /// <summary>
-        /// Gets an object representing an <see cref="OpenidConnectProviderContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OpenidConnectProviderContractResource.CreateResourceIdentifier" /> to create an <see cref="OpenidConnectProviderContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OpenIdConnectProviderContractResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OpenIdConnectProviderContractResource.CreateResourceIdentifier" /> to create an <see cref="OpenIdConnectProviderContractResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OpenidConnectProviderContractResource" /> object. </returns>
-        public static OpenidConnectProviderContractResource GetOpenidConnectProviderContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OpenIdConnectProviderContractResource" /> object. </returns>
+        public static OpenIdConnectProviderContractResource GetOpenIdConnectProviderContractResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OpenidConnectProviderContractResource.ValidateResourceId(id);
-                return new OpenidConnectProviderContractResource(client, id);
+                OpenIdConnectProviderContractResource.ValidateResourceId(id);
+                return new OpenIdConnectProviderContractResource(client, id);
             }
             );
         }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OpenidConnectProviderContractPatch : IUtf8JsonSerializable
+    public partial class OpenIdConnectProviderContractPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

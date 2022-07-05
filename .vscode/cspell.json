@@ -106,6 +106,13 @@
         "zabbix"
       ]
     },
+	{
+      "filename": "**/sdk/\apimanagement/**/*.cs",
+      "words": [
+        "signin",
+        "Wadl"
+      ]
+    },
     {
       "filename": "**/sdk/appplatform/**/*.cs",
       "words": [

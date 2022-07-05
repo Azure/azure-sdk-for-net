@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class OpenidConnectProviderContractData : IUtf8JsonSerializable
+    public partial class OpenIdConnectProviderContractData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        internal static OpenidConnectProviderContractData DeserializeOpenidConnectProviderContractData(JsonElement element)
+        internal static OpenIdConnectProviderContractData DeserializeOpenIdConnectProviderContractData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new OpenidConnectProviderContractData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
+            return new OpenIdConnectProviderContractData(id, name, type, systemData.Value, displayName.Value, description.Value, metadataEndpoint.Value, clientId.Value, clientSecret.Value);
         }
     }
 }

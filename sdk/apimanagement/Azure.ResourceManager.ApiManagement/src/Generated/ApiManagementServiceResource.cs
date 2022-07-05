@@ -800,11 +800,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetNotificationContracts().Get(notificationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OpenidConnectProviderContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of OpenidConnectProviderContractResources and their operations over a OpenidConnectProviderContractResource. </returns>
-        public virtual OpenidConnectProviderContractCollection GetOpenidConnectProviderContracts()
+        /// <summary> Gets a collection of OpenIdConnectProviderContractResources in the ApiManagementServiceResource. </summary>
+        /// <returns> An object representing collection of OpenIdConnectProviderContractResources and their operations over a OpenIdConnectProviderContractResource. </returns>
+        public virtual OpenIdConnectProviderContractCollection GetOpenIdConnectProviderContracts()
         {
-            return GetCachedClient(Client => new OpenidConnectProviderContractCollection(Client, Id));
+            return GetCachedClient(Client => new OpenIdConnectProviderContractCollection(Client, Id));
         }
 
         /// <summary>
@@ -812,14 +812,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}
         /// Operation Id: OpenIdConnectProvider_Get
         /// </summary>
-        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="opid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OpenidConnectProviderContractResource>> GetOpenidConnectProviderContractAsync(string opid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenIdConnectProviderContractResource>> GetOpenIdConnectProviderContractAsync(string openId, CancellationToken cancellationToken = default)
         {
-            return await GetOpenidConnectProviderContracts().GetAsync(opid, cancellationToken).ConfigureAwait(false);
+            return await GetOpenIdConnectProviderContracts().GetAsync(openId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -827,14 +827,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}
         /// Operation Id: OpenIdConnectProvider_Get
         /// </summary>
-        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="opid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="opid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OpenidConnectProviderContractResource> GetOpenidConnectProviderContract(string opid, CancellationToken cancellationToken = default)
+        public virtual Response<OpenIdConnectProviderContractResource> GetOpenIdConnectProviderContract(string openId, CancellationToken cancellationToken = default)
         {
-            return GetOpenidConnectProviderContracts().Get(opid, cancellationToken);
+            return GetOpenIdConnectProviderContracts().Get(openId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PortalRevisionContractResources in the ApiManagementServiceResource. </summary>
@@ -1860,11 +1860,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual async Task<Response<NetworkStatusContract>> GetByLocationNetworkStatuAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetByLocationNetworkStatu");
+            using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try
             {
@@ -1887,11 +1887,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual Response<NetworkStatusContract> GetByLocationNetworkStatu(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetByLocationNetworkStatu");
+            using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try
             {
