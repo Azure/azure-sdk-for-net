@@ -14,7 +14,7 @@ foreach ($file in $ymlfiles)
   }
   catch
   {
-    Write-Output "Failed to parse yml file $($file.FullName)"
+    Write-Host "Skipping $($file.FullName) because the file does not contain valid yml."
     continue
   }
 
