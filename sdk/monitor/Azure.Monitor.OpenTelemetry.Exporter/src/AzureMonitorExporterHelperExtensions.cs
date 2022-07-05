@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using System;
@@ -33,6 +34,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
             }
+
+            // TODO: provide a way to turn off statsbeat
+            StatsBeatHelper.InitializeStatsBeat(options.ConnectionString);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
             return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));

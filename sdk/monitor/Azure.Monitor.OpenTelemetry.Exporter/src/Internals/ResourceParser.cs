@@ -63,6 +63,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingRoleInstanceToHostName", ex);
                 }
             }
+
+            // Race condition is not taken in to account here
+            // If the exporters have different resources
+            // only one of them will be used.
+            // Also, no statsbeat can be sent before the first export
+            // as the resource is initialized at that time.
+            if (StatsBeat.s_roleName == null && StatsBeat.s_roleInstance == null)
+            {
+                StatsBeat.s_roleInstance = RoleInstance;
+                StatsBeat.s_roleName = RoleName;
+            }
         }
     }
 }
