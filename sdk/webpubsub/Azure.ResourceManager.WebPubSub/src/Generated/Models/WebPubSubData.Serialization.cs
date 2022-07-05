@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
-            Optional<WebPubSubSku> sku = default;
+            Optional<BillingInfoSku> sku = default;
             Optional<ManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

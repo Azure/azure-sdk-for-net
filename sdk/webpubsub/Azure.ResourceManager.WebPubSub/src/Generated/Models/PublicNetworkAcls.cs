@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Network ACL. </summary>
-    public partial class NetworkAcl
+    public partial class PublicNetworkAcls
     {
-        /// <summary> Initializes a new instance of NetworkAcl. </summary>
-        public NetworkAcl()
+        /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
+        public PublicNetworkAcls()
         {
             Allow = new ChangeTrackingList<WebPubSubRequestType>();
             Deny = new ChangeTrackingList<WebPubSubRequestType>();
         }
 
-        /// <summary> Initializes a new instance of NetworkAcl. </summary>
+        /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        internal NetworkAcl(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny)
+        internal PublicNetworkAcls(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny)
         {
             Allow = allow;
             Deny = deny;

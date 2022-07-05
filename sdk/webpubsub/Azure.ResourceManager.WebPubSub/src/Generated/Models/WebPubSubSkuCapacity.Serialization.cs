@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class SkuCapacity
+    public partial class WebPubSubSkuCapacity
     {
-        internal static SkuCapacity DeserializeSkuCapacity(JsonElement element)
+        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element)
         {
             Optional<int> minimum = default;
             Optional<int> maximum = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new SkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
+            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
         }
     }
 }

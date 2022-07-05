@@ -71,12 +71,6 @@ directive:
   - rename-model:
       from: ShareablePrivateLinkResourceProperties
       to: ShareablePrivateLinkProperties
-  - rename-model:
-      from: ResourceSku
-      to: WebPubSubSku
-  - rename-model:
-      from: Sku
-      to: WebPubSubResourceSku
 
   - from: webpubsub.json
     where: $.definitions.SharedPrivateLinkResourceStatus
@@ -94,6 +88,23 @@ directive:
   - from: webpubsub.json
     where: $.definitions.ProvisioningState
     transform: $["x-ms-enum"].name = "WebPubSubProvisioningState"
+
+  # rename classes with common names
+  - rename-model:
+      from: Sku
+      to: WebPubSubSku
+  - rename-model:
+      from: ResourceSku
+      to: BillingInfoSku
+  - rename-model:
+      from: SkuCapacity
+      to: WebPubSubSkuCapacity
+  - rename-model:
+      from: ScaleType
+      to:  WebPubSubSkuScaleType
+  - rename-model:
+      from: NetworkACL
+      to:  PublicNetworkAcls
 
   # Change type to ResourceIdentifier
   - from: webpubsub.json

@@ -5,82 +5,32 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> The billing information of the resource. </summary>
+    /// <summary> Describes an available sku.&quot;. </summary>
     public partial class WebPubSubSku
     {
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>
-        /// <param name="name">
-        /// The name of the SKU. Required.
-        /// 
-        /// Allowed values: Standard_S1, Free_F1
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public WebPubSubSku(string name)
+        internal WebPubSubSku()
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>
-        /// <param name="name">
-        /// The name of the SKU. Required.
-        /// 
-        /// Allowed values: Standard_S1, Free_F1
-        /// </param>
-        /// <param name="tier">
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
-        /// 
-        /// `Basic` is deprecated, use `Standard` instead.
-        /// </param>
-        /// <param name="size"> Not used. Retained for future use. </param>
-        /// <param name="family"> Not used. Retained for future use. </param>
-        /// <param name="capacity">
-        /// Optional, integer. The unit count of the resource. 1 by default.
-        /// 
-        /// If present, following values are allowed:
-        ///     Free: 1
-        ///     Standard: 1,2,5,10,20,50,100
-        /// </param>
-        internal WebPubSubSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity)
+        /// <param name="resourceType"> The resource type that this object applies to. </param>
+        /// <param name="sku"> The exact set of keys that define this sku. </param>
+        /// <param name="capacity"> Specifies the unit of the resource. </param>
+        internal WebPubSubSku(string resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity)
         {
-            Name = name;
-            Tier = tier;
-            Size = size;
-            Family = family;
+            ResourceType = resourceType;
+            Sku = sku;
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// The name of the SKU. Required.
-        /// 
-        /// Allowed values: Standard_S1, Free_F1
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// Optional tier of this particular SKU. &apos;Standard&apos; or &apos;Free&apos;. 
-        /// 
-        /// `Basic` is deprecated, use `Standard` instead.
-        /// </summary>
-        public WebPubSubSkuTier? Tier { get; set; }
-        /// <summary> Not used. Retained for future use. </summary>
-        public string Size { get; }
-        /// <summary> Not used. Retained for future use. </summary>
-        public string Family { get; }
-        /// <summary>
-        /// Optional, integer. The unit count of the resource. 1 by default.
-        /// 
-        /// If present, following values are allowed:
-        ///     Free: 1
-        ///     Standard: 1,2,5,10,20,50,100
-        /// </summary>
-        public int? Capacity { get; set; }
+        /// <summary> The resource type that this object applies to. </summary>
+        public string ResourceType { get; }
+        /// <summary> The exact set of keys that define this sku. </summary>
+        public BillingInfoSku Sku { get; }
+        /// <summary> Specifies the unit of the resource. </summary>
+        public WebPubSubSkuCapacity Capacity { get; }
     }
 }
