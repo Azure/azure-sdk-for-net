@@ -282,8 +282,7 @@ namespace Azure.Storage.Blobs.Experimental.Tests
         public async Task ScheduleUpload_Two(long fileSize, int waitTimeInSec)
         {
             // Arrange
-            //await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            BlobContainerClient containerClient = new BlobContainerClient("DefaultEndpointsProtocol=https;AccountName=amandadev3;AccountKey=w1FcAGMn3nvAZ+p+X7MLJZBmeBGsUoj46DooFI165FrireIfvZddHYmE0/N8CU9zwWdSY3oLceIUcigLUZizyQ==;EndpointSuffix=core.windows.net", "sample15container");
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
             // Set up blob to upload
             var blobName = GetNewBlobName();
@@ -297,8 +296,8 @@ namespace Azure.Storage.Blobs.Experimental.Tests
                 string localSourceFile2 = await CreateRandomFileAsync(parentPath: directory, size: fileSize).ConfigureAwait(false);
 
                 // Set up destination client
-                BlockBlobClient destClient = containerClient.GetBlockBlobClient(blobName);
-                BlockBlobClient destClient2 = containerClient.GetBlockBlobClient(blobName2);
+                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
+                BlockBlobClient destClient2 = testContainer.Container.GetBlockBlobClient(blobName2);
 
                 StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
                 {

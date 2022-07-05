@@ -349,7 +349,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Arrange
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            string permissions = "0740";
+            string permissions = "0777";
+            string umask = "0057";
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {

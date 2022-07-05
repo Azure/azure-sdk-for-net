@@ -22,6 +22,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
     <PackageReference Include="System.Threading.Tasks.Dataflow" VersionOverride="5.0.0" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>

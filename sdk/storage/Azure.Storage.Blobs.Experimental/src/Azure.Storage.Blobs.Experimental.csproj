@@ -19,6 +19,12 @@
     <RootNamespace>Azure.Storage.Blobs.Experimental</RootNamespace>
     <PackageId />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading" VersionOverride="16.10.56" />
     <PackageReference Include="System.Threading.Channels"/>
