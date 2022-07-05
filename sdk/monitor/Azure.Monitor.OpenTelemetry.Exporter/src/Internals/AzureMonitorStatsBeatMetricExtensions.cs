@@ -9,7 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Metrics Exporter.
     /// </summary>
-    internal static class AzureMonitorStatsBeatMetricExtensions
+    internal static class AzureMonitorStatsbeatMetricExtensions
     {
         /// <summary>
         /// Adds Azure Monitor Metric exporter.
@@ -18,12 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="configure">Exporter configuration options.</param>
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The objects should not be disposed.")]
-        internal static MeterProviderBuilder AddAzureMonitorStatsBeatExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
+        internal static MeterProviderBuilder AddAzureMonitorStatsbeatExporter(this MeterProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
         {
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorStatsBeatExporter(options), options.StatsBeatInterval)
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorStatsbeatExporter(options), options.StatsBeatInterval)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }

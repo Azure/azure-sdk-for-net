@@ -11,16 +11,16 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorStatsBeatExporter : BaseExporter<Metric>
+    internal class AzureMonitorStatsbeatExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
 
-        public AzureMonitorStatsBeatExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public AzureMonitorStatsbeatExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorStatsBeatExporter(ITransmitter transmitter)
+        internal AzureMonitorStatsbeatExporter(ITransmitter transmitter)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
