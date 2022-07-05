@@ -7,7 +7,16 @@ foreach ($file in $ymlfiles)
 {
   Write-Host "Verifying '${file}'"
   $ymlContent = Get-Content $file.FullName -Raw
-  $ymlObject = ConvertFrom-Yaml $ymlContent -Ordered
+
+  try
+  {
+    $ymlObject = ConvertFrom-Yaml $ymlContent -Ordered
+  }
+  catch
+  {
+    Write-Output "Failed to parse yml file $($file.FullName)"
+    continue
+  }
 
   if ($ymlObject -and ($ymlObject.Contains("resources")))
   {
