@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
-            Optional<WebPubSubSku> sku = default;
+            Optional<BillingInfoSku> sku = default;
             Optional<ManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.WebPubSub
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<WebPubSubProvisioningState> provisioningState = default;
             Optional<string> externalIP = default;
             Optional<string> hostName = default;
             Optional<int> publicPort = default;
             Optional<int> serverPort = default;
             Optional<string> version = default;
             Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedPrivateLinkData>> sharedPrivateLinkResources = default;
+            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> sharedPrivateLinkResources = default;
             Optional<WebPubSubTlsSettings> tls = default;
             Optional<string> hostNamePrefix = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("externalIP"))
@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkData> array = new List<SharedPrivateLinkData>();
+                            List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkData.DeserializeSharedPrivateLinkData(item));
+                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;

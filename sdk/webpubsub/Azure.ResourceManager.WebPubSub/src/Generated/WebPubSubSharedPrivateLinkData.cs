@@ -11,15 +11,15 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the SharedPrivateLink data model. </summary>
-    public partial class SharedPrivateLinkData : ResourceData
+    /// <summary> A class representing the WebPubSubSharedPrivateLink data model. </summary>
+    public partial class WebPubSubSharedPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
-        public SharedPrivateLinkData()
+        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
+        public WebPubSubSharedPrivateLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal SharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, string privateLinkResourceId, ProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
+        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
         public string GroupId { get; set; }
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> Provisioning state of the shared private link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
         public string RequestMessage { get; set; }
         /// <summary> Status of the shared private link resource. </summary>

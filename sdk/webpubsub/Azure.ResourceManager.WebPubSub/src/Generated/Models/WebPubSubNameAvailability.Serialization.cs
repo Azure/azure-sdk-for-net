@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class NameAvailability
+    public partial class WebPubSubNameAvailability
     {
-        internal static NameAvailability DeserializeNameAvailability(JsonElement element)
+        internal static WebPubSubNameAvailability DeserializeWebPubSubNameAvailability(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new NameAvailability(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new WebPubSubNameAvailability(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }
