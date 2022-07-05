@@ -2,13 +2,14 @@
 
 ## 1.0.0-beta.6 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Change some models name:
+- Type `NetworkAcl` renamed to `PublicNetworkAcls`.
+- Type `WebPubSubResourceSku` renamed to `WebPubSubSku`.
+- Type `WebPubSubSku` renamed to `BillingInfoSku`.
+- Type `SkuCapacity` renamed to `WebPubSubSkuCapacity`.
+- Type `XXXXX` renamed to `XXXXX`.
+- Type `XXXXX` renamed to `XXXXX`.
 
 ## 1.0.0-beta.5 (2022-06-28)
 

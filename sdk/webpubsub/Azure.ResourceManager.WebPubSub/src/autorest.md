@@ -100,11 +100,11 @@ directive:
       from: SkuCapacity
       to: WebPubSubSkuCapacity
   - rename-model:
-      from: ScaleType
-      to:  WebPubSubSkuScaleType
-  - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - from: webpubsub.json
+    where: $.definitions.ScaleType
+    transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
 
   # Change type to ResourceIdentifier
   - from: webpubsub.json
