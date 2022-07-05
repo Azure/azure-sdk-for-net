@@ -5,7 +5,7 @@ This is a quick guide to running the tests in this repo.
 ## SSH Keys
 
 Create a private-public key pair to be used for authentication of your VMs.
-In the file SshKeyPrivate, supply the  private key value, and in the SshKeyPublic, supply the public key value.
+In the file SshKeyPrivate, supply the private key value, and in the SshKeyPublic, supply the public key value.
 
 ## SVI and RG Names
 
