@@ -211,8 +211,9 @@ function New-DataPlanePackageFolder() {
         exit 1
     }
 
+    $endIndex = $namespaceArray.Count - 2
     $clientName = $namespaceArray[-1]
-    $groupName = $namespaceArray[1]
+    $groupName = $namespaceArray[1..$endIndex] -join "."
     $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
     if ($inputfile -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
@@ -490,9 +491,9 @@ function GeneratePackage()
     $hasBreakingChange = $null
     $content = $null
     $result = ""
-    $srcPath = Join-Path $projectFolder 'src'
 
     # Generate Code
+    Write-Host "Start to generate sdk $projectFolder"
     Invoke-Generate -sdkfolder $projectFolder
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
@@ -500,6 +501,7 @@ function GeneratePackage()
     }
 
     # Build
+    Write-Host "Start to build sdk: $projectFolder"
     Invoke-Build -sdkfolder $projectFolder
     if ( !$? ) {
         Write-Error "Failed to build sdk. exit code: $?"
@@ -507,16 +509,19 @@ function GeneratePackage()
     }
 
     # pack
+    Write-Host "Start to pack sdk"
     Invoke-Pack -sdkfolder $projectFolder
     if ( !$? ) {
         Write-Error "Failed to packe sdk. exit code: $?"
         exit 1
     }
     # Generate APIs
+    Write-Host "Start to export api for $service"
     pwsh $sdkRootPath/eng/scripts/Export-API.ps1 $service
 
     # breaking change validation
     $srcPath = Join-Path $projectFolder 'src'
+    Write-Host "Start to validate breaking change. srcPath:$srcPath"
     $hasBreakingChange = $null
     $content = $null
     $logFilePath = Join-Path "$srcPath" 'log.txt'
