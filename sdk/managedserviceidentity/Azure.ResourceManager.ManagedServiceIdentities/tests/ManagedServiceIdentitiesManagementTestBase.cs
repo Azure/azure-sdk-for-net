@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
         {
         }
 
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+
         [SetUp]
         public void CreateCommonClient()
         {
