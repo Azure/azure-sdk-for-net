@@ -140,9 +140,4 @@ directive:
   - from: RoleAssignmentScheduleInstance.json
     where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleAssignmentScheduleId
     transform: $['x-ms-format'] = 'arm-id'
-
-  # change definition to data
-# rename-mapping:
-#   PolicyAssignmentProperties.roleDefinition: roleData
-#   ExpandedProperties.roleDefinition: roleData
 ```
