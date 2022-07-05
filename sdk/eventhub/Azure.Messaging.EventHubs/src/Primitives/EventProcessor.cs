@@ -916,11 +916,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   the processor to function.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the validation.</param>
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        protected internal virtual async Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default)
+        protected internal virtual async Task ValidateProcessingPreconditions(CancellationToken cancellationToken)
         {
             var validationTask = Task.WhenAll
             (

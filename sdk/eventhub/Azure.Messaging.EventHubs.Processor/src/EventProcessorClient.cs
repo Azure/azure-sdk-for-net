@@ -767,11 +767,11 @@ namespace Azure.Messaging.EventHubs
         ///   the processor to function.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the validation.</param>
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        protected override async Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default)
+        protected override async Task ValidateProcessingPreconditions(CancellationToken cancellationToken)
         {
             // Because the base class has no understanding of what concrete storage type is in use and
             // does not directly make use of some of its operations, such as writing a checkpoint.  Validate
