@@ -107,7 +107,7 @@
       ]
     },
 	{
-      "filename": "**/sdk/\apimanagement/**/*.cs",
+      "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
         "Wadl"
