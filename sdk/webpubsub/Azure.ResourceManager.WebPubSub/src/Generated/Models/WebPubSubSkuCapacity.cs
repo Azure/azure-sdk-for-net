@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes scaling information of a sku. </summary>
-    public partial class SkuCapacity
+    public partial class WebPubSubSkuCapacity
     {
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
-        internal SkuCapacity()
+        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
+        internal WebPubSubSkuCapacity()
         {
             AllowedValues = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
+        /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="allowedValues"> Allows capacity value list. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal SkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, ScaleType? scaleType)
+        internal WebPubSubSkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, WebPubSubScaleType? scaleType)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Allows capacity value list. </summary>
         public IReadOnlyList<int> AllowedValues { get; }
         /// <summary> The scale type applicable to the sku. </summary>
-        public ScaleType? ScaleType { get; }
+        public WebPubSubScaleType? ScaleType { get; }
     }
 }
