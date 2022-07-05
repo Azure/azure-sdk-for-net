@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<int> maximum = default;
             Optional<int> @default = default;
             Optional<IReadOnlyList<int>> allowedValues = default;
-            Optional<ScaleType> scaleType = default;
+            Optional<WebPubSubScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleType = new ScaleType(property.Value.GetString());
+                    scaleType = new WebPubSubScaleType(property.Value.GetString());
                     continue;
                 }
             }

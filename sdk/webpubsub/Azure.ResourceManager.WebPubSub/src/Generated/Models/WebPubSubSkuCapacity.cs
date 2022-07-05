@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="default"> The default capacity. </param>
         /// <param name="allowedValues"> Allows capacity value list. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal WebPubSubSkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, ScaleType? scaleType)
+        internal WebPubSubSkuCapacity(int? minimum, int? maximum, int? @default, IReadOnlyList<int> allowedValues, WebPubSubScaleType? scaleType)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Allows capacity value list. </summary>
         public IReadOnlyList<int> AllowedValues { get; }
         /// <summary> The scale type applicable to the sku. </summary>
-        public ScaleType? ScaleType { get; }
+        public WebPubSubScaleType? ScaleType { get; }
     }
 }
