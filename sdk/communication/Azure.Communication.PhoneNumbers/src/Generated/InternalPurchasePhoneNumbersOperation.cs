@@ -17,18 +17,19 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Purchases phone numbers. </summary>
     internal partial class InternalPurchasePhoneNumbersOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationInternal _operation;
 
         /// <summary> Initializes a new instance of InternalPurchasePhoneNumbersOperation for mocking. </summary>
         protected InternalPurchasePhoneNumbersOperation()
         {
         }
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

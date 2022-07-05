@@ -2,6 +2,23 @@
 
 This sample demonstrates publishing events to an Event Hub.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Client types](#client-types)
+- [Buffering versus explicit batching](#buffering-versus-explicit-batching)
+- [Event lifetime](#event-lifetime)
+- [Publishing size constraints](#publishing-size-constraints)
+- [Publishing and partitions](#publishing-and-partitions)
+- [Publishing events with automatic partition assignment](#publishing-events-with-automatic-partition-assignment)
+- [Publishing events with a partition key](#publishing-events-with-a-partition-key)
+- [Publishing events to a specific partition](#publishing-events-to-a-specific-partition)
+- [Publishing events with custom metadata](#publishing-events-with-custom-metadata)
+- [Guidance for buffered producer handler implementation](#guidance-for-buffered-producer-handler-implementation)
+- [Tuning throughput for buffered publishing](#tuning-throughput-for-buffered-publishing)
+- [Creating and publishing multiple batches](#creating-and-publishing-multiple-batches)
+- [Publishing events with an implicit batch](#publishing-events-with-an-implicit-batch)
+- [Restricting a batch to a custom size limit](#restricting-a-batch-to-a-custom-size-limit)
+
 ## Client types
 
 Event publishing is the responsibility of an event producer.  The client library offers two producers, the `EventHubProducerClient` and `EventHubBufferedProducerClient`, each tailored to a unique pattern of use, but applicable to the same application scenarios.  This sample will include code snippets for both types, unless the concept is not applicable to one.  More information about the available event producers can be found in [Sample02_EventHubsClients](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md).

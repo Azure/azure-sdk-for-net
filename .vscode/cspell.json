@@ -97,6 +97,22 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
     },
+	{
+      "filename": "**/sdk/alertsmanagement/**/*.cs",
+      "words": [
+        "groupby",
+        "groupedby",
+        "scom",
+        "zabbix"
+      ]
+    },
+    {
+      "filename": "**/sdk/appplatform/**/*.cs",
+      "words": [
+        "dynatrace",
+        "fqdns"
+      ]
+    },
     {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
@@ -164,6 +180,38 @@
       ]
     },
     {
+      "filename": "**/sdk/datafactory/**/*.cs",
+      "words": [
+        "Ssis",
+        "Asana",
+        "Adls",
+        "Usql",
+        "Distcp",
+        "Eloqua",
+        "Vsts",
+        "Byoa",
+        "Hdfs",
+        "Distcp",
+        "Hcatalog",
+        "Oozie",
+        "Sasl",
+        "Informix",
+        "Exprired",
+        "Magento",
+        "Fqdns",
+        "Netezza",
+        "Responsys",
+        "Hana",
+        "Ssisdb",
+        "Sybase",
+        "Teradata",
+        "Inprogress",
+        "Twilio",
+        "Vertica",
+        "Xero"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -210,6 +258,7 @@
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
+        "ikev",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -240,6 +289,12 @@
         "setsas",
         "mhsm",
         "mhsmip"
+      ]
+    },
+	{
+      "filename": "**/sdk/networkfunction/**/*.cs",
+      "words": [
+        "ipfix"
       ]
     },
     {
@@ -372,7 +427,38 @@
         "Plex",
         "Vstsrm"
       ]
-    }
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
+      ]
+    },
+   {
+      "filename": "**/sdk/containerinstance/**/*.cs",
+      "words": [
+        "Noreuse",
+        "Unsecure"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningservices/**/*.cs",
+      "words": [
+        "Skus",
+        "Cname",
+        "Kube",
+        "Gluster",
+        "Gepc",
+        "Conda",
+        "Reimage",
+        "Cran",
+        "Rscript",
+        "VCPUs"
+        ]
+    }  
   ],
   "allowCompoundWords": true
 }

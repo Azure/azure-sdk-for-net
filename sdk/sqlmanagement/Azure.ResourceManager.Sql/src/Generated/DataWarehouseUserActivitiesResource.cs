@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class DataWarehouseUserActivitiesResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataWarehouseUserActivitiesResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataWarehouseUserActivityName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, DataWarehouseUserActivityName dataWarehouseUserActivityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}";
             return new ResourceIdentifier(resourceId);

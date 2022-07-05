@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class PurchaseReservationOrderTests : ReservationsManagementClientBase
     {
         private TenantResource Tenant { get; set; }
-        private ReservationOrderResponseCollection collection { get; set; }
+        private ReservationOrderResponseCollection Collection { get; set; }
 
         public PurchaseReservationOrderTests(bool isAsync) : base(isAsync)
         {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
                 Tenant = tenantResources.ToArray()[0];
-                collection = Tenant.GetReservationOrderResponses();
+                Collection = Tenant.GetReservationOrderResponses();
             }
         }
 
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId);
         }
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId);
         }
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId);
         }
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId);
         }

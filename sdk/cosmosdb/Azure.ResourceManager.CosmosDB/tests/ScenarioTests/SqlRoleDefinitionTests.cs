@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private const string PermissionDataActionCreate = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create";
         private const string PermissionDataActionRead = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read";
 
-        private DatabaseAccountResource _databaseAccount;
-        private SqlDatabaseResource _sqlDatabase;
-        private SqlRoleDefinitionResource _roleDefinition;
+        private CosmosDBAccountResource _databaseAccount;
+        private CosmosDBSqlDatabaseResource _sqlDatabase;
+        private CosmosDBSqlRoleDefinitionResource _roleDefinition;
 
         public SqlRoleDefinitionTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private SqlRoleDefinitionCollection SqlRoleDefinitionCollection { get => _databaseAccount.GetSqlRoleDefinitions(); }
+        private CosmosDBSqlRoleDefinitionCollection SqlRoleDefinitionCollection { get => _databaseAccount.GetCosmosDBSqlRoleDefinitions(); }
         private string SqlDatabaseActionScope { get => $"{_databaseAccount.Id}/dbs/{_sqlDatabase.Data.Name}"; }
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccount = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
+            _databaseAccount = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB);
 
-            _sqlDatabase = await SqlDatabaseTests.CreateSqlDatabase(Recording.GenerateAssetName("sql-db-"), null, _databaseAccount.GetSqlDatabases());
+            _sqlDatabase = await SqlDatabaseTests.CreateSqlDatabase(Recording.GenerateAssetName("sql-db-"), null, _databaseAccount.GetCosmosDBSqlDatabases());
         }
 
         [TearDown]
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId);
             Assert.True(ifExists);
 
-            SqlRoleDefinitionResource definition2 = await SqlRoleDefinitionCollection.GetAsync(RoleDefinitionId);
+            CosmosDBSqlRoleDefinitionResource definition2 = await SqlRoleDefinitionCollection.GetAsync(RoleDefinitionId);
             Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
             VerifySqlRoleDefinitions(definition, definition2);
 
-            var updateParameters = new SqlRoleDefinitionCreateOrUpdateContent
+            var updateParameters = new CosmosDBSqlRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = _roleDefinition.Data.Name,
-                RoleDefinitionType = RoleDefinitionType.CustomRole,
+                RoleDefinitionType = CosmosDBSqlRoleDefinitionType.CustomRole,
                 AssignableScopes = { SqlDatabaseActionScope },
-                Permissions = { new Permission { DataActions = { PermissionDataActionRead } } },
+                Permissions = { new CosmosDBSqlRolePermission { DataActions = { PermissionDataActionRead } } },
             };
             definition = await (await SqlRoleDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, RoleDefinitionId, updateParameters)).WaitForCompletionAsync();
             Assert.AreEqual(_roleDefinition.Data.Name, definition.Data.Name);
@@ -121,33 +121,33 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.IsFalse(await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId));
         }
 
-        private async Task<SqlRoleDefinitionResource> CreateSqlRoleDefinition(string assignableScope, SqlRoleDefinitionCollection definitionCollection)
+        private async Task<CosmosDBSqlRoleDefinitionResource> CreateSqlRoleDefinition(string assignableScope, CosmosDBSqlRoleDefinitionCollection definitionCollection)
         {
             var roleDefinitionName = Recording.GenerateAssetName("sql-role-def-");
             _roleDefinition = await CreateSqlRoleDefinition(roleDefinitionName, assignableScope, definitionCollection);
             return _roleDefinition;
         }
 
-        internal static async Task<SqlRoleDefinitionResource> CreateSqlRoleDefinition(string name, string assignableScope, SqlRoleDefinitionCollection definitionCollection)
+        internal static async Task<CosmosDBSqlRoleDefinitionResource> CreateSqlRoleDefinition(string name, string assignableScope, CosmosDBSqlRoleDefinitionCollection definitionCollection)
         {
             return await CreateSqlRoleDefinition(RoleDefinitionId, name, assignableScope, definitionCollection).ConfigureAwait(false);
         }
 
-        internal static async Task<SqlRoleDefinitionResource> CreateSqlRoleDefinition(string roleDefinitionId, string name, string assignableScope, SqlRoleDefinitionCollection definitionCollection)
+        internal static async Task<CosmosDBSqlRoleDefinitionResource> CreateSqlRoleDefinition(string roleDefinitionId, string name, string assignableScope, CosmosDBSqlRoleDefinitionCollection definitionCollection)
         {
             //RoleDefinitionId = Recording.GenerateAssetName("sql-role-");
-            var parameters = new SqlRoleDefinitionCreateOrUpdateContent
+            var parameters = new CosmosDBSqlRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = name,
-                RoleDefinitionType = RoleDefinitionType.CustomRole,
+                RoleDefinitionType = CosmosDBSqlRoleDefinitionType.CustomRole,
                 AssignableScopes = { assignableScope },
-                Permissions = { new Permission { DataActions = { PermissionDataActionCreate } } },
+                Permissions = { new CosmosDBSqlRolePermission { DataActions = { PermissionDataActionCreate } } },
             };
             var definitionLro = await definitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, roleDefinitionId, parameters);
             return definitionLro.Value;
         }
 
-        private void VerifySqlRoleDefinitions(SqlRoleDefinitionResource expectedValue, SqlRoleDefinitionResource actualValue)
+        private void VerifySqlRoleDefinitions(CosmosDBSqlRoleDefinitionResource expectedValue, CosmosDBSqlRoleDefinitionResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPermissions(expectedValue.Data.Permissions, actualValue.Data.Permissions);
         }
 
-        private void VerifyPermissions(IList<Permission> expected, IList<Permission> actualValue)
+        private void VerifyPermissions(IList<CosmosDBSqlRolePermission> expected, IList<CosmosDBSqlRolePermission> actualValue)
         {
             Assert.AreEqual(expected.Count, actualValue.Count);
             for (int i = 0; i < expected.Count; i++)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        private void VerifyPermission(Permission expected, Permission actualValue)
+        private void VerifyPermission(CosmosDBSqlRolePermission expected, CosmosDBSqlRolePermission actualValue)
         {
             Assert.AreEqual(expected.DataActions, actualValue.DataActions);
             Assert.AreEqual(expected.NotDataActions, actualValue.NotDataActions);

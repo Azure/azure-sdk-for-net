@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -42,7 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
-        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
+        /// <param name="architecture"> Specifies the Architecture Type. </param>
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGeneration = hyperVGeneration;
             Disallowed = disallowed;
             Features = features;
+            Architecture = architecture;
         }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
@@ -58,9 +61,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Contains the os disk image information. </summary>
         internal OSDiskImage OSDiskImage { get; set; }
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemTypes? OSDiskImageOperatingSystem
+        public SupportedOperatingSystemType? OSDiskImageOperatingSystem
         {
-            get => OSDiskImage is null ? default(OperatingSystemTypes?) : OSDiskImage.OperatingSystem;
+            get => OSDiskImage is null ? default(SupportedOperatingSystemType?) : OSDiskImage.OperatingSystem;
             set
             {
                 OSDiskImage = value.HasValue ? new OSDiskImage(value.Value) : null;
@@ -82,11 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the HyperVGeneration Type. </summary>
-        public HyperVGenerationTypes? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration { get; set; }
         /// <summary> Specifies disallowed configuration for the VirtualMachine created from the image. </summary>
         internal DisallowedConfiguration Disallowed { get; set; }
         /// <summary> VM disk types which are disallowed. </summary>
-        public VmDiskTypes? DisallowedVmDiskType
+        public VmDiskType? DisallowedVmDiskType
         {
             get => Disallowed is null ? default : Disallowed.VmDiskType;
             set
@@ -99,5 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; }
+        /// <summary> Specifies the Architecture Type. </summary>
+        public ArchitectureType? Architecture { get; set; }
     }
 }

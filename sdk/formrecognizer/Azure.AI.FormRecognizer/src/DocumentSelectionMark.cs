@@ -13,33 +13,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of DocumentSelectionMark. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentSelectionMark(SelectionMarkState state, BoundingBox boundingBox, DocumentSpan span, float confidence)
+        internal DocumentSelectionMark(SelectionMarkState state, BoundingPolygon boundingPolygon, DocumentSpan span, float confidence)
         {
             State = state;
-            BoundingBox = boundingBox;
+            BoundingPolygon = boundingPolygon;
             Span = span;
             Confidence = confidence;
         }
 
         /// <summary>
-        /// The quadrilateral bounding box that outlines this selection mark. Units are in pixels for
-        /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
-        /// at <see cref="DocumentPage.Unit"/>.
+        /// The polygon that outlines the content of this selection mark. Coordinates are specified relative to the
+        /// top-left of the page, and points are ordered clockwise from the left relative to the selection mark
+        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="LengthUnit"/>
+        /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
         /// </summary>
-        public BoundingBox BoundingBox { get; private set; }
+        public BoundingPolygon BoundingPolygon { get; private set; }
 
         /// <summary>
         /// Selection mark state value, like Selected or Unselected.
         /// </summary>
         public SelectionMarkState State { get; private set; }
 
-        [CodeGenMember("BoundingBox")]
-        private IReadOnlyList<float> BoundingBoxPrivate
+        private IReadOnlyList<float> Polygon
         {
             get => throw new InvalidOperationException();
             set
             {
-                BoundingBox = new BoundingBox(value);
+                BoundingPolygon = new BoundingPolygon(value);
             }
         }
 

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of AaaaRecord. </summary>
-        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal AaaaRecord(string ipv6Address)
+        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        internal AaaaRecord(string iPv6Address)
         {
-            Ipv6Address = ipv6Address;
+            IPv6Address = iPv6Address;
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>
-        public string Ipv6Address { get; set; }
+        public string IPv6Address { get; set; }
     }
 }

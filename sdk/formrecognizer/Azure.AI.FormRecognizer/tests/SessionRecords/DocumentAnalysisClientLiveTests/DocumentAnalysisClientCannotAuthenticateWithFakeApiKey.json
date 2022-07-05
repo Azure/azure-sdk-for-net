@@ -1,25 +1,25 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "479269",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-52747e43fc65c64786b405cfaed589a6-21d5164d2a87994f-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e95c875a7b383e9c3c24d652794f1d4b",
+        "traceparent": "00-6bf225852df57a9c0926e0469c4fbbd2-5a47cf77aed5e99a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "bfa6efe6a9013718aecc0776c9bffece",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "95f601f2-2883-4c77-a105-ef34e6255a92",
+        "apim-request-id": "bdb65860-0827-4bcc-8b30-0727d19cc119",
         "Content-Length": "224",
         "Content-Type": "application/json",
-        "Date": "Wed, 26 Jan 2022 00:16:39 GMT"
+        "Date": "Fri, 20 May 2022 21:40:15 GMT"
       },
       "ResponseBody": {
         "error": {
@@ -30,7 +30,7 @@
     }
   ],
   "Variables": {
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
-    "RandomSeed": "1992549371"
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "365252032"
   }
 }

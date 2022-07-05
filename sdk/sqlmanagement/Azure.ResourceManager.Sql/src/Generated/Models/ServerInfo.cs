@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerInfo. </summary>
         /// <param name="serverId"> Server Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
-        public ServerInfo(string serverId)
+        public ServerInfo(ResourceIdentifier serverId)
         {
             if (serverId == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Server Id. </summary>
-        public string ServerId { get; set; }
+        public ResourceIdentifier ServerId { get; set; }
     }
 }

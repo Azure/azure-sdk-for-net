@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<OperatingSystemTypes> osType = default;
-            Optional<OperatingSystemStateTypes> osState = default;
+            Optional<SupportedOperatingSystemType> osType = default;
+            Optional<OperatingSystemStateType> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<GalleryImageIdentifier> identifier = default;
             Optional<RecommendedMachineConfiguration> recommended = default;
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Compute
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<IReadOnlyList<GalleryImageFeature>> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
+            Optional<ArchitectureType> architecture = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("osState"))
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osState = property0.Value.GetString().ToOperatingSystemStateTypes();
+                            osState = property0.Value.GetString().ToOperatingSystemStateType();
                             continue;
                         }
                         if (property0.NameEquals("endOfLifeDate"))
@@ -150,6 +151,16 @@ namespace Azure.ResourceManager.Compute
                             purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("architecture"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            architecture = new ArchitectureType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -171,7 +182,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
+            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture));
         }
     }
 }

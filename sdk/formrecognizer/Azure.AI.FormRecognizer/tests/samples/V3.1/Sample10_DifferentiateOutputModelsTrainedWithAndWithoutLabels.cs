@@ -9,7 +9,6 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
@@ -22,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
         /// For more information see https://docs.microsoft.com/azure/cognitive-services/form-recognizer/overview#custom-models
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithLabels()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -78,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithoutLabels()
         {
             string endpoint = TestEnvironment.Endpoint;

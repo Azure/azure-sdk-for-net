@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> domainName = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<CustomDomainStatus> status = default;
@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -116,7 +121,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteCustomDomainOverviewARMResourceData(id, name, type, systemData, kind.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value);
+            return new StaticSiteCustomDomainOverviewARMResourceData(id, name, type, systemData.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value);
         }
     }
 }

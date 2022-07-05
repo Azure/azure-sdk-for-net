@@ -1,5 +1,6 @@
 scenarios:
+- "Consumer"
 - "EventProd"
 - "BuffProd"
 - "BurstBuffProd"
-- "ConcurBuffProd"
+- "Processor"

@@ -54,6 +54,23 @@ namespace Azure.Storage
         public delegate Task<Response<TProperties>> GetPropertiesAsync(bool async, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Delegate to replicate how a client will alter the download range.
+        /// Used to avoid requesting blob ranges that will result in error after transformation.
+        /// </summary>
+        /// <param name="range">Range this stream will request on download.</param>
+        /// <returns>Range the underlying client will adjust to.</returns>
+        /// <remarks>
+        /// Used by advanced features such as clientside encryption, which alters ranges to
+        /// ensure necessary info for decryption is downloaded.
+        /// </remarks>
+        public delegate HttpRange PredictEncryptedRangeAdjustment(HttpRange range);
+
+        /// <summary>
+        /// No-op for range adjustment.
+        /// </summary>
+        public static PredictEncryptedRangeAdjustment NoRangeAdjustment => range => range;
+
+        /// <summary>
         /// The current position within the blob or file.
         /// </summary>
         private long _position;
@@ -103,6 +120,12 @@ namespace Azure.Storage
         /// </summary>
         private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
+        /// <summary>
+        /// Helper to determine how <see cref="_downloadInternalFunc"/> will adjust the range this class.
+        /// requests.
+        /// </summary>
+        private readonly PredictEncryptedRangeAdjustment _predictEncryptedRangeAdjustment;
+
         // TODO #27253
         ///// <summary>
         ///// Hashing options to use with <see cref="_downloadInternalFunc"/>.
@@ -117,10 +140,12 @@ namespace Azure.Storage
             bool allowModifications,
             long initialLenght,
             long position = 0,
-            int? bufferSize = default)
+            int? bufferSize = default,
+            PredictEncryptedRangeAdjustment rangePredictionFunc = default)
         {
             _downloadInternalFunc = downloadInternalFunc;
             _getPropertiesInternalFunc = getPropertiesFunc;
+            _predictEncryptedRangeAdjustment = rangePredictionFunc ?? (range => range);
             _position = position;
             _bufferSize = bufferSize ?? Constants.DefaultStreamingDownloadSize;
             _buffer = ArrayPool<byte>.Shared.Rent(_bufferSize);
@@ -215,6 +240,12 @@ namespace Azure.Storage
 
             HttpRange range = new HttpRange(_position, _bufferSize);
 
+            // if _downloadInternalFunc is going to produce a range out of bounds response, we're at the end of the blob
+            if (_predictEncryptedRangeAdjustment(range).Offset >= _length)
+            {
+                return 0;
+            }
+
             // TODO #27253
             response = await _downloadInternalFunc(range, /*_hashingOptions,*/ async, cancellationToken).ConfigureAwait(false);
 
@@ -306,9 +337,7 @@ namespace Azure.Storage
 
         private async Task<long> GetBlobLengthInternal(bool async, CancellationToken cancellationToken)
         {
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             Response<TProperties> response = await _getPropertiesInternalFunc(async, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
             response.GetRawResponse().Headers.TryGetValue("Content-Length", out string lengthString);
 

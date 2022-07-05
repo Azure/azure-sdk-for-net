@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
         internal RestorableDatabaseAccountsListResult()
         {
-            Value = new ChangeTrackingList<RestorableDatabaseAccountData>();
+            Value = new ChangeTrackingList<RestorableCosmosDBAccountData>();
         }
 
         /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
         /// <param name="value"> List of restorable database accounts and their properties. </param>
-        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableDatabaseAccountData> value)
+        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableCosmosDBAccountData> value)
         {
             Value = value;
         }
 
         /// <summary> List of restorable database accounts and their properties. </summary>
-        public IReadOnlyList<RestorableDatabaseAccountData> Value { get; }
+        public IReadOnlyList<RestorableCosmosDBAccountData> Value { get; }
     }
 }

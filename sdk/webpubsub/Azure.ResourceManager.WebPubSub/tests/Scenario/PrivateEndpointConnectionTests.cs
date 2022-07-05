@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicies = "Disabled", }
+                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
                 },
             };
             vnetData.AddressPrefixes.Add("10.10.0.0/16");
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
             //allow.Add(new WebPubSubRequestType("ClientConnectionValue"));
             deny.Add(new WebPubSubRequestType("RESTAPI"));
-            NetworkAcl publicNetwork = new NetworkAcl(allow, deny);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
-                Sku = new WebPubSubSku("Standard_S1"),
+                Sku = new BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
                 //EventHandler = new EventHandlerSettings(items),
                 NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
                     new PrivateLinkServiceConnection()
                     {
                         Name = privateEndPointName,
-                        PrivateLinkServiceId = _webPubSub.Data.Id.ToString(),
+                        PrivateLinkServiceId = _webPubSub.Data.Id,
                         GroupIds = { "webpubsub" },
                     }
                 },

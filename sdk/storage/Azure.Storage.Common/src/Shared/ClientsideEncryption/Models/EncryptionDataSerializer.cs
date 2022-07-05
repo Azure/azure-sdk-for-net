@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Storage.Cryptography.Models
 {
@@ -59,11 +60,26 @@ namespace Azure.Storage.Cryptography.Models
             WriteEncryptionAgent(json, data.EncryptionAgent);
             json.WriteEndObject();
 
-            json.WriteString(nameof(data.ContentEncryptionIV), Convert.ToBase64String(data.ContentEncryptionIV));
+            if (data.ContentEncryptionIV != null)
+            {
+                json.WriteString(nameof(data.ContentEncryptionIV), Convert.ToBase64String(data.ContentEncryptionIV));
+            }
+            if (data.EncryptedRegionInfo != null)
+            {
+                json.WriteStartObject(nameof(data.EncryptedRegionInfo));
+                WriteEncryptedRegionInfo(json, data.EncryptedRegionInfo);
+                json.WriteEndObject();
+            }
 
             json.WriteStartObject(nameof(data.KeyWrappingMetadata));
             WriteDictionary(json, data.KeyWrappingMetadata);
             json.WriteEndObject();
+        }
+
+        private static void WriteEncryptedRegionInfo(Utf8JsonWriter json, EncryptedRegionInfo encryptedRegionInfo)
+        {
+            json.WriteNumber(nameof(encryptedRegionInfo.DataLength), encryptedRegionInfo.DataLength);
+            json.WriteNumber(nameof(encryptedRegionInfo.NonceLength), encryptedRegionInfo.NonceLength);
         }
 
         private static void WriteWrappedKey(Utf8JsonWriter json, KeyEnvelope key)
@@ -164,6 +180,15 @@ namespace Azure.Storage.Cryptography.Models
                 }
                 data.KeyWrappingMetadata = metadata;
             }
+            else if (property.NameEquals(nameof(data.EncryptedRegionInfo)))
+            {
+                var info = new EncryptedRegionInfo();
+                foreach (var subProperty in property.Value.EnumerateObject())
+                {
+                    ReadPropertyValue(info, subProperty);
+                }
+                data.EncryptedRegionInfo = info;
+            }
         }
 
         private static void ReadPropertyValue(KeyEnvelope key, JsonProperty property)
@@ -191,6 +216,18 @@ namespace Azure.Storage.Cryptography.Models
             else if (property.NameEquals(EncryptionAgent_EncryptionVersionName))
             {
                 agent.EncryptionVersion = property.Value.GetString().ToClientSideEncryptionVersion();
+            }
+        }
+
+        private static void ReadPropertyValue(EncryptedRegionInfo info, JsonProperty property)
+        {
+            if (property.NameEquals(nameof(info.NonceLength)))
+            {
+                info.NonceLength = property.Value.GetInt32();
+            }
+            else if (property.NameEquals(nameof(info.DataLength)))
+            {
+                info.DataLength = property.Value.GetInt32();
             }
         }
         #endregion

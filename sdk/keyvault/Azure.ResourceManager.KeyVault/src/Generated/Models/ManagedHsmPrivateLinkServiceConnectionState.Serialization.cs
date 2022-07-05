@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmPrivateLinkServiceConnectionState DeserializeManagedHsmPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<ManagedHsmPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
-            Optional<ActionsRequired> actionsRequired = default;
+            Optional<ManagedHsmActionsRequiredMessage> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new KeyVaultPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new ManagedHsmPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionsRequired = new ActionsRequired(property.Value.GetString());
+                    actionsRequired = new ManagedHsmActionsRequiredMessage(property.Value.GetString());
                     continue;
                 }
             }

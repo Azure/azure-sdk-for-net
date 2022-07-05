@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             Optional<IPAllocationType> type0 = default;
             Optional<string> prefix = default;
             Optional<int?> prefixLength = default;
-            Optional<IPVersion> prefixType = default;
+            Optional<NetworkIPVersion> prefixType = default;
             Optional<string> ipamAllocationId = default;
             Optional<IDictionary<string, string>> allocationTags = default;
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            prefixType = new IPVersion(property0.Value.GetString());
+                            prefixType = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ipamAllocationId"))

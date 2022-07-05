@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the FileShare data model. </summary>
-    public partial class FileShareData : AzureEntityResource
+    public partial class FileShareData : ResourceData
     {
         /// <summary> Initializes a new instance of FileShareData. </summary>
         public FileShareData()
@@ -28,7 +29,6 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource Etag. </param>
         /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
         /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
         /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocols? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn) : base(id, name, resourceType, systemData, etag)
+        /// <param name="eTag"> Resource Etag. </param>
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocol? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.Storage
             LeaseDuration = leaseDuration;
             SignedIdentifiers = signedIdentifiers;
             SnapshotOn = snapshotOn;
+            ETag = eTag;
         }
 
         /// <summary> Returns the date and time the share was last modified. </summary>
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </summary>
         public int? ShareQuota { get; set; }
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
-        public EnabledProtocols? EnabledProtocols { get; set; }
+        public EnabledProtocol? EnabledProtocols { get; set; }
         /// <summary> The property is for NFS share only. The default is NoRootSquash. </summary>
         public RootSquashType? RootSquash { get; set; }
         /// <summary> The version of the share. </summary>
@@ -105,5 +107,7 @@ namespace Azure.ResourceManager.Storage
         public IList<SignedIdentifier> SignedIdentifiers { get; }
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </summary>
         public DateTimeOffset? SnapshotOn { get; }
+        /// <summary> Resource Etag. </summary>
+        public ETag? ETag { get; }
     }
 }

@@ -10,8 +10,7 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-mgmt-debug:
-  show-request-path: true
+
 batch:
   - tag: package-common-type-2022-04
   - tag: package-resources-2022-04
@@ -28,6 +27,13 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -52,29 +58,63 @@ rename-rules:
   URI: Uri
 
 directive:
-  - remove-model: "AzureEntityResource"
-  - remove-model: "ProxyResource"
-  - remove-model: "ResourceModelWithAllowedPropertySet"
-  - remove-model: "Identity"
-  - remove-model: "Operation"
-  - remove-model: "OperationListResult"
-  - remove-model: "OperationStatusResult"
-  - remove-model: "locationData"
-  - remove-model: "CheckNameAvailabilityRequest"
-  - remove-model: "CheckNameAvailabilityResponse"
-  - remove-model: "ErrorResponse"
-  - remove-model: "ErrorDetail"
-  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
-    where: $.definitions['Resource']
+    where: $.definitions.Resource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions['TrackedResource']
+    where: $.definitions.TrackedResource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions.*
+    where: $.definitions.Plan
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.Sku
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.systemData
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
+  - from: types.json
+    where: $.definitions.systemData.properties.*
+    transform: >
+      $["readOnly"] = true;
+  - from: types.json
+    where: $.definitions.encryptionProperties
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.KeyVaultProperties
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
@@ -86,22 +126,30 @@ directive:
     transform: >
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
-# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
-    where: $.definitions.systemData.properties.*
+    where: $.definitions['OperationStatusResult']
     transform: >
-      $["readOnly"] = true
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,output";
   - from: managedidentity.json
-    where: $.definitions.*
+    where: $.definitions.SystemAssignedServiceIdentity
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+      $.properties.type["x-ms-client-name"] = "SystemAssignedServiceIdentityType";
   - from: managedidentity.json
-    where: $.definitions.SystemAssignedServiceIdentity.properties.type
-    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
+    where: $.definitions.UserAssignedIdentity
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources-2022-04
@@ -175,6 +223,16 @@ override-operation-name:
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -223,6 +281,10 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - from: swagger-document
+    where: $.definitions.ExtendedLocation
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
@@ -610,6 +672,13 @@ operation-groups-to-omit:
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -638,13 +707,6 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType"
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -729,5 +791,8 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

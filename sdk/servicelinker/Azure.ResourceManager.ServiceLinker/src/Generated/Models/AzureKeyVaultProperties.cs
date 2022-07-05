@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The resource properties when type is Azure Key Vault. </summary>
-    public partial class AzureKeyVaultProperties : AzureResourcePropertiesBase
+    public partial class AzureKeyVaultProperties : AzureResourceBaseProperties
     {
         /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
         public AzureKeyVaultProperties()

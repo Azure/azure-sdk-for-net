@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="MaxUploadLongBytes"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual int MaxUploadBytes => ClientConfiguration.Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+        public virtual int MaxUploadBytes => ClientConfiguration.ClientOptions.Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
             ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
             : int.MaxValue;  // value is larger than can be represented by an int
 
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.DataLake
         /// Gets the maximum number of bytes that can be sent in each append call in
         /// <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual long MaxUploadLongBytes => ClientConfiguration.Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
+        public virtual long MaxUploadLongBytes => ClientConfiguration.ClientOptions.Version < DataLakeClientOptions.ServiceVersion.V2019_12_12
             ? Constants.DataLake.Pre_2019_12_12_MaxAppendBytes
             : Constants.DataLake.MaxAppendBytes;
 
@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
         /// file.
         /// </param>
         public DataLakeFileClient(Uri fileUri)
-            : this(fileUri, (HttpPipelinePolicy)null, null, null)
+            : this(fileUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential:null)
         {
         }
 
@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, DataLakeClientOptions options)
-            : this(fileUri, (HttpPipelinePolicy)null, options, null)
+            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
         {
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakeFileClient(Uri fileUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy<DataLakeUriBuilder>(fileUri), options, null)
+            : this(fileUri, credential.AsPolicy<DataLakeUriBuilder>(fileUri), options, credential)
         {
         }
 
@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
+            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +258,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, null)
+            : this(fileUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -289,6 +289,35 @@ namespace Azure.Storage.Files.DataLake
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
             : base(fileUri, authentication, options, storageSharedKeyCredential)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
+            : base(fileUri, authentication, options, sasCredential)
         {
         }
 
