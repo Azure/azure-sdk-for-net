@@ -8,7 +8,7 @@ To interact with Device Update for IoT Hub, you need to instantiate a `DeviceUpd
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# Snippet:AzDeviceUpdateSample1_CreateDeviceUpdateClient
+```C# 
 var credentials = new DefaultAzureCredential();
 var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 ```
@@ -17,7 +17,7 @@ var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateProviders
+```C# 
 var providers = client.GetProviders();
 foreach(var provider in providers)
 {
@@ -30,7 +30,7 @@ foreach(var provider in providers)
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateNames
+```C# 
 var names = client.GetNames(provider);
 foreach(var name in names)
 {
@@ -43,7 +43,7 @@ foreach(var name in names)
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# Snippet:AzDeviceUpdateSample1_EnumerateVersions
+```C#
 var versions = client.GetNames(provider, name);
 foreach(var version in versions)
 {

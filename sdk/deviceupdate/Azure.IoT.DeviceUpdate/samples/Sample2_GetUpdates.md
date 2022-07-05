@@ -8,7 +8,7 @@ To interact with Device Update for IoT Hub, you need to instantiate a `DeviceUpd
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
+```C# 
 var credentials = new DefaultAzureCredential();
 var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 ```
@@ -17,7 +17,7 @@ var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 
 First, let's try to retrieve update metadata.
 
-```C# Snippet:AzDeviceUpdateSample2_GetUpdate
+```C# 
 var response = client.GetUpdate(provider, name, version);
 Console.WriteLine(response.Content.ToString());
 ```
@@ -26,7 +26,7 @@ Console.WriteLine(response.Content.ToString());
 
 Now that we have update metadata, let's try to retrieve payload file identities that correspond to this update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
+```C# 
 var files = client.GetFiles(provider, name, version);
 foreach(var file in files)
 {
@@ -39,7 +39,7 @@ foreach(var file in files)
 
 In this step, we will retrieve full file metadata for each file associated with the update.
 
-```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
+```C# 
 var files = client.GetFiles(provider, name, version);
 foreach(var file in files)
 {

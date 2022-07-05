@@ -8,7 +8,7 @@ Let's assume you have an already import device update that we want to remove fro
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# Snippet:AzDeviceUpdateSample4_CreateDeviceUpdateClient
+```C#
 var credentials = new DefaultAzureCredential();
 var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 ```
@@ -17,7 +17,7 @@ var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
-```C# Snippet:AzDeviceUpdateSample4_DeleteUpdate
+```C#
 var response = client.DeleteUpdate(WaitUntil.Completed, provider, name, version);
 var doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());

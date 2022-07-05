@@ -9,7 +9,7 @@ the actual payload file but also the corresponding import manifest document. See
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# Snippet:AzDeviceUpdateSample3_CreateDeviceUpdateClient
+```C#
 var credentials = new DefaultAzureCredential();
 var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 ```
@@ -18,7 +18,7 @@ var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
 
 Before we can import device update, we need to upload all device update artifacts, in our case payload file and import manifest file, to an Azure Blob container. Let's assume we have local artifact file paths `payloadFilePath`, `manifestFilePath` and Azure Blob container Urls `payloadUrl` and `manifestUrl`.
 
-```C# Snippet:AzDeviceUpdateSample3_CreateImportRequest
+```C#
 var payload = new FileInfo(payloadFilePath);
 var manifest = new FileInfo(manifestFilePath);
 SHA256 sha256 = SHA256.Create();
@@ -59,7 +59,7 @@ var requestBody = JsonSerializer.Serialize(content);
 
 Now that we have import request ready, we can start the import operation. The import is a long running operation that might take up to an hour for really big files.
 
-```C# Snippet:AzDeviceUpdateSample3_ImportUpdate
+```C#
 var response = client.ImportUpdate(WaitUntil.Completed, RequestContent.Create(requestBody));
 var doc = JsonDocument.Parse(response.Value.ToMemory());
 Console.WriteLine(doc.RootElement.GetProperty("status").ToString());
