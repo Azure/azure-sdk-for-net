@@ -331,7 +331,7 @@
     <value>The event is too large for be published to the Event Hub: '{0}`.  Size limit: {1} bytes.</value>
   </data>
   <data name="DeveloperCodeEventProcessingError" xml:space="preserve">
-    <value>An error was encountered while executing developer-provided to process events.  On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and ensure that no exceptions are allowed to propagate up the stack.  Exception details can be found in the inner exception.</value>
+    <value>An error was encountered while executing developer-provided code to process events.  On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.  It is very strongly advised that all developer-provided code include a try/catch wrapper and ensure that no exceptions are allowed to propagate up the stack.  Exception details can be found in the inner exception.</value>
   </data>
   <data name="OperationEventProcessingDeveloperCode" xml:space="preserve">
     <value>Executing developer-provided code to process events.</value>

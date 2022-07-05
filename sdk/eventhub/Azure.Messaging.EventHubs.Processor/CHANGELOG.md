@@ -10,7 +10,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-- Added a warning surfaced to the event processor error handler signaling that an unhandled exception propagated from the event processing handler causing partition processing to fault and restart.
+- The event processor error handler will now raise warning when an unhandled exception propagated from the event processing handler causing partition processing to fault and restart.
 
 ### Bugs Fixed
 
