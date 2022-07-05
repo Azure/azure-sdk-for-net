@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             */
 
             // Create a vault first
-            VaultResource vaultResource = (await CreateVault()).Value;
+            KeyVaultResource vaultResource = (await CreateVault()).Value;
             // Create a vnet
             VirtualNetworkResource vnetResource = (await createVirtualNetwork()).Value;
 
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return await networks.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
         }
 
-        private async Task<ArmOperation<VaultResource>> CreateVault()
+        private async Task<ArmOperation<KeyVaultResource>> CreateVault()
         {
             // Create a Vault first
-            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             return await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
         }
