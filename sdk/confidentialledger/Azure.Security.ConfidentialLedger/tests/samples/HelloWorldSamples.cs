@@ -64,7 +64,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
                 var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
                     .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
-                return isCertSignedByTheTlsCert;
+                return httpRequestMessage.RequestUri.Host == "identity.confidential-ledger.core.azure.com"  || isCertSignedByTheTlsCert;
             }
 
             // Create an HttpClientHandler to use our certValidationCheck function.
@@ -188,7 +188,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string subLedgerId2 = JsonDocument.Parse(getBySubledgerResponse.Content)
                 .RootElement
                 .GetProperty("entry")
-                .GetProperty("subLedgerId")
+                .GetProperty("collectionId")
                 .GetString();
 
             Console.WriteLine($"{subLedgerId} == {subLedgerId2}");

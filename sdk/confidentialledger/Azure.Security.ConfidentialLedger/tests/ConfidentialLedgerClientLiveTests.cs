@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
-    [LiveOnly]
+    //[LiveOnly]
     public class ConfidentialLedgerClientLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
         private TokenCredential Credential;
@@ -23,7 +23,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private ConfidentialLedgerIdentityServiceClient IdentityClient;
         private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
 
-        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
+        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
