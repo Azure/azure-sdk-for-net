@@ -916,13 +916,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   the processor to function.
         /// </summary>
         ///
-        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        protected internal virtual async Task ValidateStartupAsync(bool async,
-                                                                   CancellationToken cancellationToken = default)
+        protected internal virtual async Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default)
         {
             var validationTask = Task.WhenAll
             (
@@ -930,32 +928,21 @@ namespace Azure.Messaging.EventHubs.Primitives
                 ValidateStorageConnectionAsync(cancellationToken)
             );
 
-            if (async)
+            try
             {
-                try
-                {
-                    await validationTask.ConfigureAwait(false);
-                }
-                catch
-                {
-                    // If the validation task has an exception, it will be the aggregate exception
-                    // that we wish to surface.  Use that if it is available.
-
-                    if (validationTask.Exception != null)
-                    {
-                        throw validationTask.Exception;
-                    }
-
-                    throw;
-                }
+                await validationTask.ConfigureAwait(false);
             }
-            else
+            catch
             {
-                // Wait is used over GetAwaiter().GetResult() because it will
-                // ensure an AggregateException is thrown rather than unwrapping and
-                // throwing only the first exception.
+                // If the validation task has an exception, it will be the aggregate exception
+                // that we wish to surface.  Use that if it is available.
 
-                validationTask.Wait(cancellationToken);
+                if (validationTask.Exception != null)
+                {
+                    throw validationTask.Exception;
+                }
+
+                throw;
             }
         }
 
@@ -1266,11 +1253,15 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     if (async)
                     {
-                        await ValidateStartupAsync(async, cancellationToken).ConfigureAwait(false);
+                        await ValidateProcessingPreconditions(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        ValidateStartupAsync(async, cancellationToken).EnsureCompleted();
+                        // Wait is used over GetAwaiter().GetResult() because it will
+                        // ensure an AggregateException is thrown rather than unwrapping and
+                        // throwing only the first exception.
+
+                        ValidateProcessingPreconditions(cancellationToken).Wait(cancellationToken);
                     }
                 }
                 catch (AggregateException ex)

@@ -718,14 +718,12 @@ namespace Azure.Messaging.EventHubs
         ///   the processor to function.
         /// </summary>
         ///
-        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
         /// <param name="containerClient">The <see cref="BlobContainerClient" /> to use for validating storage operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        internal async Task ValidateStoragePermissionsAsync(bool async,
-                                                            BlobContainerClient containerClient,
+        internal async Task ValidateStoragePermissionsAsync(BlobContainerClient containerClient,
                                                             CancellationToken cancellationToken = default)
         {
             var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{ Guid.NewGuid().ToString("N") }");
@@ -738,14 +736,7 @@ namespace Azure.Messaging.EventHubs
                 using var blobContent = new MemoryStream(Array.Empty<byte>());
                 var blobMetadata = new Dictionary<string, string> {{ "name", blobClient.Name }};
 
-                if (async)
-                {
-                    await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    blobClient.Upload(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken);
-                }
+                await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -762,14 +753,7 @@ namespace Azure.Messaging.EventHubs
 
                 try
                 {
-                    if (async)
-                    {
-                        await blobClient.DeleteIfExistsAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        blobClient.DeleteIfExists(cancellationToken: CancellationToken.None);
-                    }
+                    await blobClient.DeleteIfExistsAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -783,28 +767,18 @@ namespace Azure.Messaging.EventHubs
         ///   the processor to function.
         /// </summary>
         ///
-        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
         ///
         /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
         ///
-        protected override async Task ValidateStartupAsync(bool async,
-                                                           CancellationToken cancellationToken = default)
+        protected override async Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default)
         {
             // Because the base class has no understanding of what concrete storage type is in use and
             // does not directly make use of some of its operations, such as writing a checkpoint.  Validate
             // these additional needs if a storage client is available.
 
-            if (async)
-            {
-                await base.ValidateStartupAsync(async, cancellationToken).ConfigureAwait(false);
-                await ValidateStoragePermissionsAsync(async, _containerClient, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                base.ValidateStartupAsync(async, cancellationToken).EnsureCompleted();
-                ValidateStoragePermissionsAsync(async, _containerClient, cancellationToken).EnsureCompleted();
-            }
+            await base.ValidateProcessingPreconditions(cancellationToken).ConfigureAwait(false);
+            await ValidateStoragePermissionsAsync(_containerClient, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
