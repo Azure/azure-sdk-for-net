@@ -9,7 +9,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal sealed class StatsBeat : IDisposable
+    internal sealed class Statsbeat : IDisposable
     {
         private readonly IDisposable _meterProvider;
 
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal const int AttachStatsBeatInterval = 86400000;
 
-        private StatsBeat()
+        private Statsbeat()
         {
             s_myMeter.CreateObservableGauge("AttachStatsBeat", () => GetAttachStatsBeat());
 
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             .Build();
         }
 
-        public static StatsBeat StatsBeatInstance { get; } = new();
+        public static Statsbeat StatsbeatInstance { get; } = new();
 
         internal static string Customer_Ikey { get => s_ikey; set => s_ikey = value; }
         internal static string Statsbeat_RoleName { get => s_roleName; set => s_roleName = value; }

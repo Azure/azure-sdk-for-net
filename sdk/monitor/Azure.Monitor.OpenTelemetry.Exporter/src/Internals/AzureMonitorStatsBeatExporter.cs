@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, StatsBeat.Statsbeat_RoleName, StatsBeat.Statsbeat_RoleInstance, _instrumentationKey);
+                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, Statsbeat.Statsbeat_RoleName, Statsbeat.Statsbeat_RoleInstance, _instrumentationKey);
 
                 // TODO: Add overload in tranmitter with no loggging and failure handling
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();

@@ -5,17 +5,17 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class StatsBeatHelper
+    internal class StatsbeatHelper
     {
-        internal static void InitializeStatsBeat(string connectionString)
+        internal static void InitializeStatsbeat(string connectionString)
         {
             // Race condition is not taken in to account here
             // If the exporters have different connection string
             // only one of them will be used.
-            if (StatsBeat.Customer_Ikey == null)
+            if (Statsbeat.Customer_Ikey == null)
             {
                 ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out _);
-                StatsBeat.Customer_Ikey = instrumentationKey;
+                Statsbeat.Customer_Ikey = instrumentationKey;
             }
         }
     }
