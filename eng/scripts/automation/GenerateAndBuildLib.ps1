@@ -518,7 +518,10 @@ function GeneratePackage()
     # Generate APIs
     Write-Host "Start to export api for $service"
     pwsh $sdkRootPath/eng/scripts/Export-API.ps1 $service
-
+    if ( !$? ) {
+        Write-Error "Failed to export api for sdk. exit code: $?"
+        exit 1
+    }
     # breaking change validation
     $srcPath = Join-Path $projectFolder 'src'
     Write-Host "Start to validate breaking change. srcPath:$srcPath"
@@ -528,7 +531,7 @@ function GeneratePackage()
     if (!(Test-Path $logFilePath)) {
         New-Item $logFilePath
     }
-    dotnet build $srcPath /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath`
+    dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath`
     if (!$LASTEXITCODE) {
         $hasBreakingChange = $false
     }
