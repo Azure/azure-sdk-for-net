@@ -2,14 +2,24 @@
 
 ## 1.0.0-beta.6 (Unreleased)
 
+### Features Added
+
 ### Breaking Changes
-Change some models name:
+
 - Type `NetworkAcl` renamed to `PublicNetworkAcls`.
 - Type `WebPubSubResourceSku` renamed to `WebPubSubSku`.
 - Type `WebPubSubSku` renamed to `BillingInfoSku`.
 - Type `SkuCapacity` renamed to `WebPubSubSkuCapacity`.
-- Type `XXXXX` renamed to `XXXXX`.
-- Type `XXXXX` renamed to `XXXXX`.
+- Type `ScaleType` renamed to `WebPubSubScaleType`.
+- Type `PrivateLinkResource` renamed to `WebPubSubPrivateLink`.
+- Type `SharedPrivateLinkResource` renamed to `WebPubSubSharedPrivateLink`.
+- Type `NameAvailability` renamed to `WebPubSubNameAvailability`.
+- Type `NameAvailabilityParameters` renamed to `WebPubSubNameAvailabilityParameters`.
+- Type of `privateLinkResourceId` change to `ResourceIdentifier`
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0-beta.5 (2022-06-28)
 
