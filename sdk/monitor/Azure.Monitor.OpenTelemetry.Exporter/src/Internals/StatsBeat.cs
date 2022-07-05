@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 o.ConnectionString = ConnectionString;
                 o.DisableOfflineStorage = true;
-                o.StatsBeatInterval = AttachStatsBeatInterval;
+                o.StatsbeatInterval = AttachStatsBeatInterval;
             })
             .Build();
         }

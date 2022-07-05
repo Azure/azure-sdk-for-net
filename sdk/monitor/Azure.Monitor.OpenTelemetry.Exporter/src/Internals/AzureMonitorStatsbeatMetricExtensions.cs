@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorStatsbeatExporter(options), options.StatsBeatInterval)
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorStatsbeatExporter(options), options.StatsbeatInterval)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
