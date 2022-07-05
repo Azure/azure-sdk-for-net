@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultPrivateLinkResourceListResult DeserializeKeyVaultPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VaultPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<KeyVaultPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VaultPrivateLinkResourceData> array = new List<VaultPrivateLinkResourceData>();
+                    List<KeyVaultPrivateLinkResourceData> array = new List<KeyVaultPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultPrivateLinkResourceData.DeserializeVaultPrivateLinkResourceData(item));
+                        array.Add(KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;
