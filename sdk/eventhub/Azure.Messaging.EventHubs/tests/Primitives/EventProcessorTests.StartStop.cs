@@ -353,11 +353,26 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var capturedException = default(Exception);
             var expectedException = new DivideByZeroException("The universe will now end.");
+            var mockConnection = new Mock<EventHubConnection>();
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            mockConnection
+                .Setup(connection => connection.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties(mockProcessor.Object.EventHubName, new DateTimeOffset(2015, 10, 27, 12, 0, 0, 0, TimeSpan.Zero), new[] { "0" }));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
-                .Returns(Mock.Of<EventHubConnection>());
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventProcessorOptions>()))
+                .Returns(Mock.Of<TransportConsumer>());
 
             mockProcessor
                 .Protected()
@@ -1282,9 +1297,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) } };
             var handlerCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockEventSource = new Mock<EventHubsEventSource>();
-            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConnection = new Mock<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            mockConnection
+                .Setup(connection => connection.GetPropertiesAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new EventHubProperties(mockProcessor.Object.EventHubName, new DateTimeOffset(2015, 10, 27, 12, 0, 0, 0, TimeSpan.Zero), new[] { "0" }));
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
@@ -1298,10 +1317,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
-                .Returns(mockConnection);
+                .Returns(mockConnection.Object);
 
             mockProcessor
-                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
             mockProcessor

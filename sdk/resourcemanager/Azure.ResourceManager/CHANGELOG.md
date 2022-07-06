@@ -1,10 +1,16 @@
 # Release History
 
-## 1.1.2 (2022-07-01)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
-- Add `ExtendedLocation` to common type.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Changed `OperationStatusResult` initialization constructor from internal to public.
 
 ## 1.1.2 (2022-07-01)
 

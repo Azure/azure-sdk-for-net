@@ -123,4 +123,21 @@ directive:
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions'].get
     transform: $.operationId = "AzurePermissionsForResource_List" 
+
+  # change type to ResourceIdentifier
+  - from: authorization-RoleAssignmentsCalls.json
+    where: $.definitions.RoleAssignmentPropertiesWithScope.properties.roleDefinitionId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: RoleAssignmentSchedule.json
+    where: $.definitions.RoleAssignmentScheduleProperties.properties.roleAssignmentScheduleRequestId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: RoleAssignmentScheduleInstance.json
+    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.originRoleAssignmentId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: RoleAssignmentScheduleInstance.json
+    where: $.definitions.RoleAssignmentScheduleInstanceFilter.properties.roleAssignmentScheduleId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: RoleAssignmentScheduleInstance.json
+    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleAssignmentScheduleId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

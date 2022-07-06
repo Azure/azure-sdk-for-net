@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/> or <paramref name="callbackUri"/> is null. </exception>
-        public LogicAppReceiver(string name, string resourceId, Uri callbackUri)
+        public LogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri)
         {
             if (name == null)
             {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal LogicAppReceiver(string name, string resourceId, Uri callbackUri, bool? useCommonAlertSchema)
+        internal LogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri, bool? useCommonAlertSchema)
         {
             Name = name;
             ResourceId = resourceId;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The name of the logic app receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
         /// <summary> The azure resource id of the logic app receiver. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The callback url where http request sent to. </summary>
         public Uri CallbackUri { get; set; }
         /// <summary> Indicates whether to use common alert schema. </summary>

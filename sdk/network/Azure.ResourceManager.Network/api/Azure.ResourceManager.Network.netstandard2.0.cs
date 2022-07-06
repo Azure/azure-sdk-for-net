@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ServiceProviderProvisioningState? ServiceProviderProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRouteCircuitSku Sku { get { throw null; } set { } }
-        public int? Stag { get { throw null; } }
+        public int? STag { get { throw null; } }
     }
     public partial class ExpressRouteCircuitPeeringCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ExpressRouteCircuitPeeringResource>, System.Collections.IEnumerable
     {
