@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.MySql</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider MySql</Description>
     <PackageTags>azure;management;arm;resource manager;mysql</PackageTags>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>

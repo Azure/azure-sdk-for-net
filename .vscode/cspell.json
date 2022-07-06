@@ -366,6 +366,13 @@
       ]
     },
 	{
+      "filename": "**/sdk/postgresql/**/*.cs",
+      "words": [
+        "vcore",
+        "vcores"
+      ]
+    },
+	{
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
