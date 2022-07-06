@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 foreach (var evnt in  activity.Events)
                 {
-                    if (evnt.Name == "exception")
+                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
                         var exceptionTelemetryItem = new TelemetryItem("Exception" , activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
                         SetExceptionDataOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
