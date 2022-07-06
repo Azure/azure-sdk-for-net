@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskSku DeserializeDiskSku(JsonElement element)
         {
-            Optional<DiskStorageAccountTypes> name = default;
+            Optional<DiskStorageAccountType> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new DiskStorageAccountTypes(property.Value.GetString());
+                    name = new DiskStorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))

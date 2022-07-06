@@ -51,8 +51,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="dataResidencyBoundary">The data residency boundary for
         /// the topic. Possible values include: 'WithinGeopair',
         /// 'WithinRegion'</param>
-        /// <param name="sku">The Sku pricing tier for the topic.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string dataResidencyBoundary = default(string), ResourceSku sku = default(ResourceSku))
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string dataResidencyBoundary = default(string))
         {
             Tags = tags;
             Identity = identity;
@@ -60,7 +59,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
             DataResidencyBoundary = dataResidencyBoundary;
-            Sku = sku;
             CustomInit();
         }
 
@@ -115,12 +113,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataResidencyBoundary")]
         public string DataResidencyBoundary { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Sku pricing tier for the topic.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Sku { get; set; }
 
     }
 }

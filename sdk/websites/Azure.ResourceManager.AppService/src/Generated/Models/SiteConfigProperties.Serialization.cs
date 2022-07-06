@@ -911,8 +911,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<IPSecurityRestriction>> scmIpSecurityRestrictions = default;
             Optional<bool?> scmIpSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
-            Optional<SupportedTlsVersions?> minTlsVersion = default;
-            Optional<SupportedTlsVersions?> scmMinTlsVersion = default;
+            Optional<SupportedTlsVersion?> minTlsVersion = default;
+            Optional<SupportedTlsVersion?> scmMinTlsVersion = default;
             Optional<FtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.AppService.Models
                         minTlsVersion = null;
                         continue;
                     }
-                    minTlsVersion = new SupportedTlsVersions(property.Value.GetString());
+                    minTlsVersion = new SupportedTlsVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scmMinTlsVersion"))
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.AppService.Models
                         scmMinTlsVersion = null;
                         continue;
                     }
-                    scmMinTlsVersion = new SupportedTlsVersions(property.Value.GetString());
+                    scmMinTlsVersion = new SupportedTlsVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ftpsState"))

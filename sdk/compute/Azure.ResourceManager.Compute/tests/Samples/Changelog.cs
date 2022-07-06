@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         Name = "Primary",
                         Primary = true,
                         Subnet = new SubnetData() { Id = vnet.Data.Subnets.First().Id },
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                     }
                 }
             };
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         Version = "latest"
                     }
                 },
-                HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
+                HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
             };
             ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
             VirtualMachineResource vm = vmOperation.Value;

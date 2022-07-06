@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("bandwidthInGbps");
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (Optional.IsDefined(GatewayManagerEtag))
+            if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag");
-                writer.WriteStringValue(GatewayManagerEtag);
+                writer.WriteStringValue(GatewayManagerETag);
             }
             if (Optional.IsDefined(GlobalReachEnabled))
             {

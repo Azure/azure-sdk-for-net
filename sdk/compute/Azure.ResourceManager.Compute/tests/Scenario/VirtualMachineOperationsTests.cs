@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 HardwareProfile = new HardwareProfile
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF1
+                    VmSize = VirtualMachineSizeType.StandardF1
                 }
             };
             var lro = await vm.UpdateAsync(WaitUntil.Completed, update);
             VirtualMachineResource updatedVM = lro.Value;
 
-            Assert.AreEqual(VirtualMachineSizeTypes.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
+            Assert.AreEqual(VirtualMachineSizeType.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
         }
 
         [TestCase]

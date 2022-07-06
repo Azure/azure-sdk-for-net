@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<DateTimeOffset> updatedAt = default;
             Optional<long> messageRetentionInDays = default;
             Optional<long> partitionCount = default;
-            Optional<EntityStatus> status = default;
+            Optional<EventHubEntityStatus> status = default;
             Optional<CaptureDescription> captureDescription = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToEntityStatus();
+                            status = property0.Value.GetString().ToEventHubEntityStatus();
                             continue;
                         }
                         if (property0.NameEquals("captureDescription"))

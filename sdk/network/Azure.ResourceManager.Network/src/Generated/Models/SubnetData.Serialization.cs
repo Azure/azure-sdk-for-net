@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies");
-                writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies");
-                writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
+                writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ServiceEndpointPropertiesFormat>> serviceEndpoints = default;
             Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
             Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
-            Optional<IReadOnlyList<IPConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
             Optional<IReadOnlyList<IPConfigurationProfile>> ipConfigurationProfiles = default;
             Optional<IList<WritableSubResource>> ipAllocations = default;
             Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ServiceDelegation>> delegations = default;
             Optional<string> purpose = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VirtualNetworkPrivateEndpointNetworkPolicies> privateEndpointNetworkPolicies = default;
-            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicies> privateLinkServiceNetworkPolicies = default;
+            Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
+            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
             Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIpConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IPConfiguration> array = new List<IPConfiguration>();
+                            List<NetworkIPConfiguration> array = new List<NetworkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfiguration.DeserializeIPConfiguration(item));
+                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpointNetworkPolicies = new VirtualNetworkPrivateEndpointNetworkPolicies(property0.Value.GetString());
+                            privateEndpointNetworkPolicies = new VirtualNetworkPrivateEndpointNetworkPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceNetworkPolicies"))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceNetworkPolicies = new VirtualNetworkPrivateLinkServiceNetworkPolicies(property0.Value.GetString());
+                            privateLinkServiceNetworkPolicies = new VirtualNetworkPrivateLinkServiceNetworkPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationGatewayIpConfigurations"))

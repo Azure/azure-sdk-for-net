@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> otherPatchCount = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<IReadOnlyList<VirtualMachineSoftwarePatchProperties>> availablePatches = default;
-            Optional<ApiError> error = default;
+            Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
             }

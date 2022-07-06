@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
             Optional<bool> acceleratedNetwork = default;
-            Optional<ArchitectureTypes> architecture = default;
+            Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acceleratedNetwork"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    architecture = new ArchitectureTypes(property.Value.GetString());
+                    architecture = new ArchitectureType(property.Value.GetString());
                     continue;
                 }
             }

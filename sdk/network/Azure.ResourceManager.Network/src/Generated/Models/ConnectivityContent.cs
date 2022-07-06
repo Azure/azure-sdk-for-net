@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Preferred IP version of the connection. </summary>
-        public IPVersion? PreferredIPVersion { get; set; }
+        public NetworkIPVersion? PreferredIPVersion { get; set; }
     }
 }

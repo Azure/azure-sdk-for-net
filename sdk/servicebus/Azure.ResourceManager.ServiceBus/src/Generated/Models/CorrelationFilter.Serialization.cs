@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("messageId");
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(To))
+            if (Optional.IsDefined(SendTo))
             {
                 writer.WritePropertyName("to");
-                writer.WriteStringValue(To);
+                writer.WriteStringValue(SendTo);
             }
             if (Optional.IsDefined(ReplyTo))
             {

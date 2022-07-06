@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> roleDefinitionId = default;
             Optional<string> principalId = default;
             Optional<PrincipalType> principalType = default;
-            Optional<string> roleAssignmentScheduleId = default;
-            Optional<string> originRoleAssignmentId = default;
+            Optional<ResourceIdentifier> roleAssignmentScheduleId = default;
+            Optional<ResourceIdentifier> originRoleAssignmentId = default;
             Optional<RoleAssignmentScheduleInstanceStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -101,12 +101,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleAssignmentScheduleId"))
                         {
-                            roleAssignmentScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleAssignmentScheduleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("originRoleAssignmentId"))
                         {
-                            originRoleAssignmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originRoleAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))

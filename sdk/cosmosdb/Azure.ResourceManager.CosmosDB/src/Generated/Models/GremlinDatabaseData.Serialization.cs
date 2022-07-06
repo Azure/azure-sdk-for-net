@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<GremlinDatabasePropertiesResource> resource = default;
-            Optional<GremlinDatabasePropertiesOptions> options = default;
+            Optional<ExtendedGremlinDatabaseResourceInfo> resource = default;
+            Optional<GremlinDatabasePropertiesConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resource = GremlinDatabasePropertiesResource.DeserializeGremlinDatabasePropertiesResource(property0.Value);
+                            resource = ExtendedGremlinDatabaseResourceInfo.DeserializeExtendedGremlinDatabaseResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("options"))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            options = GremlinDatabasePropertiesOptions.DeserializeGremlinDatabasePropertiesOptions(property0.Value);
+                            options = GremlinDatabasePropertiesConfig.DeserializeGremlinDatabasePropertiesConfig(property0.Value);
                             continue;
                         }
                     }

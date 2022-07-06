@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> vpnConnectionId = default;
             Optional<long> vpnConnectionDuration = default;
-            Optional<string> vpnConnectionTime = default;
+            Optional<DateTimeOffset> vpnConnectionTime = default;
             Optional<string> publicIpAddress = default;
             Optional<string> privateIpAddress = default;
             Optional<string> vpnUserName = default;
@@ -45,7 +46,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("vpnConnectionTime"))
                 {
-                    vpnConnectionTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vpnConnectionTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("publicIpAddress"))
@@ -124,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), vpnConnectionTime.Value, publicIpAddress.Value, privateIpAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
+            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIpAddress.Value, privateIpAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
         }
     }
 }

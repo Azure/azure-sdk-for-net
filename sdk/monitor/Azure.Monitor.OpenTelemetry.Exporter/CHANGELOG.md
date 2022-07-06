@@ -19,9 +19,12 @@
 
 ### Bugs Fixed
 
+* [Remove populating _MS.AggregationIntervalMs to all metrics](https://github.com/Azure/azure-sdk-for-net/pull/29473)
 * [Fix shared RoleName/RoleInstance between Trace and Log Exporter](https://github.com/Azure/azure-sdk-for-net/pull/26438)
 
 ### Other Changes
+
+* [Update persistent storage package dependency](https://github.com/Azure/azure-sdk-for-net/pull/29530)
 
 ## 1.0.0-beta.3 (2021-10-04)
 

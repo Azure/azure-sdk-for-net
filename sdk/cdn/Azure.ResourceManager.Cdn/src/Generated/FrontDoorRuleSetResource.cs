@@ -282,10 +282,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: FrontDoorRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FrontDoorUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FrontDoorUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.GetResourceUsages");
                 scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<FrontDoorUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.GetResourceUsages");
                 scope.Start();
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: FrontDoorRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FrontDoorUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FrontDoorUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
-            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
+            Page<FrontDoorUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.GetResourceUsages");
                 scope.Start();
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<FrontDoorUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetResource.GetResourceUsages");
                 scope.Start();

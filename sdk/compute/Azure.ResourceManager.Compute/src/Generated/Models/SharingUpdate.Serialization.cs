@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingUpdate DeserializeSharingUpdate(JsonElement element)
         {
-            SharingUpdateOperationTypes operationType = default;
+            SharingUpdateOperationType operationType = default;
             Optional<IList<SharingProfileGroup>> groups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationType"))
                 {
-                    operationType = new SharingUpdateOperationTypes(property.Value.GetString());
+                    operationType = new SharingUpdateOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groups"))

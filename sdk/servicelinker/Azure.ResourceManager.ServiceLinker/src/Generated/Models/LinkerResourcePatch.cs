@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> A linker to be updated. </summary>
@@ -17,18 +19,18 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The target service properties
-        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
+        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
         /// </summary>
-        public TargetServiceBase TargetService { get; set; }
+        public TargetServiceBaseInfo TargetService { get; set; }
         /// <summary>
         /// The authentication type.
-        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </summary>
-        public AuthInfoBase AuthInfo { get; set; }
+        public AuthBaseInfo AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
-        public ClientType? ClientType { get; set; }
+        public LinkerClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
@@ -46,15 +48,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> An option to store secret value in secure place. </summary>
-        internal SecretStore SecretStore { get; set; }
+        internal LinkerSecretStore SecretStore { get; set; }
         /// <summary> The key vault id to store secret. </summary>
-        public string SecretStoreKeyVaultId
+        public ResourceIdentifier SecretStoreKeyVaultId
         {
             get => SecretStore is null ? default : SecretStore.KeyVaultId;
             set
             {
                 if (SecretStore is null)
-                    SecretStore = new SecretStore();
+                    SecretStore = new LinkerSecretStore();
                 SecretStore.KeyVaultId = value;
             }
         }

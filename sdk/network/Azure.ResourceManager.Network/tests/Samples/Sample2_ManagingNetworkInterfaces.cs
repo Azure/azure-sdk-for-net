@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             PublicIPAddressData publicIPInput = new PublicIPAddressData()
             {
                 Location = resourceGroup.Data.Location,
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = "myDomain"
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "ipConfig",
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = publicIPAddress.Id

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkUsage DeserializeVirtualNetworkUsage(JsonElement element)
         {
             Optional<double> currentValue = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<double> limit = default;
             Optional<VirtualNetworkUsageName> name = default;
             Optional<string> unit = default;
@@ -33,7 +33,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("limit"))

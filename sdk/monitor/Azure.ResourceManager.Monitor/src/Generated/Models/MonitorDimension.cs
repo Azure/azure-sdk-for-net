@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
-        public MonitorDimension(string name, Operator @operator, IEnumerable<string> values)
+        public MonitorDimension(string name, MonitorOperator @operator, IEnumerable<string> values)
         {
             if (name == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
-        internal MonitorDimension(string name, Operator @operator, IList<string> values)
+        internal MonitorDimension(string name, MonitorOperator @operator, IList<string> values)
         {
             Name = name;
             Operator = @operator;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Name of the dimension. </summary>
         public string Name { get; set; }
         /// <summary> Operator for dimension values. </summary>
-        public Operator Operator { get; set; }
+        public MonitorOperator Operator { get; set; }
         /// <summary> List of dimension values. </summary>
         public IList<string> Values { get; }
     }

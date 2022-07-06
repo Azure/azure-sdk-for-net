@@ -434,20 +434,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region DataVersionBaseResource
+        #region DataVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataVersionBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataVersionBaseResource.CreateResourceIdentifier" /> to create a <see cref="DataVersionBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataVersionResource.CreateResourceIdentifier" /> to create a <see cref="DataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataVersionBaseResource" /> object. </returns>
-        public static DataVersionBaseResource GetDataVersionBaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataVersionResource" /> object. </returns>
+        public static DataVersionResource GetDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataVersionBaseResource.ValidateResourceId(id);
-                return new DataVersionBaseResource(client, id);
+                DataVersionResource.ValidateResourceId(id);
+                return new DataVersionResource(client, id);
             }
             );
         }

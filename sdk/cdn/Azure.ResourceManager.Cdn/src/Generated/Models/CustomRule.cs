@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
-        public CustomRule(string name, int priority, IEnumerable<MatchCondition> matchConditions, ActionType action)
+        public CustomRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
         {
             if (name == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<MatchCondition> matchConditions, ActionType action)
+        internal CustomRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
         {
             Name = name;
             EnabledState = enabledState;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines in what order this rule be evaluated in the overall list of custom rules. </summary>
         public int Priority { get; set; }
         /// <summary> List of match conditions. </summary>
-        public IList<MatchCondition> MatchConditions { get; }
+        public IList<CustomRuleMatchCondition> MatchConditions { get; }
         /// <summary> Describes what action to be applied when rule matches. </summary>
-        public ActionType Action { get; set; }
+        public OverrideActionType Action { get; set; }
     }
 }

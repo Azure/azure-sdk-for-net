@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
         internal PrivateLinkResourceList()
         {
-            Value = new ChangeTrackingList<PrivateLink>();
+            Value = new ChangeTrackingList<WebPubSubPrivateLink>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal PrivateLinkResourceList(IReadOnlyList<PrivateLink> value, string nextLink)
+        internal PrivateLinkResourceList(IReadOnlyList<WebPubSubPrivateLink> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of PrivateLinkResource. </summary>
-        public IReadOnlyList<PrivateLink> Value { get; }
+        public IReadOnlyList<WebPubSubPrivateLink> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
