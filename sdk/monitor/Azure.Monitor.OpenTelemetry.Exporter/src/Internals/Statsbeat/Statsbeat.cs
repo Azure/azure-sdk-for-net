@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string ConnectionString = "<ConnectionString>";
 
-        // TODO: Move IsWindoesOS() to new class
+        // TODO: Move IsWindowsOS() to new class
         // Do we need to support OSX?
         internal static string s_os = StorageHelper.IsWindowsOS() ? "windows" : "linux";
 
