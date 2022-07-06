@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(KeyFrameIntervalDuration))
             {
                 writer.WritePropertyName("keyFrameIntervalDuration");
-                writer.WriteStringValue(KeyFrameIntervalDuration.Value, "c");
+                writer.WriteStringValue(KeyFrameIntervalDuration.Value, "P");
             }
             if (Optional.IsDefined(AccessToken))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyFrameIntervalDuration = property.Value.GetTimeSpan("c");
+                    keyFrameIntervalDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("accessToken"))

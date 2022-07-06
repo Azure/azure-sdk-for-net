@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(FadeInDuration))
             {
                 writer.WritePropertyName("fadeInDuration");
-                writer.WriteStringValue(FadeInDuration.Value, "c");
+                writer.WriteStringValue(FadeInDuration.Value, "P");
             }
             if (Optional.IsDefined(FadeOutDuration))
             {
                 writer.WritePropertyName("fadeOutDuration");
-                writer.WriteStringValue(FadeOutDuration.Value, "c");
+                writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
             if (Optional.IsDefined(AudioGainLevel))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fadeInDuration = property.Value.GetTimeSpan("c");
+                    fadeInDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("fadeOutDuration"))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fadeOutDuration = property.Value.GetTimeSpan("c");
+                    fadeOutDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("audioGainLevel"))

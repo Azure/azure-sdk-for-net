@@ -130,6 +130,12 @@
       ]
     },
     {
+      "filename": "**/sdk/batch/**/*.cs",
+      "words": [
+        "cifs"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
@@ -269,7 +275,15 @@
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
-	{
+    {
+      "filename": "**/sdk/hdinsight/**/*.cs",
+      "words": [
+        "aadds",
+        "ldaps",
+        "oaep"
+      ]
+    },
+    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "Edifact",
@@ -360,6 +374,13 @@
       ]
     },
     {
+      "filename": "**/sdk/notificationhubs/**/*.cs",
+      "words": [
+        "availiable",
+        "mpns"
+      ]
+    },
+    {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
@@ -402,6 +423,17 @@
         "Stdev",
         "Unrestorable",
         "Vcores"
+      ]
+    },
+    {
+      "filename": "**/sdk/sqlvirtualmachine/**/*.cs",
+      "words": [
+        "ahub",
+        "domainful",
+        "lpim",
+        "oltp",
+        "payg",
+        "wsfc"
       ]
     },
     {
