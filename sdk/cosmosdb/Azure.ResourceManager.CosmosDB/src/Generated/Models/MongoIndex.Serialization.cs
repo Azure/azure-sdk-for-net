@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static MongoIndex DeserializeMongoIndex(JsonElement element)
         {
             Optional<MongoIndexKeys> key = default;
-            Optional<MongoIndexOptions> options = default;
+            Optional<MongoIndexConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    options = MongoIndexOptions.DeserializeMongoIndexOptions(property.Value);
+                    options = MongoIndexConfig.DeserializeMongoIndexConfig(property.Value);
                     continue;
                 }
             }

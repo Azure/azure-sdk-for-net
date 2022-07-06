@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleAssignmentPropertiesWithScope DeserializeRoleAssignmentPropertiesWithScope(JsonElement element)
         {
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<string> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("roleDefinitionId"))
                 {
-                    roleDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    roleDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalId"))

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorableMongodbDatabasesListResult>> ListAsync(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorableMongoDBDatabasesListResult>> ListAsync(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableMongodbDatabasesListResult value = default;
+                        RestorableMongoDBDatabasesListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorableMongodbDatabasesListResult.DeserializeRestorableMongodbDatabasesListResult(document.RootElement);
+                        value = RestorableMongoDBDatabasesListResult.DeserializeRestorableMongoDBDatabasesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorableMongodbDatabasesListResult> List(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
+        public Response<RestorableMongoDBDatabasesListResult> List(string subscriptionId, AzureLocation location, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        RestorableMongodbDatabasesListResult value = default;
+                        RestorableMongoDBDatabasesListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorableMongodbDatabasesListResult.DeserializeRestorableMongodbDatabasesListResult(document.RootElement);
+                        value = RestorableMongoDBDatabasesListResult.DeserializeRestorableMongoDBDatabasesListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -331,6 +331,7 @@ namespace Azure.Search.Documents.Indexes
         public bool IsHidden { get { throw null; } set { } }
         public bool IsKey { get { throw null; } set { } }
         public bool IsSortable { get { throw null; } set { } }
+        public string NormalizerName { get { throw null; } set { } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
@@ -1341,6 +1342,14 @@ namespace Azure.Search.Documents.Indexes.Models
         public static implicit operator Azure.Search.Documents.Indexes.Models.LexicalNormalizerName (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.LexicalNormalizerName left, Azure.Search.Documents.Indexes.Models.LexicalNormalizerName right) { throw null; }
         public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string AsciiFolding = "asciifolding";
+            public const string Elision = "elision";
+            public const string Lowercase = "lowercase";
+            public const string Standard = "standard";
+            public const string Uppercase = "uppercase";
+        }
     }
     public partial class LexicalTokenizer
     {
@@ -1793,7 +1802,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? IsSearchable { get { throw null; } set { } }
         public bool? IsSortable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? Normalizer { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? NormalizerName { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
@@ -2141,6 +2150,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool IsHidden { get { throw null; } set { } }
         public bool IsKey { get { throw null; } set { } }
         public bool IsSortable { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.LexicalNormalizerName? NormalizerName { get { throw null; } set { } }
     }
     public partial class SnowballTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {

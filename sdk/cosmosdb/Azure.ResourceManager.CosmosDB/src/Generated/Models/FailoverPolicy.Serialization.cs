@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName");
-                writer.WriteStringValue(LocationName);
+                writer.WriteStringValue(LocationName.Value);
             }
             if (Optional.IsDefined(FailoverPriority))
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static FailoverPolicy DeserializeFailoverPolicy(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> locationName = default;
+            Optional<AzureLocation> locationName = default;
             Optional<int> failoverPriority = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("locationName"))
                 {
-                    locationName = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    locationName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failoverPriority"))
@@ -56,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new FailoverPolicy(id.Value, locationName.Value, Optional.ToNullable(failoverPriority));
+            return new FailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority));
         }
     }
 }

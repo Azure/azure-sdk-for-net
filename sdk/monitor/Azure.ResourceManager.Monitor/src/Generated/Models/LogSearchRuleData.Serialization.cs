@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<bool> autoMitigate = default;
-            Optional<Enabled> enabled = default;
+            Optional<MonitorEnabled> enabled = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<ProvisioningState> provisioningState = default;
             MonitorSource source = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabled = new Enabled(property0.Value.GetString());
+                            enabled = new MonitorEnabled(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastUpdatedTime"))

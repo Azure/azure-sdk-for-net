@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logs"> The list of logs settings. </param>
         /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
-        internal DiagnosticSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, string logAnalyticsDestinationType) : base(id, name, resourceType, systemData)
+        internal DiagnosticSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, string logAnalyticsDestinationType) : base(id, name, resourceType, systemData)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </summary>
-        public string ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId { get; set; }
         /// <summary> The resource Id for the event hub authorization rule. </summary>
-        public string EventHubAuthorizationRuleId { get; set; }
+        public ResourceIdentifier EventHubAuthorizationRuleId { get; set; }
         /// <summary> The name of the event hub. If none is specified, the default event hub will be selected. </summary>
         public string EventHubName { get; set; }
         /// <summary> The list of metric settings. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The list of logs settings. </summary>
         public IList<LogSettings> Logs { get; }
         /// <summary> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
         /// <summary> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </summary>
         public string LogAnalyticsDestinationType { get; set; }
     }
