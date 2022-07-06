@@ -608,7 +608,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        ///   Verifies that the <see cref="EventProcessorClient" /> detects an invalid
+        ///   consumer group when starting up.
         /// </summary>
         ///
         [Test]
@@ -619,13 +620,16 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            await using StorageScope storageScope = await StorageScope.CreateAsync();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Create the processor and attempt to start.
 
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+            var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, storageScope.ContainerName);
+            var processor = new EventProcessorClient(containerClient, "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
             processor.ProcessErrorAsync += _ => Task.CompletedTask;
             processor.ProcessEventAsync += _ => Task.CompletedTask;
 
@@ -1165,6 +1169,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             protected override EventHubConnection CreateConnection() => InjectedConnectionFactory();
+            protected override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
     }
 }

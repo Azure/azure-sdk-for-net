@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                           PartitionLoadBalancer loadBalancer) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, loadBalancer) { }
 
             public LastEnqueuedEventProperties InvokeReadLastEnqueuedEventProperties(string partitionId) => ReadLastEnqueuedEventProperties(partitionId);
-            internal override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
+            protected internal override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
             protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => Task.FromResult(Enumerable.Empty<EventProcessorPartitionOwnership>());
             protected override Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => Task.FromResult(default(EventProcessorCheckpoint));
             protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken = default) => Task.FromResult(Enumerable.Empty<EventProcessorCheckpoint>());
