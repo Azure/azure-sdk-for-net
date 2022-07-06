@@ -374,6 +374,13 @@
       ]
     },
     {
+      "filename": "**/sdk/notificationhubs/**/*.cs",
+      "words": [
+        "availiable",
+        "mpns"
+      ]
+    },
+    {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"

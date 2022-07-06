@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxAllowedUnreportedUsageDuration = property.Value.GetTimeSpan("c");
+                    maxAllowedUnreportedUsageDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("eventHubDetails"))

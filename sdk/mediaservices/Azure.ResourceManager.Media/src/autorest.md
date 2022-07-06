@@ -55,14 +55,14 @@ directive:
   - from: Accounts.json
     where: $.definitions
     transform: >
-      $.EdgeUsageDataCollectionPolicy.properties.maxAllowedUnreportedUsageDuration['x-ms-format'] = 'duration-constant';
+      $.EdgeUsageDataCollectionPolicy.properties.maxAllowedUnreportedUsageDuration['format'] = 'duration';
   - from: streamingservice.json
     where: $.definitions
     transform: >
-      $.LiveEventInput.properties.keyFrameIntervalDuration['x-ms-format'] = 'duration-constant';
+      $.LiveEventInput.properties.keyFrameIntervalDuration['format'] = 'duration';
   - from: Encoding.json
     where: $.definitions
     transform: >
-      $.Overlay.properties.fadeInDuration['x-ms-format'] = 'duration-constant';
-      $.Overlay.properties.fadeOutDuration['x-ms-format'] = 'duration-constant';
+      $.Overlay.properties.fadeInDuration['format'] = 'duration';
+      $.Overlay.properties.fadeOutDuration['format'] = 'duration';
 ```
