@@ -94,7 +94,13 @@ namespace Azure.Messaging.ServiceBus.Administration
             var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new ServiceBusAdministrationRequestFailedDetailsParser()
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(pipelineOptions);
             _clientDiagnostics = new ServiceBusClientDiagnostics(options);
 
             _httpRequestAndResponse = new HttpRequestAndResponse(
