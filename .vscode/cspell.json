@@ -317,6 +317,17 @@
         "mhsmip"
       ]
     },
+	{
+      "filename": "**/sdk/mediaservices/**/*.cs",
+      "words": [
+        "cavlc",
+        "cbcs",
+        "cenc",
+        "deinterlace",
+        "rtmp",
+        "scms"
+      ]
+    },
     {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
