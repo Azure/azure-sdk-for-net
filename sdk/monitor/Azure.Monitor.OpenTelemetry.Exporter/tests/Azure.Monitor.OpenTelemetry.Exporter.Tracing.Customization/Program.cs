@@ -27,11 +27,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource("OTel.AzureMonitor.Demo")
                 .SetResourceBuilder(resourceBuilder) // Sets cloud_RoleName as "my-namespace.my-service" and cloud_RoleInstance as "my-instance"
-                .AddProcessor(new ActivityFilteringProcessor())
-                .AddProcessor(new ActivityEnrichingProcessor())
+                //.AddProcessor(new ActivityFilteringProcessor())
+                //.AddProcessor(new ActivityEnrichingProcessor())
                 .AddAzureMonitorTraceExporter(o =>
                 {
-                    o.ConnectionString = "<Your Connection String>";
+                    o.ConnectionString = "InstrumentationKey=08a92d9d-c93e-4ca9-8345-6dd249d4744f;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
                 })
                 .AddOtlpExporter()
                 .Build();

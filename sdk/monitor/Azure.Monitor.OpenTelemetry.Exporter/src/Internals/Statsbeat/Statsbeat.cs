@@ -17,12 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string ConnectionString = "<ConnectionString>";
 
-        private static string s_roleName;
-
-        private static string s_roleInstance;
-
-        private static string s_ikey;
-
+        // TODO: Move IsWindoesOS() to new class
+        // Do we need to support OSX?
         internal static string s_os = StorageHelper.IsWindowsOS() ? "windows" : "linux";
 
         internal const int AttachStatsBeatInterval = 86400000;
@@ -39,16 +35,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 o.ConnectionString = ConnectionString;
                 o.DisableOfflineStorage = true;
-                o.StatsbeatInterval = AttachStatsBeatInterval;
+                o.StatsbeatIntervalInMilliseconds = AttachStatsBeatInterval;
             })
             .Build();
         }
 
         public static Statsbeat StatsbeatInstance { get; } = new();
 
-        internal static string Customer_Ikey { get => s_ikey; set => s_ikey = value; }
-        internal static string Statsbeat_RoleName { get => s_roleName; set => s_roleName = value; }
-        internal static string Statsbeat_RoleInstance { get => s_roleInstance; set => s_roleInstance = value; }
+        internal static string Customer_Ikey { get; set; }
+        internal static string Statsbeat_RoleName { get; set; }
+        internal static string Statsbeat_RoleInstance { get; set; }
 
         private static Measurement<int> GetAttachStatsBeat()
         {

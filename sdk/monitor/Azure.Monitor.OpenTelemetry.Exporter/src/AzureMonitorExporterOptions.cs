@@ -52,6 +52,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         public bool DisableOfflineStorage { get; set; }
 
-        internal int StatsbeatInterval { get; set; }
+        internal int StatsbeatIntervalInMilliseconds { get; set; }
     }
 }
