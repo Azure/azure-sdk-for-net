@@ -199,6 +199,13 @@ directive:
     where: $.definitions.PolicyProperties.properties.scope.properties.id
     transform: $['x-ms-format'] = 'arm-id'
 
+  - from: swagger-document
+    where: $.definitions.RoleManagementPolicyRule.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.UserSet.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+
   # Rename models
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
