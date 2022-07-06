@@ -354,7 +354,7 @@
       ]
     },
 	{
-      "filename": "**/sdk/mediaservices/**/*.cs",
+      "filename": "**/sdk/mysql/**/*.cs",
       "words": [
         "byok"
       ]
