@@ -21,6 +21,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationAssignment
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}: GuestConfigurationAssignment
   
+rename-mapping:
+  'VmssvmInfo': 'VmssVmInfo'
 
 format-by-name-rules:
   'tenantId': 'uuid'

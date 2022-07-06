@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
         public GuestConfigurationAssignmentProperties()
         {
-            VmssVmList = new ChangeTrackingList<VmssvmInfo>();
+            VmssVmList = new ChangeTrackingList<VmssVmInfo>();
         }
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, ComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusChecked, string latestReportId, string parameterHash, AssignmentReport latestAssignmentReport, string context, string assignmentHash, ProvisioningState? provisioningState, string resourceType, IList<VmssvmInfo> vmssVmList)
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, ComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusChecked, string latestReportId, string parameterHash, AssignmentReport latestAssignmentReport, string context, string assignmentHash, ProvisioningState? provisioningState, string resourceType, IList<VmssVmInfo> vmssVmList)
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Type of the resource - VMSS / VM. </summary>
         public string ResourceType { get; }
         /// <summary> The list of VM Compliance data for VMSS. </summary>
-        public IList<VmssvmInfo> VmssVmList { get; }
+        public IList<VmssVmInfo> VmssVmList { get; }
     }
 }

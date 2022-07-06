@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class VmssvmInfo : IUtf8JsonSerializable
+    public partial class VmssVmInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static VmssvmInfo DeserializeVmssvmInfo(JsonElement element)
+        internal static VmssVmInfo DeserializeVmssVmInfo(JsonElement element)
         {
             Optional<string> vmId = default;
             Optional<string> vmResourceId = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new VmssvmInfo(vmId.Value, vmResourceId.Value, Optional.ToNullable(complianceStatus), latestReportId.Value, Optional.ToNullable(lastComplianceChecked));
+            return new VmssVmInfo(vmId.Value, vmResourceId.Value, Optional.ToNullable(complianceStatus), latestReportId.Value, Optional.ToNullable(lastComplianceChecked));
         }
     }
 }

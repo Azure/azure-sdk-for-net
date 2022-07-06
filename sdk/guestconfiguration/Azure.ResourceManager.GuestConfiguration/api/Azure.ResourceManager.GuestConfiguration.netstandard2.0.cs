@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string TargetResourceId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.VmssvmInfo> VmssVmList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.VmssVmInfo> VmssVmList { get { throw null; } }
     }
     public partial class GuestConfigurationAssignmentReport
     {
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string Id { get { throw null; } }
         public string Uuid { get { throw null; } }
     }
-    public partial class VmssvmInfo
+    public partial class VmssVmInfo
     {
-        public VmssvmInfo() { }
+        public VmssVmInfo() { }
         public Azure.ResourceManager.GuestConfiguration.Models.ComplianceStatus? ComplianceStatus { get { throw null; } }
         public System.DateTimeOffset? LastComplianceChecked { get { throw null; } }
         public string LatestReportId { get { throw null; } }

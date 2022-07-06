@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Information about VMSS VM. </summary>
-    public partial class VmssvmInfo
+    public partial class VmssVmInfo
     {
-        /// <summary> Initializes a new instance of VmssvmInfo. </summary>
-        public VmssvmInfo()
+        /// <summary> Initializes a new instance of VmssVmInfo. </summary>
+        public VmssVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VmssvmInfo. </summary>
+        /// <summary> Initializes a new instance of VmssVmInfo. </summary>
         /// <param name="vmId"> UUID of the VM. </param>
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
         /// <param name="lastComplianceChecked"> Date and time when last compliance status was checked. </param>
-        internal VmssvmInfo(string vmId, string vmResourceId, ComplianceStatus? complianceStatus, string latestReportId, DateTimeOffset? lastComplianceChecked)
+        internal VmssVmInfo(string vmId, string vmResourceId, ComplianceStatus? complianceStatus, string latestReportId, DateTimeOffset? lastComplianceChecked)
         {
             VmId = vmId;
             VmResourceId = vmResourceId;

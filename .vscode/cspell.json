@@ -88,6 +88,7 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vmss",
     "vnet",
     "westus",
     "xunit"
@@ -139,7 +140,6 @@
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "vmss",
         "unattend",
         "ssdlrs",
         "vcpus",
@@ -295,7 +295,6 @@
         "TLSDHEDSS",
         "TLSDHERSA",
         "Unprepare",
-        "Vmss",
         "vmssip",
         "Vnets",
         "Vxlan",
@@ -478,8 +477,7 @@
       "words": [
         "ascs",
         "hana",
-        "ssdlrs",
-        "vmss"
+        "ssdlrs"
       ]
     },
    {
