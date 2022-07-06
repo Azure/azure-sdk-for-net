@@ -245,10 +245,10 @@ function New-DataPlanePackageFolder() {
     (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | Set-Content $projFile
     # dotnet sln
     Push-Location $projectFolder
-    dotnet sln remove src\$namespace.csproj
-    dotnet sln add src\$namespace.csproj
-    dotnet sln remove tests\$namespace.Tests.csproj
-    dotnet sln add tests\$namespace.Tests.csproj
+    dotnet sln remove src/$namespace.csproj
+    dotnet sln add src/$namespace.csproj
+    dotnet sln remove tests/$namespace.Tests.csproj
+    dotnet sln add tests/$namespace.Tests.csproj
     Pop-Location
   }
 
