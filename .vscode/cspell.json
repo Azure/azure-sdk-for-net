@@ -353,6 +353,12 @@
         "scms"
       ]
     },
+	{
+      "filename": "**/sdk/mediaservices/**/*.cs",
+      "words": [
+        "byok"
+      ]
+    },
     {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
