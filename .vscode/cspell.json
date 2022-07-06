@@ -88,6 +88,7 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vmss",
     "vnet",
     "westus",
     "xunit"
@@ -97,13 +98,20 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]
     },
-	{
+    {
       "filename": "**/sdk/alertsmanagement/**/*.cs",
       "words": [
         "groupby",
         "groupedby",
         "scom",
         "zabbix"
+      ]
+    },
+	{
+      "filename": "**/sdk/apimanagement/**/*.cs",
+      "words": [
+        "signin",
+        "Wadl"
       ]
     },
     {
@@ -132,7 +140,6 @@
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "reimage",
-        "vmss",
         "unattend",
         "ssdlrs",
         "vcpus",
@@ -177,6 +184,25 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerservice/**/*",
+      "words": [
+        "gmsa",
+        "inotify",
+        "intvl",
+        "kube",
+        "kubeconfigs",
+        "kubelet",
+        "Kubenet",
+        "ossku",
+        "pids",
+        "somaxconn",
+        "sysctls",
+        "tcpkeepalive",
+        "wasi",
+        "wmem"
       ]
     },
     {
@@ -243,6 +269,31 @@
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
+	{
+      "filename": "**/sdk/logic/**/*.cs",
+      "words": [
+        "Edifact",
+        "Keca",
+        "Unoa",
+        "Unob",
+        "Unoc",
+        "Unod",
+        "Unoe",
+        "Unof",
+        "Unog",
+        "Unoh",
+        "Unoi",
+        "Unoj",
+        "Unok",
+        "Unox",
+        "Unoy",
+        "Unregistering",
+        "Ccyymmdd",
+        "Hhmm",
+        "Hhmmss",
+        "Hhmms"
+      ]
+    },
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
@@ -269,7 +320,6 @@
         "TLSDHEDSS",
         "TLSDHERSA",
         "Unprepare",
-        "Vmss",
         "vmssip",
         "Vnets",
         "Vxlan",
@@ -292,16 +342,49 @@
       ]
     },
 	{
+      "filename": "**/sdk/mediaservices/**/*.cs",
+      "words": [
+        "cabac",
+        "cavlc",
+        "cbcs",
+        "cenc",
+        "deinterlace",
+        "rtmp",
+        "scms"
+      ]
+    },
+	{
+      "filename": "**/sdk/mysql/**/*.cs",
+      "words": [
+        "byok"
+      ]
+    },
+    {
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
       ]
     },
+	{
+      "filename": "**/sdk/postgresql/**/*.cs",
+      "words": [
+        "byok",
+		"vcore",
+        "vcores"
+      ]
+    },
+	{
+      "filename": "**/sdk/redis/**/*.cs",
+      "words": [
+        "hana",
+        "msrp",
+        "unprovisioning"
+      ]
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
-        "msrp",
-        "hana"
+        "Unprovisioning"
       ]
     },
     {
@@ -428,13 +511,12 @@
         "Vstsrm"
       ]
     },
-	{
+    {
       "filename": "**/sdk/workloads/**/*.cs",
       "words": [
         "ascs",
         "hana",
-        "ssdlrs",
-        "vmss"
+        "ssdlrs"
       ]
     },
    {
