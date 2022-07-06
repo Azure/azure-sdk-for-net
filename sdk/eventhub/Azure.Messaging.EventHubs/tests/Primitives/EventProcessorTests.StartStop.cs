@@ -75,9 +75,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             if (async)
@@ -137,9 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConnection.Object);
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             if (async)
@@ -189,9 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             if (async)
@@ -871,9 +865,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Throws(expectedException);
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -918,9 +910,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Starting the processor should result in an exception on the first call, which should leave it in a faulted state.
@@ -1061,9 +1051,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(default(EventHubConnection));
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
@@ -1126,9 +1114,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Throws(expectedException);
 
             mockProcessor
-                .Setup(processor => processor.ValidateStartupAsync(
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
