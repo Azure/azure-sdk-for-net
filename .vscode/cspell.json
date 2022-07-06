@@ -269,6 +269,31 @@
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
+	{
+      "filename": "**/sdk/logic/**/*.cs",
+      "words": [
+        "Edifact",
+        "Keca",
+        "Unoa",
+        "Unob",
+        "Unoc",
+        "Unod",
+        "Unoe",
+        "Unof",
+        "Unog",
+        "Unoh",
+        "Unoi",
+        "Unoj",
+        "Unok",
+        "Unox",
+        "Unoy",
+        "Unregistering",
+        "Ccyymmdd",
+        "Hhmm",
+        "Hhmmss",
+        "Hhmms"
+      ]
+    },
     {
       "filename": "**/sdk/network/**/*.cs",
       "words": [
