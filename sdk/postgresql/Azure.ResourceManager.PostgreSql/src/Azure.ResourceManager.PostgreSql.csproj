@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.PostgreSql</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider PostgreSql</Description>
     <PackageTags>azure;management;arm;resource manager;postgresql</PackageTags>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>
