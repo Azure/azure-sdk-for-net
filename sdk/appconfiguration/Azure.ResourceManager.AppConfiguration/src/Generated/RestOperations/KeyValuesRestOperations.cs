@@ -228,13 +228,10 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -246,14 +243,15 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyValueData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyValueData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, configStoreName, keyValueName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,14 +276,15 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyValueData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data = null, CancellationToken cancellationToken = default)
+        public Response<KeyValueData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, configStoreName, keyValueName, data);
             _pipeline.Send(message, cancellationToken);
