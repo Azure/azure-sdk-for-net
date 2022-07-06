@@ -413,6 +413,16 @@
       ]
     },
     {
+      "filename": "**/sdk/sqlvirtualmachine/**/*.cs",
+      "words": [
+        "ahub",
+        "domainful",
+        "lpim",
+        "oltp",
+        "wsfc"
+      ]
+    },
+    {
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "Adls",
