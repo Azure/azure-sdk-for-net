@@ -20,6 +20,13 @@ Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://w
 dotnet add package Azure.Monitor.OpenTelemetry.Exporter --prerelease
 ```
 
+#### Nightly builds
+
+Nightly builds are available from this feed: `https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json`
+
+These are provided without support and are not intended for production workloads.
+
+
 ### Authenticate the client
 
 Exporter does not use authentication. 
