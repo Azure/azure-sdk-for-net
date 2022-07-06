@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<OnboardingStatus> onboardingStatus = default;
             Optional<DataStatus> dataStatus = default;
             Optional<IList<DataContainer>> data = default;
@@ -97,7 +97,12 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("onboardingStatus"))

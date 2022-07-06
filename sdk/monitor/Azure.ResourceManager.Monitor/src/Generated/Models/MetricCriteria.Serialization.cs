@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricCriteria DeserializeMetricCriteria(JsonElement element)
         {
-            Operator @operator = default;
+            MonitorOperator @operator = default;
             double threshold = default;
             CriterionType criterionType = default;
             string name = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("operator"))
                 {
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new MonitorOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("threshold"))

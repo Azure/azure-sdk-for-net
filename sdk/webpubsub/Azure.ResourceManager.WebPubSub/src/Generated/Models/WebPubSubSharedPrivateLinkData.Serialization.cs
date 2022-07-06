@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<WebPubSubProvisioningState> provisioningState = default;
             Optional<string> requestMessage = default;
-            Optional<SharedPrivateLinkStatus> status = default;
+            Optional<WebPubSubSharedPrivateLinkStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WebPubSub
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new SharedPrivateLinkStatus(property0.Value.GetString());
+                            status = new WebPubSubSharedPrivateLinkStatus(property0.Value.GetString());
                             continue;
                         }
                     }
