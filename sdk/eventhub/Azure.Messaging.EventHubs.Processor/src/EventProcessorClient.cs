@@ -155,9 +155,9 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///  Performs the tasks needed to process a batch of events for a given partition as they are read from the Event Hubs service. Implementation is mandatory.
         ///
-        ///   Should an exception occur within the code for this handler, the <see cref="EventProcessorClient" /> will allow it to bubble and will not surface to the error handler or attempt to handle
-        ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account, including the need to retry processing, and guard against them using try/catch blocks and other means,
-        ///   as appropriate.
+        ///   Should an exception occur within the code for this method, the event processor will allow it to propagate up the stack without attempting to handle it in any way.
+        ///   On most hosts, this will fault the task responsible for partition processing, causing it to be restarted from the last checkpoint.  On some hosts, it may crash the process.
+        ///   Developers are strongly encouraged to take all exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.
         ///
         ///   It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs
         ///
         ///   The exceptions surfaced to this method may be fatal or non-fatal; because the processor may not be able to accurately predict whether an
         ///   exception was fatal or whether its state was corrupted, this method has responsibility for making the determination as to whether processing
-        ///   should be terminated or restarted.  The method may do so by calling Stop on the processor instance and then, if desired, calling Start on the processor.
+        ///   should be terminated or restarted.  If desired, this can be done safely by calling <see cref="StopProcessingAsync" />  and/or <see cref="StartProcessingAsync" />.
         ///
         ///   It is recommended that, for production scenarios, the decision be made by considering observations made by this error handler, the method invoked
         ///   when initializing processing for a partition, and the method invoked when processing for a partition is stopped.  Many developers will also include
@@ -219,6 +219,8 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="ArgumentException">If an attempt is made to remove a handler that doesn't match the current handler registered.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
+        ///
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md">Troubleshoot Event Hubs issues</seealso>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
@@ -712,6 +714,100 @@ namespace Azure.Messaging.EventHubs
         public override string ToString() => base.ToString();
 
         /// <summary>
+        ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
+        ///   the processor to function.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="containerClient">The <see cref="BlobContainerClient" /> to use for validating storage operations.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        ///
+        /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
+        ///
+        internal async Task ValidateStoragePermissionsAsync(bool async,
+                                                            BlobContainerClient containerClient,
+                                                            CancellationToken cancellationToken = default)
+        {
+            var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{ Guid.NewGuid().ToString("N") }");
+
+            // Write an blob with metadata, simulating the approach used for checkpoint and ownership
+            // data creation.
+
+            try
+            {
+                using var blobContent = new MemoryStream(Array.Empty<byte>());
+                var blobMetadata = new Dictionary<string, string> {{ "name", blobClient.Name }};
+
+                if (async)
+                {
+                    await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    blobClient.Upload(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AggregateException(ex);
+            }
+            finally
+            {
+                // Remove the test blob if written; do so without respecting a cancellation request to
+                // ensure that the container is left in a consistent state.
+
+                try
+                {
+                    if (async)
+                    {
+                        await blobClient.DeleteIfExistsAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        blobClient.DeleteIfExists(cancellationToken: CancellationToken.None);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.ValidationCleanupError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
+        ///   the processor to function.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        ///
+        /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
+        ///
+        protected override async Task ValidateStartupAsync(bool async,
+                                                           CancellationToken cancellationToken = default)
+        {
+            // Because the base class has no understanding of what concrete storage type is in use and
+            // does not directly make use of some of its operations, such as writing a checkpoint.  Validate
+            // these additional needs if a storage client is available.
+
+            if (async)
+            {
+                await base.ValidateStartupAsync(async, cancellationToken).ConfigureAwait(false);
+                await ValidateStoragePermissionsAsync(async, _containerClient, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                base.ValidateStartupAsync(async, cancellationToken).EnsureCompleted();
+                ValidateStoragePermissionsAsync(async, _containerClient, cancellationToken).EnsureCompleted();
+            }
+        }
+
+        /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
@@ -1048,8 +1144,6 @@ namespace Azure.Messaging.EventHubs
                                                         CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            var capturedValidationException = default(Exception);
             var releaseGuard = false;
 
             try
@@ -1091,35 +1185,6 @@ namespace Azure.Messaging.EventHubs
                 {
                     base.StartProcessing(cancellationToken);
                 }
-
-                // Because the base class has no understanding of what concrete storage type is in use and
-                // does not directly make use of some of its operations, such as writing a checkpoint.  Validate
-                // these additional needs if a storage client is available.
-
-                if (_containerClient != null)
-                {
-                    try
-                    {
-                        if (async)
-                        {
-                            await ValidateStartupAsync(async, _containerClient, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            ValidateStartupAsync(async, _containerClient, cancellationToken).EnsureCompleted();
-                        }
-                    }
-                    catch (AggregateException ex)
-                    {
-                        // Capture the validation exception and log, but do not throw.  Because this is
-                        // a fatal exception and the processing task was already started, StopProcessing
-                        // will need to be called, which requires the semaphore.  The validation exception
-                        // will be handled after the start operation has officially completed and the
-                        // semaphore has been released.
-
-                        capturedValidationException = ex.Flatten();
-                    }
-                }
             }
             catch (OperationCanceledException)
             {
@@ -1131,31 +1196,6 @@ namespace Azure.Messaging.EventHubs
                 {
                     ProcessorStatusGuard.Release();
                 }
-            }
-
-            // If there was a validation exception captured, then stop the processor now
-            // that it is safe to do so.
-
-            if (capturedValidationException != null)
-            {
-                try
-                {
-                    if (async)
-                    {
-                        await StopProcessingAsync(CancellationToken.None).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        StopProcessing(CancellationToken.None);
-                    }
-                }
-                catch
-                {
-                    // An exception is expected here, as the processor configuration was invalid and
-                    // processing was canceled.  It will have already been logged; ignore it here.
-                }
-
-                ExceptionDispatchInfo.Capture(capturedValidationException).Throw();
             }
         }
 
@@ -1177,71 +1217,6 @@ namespace Azure.Messaging.EventHubs
                 PartitionId = partitionId,
                 StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition
             };
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
-        ///   the processor to function.
-        /// </summary>
-        ///
-        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
-        /// <param name="containerClient">The <see cref="BlobContainerClient" /> to use for validating storage operations.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
-        ///
-        /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
-        ///
-        private async Task ValidateStartupAsync(bool async,
-                                                BlobContainerClient containerClient,
-                                                CancellationToken cancellationToken = default)
-        {
-            var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{ Guid.NewGuid().ToString("N") }");
-
-            // Write an blob with metadata, simulating the approach used for checkpoint and ownership
-            // data creation.
-
-            try
-            {
-                using var blobContent = new MemoryStream(Array.Empty<byte>());
-                var blobMetadata = new Dictionary<string, string> {{ "name", blobClient.Name }};
-
-                if (async)
-                {
-                    await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    blobClient.Upload(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new AggregateException(ex);
-            }
-            finally
-            {
-                // Remove the test blob if written; do so without respecting a cancellation request to
-                // ensure that the container is left in a consistent state.
-
-                try
-                {
-                    if (async)
-                    {
-                        await blobClient.DeleteIfExistsAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        blobClient.DeleteIfExists(cancellationToken: CancellationToken.None);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.ValidationCleanupError(Identifier, EventHubName, ConsumerGroup, ex.Message);
-                }
-            }
         }
 
         /// <summary>

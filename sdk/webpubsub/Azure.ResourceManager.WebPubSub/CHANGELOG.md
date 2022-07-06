@@ -6,6 +6,17 @@
 
 ### Breaking Changes
 
+- Type `NetworkAcl` renamed to `PublicNetworkAcls`.
+- Type `WebPubSubResourceSku` renamed to `WebPubSubSku`.
+- Type `WebPubSubSku` renamed to `BillingInfoSku`.
+- Type `SkuCapacity` renamed to `WebPubSubSkuCapacity`.
+- Type `ScaleType` renamed to `WebPubSubScaleType`.
+- Type `PrivateLinkResource` renamed to `WebPubSubPrivateLink`.
+- Type `SharedPrivateLinkResource` renamed to `WebPubSubSharedPrivateLink`.
+- Type `NameAvailability` renamed to `WebPubSubNameAvailability`.
+- Type `NameAvailabilityParameters` renamed to `WebPubSubNameAvailabilityParameters`.
+- Type of `privateLinkResourceId` change to `ResourceIdentifier`
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -17,16 +17,22 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceOSFamilyData DeserializeCloudServiceOSFamilyData(JsonElement element)
         {
+            Optional<string> name = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
-            string name = default;
+            string name0 = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
+            Optional<string> name1 = default;
             Optional<string> label = default;
             Optional<IReadOnlyList<OSVersionPropertiesBase>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("location"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString();
+                    name0 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -73,7 +79,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         if (property0.NameEquals("name"))
                         {
-                            name0 = property0.Value.GetString();
+                            name1 = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("label"))
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceOSFamilyData(id, name, type, systemData.Value, Optional.ToNullable(location), name0.Value, label.Value, Optional.ToList(versions));
+            return new CloudServiceOSFamilyData(id, name0, type, systemData.Value, name.Value, Optional.ToNullable(location), name1.Value, label.Value, Optional.ToList(versions));
         }
     }
 }

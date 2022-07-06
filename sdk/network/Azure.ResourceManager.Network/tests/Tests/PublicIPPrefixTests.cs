@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(name, data.Name);
             Assert.AreEqual(28, data.PrefixLength);
             Assert.AreEqual(PublicIPPrefixSkuName.Standard, data.Sku.Name);
-            Assert.AreEqual(IPVersion.IPv4, data.PublicIPAddressVersion);
+            Assert.AreEqual(NetworkIPVersion.IPv4, data.PublicIPAddressVersion);
         }
     }
 }

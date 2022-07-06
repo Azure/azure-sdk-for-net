@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -11,11 +10,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentTable
     {
         /// <summary> Caption associated with the table. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DocumentCaption Caption { get; }
+        internal DocumentCaption Caption { get; }
 
         /// <summary> Footnotes associated with the table. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<DocumentFootnote> Footnotes { get; }
+        internal IReadOnlyList<DocumentFootnote> Footnotes { get; }
     }
 }

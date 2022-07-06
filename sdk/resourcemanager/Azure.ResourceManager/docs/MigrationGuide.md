@@ -220,7 +220,7 @@ NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new Networ
     Name = "Primary",
     Primary = true,
     Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
-    PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+    PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
 };
 
 NetworkInterfaceData nicData = new NetworkInterfaceData();

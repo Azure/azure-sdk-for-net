@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Changed `OperationStatusResult` initialization constructor from internal to public.
+
+## 1.1.2 (2022-07-01)
+
+### Features Added
+
+- Add `ExtendedLocation` to common type.
 
 ## 1.1.1 (2022-06-22)
 

@@ -42,7 +42,7 @@ string publicIPAddressName = "myIPAddress";
 PublicIPAddressData publicIPInput = new PublicIPAddressData()
 {
     Location = resourceGroup.Data.Location,
-    PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+    PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
     DnsSettings = new PublicIPAddressDnsSettings()
     {
         DomainNameLabel = "myDomain"
@@ -59,7 +59,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         new NetworkInterfaceIPConfigurationData()
         {
             Name = "ipConfig",
-            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+            PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
             PublicIPAddress = new PublicIPAddressData()
             {
                 Id = publicIPAddress.Id

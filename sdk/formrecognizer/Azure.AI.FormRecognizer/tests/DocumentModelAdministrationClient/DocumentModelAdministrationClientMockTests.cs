@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            await client.StartCreateComposedModelAsync(new List<string> { "123123", "34234"} );
+            await client.StartComposeModelAsync(new List<string> { "123123", "34234"} );
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             string modelId = contentString.Substring(contentString.IndexOf("modelId") + 10, 36);
