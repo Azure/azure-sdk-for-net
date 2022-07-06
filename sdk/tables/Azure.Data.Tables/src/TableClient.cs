@@ -316,11 +316,15 @@ namespace Azure.Data.Tables
                 // We were passed an explicit SasCredential, use that
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies,
-                new[] { authPolicy },
-                new ResponseClassifier());
+
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { authPolicy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
