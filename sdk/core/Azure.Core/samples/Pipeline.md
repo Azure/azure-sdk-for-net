@@ -70,3 +70,30 @@ public class CustomRequestPolicy : HttpPipelineSynchronousPolicy
     }
 }
 ```
+
+## Customizing error formatting
+
+The pipeline can be configured to utilize a custom error response parser. This is typically needed when a service does not always conform to the standard Azure error format, or when additional information needs to be added to an error.
+
+To configure custom error formatting, a client must implement a `RequestFailedDetailsParser` and provide it to the `HttpPipelineOptions` when building the pipeline.
+
+### Create an implementation 
+
+An example implementation can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/02ca346fdff349be0d9181955f36c60497fa5c60/sdk/tables/Azure.Data.Tables/src/TablesRequestFailedDetailsParser.cs)
+
+### Configure the pipeline with a custom `RequestFailedDetailsParser`
+
+Below is an example of how clients would specify their custom parser in the `HttpPiplineOptions`
+
+```c#
+var pipelineOptions = new HttpPipelineOptions(options)
+{
+    PerRetryPolicies = { policyFoo },
+    PerCallPolicies = { policyBar },
+    ResponseClassifier = new ResponseClassifier(),
+    RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+};
+
+_pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+
+```
