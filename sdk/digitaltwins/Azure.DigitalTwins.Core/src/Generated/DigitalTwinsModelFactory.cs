@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class AzureDigitalTwinsAPIModelFactory
+    public static partial class DigitalTwinsModelFactory
     {
         /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>

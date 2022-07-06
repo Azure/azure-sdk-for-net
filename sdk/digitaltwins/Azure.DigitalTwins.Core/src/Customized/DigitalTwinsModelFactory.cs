@@ -9,7 +9,7 @@ namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for read-only models. </summary>
     [CodeGenType(nameof(AzureDigitalTwinsAPIModelFactory))]
-    public static partial class AzureDigitalTwinsAPIModelFactory
+    public static partial class DigitalTwinsModelFactory
     {
     }
 }
