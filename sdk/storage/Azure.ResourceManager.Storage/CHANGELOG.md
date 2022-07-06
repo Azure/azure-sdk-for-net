@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Refined quite a few names of types and properties according to internal review comments.
+
 ### Bugs Fixed
 
 ### Other Changes

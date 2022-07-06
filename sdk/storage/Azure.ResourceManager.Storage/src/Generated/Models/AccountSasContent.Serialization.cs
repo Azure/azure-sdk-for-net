@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("signedServices");
             writer.WriteStringValue(Services.ToString());
             writer.WritePropertyName("signedResourceTypes");
-            writer.WriteStringValue(ResourceTypes.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WritePropertyName("signedPermission");
-            writer.WriteStringValue(Permissions.ToString());
+            writer.WriteStringValue(Permission.ToString());
             if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp");

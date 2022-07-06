@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of AccessPolicy. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
-        /// <param name="expiryOn"> Expiry time of the access policy. </param>
+        /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> List of abbreviated permissions. </param>
-        internal AccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expiryOn, string permission)
+        internal AccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission)
         {
             StartOn = startOn;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             Permission = permission;
         }
 
         /// <summary> Start time of the access policy. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiry time of the access policy. </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> List of abbreviated permissions. </summary>
         public string Permission { get; set; }
     }

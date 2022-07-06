@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="enabled"> This is an immutable property, when set to true it enables object level immutability at the container level. </param>
         /// <param name="timeStamp"> Returns the date and time the object level immutability was enabled. </param>
         /// <param name="migrationState"> This property denotes the container level immutability to object level immutability migration state. </param>
-        internal ImmutableStorageWithVersioning(bool? enabled, DateTimeOffset? timeStamp, MigrationState? migrationState)
+        internal ImmutableStorageWithVersioning(bool? enabled, DateTimeOffset? timeStamp, StorageMigrationState? migrationState)
         {
             Enabled = enabled;
             TimeStamp = timeStamp;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Returns the date and time the object level immutability was enabled. </summary>
         public DateTimeOffset? TimeStamp { get; }
         /// <summary> This property denotes the container level immutability to object level immutability migration state. </summary>
-        public MigrationState? MigrationState { get; }
+        public StorageMigrationState? MigrationState { get; }
     }
 }

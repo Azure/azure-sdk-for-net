@@ -14,27 +14,27 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of AccountSasContent. </summary>
         /// <param name="services"> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </param>
-        /// <param name="resourceTypes"> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </param>
-        /// <param name="permissions"> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
+        /// <param name="resourceType"> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </param>
+        /// <param name="permission"> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
         /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
-        public AccountSasContent(Service services, SignedResourceType resourceTypes, Permission permissions, DateTimeOffset sharedAccessExpiryOn)
+        public AccountSasContent(AccountSasSignedService services, AccountSasSignedResourceType resourceType, AccountSasPermission permission, DateTimeOffset sharedAccessExpiryOn)
         {
             Services = services;
-            ResourceTypes = resourceTypes;
-            Permissions = permissions;
+            ResourceType = resourceType;
+            Permission = permission;
             SharedAccessExpiryOn = sharedAccessExpiryOn;
         }
 
         /// <summary> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </summary>
-        public Service Services { get; }
+        public AccountSasSignedService Services { get; }
         /// <summary> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </summary>
-        public SignedResourceType ResourceTypes { get; }
+        public AccountSasSignedResourceType ResourceType { get; }
         /// <summary> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>
-        public Permission Permissions { get; }
+        public AccountSasPermission Permission { get; }
         /// <summary> An IP address or a range of IP addresses from which to accept requests. </summary>
         public string IPAddressOrRange { get; set; }
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>
-        public HttpProtocol? Protocols { get; set; }
+        public StorageAccountHttpProtocol? Protocols { get; set; }
         /// <summary> The time at which the SAS becomes valid. </summary>
         public DateTimeOffset? SharedAccessStartOn { get; set; }
         /// <summary> The time at which the shared access signature becomes invalid. </summary>

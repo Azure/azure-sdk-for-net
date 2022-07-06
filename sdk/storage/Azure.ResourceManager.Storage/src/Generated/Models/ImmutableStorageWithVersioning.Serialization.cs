@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> timeStamp = default;
-            Optional<MigrationState> migrationState = default;
+            Optional<StorageMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    migrationState = new MigrationState(property.Value.GetString());
+                    migrationState = new StorageMigrationState(property.Value.GetString());
                     continue;
                 }
             }

@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Storage
             Optional<int> remainingRetentionDays = default;
             Optional<string> defaultEncryptionScope = default;
             Optional<bool> denyEncryptionScopeOverride = default;
-            Optional<PublicAccess> publicAccess = default;
+            Optional<StoragePublicAccess> publicAccess = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<LeaseStatus> leaseStatus = default;
             Optional<LeaseState> leaseState = default;
-            Optional<LeaseDuration> leaseDuration = default;
+            Optional<LeaseDurationType> leaseDuration = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<ImmutabilityPolicyProperties> immutabilityPolicy = default;
             Optional<LegalHoldProperties> legalHold = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicAccess = property0.Value.GetString().ToPublicAccess();
+                            publicAccess = property0.Value.GetString().ToStoragePublicAccess();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedTime"))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDuration(property0.Value.GetString());
+                            leaseDuration = new LeaseDurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metadata"))
