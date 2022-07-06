@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing an AuthsettingsV2SiteConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AuthsettingsV2SiteConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAuthsettingsV2SiteConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetAuthsettingsV2SiteConfig method.
+    /// A Class representing a SiteAuthSettingsV2 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteAuthSettingsV2Resource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteAuthSettingsV2Resource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteAuthSettingsV2 method.
     /// </summary>
-    public partial class AuthsettingsV2SiteConfigResource : ArmResource
+    public partial class SiteAuthSettingsV2Resource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AuthsettingsV2SiteConfigResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteAuthSettingsV2Resource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _authsettingsV2SiteConfigWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _authsettingsV2SiteConfigWebAppsRestClient;
+        private readonly ClientDiagnostics _siteAuthSettingsV2WebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteAuthSettingsV2WebAppsRestClient;
         private readonly SiteAuthSettingsV2Data _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AuthsettingsV2SiteConfigResource"/> class for mocking. </summary>
-        protected AuthsettingsV2SiteConfigResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteAuthSettingsV2Resource"/> class for mocking. </summary>
+        protected SiteAuthSettingsV2Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AuthsettingsV2SiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteAuthSettingsV2Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AuthsettingsV2SiteConfigResource(ArmClient client, SiteAuthSettingsV2Data data) : this(client, data.Id)
+        internal SiteAuthSettingsV2Resource(ArmClient client, SiteAuthSettingsV2Data data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AuthsettingsV2SiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteAuthSettingsV2Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AuthsettingsV2SiteConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteAuthSettingsV2Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _authsettingsV2SiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string authsettingsV2SiteConfigWebAppsApiVersion);
-            _authsettingsV2SiteConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, authsettingsV2SiteConfigWebAppsApiVersion);
+            _siteAuthSettingsV2WebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteAuthSettingsV2WebAppsApiVersion);
+            _siteAuthSettingsV2WebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteAuthSettingsV2WebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2WithoutSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AuthsettingsV2SiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.Get");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.Get");
             scope.Start();
             try
             {
-                var response = await _authsettingsV2SiteConfigWebAppsRestClient.GetAuthSettingsV2WithoutSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteAuthSettingsV2WebAppsRestClient.GetAuthSettingsV2WithoutSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2WithoutSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthsettingsV2SiteConfigResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteAuthSettingsV2Resource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.Get");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.Get");
             scope.Start();
             try
             {
-                var response = _authsettingsV2SiteConfigWebAppsRestClient.GetAuthSettingsV2WithoutSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _siteAuthSettingsV2WebAppsRestClient.GetAuthSettingsV2WithoutSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AuthsettingsV2SiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteAuthSettingsV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.CreateOrUpdate");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _authsettingsV2SiteConfigWebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()));
+                var response = await _siteAuthSettingsV2WebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteAuthSettingsV2Resource>(Response.FromValue(new SiteAuthSettingsV2Resource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -173,16 +173,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AuthsettingsV2SiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteAuthSettingsV2Resource> CreateOrUpdate(WaitUntil waitUntil, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.CreateOrUpdate");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _authsettingsV2SiteConfigWebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()));
+                var response = _siteAuthSettingsV2WebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteAuthSettingsV2Resource>(Response.FromValue(new SiteAuthSettingsV2Resource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AuthsettingsV2SiteConfigResource>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
         {
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.GetAuthSettingsV2");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.GetAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = await _authsettingsV2SiteConfigWebAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response.Value), response.GetRawResponse());
+                var response = await _siteAuthSettingsV2WebAppsRestClient.GetAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthsettingsV2SiteConfigResource> GetAuthSettingsV2(CancellationToken cancellationToken = default)
+        public virtual Response<SiteAuthSettingsV2Resource> GetAuthSettingsV2(CancellationToken cancellationToken = default)
         {
-            using var scope = _authsettingsV2SiteConfigWebAppsClientDiagnostics.CreateScope("AuthsettingsV2SiteConfigResource.GetAuthSettingsV2");
+            using var scope = _siteAuthSettingsV2WebAppsClientDiagnostics.CreateScope("SiteAuthSettingsV2Resource.GetAuthSettingsV2");
             scope.Start();
             try
             {
-                var response = _authsettingsV2SiteConfigWebAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                return Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response.Value), response.GetRawResponse());
+                var response = _siteAuthSettingsV2WebAppsRestClient.GetAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,8 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/e8c0c73d5f11f9f2b7cde8e1ac33638bb3c5695d/specification/web/resource-manager/readme.md
-tag: package-2022-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/4e19e4a021b8874270c3fafcd85e101017a11a8e/specification/web/resource-manager/readme.md
+tag: package-2021-03
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -135,6 +135,10 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+
+# rename bool and ResourceId
+rename-mapping:
+  CertificateOrder.autoRenew: IsAutoRenew
       
 directive:
 # rename model

@@ -24,18 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
-        private const string WindowsFunctionsValue = "WindowsFunctions";
-        private const string LinuxFunctionsValue = "LinuxFunctions";
         private const string AllValue = "All";
 
         /// <summary> Windows. </summary>
         public static Enum16 Windows { get; } = new Enum16(WindowsValue);
         /// <summary> Linux. </summary>
         public static Enum16 Linux { get; } = new Enum16(LinuxValue);
-        /// <summary> WindowsFunctions. </summary>
-        public static Enum16 WindowsFunctions { get; } = new Enum16(WindowsFunctionsValue);
-        /// <summary> LinuxFunctions. </summary>
-        public static Enum16 LinuxFunctions { get; } = new Enum16(LinuxFunctionsValue);
         /// <summary> All. </summary>
         public static Enum16 All { get; } = new Enum16(AllValue);
         /// <summary> Determines if two <see cref="Enum16"/> values are the same. </summary>

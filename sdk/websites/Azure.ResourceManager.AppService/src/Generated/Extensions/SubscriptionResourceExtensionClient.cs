@@ -1189,10 +1189,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The Enum21 to use. </param>
+        /// <param name="osTypeSelected"> The Enum19 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(Enum21? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(Enum19? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1232,10 +1232,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The Enum21 to use. </param>
+        /// <param name="osTypeSelected"> The Enum19 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(Enum21? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(Enum19? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1671,10 +1671,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites
         /// Operation Id: ListCustomHostNameSites
         /// </summary>
-        /// <param name="hostname"> Specific hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomHostnameSites" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(string hostname = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CustomHostnameSites>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1682,7 +1681,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListCustomHostNameSitesAsync(Id.SubscriptionId, hostname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListCustomHostNameSitesAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1697,7 +1696,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListCustomHostNameSitesNextPageAsync(nextLink, Id.SubscriptionId, hostname, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListCustomHostNameSitesNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1714,10 +1713,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites
         /// Operation Id: ListCustomHostNameSites
         /// </summary>
-        /// <param name="hostname"> Specific hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomHostnameSites" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomHostnameSites> GetCustomHostNameSites(string hostname = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomHostnameSites> GetCustomHostNameSites(CancellationToken cancellationToken = default)
         {
             Page<CustomHostnameSites> FirstPageFunc(int? pageSizeHint)
             {
@@ -1725,7 +1723,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListCustomHostNameSites(Id.SubscriptionId, hostname, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListCustomHostNameSites(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1740,7 +1738,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListCustomHostNameSitesNextPage(nextLink, Id.SubscriptionId, hostname, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListCustomHostNameSitesNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

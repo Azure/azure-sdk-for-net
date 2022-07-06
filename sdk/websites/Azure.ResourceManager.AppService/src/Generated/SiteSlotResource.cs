@@ -341,13 +341,6 @@ namespace Azure.ResourceManager.AppService
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
-        /// <summary> Gets an object representing a AuthsettingsV2SiteSlotConfigResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteSlotConfigResource" /> object. </returns>
-        public virtual AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfig()
-        {
-            return new AuthsettingsV2SiteSlotConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/authsettingsV2"));
-        }
-
         /// <summary> Gets a collection of SiteSlotConfigAppSettingResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigAppSettingResources and their operations over a SiteSlotConfigAppSettingResource. </returns>
         public virtual SiteSlotConfigAppSettingCollection GetSiteSlotConfigAppSettings()
@@ -471,45 +464,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<SiteSlotContinuousWebJobResource> GetSiteSlotContinuousWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotContinuousWebJobs().Get(webJobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SiteSlotDeploymentStatuResources in the SiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotDeploymentStatuResources and their operations over a SiteSlotDeploymentStatuResource. </returns>
-        public virtual SiteSlotDeploymentStatuCollection GetSiteSlotDeploymentStatus()
-        {
-            return GetCachedClient(Client => new SiteSlotDeploymentStatuCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the deployment status for an app (or deployment slot, if specified).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus/{deploymentStatusId}
-        /// Operation Id: WebApps_GetSlotSiteDeploymentStatusSlot
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<ArmOperation<SiteSlotDeploymentStatuResource>> GetSiteSlotDeploymentStatuAsync(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            return await GetSiteSlotDeploymentStatus().GetAsync(waitUntil, deploymentStatusId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the deployment status for an app (or deployment slot, if specified).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deploymentStatus/{deploymentStatusId}
-        /// Operation Id: WebApps_GetSlotSiteDeploymentStatusSlot
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual ArmOperation<SiteSlotDeploymentStatuResource> GetSiteSlotDeploymentStatu(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            return GetSiteSlotDeploymentStatus().Get(waitUntil, deploymentStatusId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteSlotDeploymentResources in the SiteSlot. </summary>
@@ -1602,6 +1556,102 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotWebAppsRestClient.GetAuthSettingsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2
+        /// Operation Id: WebApps_UpdateAuthSettingsV2Slot
+        /// </summary>
+        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> UpdateAuthSettingsV2SlotAsync(SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.UpdateAuthSettingsV2Slot");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotWebAppsRestClient.UpdateAuthSettingsV2SlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2
+        /// Operation Id: WebApps_UpdateAuthSettingsV2Slot
+        /// </summary>
+        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SiteAuthSettingsV2Resource> UpdateAuthSettingsV2Slot(SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.UpdateAuthSettingsV2Slot");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotWebAppsRestClient.UpdateAuthSettingsV2Slot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2/list
+        /// Operation Id: WebApps_GetAuthSettingsV2Slot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteAuthSettingsV2Resource>> GetAuthSettingsV2SlotAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetAuthSettingsV2Slot");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotWebAppsRestClient.GetAuthSettingsV2SlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2/list
+        /// Operation Id: WebApps_GetAuthSettingsV2Slot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteAuthSettingsV2Resource> GetAuthSettingsV2Slot(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetAuthSettingsV2Slot");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotWebAppsRestClient.GetAuthSettingsV2Slot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new SiteAuthSettingsV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

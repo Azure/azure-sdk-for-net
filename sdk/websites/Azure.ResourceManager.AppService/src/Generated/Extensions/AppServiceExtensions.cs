@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum16 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, Enum16? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum16 to use. </param>
+        /// <param name="osTypeSelected"> The Enum14 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, Enum16? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, Enum14? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, Enum17? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, Enum15? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, Enum17? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, Enum15? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
         }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, Enum16? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, Enum16? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, Enum17? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, Enum19? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, Enum17? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, Enum20? stackOSType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, Enum20? stackOSType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, Enum18? stackOSType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
         }
@@ -843,10 +843,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum21 to use. </param>
+        /// <param name="osTypeSelected"> The Enum19 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, Enum21? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, Enum19? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -857,10 +857,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The Enum21 to use. </param>
+        /// <param name="osTypeSelected"> The Enum19 to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, Enum21? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, Enum19? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
@@ -1047,12 +1047,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListCustomHostNameSites
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="hostname"> Specific hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomHostnameSites" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCustomHostNameSitesAsync(hostname, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCustomHostNameSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1061,12 +1060,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListCustomHostNameSites
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="hostname"> Specific hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomHostnameSites" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomHostnameSites> GetCustomHostNameSites(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
+        public static Pageable<CustomHostnameSites> GetCustomHostNameSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCustomHostNameSites(hostname, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCustomHostNameSites(cancellationToken);
         }
 
         /// <summary>
@@ -2010,25 +2008,6 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region CustomDnsSuffixConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CustomDnsSuffixConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomDnsSuffixConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CustomDnsSuffixConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomDnsSuffixConfigurationResource" /> object. </returns>
-        public static CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CustomDnsSuffixConfigurationResource.ValidateResourceId(id);
-                return new CustomDnsSuffixConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region AseV3NetworkingConfigurationResource
         /// <summary>
         /// Gets an object representing an <see cref="AseV3NetworkingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2789,44 +2768,6 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteLinkedBackendResource
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource" /> object. </returns>
-        public static StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                StaticSiteLinkedBackendResource.ValidateResourceId(id);
-                return new StaticSiteLinkedBackendResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region StaticSiteBuildLinkedBackendResource
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource" /> object. </returns>
-        public static StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                StaticSiteBuildLinkedBackendResource.ValidateResourceId(id);
-                return new StaticSiteBuildLinkedBackendResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region WebSiteResource
         /// <summary>
         /// Gets an object representing a <see cref="WebSiteResource" /> along with the instance operations that can be performed on it but with no data.
@@ -2979,39 +2920,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region AuthsettingsV2SiteConfigResource
+        #region SiteAuthSettingsV2Resource
         /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteAuthSettingsV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteAuthSettingsV2Resource.CreateResourceIdentifier" /> to create a <see cref="SiteAuthSettingsV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteConfigResource" /> object. </returns>
-        public static AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfigResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource" /> object. </returns>
+        public static SiteAuthSettingsV2Resource GetSiteAuthSettingsV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AuthsettingsV2SiteConfigResource.ValidateResourceId(id);
-                return new AuthsettingsV2SiteConfigResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AuthsettingsV2SiteSlotConfigResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthsettingsV2SiteSlotConfigResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthsettingsV2SiteSlotConfigResource.CreateResourceIdentifier" /> to create an <see cref="AuthsettingsV2SiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthsettingsV2SiteSlotConfigResource" /> object. </returns>
-        public static AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AuthsettingsV2SiteSlotConfigResource.ValidateResourceId(id);
-                return new AuthsettingsV2SiteSlotConfigResource(client, id);
+                SiteAuthSettingsV2Resource.ValidateResourceId(id);
+                return new SiteAuthSettingsV2Resource(client, id);
             }
             );
         }
@@ -3259,44 +3181,6 @@ namespace Azure.ResourceManager.AppService
             {
                 SiteSlotContinuousWebJobResource.ValidateResourceId(id);
                 return new SiteSlotContinuousWebJobResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteDeploymentStatuResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDeploymentStatuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDeploymentStatuResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentStatuResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDeploymentStatuResource" /> object. </returns>
-        public static SiteDeploymentStatuResource GetSiteDeploymentStatuResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteDeploymentStatuResource.ValidateResourceId(id);
-                return new SiteDeploymentStatuResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteSlotDeploymentStatuResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDeploymentStatuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDeploymentStatuResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDeploymentStatuResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDeploymentStatuResource" /> object. </returns>
-        public static SiteSlotDeploymentStatuResource GetSiteSlotDeploymentStatuResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteSlotDeploymentStatuResource.ValidateResourceId(id);
-                return new SiteSlotDeploymentStatuResource(client, id);
             }
             );
         }
@@ -4133,158 +4017,6 @@ namespace Azure.ResourceManager.AppService
             {
                 SiteWebJobResource.ValidateResourceId(id);
                 return new SiteWebJobResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkflowRunResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunResource" /> object. </returns>
-        public static WorkflowRunResource GetWorkflowRunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkflowRunResource.ValidateResourceId(id);
-                return new WorkflowRunResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkflowRunActionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionResource" /> object. </returns>
-        public static WorkflowRunActionResource GetWorkflowRunActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkflowRunActionResource.ValidateResourceId(id);
-                return new WorkflowRunActionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource" /> object. </returns>
-        public static SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource.ValidateResourceId(id);
-                return new SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource" /> object. </returns>
-        public static SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource.ValidateResourceId(id);
-                return new SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RequestHistoryResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="RequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RequestHistoryResource" /> object. </returns>
-        public static RequestHistoryResource GetRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RequestHistoryResource.ValidateResourceId(id);
-                return new RequestHistoryResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkflowTriggerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTriggerResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTriggerResource" /> object. </returns>
-        public static WorkflowTriggerResource GetWorkflowTriggerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkflowTriggerResource.ValidateResourceId(id);
-                return new WorkflowTriggerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkflowTriggerHistoryResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTriggerHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTriggerHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTriggerHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTriggerHistoryResource" /> object. </returns>
-        public static WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkflowTriggerHistoryResource.ValidateResourceId(id);
-                return new WorkflowTriggerHistoryResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region WorkflowVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowVersionResource" /> object. </returns>
-        public static WorkflowVersionResource GetWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                WorkflowVersionResource.ValidateResourceId(id);
-                return new WorkflowVersionResource(client, id);
             }
             );
         }

@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> lastUpdatedOn = default;
             Optional<BuildStatus> status = default;
             Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
-            Optional<IReadOnlyList<StaticSiteLinkedBackend>> linkedBackends = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -152,26 +151,11 @@ namespace Azure.ResourceManager.AppService
                             userProvidedFunctionApps = array;
                             continue;
                         }
-                        if (property0.NameEquals("linkedBackends"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<StaticSiteLinkedBackend> array = new List<StaticSiteLinkedBackend>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(StaticSiteLinkedBackend.DeserializeStaticSiteLinkedBackend(item));
-                            }
-                            linkedBackends = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new StaticSiteBuildARMResourceData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), Optional.ToList(linkedBackends), kind.Value);
+            return new StaticSiteBuildARMResourceData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), kind.Value);
         }
     }
 }
