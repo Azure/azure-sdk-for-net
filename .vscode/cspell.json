@@ -320,6 +320,7 @@
 	{
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
+        "cabac",
         "cavlc",
         "cbcs",
         "cenc",
