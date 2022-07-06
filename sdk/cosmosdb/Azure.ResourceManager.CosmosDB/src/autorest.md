@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-10-csharp
+require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/readme.md
+tag: package-2022-05-csharp
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -189,6 +189,24 @@ rename-mapping:
   TriggerOperation: CosmosDBSqlTriggerOperation
   TriggerType: CosmosDBSqlTriggerType
   UnitType: CosmosDBMetricUnitType
+  RestorableSqlResourcesGetResult: RestorableSqlResourceData
+  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  ServiceResourceProperties: CosmosDBServiceProperties
+  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
+  ServiceResource: CosmosDBService
+  ServiceResourceListResult: CosmosDBServiceListResult
+  DataTransferServiceResourceProperties: DataTransferServiceProperties
+  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
+  GraphAPIComputeServiceResourceProperties: GraphAPIComputeServiceProperties
+  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
+  RegionalServiceResource: CosmosDBRegionalService
+  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
+  GraphAPIComputeRegionalServiceResource: GraphAPIComputeRegionalService
+  DataTransferRegionalServiceResource: DataTransferRegionalService
+  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
+  ServiceStatus: CosmosDBServiceStatus
+  ServiceSize: CosmosDBServiceSize
+  ServiceType: CosmosDBServiceType
 prepend-rp-prefix:
 - UniqueKey
 - UniqueKeyPolicy
@@ -464,18 +482,19 @@ directive:
     $.properties.latestRestorableTimestamp['format'] = 'date-time';
 ```
 
-### Tag: package-2021-10-csharp
+### Tag: package-2022-05-csharp
 
-These settings apply only when `--tag=package-2021-10-csharp` is specified on the command line. We have to remove the following files:
+These settings apply only when `--tag=package-2022-05-csharp` is specified on the command line. We have to remove the following files:
 
 - `notebook.json`: that feature is offline due to security issues
 
-```yaml $(tag) == 'package-2021-10-csharp'
+```yaml $(tag) == 'package-2022-05-csharp'
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/cosmos-db.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateEndpointConnection.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/privateLinkResources.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/restorable.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/managedCassandra.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/8a2a6226c3ac5a882f065a66daeaf5acef334273/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2021-10-15/rbac.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/cosmos-db.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/privateEndpointConnection.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/privateLinkResources.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/restorable.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/managedCassandra.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/rbac.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/stable/2022-05-15/services.json
 ```

@@ -842,5 +842,24 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
         #endregion
+
+        #region CosmosDBServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBServiceResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBServiceResource" /> object. </returns>
+        public static CosmosDBServiceResource GetCosmosDBServiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CosmosDBServiceResource.ValidateResourceId(id);
+                return new CosmosDBServiceResource(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }
