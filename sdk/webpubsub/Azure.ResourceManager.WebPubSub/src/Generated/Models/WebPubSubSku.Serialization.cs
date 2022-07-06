@@ -14,14 +14,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static WebPubSubSku DeserializeWebPubSubSku(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<BillingInfoSku> sku = default;
             Optional<WebPubSubSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubSku(resourceType.Value, sku.Value, capacity.Value);
+            return new WebPubSubSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

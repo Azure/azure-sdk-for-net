@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsDisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(DisableAadAuth))
+            if (Optional.IsDefined(IsDisableAadAuth))
             {
                 writer.WritePropertyName("disableAadAuth");
-                writer.WriteBooleanValue(DisableAadAuth.Value);
+                writer.WriteBooleanValue(IsDisableAadAuth.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
