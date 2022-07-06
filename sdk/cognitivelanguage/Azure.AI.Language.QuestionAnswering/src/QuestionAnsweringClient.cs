@@ -52,6 +52,30 @@ namespace Azure.AI.Language.QuestionAnswering
             _restClient = new(Diagnostics, Pipeline, Endpoint, Options.Version);
         }
 
+        /// <summary> Initializes a new instance of QuestionAnsweringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringClient(Uri endpoint, TokenCredential credential, QuestionAnsweringClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new QuestionAnsweringClientOptions();
+
+            Diagnostics = new ClientDiagnostics(options, true);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, "https://cognitiveservices.azure.com/.default") }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Endpoint = endpoint;
+        }
+
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
