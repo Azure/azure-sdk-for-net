@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
             SignedIdentifier sig1 = new SignedIdentifier("testSig1",
-                new AccessPolicy(startOn: start1,
+                new StorageServiceAccessPolicy(startOn: start1,
                     expireOn: end1,
                     permission: "rw"));
             SignedIdentifier sig2 = new SignedIdentifier("testSig2",
-                new AccessPolicy(startOn: start2,
+                new StorageServiceAccessPolicy(startOn: start2,
                     expireOn: end2,
                     permission: "rwdl"));
             updateParameters2.SignedIdentifiers.Add(sig1);
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
-            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
             Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
-            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
             Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 

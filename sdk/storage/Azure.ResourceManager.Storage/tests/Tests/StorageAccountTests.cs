@@ -1290,7 +1290,6 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            BlobInventoryPolicyCollection blobInventoryPolicyCollection = account.GetBlobInventoryPolicies();
 
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
@@ -1347,8 +1346,9 @@ namespace Azure.ResourceManager.Storage.Tests
             };
 
             //create and get policy, the name of blob inventory policy should always be default
-            BlobInventoryPolicyResource blobInventoryPolicy = (await blobInventoryPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, "default", parameter)).Value;
-            blobInventoryPolicy = await blobInventoryPolicyCollection.GetAsync("default");
+            BlobInventoryPolicyResource blobInventoryPolicy = account.GetBlobInventoryPolicy();
+            blobInventoryPolicy = (await blobInventoryPolicy.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
+            blobInventoryPolicy = await blobInventoryPolicy.GetAsync();
             Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 2);
 
             //update policy
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Policy = policy2
             };
-            blobInventoryPolicy = (await blobInventoryPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, "default", parameter2)).Value;
+            blobInventoryPolicy = (await blobInventoryPolicy.CreateOrUpdateAsync(WaitUntil.Completed, parameter2)).Value;
             Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 3);
 
             //delete policy
