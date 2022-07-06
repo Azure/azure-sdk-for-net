@@ -189,7 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            return new TelemetryItem(activity, ref monitorTags, null, null, null);
+            return new TelemetryItem(null, activity, ref monitorTags, null, null, null);
         }
 
         private class MockFileProvider : PersistentBlobProvider

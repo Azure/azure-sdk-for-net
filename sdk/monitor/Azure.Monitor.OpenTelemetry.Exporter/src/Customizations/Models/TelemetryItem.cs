@@ -22,8 +22,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             [TelemetryType.Dependency] = "RemoteDependency",
         };
 
-        public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
-            this(s_telemetryItem_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
+        public TelemetryItem(string name, Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
+            this(name == null ? s_telemetryItem_Name_Mapping[activity.GetTelemetryType()] : name, FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
             {

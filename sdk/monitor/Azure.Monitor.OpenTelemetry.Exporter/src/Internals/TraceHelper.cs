@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(null, activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     if (evnt.Name == "exception")
                     {
                         // Do nothing.
-                        var exceptionTelemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                        var exceptionTelemetryItem = new TelemetryItem("Exception" , activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
                         GetExceptionTelemetryItem(evnt.Tags, exceptionTelemetryItem);
                         telemetryItems.Add(exceptionTelemetryItem);
                         break;
