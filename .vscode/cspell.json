@@ -130,6 +130,12 @@
       ]
     },
     {
+      "filename": "**/sdk/batch/**/*.cs",
+      "words": [
+        "cifs"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
