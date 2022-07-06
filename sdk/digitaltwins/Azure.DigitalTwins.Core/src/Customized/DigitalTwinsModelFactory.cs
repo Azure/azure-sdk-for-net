@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for read-only models. </summary>
-    [CodeGenType(nameof(AzureDigitalTwinsAPIModelFactory))]
+    [CodeGenType("AzureDigitalTwinsAPIModelFactory")]
     public static partial class DigitalTwinsModelFactory
     {
     }
