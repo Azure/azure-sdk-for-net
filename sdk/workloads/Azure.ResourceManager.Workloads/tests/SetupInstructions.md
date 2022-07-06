@@ -1,6 +1,6 @@
 # Setup Instructions
 
-This is a quick guide to running the tests in this repo. 
+This is a quick guide to running the tests of Svi. 
 
 ## SSH Keys
 
