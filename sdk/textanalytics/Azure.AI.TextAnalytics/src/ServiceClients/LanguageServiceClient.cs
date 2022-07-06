@@ -45,8 +45,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
+            HttpPipelineOptions pipelineOptions = new(options)
+            {
+                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TextAnalyticsRequestFailedDetailsParser()
+            };
+            var pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
             _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
@@ -62,7 +68,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            HttpPipelineOptions pipelineOptions = new(options)
+            {
+                PerRetryPolicies = { new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TextAnalyticsRequestFailedDetailsParser()
+            };
+            var pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+
             _languageRestClient = new MicrosoftCognitiveLanguageServiceRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
@@ -1301,7 +1314,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } );
+                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) });
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
 
