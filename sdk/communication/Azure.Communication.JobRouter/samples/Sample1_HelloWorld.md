@@ -54,7 +54,7 @@ var job = routerClient.CreateJob(
         Priority = 1,
         RequestedWorkerSelectors = new List<WorkerSelector>
         {
-            new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+            new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
         },
     });
 ```
@@ -72,7 +72,7 @@ var worker = routerClient.CreateWorker(
         QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
         Labels = new LabelCollection()
         {
-            ["Some-Skill"] = 11
+            ["Some-Skill"] = new LabelValue(11)
         },
         ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
         {

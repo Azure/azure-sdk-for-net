@@ -27,13 +27,13 @@ var classificationPolicy = routerClient.CreateClassificationPolicy(
         PrioritizationRule = new StaticRule(10),
         QueueSelectors = new List<QueueSelectorAttachment>()
         {
-            new StaticQueueSelector(new QueueSelector("Region", LabelOperator.Equal, "NA")),
+            new StaticQueueSelector(new QueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
             new ConditionalQueueSelector(
                 condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
                 labelSelectors: new List<QueueSelector>()
                 {
-                    new QueueSelector("Product", LabelOperator.Equal, "O365"),
-                    new QueueSelector("QGroup", LabelOperator.Equal, "NA_O365")
+                    new QueueSelector("Product", LabelOperator.Equal, new LabelValue("O365")),
+                    new QueueSelector("QGroup", LabelOperator.Equal, new LabelValue("NA_O365"))
                 }),
         },
         WorkerSelectors = new List<WorkerSelectorAttachment>()
@@ -42,14 +42,14 @@ var classificationPolicy = routerClient.CreateClassificationPolicy(
                 condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
                 labelSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("Skill_O365", LabelOperator.Equal, true),
-                    new WorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, 1)
+                    new WorkerSelector("Skill_O365", LabelOperator.Equal, new LabelValue(true)),
+                    new WorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(1))
                 }),
             new ConditionalWorkerSelector(
                 condition: new ExpressionRule("If(job.HighPriority = \"true\", true, false)"),
                 labelSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, 10)
+                    new WorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(10))
                 })
         }
     });

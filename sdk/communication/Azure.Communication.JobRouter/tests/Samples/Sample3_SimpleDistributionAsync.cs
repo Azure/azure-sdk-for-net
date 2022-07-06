@@ -264,12 +264,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
                     Labels = new LabelCollection()
                     {
-                        ["Location"] = "United States",
-                        ["Language"] = "en-us",
-                        ["Region"] = "NA",
-                        ["Hardware_Support"] = true,
-                        ["Hardware_Support_SurfaceLaptop"] = true,
-                        ["Language_Skill_Level_EN_US"] = 10,
+                        ["Location"] = new LabelValue("United States"),
+                        ["Language"] = new LabelValue("en-us"),
+                        ["Region"] = new LabelValue("NA"),
+                        ["Hardware_Support"] = new LabelValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
+                        ["Language_Skill_Level_EN_US"] = new LabelValue(10),
                     }
                 });
 
@@ -283,12 +283,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
                     Labels = new LabelCollection()
                     {
-                        ["Location"] = "United States",
-                        ["Language"] = "en-us",
-                        ["Region"] = "NA",
-                        ["Hardware_Support"] = true,
-                        ["Hardware_Support_SurfaceLaptop"] = true,
-                        ["Language_Skill_Level_EN_US"] = 20,
+                        ["Location"] = new LabelValue("United States"),
+                        ["Language"] = new LabelValue("en-us"),
+                        ["Region"] = new LabelValue("NA"),
+                        ["Hardware_Support"] = new LabelValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
+                        ["Language_Skill_Level_EN_US"] = new LabelValue(20),
                     }
                 });
 
@@ -302,12 +302,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
                     Labels = new LabelCollection()
                     {
-                        ["Location"] = "United States",
-                        ["Language"] = "en-us",
-                        ["Region"] = "NA",
-                        ["Hardware_Support"] = true,
-                        ["Hardware_Support_SurfaceLaptop"] = false,
-                        ["Language_Skill_Level_EN_US"] = 1,
+                        ["Location"] = new LabelValue("United States"),
+                        ["Language"] = new LabelValue("en-us"),
+                        ["Region"] = new LabelValue("NA"),
+                        ["Hardware_Support"] = new LabelValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(false),
+                        ["Language_Skill_Level_EN_US"] = new LabelValue(1),
                     }
                 });
 
@@ -320,15 +320,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     Labels = new LabelCollection()
                     {
-                        ["Location"] = "United States",
-                        ["Language"] = "en-us",
-                        ["Region"] = "NA",
-                        ["Hardware_Support"] = true,
-                        ["Hardware_Support_SurfaceLaptop"] = true,
+                        ["Location"] = new LabelValue("United States"),
+                        ["Language"] = new LabelValue("en-us"),
+                        ["Region"] = new LabelValue("NA"),
+                        ["Hardware_Support"] = new LabelValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
                     },
                     RequestedWorkerSelectors = new List<WorkerSelector>()
                     {
-                        new WorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, 0),
+                        new WorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, new LabelValue(0)),
                     }
                 });
 

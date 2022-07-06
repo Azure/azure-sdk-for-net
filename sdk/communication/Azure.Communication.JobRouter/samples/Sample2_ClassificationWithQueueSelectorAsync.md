@@ -58,7 +58,7 @@ var queue2 = await routerClient.CreateQueueAsync(
 
 var cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
 {
-    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, queue1.Value.Id))
+    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
 };
 var cp1 = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy-o365",
@@ -70,7 +70,7 @@ var cp1 = await routerClient.CreateClassificationPolicyAsync(
 
 var cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
 {
-    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, queue2.Value.Id))
+    new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
 };
 var cp2 = await routerClient.CreateClassificationPolicyAsync(
     id: "classification-policy-xbox",
@@ -146,7 +146,7 @@ var queue1 = await routerClient.CreateQueueAsync(
         Name = "Queue_365",
         Labels = new LabelCollection()
         {
-            ["ProductDetail"] = "Office_Support"
+            ["ProductDetail"] = new LabelValue("Office_Support")
         }
     });
 
@@ -158,7 +158,7 @@ var queue2 = await routerClient.CreateQueueAsync(
         Name = "Queue_XBox",
         Labels = new LabelCollection()
         {
-            ["ProductDetail"] = "XBox_Support"
+            ["ProductDetail"] = new LabelValue("XBox_Support")
         }
     });
 
@@ -168,13 +168,13 @@ var queueSelectorAttachments = new List<QueueSelectorAttachment>()
         condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
         labelSelectors: new List<QueueSelector>()
         {
-            new QueueSelector("ProductDetail", LabelOperator.Equal, "Office_Support")
+            new QueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
         }),
     new ConditionalQueueSelector(
         condition: new ExpressionRule("If(job.Product = \"XBx\", true, false)"),
         labelSelectors: new List<QueueSelector>()
         {
-            new QueueSelector("ProductDetail", LabelOperator.Equal, "XBox_Support")
+            new QueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))
         })
 };
 
@@ -195,9 +195,9 @@ var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
         ChannelReference = "12345",
         Labels = new LabelCollection()
         {
-            ["Language"] = "en",
-            ["Product"] = "O365",
-            ["Geo"] = "North America",
+            ["Language"] = new LabelValue("en"),
+            ["Product"] = new LabelValue("O365"),
+            ["Geo"] = new LabelValue("North America"),
         },
     });
 
@@ -210,9 +210,9 @@ var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
         ChannelReference = "12345",
         Labels = new LabelCollection()
         {
-            ["Language"] = "en",
-            ["Product"] = "XBx",
-            ["Geo"] = "North America",
+            ["Language"] = new LabelValue("en"),
+            ["Product"] = new LabelValue("XBx"),
+            ["Geo"] = new LabelValue("North America"),
         },
     });
 
@@ -267,9 +267,9 @@ var queue1 = await routerClient.CreateQueueAsync(
         Name = "Queue_365_EN_EMEA",
         Labels = new LabelCollection()
         {
-            ["ProductDetail"] = "Office_Support",
-            ["Language"] = "en",
-            ["Region"] = "EMEA",
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Language"] = new LabelValue("en"),
+            ["Region"] = new LabelValue("EMEA"),
         },
     });
 
@@ -281,9 +281,9 @@ var queue2 = await routerClient.CreateQueueAsync(
         Name = "Queue_365_FR_EMEA",
         Labels = new LabelCollection()
         {
-            ["ProductDetail"] = "Office_Support",
-            ["Language"] = "fr",
-            ["Region"] = "EMEA",
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Language"] = new LabelValue("fr"),
+            ["Region"] = new LabelValue("EMEA"),
         },
     });
 
@@ -295,9 +295,9 @@ var queue3 = await routerClient.CreateQueueAsync(
         Name = "Queue_365_EN_NA",
         Labels = new LabelCollection()
         {
-            ["ProductDetail"] = "Office_Support",
-            ["Language"] = "en",
-            ["Region"] = "NA",
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Language"] = new LabelValue("en"),
+            ["Region"] = new LabelValue("NA"),
         },
     });
 
@@ -325,11 +325,11 @@ var jobENEmea = await routerClient.CreateJobWithClassificationPolicyAsync(
         ChannelReference = "12345",
         Labels = new LabelCollection()
         {
-            ["Language"] = "en",
-            ["Product"] = "O365",
-            ["Geo"] = "Europe, Middle East, Africa",
-            ["ProductDetail"] = "Office_Support",
-            ["Region"] = "EMEA",
+            ["Language"] = new LabelValue("en"),
+            ["Product"] = new LabelValue("O365"),
+            ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Region"] = new LabelValue("EMEA"),
         },
     });
 
@@ -342,11 +342,11 @@ var jobFREmea = await routerClient.CreateJobWithClassificationPolicyAsync(
         ChannelReference = "12345",
         Labels = new LabelCollection()
         {
-            ["Language"] = "fr",
-            ["Product"] = "O365",
-            ["Geo"] = "Europe, Middle East, Africa",
-            ["ProductDetail"] = "Office_Support",
-            ["Region"] = "EMEA",
+            ["Language"] = new LabelValue("fr"),
+            ["Product"] = new LabelValue("O365"),
+            ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Region"] = new LabelValue("EMEA"),
         },
     });
 
@@ -359,11 +359,11 @@ var jobENNa = await routerClient.CreateJobWithClassificationPolicyAsync(
         ChannelReference = "12345",
         Labels = new LabelCollection()
         {
-            ["Language"] = "en",
-            ["Product"] = "O365",
-            ["Geo"] = "North America",
-            ["ProductDetail"] = "Office_Support",
-            ["Region"] = "NA",
+            ["Language"] = new LabelValue("en"),
+            ["Product"] = new LabelValue("O365"),
+            ["Geo"] = new LabelValue("North America"),
+            ["ProductDetail"] = new LabelValue("Office_Support"),
+            ["Region"] = new LabelValue("NA"),
         },
     });
 

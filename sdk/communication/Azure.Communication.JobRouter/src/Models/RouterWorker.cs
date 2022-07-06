@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
             {
                 return Labels != null
                     ? Labels?.ToDictionary(x => x.Key,
-                        x => x.Value)
+                        x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
             {
                 return Tags != null
                     ? Tags?.ToDictionary(x => x.Key,
-                        x => x.Value)
+                        x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set

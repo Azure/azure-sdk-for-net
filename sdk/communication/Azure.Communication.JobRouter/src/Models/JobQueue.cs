@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Labels?.ToDictionary(x => x.Key, x => x.Value);
+                return Labels?.ToDictionary(x => x.Key, x => x.Value.Value);
             }
             set
             {

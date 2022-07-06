@@ -19,11 +19,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var subject = new LabelCollection();
 
             // act & assert
-            Assert.DoesNotThrow(() => subject.Add("k1", "string"));
-            Assert.DoesNotThrow(() => subject.Add("k2", 1));
-            Assert.DoesNotThrow(() => subject.Add("k3", 1.5));
-            Assert.DoesNotThrow(() => subject.Add("k4", true));
-            Assert.Throws<ArgumentException>(() => subject.Add("k5", new object()));
+            Assert.DoesNotThrow(() => subject.Add("k1", new LabelValue("string")));
+            Assert.DoesNotThrow(() => subject.Add("k2", new LabelValue(1)));
+            Assert.DoesNotThrow(() => subject.Add("k3", new LabelValue(1.5)));
+            Assert.DoesNotThrow(() => subject.Add("k4", new LabelValue(true)));
+            Assert.Throws<ArgumentException>(() => subject.Add("k5", new LabelValue(new object())));
         }
 
         [Test]
@@ -31,23 +31,23 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             Assert.DoesNotThrow(() => new LabelCollection()
             {
-                ["k1"] = "string"
+                ["k1"] = new LabelValue("string")
             });
             Assert.DoesNotThrow(() => new LabelCollection()
             {
-                ["k1"] = 1
+                ["k1"] = new LabelValue(1)
             });
             Assert.DoesNotThrow(() => new LabelCollection()
             {
-                ["k1"] = 1.5
+                ["k1"] = new LabelValue(1.5)
             });
             Assert.DoesNotThrow(() => new LabelCollection()
             {
-                ["k1"] = true
+                ["k1"] = new LabelValue(true)
             });
             Assert.Throws<ArgumentException>(() => new LabelCollection()
             {
-                ["k1"] = new object()
+                ["k1"] = new LabelValue(new object())
             });
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             foreach (var item in rawValues)
             {
-                Assert.AreEqual(item.Value, labels[item.Key]);
+                Assert.AreEqual(item.Value, labels[item.Key].Value);
             }
         }
     }

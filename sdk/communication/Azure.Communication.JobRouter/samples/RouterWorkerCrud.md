@@ -37,15 +37,15 @@ var worker = routerClient.CreateWorker(
         },
         Labels = new LabelCollection()
         {
-            ["Location"] = "NA",
-            ["English"] = 7,
-            ["O365"] = true,
-            ["Xbox_Support"] = false
+            ["Location"] = new LabelValue("NA"),
+            ["English"] = new LabelValue(7),
+            ["O365"] = new LabelValue(true),
+            ["Xbox_Support"] = new LabelValue(false)
         },
         Tags = new LabelCollection()
         {
-            ["Name"] = "John Doe",
-            ["Department"] = "IT_HelpDesk"
+            ["Name"] = new LabelValue("John Doe"),
+            ["Department"] = new LabelValue("IT_HelpDesk")
         }
     }
 );
@@ -86,9 +86,9 @@ var updateWorker = routerClient.UpdateWorker(
         },
         Labels = new LabelCollection()
         {
-            ["O365"] = "Supported",
+            ["O365"] = new LabelValue("Supported"),
             ["Xbox_Support"] = null,
-            ["Xbox_Support_EN"] = true,
+            ["Xbox_Support_EN"] = new LabelValue(true),
         }
     });
 

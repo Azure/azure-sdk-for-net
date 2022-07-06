@@ -19,10 +19,10 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator");
             writer.WriteStringValue(LabelOperator.ToSerialString());
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value");
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue(_value);
             }
             if (Optional.IsDefined(TtlSeconds))
             {

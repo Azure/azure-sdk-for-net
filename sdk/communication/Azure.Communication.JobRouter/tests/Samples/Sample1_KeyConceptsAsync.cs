@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Priority = 1,
                     RequestedWorkerSelectors = new List<WorkerSelector>
                     {
-                        new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+                        new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
                     }
                 });
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
                     Labels = new LabelCollection()
                     {
-                        ["Some-Skill"] = 11
+                        ["Some-Skill"] = new LabelValue(11)
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {

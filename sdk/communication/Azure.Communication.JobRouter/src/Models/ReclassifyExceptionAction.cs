@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
             {
                 return LabelsToUpsert != null
                     ? LabelsToUpsert?.ToDictionary(x => x.Key,
-                        x => x.Value)
+                        x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set

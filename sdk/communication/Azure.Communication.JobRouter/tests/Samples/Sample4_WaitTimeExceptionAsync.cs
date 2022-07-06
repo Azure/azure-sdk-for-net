@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 priority: 100,
                 workerSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("HandleEscalation", LabelOperator.Equal, true)
+                    new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true))
                 });
 
             var exceptionPolicyId = "execption-policy-id";
@@ -115,7 +115,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Console.WriteLine($"Exception has been triggered and job has been moved to queue with id: {fallbackQueueId}"); // fallback-q-id
             Console.WriteLine($"Job priority has been raised to: {queriedJob.Value.Priority}"); // 100
-            Console.WriteLine($"Job has extra requirement for workers who can handler escalation now: {queriedJob.Value.RequestedWorkerSelectors.Any(ws => ws.Key == "HandlerEscalation" && ws.LabelOperator == LabelOperator.Equal && (bool)ws.Value)}"); // true
+            Console.WriteLine($"Job has extra requirement for workers who can handler escalation now: {queriedJob.Value.RequestedWorkerSelectors.Any(ws => ws.Key == "HandlerEscalation" && ws.LabelOperator == LabelOperator.Equal && (bool)ws.Value.Value)}"); // true
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_WaitTimeTrigger
         }

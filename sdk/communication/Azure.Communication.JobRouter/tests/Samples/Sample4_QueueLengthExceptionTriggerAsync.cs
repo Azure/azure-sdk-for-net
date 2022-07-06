@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 priority: 10,
                 workerSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, true)
+                    new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
                 });
 
             var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(

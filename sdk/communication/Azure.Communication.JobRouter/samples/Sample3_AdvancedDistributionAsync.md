@@ -39,7 +39,11 @@ var worker1Id = "worker-Id-1";
 var worker2Id = "worker-Id-2";
 
 // Worker 1 can handle escalation
-var worker1Labels = new LabelCollection() { ["HandleEscalation"] = true, ["IT_Support"] = true };
+var worker1Labels = new LabelCollection()
+{
+    ["HandleEscalation"] = new LabelValue(true),
+    ["IT_Support"] = new LabelValue(true)
+};
 
 var worker1 = await routerClient.CreateWorkerAsync(
     id: worker1Id,
@@ -57,7 +61,10 @@ var worker1 = await routerClient.CreateWorkerAsync(
     });
 
 // Worker 2 cannot handle escalation
-var worker2Labels = new LabelCollection() { ["IT_Support"] = true, };
+var worker2Labels = new LabelCollection()
+{
+    ["IT_Support"] = new LabelValue(true),
+};
 
 var worker2 = await routerClient.CreateWorkerAsync(
     id: worker2Id,
@@ -79,7 +86,7 @@ var job = await routerClient.CreateJobAsync(
     queueId: jobQueueId,
     options: new CreateJobOptions()
     {
-        RequestedWorkerSelectors = new List<WorkerSelector>(){ new WorkerSelector("IT_Support", LabelOperator.Equal, true)},
+        RequestedWorkerSelectors = new List<WorkerSelector>(){ new WorkerSelector("IT_Support", LabelOperator.Equal, new LabelValue(true))},
         Priority = 100,
     });
 
@@ -278,12 +285,12 @@ var channelId = "general";
 var workerId1 = "worker-Id-1";
 var worker1Labels = new LabelCollection()
 {
-    ["HighPrioritySupport"] = true,
-    ["HardwareSupport"] = true,
-    ["Support_XBOX_SERIES_X"] = true,
-    ["English"] = 10,
-    ["ChatSupport"] = true,
-    ["XboxSupport"] = true
+    ["HighPrioritySupport"] = new LabelValue(true),
+    ["HardwareSupport"] = new LabelValue(true),
+    ["Support_XBOX_SERIES_X"] = new LabelValue(true),
+    ["English"] = new LabelValue(10),
+    ["ChatSupport"] = new LabelValue(true),
+    ["XboxSupport"] = new LabelValue(true)
 };
 
 var worker1 = await routerClient.CreateWorkerAsync(
@@ -303,13 +310,13 @@ var worker1 = await routerClient.CreateWorkerAsync(
 var workerId2 = "worker-Id-2";
 var worker2Labels = new LabelCollection()
 {
-    ["HighPrioritySupport"] = true,
-    ["HardwareSupport"] = true,
-    ["Support_XBOX_SERIES_X"] = true,
-    ["Support_XBOX_SERIES_S"] = true,
-    ["English"] = 8,
-    ["ChatSupport"] = true,
-    ["XboxSupport"] = true
+    ["HighPrioritySupport"] = new LabelValue(true),
+    ["HardwareSupport"] = new LabelValue(true),
+    ["Support_XBOX_SERIES_X"] = new LabelValue(true),
+    ["Support_XBOX_SERIES_S"] = new LabelValue(true),
+    ["English"] = new LabelValue(8),
+    ["ChatSupport"] = new LabelValue(true),
+    ["XboxSupport"] = new LabelValue(true)
 };
 
 var worker2 = await routerClient.CreateWorkerAsync(
@@ -329,12 +336,12 @@ var worker2 = await routerClient.CreateWorkerAsync(
 var workerId3 = "worker-Id-3";
 var worker3Labels = new LabelCollection()
 {
-    ["HighPrioritySupport"] = false,
-    ["HardwareSupport"] = true,
-    ["Support_XBOX"] = true,
-    ["English"] = 7,
-    ["ChatSupport"] = true,
-    ["XboxSupport"] = true
+    ["HighPrioritySupport"] = new LabelValue(false),
+    ["HardwareSupport"] = new LabelValue(true),
+    ["Support_XBOX"] = new LabelValue(true),
+    ["English"] = new LabelValue(7),
+    ["ChatSupport"] = new LabelValue(true),
+    ["XboxSupport"] = new LabelValue(true),
 };
 
 var worker3 = await routerClient.CreateWorkerAsync(
@@ -354,21 +361,21 @@ var worker3 = await routerClient.CreateWorkerAsync(
 // Create job
 var jobLabels = new LabelCollection()
 {
-    ["CommunicationType"] = "Chat",
-    ["IssueType"] = "XboxSupport",
-    ["Language"] = "en",
-    ["HighPriority"] = true,
-    ["SubIssueType"] = "ConsoleMalfunction",
-    ["ConsoleType"] = "XBOX_SERIES_X",
-    ["Model"] = "XBOX_SERIES_X_1TB"
+    ["CommunicationType"] = new LabelValue("Chat"),
+    ["IssueType"] = new LabelValue("XboxSupport"),
+    ["Language"] = new LabelValue("en"),
+    ["HighPriority"] = new LabelValue(true),
+    ["SubIssueType"] = new LabelValue("ConsoleMalfunction"),
+    ["ConsoleType"] = new LabelValue("XBOX_SERIES_X"),
+    ["Model"] = new LabelValue("XBOX_SERIES_X_1TB")
 };
 
 var jobId = "job-id-1";
 var workerSelectors = new List<WorkerSelector>()
 {
-    new WorkerSelector("English", LabelOperator.GreaterThanEqual, 7),
-    new WorkerSelector("ChatSupport", LabelOperator.Equal, true),
-    new WorkerSelector("XboxSupport", LabelOperator.Equal, true)
+    new WorkerSelector("English", LabelOperator.GreaterThanEqual, new LabelValue(7)),
+    new WorkerSelector("ChatSupport", LabelOperator.Equal, new LabelValue(true)),
+    new WorkerSelector("XboxSupport", LabelOperator.Equal, new LabelValue(true))
 };
 
 var job = await routerClient.CreateJobAsync(

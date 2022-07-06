@@ -11,23 +11,23 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Dictionary like data structure which supports only string values as keys and primitive types as values.
     /// </summary>
-    public partial class LabelCollection : IEnumerable<KeyValuePair<string, object>>
+    public partial class LabelCollection : IEnumerable<KeyValuePair<string, LabelValue>>
     {
-        private Dictionary<string, object> _data;
+        private Dictionary<string, LabelValue> _data;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         public LabelCollection()
         {
-            _data = new Dictionary<string, object>();
+            _data = new Dictionary<string, LabelValue>();
         }
 
         /// <summary>
         /// Returns a new LabelCollection with another dictionary.
         /// </summary>
         /// <param name="values"></param>
-        public LabelCollection(IDictionary<string, object> values)
+        public LabelCollection(IDictionary<string, LabelValue> values)
             : this()
         {
             foreach (var item in values)
@@ -44,28 +44,28 @@ namespace Azure.Communication.JobRouter
             }
 
             foreach (var item in values)
-                result._data.Add(item.Key, item.Value);
+                result._data.Add(item.Key, new LabelValue(item.Value));
 
             return result;
         }
 
-        private static void ValidateValue(object value)
+        private static void ValidateValue(LabelValue value)
         {
             if (value == null)
                 return;
-            if (value.GetType().IsPrimitive)
+            if (value.Value.GetType().IsPrimitive)
                 return;
-            if (value is string)
+            if (value.Value is string)
                 return;
 
-            throw new ArgumentException($"Unsupported type {value.GetType()}");
+            throw new ArgumentException($"Unsupported type {value.Value.GetType()}");
         }
 
         /// <summary>
         /// Get or set key-value.
         /// </summary>
         /// <param name="key"></param>
-        public object this[string key]
+        public LabelValue this[string key]
         {
             get => _data[key];
             set
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add.</param>
-        public void Add(string key, object value)
+        public void Add(string key, LabelValue value)
         {
             ValidateValue(value);
             _data.Add(key, value);
@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter
         /// Returns an enumerator that iterates through the <see cref="LabelCollection"/>.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _data.GetEnumerator();
+        public IEnumerator<KeyValuePair<string, LabelValue>> GetEnumerator() => _data.GetEnumerator();
 
         /// <summary>
         /// Removes the value with the specified key from the <see cref="LabelCollection"/>.
@@ -129,6 +129,6 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Gets a collection containing the values in the <see cref="LabelCollection"/>.
         /// </summary>
-        public ICollection<object> Values => _data.Values;
+        public ICollection<LabelValue> Values => _data.Values;
     }
 }

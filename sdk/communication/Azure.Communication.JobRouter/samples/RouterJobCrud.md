@@ -46,7 +46,7 @@ var classificationPolicy = routerClient.CreateClassificationPolicy("classificati
         QueueSelectors = new List<QueueSelectorAttachment>()
         {
             new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal,
-                jobQueue.Value.Id)),
+                new LabelValue(jobQueue.Value.Id))),
         },
         PrioritizationRule = new StaticRule(10)
     });

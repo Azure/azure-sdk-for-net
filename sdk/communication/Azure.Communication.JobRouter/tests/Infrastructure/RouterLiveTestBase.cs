@@ -75,7 +75,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var createQueueResponse = await CreateQueueAsync(nameof(CreateQueueSelectionCPAsync));
             var queueSelectionRule = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, createQueueResponse.Value.Id))
+                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
             };
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 id: classificationPolicyId,
@@ -96,7 +96,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var createDistributionPolicyResponse = await CreateDistributionPolicy(uniqueIdentifier);
             var queueId = GenerateUniqueId($"{IdPrefix}-{uniqueIdentifier}");
             var queueName = "DefaultQueue-Sdk-Test" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
+            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 queueId,
                 createDistributionPolicyResponse.Value.Id,
@@ -147,7 +147,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
-                labelsWithID.Add("Id", queueId);
+                labelsWithID.Add("Id", new LabelValue(queueId));
                 Assert.AreEqual(labelsWithID, response.Labels);
             }
 
@@ -168,7 +168,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             if (workerLabels != default)
             {
                 var labelsWithID = workerLabels.ToDictionary(k => k.Key, k => k.Value);
-                labelsWithID.Add("Id", workerId);
+                labelsWithID.Add("Id", new LabelValue(workerId));
                 Assert.AreEqual(labelsWithID, response.Labels);
             }
 

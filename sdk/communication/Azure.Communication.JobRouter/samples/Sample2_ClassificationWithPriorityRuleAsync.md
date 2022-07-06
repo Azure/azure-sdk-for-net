@@ -120,7 +120,7 @@ var job1 = await routerClient.CreateJobWithClassificationPolicyAsync(
         QueueId = jobQueueId,
         Labels = new LabelCollection()
         {
-            ["Escalated"] = false
+            ["Escalated"] = new LabelValue(false)
         }
     });
 
@@ -135,7 +135,7 @@ var job2 = await routerClient.CreateJobWithClassificationPolicyAsync(
         QueueId = jobQueueId,
         Labels = new LabelCollection()
         {
-            ["Escalated"] = true
+            ["Escalated"] = new LabelValue(true)
         }
     });
 
@@ -232,7 +232,7 @@ var job1 = await routerClient.CreateJobWithClassificationPolicyAsync(
         QueueId = jobQueueId,
         Labels = new LabelCollection()
         {
-            ["Escalated"] = false
+            ["Escalated"] = new LabelValue(false)
         }
     });
 
@@ -247,7 +247,7 @@ var job2 = await routerClient.CreateJobWithClassificationPolicyAsync(
         QueueId = jobQueueId,
         Labels = new LabelCollection()
         {
-            ["Escalated"] = true
+            ["Escalated"] = new LabelValue(true)
         }
     });
 

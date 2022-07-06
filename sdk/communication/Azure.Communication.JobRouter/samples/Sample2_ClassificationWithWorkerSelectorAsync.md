@@ -66,9 +66,9 @@ var cp1 = await routerClient.CreateClassificationPolicyAsync(
         Name = "Classification_Policy_O365",
         WorkerSelectors = new List<WorkerSelectorAttachment>()
         {
-            new StaticWorkerSelector(new WorkerSelector("Location", LabelOperator.Equal, "United States")),
-            new StaticWorkerSelector(new WorkerSelector("Language", LabelOperator.Equal, "en-us")),
-            new StaticWorkerSelector(new WorkerSelector("Geo", LabelOperator.Equal, "NA"))
+            new StaticWorkerSelector(new WorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
+            new StaticWorkerSelector(new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
+            new StaticWorkerSelector(new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")))
         }
     });
 
@@ -93,7 +93,10 @@ Console.WriteLine($"O365 job has been enqueued in queue: {queue1.Value.Id}. Stat
 var workerId1 = "worker-id-1";
 var worker1Labels = new LabelCollection()
 {
-    ["Location"] = "United States", ["Language"] = "en-us", ["Geo"] = "NA", ["Skill_English_Lvl"] = 7
+    ["Location"] = new LabelValue("United States"),
+    ["Language"] = new LabelValue("en-us"),
+    ["Geo"] = new LabelValue("NA"),
+    ["Skill_English_Lvl"] = new LabelValue(7),
 };
 var worker1 = await routerClient.CreateWorkerAsync(
     id: workerId1,
@@ -115,7 +118,7 @@ var worker1 = await routerClient.CreateWorkerAsync(
 var workerId2 = "worker-id-2";
 var worker2Labels = new LabelCollection()
 {
-    ["Skill_English_Lvl"] = 7
+    ["Skill_English_Lvl"] = new LabelValue(7)
 };
 var worker2 = await routerClient.CreateWorkerAsync(
     id: workerId2,
@@ -207,17 +210,17 @@ var cp1 = await routerClient.CreateClassificationPolicyAsync(
                 condition: new ExpressionRule("If(job.Location = \"United States\", true, false)"),
                 labelSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("Language", LabelOperator.Equal, "en-us"),
-                    new WorkerSelector("Geo", LabelOperator.Equal, "NA"),
-                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, 5)
+                    new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
+                    new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
+                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
                 }),
             new ConditionalWorkerSelector(
                 condition: new ExpressionRule("If(job.Location = \"Canada\", true, false)"),
                 labelSelectors: new List<WorkerSelector>()
                 {
-                    new WorkerSelector("Language", LabelOperator.Equal, "en-ca"),
-                    new WorkerSelector("Geo", LabelOperator.Equal, "NA"),
-                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, 5)
+                    new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),
+                    new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
+                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
                 }),
         }
     });
@@ -234,7 +237,7 @@ var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
         Labels = new LabelCollection() // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = "United States",
+            ["Location"] = new LabelValue("United States"),
         }
     });
 
@@ -248,9 +251,9 @@ Console.Write($"O365 job has the following worker selectors attached to it after
 var workerId1 = "worker-id-1";
 var worker1Labels = new LabelCollection()
 {
-    ["Language"] = "en-us",
-    ["Geo"] = "NA",
-    ["Skill_English_Lvl"] = 7
+    ["Language"] = new LabelValue("en-us"),
+    ["Geo"] = new LabelValue("NA"),
+    ["Skill_English_Lvl"] = new LabelValue(7)
 };
 var worker1 = await routerClient.CreateWorkerAsync(
     id: workerId1,
@@ -272,9 +275,9 @@ var worker1 = await routerClient.CreateWorkerAsync(
 var workerId2 = "worker-id-2";
 var worker2Labels = new LabelCollection()
 {
-    ["Language"] = "en-ca",
-    ["Geo"] = "NA",
-    ["Skill_English_Lvl"] = 7
+    ["Language"] = new LabelValue("en-ca"),
+    ["Geo"] = new LabelValue("NA"),
+    ["Skill_English_Lvl"] = new LabelValue(7)
 };
 var worker2 = await routerClient.CreateWorkerAsync(
     id: workerId2,
@@ -358,7 +361,7 @@ var cp1 = await routerClient.CreateClassificationPolicyAsync(
             new PassThroughWorkerSelector("Geo", LabelOperator.Equal),
             new PassThroughWorkerSelector("Language", LabelOperator.Equal),
             new PassThroughWorkerSelector("Dept", LabelOperator.Equal),
-            new StaticWorkerSelector(new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, 5)),
+            new StaticWorkerSelector(new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))),
         }
     });
 
@@ -374,10 +377,10 @@ var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
         Labels = new LabelCollection() // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = "United States",
-            ["Geo"] = "NA",
-            ["Language"] = "en-us",
-            ["Dept"] = "O365"
+            ["Location"] = new LabelValue("United States"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Language"] = new LabelValue("en-us"),
+            ["Dept"] = new LabelValue("O365")
         }
     });
 
@@ -392,10 +395,10 @@ var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
         Labels = new LabelCollection() // we will attach a label to the job which will affects its classification
         {
-            ["Location"] = "United States",
-            ["Geo"] = "NA",
-            ["Language"] = "en-us",
-            ["Dept"] = "Xbox"
+            ["Location"] = new LabelValue("United States"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Language"] = new LabelValue("en-us"),
+            ["Dept"] = new LabelValue("Xbox")
         }
     });
 
@@ -414,11 +417,11 @@ Console.Write($"O365 job has the following worker selectors attached to it after
 var workerId1 = "worker-id-1";
 var worker1Labels = new LabelCollection()
 {
-    ["Location"] = "United States",
-    ["Geo"] = "NA",
-    ["Language"] = "en-us",
-    ["Dept"] = "O365",
-    ["Skill_English_Lvl"] = 10,
+    ["Location"] = new LabelValue("United States"),
+    ["Geo"] = new LabelValue("NA"),
+    ["Language"] = new LabelValue("en-us"),
+    ["Dept"] = new LabelValue("O365"),
+    ["Skill_English_Lvl"] = new LabelValue(10),
 };
 var worker1 = await routerClient.CreateWorkerAsync(
     id: workerId1,
@@ -440,11 +443,11 @@ var worker1 = await routerClient.CreateWorkerAsync(
 var workerId2 = "worker-id-2";
 var worker2Labels = new LabelCollection()
 {
-    ["Location"] = "United States",
-    ["Geo"] = "NA",
-    ["Language"] = "en-us",
-    ["Dept"] = "Xbox",
-    ["Skill_English_Lvl"] = 10,
+    ["Location"] = new LabelValue("United States"),
+    ["Geo"] = new LabelValue("NA"),
+    ["Language"] = new LabelValue("en-us"),
+    ["Dept"] = new LabelValue("Xbox"),
+    ["Skill_English_Lvl"] = new LabelValue(10),
 };
 var worker2 = await routerClient.CreateWorkerAsync(
     id: workerId2,

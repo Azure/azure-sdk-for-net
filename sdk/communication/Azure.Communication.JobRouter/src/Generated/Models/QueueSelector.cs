@@ -17,7 +17,5 @@ namespace Azure.Communication.JobRouter
         public string Key { get; set; }
         /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
         public LabelOperator LabelOperator { get; set; }
-        /// <summary> The value to compare against the actual label value with the given operator. </summary>
-        public object Value { get; set; }
     }
 }

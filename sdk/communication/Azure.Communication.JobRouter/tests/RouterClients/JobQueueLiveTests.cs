@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
+            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 queueId,
                 createDistributionPolicyResponse.Value.Id,
@@ -48,7 +48,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
+            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 queueId,
                 createDistributionPolicyResponse.Value.Id,
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var updatedLabels =
                 new LabelCollection(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value));
-            updatedLabels["Label2"] = "Value2";
+            updatedLabels["Label2"] = new LabelValue("Value2");
 
             var updatedQueueResponse =
                 await routerClient.UpdateQueueAsync(queueId, new UpdateQueueOptions() { Labels = updatedLabels, });

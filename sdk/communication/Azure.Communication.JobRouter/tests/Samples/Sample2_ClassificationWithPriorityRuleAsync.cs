@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels = new LabelCollection()
                     {
-                        ["Escalated"] = false
+                        ["Escalated"] = new LabelValue(false)
                     }
                 });
 
@@ -161,7 +161,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels = new LabelCollection()
                     {
-                        ["Escalated"] = true
+                        ["Escalated"] = new LabelValue(true)
                     }
                 });
 
@@ -251,7 +251,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels = new LabelCollection()
                     {
-                        ["Escalated"] = false
+                        ["Escalated"] = new LabelValue(false)
                     }
                 });
 
@@ -266,7 +266,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels = new LabelCollection()
                     {
-                        ["Escalated"] = true
+                        ["Escalated"] = new LabelValue(true)
                     }
                 });
 

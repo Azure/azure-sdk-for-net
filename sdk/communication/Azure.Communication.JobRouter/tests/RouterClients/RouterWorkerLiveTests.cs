@@ -40,8 +40,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             };
             var workerLabels = new LabelCollection()
             {
-                ["test_label_1"] = "testLabel",
-                ["test_label_2"] = 12,
+                ["test_label_1"] = new LabelValue("testLabel"),
+                ["test_label_2"] = new LabelValue(12),
             };
 
             var queueAssignmentList = new string[] { createQueueResponse.Value.Id };

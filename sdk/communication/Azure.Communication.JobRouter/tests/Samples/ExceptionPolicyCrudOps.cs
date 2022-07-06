@@ -38,7 +38,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // define exception actions that needs to be executed when trigger condition is satisfied
             var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-q-over-flow",
-                labelsToUpsert: new LabelCollection() { ["EscalateJob"] = true, ["EscalationReasonCode"] = "QueueOverFlow" });
+                labelsToUpsert: new LabelCollection()
+                {
+                    ["EscalateJob"] = new LabelValue(true),
+                    ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
+                });
 
             // define second exception trigger for wait time
             var waitTimeExceptionTrigger = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(10));
@@ -49,7 +53,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
                 labelsToUpsert: new LabelCollection()
                 {
-                    ["EscalateJob"] = true, ["EscalationReasonCode"] = "WaitTimeExceeded"
+                    ["EscalateJob"] = new LabelValue(true),
+                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
                 });
 
             // define exception rule
@@ -107,7 +112,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
                 labelsToUpsert: new LabelCollection()
                 {
-                    ["EscalateJob"] = true, ["EscalationReasonCode"] = "WaitTimeExceeded2Min"
+                    ["EscalateJob"] = new LabelValue(true),
+                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
                 });
 
             var updateExceptionPolicy = routerClient.UpdateExceptionPolicy(

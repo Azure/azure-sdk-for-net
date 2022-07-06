@@ -57,7 +57,7 @@ var updatedJobQueue = await routerClient.UpdateQueueAsync(
     {
         Labels = new LabelCollection()
         {
-            ["Additional-Queue-Label"] = "ChatQueue"
+            ["Additional-Queue-Label"] = new LabelValue("ChatQueue")
         }
     });
 ```

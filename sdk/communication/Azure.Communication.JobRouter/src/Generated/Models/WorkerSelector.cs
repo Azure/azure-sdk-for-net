@@ -17,8 +17,6 @@ namespace Azure.Communication.JobRouter
         public string Key { get; set; }
         /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
         public LabelOperator LabelOperator { get; set; }
-        /// <summary> The value to compare against the actual label value with the given operator. </summary>
-        public object Value { get; set; }
         /// <summary> Describes how long this label selector is valid in seconds. </summary>
         public double? TtlSeconds { get; set; }
         /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>

@@ -29,11 +29,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateClassificationPolicyTest)}");
             var queueSelector = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, createQueueResponse.Value.Id))
+                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
             };
             var workerSelectors = new List<WorkerSelectorAttachment>()
             {
-                new StaticWorkerSelector(new WorkerSelector("key", LabelOperator.Equal, "value"))
+                new StaticWorkerSelector(new WorkerSelector("key", LabelOperator.Equal, new LabelValue("value")))
             };
             var prioritizationRule = new StaticRule(1);
 
@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 var staticQSelector = (StaticQueueSelector)qs;
                 Assert.AreEqual(staticQSelector.LabelSelector.Key, "Id");
                 Assert.AreEqual(staticQSelector.LabelSelector.LabelOperator, LabelOperator.Equal);
-                Assert.AreEqual(staticQSelector.LabelSelector.Value, createQueueResponse.Value.Id);
+                Assert.AreEqual(staticQSelector.LabelSelector.Value.Value, createQueueResponse.Value.Id);
             });
             Assert.AreEqual(1, createClassificationPolicy.WorkerSelectors.Count);
             Assert.DoesNotThrow(() =>
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 var staticWSelector = (StaticWorkerSelector)ws;
                 Assert.AreEqual("key", staticWSelector.LabelSelector.Key);
                 Assert.AreEqual(LabelOperator.Equal, staticWSelector.LabelSelector.LabelOperator);
-                Assert.AreEqual("value", staticWSelector.LabelSelector.Value);
+                Assert.AreEqual("value", staticWSelector.LabelSelector.Value.Value);
             });
             Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRule));
             Assert.IsTrue(string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId));
@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 var staticQSelector = (StaticQueueSelector)qs;
                 Assert.AreEqual(staticQSelector.LabelSelector.Key, "Id");
                 Assert.AreEqual(staticQSelector.LabelSelector.LabelOperator, LabelOperator.Equal);
-                Assert.AreEqual(staticQSelector.LabelSelector.Value, createQueueResponse.Value.Id);
+                Assert.AreEqual(staticQSelector.LabelSelector.Value.Value, createQueueResponse.Value.Id);
             });
             Assert.AreEqual(1, createClassificationPolicy.WorkerSelectors.Count);
             Assert.DoesNotThrow(() =>
@@ -113,7 +113,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 var staticWSelector = (StaticWorkerSelector)ws;
                 Assert.AreEqual("key", staticWSelector.LabelSelector.Key);
                 Assert.AreEqual(LabelOperator.Equal, staticWSelector.LabelSelector.LabelOperator);
-                Assert.AreEqual("value", staticWSelector.LabelSelector.Value);
+                Assert.AreEqual("value", staticWSelector.LabelSelector.Value.Value);
             });
             Assert.IsTrue(createClassificationPolicy.PrioritizationRule.GetType() == typeof(StaticRule));
             Assert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
@@ -178,7 +178,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var queueIdStaticRule = new StaticRule(createQueueResponse.Value.Id);
             var queueSelectionRule = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, createQueueResponse.Value.Id))
+                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
             };
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 classificationPolicyId,
@@ -209,7 +209,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-ClassicationPolicy_w_WSelector");
             var classificationPolicyName = $"Priority-ClassificationPolicy";
             var workerSelectors = new List<WorkerSelectorAttachment>();
-            var labelSelectorAttachment = new StaticWorkerSelector(new WorkerSelector("department", LabelOperator.Equal, "sales"));
+            var labelSelectorAttachment = new StaticWorkerSelector(new WorkerSelector("department", LabelOperator.Equal, new LabelValue("sales")));
             workerSelectors.Add(labelSelectorAttachment);
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 classificationPolicyId,

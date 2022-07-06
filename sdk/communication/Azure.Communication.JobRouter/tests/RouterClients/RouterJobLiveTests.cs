@@ -167,7 +167,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var classificationPolicyName = $"StaticQueueSelector-ClassificationPolicy";
             var staticQueueSelector = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector(key: "Id", LabelOperator.Equal, value: createQueue2.Id))
+                new StaticQueueSelector(new QueueSelector(key: "Id", LabelOperator.Equal, value: new LabelValue(createQueue2.Id)))
             };
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 classificationPolicyId,
