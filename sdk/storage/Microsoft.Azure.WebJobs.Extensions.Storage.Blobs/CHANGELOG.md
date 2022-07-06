@@ -1,14 +1,7 @@
 # Release History
 
 ## 5.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 5.0.1 (2022-05-02)
 - Implemented caching blobs in shared memory for faster I/O.

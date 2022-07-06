@@ -17,7 +17,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             // This value appears to work well with both DateTimes (without time zone information) and DateTimeOffsets.
             DateParseHandling = DateParseHandling.DateTimeOffset,
             NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented
+            Formatting = Formatting.Indented,
+            MaxDepth = Constants.MaxDepthDefault,
         };
 
         private static readonly JsonSerializer JsonSerializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Protocols
             reader.DateParseHandling = JsonSerializerSettings.DateParseHandling;
             reader.DateTimeZoneHandling = JsonSerializerSettings.DateTimeZoneHandling;
             reader.FloatParseHandling = Serializer.FloatParseHandling;
+            reader.MaxDepth = JsonSerializerSettings.MaxDepth;
         }
 
         internal static void ApplySettings(JsonWriter writer)
