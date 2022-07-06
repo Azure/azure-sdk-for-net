@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType");
-                writer.WriteStringValue(LinkedResourceType);
+                writer.WriteStringValue(LinkedResourceType.Value);
             }
             if (Optional.IsDefined(Link))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<string> linkedResourceType = default;
+            Optional<ResourceType> linkedResourceType = default;
             Optional<string> link = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,12 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("linkedResourceType"))
                         {
-                            linkedResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("link"))
@@ -121,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ResourceNavigationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), linkedResourceType.Value, link.Value, Optional.ToNullable(provisioningState));
+            return new ResourceNavigationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

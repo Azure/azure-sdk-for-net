@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Network.Tests
                         Name = probeName,
                         Protocol = ApplicationGatewayProtocol.Http,
                         Path = "/path/path.htm",
-                        Interval = 17,
-                        Timeout = 17,
+                        IntervalInSeconds = 17,
+                        TimeoutInSeconds = 17,
                         UnhealthyThreshold = 5,
                         PickHostNameFromBackendHttpSettings = true,
                         Match = new ApplicationGatewayProbeHealthResponseMatch
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeout = 69,
+                        RequestTimeoutInSeconds = 69,
                         Probe = new WritableSubResource()
                         {
                             Id = GetChildAppGwResourceId(subscriptionId,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new ApplicationGatewayFrontendIPConfiguration()
                     {
                         Name = frontendIPConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         Subnet = new WritableSubResource()
                         {
                             Id = subnet.Id
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Network.Tests
                         Port = 80,
                         Protocol = ApplicationGatewayProtocol.Http,
                         CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
-                        RequestTimeout = 20,
+                        RequestTimeoutInSeconds = 20,
                     }
                 },
                 HttpListeners = {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
                     Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled);
-                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec);
+                    Assert.AreEqual(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSeconds);
                 }
                 else
                 {

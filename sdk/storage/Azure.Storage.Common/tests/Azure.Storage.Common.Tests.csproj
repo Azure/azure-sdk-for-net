@@ -17,6 +17,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
+    <Compile Remove="Shared\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
     <Compile Remove="AesGcmTests\*.cs" />
   </ItemGroup>

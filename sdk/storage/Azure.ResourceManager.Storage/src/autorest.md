@@ -25,7 +25,7 @@ request-path-to-singleton-resource:
 
 format-by-name-rules:
   'tenantId': 'uuid'
-  'etag': 'etag'
+  'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
@@ -52,6 +52,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   SAS: Sas
+  Etag: ETag
   
 directive:
   - rename-model:
@@ -93,6 +94,11 @@ directive:
               $.properties[key] = property;
           }
       }
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StorageAccountCheckNameAvailabilityParameters["x-ms-client-name"] = "StorageAccountNameAvailabilityContent";
+      $.StorageAccountCheckNameAvailabilityParameters.properties.type["x-ms-format"] = "resource-type";
   - from: swagger-document
     where: $.definitions.Encryption
     transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357 

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
-            Optional<IList<EnablementRules>> enabledRules = default;
+            Optional<IList<EnablementRule>> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnablementRules> array = new List<EnablementRules>();
+                    List<EnablementRule> array = new List<EnablementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new EnablementRules(item.GetString()));
+                        array.Add(new EnablementRule(item.GetString()));
                     }
                     enabledRules = array;
                     continue;

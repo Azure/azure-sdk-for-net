@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dynatrace
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SingleSignOnStates> singleSignOnState = default;
+            Optional<SingleSignOnState> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dynatrace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            singleSignOnState = new SingleSignOnStates(property0.Value.GetString());
+                            singleSignOnState = new SingleSignOnState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enterpriseAppId"))

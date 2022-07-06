@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnGateway");
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
-            if (Optional.IsDefined(P2SVpnGateway))
+            if (Optional.IsDefined(P2sVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway");
-                JsonSerializer.Serialize(writer, P2SVpnGateway);
+                JsonSerializer.Serialize(writer, P2sVpnGateway);
             }
             if (Optional.IsDefined(ExpressRouteGateway))
             {
