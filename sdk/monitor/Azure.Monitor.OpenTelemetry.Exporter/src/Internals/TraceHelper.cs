@@ -49,6 +49,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 monitorTags.Return();
                 telemetryItems.Add(telemetryItem);
+
+                foreach (var evnt in  activity.Events)
+                {
+                    if (evnt.Name == "exception")
+                    {
+                        // Do nothing.
+                        var exceptionTelemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                        GetExceptionTelemetryItem(evnt.Tags, exceptionTelemetryItem);
+                        telemetryItems.Add(exceptionTelemetryItem);
+                        break;
+                    }
+                }
             }
 
             return telemetryItems;
@@ -167,6 +179,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return activity.DisplayName;
+        }
+
+        internal static void GetExceptionTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityTags, TelemetryItem exceptionTelemetryItem)
+        {
+            string exceptionType = null;
+            string exceptionStackTrace = null;
+            string exceptionMessage = null;
+
+            foreach (var tag in activityTags)
+            {
+                if (tag.Key == SemanticConventions.AttributeExceptionType)
+                {
+                    exceptionType = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                {
+                    exceptionMessage = tag.Value.ToString();
+                    continue;
+                }
+                if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                {
+                    exceptionStackTrace = tag.Value.ToString();
+                    continue;
+                }
+            }
+
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage);
+
+            exceptionDetails.Stack = exceptionStackTrace;
+            exceptionDetails.TypeName = exceptionType;
+
+            List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();
+            exceptions.Add(exceptionDetails);
+
+            TelemetryExceptionData exceptionData = new TelemetryExceptionData(2, exceptions);
+
+            exceptionTelemetryItem.Data = new MonitorBase
+            {
+                BaseType = "ExceptionData",
+                BaseData = exceptionData,
+            };
         }
     }
 }
