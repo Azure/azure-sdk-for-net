@@ -180,6 +180,24 @@ directive:
   - from: swagger-document
     where: $.definitions.RoleEligibilityScheduleProperties.properties.roleEligibilityScheduleRequestId
     transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.ExpandedProperties.properties.roleDefinition.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.PolicyAssignmentProperties.properties.roleDefinition.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.ExpandedProperties.properties.scope.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.PolicyAssignmentProperties.properties.scope.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.PolicyAssignmentProperties.properties.policy.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: swagger-document
+    where: $.definitions.PolicyProperties.properties.scope.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
 
   # Rename models
   - rename-model:
