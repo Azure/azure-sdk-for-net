@@ -497,55 +497,52 @@ function GeneratePackage()
     Invoke-Generate -sdkfolder $projectFolder
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
-        exit 1
-    }
+        $result = "failed"
+    } else {
+        # Build
+        Write-Host "Start to build sdk: $projectFolder"
+        Invoke-Build -sdkfolder $projectFolder
+        if ( !$? ) {
+            Write-Error "Failed to build sdk. exit code: $?"
+            $result = "failed"
+        } else {
+            # pack
+            Write-Host "Start to pack sdk"
+            Invoke-Pack -sdkfolder $projectFolder
+            if ( !$? ) {
+                Write-Error "Failed to packe sdk. exit code: $?"
+            }
+            # Generate APIs
+            Write-Host "Start to export api for $service"
+            pwsh $sdkRootPath/eng/scripts/Export-API.ps1 $service
+            if ( !$? ) {
+                Write-Error "Failed to export api for sdk. exit code: $?"
+            }
+            # breaking change validation
+            $srcPath = Join-Path $projectFolder 'src'
+            Write-Host "Start to validate breaking change. srcPath:$srcPath"
+            $logFilePath = Join-Path "$srcPath" 'log.txt'
+            if (!(Test-Path $logFilePath)) {
+                New-Item $logFilePath
+            }
+            dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+            if (!$LASTEXITCODE) {
+                $hasBreakingChange = $false
+            }
+            else {
+                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+                $breakingChanges = $logFile -join ",`n"
+                $content = "Breaking Changes: $breakingChanges"
+                $hasBreakingChange = $true
+            }
 
-    # Build
-    Write-Host "Start to build sdk: $projectFolder"
-    Invoke-Build -sdkfolder $projectFolder
-    if ( !$? ) {
-        Write-Error "Failed to build sdk. exit code: $?"
-        exit 1
-    }
+            if (Test-Path $logFilePath) {
+                Remove-Item $logFilePath
+            }
+        }
 
-    # pack
-    Write-Host "Start to pack sdk"
-    Invoke-Pack -sdkfolder $projectFolder
-    if ( !$? ) {
-        Write-Error "Failed to packe sdk. exit code: $?"
-        exit 1
     }
-    # Generate APIs
-    Write-Host "Start to export api for $service"
-    pwsh $sdkRootPath/eng/scripts/Export-API.ps1 $service
-    if ( !$? ) {
-        Write-Error "Failed to export api for sdk. exit code: $?"
-        exit 1
-    }
-    # breaking change validation
-    $srcPath = Join-Path $projectFolder 'src'
-    Write-Host "Start to validate breaking change. srcPath:$srcPath"
-    $hasBreakingChange = $null
-    $content = $null
-    $logFilePath = Join-Path "$srcPath" 'log.txt'
-    if (!(Test-Path $logFilePath)) {
-        New-Item $logFilePath
-    }
-    dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
-    if (!$LASTEXITCODE) {
-        $hasBreakingChange = $false
-    }
-    else {
-        $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-        $breakingChanges = $logFile -join ",`n"
-        $content = "Breaking Changes: $breakingChanges"
-        $hasBreakingChange = $true
-    }
-
-    if (Test-Path $logFilePath) {
-        Remove-Item $logFilePath
-    }
-
+    
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
@@ -554,7 +551,7 @@ function GeneratePackage()
     # artifacts
     Push-Location $sdkRootPath
     $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
-    [string[]]$artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+    $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
     $apiViewArtifact = ""
     if ( $artifacts.count -le 0) {
         Write-Error "Failed to generate sdk artifact"
