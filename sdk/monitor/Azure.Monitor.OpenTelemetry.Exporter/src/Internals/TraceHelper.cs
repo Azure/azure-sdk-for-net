@@ -54,9 +54,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (evnt.Name == "exception")
                     {
-                        // Do nothing.
                         var exceptionTelemetryItem = new TelemetryItem("Exception" , activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                        GetExceptionTelemetryItem(evnt.Tags, exceptionTelemetryItem);
+                        SetExceptionDataOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
                         telemetryItems.Add(exceptionTelemetryItem);
                         break;
                     }
@@ -181,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        internal static void GetExceptionTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityTags, TelemetryItem exceptionTelemetryItem)
+        internal static void SetExceptionDataOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityTags, TelemetryItem exceptionTelemetryItem)
         {
             string exceptionType = null;
             string exceptionStackTrace = null;
