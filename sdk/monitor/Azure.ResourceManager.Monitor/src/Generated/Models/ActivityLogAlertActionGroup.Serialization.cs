@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ActivityLogAlertActionGroup DeserializeActivityLogAlertActionGroup(JsonElement element)
         {
-            string actionGroupId = default;
+            ResourceIdentifier actionGroupId = default;
             Optional<IDictionary<string, string>> webhookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupId"))
                 {
-                    actionGroupId = property.Value.GetString();
+                    actionGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("webhookProperties"))

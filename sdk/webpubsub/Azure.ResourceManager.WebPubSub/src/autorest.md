@@ -73,13 +73,6 @@ directive:
       to: ShareablePrivateLinkProperties
 
   - from: webpubsub.json
-    where: $.definitions.SharedPrivateLinkResourceStatus
-    transform: >
-        $["x-ms-enum"] = {
-            "name": "SharedPrivateLinkStatus",
-            "modelAsString": true
-        }
-  - from: webpubsub.json
     where: $.definitions.PrivateLinkResourceProperties.properties.shareablePrivateLinkResourceTypes
     transform: $["x-ms-client-name"] = "shareablePrivateLinkTypes"
   - from: webpubsub.json
@@ -88,6 +81,12 @@ directive:
   - from: webpubsub.json
     where: $.definitions.ProvisioningState
     transform: $["x-ms-enum"].name = "WebPubSubProvisioningState"
+  - from: webpubsub.json
+    where: $.definitions.SharedPrivateLinkResourceStatus
+    transform: $["x-ms-enum"].name = "WebPubSubSharedPrivateLinkStatus"
+  - from: webpubsub.json
+    where: $.definitions.Sku.properties.resourceType
+    transform: $['x-ms-format']= "resource-type"
 
   # rename classes with common names
   - rename-model:
@@ -110,4 +109,21 @@ directive:
   - from: webpubsub.json
     where: $.definitions.SharedPrivateLinkResourceProperties.properties.privateLinkResourceId
     transform: $['x-ms-format'] = 'arm-id'
+  - from: webpubsub.json
+    where: $.definitions.PrivateEndpoint.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: webpubsub.json
+    where: $.definitions.SignalRServiceUsage.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+
+  # Rename some class names of  boolean types
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
+    transform: $["x-ms-client-name"] = 'isClientCertEnabled'
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubProperties.properties.disableAadAuth
+    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
+    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
 ```
