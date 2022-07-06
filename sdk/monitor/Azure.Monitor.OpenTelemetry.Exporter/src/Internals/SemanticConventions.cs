@@ -145,7 +145,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const string AttributeExceptionType = "exception.type";
         public const string AttributeExceptionMessage = "exception.message";
         public const string AttributeExceptionStacktrace = "exception.stacktrace";
-
     }
 }
-s
