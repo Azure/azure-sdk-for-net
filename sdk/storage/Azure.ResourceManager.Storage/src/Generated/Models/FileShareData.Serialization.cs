@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
             Optional<long> shareUsageBytes = default;
             Optional<LeaseStatus> leaseStatus = default;
             Optional<LeaseState> leaseState = default;
-            Optional<LeaseDurationType> leaseDuration = default;
+            Optional<LeaseDuration> leaseDuration = default;
             Optional<IList<SignedIdentifier>> signedIdentifiers = default;
             Optional<DateTimeOffset> snapshotTime = default;
             foreach (var property in element.EnumerateObject())
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDurationType(property0.Value.GetString());
+                            leaseDuration = new LeaseDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("signedIdentifiers"))

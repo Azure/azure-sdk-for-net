@@ -22,6 +22,7 @@ override-operation-name:
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}: inventoryPolicies/default
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -63,7 +64,6 @@ prepend-rp-prefix:
 - CustomDomain
 - DnsEndpointType
 - ListKeyExpand
-- MigrationState # is this OK?
 - MinimumTlsVersion
 - ProvisioningState
 - PermissionScope
@@ -116,7 +116,6 @@ rename-mapping:
   LastAccessTimeTrackingPolicy.enable: IsEnabled
   HttpProtocol: StorageAccountHttpProtocol
   Name: LastAccessTimeTrackingPolicyName
-  LeaseDuration: LeaseDurationType
   BlobContainer.properties.leaseDuration: LeaseDuration
   FileShare.properties.leaseDuration: LeaseDuration
   ManagementPolicyRule.enabled: IsEnabled
@@ -141,6 +140,8 @@ rename-mapping:
   StorageAccountSkuConversionStatus.endTime: EndOn
   SkuConversionStatus: StorageAccountSkuConversionState
   PrivateLinkResource: StoragePrivateLinkResourceData
+  MigrationState: ImmutableStorageWithVersioningMigrationState
+  AccessPolicy: StorageServiceAccessPolicy
 
 directive:
   - from: swagger-document

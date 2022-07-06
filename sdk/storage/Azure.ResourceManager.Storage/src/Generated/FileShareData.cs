@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Lease state of the share. </summary>
         public LeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </summary>
-        public LeaseDurationType? LeaseDuration { get; }
+        public LeaseDuration? LeaseDuration { get; }
         /// <summary> List of stored access policies specified on the share. </summary>
         public IList<SignedIdentifier> SignedIdentifiers { get; }
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </summary>

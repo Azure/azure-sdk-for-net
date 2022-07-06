@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class AccessPolicy : IUtf8JsonSerializable
+    public partial class StorageServiceAccessPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndObject();
         }
 
-        internal static AccessPolicy DeserializeAccessPolicy(JsonElement element)
+        internal static StorageServiceAccessPolicy DeserializeStorageServiceAccessPolicy(JsonElement element)
         {
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> expiryTime = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new AccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission.Value);
+            return new StorageServiceAccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission.Value);
         }
     }
 }

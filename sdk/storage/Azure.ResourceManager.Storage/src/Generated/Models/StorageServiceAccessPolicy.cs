@@ -9,19 +9,19 @@ using System;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The AccessPolicy. </summary>
-    public partial class AccessPolicy
+    /// <summary> The StorageServiceAccessPolicy. </summary>
+    public partial class StorageServiceAccessPolicy
     {
-        /// <summary> Initializes a new instance of AccessPolicy. </summary>
-        public AccessPolicy()
+        /// <summary> Initializes a new instance of StorageServiceAccessPolicy. </summary>
+        public StorageServiceAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessPolicy. </summary>
+        /// <summary> Initializes a new instance of StorageServiceAccessPolicy. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> List of abbreviated permissions. </param>
-        internal AccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission)
+        internal StorageServiceAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission)
         {
             StartOn = startOn;
             ExpireOn = expireOn;

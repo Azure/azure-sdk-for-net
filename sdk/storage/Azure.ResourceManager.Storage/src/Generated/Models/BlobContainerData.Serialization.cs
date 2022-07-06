@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<LeaseStatus> leaseStatus = default;
             Optional<LeaseState> leaseState = default;
-            Optional<LeaseDurationType> leaseDuration = default;
+            Optional<LeaseDuration> leaseDuration = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<ImmutabilityPolicyProperties> immutabilityPolicy = default;
             Optional<LegalHoldProperties> legalHold = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDurationType(property0.Value.GetString());
+                            leaseDuration = new LeaseDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metadata"))

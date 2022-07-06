@@ -100,37 +100,11 @@ namespace Azure.ResourceManager.Storage
             return new ManagementPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
         }
 
-        /// <summary> Gets a collection of BlobInventoryPolicyResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of BlobInventoryPolicyResources and their operations over a BlobInventoryPolicyResource. </returns>
-        public virtual BlobInventoryPolicyCollection GetBlobInventoryPolicies()
+        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
         {
-            return GetCachedClient(Client => new BlobInventoryPolicyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BlobInventoryPolicyResource>> GetBlobInventoryPolicyAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetBlobInventoryPolicies().GetAsync(blobInventoryPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<BlobInventoryPolicyResource> GetBlobInventoryPolicy(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetBlobInventoryPolicies().Get(blobInventoryPolicyName, cancellationToken);
+            return new BlobInventoryPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/inventoryPolicies/default"));
         }
 
         /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
