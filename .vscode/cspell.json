@@ -269,7 +269,15 @@
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
-	{
+    {
+      "filename": "**/sdk/hdinsight/**/*.cs",
+      "words": [
+        "aadds",
+        "ldaps",
+        "oaep"
+      ]
+    },
+    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "Edifact",

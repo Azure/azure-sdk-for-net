@@ -20,6 +20,7 @@ pr:
   paths:
     include:
     - sdk/hdinsight/
+    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,3 +30,5 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.HDInsight.Job
       safeName: MicrosoftAzureHDInsightJob
+    - name: Azure.ResourceManager.HDInsight
+      safeName: AzureResourceManagerHDInsight
