@@ -126,12 +126,4 @@ directive:
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
     transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
-
-
-
-
-
-
-
-
 ```
