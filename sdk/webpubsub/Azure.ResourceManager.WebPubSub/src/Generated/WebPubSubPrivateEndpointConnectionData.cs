@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Private endpoint associated with the private endpoint connection. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> Full qualified Id of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             set

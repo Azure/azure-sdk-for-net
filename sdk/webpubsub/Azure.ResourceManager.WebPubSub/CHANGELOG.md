@@ -15,6 +15,7 @@
 - Type `SharedPrivateLinkResource` renamed to `WebPubSubSharedPrivateLink`.
 - Type `NameAvailability` renamed to `WebPubSubNameAvailability`.
 - Type `NameAvailabilityParameters` renamed to `WebPubSubNameAvailabilityParameters`.
+- Type `SharedPrivateLinkResourceStatus` renamed to `WebPubSubSharedPrivateLinkResourceStatus`.
 - Type of `privateLinkResourceId` change to `ResourceIdentifier`
 
 ### Bugs Fixed
