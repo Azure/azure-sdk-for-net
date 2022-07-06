@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/managedserviceidentities/
+    - sdk/managedserviceidentity/
 
 pr:
   branches:
@@ -19,12 +19,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/managedserviceidentities/
+    - sdk/managedserviceidentity/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: managedserviceidentities
+    ServiceDirectory: managedserviceidentity
     ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager.ManagedServiceIdentities
