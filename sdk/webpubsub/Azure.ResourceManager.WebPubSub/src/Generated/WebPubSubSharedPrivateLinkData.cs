@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, SharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
+        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, WebPubSubSharedPrivateLinkStatus? status) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
         public string RequestMessage { get; set; }
         /// <summary> Status of the shared private link resource. </summary>
-        public SharedPrivateLinkStatus? Status { get; }
+        public WebPubSubSharedPrivateLinkStatus? Status { get; }
     }
 }

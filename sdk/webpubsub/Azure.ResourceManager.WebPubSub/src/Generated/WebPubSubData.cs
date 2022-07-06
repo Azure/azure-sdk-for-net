@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// When it&apos;s Enabled, network ACLs still apply.
         /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
-        /// <param name="disableLocalAuth">
+        /// <param name="isDisableLocalAuth">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won&apos;t work.
         /// </param>
-        /// <param name="disableAadAuth">
+        /// <param name="isDisableAadAuth">
         /// DisableLocalAuth
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isDisableLocalAuth, bool? isDisableAadAuth) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceLogConfiguration = resourceLogConfiguration;
             NetworkAcls = networkAcls;
             PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
-            DisableAadAuth = disableAadAuth;
+            IsDisableLocalAuth = isDisableLocalAuth;
+            IsDisableAadAuth = isDisableAadAuth;
         }
 
         /// <summary> The billing information of the resource.(e.g. Free, Standard). </summary>
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> TLS settings. </summary>
         internal WebPubSubTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
-        public bool? ClientCertEnabled
+        public bool? IsClientCertEnabled
         {
-            get => Tls is null ? default : Tls.ClientCertEnabled;
+            get => Tls is null ? default : Tls.IsClientCertEnabled;
             set
             {
                 if (Tls is null)
                     Tls = new WebPubSubTlsSettings();
-                Tls.ClientCertEnabled = value;
+                Tls.IsClientCertEnabled = value;
             }
         }
 
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won&apos;t work.
         /// </summary>
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsDisableLocalAuth { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </summary>
-        public bool? DisableAadAuth { get; set; }
+        public bool? IsDisableAadAuth { get; set; }
     }
 }
