@@ -490,7 +490,7 @@ function GeneratePackage()
     $apiViewArtifact = ""
     $hasBreakingChange = $null
     $content = $null
-    $result = ""
+    $result = "succeeded"
 
     # Generate Code
     Write-Host "Start to generate sdk $projectFolder"
