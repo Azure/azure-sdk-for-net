@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     public class SviCRUDTests : WorkloadsManagementTestBase
     {
         public SviCRUDTests(bool isAsync) : base(isAsync)
-        {  }
+        {
+            JsonPathSanitizers.Add("$.properties.configuration.infrastructureConfiguration.virtualMachineConfiguration" +
+                ".osProfile.osConfiguration.ssh.publicKeys.[*].keyData");
+            JsonPathSanitizers.Add("$.properties.configuration.softwareConfiguration.sshPrivateKey");
+        }
 
         [OneTimeTearDown]
         public void Cleanup()
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         /// <summary>
         /// The Get Ops Extension Status Interval.
         /// </summary>
-        private const int GetStatusIntervalinMillis = 10000;
+        private const int GetStatusIntervalinMillis = 2000;
 
         /// <summary>
         /// The SVI CRUD test that creates and installs
@@ -45,7 +49,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         [RecordedTest]
         public async Task TestSVICrudOperations()
         {
-            string SviName = "F97";
+            string sviName = "F97";
             // Create Test RG
             var resourceGroupName = Recording.GenerateAssetName("SdkRg-SVICrud");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -54,37 +58,37 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 resourceGroupName,
                 AzureLocation.EastUS);
 
-            SapVirtualInstanceData SviCreatePayload = this.GetSingleServerPayloadToPut(rg.Data.Name, false);
+            SapVirtualInstanceData sviCreatePayload = this.GetSingleServerPayloadToPut(rg.Data.Name, false);
 
             // Create SVI
             try
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: SviName,
-                    data: SviCreatePayload);
+                    sapVirtualInstanceName: sviName,
+                    data: sviCreatePayload);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            SapVirtualInstanceData SviInstallPayload = this.GetSingleServerPayloadToPut(rg.Data.Name, true);
+            SapVirtualInstanceData sviInstallPayload = this.GetSingleServerPayloadToPut(rg.Data.Name, true);
 
             // Install SVI
             try
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances().CreateOrUpdateAsync(
                     waitUntil: WaitUntil.Completed,
-                    sapVirtualInstanceName: SviName,
-                    data: SviInstallPayload);
+                    sapVirtualInstanceName: sviName,
+                    data: sviInstallPayload);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-            var sviObject1 = await rg.GetSapVirtualInstanceAsync(SviName);
+            var sviObject1 = await rg.GetSapVirtualInstanceAsync(sviName);
 
             // Delete RG
             await rg.DeleteAsync(WaitUntil.Completed);
@@ -190,27 +194,23 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             var testSapWorkloadJson = File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName));
 
-            // Updating payload at runtme.
-            dynamic dynamicObject = JsonConvert.DeserializeObject<dynamic>(testSapWorkloadJson);
+            var sapPayloadJson = JsonDocument.Parse(testSapWorkloadJson).RootElement;
+            SapVirtualInstanceData sviPayload = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(
+                sapPayloadJson);
 
-            dynamicObject.properties.configuration.infrastructureConfiguration.appResourceGroup =
-                infraRgName;
-            dynamicObject.properties.configuration.infrastructureConfiguration.
-                virtualMachineConfiguration.osProfile.osConfiguration.ssh.publicKeys[0].keyData =
-                    sshPublicKey;
+            ((DeploymentConfiguration)sviPayload.Configuration).InfrastructureConfiguration.AppResourceGroup = infraRgName;
+
+            ((LinuxConfiguration)((SingleServerConfiguration)((DeploymentConfiguration)sviPayload.Configuration).InfrastructureConfiguration)
+                .VirtualMachineConfiguration.OSProfile.OSConfiguration).Ssh.PublicKeys[0] = new SshPublicKey(sshPublicKey);
 
             if (isInstall)
             {
                 string sshPrivateKey = File.ReadAllText(Path.Combine(
                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SshKeyPrivate.txt"));
-                dynamicObject.properties.configuration.softwareConfiguration.sshPrivateKey =
-                    sshPrivateKey;
+                ((ServiceInitiatedSoftwareConfiguration)((DeploymentConfiguration)sviPayload.Configuration)
+                    .SoftwareConfiguration).SshPrivateKey = sshPrivateKey;
             }
-
-            // Converting Json payload to SVI Payload.
-            var sapPayloadJson = JsonDocument.Parse(JsonConvert.SerializeObject(dynamicObject)).RootElement;
-
-            return SapVirtualInstanceData.DeserializeSapVirtualInstanceData(sapPayloadJson);
+            return sviPayload;
         }
     }
 }

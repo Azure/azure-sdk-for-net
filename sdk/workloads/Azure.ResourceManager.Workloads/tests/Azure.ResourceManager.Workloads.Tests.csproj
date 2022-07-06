@@ -6,22 +6,12 @@
     <Folder Include="SessionRecords\SviCRUDTests\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="SingleServerInstall.json">
+    <None Update="*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Update="SingleServerCreate.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="SshKeyPrivate.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="SshKeyPublic.txt">
+    <None Update="*.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
