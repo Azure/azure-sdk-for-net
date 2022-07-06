@@ -586,6 +586,7 @@ function UpdateExistingSDKByInputFiles()
         [string]$sdkRootPath,
         [string]$headSha = "",
         [string]$repoHttpsUrl,
+        [string]$downloadUrlPrefix="",
         [object]$generatedSDKPackages
     )
 
@@ -622,7 +623,7 @@ function UpdateExistingSDKByInputFiles()
         if (!$serviceWithReadme.Contains($matches["service"])) {
             $inputFileToGen.Add($file)
         }
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
     }
     
 }

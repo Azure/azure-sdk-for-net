@@ -14,6 +14,7 @@ $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFiles = $inputJson.relatedReadmeMdFiles
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
+$downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 [string] $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfigYaml = ""
@@ -60,7 +61,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         $readmeFiles[$i] = $readme
         $autorestConfigYaml = ConvertTo-YAML $yml
     }
-    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -generatedSDKPackages $generatedSDKPackages
+    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
 #update services without readme.md
@@ -78,7 +79,7 @@ foreach( $file in $inputFilePaths) {
 }
 
 if ($inputFileToGen.Count -gt 0 ) {
-    UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -generatedSDKPackages $generatedSDKPackages
+    UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
 $outputJson = [PSCustomObject]@{
