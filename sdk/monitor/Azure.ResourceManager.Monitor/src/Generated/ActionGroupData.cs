@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
-        /// <param name="enabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
         /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
         /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
         /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <param name="kind"> Azure resource kind. </param>
         /// <param name="identity"> Azure resource identity. </param>
-        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? enabled, IList<EmailReceiver> emailReceivers, IList<SmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<ItsmReceiver> itsmReceivers, IList<AzureAppPushReceiver> azureAppPushReceivers, IList<AutomationRunbookReceiver> automationRunbookReceivers, IList<VoiceReceiver> voiceReceivers, IList<LogicAppReceiver> logicAppReceivers, IList<AzureFunctionReceiver> azureFunctionReceivers, IList<ArmRoleReceiver> armRoleReceivers, IList<EventHubReceiver> eventHubReceivers, string kind, string identity) : base(id, name, resourceType, systemData, tags, location)
+        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<EmailReceiver> emailReceivers, IList<SmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<ItsmReceiver> itsmReceivers, IList<AzureAppPushReceiver> azureAppPushReceivers, IList<AutomationRunbookReceiver> automationRunbookReceivers, IList<VoiceReceiver> voiceReceivers, IList<LogicAppReceiver> logicAppReceivers, IList<AzureFunctionReceiver> azureFunctionReceivers, IList<ArmRoleReceiver> armRoleReceivers, IList<EventHubReceiver> eventHubReceivers, string kind, string identity) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupShortName = groupShortName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             EmailReceivers = emailReceivers;
             SmsReceivers = smsReceivers;
             WebhookReceivers = webhookReceivers;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The short name of the action group. This will be used in SMS messages. </summary>
         public string GroupShortName { get; set; }
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The list of email receivers that are part of this action group. </summary>
         public IList<EmailReceiver> EmailReceivers { get; }
         /// <summary> The list of SMS receivers that are part of this action group. </summary>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Alert severity {0, 1, 2, 3, 4}. </summary>
         public int? Severity { get; set; }
         /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> the list of resource id&apos;s that this metric alert is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? AutoMitigate { get; set; }
+        public bool? IsAutoMitigate { get; set; }
         /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
         public IList<MetricAlertAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>
