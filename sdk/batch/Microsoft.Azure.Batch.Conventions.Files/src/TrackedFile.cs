@@ -18,8 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
 using System.IO;
 
 namespace Microsoft.Azure.Batch.Conventions.Files
@@ -29,12 +28,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         public static readonly TimeSpan DefaultFlushInterval = TimeSpan.FromMinutes(1);
 
         private readonly Timer _timer;
-        private readonly CloudAppendBlob _blob;
+        private readonly AppendBlobClient _blob;
         private readonly string _filePath;
         private long _flushPointer = 0;
         private readonly object _lock = new object();
 
-        public TrackedFile(string filePath, CloudAppendBlob blob, TimeSpan interval)
+        public TrackedFile(string filePath, AppendBlobClient blob, TimeSpan interval)
         {
             _filePath = filePath;
             _blob = blob;
@@ -78,9 +77,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
                 using (var stm = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    stm.Seek(_flushPointer, SeekOrigin.Begin);
-                    _blob.AppendFromStreamAsync(stm, uploadPointer - _flushPointer).GetAwaiter().GetResult();
-                    _flushPointer = uploadPointer;
+                    //Open a stream to write to the blob
+                    using (var appendBlobStream = _blob.OpenWrite(false))
+                    {
+                        stm.Seek(_flushPointer, SeekOrigin.Begin);
+                        stm.CopyTo(appendBlobStream);
+                        _flushPointer = uploadPointer;
+                    }
                 }
             }
             catch (Exception ex)

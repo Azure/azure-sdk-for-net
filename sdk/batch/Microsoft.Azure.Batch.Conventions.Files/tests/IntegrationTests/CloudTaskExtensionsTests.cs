@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             {
                 var task = await batchClient.JobOperations.GetTaskAsync(_jobId, _taskId);
 
-                await task.OutputStorage(StorageAccount).SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"));
+                await task.OutputStorage(blobClient).SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"));
 
-                var blobs = task.OutputStorage(StorageAccount).ListOutputs(TaskOutputKind.TaskOutput).ToList();
+                var blobs = task.OutputStorage(blobClient).ListOutputs(TaskOutputKind.TaskOutput).ToList();
                 Assert.NotEmpty(blobs);
                 Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskOutput/Files/TestText1.txt"));
                 Assert.Collection(blobs, b => b.Uri.AbsoluteUri.StartsWith(task.GetOutputStoragePath(TaskOutputKind.TaskOutput)));
