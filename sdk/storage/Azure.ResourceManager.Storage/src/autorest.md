@@ -102,6 +102,7 @@ rename-mapping:
   EncryptionIdentity: StorageAccountEncryptionIdentity
   EncryptionServices: StorageAccountEncryptionServices
   EncryptionService: StorageEncryptionService
+  EncryptionService.enabled: IsEnabled
   Endpoints: StorageAccountEndpoints
   KeySource: StorageAccountKeySource
   KeyType: StorageKeyType
@@ -122,8 +123,7 @@ rename-mapping:
   RuleType: ManagementPolicyRuleType
   Permissions: AccountSasPermission
   Services: AccountSasSignedService
-  AccountSasParameters.signedResourceTypes: ResourceType
-  AccountSasParameters.signedPermission: Permission
+  AccountSasParameters.signedExpiry: SharedAccessExpireOn
   SignedResourceTypes: AccountSasSignedResourceType
   SignedResource: ServiceSasSignedResourceType
   Reason: StorageAccountNameUnavailableReason
@@ -194,6 +194,9 @@ directive:
     transform: $["format"] = "date-time";
   - from: swagger-document
     where: $.definitions.PrivateLinkResourceProperties.properties.groupId
+    transform: $["x-ms-format"] = "arm-id";
+  - from: swagger-document
+    where: $.definitions.ResourceAccessRule.properties.resourceId
     transform: $["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.Encryption

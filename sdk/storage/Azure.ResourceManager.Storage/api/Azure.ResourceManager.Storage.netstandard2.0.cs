@@ -739,14 +739,14 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class AccountSasContent
     {
-        public AccountSasContent(Azure.ResourceManager.Storage.Models.AccountSasSignedService services, Azure.ResourceManager.Storage.Models.AccountSasSignedResourceType resourceType, Azure.ResourceManager.Storage.Models.AccountSasPermission permission, System.DateTimeOffset sharedAccessExpiryOn) { }
+        public AccountSasContent(Azure.ResourceManager.Storage.Models.AccountSasSignedService services, Azure.ResourceManager.Storage.Models.AccountSasSignedResourceType resourceTypes, Azure.ResourceManager.Storage.Models.AccountSasPermission permissions, System.DateTimeOffset sharedAccessExpireOn) { }
         public string IPAddressOrRange { get { throw null; } set { } }
         public string KeyToSign { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.AccountSasPermission Permission { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.AccountSasPermission Permissions { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol? Protocols { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.AccountSasSignedResourceType ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.AccountSasSignedResourceType ResourceTypes { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.AccountSasSignedService Services { get { throw null; } }
-        public System.DateTimeOffset SharedAccessExpiryOn { get { throw null; } }
+        public System.DateTimeOffset SharedAccessExpireOn { get { throw null; } }
         public System.DateTimeOffset? SharedAccessStartOn { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1999,7 +1999,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountResourceAccessRule
     {
         public StorageAccountResourceAccessRule() { }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class StorageAccountSasPolicy
@@ -2083,7 +2083,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageEncryptionService
     {
         public StorageEncryptionService() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageKeyType? KeyType { get { throw null; } set { } }
         public System.DateTimeOffset? LastEnabledOn { get { throw null; } }
     }

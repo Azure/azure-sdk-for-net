@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("signedServices");
             writer.WriteStringValue(Services.ToString());
             writer.WritePropertyName("signedResourceTypes");
-            writer.WriteStringValue(ResourceType.ToString());
+            writer.WriteStringValue(ResourceTypes.ToString());
             writer.WritePropertyName("signedPermission");
-            writer.WriteStringValue(Permission.ToString());
+            writer.WriteStringValue(Permissions.ToString());
             if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp");
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry");
-            writer.WriteStringValue(SharedAccessExpiryOn, "O");
+            writer.WriteStringValue(SharedAccessExpireOn, "O");
             if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign");
