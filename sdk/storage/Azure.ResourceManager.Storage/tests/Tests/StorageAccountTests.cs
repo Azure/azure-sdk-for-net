@@ -1604,9 +1604,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId.ToString());
-            Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1", account.Data.NetworkRuleSet.ResourceAccessRules[0].ResourceId);
+            Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1", account.Data.NetworkRuleSet.ResourceAccessRules[0].ResourceId.ToString());
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[1].TenantId.ToString());
-            Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.Data.NetworkRuleSet.ResourceAccessRules[1].ResourceId);
+            Assert.AreEqual("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2", account.Data.NetworkRuleSet.ResourceAccessRules[1].ResourceId.ToString());
 
             //delete vnet
             updateParameters = new StorageAccountPatch
@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRagrs));
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
             int i = 100;
-            string location = account.Data.Location;
+            string location;
             do
             {
                 account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account = await account.GetAsync();
 
             Assert.AreEqual(StorageSkuName.StandardLRS, account.Data.Sku.Name);
-            Assert.AreEqual(location, account.Data.PrimaryLocation);
+            Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
         }
 
         [Test]
