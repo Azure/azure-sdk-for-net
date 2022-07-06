@@ -85,12 +85,6 @@ directive:
     where: $.definitions.SharedPrivateLinkResourceStatus
     transform: $["x-ms-enum"].name = "WebPubSubSharedPrivateLinkStatus"
   - from: webpubsub.json
-    where: $.definitions.LiveTraceCategory.properties.enabled
-    transform: $.type= "boolean"
-  - from: webpubsub.json
-    where: $.definitions.LiveTraceCategory.properties.enabled
-    transform: $["x-ms-client-name"]= "isEnabled"
-  - from: webpubsub.json
     where: $.definitions.Sku.properties.resourceType
     transform: $['x-ms-format']= "resource-type"
 

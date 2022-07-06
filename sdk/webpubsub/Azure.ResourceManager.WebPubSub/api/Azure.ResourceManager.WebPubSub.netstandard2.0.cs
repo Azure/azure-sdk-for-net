@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public WebPubSubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public bool? ClientCertEnabled { get { throw null; } set { } }
-        public bool? DisableAadAuth { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
         public string ExternalIP { get { throw null; } }
         public string HostName { get { throw null; } }
         public string HostNamePrefix { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.ManagedIdentity Identity { get { throw null; } set { } }
+        public bool? IsClientCertEnabled { get { throw null; } set { } }
+        public bool? IsDisableAadAuth { get { throw null; } set { } }
+        public bool? IsDisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration LiveTraceConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls NetworkAcls { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WebPubSub
         public WebPubSubPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public string PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class WebPubSubPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.WebPubSub
         public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus? Status { get { throw null; } }
     }
     public partial class WebPubSubSharedPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -332,32 +332,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties Properties { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SharedPrivateLinkStatus : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SharedPrivateLinkStatus(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus Approved { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus Disconnected { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus Pending { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus Rejected { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus Timeout { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus left, Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus left, Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SignalRServiceUsage
     {
         internal SignalRServiceUsage() { }
         public long? CurrentValue { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName Name { get { throw null; } }
         public string Unit { get { throw null; } }
@@ -525,11 +504,32 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebPubSubSharedPrivateLinkStatus : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebPubSubSharedPrivateLinkStatus(string value) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus Disconnected { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus Rejected { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus Timeout { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus left, Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus left, Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WebPubSubSku
     {
         internal WebPubSubSku() { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.BillingInfoSku Sku { get { throw null; } }
     }
     public partial class WebPubSubSkuCapacity

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
-            categories.Add(new LiveTraceCategory("category-01", true));
+            categories.Add(new LiveTraceCategory("category-01", "true"));
 
             AclAction aclAction = new AclAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();

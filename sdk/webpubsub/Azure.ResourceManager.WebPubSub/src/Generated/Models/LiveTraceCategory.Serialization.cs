@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteStringValue(Enabled);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         internal static LiveTraceCategory DeserializeLiveTraceCategory(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<bool> enabled = default;
+            Optional<string> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,16 +41,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (property.NameEquals("enabled"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    enabled = property.Value.GetBoolean();
+                    enabled = property.Value.GetString();
                     continue;
                 }
             }
-            return new LiveTraceCategory(name.Value, Optional.ToNullable(enabled));
+            return new LiveTraceCategory(name.Value, enabled.Value);
         }
     }
 }

@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
-        /// <param name="isEnabled">
+        /// <param name="enabled">
         /// Indicates whether or the live trace category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        internal LiveTraceCategory(string name, bool? isEnabled)
+        internal LiveTraceCategory(string name, string enabled)
         {
             Name = name;
-            IsEnabled = isEnabled;
+            Enabled = enabled;
         }
 
         /// <summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>
-        public bool? IsEnabled { get; set; }
+        public string Enabled { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
 
             // Use the same location as the resource group
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
-            categories.Add(new LiveTraceCategory("category-01", true));
+            categories.Add(new LiveTraceCategory("category-01", "true"));
 
             AclAction aclAction = new AclAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
