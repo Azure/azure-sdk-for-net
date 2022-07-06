@@ -117,8 +117,8 @@ rename-mapping:
   HttpProtocol: StorageAccountHttpProtocol
   Name: LastAccessTimeTrackingPolicyName
   LeaseDuration: LeaseDurationType
-  BlobContainer.properties.leaseDuration: LeaseDurationType
-  FileShare.properties.leaseDuration: LeaseDurationType
+  BlobContainer.properties.leaseDuration: LeaseDuration
+  FileShare.properties.leaseDuration: LeaseDuration
   ManagementPolicyRule.enabled: IsEnabled
   RuleType: ManagementPolicyRuleType
   Permissions: AccountSasPermission

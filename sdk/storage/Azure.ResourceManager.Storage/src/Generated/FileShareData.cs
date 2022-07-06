@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
         /// <param name="leaseStatus"> The lease status of the share. </param>
         /// <param name="leaseState"> Lease state of the share. </param>
-        /// <param name="leaseDurationType"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDurationType, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage
             ShareUsageBytes = shareUsageBytes;
             LeaseStatus = leaseStatus;
             LeaseState = leaseState;
-            LeaseDurationType = leaseDurationType;
+            LeaseDuration = leaseDuration;
             SignedIdentifiers = signedIdentifiers;
             SnapshotOn = snapshotOn;
             ETag = eTag;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Lease state of the share. </summary>
         public LeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </summary>
-        public LeaseDurationType? LeaseDurationType { get; }
+        public LeaseDurationType? LeaseDuration { get; }
         /// <summary> List of stored access policies specified on the share. </summary>
         public IList<SignedIdentifier> SignedIdentifiers { get; }
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </summary>

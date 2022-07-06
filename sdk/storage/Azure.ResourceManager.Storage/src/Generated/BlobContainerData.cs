@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
         /// <param name="leaseStatus"> The lease status of the container. </param>
         /// <param name="leaseState"> Lease state of the container. </param>
-        /// <param name="leaseDurationType"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
+        /// <param name="leaseDuration"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
         /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
         /// <param name="immutabilityPolicy"> The ImmutabilityPolicy property of the container. </param>
         /// <param name="legalHold"> The LegalHold property of the container. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDurationType, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccess? publicAccess, DateTimeOffset? lastModifiedOn, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Version = version;
             Deleted = deleted;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
             LastModifiedOn = lastModifiedOn;
             LeaseStatus = leaseStatus;
             LeaseState = leaseState;
-            LeaseDurationType = leaseDurationType;
+            LeaseDuration = leaseDuration;
             Metadata = metadata;
             ImmutabilityPolicy = immutabilityPolicy;
             LegalHold = legalHold;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Lease state of the container. </summary>
         public LeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </summary>
-        public LeaseDurationType? LeaseDurationType { get; }
+        public LeaseDurationType? LeaseDuration { get; }
         /// <summary> A name-value pair to associate with the container as metadata. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The ImmutabilityPolicy property of the container. </summary>

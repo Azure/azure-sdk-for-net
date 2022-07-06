@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyProperties ImmutabilityPolicy { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning ImmutableStorageWithVersioning { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.LeaseDurationType? LeaseDurationType { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.LeaseDurationType? LeaseDuration { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseState? LeaseState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseStatus? LeaseStatus { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LegalHoldProperties LegalHold { get { throw null; } }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? EnabledProtocol { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.LeaseDurationType? LeaseDurationType { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.LeaseDurationType? LeaseDuration { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseState? LeaseState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LeaseStatus? LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }

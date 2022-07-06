@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
-            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDurationType);
+            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDuration);
             Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
-            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDurationType);
+            Assert.AreEqual(LeaseDurationType.Fixed, share.Data.LeaseDuration);
             Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
