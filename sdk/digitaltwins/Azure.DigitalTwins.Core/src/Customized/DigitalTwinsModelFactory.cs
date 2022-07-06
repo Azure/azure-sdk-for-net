@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
+#nullable enable
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for read-only models. </summary>
