@@ -26,7 +26,6 @@ Nightly builds are available from this feed: `https://pkgs.dev.azure.com/azure-s
 
 These are provided without support and are not intended for production workloads.
 
-
 ### Authenticate the client
 
 Exporter does not use authentication. 
