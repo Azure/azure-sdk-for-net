@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutomationRunbookReceiver DeserializeAutomationRunbookReceiver(JsonElement element)
         {
-            string automationAccountId = default;
+            ResourceIdentifier automationAccountId = default;
             string runbookName = default;
-            string webhookResourceId = default;
+            ResourceIdentifier webhookResourceId = default;
             bool isGlobalRunbook = default;
             Optional<string> name = default;
             Optional<Uri> serviceUri = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("automationAccountId"))
                 {
-                    automationAccountId = property.Value.GetString();
+                    automationAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("runbookName"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("webhookResourceId"))
                 {
-                    webhookResourceId = property.Value.GetString();
+                    webhookResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isGlobalRunbook"))

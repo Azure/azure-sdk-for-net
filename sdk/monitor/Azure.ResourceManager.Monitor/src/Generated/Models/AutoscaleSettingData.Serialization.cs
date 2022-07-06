@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("notifications");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WriteStringValue(AutoscaleSettingName);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(TargetResourceLocation))
             {
                 writer.WritePropertyName("targetResourceLocation");
-                writer.WriteStringValue(TargetResourceLocation);
+                writer.WriteStringValue(TargetResourceLocation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<AutoscaleNotification>> notifications = default;
             Optional<bool> enabled = default;
             Optional<string> name0 = default;
-            Optional<string> targetResourceUri = default;
-            Optional<string> targetResourceLocation = default;
+            Optional<ResourceIdentifier> targetResourceUri = default;
+            Optional<AzureLocation> targetResourceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -193,19 +193,29 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("targetResourceUri"))
                         {
-                            targetResourceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceUri = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetResourceLocation"))
                         {
-                            targetResourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            targetResourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, targetResourceLocation.Value);
+            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation));
         }
     }
 }
