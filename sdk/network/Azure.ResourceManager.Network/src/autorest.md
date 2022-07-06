@@ -134,6 +134,7 @@ rename-rules:
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2
+  Stag: STag
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

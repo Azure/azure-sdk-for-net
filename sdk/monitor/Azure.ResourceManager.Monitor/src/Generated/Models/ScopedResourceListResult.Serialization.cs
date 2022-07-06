@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static ScopedResourceListResult DeserializeScopedResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ScopedPrivateLinkData>> value = default;
+            Optional<IReadOnlyList<PrivateLinkScopedResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScopedPrivateLinkData> array = new List<ScopedPrivateLinkData>();
+                    List<PrivateLinkScopedResourceData> array = new List<PrivateLinkScopedResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopedPrivateLinkData.DeserializeScopedPrivateLinkData(item));
+                        array.Add(PrivateLinkScopedResourceData.DeserializePrivateLinkScopedResourceData(item));
                     }
                     value = array;
                     continue;

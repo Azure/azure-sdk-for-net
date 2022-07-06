@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static AzureFunctionReceiver DeserializeAzureFunctionReceiver(JsonElement element)
         {
             string name = default;
-            string functionAppResourceId = default;
+            ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
             Uri httpTriggerUrl = default;
             Optional<bool> useCommonAlertSchema = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("functionAppResourceId"))
                 {
-                    functionAppResourceId = property.Value.GetString();
+                    functionAppResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("functionName"))
