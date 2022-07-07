@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class P2sVpnGatewayOperationSource : IOperationSource<P2sVpnGatewayResource>
+    internal class P2SVpnGatewayOperationSource : IOperationSource<P2SVpnGatewayResource>
     {
         private readonly ArmClient _client;
 
-        internal P2sVpnGatewayOperationSource(ArmClient client)
+        internal P2SVpnGatewayOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        P2sVpnGatewayResource IOperationSource<P2sVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        P2SVpnGatewayResource IOperationSource<P2SVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = P2sVpnGatewayData.DeserializeP2sVpnGatewayData(document.RootElement);
-            return new P2sVpnGatewayResource(_client, data);
+            var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
+            return new P2SVpnGatewayResource(_client, data);
         }
 
-        async ValueTask<P2sVpnGatewayResource> IOperationSource<P2sVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<P2SVpnGatewayResource> IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = P2sVpnGatewayData.DeserializeP2sVpnGatewayData(document.RootElement);
-            return new P2sVpnGatewayResource(_client, data);
+            var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
+            return new P2SVpnGatewayResource(_client, data);
         }
     }
 }

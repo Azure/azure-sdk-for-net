@@ -13,23 +13,23 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the P2sVpnGateway data model. </summary>
-    public partial class P2sVpnGatewayData : NetworkTrackedResourceData
+    /// <summary> A class representing the P2SVpnGateway data model. </summary>
+    public partial class P2SVpnGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of P2sVpnGatewayData. </summary>
-        public P2sVpnGatewayData()
+        /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
+        public P2SVpnGatewayData()
         {
-            P2sConnectionConfigurations = new ChangeTrackingList<P2sConnectionConfiguration>();
+            P2SConnectionConfigurations = new ChangeTrackingList<P2SConnectionConfiguration>();
             CustomDnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of P2sVpnGatewayData. </summary>
+        /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualHub"> The VirtualHub to which the gateway belongs. </param>
         /// <param name="p2sConnectionConfigurations"> List of all p2s connection configurations of the gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the P2S VPN gateway resource. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientConnectionHealth"> All P2S VPN clients&apos; connection health status. </param>
         /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
-        internal P2sVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, WritableSubResource virtualHub, IList<P2sConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags)
+        internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             VirtualHub = virtualHub;
-            P2sConnectionConfigurations = p2sConnectionConfigurations;
+            P2SConnectionConfigurations = p2sConnectionConfigurations;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             VpnServerConfiguration = vpnServerConfiguration;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List of all p2s connection configurations of the gateway. </summary>
-        public IList<P2sConnectionConfiguration> P2sConnectionConfigurations { get; }
+        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the P2S VPN gateway resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The scale unit for this p2s vpn gateway. </summary>
