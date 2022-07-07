@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class CustomDnsConfigPropertiesFormat : IUtf8JsonSerializable
+    public partial class CustomDnsConfigProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomDnsConfigPropertiesFormat DeserializeCustomDnsConfigPropertiesFormat(JsonElement element)
+        internal static CustomDnsConfigProperties DeserializeCustomDnsConfigProperties(JsonElement element)
         {
             Optional<string> fqdn = default;
             Optional<IList<string>> ipAddresses = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CustomDnsConfigPropertiesFormat(fqdn.Value, Optional.ToList(ipAddresses));
+            return new CustomDnsConfigProperties(fqdn.Value, Optional.ToList(ipAddresses));
         }
     }
 }

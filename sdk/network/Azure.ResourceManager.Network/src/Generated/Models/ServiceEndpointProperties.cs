@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The service endpoint properties. </summary>
-    public partial class ServiceEndpointPropertiesFormat
+    public partial class ServiceEndpointProperties
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
-        public ServiceEndpointPropertiesFormat()
+        /// <summary> Initializes a new instance of ServiceEndpointProperties. </summary>
+        public ServiceEndpointProperties()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of ServiceEndpointProperties. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint resource. </param>
-        internal ServiceEndpointPropertiesFormat(string service, IList<AzureLocation> locations, NetworkProvisioningState? provisioningState)
+        internal ServiceEndpointProperties(string service, IList<AzureLocation> locations, NetworkProvisioningState? provisioningState)
         {
             Service = service;
             Locations = locations;
