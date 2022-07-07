@@ -50,15 +50,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 monitorTags.Return();
                 telemetryItems.Add(telemetryItem);
 
-                foreach (var evnt in  activity.Events)
+                // Check for Exceptions
+                var exceptionTelemetryItem = GetExceptionTelemetryFromActivityExceptionEvent(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                if (exceptionTelemetryItem != null)
                 {
-                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
-                    {
-                        var exceptionTelemetryItem = new TelemetryItem("Exception" , activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                        SetExceptionDataOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
-                        telemetryItems.Add(exceptionTelemetryItem);
-                        break;
-                    }
+                    telemetryItems.Add(exceptionTelemetryItem);
                 }
             }
 
@@ -180,13 +176,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        internal static void SetExceptionDataOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityTags, TelemetryItem exceptionTelemetryItem)
+        private static TelemetryItem GetExceptionTelemetryFromActivityExceptionEvent(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey)
+        {
+            foreach (var evnt in activity.Events)
+            {
+                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                {
+                    try
+                    {
+                        var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                        SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
+                        return exceptionTelemetryItem;
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        internal static void SetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags, TelemetryItem exceptionTelemetryItem)
         {
             string exceptionType = null;
             string exceptionStackTrace = null;
             string exceptionMessage = null;
 
-            foreach (var tag in activityTags)
+            foreach (var tag in activityEventTags)
             {
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
                 {
