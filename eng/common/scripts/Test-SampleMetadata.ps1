@@ -209,6 +209,7 @@ begin {
         "azure-internet-analyzer",
         "azure-iot",
         "azure-iot-central",
+        "azure-iot-device-update",
         "azure-iot-dps",
         "azure-iot-edge",
         "azure-iot-hub",
