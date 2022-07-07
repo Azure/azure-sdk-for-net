@@ -1169,7 +1169,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             protected override EventHubConnection CreateConnection() => InjectedConnectionFactory();
-            protected override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
     }
 }
