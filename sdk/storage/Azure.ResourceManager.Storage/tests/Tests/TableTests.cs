@@ -26,8 +26,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
-            _tableService = _storageAccount.GetTableService();
-            _tableService = await _tableService.GetAsync();
+            _tableService = await _storageAccount.GetTableService().GetAsync();
             _tableCollection = _tableService.GetTables();
         }
 
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create table
             string tableName = Recording.GenerateAssetName("testtable");
-            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName)).Value;
+            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, new TableData())).Value;
             Assert.IsNotNull(table1);
             Assert.AreEqual(table1.Id.Name, tableName);
 
@@ -78,8 +77,8 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two tables
             string tableName1 = Recording.GenerateAssetName("testtable1");
             string tableName2 = Recording.GenerateAssetName("testtable2");
-            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName1)).Value;
-            TableResource table2 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName2)).Value;
+            TableResource table1 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName1, new TableData())).Value;
+            TableResource table2 = (await _tableCollection.CreateOrUpdateAsync(WaitUntil.Completed, tableName2, new TableData())).Value;
 
             //validate two tables
             TableResource table3 = null;

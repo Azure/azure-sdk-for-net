@@ -27,8 +27,7 @@ namespace Azure.ResourceManager.Storage.Tests
             if (_resourceGroup != null)
             {
                 StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-                List<StorageAccountResource> storageAccountList = await storageAccountCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (StorageAccountResource account in storageAccountList)
+                await foreach (StorageAccountResource account in storageAccountCollection.GetAllAsync())
                 {
                     await account.DeleteAsync(WaitUntil.Completed);
                 }
