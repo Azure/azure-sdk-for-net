@@ -2,43 +2,55 @@
 
 param (
   [Parameter(mandatory = $true)]
-  $BuildID,
+  [string]$BuildID,
   [Parameter(mandatory = $true)]
-  $PackageName,
+  [string]$PackageNames,
   [Parameter(mandatory = $true)]
-  $ServiceDirectory
+  [string]$ServiceDirectory
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-Write-Host "PackageName: $PackageName"
+Write-Host "PackageNames: $PackageNames"
 Write-Host "ServiceDirectory: $ServiceDirectory"
 Write-Host "BuildID: $BuildID"
 
-$newVersion = [AzureEngSemanticVersion]::new("1.0.0")
-$latestTags = git tag -l "${PackageName}_*"
+$packageNamesArray = @()
 
-Write-Host "Get Latest Tag : git tag -l ${PackageName}_*"
-$semVars = @()
-
-if ($latestTags -and ($latestTags.Length -gt 0))
-{
-  foreach ($tags in $latestTags)
-  {
-    $semVars += $tags.Replace("${PackageName}_", "")
-  }
-
-  $semVarsSorted = [AzureEngSemanticVersion]::SortVersionStrings($semVars)
-  Write-Host "Last Published Version $($semVarsSorted[0])"
-  $newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
+if ([String]::IsNullOrWhiteSpace($PackageNames)) {
+  LogError "PackageNames cannot be empty."
+  exit 1
+} else {
+  $packageNamesArray = $PackageNames.Split(',')
 }
 
-$newVersion.PrereleaseLabel = $newVersion.DefaultPrereleaseLabel
-$newVersion.PrereleaseNumber = $BuildID
-$newVersion.IsPrerelease = $True
+foreach ($packageName in $packageNamesArray) {
+  Write-Host "Processing $packageName"
+  $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
+  $latestTags = git tag -l "${packageName}_*"
 
-Write-Host "Version to publish [ $($newVersion.ToString()) ]"
+  Write-Host "Get Latest Tag : git tag -l ${packageName}_*"
+  $semVars = @()
 
-SetPackageVersion -PackageName $PackageName `
-  -Version $newVersion.ToString() `
-  -ServiceDirectory $ServiceDirectory
+  if ($latestTags -and ($latestTags.Length -gt 0))
+  {
+    foreach ($tags in $latestTags)
+    {
+      $semVars += $tags.Replace("${packageName}_", "")
+    }
+
+    $semVarsSorted = [AzureEngSemanticVersion]::SortVersionStrings($semVars)
+    Write-Host "Last Published Version $($semVarsSorted[0])"
+    $newVersion = [AzureEngSemanticVersion]::new($semVarsSorted[0])
+  }
+
+  $newVersion.PrereleaseLabel = $newVersion.DefaultPrereleaseLabel
+  $newVersion.PrereleaseNumber = $BuildID
+  $newVersion.IsPrerelease = $True
+
+  Write-Host "Version to publish [ $($newVersion.ToString()) ]"
+
+  SetPackageVersion -PackageName $packageName `
+    -Version $newVersion.ToString() `
+    -ServiceDirectory $ServiceDirectory
+}
