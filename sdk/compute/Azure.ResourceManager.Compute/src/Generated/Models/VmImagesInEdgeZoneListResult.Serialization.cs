@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VmImagesInEdgeZoneListResult DeserializeVmImagesInEdgeZoneListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineImageBase>> value = default;
+            Optional<IReadOnlyList<VmImageBase>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
+                    List<VmImageBase> array = new List<VmImageBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                        array.Add(VmImageBase.DeserializeVmImageBase(item));
                     }
                     value = array;
                     continue;

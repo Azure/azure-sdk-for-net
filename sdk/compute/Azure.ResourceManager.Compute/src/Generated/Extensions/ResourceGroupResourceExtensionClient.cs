@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.Compute
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
-        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
+        /// <summary> Gets a collection of VmssResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VmssResources and their operations over a VmssResource. </returns>
+        public virtual VmssCollection GetVmsses()
         {
-            return GetCachedClient(Client => new VirtualMachineScaleSetCollection(Client, Id));
+            return GetCachedClient(Client => new VmssCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
+        /// <summary> Gets a collection of VmResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VmResources and their operations over a VmResource. </returns>
+        public virtual VmCollection GetVms()
         {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
+            return GetCachedClient(Client => new VmCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<IList<NetworkInterfaceReference>> networkInterfaces = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
-            Optional<IList<VirtualMachineNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
+            Optional<IList<VmNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"))
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineNetworkInterfaceConfiguration> array = new List<VirtualMachineNetworkInterfaceConfiguration>();
+                    List<VmNetworkInterfaceConfiguration> array = new List<VmNetworkInterfaceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item));
+                        array.Add(VmNetworkInterfaceConfiguration.DeserializeVmNetworkInterfaceConfiguration(item));
                     }
                     networkInterfaceConfigurations = array;
                     continue;

@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("availabilitySet");
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (Optional.IsDefined(VirtualMachineScaleSet))
+            if (Optional.IsDefined(Vmss))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
+                JsonSerializer.Serialize(writer, Vmss);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
             Optional<ComputePlan> plan = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
+            Optional<IReadOnlyList<VmExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Compute
             Optional<WritableSubResource> availabilitySet = default;
             Optional<WritableSubResource> virtualMachineScaleSet = default;
             Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachinePriorityType> priority = default;
-            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
+            Optional<VmPriorityType> priority = default;
+            Optional<VmEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<WritableSubResource> host = default;
             Optional<WritableSubResource> hostGroup = default;
             Optional<string> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
+            Optional<VmInstanceView> instanceView = default;
             Optional<string> licenseType = default;
             Optional<string> vmId = default;
             Optional<string> extensionsTimeBudget = default;
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
+                    List<VmExtensionData> array = new List<VmExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item));
+                        array.Add(VmExtensionData.DeserializeVmExtensionData(item));
                     }
                     resources = array;
                     continue;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new VirtualMachinePriorityType(property0.Value.GetString());
+                            priority = new VmPriorityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            evictionPolicy = new VirtualMachineEvictionPolicyType(property0.Value.GetString());
+                            evictionPolicy = new VmEvictionPolicyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingProfile"))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
+                            instanceView = VmInstanceView.DeserializeVmInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("licenseType"))

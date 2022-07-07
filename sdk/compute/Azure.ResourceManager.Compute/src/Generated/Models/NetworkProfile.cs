@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Compute.Models
         public NetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceReference>();
-            NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
+            NetworkInterfaceConfigurations = new ChangeTrackingList<VmNetworkInterfaceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
-        internal NetworkProfile(IList<NetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations)
+        internal NetworkProfile(IList<NetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VmNetworkInterfaceConfiguration> networkInterfaceConfigurations)
         {
             NetworkInterfaces = networkInterfaces;
             NetworkApiVersion = networkApiVersion;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </summary>
         public NetworkApiVersion? NetworkApiVersion { get; set; }
         /// <summary> Specifies the networking configurations that will be used to create the virtual machine networking resources. </summary>
-        public IList<VirtualMachineNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }
+        public IList<VmNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }
     }
 }

@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: AvailabilitySets_ListAvailableSizes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VmSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VmSize>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetResource.GetAvailableSizes");
                 scope.Start();
@@ -274,10 +274,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: AvailabilitySets_ListAvailableSizes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineSize> GetAvailableSizes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VmSize> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
+            Page<VmSize> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetResource.GetAvailableSizes");
                 scope.Start();

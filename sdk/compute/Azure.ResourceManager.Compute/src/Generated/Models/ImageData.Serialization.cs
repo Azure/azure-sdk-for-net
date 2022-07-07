@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVirtualMachine))
+            if (Optional.IsDefined(SourceVm))
             {
                 writer.WritePropertyName("sourceVirtualMachine");
-                JsonSerializer.Serialize(writer, SourceVirtualMachine);
+                JsonSerializer.Serialize(writer, SourceVm);
             }
             if (Optional.IsDefined(StorageProfile))
             {
