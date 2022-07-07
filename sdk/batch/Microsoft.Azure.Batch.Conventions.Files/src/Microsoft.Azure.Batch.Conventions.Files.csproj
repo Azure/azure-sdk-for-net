@@ -13,17 +13,14 @@
       Improve usability of GetOutputStoragePath.
     </PackageReleaseNotes>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
     <PackageReference Include="Microsoft.Azure.Batch" />
     <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" />
-  </ItemGroup>
 </Project>
