@@ -84,6 +84,9 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+rename-mapping:
+  SecretProperties: FrontDoorSecretProperties
+  
 directive:
   - from: swagger-document
     where: $.definitions..parameters
