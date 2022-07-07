@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static AaaaRecord DeserializeAaaaRecord(JsonElement element)
         {
-            Optional<string> ipv6Address = default;
+            Optional<string> iPv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv6Address"))
                 {
-                    ipv6Address = property.Value.GetString();
+                    iPv6Address = property.Value.GetString();
                     continue;
                 }
             }
-            return new AaaaRecord(ipv6Address.Value);
+            return new AaaaRecord(iPv6Address.Value);
         }
     }
 }

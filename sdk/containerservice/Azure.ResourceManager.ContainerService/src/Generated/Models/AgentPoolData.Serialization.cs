@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.ContainerService
             Optional<OSDiskType> osDiskType = default;
             Optional<KubeletDiskType> kubeletDiskType = default;
             Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<string> vnetSubnetID = default;
-            Optional<string> podSubnetID = default;
+            Optional<string> vnetSubnetId = default;
+            Optional<string> podSubnetId = default;
             Optional<int> maxPods = default;
             Optional<OSType> osType = default;
-            Optional<Ossku> osSKU = default;
+            Optional<Ossku> ossku = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.ContainerService
             Optional<PowerState> powerState = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
-            Optional<string> nodePublicIPPrefixID = default;
+            Optional<string> nodePublicIPPrefixId = default;
             Optional<ScaleSetPriority> scaleSetPriority = default;
             Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
             Optional<float> spotMaxPrice = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> nodeLabels = default;
             Optional<IList<string>> nodeTaints = default;
-            Optional<string> proximityPlacementGroupID = default;
+            Optional<string> proximityPlacementGroupId = default;
             Optional<KubeletConfig> kubeletConfig = default;
             Optional<LinuxOSConfig> linuxOSConfig = default;
             Optional<bool> enableEncryptionAtHost = default;
@@ -370,12 +370,12 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("vnetSubnetID"))
                         {
-                            vnetSubnetID = property0.Value.GetString();
+                            vnetSubnetId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("podSubnetID"))
                         {
-                            podSubnetID = property0.Value.GetString();
+                            podSubnetId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("maxPods"))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osSKU = new Ossku(property0.Value.GetString());
+                            ossku = new Ossku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxCount"))
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("nodePublicIPPrefixID"))
                         {
-                            nodePublicIPPrefixID = property0.Value.GetString();
+                            nodePublicIPPrefixId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("scaleSetPriority"))
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("proximityPlacementGroupID"))
                         {
-                            proximityPlacementGroupID = property0.Value.GetString();
+                            proximityPlacementGroupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("kubeletConfig"))
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new AgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetID.Value, podSubnetID.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSKU), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixID.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupID.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSSD), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value);
+            return new AgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSSD), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static DeploymentData DeserializeDeploymentData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<DeploymentProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new DeploymentData(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new DeploymentData(id, name, type, systemData.Value, Optional.ToNullable(eTag), properties.Value);
         }
     }
 }

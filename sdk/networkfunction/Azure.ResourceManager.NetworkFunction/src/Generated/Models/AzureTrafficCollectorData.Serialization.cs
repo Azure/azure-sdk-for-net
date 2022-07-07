@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
+            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
         }
     }
 }

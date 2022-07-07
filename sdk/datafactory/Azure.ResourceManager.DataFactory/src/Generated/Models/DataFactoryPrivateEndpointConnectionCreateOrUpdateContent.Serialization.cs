@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DeserializeDataFactoryPrivateEndpointConnectionCreateOrUpdateContent(JsonElement element)
         {
             Optional<PrivateLinkConnectionApprovalRequest> properties = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(eTag));
         }
     }
 }

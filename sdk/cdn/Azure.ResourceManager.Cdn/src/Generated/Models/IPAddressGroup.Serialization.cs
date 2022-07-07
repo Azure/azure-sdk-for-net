@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static IPAddressGroup DeserializeIPAddressGroup(JsonElement element)
         {
             Optional<string> deliveryRegion = default;
-            Optional<IList<CidrIPAddress>> ipv4Addresses = default;
-            Optional<IList<CidrIPAddress>> ipv6Addresses = default;
+            Optional<IList<CidrIPAddress>> iPv4Addresses = default;
+            Optional<IList<CidrIPAddress>> iPv6Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryRegion"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
                     }
-                    ipv4Addresses = array;
+                    iPv4Addresses = array;
                     continue;
                 }
                 if (property.NameEquals("ipv6Addresses"))
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(CidrIPAddress.DeserializeCidrIPAddress(item));
                     }
-                    ipv6Addresses = array;
+                    iPv6Addresses = array;
                     continue;
                 }
             }
-            return new IPAddressGroup(deliveryRegion.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
+            return new IPAddressGroup(deliveryRegion.Value, Optional.ToList(iPv4Addresses), Optional.ToList(iPv6Addresses));
         }
     }
 }
