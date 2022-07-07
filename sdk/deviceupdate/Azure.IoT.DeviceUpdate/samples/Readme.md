@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- iot-hub-device-update
+name: Azure.IoT.DeviceUpdate samples for .NET
+description: Samples for theAzure.IoT.DeviceUpdate client library
+---
+
 # Device Update for IoT Hub client SDK samples
 
  - [Simple device update enumerations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/samples/Sample1_HelloWorld.md)

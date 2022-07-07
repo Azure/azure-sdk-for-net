@@ -8,21 +8,23 @@ To interact with Device Update for IoT Hub, you need to instantiate a `DeviceUpd
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# 
+```C# Snippet:AzDeviceUpdateSample1_CreateDeviceUpdateClient
+Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
+var instanceId = "<instance-id>"
 var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
+var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Enumerate all device update providers
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# 
+```C# Snippet:AzDeviceUpdateSample1_EnumerateProviders
 var providers = client.GetProviders();
-foreach(var provider in providers)
+foreach (var provider in providers)
 {
-  var doc = JsonDocument.Parse(provider.ToMemory());
-  Console.WriteLine(doc.RootElement.GetString());
+    var doc = JsonDocument.Parse(provider.ToMemory());
+    Console.WriteLine(doc.RootElement.GetString());
 }
 ```
 
@@ -30,12 +32,13 @@ foreach(var provider in providers)
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C# 
-var names = client.GetNames(provider);
-foreach(var name in names)
+```C# Snippet:AzDeviceUpdateSample1_EnumerateNames
+string updateProvider = "<update-provider>";
+var names = client.GetNames(updateProvider);
+foreach (var name in names)
 {
-  var doc = JsonDocument.Parse(provider.ToMemory());
-  Console.WriteLine(doc.RootElement.GetString());
+    var doc = JsonDocument.Parse(name.ToMemory());
+    Console.WriteLine(doc.RootElement.GetString());
 }
 ```
 
@@ -43,11 +46,12 @@ foreach(var name in names)
 
 First, let's try to enumerate all available (already imported) device update providers.
 
-```C#
-var versions = client.GetNames(provider, name);
-foreach(var version in versions)
+```C# Snippet:AzDeviceUpdateSample1_EnumerateVersions
+string updateName = "<update-name>";
+var versions = client.GetVersions(updateProvider, updateName);
+foreach (var version in versions)
 {
-  var doc = JsonDocument.Parse(provider.ToMemory());
-  Console.WriteLine(doc.RootElement.GetString());
+    var doc = JsonDocument.Parse(version.ToMemory());
+    Console.WriteLine(doc.RootElement.GetString());
 }
 ```

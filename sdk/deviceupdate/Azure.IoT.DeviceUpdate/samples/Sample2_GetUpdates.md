@@ -8,16 +8,21 @@ To interact with Device Update for IoT Hub, you need to instantiate a `DeviceUpd
  
 For the sample below, you can set `accountEndpoint` and `instance` in an environment variable.
 
-```C# 
+```C# Snippet:AzDeviceUpdateSample2_CreateDeviceUpdateClient
+Uri endpoint = new Uri("https://<account-id>.api.adu.microsoft.com");
+var instanceId = "<instance-id>"
 var credentials = new DefaultAzureCredential();
-var client = new DeviceUpdateClient(accountEndpoint, instance, credentials);
+var client = new DeviceUpdateClient(endpoint, instanceId, credentials);
 ```
 
 ## Get update metadata
 
 First, let's try to retrieve update metadata.
 
-```C# 
+```C# Snippet:AzDeviceUpdateSample2_GetUpdate
+string provider = "<update-provider>";
+string name = "<update-name>";
+string version = "<update-version>";
 var response = client.GetUpdate(provider, name, version);
 Console.WriteLine(response.Content.ToString());
 ```
@@ -26,12 +31,12 @@ Console.WriteLine(response.Content.ToString());
 
 Now that we have update metadata, let's try to retrieve payload file identities that correspond to this update.
 
-```C# 
-var files = client.GetFiles(provider, name, version);
-foreach(var file in files)
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFileIdentities
+var fileIds = client.GetFiles(provider, name, version);
+foreach (var fileId in fileIds)
 {
-  var doc = JsonDocument.Parse(file.ToMemory());
-  Console.WriteLine(doc.RootElement.GetString());
+    var doc = JsonDocument.Parse(fileId.ToMemory());
+    Console.WriteLine(doc.RootElement.GetString());
 }
 ```
 
@@ -39,12 +44,11 @@ foreach(var file in files)
 
 In this step, we will retrieve full file metadata for each file associated with the update.
 
-```C# 
+```C# Snippet:AzDeviceUpdateSample2_EnumerateUpdateFiles
 var files = client.GetFiles(provider, name, version);
-foreach(var file in files)
+foreach (var file in files)
 {
-  var doc = JsonDocument.Parse(file.ToMemory());
-  var file = await client.GetFileAsync(Constant.Provider, Constant.Name, updateVersion, doc.RootElement.GetString());
-  Console.WriteLine(file.Content.ToString());
+    var doc = JsonDocument.Parse(file.ToMemory());
+    Console.WriteLine(doc.RootElement.GetString());
 }
 ```
