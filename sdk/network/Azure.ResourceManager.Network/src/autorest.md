@@ -35,7 +35,7 @@ rename-mapping:
   TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
   TroubleshootingParameters.properties.storagePath: storageUri
   ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
-  FlowLogFormatParameters: FlowLogFormat
+  FlowLogFormatParameters: FlowLogProperties
   TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
   UsageName: NetworkUsageName
   UsagesListResult: NetworkUsagesListResult
@@ -48,6 +48,7 @@ rename-mapping:
   FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
   FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
   FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
+  ApplicationGateway.zones: AvailabilityZones
   ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
   ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
   ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
@@ -77,6 +78,9 @@ rename-mapping:
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
   DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
+  CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
+  ProtocolCustomSettingsFormat: ProtocolCustomSettings
+  ServiceEndpointPropertiesFormat: ServiceEndpointProperties
 
 
 format-by-name-rules:
@@ -98,6 +102,10 @@ format-by-name-rules:
   'resourceId': 'arm-id'
   'serviceResources': 'arm-id'
   'linkedResourceType': 'resource-type'
+  'data': 'any'
+  'body': 'any'
+  'validatedCertData': 'any'
+  'publicCertData': 'any'
   '*Guid': 'uuid'
   '*Time': 'datetime'
   '*Uri': 'Uri'
@@ -130,11 +138,11 @@ rename-rules:
   UDP: Udp
   ANY: Any
   LOA: Loa
-  P2S: P2s
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2
   Stag: STag
+  VirtualMachine: Vm
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -344,6 +352,11 @@ directive:
           'x-ms-format': 'arm-id'
       };
     reason: id should be read-only.
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
+      $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
 
 ```
 
