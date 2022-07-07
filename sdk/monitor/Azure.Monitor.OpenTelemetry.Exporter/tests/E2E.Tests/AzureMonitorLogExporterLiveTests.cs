@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
+namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 {
     using System.Threading.Tasks;
 
     using Azure.Core.TestFramework;
+    using Azure.Monitor.OpenTelemetry.Exporter;
+    using Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework;
 
     using global::OpenTelemetry;
 
