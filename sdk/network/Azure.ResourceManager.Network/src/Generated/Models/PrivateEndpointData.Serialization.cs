@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
         internal static PrivateEndpointData DeserializePrivateEndpointData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
+            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(eTag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
         }
     }
 }

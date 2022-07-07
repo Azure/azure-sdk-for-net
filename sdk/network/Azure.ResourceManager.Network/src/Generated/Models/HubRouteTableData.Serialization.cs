@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
 
         internal static HubRouteTableData DeserializeHubRouteTableData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
         }
     }
 }

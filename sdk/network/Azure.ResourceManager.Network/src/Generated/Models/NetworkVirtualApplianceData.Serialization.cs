@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
         internal static NetworkVirtualApplianceData DeserializeNetworkVirtualApplianceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(eTag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
         }
     }
 }

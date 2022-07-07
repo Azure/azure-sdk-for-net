@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
 
         internal static FirewallPolicyData DeserializeFirewallPolicyData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, dnsSettings.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), identity, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, dnsSettings.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
         }
     }
 }

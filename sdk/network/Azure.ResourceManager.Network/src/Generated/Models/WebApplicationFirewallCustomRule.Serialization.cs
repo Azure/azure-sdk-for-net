@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static WebApplicationFirewallCustomRule DeserializeWebApplicationFirewallCustomRule(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             int priority = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, ruleType, matchConditions, action);
+            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(eTag), priority, ruleType, matchConditions, action);
         }
     }
 }

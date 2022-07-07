@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewayConnectionListEntity DeserializeVirtualNetworkGatewayConnectionListEntity(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> peer = default;
             Optional<bool> enableBgp = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
+            Optional<IList<IPsecPolicy>> iPsecPolicies = default;
             Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
-                            ipsecPolicies = array;
+                            iPsecPolicies = array;
                             continue;
                         }
                         if (property0.NameEquals("trafficSelectorPolicies"))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
+            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(iPsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass));
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
 
         internal static FrontendIPConfigurationData DeserializeFrontendIPConfigurationData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FrontendIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
+            return new FrontendIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
         }
     }
 }

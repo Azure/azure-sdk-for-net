@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitConnectionData DeserializeExpressRouteCircuitConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
             Optional<string> addressPrefix = default;
             Optional<string> authorizationKey = default;
-            Optional<IPv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
+            Optional<IPv6CircuitConnectionConfig> iPv6CircuitConnectionConfig = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value);
+                            iPv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("circuitConnectionStatus"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, authorizationKey.Value, iPv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallFqdnTag DeserializeAzureFirewallFqdnTag(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), fqdnTagName.Value);
+            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), fqdnTagName.Value);
         }
     }
 }

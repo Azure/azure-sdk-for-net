@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySslProfile DeserializeApplicationGatewaySslProfile(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
 
         internal static WebApplicationFirewallPolicyData DeserializeWebApplicationFirewallPolicyData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), policySettings.Value, Optional.ToList(customRules), Optional.ToList(applicationGateways), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, Optional.ToList(httpListeners), Optional.ToList(pathBasedRules));
+            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), policySettings.Value, Optional.ToList(customRules), Optional.ToList(applicationGateways), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, Optional.ToList(httpListeners), Optional.ToList(pathBasedRules));
         }
     }
 }

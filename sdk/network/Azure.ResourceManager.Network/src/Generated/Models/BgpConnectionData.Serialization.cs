@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Network
 
         internal static BgpConnectionData DeserializeBgpConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<long> peerAsn = default;
-            Optional<string> peerIp = default;
+            Optional<string> peerIP = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<HubBgpConnectionStatus> connectionState = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("peerIp"))
                         {
-                            peerIp = property0.Value.GetString();
+                            peerIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIp.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
+            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), Optional.ToNullable(peerAsn), peerIP.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
         }
     }
 }

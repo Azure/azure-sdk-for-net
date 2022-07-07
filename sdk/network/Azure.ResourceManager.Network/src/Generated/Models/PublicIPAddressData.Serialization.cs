@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPAddressSku> sku = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(eTag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualApplianceSiteData DeserializeVirtualApplianceSiteData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualApplianceSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, o365Policy.Value, Optional.ToNullable(provisioningState));
+            return new VirtualApplianceSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), addressPrefix.Value, o365Policy.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

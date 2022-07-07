@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkSecurityGroupData DeserializeNetworkSecurityGroupData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

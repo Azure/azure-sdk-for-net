@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
         internal static VirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, Optional.ToList(ipAllocations));
+            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(eTag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, Optional.ToList(ipAllocations));
         }
     }
 }

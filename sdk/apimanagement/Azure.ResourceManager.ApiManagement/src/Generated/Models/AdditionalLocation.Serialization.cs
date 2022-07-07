@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<string>> zones = default;
             Optional<IReadOnlyList<string>> publicIPAddresses = default;
             Optional<IReadOnlyList<string>> privateIPAddresses = default;
-            Optional<string> publicIpAddressId = default;
+            Optional<string> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUrl = default;
             Optional<bool> disableGateway = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("publicIpAddressId"))
                 {
-                    publicIpAddressId = property.Value.GetString();
+                    publicIPAddressId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkConfiguration"))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIpAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUrl.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
+            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUrl.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
         }
     }
 }

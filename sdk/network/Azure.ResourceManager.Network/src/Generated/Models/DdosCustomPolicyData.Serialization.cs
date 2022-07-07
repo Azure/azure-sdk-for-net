@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
 
         internal static DdosCustomPolicyData DeserializeDdosCustomPolicyData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosCustomPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(protocolCustomSettings));
+            return new DdosCustomPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(protocolCustomSettings));
         }
     }
 }

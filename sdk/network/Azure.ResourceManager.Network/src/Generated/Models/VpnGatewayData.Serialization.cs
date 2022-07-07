@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnGatewayData DeserializeVpnGatewayData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualHub, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), Optional.ToList(ipConfigurations), Optional.ToNullable(isRoutingPreferenceInternet), Optional.ToList(natRules));
+            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), virtualHub, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), Optional.ToList(ipConfigurations), Optional.ToNullable(isRoutingPreferenceInternet), Optional.ToList(natRules));
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
 
         internal static BastionHostData DeserializeBastionHostData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<NetworkSku> sku = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

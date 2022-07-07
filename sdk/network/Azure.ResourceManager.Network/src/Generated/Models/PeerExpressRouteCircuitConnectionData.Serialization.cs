@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PeerExpressRouteCircuitConnectionData DeserializePeerExpressRouteCircuitConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
+            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

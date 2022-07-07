@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteGatewayData DeserializeExpressRouteGatewayData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub);
+            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub);
         }
     }
 }

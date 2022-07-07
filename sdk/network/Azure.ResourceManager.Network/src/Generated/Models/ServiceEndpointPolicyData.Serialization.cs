@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ServiceEndpointPolicyData DeserializeServiceEndpointPolicyData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<string> kind = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

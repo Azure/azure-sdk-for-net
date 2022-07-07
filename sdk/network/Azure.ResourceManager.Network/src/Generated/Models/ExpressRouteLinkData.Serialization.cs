@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteLinkData DeserializeExpressRouteLinkData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
         }
     }
 }

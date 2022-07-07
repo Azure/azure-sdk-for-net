@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCrossConnectionData DeserializeExpressRouteCrossConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
+            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
         }
     }
 }

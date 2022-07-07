@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Network
 
         internal static LocalNetworkGatewayData DeserializeLocalNetworkGatewayData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<AddressSpace> localNetworkAddressSpace = default;
-            Optional<string> gatewayIpAddress = default;
+            Optional<string> gatewayIPAddress = default;
             Optional<string> fqdn = default;
             Optional<BgpSettings> bgpSettings = default;
             Optional<Guid> resourceGuid = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("gatewayIpAddress"))
                         {
-                            gatewayIpAddress = property0.Value.GetString();
+                            gatewayIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("fqdn"))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LocalNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LocalNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), localNetworkAddressSpace.Value, gatewayIPAddress.Value, fqdn.Value, bgpSettings.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

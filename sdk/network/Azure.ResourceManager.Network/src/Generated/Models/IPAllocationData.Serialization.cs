@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
 
         internal static IPAllocationData DeserializeIPAllocationData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
         }
     }
 }

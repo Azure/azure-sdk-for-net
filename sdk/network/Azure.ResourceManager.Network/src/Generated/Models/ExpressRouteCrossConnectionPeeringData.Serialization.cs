@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCrossConnectionPeeringData DeserializeExpressRouteCrossConnectionPeeringData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Network
             Optional<int> vlanId = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerEtag = default;
+            Optional<string> gatewayManagerETag = default;
             Optional<string> lastModifiedBy = default;
-            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
+            Optional<IPv6ExpressRouteCircuitPeeringConfig> iPv6PeeringConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))
                         {
-                            gatewayManagerEtag = property0.Value.GetString();
+                            gatewayManagerETag = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedBy"))
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
+                            iPv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
+            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, iPv6PeeringConfig.Value);
         }
     }
 }

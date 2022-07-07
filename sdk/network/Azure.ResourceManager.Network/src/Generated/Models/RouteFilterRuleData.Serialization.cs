@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
         internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(eTag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }

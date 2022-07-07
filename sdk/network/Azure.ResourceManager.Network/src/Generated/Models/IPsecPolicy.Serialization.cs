@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Network.Models
         {
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
-            IPsecEncryption ipsecEncryption = default;
-            IPsecIntegrity ipsecIntegrity = default;
+            IPsecEncryption iPsecEncryption = default;
+            IPsecIntegrity iPsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipsecEncryption"))
                 {
-                    ipsecEncryption = new IPsecEncryption(property.Value.GetString());
+                    iPsecEncryption = new IPsecEncryption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipsecIntegrity"))
                 {
-                    ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
+                    iPsecIntegrity = new IPsecIntegrity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ikeEncryption"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
+            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, iPsecEncryption, iPsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
         }
     }
 }

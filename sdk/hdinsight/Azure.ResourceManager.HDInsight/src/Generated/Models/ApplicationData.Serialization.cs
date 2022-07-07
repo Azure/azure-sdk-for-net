@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static ApplicationData DeserializeApplicationData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ApplicationProperties> properties = default;
             ResourceIdentifier id = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new ApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), properties.Value);
+            return new ApplicationData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), properties.Value);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkIPConfiguration DeserializeNetworkIPConfiguration(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new NetworkIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, publicIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

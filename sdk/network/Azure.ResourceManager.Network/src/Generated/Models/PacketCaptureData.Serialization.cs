@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     {
         internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
+            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(eTag), target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }

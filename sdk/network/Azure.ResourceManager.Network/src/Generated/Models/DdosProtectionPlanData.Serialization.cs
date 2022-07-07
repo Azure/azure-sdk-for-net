@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
 
         internal static DdosProtectionPlanData DeserializeDdosProtectionPlanData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }

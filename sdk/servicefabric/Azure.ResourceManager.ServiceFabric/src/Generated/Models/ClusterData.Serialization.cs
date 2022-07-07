@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ClusterData DeserializeClusterData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     continue;
                 }
             }
-            return new ClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, clusterId.Value, Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(etag));
+            return new ClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, clusterId.Value, Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(eTag));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     {
         internal static AzureWebCategoryData DeserializeAzureWebCategoryData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(etag), group.Value);
+            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(eTag), group.Value);
         }
     }
 }

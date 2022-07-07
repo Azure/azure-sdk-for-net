@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     {
         internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
+            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
         }
     }
 }

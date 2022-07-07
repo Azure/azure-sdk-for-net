@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Network
             Optional<string> sharedKey = default;
             Optional<bool> enableBgp = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
+            Optional<IList<IPsecPolicy>> iPsecPolicies = default;
             Optional<bool> enableRateLimiting = default;
-            Optional<bool> useLocalAzureIpAddress = default;
+            Optional<bool> useLocalAzureIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<WritableSubResource>> ingressNatRules = default;
             Optional<IList<WritableSubResource>> egressNatRules = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
-                            ipsecPolicies = array;
+                            iPsecPolicies = array;
                             continue;
                         }
                         if (property0.NameEquals("enableRateLimiting"))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useLocalAzureIpAddress = property0.Value.GetBoolean();
+                            useLocalAzureIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIpAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(eTag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(iPsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
     }
 }

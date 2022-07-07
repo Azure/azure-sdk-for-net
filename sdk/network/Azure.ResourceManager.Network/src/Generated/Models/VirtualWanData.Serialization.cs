@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualWanData DeserializeVirtualWanData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
+            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(eTag), Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
         }
     }
 }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPPrefixSku> sku = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
             Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
-            Optional<WritableSubResource> loadBalancerFrontendIpConfiguration = default;
+            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
             Optional<WritableSubResource> customIPPrefix = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loadBalancerFrontendIpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("customIPPrefix"))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(eTag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }
