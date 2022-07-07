@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a CosmosTable along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosTableResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCosmosTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatabaseAccountResource" /> using the GetCosmosTable method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetCosmosTable method.
     /// </summary>
     public partial class CosmosTableResource : ArmResource
     {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosTable. </summary>
-        /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSettingResource" /> object. </returns>
-        public virtual DatabaseAccountTableThroughputSettingResource GetDatabaseAccountTableThroughputSetting()
+        /// <summary> Gets an object representing a CosmosTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosTable. </summary>
+        /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
+        public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSetting()
         {
-            return new DatabaseAccountTableThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CosmosTableThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
         /// <summary>

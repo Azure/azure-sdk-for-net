@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Guid> requestId = default;
             Optional<string> operationType = default;
-            Optional<string> fromBackupResourceId = default;
-            Optional<string> toBackupResourceId = default;
+            Optional<ResourceIdentifier> fromBackupResourceId = default;
+            Optional<ResourceIdentifier> toBackupResourceId = default;
             Optional<BackupStorageRedundancy> targetBackupStorageRedundancy = default;
             Optional<string> status = default;
             Optional<string> message = default;
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -84,12 +89,22 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("fromBackupResourceId"))
                         {
-                            fromBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            fromBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("toBackupResourceId"))
                         {
-                            toBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            toBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetBackupStorageRedundancy"))
@@ -116,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new LongTermRetentionBackupOperationResult(id, name, type, systemData, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
+            return new LongTermRetentionBackupOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), operationType.Value, fromBackupResourceId.Value, toBackupResourceId.Value, Optional.ToNullable(targetBackupStorageRedundancy), status.Value, message.Value);
         }
     }
 }

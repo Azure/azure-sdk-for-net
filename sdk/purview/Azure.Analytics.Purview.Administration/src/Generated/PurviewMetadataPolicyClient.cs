@@ -38,79 +38,78 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -135,79 +134,78 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -232,48 +230,44 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -298,48 +292,44 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -363,55 +353,9 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       name: string,
-        ///       id: string,
-        ///       version: number,
-        ///       properties: {
-        ///         description: string,
-        ///         decisionRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         attributeRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             id: string,
-        ///             name: string,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         collection: {
-        ///           type: string,
-        ///           referenceName: string
-        ///         },
-        ///         parentCollectionName: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementationAsync("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
@@ -435,55 +379,9 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       name: string,
-        ///       id: string,
-        ///       version: number,
-        ///       properties: {
-        ///         description: string,
-        ///         decisionRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         attributeRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             id: string,
-        ///             name: string,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         collection: {
-        ///           type: string,
-        ///           referenceName: string
-        ///         },
-        ///         parentCollectionName: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementation("PurviewMetadataPolicyClient.GetMetadataPolicies", context);

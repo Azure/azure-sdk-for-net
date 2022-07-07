@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<string> status = default;
-            Optional<ErrorResponseCommon> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         error = null;
                         continue;
                     }
-                    error = ErrorResponseCommon.DeserializeErrorResponseCommon(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
                     continue;
                 }
             }

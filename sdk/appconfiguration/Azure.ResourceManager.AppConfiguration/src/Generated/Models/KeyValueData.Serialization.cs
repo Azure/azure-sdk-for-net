@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> key = default;
             Optional<string> label = default;
             Optional<string> value = default;
@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new KeyValueData(id, name, type, systemData, key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
+            return new KeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
         }
     }
 }

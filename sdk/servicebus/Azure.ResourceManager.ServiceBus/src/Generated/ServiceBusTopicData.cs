@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusTopic data model. </summary>
-    public partial class ServiceBusTopicData : ProxyResource
+    public partial class ServiceBusTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusTopicData. </summary>
         public ServiceBusTopicData()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sizeInBytes"> Size of the topic, in bytes. </param>
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
@@ -43,7 +42,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="autoDeleteOnIdle"> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </param>
         /// <param name="enablePartitioning"> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </param>
         /// <param name="enableExpress"> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </param>
-        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, long? sizeInBytes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, EntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInBytes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, EntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             SizeInBytes = sizeInBytes;
             CreatedOn = createdOn;
@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.ServiceBus
             AutoDeleteOnIdle = autoDeleteOnIdle;
             EnablePartitioning = enablePartitioning;
             EnableExpress = enableExpress;
+            Location = location;
         }
 
         /// <summary> Size of the topic, in bytes. </summary>
@@ -98,5 +99,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? EnablePartitioning { get; set; }
         /// <summary> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </summary>
         public bool? EnableExpress { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

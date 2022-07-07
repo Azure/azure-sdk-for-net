@@ -18,27 +18,44 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
-                writer.WriteStringValue(StorageAccountId);
+                if (StorageAccountId != null)
+                {
+                    writer.WritePropertyName("storageAccountId");
+                    writer.WriteStringValue(StorageAccountId);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountId");
+                }
             }
             if (Optional.IsDefined(ServiceBusRuleId))
             {
-                writer.WritePropertyName("serviceBusRuleId");
-                writer.WriteStringValue(ServiceBusRuleId);
+                if (ServiceBusRuleId != null)
+                {
+                    writer.WritePropertyName("serviceBusRuleId");
+                    writer.WriteStringValue(ServiceBusRuleId);
+                }
+                else
+                {
+                    writer.WriteNull("serviceBusRuleId");
+                }
             }
             writer.WritePropertyName("locations");
             writer.WriteStartArray();

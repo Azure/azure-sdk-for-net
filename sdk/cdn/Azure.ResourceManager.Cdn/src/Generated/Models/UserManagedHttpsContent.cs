@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
-        public UserManagedHttpsContent(ProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
+        public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
         {
             if (certificateSourceParameters == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
-        internal UserManagedHttpsContent(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = certificateSource;

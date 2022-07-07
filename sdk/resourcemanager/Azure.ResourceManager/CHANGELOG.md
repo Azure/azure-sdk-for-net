@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Changed `OperationStatusResult` initialization constructor from internal to public.
+
+## 1.1.2 (2022-07-01)
+
+### Features Added
+
+- Add `ExtendedLocation` to common type.
+
+## 1.1.1 (2022-06-22)
+
+### Features Added
+
+- Add OperationStatusResult to common type.
+
+### Bugs Fixed
+
+- Fixed serialization of a resource which inherits from ResourceData/TrackedResourceData by making Tags and SystemData as optional properties.
+
+### Other Changes
+
+- Hide EncryptionProperties, EncryptionStatus and KeyVaultProperties in common type.
 
 ## 1.1.0 (2022-06-08)
 

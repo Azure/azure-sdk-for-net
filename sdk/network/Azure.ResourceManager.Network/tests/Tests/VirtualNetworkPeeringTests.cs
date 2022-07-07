@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Put peering in the vnet
             var putPeeringOperation = await virtualNetworkPeeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetPeeringName, peering);
             Response<VirtualNetworkPeeringResource> putPeering = await putPeeringOperation.WaitForCompletionAsync();;
-            Assert.NotNull(putPeering.Value.Data.Etag);
+            Assert.NotNull(putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, putPeering.Value.Data.Name);
             Assert.AreEqual(remoteVirtualNetwork.Value.Id, putPeering.Value.Data.RemoteVirtualNetwork.Id);
             Assert.AreEqual(peering.AllowForwardedTraffic, putPeering.Value.Data.AllowForwardedTraffic);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // get peering
             Response<VirtualNetworkPeeringResource> getPeering = await virtualNetworkPeeringCollection.GetAsync(vnetPeeringName);
-            Assert.AreEqual(getPeering.Value.Data.Etag, putPeering.Value.Data.Etag);
+            Assert.AreEqual(getPeering.Value.Data.ETag, putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, getPeering.Value.Data.Name);
             Assert.AreEqual(remoteVirtualNetwork.Value.Id, getPeering.Value.Data.RemoteVirtualNetwork.Id);
             Assert.AreEqual(peering.AllowForwardedTraffic, getPeering.Value.Data.AllowForwardedTraffic);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests
             listPeeringAP = virtualNetworkPeeringCollection.GetAllAsync();
             listPeering = await listPeeringAP.ToEnumerableAsync();
             Has.One.EqualTo(listPeering);
-            Assert.AreEqual(listPeering.ElementAt(0).Data.Etag, putPeering.Value.Data.Etag);
+            Assert.AreEqual(listPeering.ElementAt(0).Data.ETag, putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, listPeering.ElementAt(0).Data.Name);
             Assert.AreEqual(remoteVirtualNetwork.Value.Id, listPeering.ElementAt(0).Data.RemoteVirtualNetwork.Id);
             Assert.AreEqual(peering.AllowForwardedTraffic, listPeering.ElementAt(0).Data.AllowForwardedTraffic);

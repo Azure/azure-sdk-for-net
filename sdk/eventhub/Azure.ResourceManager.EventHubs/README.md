@@ -60,16 +60,16 @@ Then we can create a namespace inside this resource group.
 
 ```C# Snippet:Managing_Namespaces_CreateNamespace
 string namespaceName = "myNamespace";
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
 AzureLocation location = AzureLocation.EastUS2;
-EventHubNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
+EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
 
 ```C# Snippet:Managing_Namespaces_ListNamespaces
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-await foreach (EventHubNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+await foreach (EventHubsNamespaceResource eventHubNamespace in namespaceCollection.GetAllAsync())
 {
     Console.WriteLine(eventHubNamespace.Id.Name);
 }
@@ -78,23 +78,23 @@ await foreach (EventHubNamespaceResource eventHubNamespace in namespaceCollectio
 ### Get a namespace
 
 ```C# Snippet:Managing_Namespaces_GetNamespace
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+EventHubsNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 Console.WriteLine(eventHubNamespace.Id.Name);
 ```
 
 ### Delete a namespace
 ```C# Snippet:Managing_Namespaces_DeleteNamespace
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+EventHubsNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
 ```
 
 ### Add a tag to the namespace
 
 ```C# Snippet:Managing_Namespaces_AddTag
-EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
+EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+EventHubsNamespaceResource eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
 await eventHubNamespace.AddTagAsync("key","value");
 ```
 

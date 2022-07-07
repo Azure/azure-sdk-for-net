@@ -141,6 +141,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionInitHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionOpenEventCt);
                     byte[] state = ServiceBusTestUtilities.GetRandomBuffer(100);
                     await args.SetSessionStateAsync(new BinaryData(state));
@@ -149,6 +151,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionCloseHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionCloseEventCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].SetResult(true);
@@ -159,6 +163,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     var message = args.Message;
                     if (!autoComplete)
                     {

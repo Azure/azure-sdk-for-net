@@ -15,14 +15,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A class representing the ContainerGroup data model. </summary>
-    public partial class ContainerGroupData : ContainerGroupPatch
+    public partial class ContainerGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerGroupData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, OperatingSystemTypes osType) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, OperatingSystemType osType) : base(location)
         {
             if (containers == null)
             {
@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Volumes = new ChangeTrackingList<ContainerInstanceVolume>();
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
             InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupData. </summary>
@@ -44,7 +45,6 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -66,7 +66,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="sku"> The SKU for a container group. </param>
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IPAddress ipAddress, OperatingSystemTypes osType, IList<ContainerInstanceVolume> volumes, ContainerGroupPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers) : base(id, name, resourceType, systemData, tags, location, zones)
+        /// <param name="zones"> The zones for the container group. </param>
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IPAddress ipAddress, OperatingSystemType osType, IList<ContainerInstanceVolume> volumes, ContainerGroupPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Sku = sku;
             EncryptionProperties = encryptionProperties;
             InitContainers = initContainers;
+            Zones = zones;
         }
 
         /// <summary> The identity of the container group, if configured. </summary>
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The IP address type of the container group. </summary>
         public IPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes OSType { get; set; }
+        public OperatingSystemType OSType { get; set; }
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerInstanceVolume> Volumes { get; }
         /// <summary> The instance view of the container group. Only valid in response. </summary>
@@ -133,5 +135,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public Models.EncryptionProperties EncryptionProperties { get; set; }
         /// <summary> The init containers for a container group. </summary>
         public IList<InitContainerDefinitionContent> InitContainers { get; }
+        /// <summary> The zones for the container group. </summary>
+        public IList<string> Zones { get; }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
         public ServerWorkspaceFeature? WorkspaceFeature { get; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
-        public string PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> The Client id used for cross tenant CMK scenario. </summary>
         public Guid? FederatedClientId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>

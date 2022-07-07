@@ -51,17 +51,15 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
     $content += "[!INCLUDE [client-packages]($clientTableLink)]`r`n"
   }
   if (Test-Path (Join-Path $readmeFolder -ChildPath $mgmtTableLink)) {
-    $content = "## Management packages - $moniker`r`n"
+    $content += "## Management packages - $moniker`r`n"
     $content += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
   }
   if (!$content) {
     return
   }
-  $null = New-Item -Path $readmePath -Force
-  $lang = $LanguageDisplayName
-  $langTitle = "Azure $serviceName SDK for $lang"
   # Generate the front-matter for docs needs
-  $metadataString = GenerateDocsMsMetadata -language $lang -langTitle $langTitle -serviceName $serviceName `
+  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
+  $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
   Add-Content -Path $readmePath -Value $metadataString
@@ -91,9 +89,9 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $readmeContent = Get-Content -Path $readmePath -Raw
   $null = $readmeContent -match "---`n*(?<metadata>(.*`n)*)---`n*(?<content>(.*`n)*)"
   $restContent = $Matches["content"]
-  $lang = $LanguageDisplayName
   $orignalMetadata = $Matches["metadata"]
-  $metadataString = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
+  # $Language, $LanguageDisplayName are the variables globally defined in Language-Settings.ps1
+  $metadataString = GenerateDocsMsMetadata -language $Language -languageDisplayName $LanguageDisplayName -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
   $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
@@ -144,12 +142,11 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
   if ($clientPackageInfo) {
     generate-markdown-table -readmeFolder $readmeFolder -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $moniker
   }
-  # TODO: we currently do not have the right decision on how we display mgmt packages. Will track the mgmt work in issue. 
-  # https://github.com/Azure/azure-sdk-tools/issues/3422
-  # $mgmtPackageInfo = $packageInfos.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
-  # if ($mgmtPackageInfo) {
-  #   generate-markdown-table -readmeFolder $readmeFolder -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $moniker
-  # }
+
+  $mgmtPackageInfo = $packageInfos.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
+  if ($mgmtPackageInfo) {
+    generate-markdown-table -readmeFolder $readmeFolder -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $moniker
+  }
   if (!(Test-Path (Join-Path $readmeFolder -ChildPath $serviceReadme))) {
     create-metadata-table -readmeFolder $readmeFolder -readmeName $serviceReadme -moniker $moniker -msService $msService `
       -clientTableLink $clientIndexReadme -mgmtTableLink $mgmtIndexReadme `
@@ -225,8 +222,6 @@ foreach($moniker in $monikers) {
     Write-Host "Building service: $service"
     
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
-  
-  
     $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
     $hrefPrefix = "docs-ref-services"
   

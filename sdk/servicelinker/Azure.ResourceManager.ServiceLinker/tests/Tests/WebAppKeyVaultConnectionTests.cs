@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             WebSiteResource webapp = await webSites.GetAsync(webAppName);
 
             // create key vault
-            VaultCollection vaults = resourceGroup.GetVaults();
-            var vaultProperties = new VaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
+            var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
             vaultProperties.AccessPolicies.Clear();
-            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new VaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
-            VaultResource vault = await vaults.GetAsync(vaultName);
+            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
+            KeyVaultResource vault = await vaults.GetAsync(vaultName);
 
             // create service linker
             LinkerResourceCollection linkers = webapp.GetLinkerResources();
             var linkerData = new LinkerResourceData
             {
-                TargetService = new Models.AzureResource
+                TargetService = new Models.AzureResourceInfo
                 {
                     Id = vault.Id,
                 },
                 AuthInfo = new SystemAssignedIdentityAuthInfo(),
-                ClientType = ClientType.Dotnet,
+                ClientType = LinkerClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
 
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             // get service linker
             LinkerResource linker = await linkers.GetAsync(linkerName);
             Assert.IsTrue(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase));
-            Assert.AreEqual(vault.Id.ToString(), (linker.Data.TargetService as AzureResource).Id);
-            Assert.AreEqual(AuthType.SystemAssignedIdentity, linker.Data.AuthInfo.AuthType);
+            Assert.AreEqual(vault.Id, (linker.Data.TargetService as AzureResourceInfo).Id);
+            Assert.AreEqual(LinkerAuthType.SystemAssignedIdentity, linker.Data.AuthInfo.AuthType);
 
             // get service linker configurations
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();

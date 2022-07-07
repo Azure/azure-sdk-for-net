@@ -84,6 +84,8 @@ namespace Azure.Storage
 
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
+        public const string QueryDelimiter = "?";
+        public const string PathBackSlashDelimiter = "/";
 
         public const string FalseName = "false";
         public const string TrueName = "true";
@@ -626,8 +628,6 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
-            public const ClientSideEncryptionVersion CurrentVersion = ClientSideEncryptionVersion.V1_0;
-
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";

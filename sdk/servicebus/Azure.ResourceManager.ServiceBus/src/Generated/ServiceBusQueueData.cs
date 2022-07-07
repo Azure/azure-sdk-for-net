@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusQueue data model. </summary>
-    public partial class ServiceBusQueueData : ProxyResource
+    public partial class ServiceBusQueueData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusQueueData. </summary>
         public ServiceBusQueueData()
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="countDetails"> Message Count Details. </param>
         /// <param name="createdOn"> The exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
@@ -48,7 +47,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="enableExpress"> A value that indicates whether Express Entities are enabled. An express queue holds a message in memory temporarily before writing it to persistent storage. </param>
         /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
-        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo) : base(id, name, resourceType, systemData, location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ServiceBusQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MessageCountDetails countDetails, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? accessedOn, long? sizeInBytes, long? messageCount, TimeSpan? lockDuration, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress, string forwardTo, string forwardDeadLetteredMessagesTo, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             CountDetails = countDetails;
             CreatedOn = createdOn;
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.ServiceBus
             EnableExpress = enableExpress;
             ForwardTo = forwardTo;
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
+            Location = location;
         }
 
         /// <summary> Message Count Details. </summary>
@@ -118,5 +119,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string ForwardTo { get; set; }
         /// <summary> Queue/Topic name to forward the Dead Letter message. </summary>
         public string ForwardDeadLetteredMessagesTo { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.DataLake
 {
     internal class DataLakeClientConfiguration : StorageClientConfiguration
     {
-        public DataLakeClientOptions.ServiceVersion Version { get; internal set; }
+        public DataLakeClientOptions ClientOptions { get; internal set; }
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
@@ -17,11 +17,32 @@ namespace Azure.Storage.Files.DataLake
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
-            DataLakeClientOptions.ServiceVersion version,
+            DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, customerProvidedKey)
         {
-            Version = version;
+        }
+
+        public DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions clientOptions,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, customerProvidedKey)
+        {
+        }
+
+        internal DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions clientOptions,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+        {
+            ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
         }
 
@@ -29,8 +50,9 @@ namespace Azure.Storage.Files.DataLake
             => new DataLakeClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
+                sasCredential: originalClientConfiguration.SasCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
-                version: originalClientConfiguration.Version,
+                clientOptions: originalClientConfiguration.ClientOptions,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
     }
 }

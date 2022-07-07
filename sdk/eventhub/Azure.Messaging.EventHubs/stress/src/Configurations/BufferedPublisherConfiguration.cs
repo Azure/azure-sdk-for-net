@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -57,7 +56,7 @@ internal class BufferedPublisherConfiguration
     ///   The amount of time to wait between enqueuing <see cref="EnqueueListSize"/> events.
     /// </summary>
     ///
-    public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(4000);
+    public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(400);
 
     // Buffered Producer Configuration Values
 
