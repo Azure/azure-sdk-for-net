@@ -21,6 +21,16 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities");
             writer.WriteObjectValue(Capabilities);
+            if (Optional.IsDefined(Locality))
+            {
+                writer.WritePropertyName("locality");
+                writer.WriteStringValue(Locality);
+            }
+            if (Optional.IsDefined(AdministrativeDivision))
+            {
+                writer.WritePropertyName("administrativeDivision");
+                writer.WriteStringValue(AdministrativeDivision);
+            }
             if (Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode");

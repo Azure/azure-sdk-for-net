@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Search for available phone numbers to purchase. </summary>
+    /// <summary> Searches for available phone numbers to purchase. </summary>
     public partial class SearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
         private readonly OperationInternal<PhoneNumberSearchResult> _operation;

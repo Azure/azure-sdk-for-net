@@ -35,6 +35,10 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumberAssignmentType AssignmentType { get; }
         /// <summary> Capabilities of a phone number. </summary>
         public PhoneNumberCapabilities Capabilities { get; }
+        /// <summary> Optionally for geographic phone number type, the locality of the desired phone numbers. </summary>
+        public string Locality { get; set; }
+        /// <summary> The administrative division name to search for phone numbers, e.g. state or province. </summary>
+        public string AdministrativeDivision { get; set; }
         /// <summary> The area code of the desired phone number, e.g. 425. </summary>
         public string AreaCode { get; set; }
         /// <summary> The quantity of desired phone numbers. The default value is 1. </summary>
