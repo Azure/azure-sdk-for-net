@@ -44,6 +44,12 @@ namespace Azure.AI.Language.QuestionAnswering
         internal string Version { get; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="QuestionAnsweringAudience.AzurePublicCloud" /> will be assumed.</value>
+        public QuestionAnsweringAudience? Audience { get; set; }
+
+        /// <summary>
         /// Initializes new instance of QuestionAnsweringClientOptions.
         /// </summary>
         public QuestionAnsweringClientOptions(ServiceVersion version = LatestVersion)
