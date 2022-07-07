@@ -15,6 +15,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal string RoleName { get; private set; }
 
         internal string RoleInstance { get; private set; }
+        internal static string Statsbeat_RoleName { get; private set; }
+        internal static string Statsbeat_RoleInstance { get; private set; }
 
         internal void UpdateRoleNameAndInstance(Resource resource)
         {
@@ -64,24 +66,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
-            // 1) Accessing static members here will cause Statsbeat constructor to be executed
-            // which may fail if the options are not properly configured for exporter
-            // 2) Race condition is not taken in to account here
+            // Race condition is not taken in to account here
             // If the exporters have different resources
             // only one of them will be used.
             // Also, statsbeats will have these properties missing before the first export
             // as the resource is initialized at that time.
-            try
+            if (Statsbeat_RoleName == null && Statsbeat_RoleInstance == null)
             {
-                if (Statsbeat.Statsbeat_RoleName == null && Statsbeat.Statsbeat_RoleInstance == null)
-                {
-                    Statsbeat.Statsbeat_RoleInstance = RoleInstance;
-                    Statsbeat.Statsbeat_RoleName = RoleName;
-                }
-            }
-            catch (Exception)
-            {
-                // ignore?
+                Statsbeat_RoleInstance = RoleInstance;
+                Statsbeat_RoleName = RoleName;
             }
         }
     }

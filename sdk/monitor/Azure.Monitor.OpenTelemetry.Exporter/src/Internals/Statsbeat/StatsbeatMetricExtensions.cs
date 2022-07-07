@@ -9,7 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Metrics Exporter.
     /// </summary>
-    internal static class AzureMonitorStatsbeatMetricExtensions
+    internal static class StatsbeatMetricExtensions
     {
         /// <summary>
         /// Adds Azure Monitor Metric exporter.
@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorStatsbeatExporter(options), options.StatsbeatIntervalInMilliseconds)
+            return builder.AddReader(new PeriodicExportingMetricReader(new StatsbeatExporter(options), options.StatsbeatIntervalInMilliseconds)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }

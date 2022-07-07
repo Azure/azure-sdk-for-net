@@ -43,8 +43,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public static Statsbeat StatsbeatInstance { get; } = new();
 
         internal static string Customer_Ikey { get; set; }
-        internal static string Statsbeat_RoleName { get; set; }
-        internal static string Statsbeat_RoleInstance { get; set; }
 
         private static Measurement<int> GetAttachStatsBeat()
         {

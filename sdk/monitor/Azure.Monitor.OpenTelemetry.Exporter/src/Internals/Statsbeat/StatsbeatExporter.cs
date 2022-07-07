@@ -10,16 +10,16 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class AzureMonitorStatsbeatExporter : BaseExporter<Metric>
+    internal class StatsbeatExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
 
-        public AzureMonitorStatsbeatExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public StatsbeatExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorStatsbeatExporter(ITransmitter transmitter)
+        internal StatsbeatExporter(ITransmitter transmitter)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             try
             {
-                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, Statsbeat.Statsbeat_RoleName, Statsbeat.Statsbeat_RoleInstance, _instrumentationKey);
+                var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, ResourceParser.Statsbeat_RoleName, ResourceParser.Statsbeat_RoleInstance, _instrumentationKey);
 
                 // TODO: Add overload in tranmitter with no loggging and failure handling
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
