@@ -19,17 +19,16 @@ namespace Azure.Storage.Blobs.Tests
     /// </summary>
     [LiveOnly]
 #pragma warning disable CS0618 // obsolete
-    [TestFixture(ClientSideEncryptionVersion.V1_0)]
-    [TestFixture(ClientSideEncryptionVersion.V2_0)]
+    [BlobsClientTestFixture(ClientSideEncryptionVersion.V1_0, ClientSideEncryptionVersion.V2_0)]
 #pragma warning restore CS0618 // obsolete
     public class ClientSideEncryptedBlobClientOpenWriteTests : BlobClientOpenWriteTests
     {
         private readonly ClientSideEncryptionVersion _version;
 
         public ClientSideEncryptedBlobClientOpenWriteTests(
-            ClientSideEncryptionVersion version,
             bool async,
-            BlobClientOptions.ServiceVersion serviceVersion)
+            BlobClientOptions.ServiceVersion serviceVersion,
+            ClientSideEncryptionVersion version)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             _version = version;
