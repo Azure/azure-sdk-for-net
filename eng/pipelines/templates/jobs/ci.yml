@@ -140,6 +140,7 @@ jobs:
           ignoreDirectories: '.nuget'
 
   - job: "Analyze"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
