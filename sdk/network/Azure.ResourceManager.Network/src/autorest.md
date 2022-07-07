@@ -130,7 +130,6 @@ rename-rules:
   UDP: Udp
   ANY: Any
   LOA: Loa
-  P2S: P2s
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<RadiusServer>> radiusServers = default;
             Optional<AadAuthenticationParameters> aadAuthenticationParameters = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<P2sVpnGatewayData>> p2SVpnGateways = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> p2SVpnGateways = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<P2sVpnGatewayData> array = new List<P2sVpnGatewayData>();
+                            List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(P2sVpnGatewayData.DeserializeP2sVpnGatewayData(item));
+                                array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                             }
                             p2SVpnGateways = array;
                             continue;

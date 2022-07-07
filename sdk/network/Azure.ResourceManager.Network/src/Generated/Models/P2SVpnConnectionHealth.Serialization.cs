@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2sVpnConnectionHealth
+    public partial class P2SVpnConnectionHealth
     {
-        internal static P2sVpnConnectionHealth DeserializeP2sVpnConnectionHealth(JsonElement element)
+        internal static P2SVpnConnectionHealth DeserializeP2SVpnConnectionHealth(JsonElement element)
         {
             Optional<Uri> sasUrl = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2sVpnConnectionHealth(sasUrl.Value);
+            return new P2SVpnConnectionHealth(sasUrl.Value);
         }
     }
 }
