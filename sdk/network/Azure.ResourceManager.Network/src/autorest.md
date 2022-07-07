@@ -138,6 +138,7 @@ rename-rules:
   IKEv2: IkeV2
   IkeV2: IkeV2
   Stag: STag
+  VirtualMachine: Vm
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
