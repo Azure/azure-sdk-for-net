@@ -38,7 +38,7 @@ parameters:
   default: []
 - name: TestTimeoutInMinutes
   type: number
-  default: 60
+  default: 90
 - name: MatrixConfigs
   type: object
   default:
