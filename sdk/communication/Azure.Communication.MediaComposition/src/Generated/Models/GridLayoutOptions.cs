@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -15,15 +16,19 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of GridLayoutOptions. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
-        /// <param name="inputIds"> Input ids to be included in the layout. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
-        public GridLayoutOptions(int rows, int columns, object inputIds)
+        public GridLayoutOptions(int rows, int columns)
         {
-            if (inputIds == null)
-            {
-                throw new ArgumentNullException(nameof(inputIds));
-            }
+            Rows = rows;
+            Columns = columns;
+            InputIds = new ChangeTrackingList<IList<string>>();
+        }
 
+        /// <summary> Initializes a new instance of GridLayoutOptions. </summary>
+        /// <param name="rows"> Number of rows. </param>
+        /// <param name="columns"> Number of columns. </param>
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
+        internal GridLayoutOptions(int rows, int columns, IList<IList<string>> inputIds)
+        {
             Rows = rows;
             Columns = columns;
             InputIds = inputIds;
@@ -34,6 +39,6 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Number of columns. </summary>
         public int Columns { get; set; }
         /// <summary> Input ids to be included in the layout. </summary>
-        public object InputIds { get; set; }
+        public IList<IList<string>> InputIds { get; }
     }
 }

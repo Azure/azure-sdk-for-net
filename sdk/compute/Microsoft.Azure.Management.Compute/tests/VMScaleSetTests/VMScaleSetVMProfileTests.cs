@@ -129,7 +129,7 @@ namespace Compute.Tests.VMScaleSetTests
         /// <summary>
         /// Checks if application profile can be set through API
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Resource does not exists")]
         public void TestVMScaleSetApplicationProfile()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");

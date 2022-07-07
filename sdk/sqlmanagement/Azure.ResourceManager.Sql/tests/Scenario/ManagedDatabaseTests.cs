@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public ManagedDatabaseTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Re-record before GA")]
         public async Task ManagedDatabaseApiTests()
         {
             // create Managed Instance

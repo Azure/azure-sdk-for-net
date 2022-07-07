@@ -42,7 +42,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateMetricsClient
-var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
+var client = new MetricsQueryClient(new DefaultAzureCredential());
 ```
 
 ### Execute the query
@@ -97,6 +97,7 @@ All client instance methods are thread-safe and independent of each other ([guid
   - [Include visualization](#include-visualization)
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
+  - [Query metrics with options](#query-metrics-with-options)
 
 ### Logs query
 
@@ -265,11 +266,14 @@ string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
-    "AzureActivity | summarize count()",
+    @"AzureActivity
+        | summarize Count = count() by ResourceGroup
+        | top 10 by Count
+        | project ResourceGroup",
     new QueryTimeRange(TimeSpan.FromDays(1)),
-    options: new LogsQueryOptions
+    new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
     });
@@ -291,11 +295,14 @@ string additionalWorkspaceId = "<additional_workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 // Query TOP 10 resource groups by event count
-Response<IReadOnlyList<int>> response = await client.QueryWorkspaceAsync<int>(
+Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
-    "AzureActivity | summarize count()",
+    @"AzureActivity
+        | summarize Count = count() by ResourceGroup
+        | top 10 by Count
+        | project ResourceGroup",
     new QueryTimeRange(TimeSpan.FromDays(1)),
-    options: new LogsQueryOptions
+    new LogsQueryOptions
     {
         AdditionalWorkspaces = { additionalWorkspaceId }
     });
@@ -416,31 +423,30 @@ A resource ID is required to query metrics. To find the resource ID:
 ```C# Snippet:QueryMetrics
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
 
-var metricsClient = new MetricsQueryClient(new DefaultAzureCredential());
-
-Response<MetricsQueryResult> results = await metricsClient.QueryResourceAsync(
+Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] {"Microsoft.OperationalInsights/workspaces"}
+    new[] { "SuccessfulCalls", "TotalCalls" }
 );
 
-foreach (var metric in results.Value.Metrics)
+foreach (MetricResult metric in results.Value.Metrics)
 {
     Console.WriteLine(metric.Name);
-    foreach (var element in metric.TimeSeries)
+    foreach (MetricTimeSeriesElement element in metric.TimeSeries)
     {
         Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
 
-        foreach (var metricValue in element.Values)
+        foreach (MetricValue value in element.Values)
         {
-            Console.WriteLine(metricValue);
+            Console.WriteLine(value);
         }
     }
 }
 ```
 
 #### Handle metrics query response
-	
+
 The metrics query API returns a `MetricsQueryResult` object. The `MetricsQueryResult` object contains properties such as a list of `MetricResult`-typed objects, `Cost`, `Namespace`, `ResourceRegion`, `TimeSpan`, and `Interval`. The `MetricResult` objects list can be accessed using the `metrics` param. Each `MetricResult` object in this list contains a list of `MetricTimeSeriesElement` objects. Each `MetricTimeSeriesElement` object contains `Metadata` and `Values` properties.
 
 Here's a hierarchy of the response:
@@ -462,6 +468,39 @@ MetricsQueryResult
     |---TimeSeries (list of `MetricTimeSeriesElement` objects)
         |---Metadata
         |---Values
+```
+
+#### Query metrics with options
+
+A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following Azure Key Vault example. The resource's "Vault requests availability" metric is requested, and the "Avg" aggregation type is included.
+
+```C# Snippet:QueryMetricsWithAggregations
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+
+Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+    resourceId,
+    new[] { "Availability" },
+    new MetricsQueryOptions
+    {
+        Aggregations =
+        {
+            MetricAggregationType.Average,
+        }
+    });
+
+MetricResult metric = result.Value.Metrics[0];
+
+foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+{
+    foreach (MetricValue value in element.Values)
+    {
+        // Prints a line that looks like the following:
+        // 6/21/2022 12:29:00 AM +00:00 : 100
+        Console.WriteLine($"{value.TimeStamp} : {value.Average}");
+    }
+}
 ```
 
 ## Troubleshooting

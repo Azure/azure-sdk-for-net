@@ -98,11 +98,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>
         /// <param name="targetModelId"> Identifier of the target model. </param>
         /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
-        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
+        /// <param name="expiresOn"> Date/time when the access token expires. </param>
         /// <returns> A new <see cref="DocumentAnalysis.CopyAuthorization"/> instance for mocking. </returns>
-        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expirationDateTime = default)
+        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expiresOn = default)
         {
-            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expirationDateTime);
+            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expiresOn);
         }
 
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
@@ -126,19 +126,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             fieldConfidence ??= new Dictionary<string, float>();
 
             return new DocTypeInfo(description, buildMode, fieldSchema, fieldConfidence);
-        }
-
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
-        /// <param name="content"> Table caption content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the table caption. </param>
-        /// <param name="spans"> Location of the table caption in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentCaption"/> instance for mocking. </returns>
-        public static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
@@ -368,19 +355,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentField(DocumentFieldType.Time, null, null, valueTime: value, null, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
-        /// <param name="content"> Table footnote content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the table footnote. </param>
-        /// <param name="spans"> Location of the table footnote in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentFootnote"/> instance for mocking. </returns>
-        public static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList());
-        }
-
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
@@ -443,17 +417,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentModel(modelId, description, createdOn, apiVersion: null, tags, docTypes);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelInfo"/> instance for mocking. </returns>
-        public static DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
+        public static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelInfo(modelId, description, createdOn, apiVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, apiVersion: null, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -528,19 +502,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
-        /// <param name="caption"> Caption associated with the table. </param>
-        /// <param name="footnotes"> Footnotes associated with the table. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table. </param>
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
         {
             cells ??= new List<DocumentTableCell>();
-            footnotes ??= new List<DocumentFootnote>();
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption, footnotes?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption: null, footnotes: new List<DocumentFootnote>(), boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>

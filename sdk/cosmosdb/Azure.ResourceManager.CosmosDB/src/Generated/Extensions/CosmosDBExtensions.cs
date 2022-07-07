@@ -86,10 +86,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -102,10 +100,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetCosmosDBLocations().Get(location, cancellationToken);
         }
@@ -117,10 +113,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DatabaseAccountResource> GetDatabaseAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDatabaseAccountsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -130,10 +126,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DatabaseAccountResource> GetDatabaseAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDatabaseAccounts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -143,10 +139,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RestorableDatabaseAccountResource> GetRestorableDatabaseAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRestorableDatabaseAccountsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -156,10 +152,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RestorableDatabaseAccountResource> GetRestorableDatabaseAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetRestorableDatabaseAccounts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -169,10 +165,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClusterResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusterResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,10 +178,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusterResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CassandraClusterResource> GetCassandraClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusterResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCassandraClusters(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -197,12 +193,12 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Gets a collection of DatabaseAccountResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CosmosDBAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
-        public static DatabaseAccountCollection GetDatabaseAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
+        public static CosmosDBAccountCollection GetCosmosDBAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDatabaseAccounts();
+            return GetExtensionClient(resourceGroupResource).GetCosmosDBAccounts();
         }
 
         /// <summary>
@@ -216,9 +212,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseAccountResource>> GetDatabaseAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,17 +228,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseAccountResource> GetDatabaseAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<CosmosDBAccountResource> GetCosmosDBAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseAccounts().Get(accountName, cancellationToken);
+            return resourceGroupResource.GetCosmosDBAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterResourceCollection GetClusterResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
+        public static CassandraClusterCollection GetCassandraClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetClusterResources();
+            return GetExtensionClient(resourceGroupResource).GetCassandraClusters();
         }
 
         /// <summary>
@@ -256,9 +252,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterResourceAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusterResources().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCassandraClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,329 +268,329 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetClusterResource(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<CassandraClusterResource> GetCassandraCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusterResources().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        #region DatabaseAccountResource
+        #region CosmosDBAccountResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountResource" /> object. </returns>
-        public static DatabaseAccountResource GetDatabaseAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBAccountResource" /> object. </returns>
+        public static CosmosDBAccountResource GetCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountResource.ValidateResourceId(id);
-                return new DatabaseAccountResource(client, id);
+                CosmosDBAccountResource.ValidateResourceId(id);
+                return new CosmosDBAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlDatabaseResource
+        #region CosmosDBSqlDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
-        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource" /> object. </returns>
+        public static CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlDatabaseResource.ValidateResourceId(id);
-                return new SqlDatabaseResource(client, id);
+                CosmosDBSqlDatabaseResource.ValidateResourceId(id);
+                return new CosmosDBSqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountSqlDatabaseThroughputSettingResource
+        #region CosmosDBSqlDatabaseThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountSqlDatabaseThroughputSettingResource GetDatabaseAccountSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
+        public static CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountSqlDatabaseThroughputSettingResource(client, id);
+                CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new CosmosDBSqlDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountSqlDatabaseContainerThroughputSettingResource
+        #region CosmosDBSqlContainerThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlContainerThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountSqlDatabaseContainerThroughputSettingResource GetDatabaseAccountSqlDatabaseContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> object. </returns>
+        public static CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountSqlDatabaseContainerThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountSqlDatabaseContainerThroughputSettingResource(client, id);
+                CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
+                return new CosmosDBSqlContainerThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountMongodbDatabaseThroughputSettingResource
+        #region MongoDBDatabaseThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MongoDBDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountMongodbDatabaseThroughputSettingResource GetDatabaseAccountMongodbDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource" /> object. </returns>
+        public static MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountMongodbDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountMongodbDatabaseThroughputSettingResource(client, id);
+                MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new MongoDBDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource
+        #region MongoDBCollectionThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MongoDBCollectionThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollectionThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource GetDatabaseAccountMongodbDatabaseCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource" /> object. </returns>
+        public static MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource(client, id);
+                MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
+                return new MongoDBCollectionThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountTableThroughputSettingResource
+        #region CosmosTableThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountTableThroughputSettingResource GetDatabaseAccountTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
+        public static CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountTableThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountTableThroughputSettingResource(client, id);
+                CosmosTableThroughputSettingResource.ValidateResourceId(id);
+                return new CosmosTableThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountCassandraKeyspaceThroughputSettingResource
+        #region CassandraKeyspaceThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CassandraKeyspaceThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraKeyspaceThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountCassandraKeyspaceThroughputSettingResource GetDatabaseAccountCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
+        public static CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountCassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountCassandraKeyspaceThroughputSettingResource(client, id);
+                CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
+                return new CassandraKeyspaceThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountCassandraKeyspaceTableThroughputSettingResource
+        #region CassandraTableThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CassandraTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountCassandraKeyspaceTableThroughputSettingResource GetDatabaseAccountCassandraKeyspaceTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
+        public static CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountCassandraKeyspaceTableThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountCassandraKeyspaceTableThroughputSettingResource(client, id);
+                CassandraTableThroughputSettingResource.ValidateResourceId(id);
+                return new CassandraTableThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountGremlinDatabaseThroughputSettingResource
+        #region GremlinDatabaseThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GremlinDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GremlinDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountGremlinDatabaseThroughputSettingResource GetDatabaseAccountGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource" /> object. </returns>
+        public static GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountGremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountGremlinDatabaseThroughputSettingResource(client, id);
+                GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new GremlinDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountGremlinDatabaseGraphThroughputSettingResource
+        #region GremlinGraphThroughputSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GremlinGraphThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GremlinGraphThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinGraphThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource" /> object. </returns>
-        public static DatabaseAccountGremlinDatabaseGraphThroughputSettingResource GetDatabaseAccountGremlinDatabaseGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
+        public static GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseAccountGremlinDatabaseGraphThroughputSettingResource.ValidateResourceId(id);
-                return new DatabaseAccountGremlinDatabaseGraphThroughputSettingResource(client, id);
+                GremlinGraphThroughputSettingResource.ValidateResourceId(id);
+                return new GremlinGraphThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlContainerResource
+        #region CosmosDBSqlContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="SqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlContainerResource" /> object. </returns>
-        public static SqlContainerResource GetSqlContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
+        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlContainerResource.ValidateResourceId(id);
-                return new SqlContainerResource(client, id);
+                CosmosDBSqlContainerResource.ValidateResourceId(id);
+                return new CosmosDBSqlContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlStoredProcedureResource
+        #region CosmosDBSqlStoredProcedureResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="SqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlStoredProcedureResource" /> object. </returns>
-        public static SqlStoredProcedureResource GetSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource" /> object. </returns>
+        public static CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlStoredProcedureResource.ValidateResourceId(id);
-                return new SqlStoredProcedureResource(client, id);
+                CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
+                return new CosmosDBSqlStoredProcedureResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlUserDefinedFunctionResource
+        #region CosmosDBSqlUserDefinedFunctionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlUserDefinedFunctionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlUserDefinedFunctionResource" /> object. </returns>
-        public static SqlUserDefinedFunctionResource GetSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> object. </returns>
+        public static CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlUserDefinedFunctionResource.ValidateResourceId(id);
-                return new SqlUserDefinedFunctionResource(client, id);
+                CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
+                return new CosmosDBSqlUserDefinedFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlTriggerResource
+        #region CosmosDBSqlTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="SqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTriggerResource" /> object. </returns>
-        public static SqlTriggerResource GetSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource" /> object. </returns>
+        public static CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlTriggerResource.ValidateResourceId(id);
-                return new SqlTriggerResource(client, id);
+                CosmosDBSqlTriggerResource.ValidateResourceId(id);
+                return new CosmosDBSqlTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlRoleDefinitionResource
+        #region CosmosDBSqlRoleDefinitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleDefinitionResource" /> object. </returns>
-        public static SqlRoleDefinitionResource GetSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource" /> object. </returns>
+        public static CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlRoleDefinitionResource.ValidateResourceId(id);
-                return new SqlRoleDefinitionResource(client, id);
+                CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
+                return new CosmosDBSqlRoleDefinitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlRoleAssignmentResource
+        #region CosmosDBSqlRoleAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="SqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBSqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlRoleAssignmentResource" /> object. </returns>
-        public static SqlRoleAssignmentResource GetSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource" /> object. </returns>
+        public static CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SqlRoleAssignmentResource.ValidateResourceId(id);
-                return new SqlRoleAssignmentResource(client, id);
+                CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
+                return new CosmosDBSqlRoleAssignmentResource(client, id);
             }
             );
         }
@@ -790,58 +786,58 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region RestorableDatabaseAccountResource
+        #region RestorableCosmosDBAccountResource
         /// <summary>
-        /// Gets an object representing a <see cref="RestorableDatabaseAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorableDatabaseAccountResource.CreateResourceIdentifier" /> to create a <see cref="RestorableDatabaseAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RestorableCosmosDBAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableCosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="RestorableCosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDatabaseAccountResource" /> object. </returns>
-        public static RestorableDatabaseAccountResource GetRestorableDatabaseAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource" /> object. </returns>
+        public static RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorableDatabaseAccountResource.ValidateResourceId(id);
-                return new RestorableDatabaseAccountResource(client, id);
+                RestorableCosmosDBAccountResource.ValidateResourceId(id);
+                return new RestorableCosmosDBAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region CassandraClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CassandraClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraClusterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraClusterResource" /> object. </returns>
+        public static CassandraClusterResource GetCassandraClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                CassandraClusterResource.ValidateResourceId(id);
+                return new CassandraClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataCenterResource
+        #region CassandraDataCenterResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCenterResource.CreateResourceIdentifier" /> to create a <see cref="DataCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CassandraDataCenterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraDataCenterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraDataCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCenterResource" /> object. </returns>
-        public static DataCenterResource GetDataCenterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraDataCenterResource" /> object. </returns>
+        public static CassandraDataCenterResource GetCassandraDataCenterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataCenterResource.ValidateResourceId(id);
-                return new DataCenterResource(client, id);
+                CassandraDataCenterResource.ValidateResourceId(id);
+                return new CassandraDataCenterResource(client, id);
             }
             );
         }

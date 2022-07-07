@@ -243,7 +243,7 @@ When using Azure Active Directory, your principal must be assigned a role which 
 
 ## Troubleshooting
 
-For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs\TROUBLESHOOTING.md).
+For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md).
 
 ### Logging and diagnostics
 

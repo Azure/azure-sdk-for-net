@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportAutomaticPlacement");
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
+            if (Optional.IsDefined(AdditionalCapabilities))
+            {
+                writer.WritePropertyName("additionalCapabilities");
+                writer.WriteObjectValue(AdditionalCapabilities);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

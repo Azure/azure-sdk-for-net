@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using OpenTelemetry;
 
@@ -28,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
 
-            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
+            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }

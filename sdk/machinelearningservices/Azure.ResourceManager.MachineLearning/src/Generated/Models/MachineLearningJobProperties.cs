@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for a job. </summary>
+    /// <summary>
+    /// Base definition for a job.
+    /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoMLJob"/>, <see cref="CommandJob"/>, <see cref="PipelineJob"/> and <see cref="SweepJob"/>.
+    /// </summary>
     public partial class MachineLearningJobProperties : ResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
@@ -29,12 +33,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
+        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="schedule">
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
+        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
         /// </param>
         /// <param name="services">
         /// List of JobEndpoints.
@@ -63,6 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
+        /// Please note <see cref="IdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmlToken"/>, <see cref="ManagedIdentity"/> and <see cref="UserIdentity"/>.
         /// </summary>
         public IdentityConfiguration Identity { get; set; }
         /// <summary> Is the asset archived?. </summary>
@@ -72,6 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Schedule definition of job.
         /// If no schedule is provided, the job is run once and immediately after submission.
+        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
         /// </summary>
         public ScheduleBase Schedule { get; set; }
         /// <summary>

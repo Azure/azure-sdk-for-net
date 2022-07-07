@@ -297,9 +297,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationCapabilities>> GetCapabilitiesByLocationAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByLocationCapability");
+            using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesByLocation");
             scope.Start();
             try
             {
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LocationCapabilities> GetByLocationCapability(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public virtual Response<LocationCapabilities> GetCapabilitiesByLocation(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByLocationCapability");
+            using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesByLocation");
             scope.Start();
             try
             {

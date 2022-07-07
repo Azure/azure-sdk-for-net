@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
+            DataFlows = new ChangeTrackingList<DataFlow>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
@@ -28,21 +30,47 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <param name="description"> Description of the data collection rule. </param>
+        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
+        /// <param name="dataSources">
+        /// The specification of data sources. 
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </param>
+        /// <param name="destinations"> The specification of destinations. </param>
+        /// <param name="dataFlows"> The specification of data flows. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionRuleResourceKind? kind, ETag? eTag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             Kind = kind;
-            Etag = etag;
+            ETag = eTag;
+            Description = description;
+            ImmutableId = immutableId;
+            DataSources = dataSources;
+            Destinations = destinations;
+            DataFlows = dataFlows;
+            ProvisioningState = provisioningState;
         }
 
-        /// <summary> Resource properties. </summary>
-        public DataCollectionRuleProperties Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
         public KnownDataCollectionRuleResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
+        /// <summary> Description of the data collection rule. </summary>
+        public string Description { get; set; }
+        /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>
+        public string ImmutableId { get; }
+        /// <summary>
+        /// The specification of data sources. 
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </summary>
+        public DataCollectionRuleDataSources DataSources { get; set; }
+        /// <summary> The specification of destinations. </summary>
+        public DataCollectionRuleDestinations Destinations { get; set; }
+        /// <summary> The specification of data flows. </summary>
+        public IList<DataFlow> DataFlows { get; }
+        /// <summary> The resource provisioning state. </summary>
+        public KnownDataCollectionRuleProvisioningState? ProvisioningState { get; }
     }
 }

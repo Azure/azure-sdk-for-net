@@ -628,10 +628,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(word.Confidence, 0);
             }
 
-            // TODO: re-enable once service-side issue is fixed (https://github.com/Azure/azure-sdk-for-net-pr/issues/1727).
-            //DocumentStyle style = result.Styles.First();
+            DocumentStyle style = result.Styles.First();
 
-            //Assert.True(style.IsHandwritten);
+            Assert.True(style.IsHandwritten);
 
             Assert.AreEqual(41, result.Paragraphs.Count);
 
@@ -1389,7 +1388,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1728")]
         public async Task StartAnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
@@ -1451,7 +1449,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartAnalyzeDocumentCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential: true);

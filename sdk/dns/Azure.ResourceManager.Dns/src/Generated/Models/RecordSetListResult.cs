@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -16,20 +17,20 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of RecordSetListResult. </summary>
         internal RecordSetListResult()
         {
-            Value = new ChangeTrackingList<RecordSet>();
+            Value = new ChangeTrackingList<RecordSetData>();
         }
 
         /// <summary> Initializes a new instance of RecordSetListResult. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal RecordSetListResult(IReadOnlyList<RecordSet> value, string nextLink)
+        internal RecordSetListResult(IReadOnlyList<RecordSetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Information about the record sets in the response. </summary>
-        public IReadOnlyList<RecordSet> Value { get; }
+        public IReadOnlyList<RecordSetData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

@@ -32,6 +32,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("configurationReference");
                 writer.WriteStringValue(ConfigurationReference);
             }
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            {
+                writer.WritePropertyName("treatFailureAsDeploymentFailure");
+                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
+            }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade");
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -41,6 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> order = default;
             string packageReferenceId = default;
             Optional<string> configurationReference = default;
+            Optional<bool> treatFailureAsDeploymentFailure = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -68,8 +80,28 @@ namespace Azure.ResourceManager.Compute.Models
                     configurationReference = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("treatFailureAsDeploymentFailure"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    treatFailureAsDeploymentFailure = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableAutomaticUpgrade"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableAutomaticUpgrade = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VmGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value);
+            return new VmGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

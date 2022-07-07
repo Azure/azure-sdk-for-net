@@ -36,7 +36,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartBuildModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
@@ -202,7 +201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/28705")]
         public async Task AdminOps(bool useTokenCredential)
@@ -214,7 +213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var options = new BuildModelOptions()
             {
-                ModelDescription = description
+                Description = description
             };
 
             foreach (var tag in TestingTags)
@@ -230,12 +229,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
-            DocumentModelInfo modelInfo = client.GetModelsAsync().ToEnumerableAsync().Result
+            DocumentModelSummary modelSummary = client.GetModelsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(m => m.ModelId == modelId);
 
-            Assert.NotNull(modelInfo);
+            Assert.NotNull(modelSummary);
 
-            ValidateDocumentModelInfo(modelInfo, description, TestingTags);
+            ValidateDocumentModelSummary(modelSummary, description, TestingTags);
 
             await client.DeleteModelAsync(modelId);
 
@@ -253,7 +252,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
@@ -325,7 +324,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #region copy
         [RecordedTest]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
+        [TestCase(true)]
         [TestCase(false)]
         public async Task CopyModel(bool useTokenCredential)
         {
@@ -415,8 +414,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [TestCase(false)]
-        [TestCase(true, Ignore = "https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
-        public async Task StartCreateComposedModel(bool useTokenCredential)
+        [TestCase(true)]
+        public async Task StartComposeModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
 
@@ -429,7 +428,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, composedModelId);
+            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, composedModelId);
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
@@ -450,7 +449,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartCreateComposedModelWithTags()
+        public async Task StartComposeModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
 
@@ -464,7 +463,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartCreateComposedModelAsync(modelIds, composedModelId, tags: tags);
+            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, composedModelId, tags: tags);
 
             await operation.WaitForCompletionAsync();
 
@@ -476,7 +475,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartCreateComposedModelFailsWithInvalidId()
+        public async Task StartComposeModelFailsWithInvalidId()
         {
             var client = CreateDocumentModelAdministrationClient();
 
@@ -487,7 +486,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModel.ModelId, "00000000-0000-0000-0000-000000000000" };
 
             var composedModelId = Recording.GenerateId();
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds, composedModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartComposeModelAsync(modelIds, composedModelId));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -510,12 +509,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         private void ValidateDocumentModel(DocumentModel model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            ValidateDocumentModelInfo(model, description, tags);
+            ValidateDocumentModelSummary(model, description, tags);
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
         }
 
-        private void ValidateDocumentModelInfo(DocumentModelInfo model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModelSummary(DocumentModelSummary model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             if (description != null)
             {

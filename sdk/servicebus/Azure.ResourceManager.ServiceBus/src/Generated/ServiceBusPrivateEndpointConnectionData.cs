@@ -28,11 +28,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ConnectionState connectionState, EndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ServiceBusPrivateLinkServiceConnectionState connectionState, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            Location = location;
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>
@@ -50,8 +52,10 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Details about the state of the connection. </summary>
-        public ConnectionState ConnectionState { get; set; }
+        public ServiceBusPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
-        public EndpointProvisioningState? ProvisioningState { get; set; }
+        public ServiceBusPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

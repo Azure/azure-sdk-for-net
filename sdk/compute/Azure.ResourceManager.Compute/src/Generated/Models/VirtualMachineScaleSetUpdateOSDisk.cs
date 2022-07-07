@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The caching type. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
         /// <summary> Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </summary>
@@ -44,5 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<string> VhdContainers { get; }
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
+        /// <summary> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **Delete**. For an Ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for Ephemeral OS Disk. </summary>
+        public DiskDeleteOptionType? DeleteOption { get; set; }
     }
 }

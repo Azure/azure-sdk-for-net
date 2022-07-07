@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ChangeDirectoryRequest. </summary>
+    /// <summary> The ChangeDirectoryContent. </summary>
     public partial class ChangeDirectoryContent
     {
         /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>
