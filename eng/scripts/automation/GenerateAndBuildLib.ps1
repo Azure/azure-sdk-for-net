@@ -443,10 +443,10 @@ function Invoke-GenerateAndBuildSDK () {
             Remove-Item $newpackageoutput
         } else {
             npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
-            $serviceSDKDirectory = (Join-Path $sdkPath sdk $service)
+            $serviceSDKDirectory = (Join-Path $sdkRootPath "sdk" $service)
             $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
-            $folders |ForEach-Object {
-                $folder=$_.Name
+            foreach ($item in $folders) {
+                $folder=$item.Name
                 New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                 if ( !$? ) {
                     Write-Error "Failed to create sdk project folder. exit code: $?"
