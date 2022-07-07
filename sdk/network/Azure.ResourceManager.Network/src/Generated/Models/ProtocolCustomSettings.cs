@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> DDoS custom policy properties. </summary>
-    public partial class ProtocolCustomSettingsFormat
+    public partial class ProtocolCustomSettings
     {
-        /// <summary> Initializes a new instance of ProtocolCustomSettingsFormat. </summary>
-        public ProtocolCustomSettingsFormat()
+        /// <summary> Initializes a new instance of ProtocolCustomSettings. </summary>
+        public ProtocolCustomSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtocolCustomSettingsFormat. </summary>
+        /// <summary> Initializes a new instance of ProtocolCustomSettings. </summary>
         /// <param name="protocol"> The protocol for which the DDoS protection policy is being customized. </param>
         /// <param name="triggerRateOverride"> The customized DDoS protection trigger rate. </param>
         /// <param name="sourceRateOverride"> The customized DDoS protection source rate. </param>
         /// <param name="triggerSensitivityOverride"> The customized DDoS protection trigger rate sensitivity degrees. High: Trigger rate set with most sensitivity w.r.t. normal traffic. Default: Trigger rate set with moderate sensitivity w.r.t. normal traffic. Low: Trigger rate set with less sensitivity w.r.t. normal traffic. Relaxed: Trigger rate set with least sensitivity w.r.t. normal traffic. </param>
-        internal ProtocolCustomSettingsFormat(DdosCustomPolicyProtocol? protocol, string triggerRateOverride, string sourceRateOverride, DdosCustomPolicyTriggerSensitivityOverride? triggerSensitivityOverride)
+        internal ProtocolCustomSettings(DdosCustomPolicyProtocol? protocol, string triggerRateOverride, string sourceRateOverride, DdosCustomPolicyTriggerSensitivityOverride? triggerSensitivityOverride)
         {
             Protocol = protocol;
             TriggerRateOverride = triggerRateOverride;

@@ -12,11 +12,11 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ListP2sVpnGatewaysResult
+    internal partial class ListP2SVpnGatewaysResult
     {
-        internal static ListP2sVpnGatewaysResult DeserializeListP2sVpnGatewaysResult(JsonElement element)
+        internal static ListP2SVpnGatewaysResult DeserializeListP2SVpnGatewaysResult(JsonElement element)
         {
-            Optional<IReadOnlyList<P2sVpnGatewayData>> value = default;
+            Optional<IReadOnlyList<P2SVpnGatewayData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<P2sVpnGatewayData> array = new List<P2sVpnGatewayData>();
+                    List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(P2sVpnGatewayData.DeserializeP2sVpnGatewayData(item));
+                        array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ListP2sVpnGatewaysResult(Optional.ToList(value), nextLink.Value);
+            return new ListP2SVpnGatewaysResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
-    public partial class P2sConnectionConfiguration : NetworkResourceData
+    public partial class P2SConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of P2sConnectionConfiguration. </summary>
-        public P2sConnectionConfiguration()
+        /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
+        public P2SConnectionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of P2sConnectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2sConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = eTag;
             VpnClientAddressPool = vpnClientAddressPool;

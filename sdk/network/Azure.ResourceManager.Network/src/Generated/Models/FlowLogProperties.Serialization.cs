@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogFormat : IUtf8JsonSerializable
+    public partial class FlowLogProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static FlowLogFormat DeserializeFlowLogFormat(JsonElement element)
+        internal static FlowLogProperties DeserializeFlowLogProperties(JsonElement element)
         {
             Optional<FlowLogFormatType> type = default;
             Optional<int> version = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FlowLogFormat(Optional.ToNullable(type), Optional.ToNullable(version));
+            return new FlowLogProperties(Optional.ToNullable(type), Optional.ToNullable(version));
         }
     }
 }
