@@ -386,10 +386,9 @@ namespace Azure.Communication.CallingServer
     }
     public partial class TransferCallOptions
     {
-        public TransferCallOptions(Azure.Communication.PhoneNumberIdentifier alternateCallerId, string userToUserInformation, string operationContext, string transfereeParticipantId) { }
+        public TransferCallOptions(Azure.Communication.PhoneNumberIdentifier alternateCallerId, string userToUserInformation, string operationContext) { }
         public Azure.Communication.PhoneNumberIdentifier AlternateCallerId { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public string TransfereeParticipantId { get { throw null; } set { } }
         public string UserToUserInformation { get { throw null; } set { } }
     }
     public partial class TransferCallResponse
