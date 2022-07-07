@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsActionGroupAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TestNotificationDetailsResponse>> GetActionGroupTestNotificationsAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
             scope.Start();
             try
             {
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestNotificationDetailsResponse> GetTestNotificationsActionGroup(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<TestNotificationDetailsResponse> GetActionGroupTestNotifications(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
             scope.Start();
             try
             {
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventData> GetActivityLogsAsync(string filter, string select = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventDataInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ActivityLogsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogs");
                 scope.Start();
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            async Task<Page<EventData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventDataInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ActivityLogsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogs");
                 scope.Start();
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventData> GetActivityLogs(string filter, string select = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            Page<EventData> FirstPageFunc(int? pageSizeHint)
+            Page<EventDataInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ActivityLogsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogs");
                 scope.Start();
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            Page<EventData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventDataInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ActivityLogsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogs");
                 scope.Start();

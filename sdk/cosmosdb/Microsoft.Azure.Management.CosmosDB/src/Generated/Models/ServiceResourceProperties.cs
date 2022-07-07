@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// <summary>
     /// Services response resource.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ServiceResourceProperties")]
     public partial class ServiceResourceProperties
     {
         /// <summary>
@@ -98,12 +97,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (InstanceCount != null)
+            if (InstanceCount < 0)
             {
-                if (InstanceCount < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "InstanceCount", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "InstanceCount", 0);
             }
         }
     }

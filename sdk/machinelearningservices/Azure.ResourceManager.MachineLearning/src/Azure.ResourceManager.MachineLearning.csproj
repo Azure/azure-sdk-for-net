@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.2</Version>
+    <Description>
+      Azure management client SDK for Azure resource provider MachineLearning.
+      This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
+    </Description>
+    <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
+    <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+</Project>

@@ -70,8 +70,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
-            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium);
+            bool premium = default,
+            bool hnsEnabled = true)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
             => DataLakeClientBuilder.GetOptions(parallelRange);
@@ -271,11 +272,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
-        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, bool isDirectory = false, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new DataLakeSasBuilder
             {
                 FileSystemName = fileSystemName,
+                IsDirectory = isDirectory,
                 Path = path,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),

@@ -11,7 +11,16 @@ namespace Azure.ResourceManager.Monitor.Models
     internal partial class DestinationsSpecAzureMonitorMetrics : AzureMonitorMetricsDestination
     {
         /// <summary> Initializes a new instance of DestinationsSpecAzureMonitorMetrics. </summary>
-        internal DestinationsSpecAzureMonitorMetrics()
+        public DestinationsSpecAzureMonitorMetrics()
+        {
+        }
+
+        /// <summary> Initializes a new instance of DestinationsSpecAzureMonitorMetrics. </summary>
+        /// <param name="name">
+        /// A friendly name for the destination. 
+        /// This name should be unique across all destinations (regardless of type) within the data collection rule.
+        /// </param>
+        internal DestinationsSpecAzureMonitorMetrics(string name) : base(name)
         {
         }
     }

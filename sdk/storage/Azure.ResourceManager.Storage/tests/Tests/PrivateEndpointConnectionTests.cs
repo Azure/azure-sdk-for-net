@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Storage.Tests
             List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             StoragePrivateEndpointConnectionResource privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnection.Data.ConnectionState.Status);
 
             _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new StoragePrivateEndpointConnectionData()
             {
-                PrivateLinkServiceConnectionState = new Models.StoragePrivateLinkServiceConnectionState()
+                ConnectionState = new Models.StoragePrivateLinkServiceConnectionState()
                 {
                     Status = "Approved",
                     Description = "Approved by test",
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Tests
             privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnection = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual(StoragePrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnection.Data.ConnectionState.Status);
         }
 
         [Test]
@@ -98,6 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests
             privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, privateEndpointConnections.Count);
         }
+
         protected async Task<PrivateEndpointResource> CreatePrivateEndpoint()
         {
             var vnetName = Recording.GenerateAssetName("vnet-");
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
+                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
@@ -141,8 +142,8 @@ namespace Azure.ResourceManager.Storage.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Status, actualValue.Data.PrivateLinkServiceConnectionState.Status.ToString());
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Description, actualValue.Data.PrivateLinkServiceConnectionState.Description);
+            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
         }
     }
 }

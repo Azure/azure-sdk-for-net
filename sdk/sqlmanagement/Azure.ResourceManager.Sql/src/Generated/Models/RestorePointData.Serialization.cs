@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Sql
 
         internal static RestorePointData DeserializeRestorePointData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<RestorePointType> restorePointType = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<DateTimeOffset> restorePointCreationDate = default;
@@ -39,7 +39,12 @@ namespace Azure.ResourceManager.Sql
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -54,11 +59,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -110,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RestorePointData(id, name, type, systemData, location.Value, Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
+            return new RestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value);
         }
     }
 }

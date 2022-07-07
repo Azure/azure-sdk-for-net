@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions(TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string document = @"Parker Doe has repaid all of their loans as of 2020-04-25.
                                 Their SSN is 859-98-0987. To contact them, use their phone number 800-102-1100.

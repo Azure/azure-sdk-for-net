@@ -1,6 +1,6 @@
 # Release History
 
-## 5.5.0-beta.1 (Unreleased)
+## 5.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.5.1 (2022-06-07)
+
+### Bugs Fixed
+
+- Fixed race condition when starting up function app.
+
+## 5.5.0 (2022-05-16)
+
+### Bugs Fixed
+
+- Updated dependency on `Azure.Messaging.ServiceBus` to benefit from bug fix.
+- Messages will now be abandoned if the function invocation throws for multiple dispatch functions. This was already the behavior for single dispatch functions.
 
 ## 5.4.0 (2022-05-10)
 

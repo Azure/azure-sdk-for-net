@@ -5,7 +5,7 @@ This sample demonstrates how to analyze an utterance. To get started, you'll nee
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -16,111 +16,40 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
+string projectName = "Menu";
+string deploymentName = "production";
+
+var data = new
 {
-    Language = "es"
-};
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
-
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-
-Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-    textConversationItem,
-    conversationsProject,
-    options);
-
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
-
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
-Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
-
-Console.WriteLine("Intents:");
-foreach (ConversationIntent intent in conversationPrediction.Intents)
-{
-    Console.WriteLine($"Category: {intent.Category}");
-    Console.WriteLine($"Confidence: {intent.Confidence}");
-    Console.WriteLine();
-}
-
-Console.WriteLine("Entities:");
-foreach (ConversationEntity entity in conversationPrediction.Entities)
-{
-    Console.WriteLine($"Category: {entity.Category}");
-    Console.WriteLine($"Text: {entity.Text}");
-    Console.WriteLine($"Offset: {entity.Offset}");
-    Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence: {entity.Confidence}");
-    Console.WriteLine();
-
-    foreach (BaseResolution resolution in entity.Resolutions)
+    analysisInput = new
     {
-        if (resolution is DateTimeResolution dateTimeResolution)
+        conversationItem = new
         {
-            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-            Console.WriteLine();
+            text = "Enviar un email a Carol acerca de la presentación de mañana",
+            language = "es",
+            id = "1",
+            participantId = "1",
         }
-    }
-}
+    },
+    parameters = new
+    {
+        projectName,
+        deploymentName,
+        verbose = true,
+
+        // Use Utf16CodeUnit for strings in .NET.
+        stringIndexType = "Utf16CodeUnit",
+    },
+    kind = "Conversation",
+};
+
+Response response = client.AnalyzeConversation(RequestContent.Create(data));
 ```
 
 ## Asynchronous
 
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-TextConversationItem input = new TextConversationItem(
-    participantId: "1",
-    id: "1",
-    text: "Tendremos 2 platos de nigiri de salmón braseado.")
-{
-    Language = "es"
-};
-AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
-
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-
-Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-    textConversationItem,
-    conversationsProject,
-    options);
-
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
-
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
-Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
-
-Console.WriteLine("Intents:");
-foreach (ConversationIntent intent in conversationPrediction.Intents)
-{
-    Console.WriteLine($"Category: {intent.Category}");
-    Console.WriteLine($"Confidence: {intent.Confidence}");
-    Console.WriteLine();
-}
-
-Console.WriteLine("Entities:");
-foreach (ConversationEntity entity in conversationPrediction.Entities)
-{
-    Console.WriteLine($"Category: {entity.Category}");
-    Console.WriteLine($"Text: {entity.Text}");
-    Console.WriteLine($"Offset: {entity.Offset}");
-    Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence: {entity.Confidence}");
-    Console.WriteLine();
-
-    foreach (BaseResolution resolution in entity.Resolutions)
-    {
-        if (resolution is DateTimeResolution dateTimeResolution)
-        {
-            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-            Console.WriteLine($"Value: {dateTimeResolution.Value}");
-            Console.WriteLine();
-        }
-    }
-}
+Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 ```

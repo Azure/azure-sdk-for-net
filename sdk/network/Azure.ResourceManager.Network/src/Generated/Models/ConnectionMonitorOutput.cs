@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a connection monitor output destination. </summary>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         internal ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }
         /// <summary> Log analytics workspace resource ID. </summary>
-        public string WorkspaceResourceId
+        public ResourceIdentifier WorkspaceResourceId
         {
             get => WorkspaceSettings is null ? default : WorkspaceSettings.WorkspaceResourceId;
             set

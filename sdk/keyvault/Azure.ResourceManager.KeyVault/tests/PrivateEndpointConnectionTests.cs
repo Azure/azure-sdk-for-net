@@ -11,7 +11,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [NonParallelizable]
-    [RunFrequency(RunTestFrequency.Manually)]
     public class PrivateEndpointConnectionTests : VaultOperationsTestsBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
@@ -32,13 +31,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
+            IgnoreTestInLiveMode();
             /*
             CAUTION: all private endpoint methods do not work properly now, so just temporally use Network's private endpoint methods for testing.
             Will confirm service team that this is expected.
             */
 
             // Create a vault first
-            VaultResource vaultResource = (await CreateVault()).Value;
+            KeyVaultResource vaultResource = (await CreateVault()).Value;
             // Create a vnet
             VirtualNetworkResource vnetResource = (await createVirtualNetwork()).Value;
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}",
-                        PrivateLinkServiceId = vaultResource.Data.Id.ToString(),
+                        PrivateLinkServiceId = vaultResource.Data.Id,
 
                         RequestMessage = "SDK test",
                         GroupIds = { "vault" }
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // get
             privateEndpoint = (await privateEndpointCollection.GetAsync(privateEndpointName)).Value;
             Assert.AreEqual(privateEndpoint.Data.Name, privateEndpointName);
-            Assert.AreEqual(privateEndpoint.Data.Location, Location.ToString());
+            Assert.AreEqual(privateEndpoint.Data.Location, Location);
             Assert.IsEmpty(privateEndpoint.Data.Tags);
 
             // update
             privateEndpointData.Tags.Add("test", "test");
             privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpoint.Data.Name, privateEndpointData)).Value;
             Assert.AreEqual(privateEndpoint.Data.Name, privateEndpointName);
-            Assert.AreEqual(privateEndpoint.Data.Location, Location.ToString());
+            Assert.AreEqual(privateEndpoint.Data.Location, Location);
             Assert.That(privateEndpoint.Data.Tags, Has.Count.EqualTo(1));
             Assert.That(privateEndpoint.Data.Tags, Does.ContainKey("test").WithValue("test"));
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
+                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return await networks.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
         }
 
-        private async Task<ArmOperation<VaultResource>> CreateVault()
+        private async Task<ArmOperation<KeyVaultResource>> CreateVault()
         {
             // Create a Vault first
-            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             return await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
         }

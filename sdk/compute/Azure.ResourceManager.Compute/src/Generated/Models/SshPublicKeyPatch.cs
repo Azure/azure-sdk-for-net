@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyPatch : UpdateResource
+    public partial class SshPublicKeyPatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of SshPublicKeyPatch. </summary>
         public SshPublicKeyPatch()

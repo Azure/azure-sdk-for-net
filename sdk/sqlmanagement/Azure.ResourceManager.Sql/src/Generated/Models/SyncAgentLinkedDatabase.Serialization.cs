@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SyncMemberDbType> databaseType = default;
             Optional<string> databaseId = default;
             Optional<string> description = default;
@@ -48,11 +48,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -104,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncAgentLinkedDatabase(id, name, type, systemData, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
+            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
         }
     }
 }

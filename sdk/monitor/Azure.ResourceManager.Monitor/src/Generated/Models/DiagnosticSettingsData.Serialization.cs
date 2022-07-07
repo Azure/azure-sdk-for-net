@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> serviceBusRuleId = default;
-            Optional<string> eventHubAuthorizationRuleId = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> serviceBusRuleId = default;
+            Optional<ResourceIdentifier> eventHubAuthorizationRuleId = default;
             Optional<string> eventHubName = default;
             Optional<IList<MetricSettings>> metrics = default;
             Optional<IList<LogSettings>> logs = default;
-            Optional<string> workspaceId = default;
+            Optional<ResourceIdentifier> workspaceId = default;
             Optional<string> logAnalyticsDestinationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,11 +102,16 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -121,17 +126,32 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("storageAccountId"))
                         {
-                            storageAccountId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceBusRuleId"))
                         {
-                            serviceBusRuleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventHubAuthorizationRuleId"))
                         {
-                            eventHubAuthorizationRuleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            eventHubAuthorizationRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventHubName"))
@@ -171,7 +191,12 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("workspaceId"))
                         {
-                            workspaceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsDestinationType"))
@@ -183,7 +208,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DiagnosticSettingsData(id, name, type, systemData, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, logAnalyticsDestinationType.Value);
+            return new DiagnosticSettingsData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, logAnalyticsDestinationType.Value);
         }
     }
 }

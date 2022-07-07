@@ -20,14 +20,14 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="modelVersion"></param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, HealthcareTaskParametersFhirVersion? fhirVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, FhirVersion? fhirVersion, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
         {
             FhirVersion = fhirVersion;
             StringIndexType = stringIndexType;
         }
 
         /// <summary> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </summary>
-        public HealthcareTaskParametersFhirVersion? FhirVersion { get; set; }
+        public FhirVersion? FhirVersion { get; set; }
         /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }

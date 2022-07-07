@@ -11,7 +11,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        [Ignore("LRO not implemented")]
         public void MultiCategoryClassifyConvenience()
         {
             // Create a text analytics client.

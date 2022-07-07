@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create a cluster
             _resourceGroup = await CreateResourceGroupAsync();
             string clusterName = Recording.GenerateAssetName("cluster");
-            EventHubClusterCollection clusterCollection = _resourceGroup.GetEventHubClusters();
-            EventHubClusterData parameter = new EventHubClusterData(AzureLocation.EastUS2);
-            EventHubClusterResource cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, parameter)).Value;
+            EventHubsClusterCollection clusterCollection = _resourceGroup.GetEventHubsClusters();
+            EventHubsClusterData parameter = new EventHubsClusterData(AzureLocation.EastUS2);
+            EventHubsClusterResource cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, parameter)).Value;
             Assert.NotNull(cluster);
             Assert.AreEqual(cluster.Data.Name, clusterName);
 

@@ -94,27 +94,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MaxStalenessPrefix != null)
+            if (MaxStalenessPrefix > 2147483647)
             {
-                if (MaxStalenessPrefix > 2147483647)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxStalenessPrefix", 2147483647);
-                }
-                if (MaxStalenessPrefix < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxStalenessPrefix", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxStalenessPrefix", 2147483647);
             }
-            if (MaxIntervalInSeconds != null)
+            if (MaxStalenessPrefix < 1)
             {
-                if (MaxIntervalInSeconds > 86400)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxIntervalInSeconds", 86400);
-                }
-                if (MaxIntervalInSeconds < 5)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxIntervalInSeconds", 5);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxStalenessPrefix", 1);
+            }
+            if (MaxIntervalInSeconds > 86400)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxIntervalInSeconds", 86400);
+            }
+            if (MaxIntervalInSeconds < 5)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxIntervalInSeconds", 5);
             }
         }
     }

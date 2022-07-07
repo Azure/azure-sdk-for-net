@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -13,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PublicIPAddress data model. </summary>
-    public partial class PublicIPAddressData : NetworkResourceData
+    public partial class PublicIPAddressData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
         public PublicIPAddressData()
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
         /// <param name="sku"> The public IP address SKU. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
         /// <param name="publicIPAllocationMethod"> The public IP address allocation method. </param>
         /// <param name="publicIPAddressVersion"> The public IP address version. </param>
@@ -48,11 +50,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPAddressSku sku, string etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, string resourceGuid, ProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, resourceType, location, tags)
+        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? eTag, IList<string> zones, NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
-            Etag = etag;
+            ETag = eTag;
             Zones = zones;
             PublicIPAllocationMethod = publicIPAllocationMethod;
             PublicIPAddressVersion = publicIPAddressVersion;
@@ -73,19 +75,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The extended location of the public ip address. </summary>
-        public Models.ExtendedLocation ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The public IP address SKU. </summary>
         public PublicIPAddressSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         public IList<string> Zones { get; }
         /// <summary> The public IP address allocation method. </summary>
-        public IPAllocationMethod? PublicIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PublicIPAllocationMethod { get; set; }
         /// <summary> The public IP address version. </summary>
-        public IPVersion? PublicIPAddressVersion { get; set; }
+        public NetworkIPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> The IP configuration associated with the public IP address. </summary>
-        public IPConfiguration IPConfiguration { get; }
+        public NetworkIPConfiguration IPConfiguration { get; }
         /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
         public PublicIPAddressDnsSettings DnsSettings { get; set; }
         /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
@@ -111,9 +113,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The resource GUID property of the public IP address resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP address resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The service public IP address of the public IP address resource. </summary>
         public PublicIPAddressData ServicePublicIPAddress { get; set; }
         /// <summary> The NatGateway for the Public IP address. </summary>
@@ -123,6 +125,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The linked public IP address of the public IP address resource. </summary>
         public PublicIPAddressData LinkedPublicIPAddress { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public IPAddressDeleteOption? DeleteOption { get; set; }
     }
 }

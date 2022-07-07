@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeWithPrebuiltModelFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;

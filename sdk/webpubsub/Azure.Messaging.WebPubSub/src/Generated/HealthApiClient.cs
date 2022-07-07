@@ -33,9 +33,16 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Initializes a new instance of HealthApiClient. </summary>
         /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public HealthApiClient(string endpoint) : this(endpoint, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of HealthApiClient. </summary>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
+        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new WebPubSubServiceClientOptions();
@@ -47,7 +54,9 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -65,7 +74,9 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary> Get service health status. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");

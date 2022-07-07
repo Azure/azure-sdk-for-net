@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
         {
-            string targetResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
-            string storageId = default;
+            ResourceIdentifier storageId = default;
             bool enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogFormatParameters> format = default;
+            Optional<FlowLogFormat> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
                 {
-                    targetResourceId = property.Value.GetString();
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("flowAnalyticsConfiguration"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         if (property0.NameEquals("storageId"))
                         {
-                            storageId = property0.Value.GetString();
+                            storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enabled"))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
+                            format = FlowLogFormat.DeserializeFlowLogFormat(property0.Value);
                             continue;
                         }
                     }

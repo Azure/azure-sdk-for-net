@@ -10,7 +10,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        [Ignore("LRO not implemented")]
         public void AnalyzeHealthcareEntities_Cancellation()
         {
             string endpoint = TestEnvironment.Endpoint;

@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version");
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version");
+                }
             }
             writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
@@ -34,7 +41,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             Optional<string> name = default;
             Optional<string> version = default;
-            SecretType secretType = default;
+            LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,12 +51,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        version = null;
+                        continue;
+                    }
                     version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("secretType"))
                 {
-                    secretType = new SecretType(property.Value.GetString());
+                    secretType = new LinkerSecretType(property.Value.GetString());
                     continue;
                 }
             }

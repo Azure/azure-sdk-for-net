@@ -24,56 +24,72 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetService"> The target service properties. </param>
-        /// <param name="authInfo"> The authentication type. </param>
+        /// <param name="targetService">
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// </param>
+        /// <param name="authInfo">
+        /// The authentication type.
+        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vNetSolution"> The VNet solution. </param>
+        /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBase targetService, AuthInfoBase authInfo, ClientType? clientType, string provisioningState, VNetSolution vNetSolution, SecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
             ClientType = clientType;
             ProvisioningState = provisioningState;
-            VNetSolution = vNetSolution;
+            VnetSolution = vnetSolution;
             SecretStore = secretStore;
             Scope = scope;
         }
 
-        /// <summary> The target service properties. </summary>
-        public TargetServiceBase TargetService { get; set; }
-        /// <summary> The authentication type. </summary>
-        public AuthInfoBase AuthInfo { get; set; }
+        /// <summary>
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// </summary>
+        public TargetServiceBaseInfo TargetService { get; set; }
+        /// <summary>
+        /// The authentication type.
+        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </summary>
+        public AuthBaseInfo AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
-        public ClientType? ClientType { get; set; }
+        public LinkerClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VNetSolution VNetSolution { get; set; }
+        internal VnetSolution VnetSolution { get; set; }
         /// <summary> Type of VNet solution. </summary>
-        public VNetSolutionType? SolutionType
+        public VnetSolutionType? SolutionType
         {
-            get => VNetSolution is null ? default : VNetSolution.SolutionType;
+            get => VnetSolution is null ? default : VnetSolution.SolutionType;
             set
             {
-                if (VNetSolution is null)
-                    VNetSolution = new VNetSolution();
-                VNetSolution.SolutionType = value;
+                if (VnetSolution is null)
+                    VnetSolution = new VnetSolution();
+                VnetSolution.SolutionType = value;
             }
         }
 
         /// <summary> An option to store secret value in secure place. </summary>
-        internal SecretStore SecretStore { get; set; }
+        internal LinkerSecretStore SecretStore { get; set; }
         /// <summary> The key vault id to store secret. </summary>
-        public string SecretStoreKeyVaultId
+        public ResourceIdentifier SecretStoreKeyVaultId
         {
             get => SecretStore is null ? default : SecretStore.KeyVaultId;
             set
             {
                 if (SecretStore is null)
-                    SecretStore = new SecretStore();
+                    SecretStore = new LinkerSecretStore();
                 SecretStore.KeyVaultId = value;
             }
         }

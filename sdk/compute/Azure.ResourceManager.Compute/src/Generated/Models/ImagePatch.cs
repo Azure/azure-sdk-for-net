@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
-    public partial class ImagePatch : UpdateResource
+    public partial class ImagePatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of ImagePatch. </summary>
         public ImagePatch()
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </summary>
-        public HyperVGenerationTypes? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration { get; set; }
     }
 }

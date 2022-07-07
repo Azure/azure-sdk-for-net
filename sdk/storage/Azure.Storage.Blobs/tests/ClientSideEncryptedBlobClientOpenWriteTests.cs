@@ -18,11 +18,21 @@ namespace Azure.Storage.Blobs.Tests
     /// difficult to add onto only one test fixture parameter value and not others.
     /// </summary>
     [LiveOnly]
+#pragma warning disable CS0618 // obsolete
+    [TestFixture(ClientSideEncryptionVersion.V1_0)]
+    [TestFixture(ClientSideEncryptionVersion.V2_0)]
+#pragma warning restore CS0618 // obsolete
     public class ClientSideEncryptedBlobClientOpenWriteTests : BlobClientOpenWriteTests
     {
-        public ClientSideEncryptedBlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        private readonly ClientSideEncryptionVersion _version;
+
+        public ClientSideEncryptedBlobClientOpenWriteTests(
+            ClientSideEncryptionVersion version,
+            bool async,
+            BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            _version = version;
             // Validate every test actually used client-side encryption when writing a blob.
             AdditionalAssertions += async (client) =>
             {
@@ -34,7 +44,7 @@ namespace Azure.Storage.Blobs.Tests
         protected override BlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
-            options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(_version)
             {
                 KeyEncryptionKey = this.GetIKeyEncryptionKey(expectedCancellationToken: default).Object,
                 KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName

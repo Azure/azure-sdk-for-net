@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ActivityDurationIsNotZeroWhenStoping()
+        public void ActivityDurationIsNotZeroWhenStopping()
         {
             TimeSpan? duration = null;
             using var testListener = new TestDiagnosticListener("Azure.Clients");
@@ -68,6 +68,25 @@ namespace Azure.Core.Tests
             scope.Dispose();
 
             Assert.True(duration > TimeSpan.Zero);
+        }
+
+        [Test]
+        public void ActivityStartTimeCanBeSet()
+        {
+            DateTime? actualStartTimeUtc = null;
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            testListener.EventCallback = _ => { actualStartTimeUtc = Activity.Current?.StartTimeUtc; };
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            DateTime expectedStartTimeUtc = DateTime.UtcNow - TimeSpan.FromSeconds(10);
+            scope.SetStartTime(expectedStartTimeUtc);
+            scope.Start();
+            scope.Dispose();
+
+            Assert.AreEqual(expectedStartTimeUtc, actualStartTimeUtc);
         }
 
         [Test]

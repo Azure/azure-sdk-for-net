@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                     scope = "workspaces/" + testEnvironment.WorkspaceName
                 };
 
-                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, RequestContent.Create(roleAssignmentDetails));
+                return await assignmentsClient.CreateRoleAssignmentAsync(roleAssignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
             }
 
             public async ValueTask DisposeAsync()
@@ -245,7 +245,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
                 }
             };
 
-            var response = await assignmentsClient.CheckPrincipalAccessAsync(RequestContent.Create(accessRequest));
+            var response = await assignmentsClient.CheckPrincipalAccessAsync(RequestContent.Create(accessRequest), ContentType.ApplicationJson);
 
             // Assert
             var content = response.Content;

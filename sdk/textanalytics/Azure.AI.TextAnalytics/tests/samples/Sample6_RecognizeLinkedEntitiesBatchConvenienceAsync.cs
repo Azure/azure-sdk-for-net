@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions(TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
                                 Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocuments)

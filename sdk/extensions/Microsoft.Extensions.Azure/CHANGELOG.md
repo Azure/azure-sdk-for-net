@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityResourceId` key.
 
 ## 1.2.0 (2022-05-10)
 

@@ -338,6 +338,167 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
+        public void SqlPartitionRedistributionTests()
+        {
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "adrutest2";
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                var containerName = TestUtilities.GenerateName("container");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        }
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = 15000
+                    }
+                };
+
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(sqlContainerGetResults);
+
+                RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters();
+                var retrieveThroughputPropertiesResource = new RetrieveThroughputPropertiesResource();
+                retrieveThroughputPropertiesResource.PhysicalPartitionIds = new List<PhysicalPartitionId>();
+                for (int j = 0; j < 3; j++)
+                {
+                    PhysicalPartitionId physicalPartitionId = new PhysicalPartitionId()
+                    {
+                        Id = j.ToString()
+                    };
+                    retrieveThroughputPropertiesResource.PhysicalPartitionIds.Add(physicalPartitionId);
+                }
+                retrieveThroughputParameters.Resource = retrieveThroughputPropertiesResource;
+                PhysicalPartitionThroughputInfoResult physicalPartitionThroughputInfoResult = client.SqlContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput);
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters();
+                redistributeThroughputParameters.Resource = new RedistributeThroughputPropertiesResource();
+                redistributeThroughputParameters.Resource.ThroughputPolicy = ThroughputPolicyType.Custom;
+
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.SourcePhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("0", 0));
+
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo = new List<PhysicalPartitionThroughputInfoResource>();
+                redistributeThroughputParameters.Resource.TargetPhysicalPartitionThroughputInfo.Add(new PhysicalPartitionThroughputInfoResource("1", 7000));
+
+                physicalPartitionThroughputInfoResult = client.SqlContainerRedistributeThroughput(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    redistributeThroughputParameters);
+                Assert.Equal(2, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+
+                for (int j = 0; j < 2; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                physicalPartitionThroughputInfoResult = client.SqlContainerRetrieveThroughputDistribution(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    retrieveThroughputParameters);
+
+                Assert.Equal(3, physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo.Count);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "0")
+                    {
+                        Assert.Equal(3000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "1")
+                    {
+                        Assert.Equal(7000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else if (physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Id == "2")
+                    {
+                        Assert.Equal(5000, Math.Round((double)physicalPartitionThroughputInfoResult.Resource.PhysicalPartitionThroughputInfo[j].Throughput));
+                    }
+                    else
+                    {
+                        Assert.True(false, "unexpected id");
+                    }
+                }
+
+                client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).Wait();
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();
+            }
+        }
+
+        [Fact]
         public void SqlClientEncryptionTests()
         {
             using (var context = MockContext.Start(this.GetType()))

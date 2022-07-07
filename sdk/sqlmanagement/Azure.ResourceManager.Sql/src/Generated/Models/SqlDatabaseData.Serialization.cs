@@ -29,14 +29,17 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("identity");
                 writer.WriteObjectValue(Identity);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -71,15 +74,15 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -176,31 +179,31 @@ namespace Azure.ResourceManager.Sql
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             Optional<DatabaseIdentity> identity = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<CreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
             Optional<SampleSchemaName> sampleName = default;
-            Optional<string> elasticPoolId = default;
-            Optional<string> sourceDatabaseId = default;
+            Optional<ResourceIdentifier> elasticPoolId = default;
+            Optional<ResourceIdentifier> sourceDatabaseId = default;
             Optional<DatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> currentServiceObjectiveName = default;
             Optional<string> requestedServiceObjectiveName = default;
-            Optional<string> defaultSecondaryLocation = default;
+            Optional<AzureLocation> defaultSecondaryLocation = default;
             Optional<string> failoverGroupId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
-            Optional<string> recoveryServicesRecoveryPointId = default;
-            Optional<string> longTermRetentionBackupResourceId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
+            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
+            Optional<ResourceIdentifier> recoverableDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<bool> zoneRedundant = default;
             Optional<DatabaseLicenseType> licenseType = default;
@@ -216,11 +219,11 @@ namespace Azure.ResourceManager.Sql
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -255,6 +258,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -265,7 +273,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -280,11 +288,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -334,12 +347,22 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("elasticPoolId"))
                         {
-                            elasticPoolId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            elasticPoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseId"))
                         {
-                            sourceDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -384,7 +407,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("defaultSecondaryLocation"))
                         {
-                            defaultSecondaryLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            defaultSecondaryLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("failoverGroupId"))
@@ -414,22 +442,42 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("recoveryServicesRecoveryPointId"))
                         {
-                            recoveryServicesRecoveryPointId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            recoveryServicesRecoveryPointId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("longTermRetentionBackupResourceId"))
                         {
-                            longTermRetentionBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            longTermRetentionBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recoverableDatabaseId"))
                         {
-                            recoverableDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            recoverableDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"))
                         {
-                            restorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("catalogCollation"))
@@ -584,7 +632,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isLedgerOn"))
@@ -619,14 +672,19 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("sourceResourceId"))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData, tags, location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), sourceResourceId.Value);
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), sourceResourceId.Value);
         }
     }
 }

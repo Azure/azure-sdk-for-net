@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: JitRequests_ListBySubscription
+        /// Operation Id: jitRequests_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: JitRequests_ListBySubscription
+        /// Operation Id: jitRequests_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

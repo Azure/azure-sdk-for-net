@@ -12,11 +12,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Cryptography;
 
 namespace Azure.Storage.Blobs
 {
     internal class PartitionedDownloader
     {
+        private const string _operationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadTo);
+        private const string _innerOperationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadStreaming);
+
         /// <summary>
         /// The client used to download the blob.
         /// </summary>
@@ -111,7 +115,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
             try
             {
                 scope.Start();
@@ -122,11 +126,13 @@ namespace Azure.Storage.Blobs
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
-                    _client.DownloadStreamingAsync(
+                    _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
                         rangeGetContentHash: default,
                         _progress,
+                        _innerOperationName,
+                        async: true,
                         cancellationToken);
 
                 Response<BlobDownloadStreamingResult> initialResponse = null;
@@ -136,11 +142,13 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = await _client.DownloadStreamingAsync(
+                    initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
                         rangeGetContentHash: default,
                         _progress,
+                        _innerOperationName,
+                        async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -150,6 +158,21 @@ namespace Azure.Storage.Blobs
                 if (initialResponse.IsUnavailable())
                 {
                     return initialResponse.GetRawResponse();
+                }
+
+                // We deferred client-side encryption, so now we must handle it before anything
+                // is written to destination
+                if (_client.UsingClientSideEncryption)
+                {
+                    if (initialResponse.Value.Details.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                    {
+                        destination = await new BlobClientSideDecryptor(
+                            new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
+                                destination,
+                                initialResponse.Value.Details.Metadata,
+                                async: true,
+                                cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 // If the first segment was the entire blob, we'll copy that to
@@ -163,6 +186,8 @@ namespace Azure.Storage.Blobs
                         destination,
                         cancellationToken)
                         .ConfigureAwait(false);
+
+                    await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
                 }
 
@@ -190,11 +215,13 @@ namespace Azure.Storage.Blobs
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
-                    runningTasks.Enqueue(_client.DownloadStreamingAsync(
+                    runningTasks.Enqueue(_client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: default,
                         _progress,
+                        _innerOperationName,
+                        async: true,
                         cancellationToken));
 
                     // If we have fewer tasks than alotted workers, then just
@@ -216,6 +243,7 @@ namespace Azure.Storage.Blobs
                     await ConsumeQueuedTask().ConfigureAwait(false);
                 }
 
+                await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
                 // Wait for the first segment in the queue of tasks to complete
@@ -256,7 +284,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
             try
             {
                 scope.Start();
@@ -270,21 +298,25 @@ namespace Azure.Storage.Blobs
 
                 try
                 {
-                    initialResponse = _client.DownloadStreaming(
+                    initialResponse = _client.DownloadStreamingInternal(
                         initialRange,
                         conditions,
                         rangeGetContentHash: default,
                         _progress,
-                        cancellationToken);
+                        _innerOperationName,
+                        async: false,
+                        cancellationToken).EnsureCompleted();
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
-                    initialResponse = _client.DownloadStreaming(
+                    initialResponse = _client.DownloadStreamingInternal(
                         range: default,
                         conditions,
                         rangeGetContentHash: default,
                         _progress,
-                        cancellationToken);
+                        _innerOperationName,
+                        async: false,
+                        cancellationToken).EnsureCompleted();
                 }
 
                 // If the initial request returned no content (i.e., a 304),
@@ -292,6 +324,21 @@ namespace Azure.Storage.Blobs
                 if (initialResponse.IsUnavailable())
                 {
                     return initialResponse.GetRawResponse();
+                }
+
+                // We deferred client-side encryption, so now we must handle it before anything
+                // is written to destination
+                if (_client.UsingClientSideEncryption)
+                {
+                    if (initialResponse.Value.Details.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                    {
+                        destination = new BlobClientSideDecryptor(
+                            new ClientSideDecryptor(_client.ClientSideEncryption)).DecryptWholeBlobWriteInternal(
+                                destination,
+                                initialResponse.Value.Details.Metadata,
+                                async: false,
+                                cancellationToken).EnsureCompleted();
+                    }
                 }
 
                 // Copy the first segment to the destination stream
@@ -302,6 +349,7 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
+                    FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
                     return initialResponse.GetRawResponse();
                 }
 
@@ -317,14 +365,18 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
-                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
+                    Response<BlobDownloadStreamingResult> result = _client.DownloadStreamingInternal(
                         httpRange,
                         conditionsWithEtag,
                         rangeGetContentHash: default,
                         _progress,
-                        cancellationToken);
+                        _innerOperationName,
+                        async: false,
+                        cancellationToken).EnsureCompleted();
                     CopyTo(result.Value, destination, cancellationToken);
                 }
+
+                FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
 
                 return initialResponse.GetRawResponse();
             }
@@ -386,6 +438,37 @@ namespace Azure.Storage.Blobs
             for (long offset = initialLength; offset < totalLength; offset += _rangeSize)
             {
                 yield return new HttpRange(offset, Math.Min(totalLength - offset, _rangeSize));
+            }
+        }
+
+        /// <summary>
+        /// Writing to a crypto stream requires a "flush final" invocation, as the stream needs to treat
+        /// the final cipher block differently.
+        /// </summary>
+        /// <param name="destination">
+        /// Destination stream this downloader is writing to.
+        /// </param>
+        /// <param name="async">
+        /// Whether to operate asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellationtoken for the operation.
+        /// </param>
+        /// <returns>
+        /// Task for completion status of the operation.
+        /// </returns>
+        private async Task FlushFinalIfNecessaryInternal(Stream destination, bool async, CancellationToken cancellationToken)
+        {
+            if (_client.UsingClientSideEncryption)
+            {
+                if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
+                {
+                    cryptoStream.FlushFinalBlock();
+                }
+                else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
+                {
+                    await authRegionCryptoStream.FlushFinalInternal(async: async, cancellationToken).ConfigureAwait(false);
+                }
             }
         }
     }

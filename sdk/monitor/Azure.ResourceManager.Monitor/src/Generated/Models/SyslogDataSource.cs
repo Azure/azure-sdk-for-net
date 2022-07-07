@@ -14,29 +14,48 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of which syslog data will be collected and how it will be collected.
     /// Only collected from Linux machines.
     /// </summary>
-    internal partial class SyslogDataSource
+    public partial class SyslogDataSource
     {
         /// <summary> Initializes a new instance of SyslogDataSource. </summary>
-        internal SyslogDataSource()
+        public SyslogDataSource()
         {
-            Streams = new ChangeTrackingList<KnownSyslogDataSourceStreams>();
-            FacilityNames = new ChangeTrackingList<KnownSyslogDataSourceFacilityNames>();
-            LogLevels = new ChangeTrackingList<KnownSyslogDataSourceLogLevels>();
+            Streams = new ChangeTrackingList<KnownSyslogDataSourceStream>();
+            FacilityNames = new ChangeTrackingList<KnownSyslogDataSourceFacilityName>();
+            LogLevels = new ChangeTrackingList<KnownSyslogDataSourceLogLevel>();
+        }
+
+        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <param name="streams">
+        /// List of streams that this data source will be sent to.
+        /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+        /// </param>
+        /// <param name="facilityNames"> The list of facility names. </param>
+        /// <param name="logLevels"> The log levels to collect. </param>
+        /// <param name="name">
+        /// A friendly name for the data source. 
+        /// This name should be unique across all data sources (regardless of type) within the data collection rule.
+        /// </param>
+        internal SyslogDataSource(IList<KnownSyslogDataSourceStream> streams, IList<KnownSyslogDataSourceFacilityName> facilityNames, IList<KnownSyslogDataSourceLogLevel> logLevels, string name)
+        {
+            Streams = streams;
+            FacilityNames = facilityNames;
+            LogLevels = logLevels;
+            Name = name;
         }
 
         /// <summary>
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IReadOnlyList<KnownSyslogDataSourceStreams> Streams { get; }
+        public IList<KnownSyslogDataSourceStream> Streams { get; }
         /// <summary> The list of facility names. </summary>
-        public IReadOnlyList<KnownSyslogDataSourceFacilityNames> FacilityNames { get; }
+        public IList<KnownSyslogDataSourceFacilityName> FacilityNames { get; }
         /// <summary> The log levels to collect. </summary>
-        public IReadOnlyList<KnownSyslogDataSourceLogLevels> LogLevels { get; }
+        public IList<KnownSyslogDataSourceLogLevel> LogLevels { get; }
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

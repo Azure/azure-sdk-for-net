@@ -63,7 +63,6 @@
       },
       "RequestBody": {
         "location": "West US 2",
-        "tags": {}
       },
       "StatusCode": 201,
       "ResponseHeaders": {

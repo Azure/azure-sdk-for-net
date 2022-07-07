@@ -17,13 +17,27 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name");
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name");
+                }
             }
             if (Optional.IsDefined(SecretInfo))
             {
-                writer.WritePropertyName("secretInfo");
-                writer.WriteObjectValue(SecretInfo);
+                if (SecretInfo != null)
+                {
+                    writer.WritePropertyName("secretInfo");
+                    writer.WriteObjectValue(SecretInfo);
+                }
+                else
+                {
+                    writer.WriteNull("secretInfo");
+                }
             }
             writer.WritePropertyName("authType");
             writer.WriteStringValue(AuthType.ToString());
@@ -33,12 +47,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         internal static SecretAuthInfo DeserializeSecretAuthInfo(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<SecretInfoBase> secretInfo = default;
-            AuthType authType = default;
+            Optional<SecretBaseInfo> secretInfo = default;
+            LinkerAuthType authType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -46,15 +65,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretInfoBase.DeserializeSecretInfoBase(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authType"))
                 {
-                    authType = new AuthType(property.Value.GetString());
+                    authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
             }

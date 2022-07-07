@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> digestStorageEndpoint = default;
             Optional<LedgerDigestUploadsState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -50,11 +50,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new LedgerDigestUploadsData(id, name, type, systemData, digestStorageEndpoint.Value, Optional.ToNullable(state));
+            return new LedgerDigestUploadsData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state));
         }
     }
 }

@@ -220,6 +220,38 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CreatesManagedServiceIdentityCredentialsWithResourceId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var resourceId = (string)typeof(ManagedIdentityCredential).GetField("_clientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+
+            Assert.AreEqual("ConfigurationResourceId", resourceId);
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenResourceIdAndClientIdSpecified()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
         public void IgnoresConstructorWhenCredentialsNull()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));

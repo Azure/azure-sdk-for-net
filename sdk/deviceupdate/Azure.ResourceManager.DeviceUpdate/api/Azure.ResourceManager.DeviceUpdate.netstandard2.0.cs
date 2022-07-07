@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.DeviceUpdate
         public DeviceUpdateAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DeviceUpdate.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku? Sku { get { throw null; } set { } }
     }
     public partial class DeviceUpdateAccountResource : Azure.ResourceManager.ArmResource
     {
@@ -131,9 +134,10 @@ namespace Azure.ResourceManager.DeviceUpdate
     }
     public partial class DeviceUpdatePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
-        public DeviceUpdatePrivateEndpointConnectionData() { }
+        public DeviceUpdatePrivateEndpointConnectionData(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState connectionState) { }
+        public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class DeviceUpdatePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
@@ -186,6 +190,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdatePrivateEndpointProperties(Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointUpdate privateEndpointUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdatePrivateEndpointPropertiesAsync(Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointUpdate privateEndpointUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Validate(Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateAsync(Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -280,11 +286,35 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string MemberName { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
     }
+    public partial class DeviceUpdateAccountLocationDetail
+    {
+        internal DeviceUpdateAccountLocationDetail() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole? Role { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceUpdateAccountLocationRole : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceUpdateAccountLocationRole(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole Failover { get { throw null; } }
+        public static Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole Primary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole left, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole left, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DeviceUpdateAccountPatch
     {
         public DeviceUpdateAccountPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DeviceUpdateInstancePatch
@@ -338,6 +368,24 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceUpdateSku : System.IEquatable<Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceUpdateSku(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku Free { get { throw null; } }
+        public static Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku left, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku left, Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DiagnosticStorageProperties
     {
         public DiagnosticStorageProperties(Azure.ResourceManager.DeviceUpdate.Models.AuthenticationType authenticationType, string resourceId) { }
@@ -377,8 +425,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     public partial class IotHubSettings
     {
         public IotHubSettings(string resourceId) { }
-        public string EventHubConnectionString { get { throw null; } set { } }
-        public string IoTHubConnectionString { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -400,6 +446,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static implicit operator Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProxyProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProxyProvisioningState left, Azure.ResourceManager.DeviceUpdate.Models.PrivateEndpointConnectionProxyProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PrivateEndpointUpdate
+    {
+        public PrivateEndpointUpdate() { }
+        public string Id { get { throw null; } set { } }
+        public string ImmutableResourceId { get { throw null; } set { } }
+        public string ImmutableSubscriptionId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string VnetTrafficTag { get { throw null; } set { } }
     }
     public partial class PrivateLinkServiceConnection
     {
@@ -461,9 +516,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public RemotePrivateEndpoint() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.ConnectionDetails> ConnectionDetails { get { throw null; } }
         public string Id { get { throw null; } set { } }
+        public string ImmutableResourceId { get { throw null; } set { } }
+        public string ImmutableSubscriptionId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceUpdate.Models.PrivateLinkServiceProxy> PrivateLinkServiceProxies { get { throw null; } }
-        public string VnetTrafficTag { get { throw null; } }
+        public string VnetTrafficTag { get { throw null; } set { } }
     }
 }

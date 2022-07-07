@@ -1,6 +1,6 @@
 # Release History
 
-## 7.9.0-beta.1 (Unreleased)
+## 7.9.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.9.0-beta.1 (2022-06-06)
+
+### Features Added
+
+- Added `ServiceBusRuleManager` for managing rules.
+
+### Bugs Fixed
+
+- Updated behavior of `ServiceBusSessionReceiver.IsClosed` to return `true` if the underlying link was closed.
+
+### Other Changes
+
+- Include lock token in additional event source logs.
+
+## 7.8.1 (2022-05-16)
+
+### Bugs Fixed
+
+- Fixed issue that could result in the message lock renewal not being cancelled if the user message handler threw an exception.
+- Abandon messages that are received from the `ProcessorReceiveActions` in the event of the user message handler throwing an exception.
 
 ## 7.8.0 (2022-05-09)
 
@@ -214,7 +235,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-- Mikael Kolkinn _([GitHub](https://github.com/mikaelkolkinn))_
+- Mikael Kolkinn
 
 ### Added
 - Updated dependency on Azure.Core.Amqp to support Value/Sequence AMQP message bodies.
@@ -225,7 +246,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Fixed
 - Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
-- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
+- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of Mikael Kolkinn
 
 ## 7.1.1 (2021-03-10)
 

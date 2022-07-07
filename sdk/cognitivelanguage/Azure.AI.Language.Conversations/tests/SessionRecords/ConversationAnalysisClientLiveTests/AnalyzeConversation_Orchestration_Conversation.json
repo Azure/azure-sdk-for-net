@@ -1,96 +1,98 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "259",
+        "Content-Length": "243",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-08e4fe3edb9255438cb7f6544b5b1552-888b2c9035c58c42-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "a72493dadeff12919dc01358bd13bce6",
+        "traceparent": "00-c4f72886d203a78695e6ce15cc456e8c-f11abb8b1332753f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "11a078a0b5c2ca99ea5e98a880487226",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
             "text": "Send an email to Carol about the tomorrow\u0027s demo",
-            "participantId": "1",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
-          "projectName": "OrchScriptDeployed1",
+          "projectName": "OrchestrationScriptDeployed",
           "deploymentName": "production"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5e9f909e-ae9b-4242-b2f2-8fb88b52fd31",
+        "apim-request-id": "7d97d128-132f-4204-9a9b-d4bd8b913744",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 17 Apr 2022 13:27:37 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
+        "Date": "Tue, 28 Jun 2022 22:38:42 GMT",
         "Pragma": "no-cache",
-        "request-id": "5e9f909e-ae9b-4242-b2f2-8fb88b52fd31",
+        "request-id": "7d97d128-132f-4204-9a9b-d4bd8b913744",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "154"
+        "x-envoy-upstream-service-time": "668"
       },
       "ResponseBody": {
-        "kind": "CustomConversationResult",
-        "results": {
+        "kind": "ConversationResult",
+        "result": {
           "query": "Send an email to Carol about the tomorrow\u0027s demo",
           "prediction": {
             "topIntent": "EmailIntent",
-            "projectKind": "workflow",
+            "projectKind": "Orchestration",
             "intents": {
               "EmailIntent": {
-                "confidenceScore": 0.78807205,
-                "targetKind": "conversation",
+                "confidenceScore": 0.7871725,
+                "targetProjectKind": "Conversation",
                 "result": {
                   "query": "Send an email to Carol about the tomorrow\u0027s demo",
                   "prediction": {
+                    "topIntent": "Send",
+                    "projectKind": "Conversation",
                     "intents": [
                       {
-                        "category": "Setup",
-                        "confidenceScore": 0.6254007
-                      },
-                      {
-                        "category": "Play",
-                        "confidenceScore": 0.20336723
-                      },
-                      {
                         "category": "Send",
-                        "confidenceScore": 0.13618475
+                        "confidenceScore": 0.9053172
                       },
                       {
                         "category": "Read",
-                        "confidenceScore": 0.01904324
+                        "confidenceScore": 0.44011447
                       },
                       {
-                        "category": "Call",
-                        "confidenceScore": 0.00859508
+                        "category": "Setup",
+                        "confidenceScore": 0.41303915
                       },
                       {
                         "category": "Set",
-                        "confidenceScore": 0.0033787973
-                      },
-                      {
-                        "category": "Find",
-                        "confidenceScore": 0.0028723886
-                      },
-                      {
-                        "category": "Open",
-                        "confidenceScore": 0.0010411387
+                        "confidenceScore": 0.21186642
                       },
                       {
                         "category": "None",
-                        "confidenceScore": 0.00011662581
+                        "confidenceScore": 0.20198277
+                      },
+                      {
+                        "category": "Find",
+                        "confidenceScore": 0.19216746
+                      },
+                      {
+                        "category": "Call",
+                        "confidenceScore": 0.16446844
+                      },
+                      {
+                        "category": "Play",
+                        "confidenceScore": 0.15655291
+                      },
+                      {
+                        "category": "Open",
+                        "confidenceScore": 0.08699014
                       }
                     ],
                     "entities": [
@@ -100,7 +102,6 @@
                         "offset": 17,
                         "length": 5,
                         "confidenceScore": 1,
-                        "resolutions": [],
                         "extraInformation": [
                           {
                             "extraInformationKind": "EntitySubtype",
@@ -118,8 +119,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-04-18",
-                            "value": "2022-04-18"
+                            "timex": "2022-06-29",
+                            "value": "2022-06-29"
                           }
                         ],
                         "extraInformation": [
@@ -129,23 +130,17 @@
                           }
                         ]
                       }
-                    ],
-                    "topIntent": "Setup",
-                    "projectKind": "conversation"
+                    ]
                   }
                 }
               },
-              "RestaurantIntent": {
-                "confidenceScore": 0.63531023,
-                "targetKind": "luis"
-              },
               "ChitChat-QnA": {
-                "confidenceScore": 0.5959919,
-                "targetKind": "question_answering"
+                "confidenceScore": 0.65083516,
+                "targetProjectKind": "QuestionAnswering"
               },
               "None": {
-                "confidenceScore": 0.15094617,
-                "targetKind": "non_linked"
+                "confidenceScore": 0.15003009,
+                "targetProjectKind": "NonLinked"
               }
             }
           }
@@ -154,10 +149,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
-    "RandomSeed": "363943387"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
+    "RandomSeed": "1398993686"
   }
 }

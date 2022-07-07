@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Azure-AsyncOperation Error info. </param>
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Tags associated with resource. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Azure resource manager plan. </summary>

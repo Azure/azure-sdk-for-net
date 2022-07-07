@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServicePlan data model. </summary>
-    public partial class AppServicePlanData : AppServiceResource
+    public partial class AppServicePlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServicePlanData. </summary>
         /// <param name="location"> The location. </param>
@@ -29,7 +30,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, SkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, tags, location, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, StatusOption? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.AppService
             ProvisioningState = provisioningState;
             KubeEnvironmentProfile = kubeEnvironmentProfile;
             ZoneRedundant = zoneRedundant;
+            Kind = kind;
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
-        public StatusOptions? Status { get; }
+        public StatusOption? Status { get; }
         /// <summary> App Service plan subscription. </summary>
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
@@ -142,5 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

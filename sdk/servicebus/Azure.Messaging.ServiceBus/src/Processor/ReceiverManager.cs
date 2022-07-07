@@ -140,39 +140,32 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-            EventArgs args = null;
+            EventArgs args = ConstructEventArgs(triggerMessage, cancellationToken);
 
             try
             {
                 errorSource = ServiceBusErrorSource.ProcessMessageCallback;
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber,
-                        triggerMessage.LockTokenGuid);
-                    args = await OnMessageHandler(triggerMessage, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber,
-                        triggerMessage.LockTokenGuid);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerStart(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
+                    await OnMessageHandler(args).ConfigureAwait(false);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerComplete(Processor.Identifier, triggerMessage.SequenceNumber, triggerMessage.LockTokenGuid);
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessage.SequenceNumber,
-                        ex.ToString(), triggerMessage.LockTokenGuid);
+                    ServiceBusEventSource.Log.ProcessorMessageHandlerException(Processor.Identifier, triggerMessage.SequenceNumber, ex.ToString(), triggerMessage.LockTokenGuid);
                     throw;
                 }
 
                 if (Receiver.ReceiveMode == ServiceBusReceiveMode.PeekLock && ProcessorOptions.AutoCompleteMessages)
                 {
-                    var messages = (args is ProcessMessageEventArgs processMessageEventArgs)
-                        ? processMessageEventArgs.Messages.Keys
-                        : ((ProcessSessionMessageEventArgs)args).Messages.Keys;
-                    foreach (ServiceBusReceivedMessage message in messages)
+                    foreach (ServiceBusReceivedMessage message in GetProcessedMessages(args))
                     {
                         if (!message.IsSettled)
                         {
                             errorSource = ServiceBusErrorSource.Complete;
-                            // don't pass the processor cancellation token
-                            // as we want in flight auto-completion to be able
-                            // to finish
+                            // Don't pass the processor cancellation token as we want in flight auto-completion to be able
+                            // to finish.
                             await Receiver.CompleteMessageAsync(
                                     message,
                                     CancellationToken.None)
@@ -198,35 +191,38 @@ namespace Azure.Messaging.ServiceBus
                             cancellationToken))
                     .ConfigureAwait(false);
 
-                // if the user settled the message, or if the message or session lock was lost,
-                // do not attempt to abandon the message
+                // If we got a message or session lock lost error, do not attempt to abandon the message, or any of the additional received
+                // messages in the handler, as we have no way of knowing which message caused the error.
                 ServiceBusFailureReason? failureReason = (ex as ServiceBusException)?.Reason;
-                if (!triggerMessage.IsSettled &&
-                    _receiverOptions.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
+                if (_receiverOptions.ReceiveMode == ServiceBusReceiveMode.PeekLock &&
                     failureReason != ServiceBusFailureReason.SessionLockLost &&
                     failureReason != ServiceBusFailureReason.MessageLockLost)
                 {
-                    try
+                    foreach (ServiceBusReceivedMessage message in GetProcessedMessages(args))
                     {
-                        // don't pass the processor cancellation token
-                        // as we want in flight abandon to be able
-                        // to finish even if user stopped processing
-                        await Receiver.AbandonMessageAsync(
-                                triggerMessage.LockTokenGuid,
-                                cancellationToken: CancellationToken.None)
-                            .ConfigureAwait(false);
-                    }
-                    catch (Exception exception)
-                    {
-                        ThrowIfSessionLockLost(exception, ServiceBusErrorSource.Abandon);
-                        await RaiseExceptionReceived(
-                                new ProcessErrorEventArgs(
-                                    exception,
-                                    ServiceBusErrorSource.Abandon,
-                                    Processor.FullyQualifiedNamespace,
-                                    Processor.EntityPath,
-                                    cancellationToken))
-                            .ConfigureAwait(false);
+                        // If the user already settled the message, do not abandon.
+                        if (message.IsSettled)
+                        {
+                            continue;
+                        }
+                        try
+                        {
+                            // Don't pass the processor cancellation token as we want in flight abandon to be able
+                            // to finish even if user stopped processing.
+                            await Receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                        }
+                        catch (Exception exception)
+                        {
+                            ThrowIfSessionLockLost(exception, ServiceBusErrorSource.Abandon);
+                            await RaiseExceptionReceived(
+                                    new ProcessErrorEventArgs(
+                                        exception,
+                                        ServiceBusErrorSource.Abandon,
+                                        Processor.FullyQualifiedNamespace,
+                                        Processor.EntityPath,
+                                        cancellationToken))
+                                .ConfigureAwait(false);
+                        }
                     }
                 }
             }
@@ -239,6 +235,10 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        private static ICollection<ServiceBusReceivedMessage> GetProcessedMessages(EventArgs args) =>
+            args is ProcessMessageEventArgs processMessageEventArgs ? processMessageEventArgs.Messages.Keys
+                : ((ProcessSessionMessageEventArgs)args).Messages.Keys;
+
         internal bool ShouldAutoRenewMessageLock()
         {
             return !Receiver.IsSessionReceiver &&
@@ -246,17 +246,14 @@ namespace Azure.Messaging.ServiceBus
                    AutoRenewLock;
         }
 
-        protected virtual async Task<EventArgs> OnMessageHandler(
-            ServiceBusReceivedMessage message,
-            CancellationToken processorCancellationToken)
-        {
-            var args = new ProcessMessageEventArgs(
-                message,
-                this,
-                processorCancellationToken);
-            await Processor.OnProcessMessageAsync(args).ConfigureAwait(false);
-            return args;
-        }
+        protected virtual EventArgs ConstructEventArgs(ServiceBusReceivedMessage message, CancellationToken cancellationToken) =>
+            new ProcessMessageEventArgs(
+            message,
+            this,
+            cancellationToken);
+
+        protected virtual async Task OnMessageHandler(EventArgs args) =>
+            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
 
         internal async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,
@@ -286,11 +283,11 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(Processor.Identifier, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(Processor.Identifier, ex.ToString(), message.LockTokenGuid);
 
                     // If the message has already been settled there is no need to raise the lock lost exception to user error handler.
                     if (!message.IsSettled)

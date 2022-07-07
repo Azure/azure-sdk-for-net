@@ -182,11 +182,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual PathRestClient BlobPathRestClient => _blobPathRestClient;
 
-        /// <summary>
-        /// The <see cref="TimeSpan"/> representing an infinite lease duration.
-        /// </summary>
-        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -206,7 +201,7 @@ namespace Azure.Storage.Files.DataLake
         /// resource.
         /// </param>
         public DataLakePathClient(Uri pathUri)
-            : this(pathUri, (HttpPipelinePolicy)null, null, null)
+            : this(pathUri, options: null)
         {
         }
 
@@ -225,7 +220,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, DataLakeClientOptions options)
-            : this(pathUri, (HttpPipelinePolicy)null, options, null)
+            : this(pathUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -298,7 +293,7 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
+                clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -394,7 +389,7 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakePathClient(Uri pathUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy<DataLakeUriBuilder>(pathUri), options, null)
+            : this(pathUri, credential.AsPolicy<DataLakeUriBuilder>(pathUri), options, credential)
         {
         }
 
@@ -411,7 +406,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
-            : this(pathUri, credential.AsPolicy(new DataLakeClientOptions()), null, null)
+            : this(pathUri, credential, null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -434,7 +429,7 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(pathUri, credential.AsPolicy(options), options, null)
+            : this(pathUri, credential.AsPolicy(options), options, storageSharedKeyCredential: null)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -445,10 +440,65 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileSystemClient"><see cref="DataLakeFileSystemClient"/> of the path's File System.</param>
         /// <param name="path">The path to the <see cref="DataLakePathClient"/>.</param>
         public DataLakePathClient(DataLakeFileSystemClient fileSystemClient, string path)
-            : this(
-                  (new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
+            : this((new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
                   fileSystemClient.ClientConfiguration)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        ///
+        /// This will create an instance that uses the same diagnostics as another
+        /// client. This client will be used within another API call of the parent
+        /// client (namely Rename). This is in the case that the new child client
+        /// has different credentials than the parent client.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the resource that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="diagnostics">
+        /// The diagnostics from the parent client.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeClientOptions"/> that define the transport
+        /// pipeline policies for authentication, retries, etc., that are
+        /// applied to every request.
+        /// </param>
+        internal DataLakePathClient(
+            Uri pathUri,
+            ClientDiagnostics diagnostics,
+            DataLakeClientOptions options)
+        {
+            Argument.AssertNotNull(pathUri, nameof(pathUri));
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
+            options ??= new DataLakeClientOptions();
+            _uri = pathUri;
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+
+            _clientConfiguration = new DataLakeClientConfiguration(
+                pipeline: options.Build(),
+                sharedKeyCredential: default,
+                clientDiagnostics: diagnostics,
+                clientOptions: options,
+                customerProvidedKey: options.CustomerProvidedKey);
+
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
+
+            uriBuilder.DirectoryOrFilePath = null;
+
+            _fileSystemClient = new DataLakeFileSystemClient(
+                uriBuilder.ToDfsUri(),
+                _clientConfiguration);
+
+            (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
+            _pathRestClient = dfsPathRestClient;
+                _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -488,7 +538,7 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
+                clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
@@ -511,38 +561,39 @@ namespace Azure.Storage.Files.DataLake
         /// class.
         /// </summary>
         /// <param name="pathUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the file system, and the path to the
-        /// resource.
+        /// A <see cref="Uri"/> referencing the path that includes the
+        /// name of the account, the name of the file system, and the path to
+        /// the resource.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <param name="sasCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
         internal DataLakePathClient(
             Uri pathUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            DataLakeClientOptions options = default)
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            AzureSasCredential sasCredential)
         {
+            Argument.AssertNotNull(pathUri, nameof(pathUri));
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
-            var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
 
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: pipeline,
-                sharedKeyCredential: storageSharedKeyCredential,
+                pipeline: options.Build(authentication),
+                sasCredential: sasCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
+                clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
@@ -580,7 +631,6 @@ namespace Azure.Storage.Files.DataLake
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
-
             _clientConfiguration = clientConfiguration;
 
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -637,13 +687,13 @@ namespace Azure.Storage.Files.DataLake
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: dfsUri.AbsoluteUri,
-                version: _clientConfiguration.Version.ToVersionString());
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             PathRestClient blobPathRestClient = new PathRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
-                version: _clientConfiguration.Version.ToVersionString());
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsPathRestClient, blobPathRestClient);
         }
@@ -660,7 +710,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 return BlockBlobClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.Version.AsBlobsVersion())
+                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
                     {
                         Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
                         CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey()
@@ -766,15 +816,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -815,15 +865,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -1107,18 +1157,18 @@ namespace Azure.Storage.Files.DataLake
 
                     if (timeToExpire.HasValue)
                     {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} does not apply to directories.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.");
                     }
 
                     if (expiresOn.HasValue)
                     {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} does not apply to directories.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.");
                     }
                 }
 
                 if (expiresOn.HasValue && timeToExpire.HasValue)
                 {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} cannot both be set.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} cannot both be set.");
                 }
 
                 try
@@ -1260,15 +1310,15 @@ namespace Azure.Storage.Files.DataLake
                     resourceType: resourceType,
                     httpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    permissions: options?.Permissions,
-                    umask: options?.Umask,
-                    owner: options?.Owner,
-                    group: options?.Group,
-                    accessControlList: options?.AccessControlList,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
                     leaseId: options?.LeaseId,
                     leaseDuration: options?.LeaseDuration,
-                    timeToExpire: options?.TimeToExpire,
-                    expiresOn: options?.ExpiresOn,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1305,15 +1355,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2155,11 +2205,17 @@ namespace Azure.Storage.Files.DataLake
 
                     // Build renameSource
                     DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(_dfsUri);
-                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
+                    string renameSource = Constants.PathBackSlashDelimiter + sourceUriBuilder.FileSystemName +
+                        Constants.PathBackSlashDelimiter + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
 
+                    // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
                     if (sourceUriBuilder.Sas != null)
                     {
-                        renameSource += "?" + sourceUriBuilder.Sas;
+                        renameSource += Constants.QueryDelimiter + sourceUriBuilder.Sas;
+                    }
+                    if (_clientConfiguration.SasCredential != null)
+                    {
+                        renameSource += Constants.QueryDelimiter + ClientConfiguration.SasCredential.Signature;
                     }
 
                     // Build destination URI
@@ -2170,21 +2226,41 @@ namespace Azure.Storage.Files.DataLake
                     };
                     destUriBuilder.FileSystemName = destinationFileSystem ?? destUriBuilder.FileSystemName;
 
-                    // DataLakeUriBuider will encode the DirectoryOrFilePath.  We don't want the query parameters,
-                    // especially SAS, to be encoded.
+                    // DataLakeUriBuider will encode the DirectoryOrFilePath.
+                    // We don't want the query parameters, especially SAS, to be encoded.
+                    // We also have to build the destination client depending on if a SAS was passed with the destination.
+                    DataLakePathClient destPathClient;
                     string[] split = destinationPath.Split('?');
                     if (split.Length == 2)
                     {
                         destUriBuilder.DirectoryOrFilePath = split[0];
                         destUriBuilder.Query = split[1];
+                        // If the destination already has a SAS, then let's not further add to the Uri if it contains
+                        // AzureSasCredential on the source.
+                        var paramsMap = new UriQueryParamsCollection(split[1]);
+                        if (!paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
+                        {
+                            // No SAS in the destination, use the source credentials to build the destination path
+                            destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), ClientConfiguration);
+                        }
+                        else
+                        {
+                            // There's a SAS in the destination path
+                            // Create the destination path with the destination SAS
+                            destPathClient = new DataLakePathClient(
+                                destUriBuilder.ToUri(),
+                                ClientConfiguration.ClientDiagnostics,
+                                ClientConfiguration.ClientOptions);
+                        }
                     }
                     else
                     {
+                        // No SAS in the destination, use the source credentials as a default
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destPathClient = new DataLakePathClient(
+                            destUriBuilder.ToUri(),
+                            ClientConfiguration);
                     }
-
-                    // Build destPathClient
-                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), ClientConfiguration);
 
                     ResponseWithHeaders<PathCreateHeaders> response;
 

@@ -8,8 +8,9 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Gets the entity category inferred by the Text Analytics service's named entity recognition model.
-    /// The list of available categories is described at <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types">Supported entity categories in Named Entity Recognition v3</see>.
+    /// Gets the entity category inferred by the Language service's named entity recognition model.
+    /// The list of available categories is described at <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories">
+    /// Supported entity categories in Named Entity Recognition</see>.
     /// </summary>
     public readonly struct EntityCategory : IEquatable<EntityCategory>
     {

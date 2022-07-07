@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "IPAllocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IPAllocationResource(ArmClient client, IPAllocationData data) : this(client, new ResourceIdentifier(data.Id))
+        internal IPAllocationResource(ArmClient client, IPAllocationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

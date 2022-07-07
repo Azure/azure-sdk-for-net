@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    /// <summary> Whether or not public network access is allowed for the container registry. </summary>
+    /// <summary> Whether or not public network access is allowed for the account. </summary>
     public readonly partial struct PublicNetworkAccess : IEquatable<PublicNetworkAccess>
     {
         private readonly string _value;

@@ -407,6 +407,126 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='retrieveThroughputParameters'>
+            /// The parameters to provide for retrieving throughput distribution for the
+            /// current MongoDB container.
+            /// </param>
+            public static PhysicalPartitionThroughputInfoResult MongoDBContainerRetrieveThroughputDistribution(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters)
+            {
+                return operations.MongoDBContainerRetrieveThroughputDistributionAsync(resourceGroupName, accountName, databaseName, collectionName, retrieveThroughputParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='retrieveThroughputParameters'>
+            /// The parameters to provide for retrieving throughput distribution for the
+            /// current MongoDB container.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionThroughputInfoResult> MongoDBContainerRetrieveThroughputDistributionAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MongoDBContainerRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, retrieveThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='redistributeThroughputParameters'>
+            /// The parameters to provide for redistributing throughput for the current
+            /// MongoDB container.
+            /// </param>
+            public static PhysicalPartitionThroughputInfoResult MongoDBContainerRedistributeThroughput(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters)
+            {
+                return operations.MongoDBContainerRedistributeThroughputAsync(resourceGroupName, accountName, databaseName, collectionName, redistributeThroughputParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='redistributeThroughputParameters'>
+            /// The parameters to provide for redistributing throughput for the current
+            /// MongoDB container.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionThroughputInfoResult> MongoDBContainerRedistributeThroughputAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MongoDBContainerRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, redistributeThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the MongoDB collection under an existing Azure Cosmos DB database
             /// account.
             /// </summary>
@@ -1559,6 +1679,126 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginMigrateMongoDBDatabaseToManualThroughputAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateMongoDBDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='retrieveThroughputParameters'>
+            /// The parameters to provide for retrieving throughput distribution for the
+            /// current MongoDB container.
+            /// </param>
+            public static PhysicalPartitionThroughputInfoResult BeginMongoDBContainerRetrieveThroughputDistribution(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters)
+            {
+                return operations.BeginMongoDBContainerRetrieveThroughputDistributionAsync(resourceGroupName, accountName, databaseName, collectionName, retrieveThroughputParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='retrieveThroughputParameters'>
+            /// The parameters to provide for retrieving throughput distribution for the
+            /// current MongoDB container.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionThroughputInfoResult> BeginMongoDBContainerRetrieveThroughputDistributionAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMongoDBContainerRetrieveThroughputDistributionWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, retrieveThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='redistributeThroughputParameters'>
+            /// The parameters to provide for redistributing throughput for the current
+            /// MongoDB container.
+            /// </param>
+            public static PhysicalPartitionThroughputInfoResult BeginMongoDBContainerRedistributeThroughput(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters)
+            {
+                return operations.BeginMongoDBContainerRedistributeThroughputAsync(resourceGroupName, accountName, databaseName, collectionName, redistributeThroughputParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='collectionName'>
+            /// Cosmos DB collection name.
+            /// </param>
+            /// <param name='redistributeThroughputParameters'>
+            /// The parameters to provide for redistributing throughput for the current
+            /// MongoDB container.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PhysicalPartitionThroughputInfoResult> BeginMongoDBContainerRedistributeThroughputAsync(this IMongoDBResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMongoDBContainerRedistributeThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, collectionName, redistributeThroughputParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

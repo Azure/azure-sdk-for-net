@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01-preview";
+            _apiVersion = apiVersion ?? "2021-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceBusAuthorizationRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SBAuthorizationRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ServiceBusAuthorizationRuleListResult value = default;
+                        SBAuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
+                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceBusAuthorizationRuleListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<SBAuthorizationRuleListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ServiceBusAuthorizationRuleListResult value = default;
+                        SBAuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
+                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusAccessKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -416,9 +416,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        ServiceBusAccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessKeys> ListKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusAccessKeys> ListKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -447,9 +447,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        ServiceBusAccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions options)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, ServiceBusRegenerateAccessKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -477,9 +477,9 @@ namespace Azure.ResourceManager.ServiceBus
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -489,27 +489,27 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="options"> Parameters supplied to regenerate the authorization rule. </param>
+        /// <param name="content"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions options, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusAccessKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, ServiceBusRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, options);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        ServiceBusAccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -522,27 +522,27 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="options"> Parameters supplied to regenerate the authorization rule. </param>
+        /// <param name="content"> Parameters supplied to regenerate the authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyOptions options, CancellationToken cancellationToken = default)
+        public Response<ServiceBusAccessKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, ServiceBusRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, options);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, namespaceName, authorizationRuleName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        ServiceBusAccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = ServiceBusAccessKeys.DeserializeServiceBusAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceBusAuthorizationRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SBAuthorizationRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ServiceBusAuthorizationRuleListResult value = default;
+                        SBAuthorizationRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
+                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceBusAuthorizationRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<SBAuthorizationRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -616,9 +616,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        ServiceBusAuthorizationRuleListResult value = default;
+                        SBAuthorizationRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceBusAuthorizationRuleListResult.DeserializeServiceBusAuthorizationRuleListResult(document.RootElement);
+                        value = SBAuthorizationRuleListResult.DeserializeSBAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
                     value = property.Value.GetString();
                     continue;
                 }

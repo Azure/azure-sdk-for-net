@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BastionHost data model. </summary>
-    public partial class BastionHostData : NetworkResourceData
+    public partial class BastionHostData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of BastionHostData. </summary>
         public BastionHostData()
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
         /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
         /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
-        internal BastionHostData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = eTag;
             Sku = sku;
             IPConfigurations = ipConfigurations;
             DnsName = dnsName;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
         internal NetworkSku Sku { get; set; }
         /// <summary> The name of this Bastion Host. </summary>
@@ -61,6 +62,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
         public string DnsName { get; set; }
         /// <summary> The provisioning state of the bastion host resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

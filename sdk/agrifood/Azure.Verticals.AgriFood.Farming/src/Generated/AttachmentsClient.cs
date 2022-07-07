@@ -39,9 +39,17 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Initializes a new instance of AttachmentsClient. </summary>
         /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AttachmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FarmBeatsClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AttachmentsClient. </summary>
+        /// <param name="endpoint"> The endpoint of your FarmBeats resource (protocol and hostname, for example: https://{resourceName}.farmbeats.azure.net). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AttachmentsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options = null)
+        public AttachmentsClient(Uri endpoint, TokenCredential credential, FarmBeatsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -57,38 +65,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -115,38 +115,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets a specified attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -173,39 +165,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="attachmentId"> ID of the attachment resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -232,39 +216,31 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates an attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="attachmentId"> ID of the attachment resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Attachment</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   originalFileName: string,
-        ///   id: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   eTag: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -291,27 +267,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteAsync(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -334,27 +294,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified attachment resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="attachmentId"> ID of the attachment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -377,27 +321,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -420,27 +348,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Downloads and returns attachment as response for the given input filePath. </summary>
         /// <param name="farmerId"> ID of the associated farmer. </param>
         /// <param name="attachmentId"> ID of attachment to be downloaded. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Response Download(string farmerId, string attachmentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -480,44 +392,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       resourceId: string,
-        ///       resourceType: string,
-        ///       originalFileName: string,
-        ///       id: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       eTag: string
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 
@@ -566,44 +464,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AttachmentListResponseValue</c>:
         /// <code>{
-        ///   value: [
-        ///     {
-        ///       farmerId: string,
-        ///       resourceId: string,
-        ///       resourceType: string,
-        ///       originalFileName: string,
-        ///       id: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       eTag: string
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Optional. Farmer id for this attachment.
+        ///   resourceId: string, # Optional. Associated Resource id for this attachment.
+        ///   resourceType: string, # Optional. Associated Resource type for this attachment
+        /// i.e. Farmer, Farm, Field, SeasonalField, Boundary, FarmOperationApplicationData, HarvestData, TillageData, PlantingData.
+        ///   originalFileName: string, # Optional. Original File Name for this attachment.
+        ///   id: string, # Optional. Unique id.
+        ///   status: string, # Optional. Status of the resource.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date when resource was last modified.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of resource.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
         /// }
         /// </code>
         /// 

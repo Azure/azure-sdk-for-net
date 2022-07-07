@@ -723,7 +723,11 @@ namespace Azure.Messaging.ServiceBus
         /// Signals the processor to stop processing messaging. Should this method be
         /// called while the processor is not running, no action is taken. This method
         /// will not close the underlying receivers, but will cause the receivers to stop
-        /// receiving. To close the underlying receivers, <see cref="CloseAsync"/> should be called.
+        /// receiving. Any in-flight message handlers will be awaited, and this method will not return
+        /// until all in-flight message handlers have returned. To close the underlying receivers, <see cref="CloseAsync"/>
+        /// should be called. If <see cref="CloseAsync"/> is called, the processor cannot be restarted.
+        /// If you wish to resume processing at some point after calling this method, you can call
+        /// <see cref="StartProcessingAsync"/>.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to
@@ -943,9 +947,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
         /// </summary>
-        ///
         /// <param name="action">The action to invoke.</param>
-        ///
         /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
@@ -975,7 +977,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />. Any in-flight message handlers will
+        /// be awaited. Once all message handling has completed, the underlying links will be closed. After this point, the method will return.
+        /// This is equivalent to calling <see cref="DisposeAsync"/>.
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
@@ -999,8 +1003,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/>.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />. Any in-flight message handlers will
+        /// be awaited. Once all message handling has completed, the underlying links will be closed. After this point, the method will return.
+        /// This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
         public async ValueTask DisposeAsync()
         {

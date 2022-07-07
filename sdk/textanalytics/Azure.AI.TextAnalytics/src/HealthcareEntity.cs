@@ -11,21 +11,30 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class HealthcareEntity
     {
-#pragma warning disable IDE0060 // Remove unused parameter
-#pragma warning disable CA1801 // Review unused parameters
-        internal HealthcareEntity(HealthcareEntityInternal entity)
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning restore IDE0060 // Remove unused parameter
+        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, double confidenceScore, int offset, int length, IReadOnlyCollection<EntityDataSource> dataSources, HealthcareEntityAssertion assertion, string normalizedName)
         {
-            //Category = entity.Category;
-            //Text = entity.Text;
-            //SubCategory = entity.Subcategory;
-            //ConfidenceScore = entity.ConfidenceScore;
-            //Offset = entity.Offset;
-            //Length = entity.Length;
-            //DataSources = entity.Links;
-            //Assertion = entity.Assertion;
-            //NormalizedText = entity.Name;
+            Text = text;
+            Category = category;
+            SubCategory = subcategory;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = length;
+            DataSources = dataSources;
+            Assertion = assertion;
+            NormalizedText = normalizedName;
+        }
+
+        internal HealthcareEntity(HealthcareEntityInternal entity)
+        {
+            Category = entity.Category;
+            Text = entity.Text;
+            SubCategory = entity.Subcategory;
+            ConfidenceScore = entity.ConfidenceScore;
+            Offset = entity.Offset;
+            Length = entity.Length;
+            DataSources = new List<EntityDataSource>(entity.Links);
+            Assertion = entity.Assertion;
+            NormalizedText = entity.Name;
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
@@ -33,19 +42,15 @@ namespace Azure.AI.TextAnalytics
         public string Text { get; }
 
         /// <summary>
-        /// Gets the entity category inferred by the Text Analytics service's
-        /// healthcare model.  The list of available categories is
-        /// described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// Gets the entity category inferred by the Text Analytics for
+        /// healthcare model.
         /// </summary>
         public HealthcareEntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Text Analytics service's
-        /// healthcare model.  This property may not have a value if
-        /// a sub category doesn't exist for this entity.  The list of available categories and
-        /// subcategories is described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// Gets the subcategory of the entity inferred by the Text Analytics for
+        /// healthcare model. This property may not have a value if
+        /// a subcategory doesn't exist for this entity.
         /// </summary>
         public string SubCategory { get; }
 

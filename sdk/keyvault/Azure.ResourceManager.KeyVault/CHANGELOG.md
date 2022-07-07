@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `KeyVaultResourceData` was removed.
+- Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ManagedHsmTrackedResourceData` was removed.
+- Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes
@@ -137,11 +145,11 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
-VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
+KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
+KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
-VaultResource vault = lro.Value;
+ArmOperation<KeyVaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+KeyVaultResource vault = lro.Value;
 ```
 
 #### Object Model Changes
@@ -158,6 +166,6 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
+KeyVaultProperties properties = new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```

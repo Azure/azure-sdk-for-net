@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> clusterExtensionId = default;
             Optional<string> extensionType = default;
             Optional<IList<EnabledResourceTypePropertiesTypesMetadataItem>> typesMetadata = default;
@@ -66,11 +66,16 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
                     continue;
                 }
             }
-            return new EnabledResourceType(id, name, type, systemData, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
+            return new EnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
         }
     }
 }

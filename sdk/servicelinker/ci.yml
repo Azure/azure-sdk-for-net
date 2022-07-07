@@ -20,10 +20,14 @@ pr:
   paths:
     include:
     - sdk/servicelinker/
+    - sdk/keyvault/
+    - sdk/webpubsub/
+    - sdk/websites/
+    - sdk/network/
     - sdk/resourcemanager/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: servicelinker
     ArtifactName: packages

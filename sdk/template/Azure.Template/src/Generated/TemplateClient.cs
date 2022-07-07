@@ -36,9 +36,17 @@ namespace Azure.Template
         /// <summary> Initializes a new instance of TemplateClient. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="credential"/> is null. </exception>
+        public TemplateClient(string vaultBaseUrl, TokenCredential credential) : this(vaultBaseUrl, credential, new TemplateClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of TemplateClient. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="credential"/> is null. </exception>
-        public TemplateClient(string vaultBaseUrl, TokenCredential credential, TemplateClientOptions options = null)
+        public TemplateClient(string vaultBaseUrl, TokenCredential credential, TemplateClientOptions options)
         {
             Argument.AssertNotNull(vaultBaseUrl, nameof(vaultBaseUrl));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -53,18 +61,24 @@ namespace Azure.Template
 
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 
@@ -89,18 +103,24 @@ namespace Azure.Template
 
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SecretBundle</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. The secret value.
+        ///   id: string, # Optional. The secret id.
+        ///   contentType: string, # Optional. The content type of the secret.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
+        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
+        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
         /// }
         /// </code>
         /// 

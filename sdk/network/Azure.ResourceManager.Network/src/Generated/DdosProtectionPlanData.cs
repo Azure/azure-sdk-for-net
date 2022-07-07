@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -30,24 +32,24 @@ namespace Azure.ResourceManager.Network
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> virtualNetworks) : base(id, name, resourceType, systemData, tags, location)
+        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> virtualNetworks) : base(id, name, resourceType, systemData, tags, location)
         {
-            Etag = etag;
+            ETag = eTag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             VirtualNetworks = virtualNetworks;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The resource GUID property of the DDoS protection plan resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the DDoS protection plan resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </summary>
         public IReadOnlyList<WritableSubResource> VirtualNetworks { get; }
     }
