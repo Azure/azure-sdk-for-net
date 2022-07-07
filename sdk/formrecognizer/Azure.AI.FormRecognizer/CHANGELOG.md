@@ -11,6 +11,7 @@
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
+- `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
 
 ### Bugs Fixed
 
