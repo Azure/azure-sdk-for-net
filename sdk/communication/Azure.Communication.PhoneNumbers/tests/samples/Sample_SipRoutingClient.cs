@@ -45,25 +45,31 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             client = CreateClient();
             var newTrunks = new List<SipTrunk> { TestData.NewTrunk };
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
+            var newDomains = new List<SipDomain> { TestData.NewDomain };
 
             #region Snippet:Replace
             // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
             //@@var newTrunks = "<new_trunks_list>";
             //@@var newRoutes = "<new_routes_list>";
+            //@@var newDomains = "<new_domains_list>";
             client.SetRoutes(new List<SipTrunkRoute>());
             client.SetTrunks(newTrunks);
             client.SetRoutes(newRoutes);
+            client.SetDomains(newDomains);
             #endregion Snippet:Replace
 
             #region Snippet:RetrieveList
             var trunksResponse = client.GetTrunks();
             var routesResponse = client.GetRoutes();
+            var domainsResponse = client.GetDomains();
             #endregion Snippet:RetrieveList
 
             Assert.AreEqual(1, trunksResponse.Value.Count);
             Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
             Assert.AreEqual(1, routesResponse.Value.Count);
             Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
+            Assert.AreEqual(1, domainsResponse.Value.Count);
+            Assert.IsTrue(DomainAreEqual(TestData.NewDomain, domainsResponse.Value[0]));
 
             var fqdnToRetrieve = TestData.NewTrunk.Fqdn;
 
@@ -93,10 +99,12 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             var trunksFinalResponse = client.GetTrunks();
             var routesFinalResponse = client.GetRoutes();
+            var domainsFinalResponse = client.GetDomains();
 
             Assert.AreEqual(1, trunksFinalResponse.Value.Count);
             Assert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Value[0]));
             Assert.AreEqual(1, routesFinalResponse.Value.Count);
+            Assert.AreEqual(1, domainsFinalResponse.Value.Count);
         }
 
         [Test]
@@ -109,25 +117,31 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var client = CreateClient();
             var newTrunks = new List<SipTrunk> { TestData.NewTrunk };
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
+            var newDomains = new List<SipDomain> { TestData.NewDomain };
 
             #region Snippet:ReplaceAsync
             // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
             //@@var newTrunks = "<new_trunks_list>";
             //@@var newRoutes = "<new_routes_list>";
+            //@@var newDomains = "<new_domains_list>";
             await client.SetRoutesAsync(new List<SipTrunkRoute>());
             await client.SetTrunksAsync(newTrunks);
             await client.SetRoutesAsync(newRoutes);
+            await client.SetDomainsAsync(newDomains);
             #endregion Snippet:ReplaceAsync
 
             #region Snippet:RetrieveListAsync
             var trunksResponse = await client.GetTrunksAsync();
             var routesResponse = await client.GetRoutesAsync();
+            var domainsResponse = await client.GetDomainsAsync();
             #endregion Snippet:RetrieveListAsync
 
             Assert.AreEqual(1, trunksResponse.Value.Count);
             Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, trunksResponse.Value[0]));
             Assert.AreEqual(1, routesResponse.Value.Count);
             Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToNewTrunk, routesResponse.Value[0]));
+            Assert.AreEqual(1, domainsResponse.Value.Count);
+            Assert.IsTrue(DomainAreEqual(TestData.NewDomain, domainsResponse.Value[0]));
 
             var fqdnToRetrieve = TestData.NewTrunk.Fqdn;
 
@@ -157,10 +171,12 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             var trunksFinalResponse = client.GetTrunksAsync();
             var routesFinalResponse = client.GetRoutesAsync();
+            var domainsFinalResponse = client.GetDomainsAsync();
 
             Assert.AreEqual(1, trunksFinalResponse.Result.Value.Count);
             Assert.IsTrue(TrunkAreEqual(trunkToSet, trunksFinalResponse.Result.Value[0]));
             Assert.AreEqual(1, routesFinalResponse.Result.Value.Count);
+            Assert.AreEqual(1, domainsFinalResponse.Result.Value.Count);
         }
     }
 }

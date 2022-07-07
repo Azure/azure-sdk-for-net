@@ -72,5 +72,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         {
             return expected.Fqdn == actual.Fqdn && expected.SipSignalingPort == actual.SipSignalingPort;
         }
+
+        protected bool DomainAreEqual(SipDomain expected, SipDomain actual)
+        {
+            return expected.DomainUri == actual.DomainUri && expected.Type == actual.Type;
+        }
     }
 }

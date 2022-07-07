@@ -24,6 +24,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
             client.SetTrunksAsync(TestData.TrunkList).Wait();
             client.SetRoutesAsync(new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 }).Wait();
+            client.SetDomainsAsync(TestData.DomainList).Wait();
 
             return client;
         }
@@ -147,6 +148,72 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             Assert.IsNotNull(newTrunks);
             Assert.AreEqual(1, newTrunks.Count);
             Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, newTrunks[0]));
+        }
+
+        [Test]
+        public async Task AddSipDomainForResource()
+        {
+            var client = InitializeTest();
+            var response = await client.SetDomainAsync(TestData.NewDomain).ConfigureAwait(false);
+            var actualDomains = await client.GetDomainsAsync().ConfigureAwait(false);
+
+            Assert.AreEqual(3, actualDomains.Value.Count());
+            Assert.IsNotNull(actualDomains.Value.FirstOrDefault(x => x.DomainUri == TestData.NewDomain.DomainUri));
+        }
+
+        [Test]
+        public async Task GetSipDomainForResource()
+        {
+            var client = InitializeTest();
+
+            var response = await client.GetDomainAsync(TestData.DomainList[1].DomainUri).ConfigureAwait(false);
+
+            var domain = response.Value;
+            Assert.IsNotNull(domain);
+            Assert.IsTrue(DomainAreEqual(TestData.DomainList[1], domain));
+        }
+
+        [Test]
+        public async Task GetSipDomainsForResource()
+        {
+            var client = InitializeTest();
+            var response = await client.GetDomainsAsync().ConfigureAwait(false);
+            var domains = response.Value;
+
+            Assert.IsNotNull(domains);
+            Assert.AreEqual(TestData.DomainList.Count, domains.Count());
+            Assert.IsTrue(DomainAreEqual(TestData.DomainList[0], domains[0]));
+            Assert.IsTrue(DomainAreEqual(TestData.DomainList[1], domains[1]));
+        }
+
+        [Test]
+        public async Task ReplaceSipDomainsForResource()
+        {
+            var client = InitializeTest();
+
+            await client.SetRoutesAsync(new List<SipTrunkRoute>()).ConfigureAwait(false);  // Need to clear the routes first
+            await client.SetTrunksAsync(new List<SipTrunk> ()).ConfigureAwait(false); //Need to clear  trunks first
+            await client.SetDomainsAsync(new List<SipDomain> { TestData.NewDomain }).ConfigureAwait(false);
+            var response = await client.GetDomainsAsync().ConfigureAwait(false);
+
+            var newDomains = response.Value;
+            Assert.IsNotNull(newDomains);
+            Assert.AreEqual(1, newDomains.Count);
+            Assert.IsTrue(DomainAreEqual(TestData.NewDomain, newDomains[0]));
+        }
+
+        [Test]
+        public async Task DeleteSipDomainForResource()
+        {
+            var client = InitializeTest();
+            var initialDomains = await client.GetDomainsAsync().ConfigureAwait(false);
+            Assert.AreEqual(TestData.DomainList.Count, initialDomains.Value.Count());
+
+            await client.DeleteDomainAsync(TestData.DomainList[1].DomainUri).ConfigureAwait(false);
+
+            var finalDomains = await client.GetDomainsAsync().ConfigureAwait(false);
+            Assert.AreEqual(TestData.DomainList.Count - 1, finalDomains.Value.Count());
+            Assert.IsNull(finalDomains.Value.FirstOrDefault(x => x.DomainUri == TestData.DomainList[1].DomainUri));
         }
     }
 }

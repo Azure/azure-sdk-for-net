@@ -25,15 +25,18 @@ Set SIP trunks and routes in bulk.
 // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
 var newTrunks = "<new_trunks_list>";
 var newRoutes = "<new_routes_list>";
+var newDomains = "<new_domains_list>";
 await client.SetRoutesAsync(new List<SipTrunkRoute>());
 await client.SetTrunksAsync(newTrunks);
 await client.SetRoutesAsync(newRoutes);
+await client.SetDomainsAsync(newDomains);
 ```
 
 #### Retrieve SIP configuration
 ```C# Snippet:RetrieveListAsync
 var trunksResponse = await client.GetTrunksAsync();
 var routesResponse = await client.GetRoutesAsync();
+var domainsResponse = await client.GetDomainsAsync();
 ```
 
 ## Operations on a single trunk
