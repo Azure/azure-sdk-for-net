@@ -7,6 +7,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 
     using Azure.Core.TestFramework;
     using Azure.Monitor.OpenTelemetry.Exporter;
+    using Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework;
 
     using global::OpenTelemetry;
 
@@ -27,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
         public async Task VerifyLogExporter()
         {
             // SETUP
-            var exporter = GetAzureMonitorLogExporter();
+            var exporter = this.GetAzureMonitorLogExporter();
             var processor = new BatchLogRecordExportProcessor(exporter);
 
             var serviceCollection = new ServiceCollection().AddLogging(builder =>
@@ -47,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             var testMessage = "Hello World";
             logger.Log(logLevel: LogLevel.Information, message: testMessage);
 
-            var flushResult = processor.ForceFlush(FlushTimeoutMilliseconds);
+            var flushResult = processor.ForceFlush(this.FlushTimeoutMilliseconds);
             Assert.IsTrue(flushResult, "Processor failed to flush");
 
             // VERIFY

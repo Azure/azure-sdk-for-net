@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework
 {
     using System;
     using System.Threading.Tasks;
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
         /// </summary>
         public string ApplicationId => GetRecordedVariable(EnvironmentVariableNames.ApplicationId);
 
-        public bool IsTestModeLive => Mode != RecordedTestMode.Playback;
+        public bool IsTestModeLive => this.Mode != RecordedTestMode.Playback;
 
         /// <summary>
         /// Get a <see cref="ServiceClientCredentials"/> needed by <see cref="ApplicationInsightsDataClient"/> to query Kusto.
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
         /// </summary>
         public async Task<ServiceClientCredentials> GetServiceClientCredentialsAsync()
         {
-            if (IsTestModeLive)
+            if (this.IsTestModeLive)
             {
                 var authEndpoint = "https://login.microsoftonline.com";
                 var tokenAudience = "https://api.applicationinsights.io/";
@@ -51,9 +51,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
                 };
 
                 return await ApplicationTokenProvider.LoginSilentAsync(
-                    domain: TenantId,
-                    clientId: ClientId,
-                    secret: ClientSecret,
+                    domain: this.TenantId,
+                    clientId: this.ClientId,
+                    secret: this.ClientSecret,
                     settings: adSettings);
             }
             else
