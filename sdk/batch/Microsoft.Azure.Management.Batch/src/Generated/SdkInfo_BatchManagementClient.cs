@@ -31,5 +31,16 @@ namespace Microsoft.Azure.Management.Batch
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/batch/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\hpc\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "898587c563d7b1941e1a10779ea7b122dce8ad6f";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
