@@ -699,13 +699,25 @@ namespace Azure.Communication.CallingServer
         public virtual async Task<Response<Stream>> DownloadStreamingAsync(
             Uri sourceEndpoint,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            await _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
-                range,
-                async: true,
-                cancellationToken)
-            .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadStreaming)}");
+            scope.Start();
+            try
+            {
+                return await _contentDownloader.DownloadStreamingInternal(
+                    sourceEndpoint,
+                    range,
+                    async: true,
+                    cancellationToken)
+                .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreaming(Uri, HttpRange, CancellationToken)"/>
@@ -734,13 +746,25 @@ namespace Azure.Communication.CallingServer
         public virtual Response<Stream> DownloadStreaming(
             Uri sourceEndpoint,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            _contentDownloader.DownloadStreamingInternal(
-                sourceEndpoint,
-                range,
-                async: false,
-                cancellationToken)
-            .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadStreaming)}");
+            scope.Start();
+            try
+            {
+                return _contentDownloader.DownloadStreamingInternal(
+                    sourceEndpoint,
+                    range,
+                    async: false,
+                    cancellationToken)
+                .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
@@ -769,8 +793,22 @@ namespace Azure.Communication.CallingServer
         /// a failure occurs.
         /// </remarks>
         public virtual Response DownloadTo(Uri sourceEndpoint, Stream destinationStream,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                return _contentDownloader
+                    .StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
@@ -798,8 +836,26 @@ namespace Azure.Communication.CallingServer
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> DownloadToAsync(
+            Uri sourceEndpoint,
+            Stream destinationStream,
+            ContentTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                return await _contentDownloader
+                    .StagedDownloadAsync(sourceEndpoint, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
@@ -830,9 +886,19 @@ namespace Azure.Communication.CallingServer
         public virtual Response DownloadTo(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(destinationPath);
-            return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
-                async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                using Stream destination = File.Create(destinationPath);
+                return _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+                    async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -864,9 +930,19 @@ namespace Azure.Communication.CallingServer
         public virtual async Task<Response> DownloadToAsync(Uri sourceEndpoint, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
-            using Stream destination = File.Create(destinationPath);
-            return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
-                async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(DownloadTo)}");
+            scope.Start();
+            try
+            {
+                using Stream destination = File.Create(destinationPath);
+                return await _contentDownloader.StagedDownloadAsync(sourceEndpoint, destination, transferOptions,
+                    async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
