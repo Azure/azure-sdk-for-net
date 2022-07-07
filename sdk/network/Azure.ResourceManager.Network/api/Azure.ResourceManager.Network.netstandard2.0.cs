@@ -4569,7 +4569,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayAuthenticationCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayAuthenticationCertificate() { }
-        public string Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -4899,7 +4899,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayProbeHealthResponseMatch
     {
         public ApplicationGatewayProbeHealthResponseMatch() { }
-        public string Body { get { throw null; } set { } }
+        public System.BinaryData Body { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StatusCodes { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5048,12 +5048,12 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewaySslCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewaySslCertificate() { }
-        public string Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublicCertData { get { throw null; } }
+        public System.BinaryData PublicCertData { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationGatewaySslCipherSuite : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite>
@@ -5197,15 +5197,15 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ApplicationGatewayTrustedClientCertificate() { }
         public string ClientCertIssuerDN { get { throw null; } }
-        public string Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public string ValidatedCertData { get { throw null; } }
+        public System.BinaryData ValidatedCertData { get { throw null; } }
     }
     public partial class ApplicationGatewayTrustedRootCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
         public ApplicationGatewayTrustedRootCertificate() { }
-        public string Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string KeyVaultSecretId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -9575,10 +9575,10 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class VpnClientRootCertificate : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
-        public VpnClientRootCertificate(string publicCertData) { }
+        public VpnClientRootCertificate(System.BinaryData publicCertData) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
-        public string PublicCertData { get { throw null; } set { } }
+        public System.BinaryData PublicCertData { get { throw null; } set { } }
     }
     public partial class VpnConnectionPacketCaptureStartContent
     {
@@ -9770,7 +9770,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public VpnServerConfigRadiusServerRootCertificate() { }
         public string Name { get { throw null; } set { } }
-        public string PublicCertData { get { throw null; } set { } }
+        public System.BinaryData PublicCertData { get { throw null; } set { } }
     }
     public partial class VpnServerConfigurationsResponse
     {
@@ -9787,7 +9787,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public VpnServerConfigVpnClientRootCertificate() { }
         public string Name { get { throw null; } set { } }
-        public string PublicCertData { get { throw null; } set { } }
+        public System.BinaryData PublicCertData { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VpnType : System.IEquatable<Azure.ResourceManager.Network.Models.VpnType>
