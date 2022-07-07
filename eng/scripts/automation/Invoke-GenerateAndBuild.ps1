@@ -14,6 +14,7 @@ $readmeFile = $readmeFile -replace "\\", "/"
 $commitid = $inputJson.headSha
 $repoHttpsUrl = $inputJson.repoHttpsUrl
 $serviceType = $inputJson.serviceType
+$downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 
 $autorestConfig = $inputJson.autorestConfig
@@ -56,7 +57,8 @@ if ($commitid -ne "") {
 }
 
 $generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
-Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -generatedSDKPackages $generatedSDKPackages
+Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+
 $outputJson = [PSCustomObject]@{
   packages = $generatedSDKPackages
 }
