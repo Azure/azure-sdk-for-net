@@ -357,9 +357,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ValidateStoragePermissionsAsyncValidatesBlobsCanBeWritten(bool async)
+        public async Task ValidateStoragePermissionsAsyncValidatesBlobsCanBeWritten()
         {
             using var cancellationSource = new CancellationTokenSource();
 
@@ -378,14 +376,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                if (async)
-                {
-                    await processorClient.ValidateStoragePermissionsAsync(async, mockContainerClient.Object, cancellationSource.Token);
-                }
-                else
-                {
-                    processorClient.ValidateStoragePermissionsAsync(async, mockContainerClient.Object, cancellationSource.Token).EnsureCompleted();
-                }
+                await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token);
             }
             catch (Exception ex)
             {
@@ -407,9 +398,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ValidateStoragePermissionsAsyncLogsWhenCleanupFails(bool async)
+        public async Task ValidateStoragePermissionsAsyncLogsWhenCleanupFails()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -429,14 +418,7 @@ namespace Azure.Messaging.EventHubs.Tests
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            if (async)
-            {
-                Assert.That(async () => await processorClient.ValidateStoragePermissionsAsync(async, mockContainerClient.Object, cancellationSource.Token), Throws.Nothing);
-            }
-            else
-            {
-                Assert.That(() => processorClient.ValidateStoragePermissionsAsync(async, mockContainerClient.Object, cancellationSource.Token), Throws.Nothing);
-            }
+            Assert.That(async () => await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token), Throws.Nothing);
 
             mockLogger.Verify(log => log.ValidationCleanupError(
                 processorClient.Identifier,
@@ -1631,7 +1613,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => base.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
             public Task InvokeUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
-            protected override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
 
         /// <summary>
