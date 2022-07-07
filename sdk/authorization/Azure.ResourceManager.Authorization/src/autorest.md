@@ -36,7 +36,7 @@ rename-rules:
   URI: Uri
 
 request-path-to-resource-type:
-  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments: Microsoft.Authorization/roleManagementPolicyAssignment
+  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
 
 list-exception: 
 - /{roleDefinitionId}

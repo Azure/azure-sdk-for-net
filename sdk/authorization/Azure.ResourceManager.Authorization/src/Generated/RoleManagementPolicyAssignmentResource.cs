@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignments";
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignment";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
