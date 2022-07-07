@@ -33,7 +33,9 @@ namespace Azure.Storage.Cryptography
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
         }
 
-        public long ExpectedOutputContentLength(long plaintextLength)
+        public long ExpectedOutputContentLength(long plaintextLength) => CalculateExpectedOutputContentLength(plaintextLength);
+
+        public static long CalculateExpectedOutputContentLength(long plaintextLength)
         {
             long numBlocks = plaintextLength / EncryptionRegionDataSize;
             // partial block check
