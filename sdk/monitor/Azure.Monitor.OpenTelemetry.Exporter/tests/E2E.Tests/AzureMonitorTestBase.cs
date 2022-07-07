@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
+namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
         {
             /// <see cref="ApplicationInsightsDataClient"/> and <see cref="HttpClient"/> are not fully compatible with the Azure.Core.TestFramework.
             /// We must disable the Client validation for tests to run.
-            this.ValidateClientInstrumentation = false;
+            ValidateClientInstrumentation = false;
         }
 
         /// <remarks>
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
                 ConnectionString = TestEnvironment.ConnectionString,
             };
 
-            var clientOptions = this.InstrumentClientOptions(exporterOptions);
+            var clientOptions = InstrumentClientOptions(exporterOptions);
 
             return new AzureMonitorLogExporter(clientOptions);
         }
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.FunctionalTests
             var timeoutDuration = TimeSpan.FromMinutes(5); // timeout after 5 minutes.
             var period = TestEnvironment.IsTestModeLive ? TimeSpan.FromSeconds(10) : TimeSpan.FromSeconds(0); // query once every 10 seconds.
 
-            var client = await this.GetApplicationInsightsDataClientAsync();
+            var client = await GetApplicationInsightsDataClientAsync();
             IList<EventsTraceResult> telemetry = null;
 
             for (double actualDuration = 0; actualDuration <= timeoutDuration.TotalMilliseconds; actualDuration += period.TotalMilliseconds)
