@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -51,6 +52,15 @@ namespace Azure.Storage.Blobs.Tests
 
             return base.GetResourceClient(container, resourceName, options);
         }
+
+        protected override long GetExpectedDataLength(long dataLength) => _version switch
+        {
+#pragma warning disable CS0618 // obsolete
+            ClientSideEncryptionVersion.V1_0 => ClientSideEncryptorV1_0.CalculateExpectedOutputContentLength(dataLength),
+#pragma warning restore CS0618 // obsolete
+            ClientSideEncryptionVersion.V2_0 => ClientSideEncryptorV2_0.CalculateExpectedOutputContentLength(dataLength),
+            _ => dataLength
+        };
 
         #region Test Overrides
         /// <summary>
@@ -118,43 +128,6 @@ namespace Azure.Storage.Blobs.Tests
             Assert.AreEqual(metadata.Count + 1, downloadedMetadata.Count);
             CollectionAssert.IsSubsetOf(metadata, downloadedMetadata);
             Assert.IsTrue(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
-
-            await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
-        }
-
-        /// <summary>
-        /// Need to change assertions for a progress reporting test.
-        /// Client-side encryption alters data length.
-        /// </summary>
-        [Test]
-        public override async Task OpenWriteAsync_ProgressReporting()
-        {
-            const int bufferSize = 256;
-
-            // Arrange
-            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
-            BlobClient client = GetResourceClient(disposingContainer.Container);
-
-            byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-
-            TestProgress progress = new TestProgress();
-
-            // Act
-            using (Stream openWriteStream = await OpenWriteAsync(
-                client,
-                overwrite: true,
-                maxDataSize: Constants.KB,
-                bufferSize: bufferSize,
-                progressHandler: progress))
-            {
-                await stream.CopyToAsync(openWriteStream);
-                await openWriteStream.FlushAsync();
-            }
-
-            // Assert
-            Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(data.Length - (data.Length % 16) + 16, progress.List[progress.List.Count - 1]);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }
