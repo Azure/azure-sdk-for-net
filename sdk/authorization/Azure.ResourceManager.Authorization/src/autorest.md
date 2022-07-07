@@ -35,6 +35,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+request-path-to-resource-type:
+  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments: Microsoft.Authorization/roleManagementPolicyAssignment
+
 list-exception: 
 - /{roleDefinitionId}
 - /{roleAssignmentId}
@@ -50,16 +53,16 @@ directive:
     transform: $['x-ms-client-name'] = 'RoleAssignmentExpirationType' 
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $['x-ms-format'] = 'duration-constant'
+    transform: $["format"] = "duration"
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-client-name'] = 'RoleEligibilityExpirationType' 
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $['x-ms-format'] = 'duration-constant'
+    transform: $["format"] = "duration"
   - from: common-types.json
     where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
-    transform: $['x-ms-format'] = 'duration-constant'
+    transform: $["format"] = "duration"
 
   # change single class name
   - from: authorization-RoleDefinitionsCalls.json
