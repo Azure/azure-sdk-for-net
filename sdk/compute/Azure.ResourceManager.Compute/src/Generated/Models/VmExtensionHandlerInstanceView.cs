@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of VmExtensionHandlerInstanceView. </summary>
-        /// <param name="virtualMachineExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="vmExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> The extension handler status. </param>
-        internal VmExtensionHandlerInstanceView(string virtualMachineExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status)
+        internal VmExtensionHandlerInstanceView(string vmExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status)
         {
-            VirtualMachineExtensionHandlerInstanceViewType = virtualMachineExtensionHandlerInstanceViewType;
+            VirtualMachineExtensionHandlerInstanceViewType = vmExtensionHandlerInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
         }

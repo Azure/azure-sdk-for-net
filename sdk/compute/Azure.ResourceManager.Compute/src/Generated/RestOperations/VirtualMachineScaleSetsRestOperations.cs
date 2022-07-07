@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string vmssName, string subscriptionId, string resourceGroupName, VmssData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssData>> GetAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetData>> GetAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -384,13 +384,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssData value = default;
+                        VirtualMachineScaleSetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssData.DeserializeVmssData(document.RootElement);
+                        value = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmssData)null, message.Response);
+                    return Response.FromValue((VirtualMachineScaleSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssData> Get(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetData> Get(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -416,13 +416,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssData value = default;
+                        VirtualMachineScaleSetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssData.DeserializeVmssData(document.RootElement);
+                        value = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmssData)null, message.Response);
+                    return Response.FromValue((VirtualMachineScaleSetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics;
-        private readonly VirtualMachineExtensionImagesRestOperations _vmExtensionImageVirtualMachineExtensionImagesRestClient;
+        private readonly ClientDiagnostics _vmExtensionImageVmExtensionImagesClientDiagnostics;
+        private readonly VirtualMachineExtensionImagesRestOperations _vmExtensionImageVmExtensionImagesRestClient;
         private readonly VmExtensionImageData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VmExtensionImageResource"/> class for mocking. </summary>
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VmExtensionImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string vmExtensionImageVirtualMachineExtensionImagesApiVersion);
-            _vmExtensionImageVirtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmExtensionImageVirtualMachineExtensionImagesApiVersion);
+            _vmExtensionImageVmExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string vmExtensionImageVmExtensionImagesApiVersion);
+            _vmExtensionImageVmExtensionImagesRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmExtensionImageVmExtensionImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VmExtensionImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.Get");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _vmExtensionImageVirtualMachineExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _vmExtensionImageVmExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmExtensionImageResource(Client, response.Value), response.GetRawResponse());
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VmExtensionImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.Get");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.Get");
             scope.Start();
             try
             {
-                var response = _vmExtensionImageVirtualMachineExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _vmExtensionImageVmExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmExtensionImageResource(Client, response.Value), response.GetRawResponse());
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.AddTag");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmExtensionImageVirtualMachineExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmExtensionImageVmExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.AddTag");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmExtensionImageVirtualMachineExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _vmExtensionImageVmExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.SetTags");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.SetTags");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmExtensionImageVirtualMachineExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmExtensionImageVmExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.SetTags");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.SetTags");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmExtensionImageVirtualMachineExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _vmExtensionImageVmExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -270,14 +270,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.RemoveTag");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmExtensionImageVirtualMachineExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmExtensionImageVmExtensionImagesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -299,14 +299,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _vmExtensionImageVirtualMachineExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.RemoveTag");
+            using var scope = _vmExtensionImageVmExtensionImagesClientDiagnostics.CreateScope("VmExtensionImageResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmExtensionImageVirtualMachineExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _vmExtensionImageVmExtensionImagesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VmExtensionImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

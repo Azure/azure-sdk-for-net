@@ -7,8 +7,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    [CodeGenType("VmData")]
-    public partial class VirtualMachineData
+    [CodeGenType("VmssData")]
+    public partial class VirtualMachineScaleSetData
     {
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VmssInstanceView DeserializeVmssInstanceView(JsonElement element)
         {
-            Optional<VmssInstanceViewStatusesSummary> virtualMachine = default;
+            Optional<VmssInstanceViewStatusesSummary> vm = default;
             Optional<IReadOnlyList<VmssVmExtensionsSummary>> extensions = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    virtualMachine = VmssInstanceViewStatusesSummary.DeserializeVmssInstanceViewStatusesSummary(property.Value);
+                    vm = VmssInstanceViewStatusesSummary.DeserializeVmssInstanceViewStatusesSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VmssInstanceView(virtualMachine.Value, Optional.ToList(extensions), Optional.ToList(statuses), Optional.ToList(orchestrationServices));
+            return new VmssInstanceView(vm.Value, Optional.ToList(extensions), Optional.ToList(statuses), Optional.ToList(orchestrationServices));
         }
     }
 }

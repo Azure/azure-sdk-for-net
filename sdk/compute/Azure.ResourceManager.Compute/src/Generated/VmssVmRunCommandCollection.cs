@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VmssVmRunCommandCollection : ArmCollection, IEnumerable<VmssVmRunCommandResource>, IAsyncEnumerable<VmssVmRunCommandResource>
     {
-        private readonly ClientDiagnostics _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics;
-        private readonly VirtualMachineScaleSetVMRunCommandsRestOperations _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient;
+        private readonly ClientDiagnostics _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics;
+        private readonly VirtualMachineScaleSetVMRunCommandsRestOperations _vmssVmRunCommandVmssVmRunCommandsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VmssVmRunCommandCollection"/> class for mocking. </summary>
         protected VmssVmRunCommandCollection()
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VmssVmRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VmssVmRunCommandResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VmssVmRunCommandResource.ResourceType, out string vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsApiVersion);
-            _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsApiVersion);
+            _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VmssVmRunCommandResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VmssVmRunCommandResource.ResourceType, out string vmssVmRunCommandVmssVmRunCommandsApiVersion);
+            _vmssVmRunCommandVmssVmRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmssVmRunCommandVmssVmRunCommandsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.CreateOrUpdate");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VmssVmRunCommandResource>(new VmssVmRunCommandOperationSource(Client), _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _vmssVmRunCommandVmssVmRunCommandsRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<VmssVmRunCommandResource>(new VmssVmRunCommandOperationSource(Client), _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics, Pipeline, _vmssVmRunCommandVmssVmRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.CreateOrUpdate");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateOrUpdate(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken);
-                var operation = new ComputeArmOperation<VmssVmRunCommandResource>(new VmssVmRunCommandOperationSource(Client), _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics, Pipeline, _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _vmssVmRunCommandVmssVmRunCommandsRestClient.CreateOrUpdate(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data, cancellationToken);
+                var operation = new ComputeArmOperation<VmssVmRunCommandResource>(new VmssVmRunCommandOperationSource(Client), _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics, Pipeline, _vmssVmRunCommandVmssVmRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Get");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _vmssVmRunCommandVmssVmRunCommandsRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmssVmRunCommandResource(Client, response.Value), response.GetRawResponse());
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Get");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Get");
             scope.Start();
             try
             {
-                var response = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken);
+                var response = _vmssVmRunCommandVmssVmRunCommandsRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmssVmRunCommandResource(Client, response.Value), response.GetRawResponse());
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<VmssVmRunCommandResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
+                using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.ListAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vmssVmRunCommandVmssVmRunCommandsRestClient.ListAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VmssVmRunCommandResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<VmssVmRunCommandResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
+                using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.ListNextPageAsync(nextLink, Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _vmssVmRunCommandVmssVmRunCommandsRestClient.ListNextPageAsync(nextLink, Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VmssVmRunCommandResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<VmssVmRunCommandResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
+                using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.List(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _vmssVmRunCommandVmssVmRunCommandsRestClient.List(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VmssVmRunCommandResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<VmssVmRunCommandResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
+                using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.ListNextPage(nextLink, Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    var response = _vmssVmRunCommandVmssVmRunCommandsRestClient.ListNextPage(nextLink, Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VmssVmRunCommandResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Exists");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _vmssVmRunCommandVmssVmRunCommandsRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var scope = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Exists");
+            using var scope = _vmssVmRunCommandVmssVmRunCommandsClientDiagnostics.CreateScope("VmssVmRunCommandCollection.Exists");
             scope.Start();
             try
             {
-                var response = _vmssVmRunCommandVirtualMachineScaleSetVMRunCommandsRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken);
+                var response = _vmssVmRunCommandVmssVmRunCommandsRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

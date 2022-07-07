@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VmOperationSource : IOperationSource<VmResource>
+    internal class VirtualMachineOperationSource : IOperationSource<VirtualMachineResource>
     {
         private readonly ArmClient _client;
 
-        internal VmOperationSource(ArmClient client)
+        internal VirtualMachineOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        VmResource IOperationSource<VmResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineResource IOperationSource<VirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
-            return new VmResource(_client, data);
+            return new VirtualMachineResource(_client, data);
         }
 
-        async ValueTask<VmResource> IOperationSource<VmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineResource> IOperationSource<VirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement);
-            return new VmResource(_client, data);
+            return new VirtualMachineResource(_client, data);
         }
     }
 }

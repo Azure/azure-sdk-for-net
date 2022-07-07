@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute
     {
         private ClientDiagnostics _usageClientDiagnostics;
         private UsageRestOperations _usageRestClient;
-        private ClientDiagnostics _virtualMachineSizesClientDiagnostics;
-        private VirtualMachineSizesRestOperations _virtualMachineSizesRestClient;
-        private ClientDiagnostics _vmssVirtualMachineScaleSetsClientDiagnostics;
-        private VirtualMachineScaleSetsRestOperations _vmssVirtualMachineScaleSetsRestClient;
-        private ClientDiagnostics _vmVirtualMachinesClientDiagnostics;
-        private VirtualMachinesRestOperations _vmVirtualMachinesRestClient;
-        private ClientDiagnostics _virtualMachineImagesClientDiagnostics;
-        private VirtualMachineImagesRestOperations _virtualMachineImagesRestClient;
-        private ClientDiagnostics _virtualMachineImagesEdgeZoneClientDiagnostics;
-        private VirtualMachineImagesEdgeZoneRestOperations _virtualMachineImagesEdgeZoneRestClient;
+        private ClientDiagnostics _vmSizesClientDiagnostics;
+        private VirtualMachineSizesRestOperations _vmSizesRestClient;
+        private ClientDiagnostics _vmssClientDiagnostics;
+        private VirtualMachineScaleSetsRestOperations _vmssRestClient;
+        private ClientDiagnostics _vmClientDiagnostics;
+        private VirtualMachinesRestOperations _vmRestClient;
+        private ClientDiagnostics _vmImagesClientDiagnostics;
+        private VirtualMachineImagesRestOperations _vmImagesRestClient;
+        private ClientDiagnostics _vmImagesEdgeZoneClientDiagnostics;
+        private VirtualMachineImagesEdgeZoneRestOperations _vmImagesEdgeZoneRestClient;
         private ClientDiagnostics _availabilitySetClientDiagnostics;
         private AvailabilitySetsRestOperations _availabilitySetRestClient;
         private ClientDiagnostics _proximityPlacementGroupClientDiagnostics;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations _capacityReservationGroupRestClient;
         private ClientDiagnostics _logAnalyticsClientDiagnostics;
         private LogAnalyticsRestOperations _logAnalyticsRestClient;
-        private ClientDiagnostics _vmRunCommandVirtualMachineRunCommandsClientDiagnostics;
-        private VirtualMachineRunCommandsRestOperations _vmRunCommandVirtualMachineRunCommandsRestClient;
+        private ClientDiagnostics _vmRunCommandVmRunCommandsClientDiagnostics;
+        private VirtualMachineRunCommandsRestOperations _vmRunCommandVmRunCommandsRestClient;
         private ClientDiagnostics _managedDiskDisksClientDiagnostics;
         private DisksRestOperations _managedDiskDisksRestClient;
         private ClientDiagnostics _diskAccessClientDiagnostics;
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.Compute
 
         private ClientDiagnostics UsageClientDiagnostics => _usageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsageRestOperations UsageRestClient => _usageRestClient ??= new UsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VmssVirtualMachineScaleSetsClientDiagnostics => _vmssVirtualMachineScaleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VmssResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineScaleSetsRestOperations VmssVirtualMachineScaleSetsRestClient => _vmssVirtualMachineScaleSetsRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VmssResource.ResourceType));
-        private ClientDiagnostics VmVirtualMachinesClientDiagnostics => _vmVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VmResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachinesRestOperations VmVirtualMachinesRestClient => _vmVirtualMachinesRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VmResource.ResourceType));
-        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _virtualMachineImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _virtualMachineImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _virtualMachineImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _vmSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _vmSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineScaleSetClientDiagnostics => _vmssClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _vmssRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineScaleSetResource.ResourceType));
+        private ClientDiagnostics VirtualMachineClientDiagnostics => _vmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachinesRestOperations VirtualMachineRestClient => _vmRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
+        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _vmImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _vmImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _vmImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _vmImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailabilitySetClientDiagnostics => _availabilitySetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
         private AvailabilitySetsRestOperations AvailabilitySetRestClient => _availabilitySetRestClient ??= new AvailabilitySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvailabilitySetResource.ResourceType));
         private ClientDiagnostics ProximityPlacementGroupClientDiagnostics => _proximityPlacementGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations CapacityReservationGroupRestClient => _capacityReservationGroupRestClient ??= new CapacityReservationGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CapacityReservationGroupResource.ResourceType));
         private ClientDiagnostics LogAnalyticsClientDiagnostics => _logAnalyticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VmRunCommandVirtualMachineRunCommandsClientDiagnostics => _vmRunCommandVirtualMachineRunCommandsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VmRunCommandResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineRunCommandsRestOperations VmRunCommandVirtualMachineRunCommandsRestClient => _vmRunCommandVirtualMachineRunCommandsRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VmRunCommandResource.ResourceType));
+        private ClientDiagnostics VmRunCommandVirtualMachineRunCommandsClientDiagnostics => _vmRunCommandVmRunCommandsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VmRunCommandResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachineRunCommandsRestOperations VmRunCommandVirtualMachineRunCommandsRestClient => _vmRunCommandVmRunCommandsRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VmRunCommandResource.ResourceType));
         private ClientDiagnostics ManagedDiskDisksClientDiagnostics => _managedDiskDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
         private DisksRestOperations ManagedDiskDisksRestClient => _managedDiskDisksRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDiskResource.ResourceType));
         private ClientDiagnostics DiskAccessClientDiagnostics => _diskAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccessResource.ResourceType.Namespace, Diagnostics);
@@ -317,17 +317,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmssResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmssResource> GetVmssesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmssResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineScaleSetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmssesByLocation");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation");
                 scope.Start();
                 try
                 {
-                    var response = await VmssVirtualMachineScaleSetsRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineScaleSetRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -335,14 +335,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<VmssResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineScaleSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmssesByLocation");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation");
                 scope.Start();
                 try
                 {
-                    var response = await VmssVirtualMachineScaleSetsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineScaleSetRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -360,17 +360,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmssResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmssResource> GetVmssesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<VmssResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineScaleSetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmssesByLocation");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation");
                 scope.Start();
                 try
                 {
-                    var response = VmssVirtualMachineScaleSetsRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineScaleSetRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<VmssResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineScaleSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmssesByLocation");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSetsByLocation");
                 scope.Start();
                 try
                 {
-                    var response = VmssVirtualMachineScaleSetsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineScaleSetRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -402,17 +402,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_ListAll
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmssResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmssResource> GetVmssesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmssResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineScaleSetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsses");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets");
                 scope.Start();
                 try
                 {
-                    var response = await VmssVirtualMachineScaleSetsRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineScaleSetRestClient.ListAllAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -420,14 +420,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<VmssResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineScaleSetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsses");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets");
                 scope.Start();
                 try
                 {
-                    var response = await VmssVirtualMachineScaleSetsRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineScaleSetRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -444,17 +444,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachineScaleSets_ListAll
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmssResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmssResource> GetVmsses(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
         {
-            Page<VmssResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineScaleSetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsses");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets");
                 scope.Start();
                 try
                 {
-                    var response = VmssVirtualMachineScaleSetsRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineScaleSetRestClient.ListAll(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -462,14 +462,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<VmssResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineScaleSetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmssVirtualMachineScaleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsses");
+                using var scope = VirtualMachineScaleSetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineScaleSets");
                 scope.Start();
                 try
                 {
-                    var response = VmssVirtualMachineScaleSetsRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmssResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineScaleSetRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineScaleSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -487,17 +487,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmResource> GetVmsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsByLocation");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation");
                 scope.Start();
                 try
                 {
-                    var response = await VmVirtualMachinesRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -505,14 +505,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<VmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsByLocation");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation");
                 scope.Start();
                 try
                 {
-                    var response = await VmVirtualMachinesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -530,17 +530,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmResource> GetVmsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<VmResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsByLocation");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation");
                 scope.Start();
                 try
                 {
-                    var response = VmVirtualMachinesRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -548,14 +548,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<VmResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVmsByLocation");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachinesByLocation");
                 scope.Start();
                 try
                 {
-                    var response = VmVirtualMachinesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -574,17 +574,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmResource> GetVmsAsync(string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVms");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
                 scope.Start();
                 try
                 {
-                    var response = await VmVirtualMachinesRestClient.ListAllAsync(Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineRestClient.ListAllAsync(Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -592,14 +592,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<VmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVms");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
                 scope.Start();
                 try
                 {
-                    var response = await VmVirtualMachinesRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await VirtualMachineRestClient.ListAllNextPageAsync(nextLink, Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -618,17 +618,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is &apos;virtualMachineScaleSet/id&apos; eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmResource> GetVms(string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineResource> GetVirtualMachines(string statusOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<VmResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVms");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
                 scope.Start();
                 try
                 {
-                    var response = VmVirtualMachinesRestClient.ListAll(Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineRestClient.ListAll(Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -636,14 +636,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<VmResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmVirtualMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVms");
+                using var scope = VirtualMachineClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachines");
                 scope.Start();
                 try
                 {
-                    var response = VmVirtualMachinesRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = VirtualMachineRestClient.ListAllNextPage(nextLink, Id.SubscriptionId, statusOnly, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

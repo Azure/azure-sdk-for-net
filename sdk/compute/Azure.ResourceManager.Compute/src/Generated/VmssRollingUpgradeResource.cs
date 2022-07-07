@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
     /// A Class representing a VmssRollingUpgrade along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmssRollingUpgradeResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetVmssRollingUpgradeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VmssResource" /> using the GetVmssRollingUpgrade method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource" /> using the GetVmssRollingUpgrade method.
     /// </summary>
     public partial class VmssRollingUpgradeResource : ArmResource
     {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Compute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics;
-        private readonly VirtualMachineScaleSetRollingUpgradesRestOperations _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient;
+        private readonly ClientDiagnostics _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics;
+        private readonly VirtualMachineScaleSetRollingUpgradesRestOperations _vmssRollingUpgradeVmssRollingUpgradesRestClient;
         private readonly VmssRollingUpgradeData _data;
 
         /// <summary> Initializes a new instance of the <see cref="VmssRollingUpgradeResource"/> class for mocking. </summary>
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VmssRollingUpgradeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesApiVersion);
-            _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesApiVersion);
+            _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string vmssRollingUpgradeVmssRollingUpgradesApiVersion);
+            _vmssRollingUpgradeVmssRollingUpgradesRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmssRollingUpgradeVmssRollingUpgradesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VmssRollingUpgradeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.Get");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.Get");
             scope.Start();
             try
             {
-                var response = await _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, response.Value), response.GetRawResponse());
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VmssRollingUpgradeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.Get");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.Get");
             scope.Start();
             try
             {
-                var response = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, response.Value), response.GetRawResponse());
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.AddTag");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.AddTag");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var originalResponse = _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.SetTags");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.SetTags");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.SetTags");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.SetTags");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var originalResponse = _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.RemoveTag");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatestAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.RemoveTag");
+            using var scope = _vmssRollingUpgradeVmssRollingUpgradesClientDiagnostics.CreateScope("VmssRollingUpgradeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _vmssRollingUpgradeVirtualMachineScaleSetRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var originalResponse = _vmssRollingUpgradeVmssRollingUpgradesRestClient.GetLatest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
                 return Response.FromValue(new VmssRollingUpgradeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

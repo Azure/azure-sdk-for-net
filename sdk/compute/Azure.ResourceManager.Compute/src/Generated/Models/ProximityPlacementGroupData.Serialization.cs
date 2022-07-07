@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
             Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> vmScaleSets = default;
             Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
             Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
                             }
-                            virtualMachineScaleSets = array;
+                            vmScaleSets = array;
                             continue;
                         }
                         if (property0.NameEquals("availabilitySets"))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value);
+            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(vmScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value);
         }
     }
 }

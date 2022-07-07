@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VmssListWithLinkResult. </summary>
         /// <param name="value"> The list of virtual machine scale sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VmssListWithLinkResult(IEnumerable<VmssData> value)
+        internal VmssListWithLinkResult(IEnumerable<VirtualMachineScaleSetData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VmssListWithLinkResult. </summary>
         /// <param name="value"> The list of virtual machine scale sets. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of Virtual Machine Scale Sets. </param>
-        internal VmssListWithLinkResult(IReadOnlyList<VmssData> value, string nextLink)
+        internal VmssListWithLinkResult(IReadOnlyList<VirtualMachineScaleSetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of virtual machine scale sets. </summary>
-        public IReadOnlyList<VmssData> Value { get; }
+        public IReadOnlyList<VirtualMachineScaleSetData> Value { get; }
         /// <summary> The uri to fetch the next page of Virtual Machine Scale Sets. Call ListNext() with this to fetch the next page of Virtual Machine Scale Sets. </summary>
         public string NextLink { get; }
     }

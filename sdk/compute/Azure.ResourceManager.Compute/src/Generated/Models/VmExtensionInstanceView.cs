@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of VmExtensionInstanceView. </summary>
         /// <param name="name"> The virtual machine extension name. </param>
-        /// <param name="virtualMachineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="vmExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="substatuses"> The resource status information. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal VmExtensionInstanceView(string name, string virtualMachineExtensionInstanceViewType, string typeHandlerVersion, IList<InstanceViewStatus> substatuses, IList<InstanceViewStatus> statuses)
+        internal VmExtensionInstanceView(string name, string vmExtensionInstanceViewType, string typeHandlerVersion, IList<InstanceViewStatus> substatuses, IList<InstanceViewStatus> statuses)
         {
             Name = name;
-            VirtualMachineExtensionInstanceViewType = virtualMachineExtensionInstanceViewType;
+            VirtualMachineExtensionInstanceViewType = vmExtensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Substatuses = substatuses;
             Statuses = statuses;
