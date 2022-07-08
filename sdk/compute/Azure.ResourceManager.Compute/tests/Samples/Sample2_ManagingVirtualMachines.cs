@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         Caching = CachingType.ReadWrite,
                         ManagedDisk = new VirtualMachineManagedDisk()
                         {
-                            StorageAccountType = StorageAccountType.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLrs
                         }
                     },
                     ImageReference = new ImageReference()

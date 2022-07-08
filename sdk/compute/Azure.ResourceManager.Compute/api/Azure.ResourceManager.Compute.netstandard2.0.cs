@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ComputeResourceSku() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapabilities> Capabilities { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacity Capacity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCosts> Costs { get { throw null; } }
         public string Family { get { throw null; } }
@@ -2758,6 +2758,12 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public string Tier { get { throw null; } }
+    }
+    public partial class ComputeResourceSkuCapabilities
+    {
+        internal ComputeResourceSkuCapabilities() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class ComputeResourceSkuCapacity
     {
@@ -2809,7 +2815,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputeResourceSkuZoneDetails
     {
         internal ComputeResourceSkuZoneDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapabilities> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
     }
     public partial class ComputeSku
@@ -3304,13 +3310,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSsdLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3700,9 +3706,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ImageStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.ImageStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -4240,11 +4246,6 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirSharedGalleryResourceData() { }
         public string UniqueId { get { throw null; } }
     }
-    public enum ProtocolType
-    {
-        Http = 0,
-        Https = 1,
-    }
     public partial class ProximityPlacementGroupPatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch
     {
         public ProximityPlacementGroupPatch() { }
@@ -4400,12 +4401,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceRange() { }
         public int? Max { get { throw null; } set { } }
         public int? Min { get { throw null; } set { } }
-    }
-    public partial class ResourceSkuCapabilities
-    {
-        internal ResourceSkuCapabilities() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
     }
     public partial class ResourceSkuCosts
     {
@@ -4851,9 +4846,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SnapshotStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -4900,13 +4895,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSsdLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.StorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -6230,6 +6225,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public WinRMListener() { }
         public System.Uri CertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ProtocolType? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.WinRMListenerProtocolType? Protocol { get { throw null; } set { } }
+    }
+    public enum WinRMListenerProtocolType
+    {
+        Http = 0,
+        Https = 1,
     }
 }

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionItemData. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal KeyVaultPrivateEndpointConnectionItemData(string id, ETag? eTag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal KeyVaultPrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             Id = id;
-            ETag = eTag;
+            ETag = etag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
