@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CorsRules> cors = default;
+            Optional<StorageCorsRules> cors = default;
             Optional<string> defaultServiceVersion = default;
             Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
             Optional<bool> isVersioningEnabled = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"))
