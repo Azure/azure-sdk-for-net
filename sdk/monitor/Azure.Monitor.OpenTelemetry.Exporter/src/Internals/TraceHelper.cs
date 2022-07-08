@@ -198,6 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string exceptionStackTrace = null;
             string exceptionMessage = null;
 
+            // TODO: update to use perf improvements in .NET7.0
             foreach (var tag in activityEventTags)
             {
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
