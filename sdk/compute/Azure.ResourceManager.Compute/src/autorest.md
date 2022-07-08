@@ -190,6 +190,7 @@ rename-mapping:
   UpgradeMode: VirtualMachineScaleSetUpgradeMode
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
   ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -356,8 +357,4 @@ directive:
     transform: >
       $.items = undefined;
       $["$ref"] = "#/definitions/CommunityGalleryInfo";
-  - from: compute.json
-    where: $.definitions
-    transform: >
-      $.WinRMListener.properties.protocol['x-ms-enum']['name'] = 'WinRMListenerProtocolType';
 ```

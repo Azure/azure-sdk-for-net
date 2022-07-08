@@ -4246,11 +4246,6 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirSharedGalleryResourceData() { }
         public string UniqueId { get { throw null; } }
     }
-    public enum ProtocolType
-    {
-        Http = 0,
-        Https = 1,
-    }
     public partial class ProximityPlacementGroupPatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch
     {
         public ProximityPlacementGroupPatch() { }
@@ -6230,6 +6225,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public WinRMListener() { }
         public System.Uri CertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ProtocolType? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.WinRMListenerProtocolType? Protocol { get { throw null; } set { } }
+    }
+    public enum WinRMListenerProtocolType
+    {
+        Http = 0,
+        Https = 1,
     }
 }
