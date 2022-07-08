@@ -48,7 +48,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultCustomBlockResponseBody != null)
                 {
                     writer.WritePropertyName("defaultCustomBlockResponseBody");
-                    writer.WriteStringValue(DefaultCustomBlockResponseBody);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultCustomBlockResponseBody);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultCustomBlockResponseBody.ToString()).RootElement);
+#endif
                 }
                 else
                 {
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<PolicyMode> mode = default;
             Optional<Uri> defaultRedirectUrl = default;
             Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
-            Optional<string> defaultCustomBlockResponseBody = default;
+            Optional<BinaryData> defaultCustomBlockResponseBody = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"))
@@ -114,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         defaultCustomBlockResponseBody = null;
                         continue;
                     }
-                    defaultCustomBlockResponseBody = property.Value.GetString();
+                    defaultCustomBlockResponseBody = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

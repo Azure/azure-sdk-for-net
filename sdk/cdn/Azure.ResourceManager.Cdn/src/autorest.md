@@ -27,6 +27,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'defaultCustomBlockResponseBody': 'any'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -360,7 +361,5 @@ directive:
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
-      $.policySettings.properties.defaultCustomBlockResponseBody['format'] = 'any';
-      
   - remove-operation: Validate_Secret
 ```
