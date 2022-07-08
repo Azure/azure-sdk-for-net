@@ -51,11 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 telemetryItems.Add(telemetryItem);
 
                 // Check for Exceptions
-                var exceptionTelemetryItem = GetExceptionTelemetryFromActivityExceptionEvent(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                if (exceptionTelemetryItem != null)
-                {
-                    telemetryItems.Add(exceptionTelemetryItem);
-                }
+                AddExceptionTelemetryFromActivityExceptionEvents(activity, ref monitorTags, roleName, roleInstance, instrumentationKey, telemetryItems);
             }
 
             return telemetryItems;
@@ -176,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static TelemetryItem GetExceptionTelemetryFromActivityExceptionEvent(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey)
+        private static TelemetryItem AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
             foreach (var evnt in activity.Events)
             {
@@ -186,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
                         SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
-                        return exceptionTelemetryItem;
+                        telemetryItems.Add(exceptionTelemetryItem);
                     }
                     catch (Exception ex)
                     {
