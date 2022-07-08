@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Entity status. </summary>
-    public enum EntityStatus
+    public enum ServiceBusMessagingEntityStatus
     {
         /// <summary> Unknown. </summary>
         Unknown,
