@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> supportsHibernation = default;
             Optional<DiskSecurityProfile> securityProfile = default;
             Optional<float> completionPercent = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DiskPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataAccessAuthMode"))
