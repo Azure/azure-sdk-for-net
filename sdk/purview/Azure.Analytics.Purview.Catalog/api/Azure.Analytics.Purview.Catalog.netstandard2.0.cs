@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }
-        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options) { }
         public Azure.Analytics.Purview.Catalog.PurviewCollections Collections { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewEntities Entities { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewGlossaries Glossaries { get { throw null; } }
@@ -15,6 +16,12 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Browse(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BrowseAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewCollections GetPurviewCollectionsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewEntities GetPurviewEntitiesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewGlossaries GetPurviewGlossariesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewLineages GetPurviewLineagesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewRelationships GetPurviewRelationshipsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewTypes GetPurviewTypesClient() { throw null; }
         public virtual Azure.Response Search(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Suggest(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -22,10 +29,10 @@ namespace Azure.Analytics.Purview.Catalog
     }
     public partial class PurviewCatalogClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewCatalogClientOptions(Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion version = Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion.V2021_05_01_preview) { }
+        public PurviewCatalogClientOptions(Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion version = Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions.ServiceVersion.V2022_03_01_preview) { }
         public enum ServiceVersion
         {
-            V2021_05_01_preview = 1,
+            V2022_03_01_preview = 1,
         }
     }
     public partial class PurviewCollections
@@ -49,10 +56,22 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddClassificationsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddLabel(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddOrUpdateBusinessMetadata(string guid, Azure.Core.RequestContent content, bool? isOverwrite = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, bool? isOverwrite = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateEntities(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateEntitiesAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteBusinessMetadata(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteByGuid(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteByGuidAsync(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteByGuids(System.Collections.Generic.IEnumerable<string> guids, Azure.RequestContext context = null) { throw null; }
@@ -63,6 +82,10 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationAsync(string guid, string classificationName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetByGuid(string guid, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidAsync(string guid, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetByGuids(System.Collections.Generic.IEnumerable<string> guids, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes = null, Azure.RequestContext context = null) { throw null; }
@@ -77,12 +100,20 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetHeader(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetSampleBusinessMetadataTemplate(Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSampleBusinessMetadataTemplateAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateEntityAttributeByGuid(string guid, string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateEntityByUniqueAttributes(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SetClassifications(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetClassificationsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SetLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SetLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassifications(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateClassificationsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassificationsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
@@ -130,8 +161,8 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetGlossaryCategory(string categoryGuid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryCategoryAsync(string categoryGuid, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypeList = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = default(bool?), System.Collections.Generic.IEnumerable<string> excludeRelationshipTypeList = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = default(bool?), int? limit = default(int?), int? offset = default(int?), string sort = null, Azure.RequestContext context = null) { throw null; }
@@ -160,13 +191,15 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateGlossaryAsync(string glossaryGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateGlossaryCategory(string categoryGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateGlossaryCategoryAsync(string categoryGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response UpdateGlossaryTerm(string termGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateGlossaryTermAsync(string termGuid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response UpdateGlossaryTerm(string termGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateGlossaryTermAsync(string termGuid, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
     public partial class PurviewLineages
     {
         protected PurviewLineages() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetLineageByUniqueAttribute(string typeName, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLineageByUniqueAttributeAsync(string typeName, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetLineageGraph(string guid, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLineageGraphAsync(string guid, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = default(bool?), int? offset = default(int?), int? limit = default(int?), Azure.RequestContext context = null) { throw null; }
@@ -197,6 +230,10 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTypeDefinitionsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAllTypeDefinitions(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = default(bool?), string type = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetBusinessMetadataDefByGuid(string guid, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetBusinessMetadataDefByGuidAsync(string guid, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetBusinessMetadataDefByName(string name, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetBusinessMetadataDefByNameAsync(string name, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetClassificationDefByGuid(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetClassificationDefByGuidAsync(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetClassificationDefByName(string name, Azure.RequestContext context = null) { throw null; }

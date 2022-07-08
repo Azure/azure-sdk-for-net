@@ -79,8 +79,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(recoverableManagedDatabaseName.ToString(), getRecoverableManagedDatabase.Value.Data.Name);
 
             // 4.GetIfExist
-            var GetIfExistgetRecoverableManagedDatabase = await collection.GetIfExistsAsync(recoverableManagedDatabaseName);
-            Assert.AreEqual(recoverableManagedDatabaseName.ToString(), GetIfExistgetRecoverableManagedDatabase.Value.Data.Name);
+            Assert.IsTrue(await collection.ExistsAsync(recoverableManagedDatabaseName));
         }
     }
 }

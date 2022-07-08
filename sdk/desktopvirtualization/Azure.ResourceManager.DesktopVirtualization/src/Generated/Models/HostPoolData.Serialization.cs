@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -43,14 +44,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("plan");
                 JsonSerializer.Serialize(writer, Plan);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -144,16 +148,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<string> etag = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ETag> eTag = default;
+            Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> friendlyName = default;
             Optional<string> description = default;
@@ -172,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> ssoClientSecretKeyVaultPath = default;
             Optional<SsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
-            Optional<bool> startVMOnConnect = default;
+            Optional<bool> startVmOnConnect = default;
             Optional<MigrationRequestProperties> migrationRequest = default;
             Optional<bool> cloudPcResource = default;
             foreach (var property in element.EnumerateObject())
@@ -189,7 +193,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -199,7 +208,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = ResourceModelWithAllowedPropertySetIdentity.DeserializeResourceModelWithAllowedPropertySetIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -224,6 +233,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -234,7 +248,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -249,11 +263,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -403,7 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            startVMOnConnect = property0.Value.GetBoolean();
+                            startVmOnConnect = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("migrationRequest"))
@@ -430,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new HostPoolData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVMOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource));
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(eTag), identity.Value, sku.Value, plan);
         }
     }
 }

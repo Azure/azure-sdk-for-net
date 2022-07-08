@@ -6,7 +6,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
     /// a Single Category Classification action on a set of documents. This corresponds
-    /// to a Single Category Classification task in the Text Analytics service.
+    /// to a Single Category Classification task in the Language service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
     /// </summary>
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
         public string DeploymentName { get; }
 
         /// <summary>
-        /// The default value of this property is 'false'. This means, Text Analytics service logs your input text for 48 hours,
+        /// The default value of this property is 'false'. This means, the Language service logs your input text for 48 hours,
         /// solely to allow for troubleshooting issues.
         /// Setting this property to true, disables input logging and may limit our ability to investigate issues that occur.
         /// <para>

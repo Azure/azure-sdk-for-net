@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, ResourceGroupPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="data"> Parameters supplied to update a resource group. </param>
+        /// <param name="patch"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceGroupData>> UpdateAsync(string subscriptionId, string resourceGroupName, ResourceGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -319,17 +319,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group to update. The name is case insensitive. </param>
-        /// <param name="data"> Parameters supplied to update a resource group. </param>
+        /// <param name="patch"> Parameters supplied to update a resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, PatchableResourceGroupData data, CancellationToken cancellationToken = default)
+        public Response<ResourceGroupData> Update(string subscriptionId, string resourceGroupName, ResourceGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplate parameters)
+        internal HttpMessage CreateExportTemplateRequest(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(exportTemplate);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -371,17 +371,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="exportTemplate"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exportTemplate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportTemplateAsync(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportTemplate, nameof(exportTemplate));
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, exportTemplate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -396,17 +396,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Captures the specified resource group as a template. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="exportTemplate"> Parameters for exporting the template. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="exportTemplate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplate parameters, CancellationToken cancellationToken = default)
+        public Response ExportTemplate(string subscriptionId, string resourceGroupName, ExportTemplate exportTemplate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(exportTemplate, nameof(exportTemplate));
 
-            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, parameters);
+            using var message = CreateExportTemplateRequest(subscriptionId, resourceGroupName, exportTemplate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        internal HttpMessage CreateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -523,17 +523,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
-        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> MoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> MoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, parameters);
+            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,17 +548,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be moved. </param>
-        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response MoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public Response MoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, parameters);
+            using var message = CreateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateValidateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+        internal HttpMessage CreateValidateMoveResourcesRequest(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -586,9 +586,9 @@ namespace Azure.ResourceManager.Resources
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -596,17 +596,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
-        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateMoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateMoveResourcesAsync(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, parameters);
+            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -621,17 +621,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="sourceResourceGroupName"> The name of the resource group from the source subscription containing the resources to be validated for move. </param>
-        /// <param name="parameters"> Parameters for moving resources. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="sourceResourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="sourceResourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateMoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public Response ValidateMoveResources(string subscriptionId, string sourceResourceGroupName, ResourcesMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(sourceResourceGroupName, nameof(sourceResourceGroupName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, parameters);
+            using var message = CreateValidateMoveResourcesRequest(subscriptionId, sourceResourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

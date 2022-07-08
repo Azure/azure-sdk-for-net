@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this TenantResource tenantResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this TenantResource tenantResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetArmDeployments().Get(deploymentName, cancellationToken);
@@ -125,6 +127,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this SubscriptionResource subscriptionResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
@@ -140,6 +143,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this SubscriptionResource subscriptionResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetArmDeployments().Get(deploymentName, cancellationToken);
@@ -174,7 +178,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: JitRequests_ListBySubscription
+        /// Operation Id: jitRequests_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,7 +191,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: JitRequests_ListBySubscription
+        /// Operation Id: jitRequests_ListBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,6 +282,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
@@ -293,6 +298,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetArmDeployments().Get(deploymentName, cancellationToken);
@@ -316,6 +322,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmApplicationResource>> GetArmApplicationAsync(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetArmApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
@@ -331,6 +338,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmApplicationResource> GetArmApplication(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetArmApplications().Get(applicationName, cancellationToken);
@@ -354,6 +362,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmApplicationDefinitionResource>> GetArmApplicationDefinitionAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetArmApplicationDefinitions().GetAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -369,6 +378,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmApplicationDefinitionResource> GetArmApplicationDefinition(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetArmApplicationDefinitions().Get(applicationDefinitionName, cancellationToken);
@@ -392,6 +402,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<JitRequestResource>> GetJitRequestAsync(this ResourceGroupResource resourceGroupResource, string jitRequestName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetJitRequests().GetAsync(jitRequestName, cancellationToken).ConfigureAwait(false);
@@ -407,6 +418,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jitRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<JitRequestResource> GetJitRequest(this ResourceGroupResource resourceGroupResource, string jitRequestName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetJitRequests().Get(jitRequestName, cancellationToken);
@@ -430,6 +442,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentScriptResource>> GetArmDeploymentScriptAsync(this ResourceGroupResource resourceGroupResource, string scriptName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetArmDeploymentScripts().GetAsync(scriptName, cancellationToken).ConfigureAwait(false);
@@ -445,6 +458,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmDeploymentScriptResource> GetArmDeploymentScript(this ResourceGroupResource resourceGroupResource, string scriptName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetArmDeploymentScripts().Get(scriptName, cancellationToken);
@@ -469,6 +483,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<TemplateSpecResource>> GetTemplateSpecAsync(this ResourceGroupResource resourceGroupResource, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetTemplateSpecs().GetAsync(templateSpecName, expand, cancellationToken).ConfigureAwait(false);
@@ -485,6 +500,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<TemplateSpecResource> GetTemplateSpec(this ResourceGroupResource resourceGroupResource, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetTemplateSpecs().Get(templateSpecName, expand, cancellationToken);
@@ -517,6 +533,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this ManagementGroupResource managementGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return await managementGroupResource.GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
@@ -532,6 +549,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this ManagementGroupResource managementGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
             return managementGroupResource.GetArmDeployments().Get(deploymentName, cancellationToken);

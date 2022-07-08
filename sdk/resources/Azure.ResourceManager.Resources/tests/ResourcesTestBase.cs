@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Resources.Tests
             return tmpDeploymentProperties;
         }
 
-        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentInput(deploymentProperties);
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentContent(deploymentProperties);
 
-        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentInput(deploymentProperties)
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentContent(deploymentProperties)
         {
             Location = location
         };
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources.Tests
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new ArmDeploymentScriptManagedIdentity()
             {
-                ArmDeploymentScriptManagedIdentityType = "UserAssigned",
+                IdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {

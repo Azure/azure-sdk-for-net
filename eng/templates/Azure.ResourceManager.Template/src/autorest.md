@@ -9,10 +9,20 @@ csharp: true
 library-name: ProviderShortName
 namespace: Azure.ResourceManager.ProviderShortName
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/ProviderNameLowercase/resource-manager/readme.md
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 tagPrefix SwaggerVersionTag
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -34,5 +44,6 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Etag: ETag
 
 ```

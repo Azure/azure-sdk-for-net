@@ -299,10 +299,16 @@ namespace Azure.Identity
         internal TokenCacheUpdatedArgs() { }
         public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
+    public partial class TokenCredentialDiagnosticsOptions : Azure.Core.DiagnosticsOptions
+    {
+        public TokenCredentialDiagnosticsOptions() { }
+        public bool IsAccountIdentifierLoggingEnabled { get { throw null; } set { } }
+    }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
+        public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

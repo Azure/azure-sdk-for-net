@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePreviewWorkflowRequest(string subscriptionId, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest)
+        internal HttpMessage CreatePreviewWorkflowRequest(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSitesWorkflowPreviewRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -63,17 +63,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Generates a preview workflow file for the static site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowAsync(string subscriptionId, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowAsync(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(staticSitesWorkflowPreviewRequest, nameof(staticSitesWorkflowPreviewRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePreviewWorkflowRequest(subscriptionId, location, staticSitesWorkflowPreviewRequest);
+            using var message = CreatePreviewWorkflowRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -92,17 +91,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Generates a preview workflow file for the static site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
-        /// <param name="staticSitesWorkflowPreviewRequest"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="staticSitesWorkflowPreviewRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSitesWorkflowPreview> PreviewWorkflow(string subscriptionId, string location, StaticSitesWorkflowPreviewRequest staticSitesWorkflowPreviewRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<StaticSitesWorkflowPreview> PreviewWorkflow(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(staticSitesWorkflowPreviewRequest, nameof(staticSitesWorkflowPreviewRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePreviewWorkflowRequest(subscriptionId, location, staticSitesWorkflowPreviewRequest);
+            using var message = CreatePreviewWorkflowRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -357,9 +355,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -488,7 +486,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data)
+        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -505,9 +503,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(patch);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -516,18 +514,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteARMResourceData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteARMResourceData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -548,18 +546,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site to create or update. </param>
-        /// <param name="data"> A JSON representation of the staticsite properties. See example. </param>
+        /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteARMResourceData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, PatchableStaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public Response<StaticSiteARMResourceData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -762,9 +760,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteUserEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteUserEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1104,9 +1102,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(appSettings);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1197,9 +1195,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(appSettings);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1729,9 +1727,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1902,9 +1900,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1985,9 +1983,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(appSettings);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2072,9 +2070,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(appSettings);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2159,9 +2157,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteUserRolesInvitationEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteUserRolesInvitationEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2414,9 +2412,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteCustomDomainRequestPropertiesEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteCustomDomainRequestPropertiesEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2575,9 +2573,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteCustomDomainRequestPropertiesEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteCustomDomainRequestPropertiesEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -3292,9 +3290,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(privateEndpointWrapper);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(privateEndpointWrapper);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -3532,9 +3530,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resetPropertiesEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(resetPropertiesEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -3781,9 +3779,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -3942,9 +3940,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }

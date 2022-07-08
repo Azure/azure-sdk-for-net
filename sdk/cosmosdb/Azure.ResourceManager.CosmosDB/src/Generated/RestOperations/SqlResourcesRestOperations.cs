@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlDatabaseListResult>> ListSqlDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlDatabaseListResult>> ListSqlDatabasesAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseListResult value = default;
+                        CosmosDBSqlDatabaseListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlDatabaseListResult.DeserializeSqlDatabaseListResult(document.RootElement);
+                        value = CosmosDBSqlDatabaseListResult.DeserializeCosmosDBSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlDatabaseListResult> ListSqlDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlDatabaseListResult> ListSqlDatabases(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseListResult value = default;
+                        CosmosDBSqlDatabaseListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlDatabaseListResult.DeserializeSqlDatabaseListResult(document.RootElement);
+                        value = CosmosDBSqlDatabaseListResult.DeserializeCosmosDBSqlDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlDatabaseData>> GetSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlDatabaseData>> GetSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseData value = default;
+                        CosmosDBSqlDatabaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
+                        value = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlDatabaseData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlDatabaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlDatabaseData> GetSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlDatabaseData> GetSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlDatabaseData value = default;
+                        CosmosDBSqlDatabaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
+                        value = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlDatabaseData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlDatabaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CosmosDBSqlDatabaseCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -235,19 +235,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL database. </param>
+        /// <param name="content"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlDatabaseAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CosmosDBSqlDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, data);
+            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL database. </param>
+        /// <param name="content"> The parameters to provide for the current SQL database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, SqlDatabaseCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlDatabase(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CosmosDBSqlDatabaseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, data);
+            using var message = CreateCreateUpdateSqlDatabaseRequest(subscriptionId, resourceGroupName, accountName, databaseName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -472,9 +472,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlContainerListResult>> ListSqlContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlContainerListResult>> ListSqlContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -735,9 +735,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerListResult value = default;
+                        CosmosDBSqlContainerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlContainerListResult.DeserializeSqlContainerListResult(document.RootElement);
+                        value = CosmosDBSqlContainerListResult.DeserializeCosmosDBSqlContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlContainerListResult> ListSqlContainers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlContainerListResult> ListSqlContainers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -766,9 +766,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerListResult value = default;
+                        CosmosDBSqlContainerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlContainerListResult.DeserializeSqlContainerListResult(document.RootElement);
+                        value = CosmosDBSqlContainerListResult.DeserializeCosmosDBSqlContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlContainerData>> GetSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlContainerData>> GetSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -823,13 +823,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerData value = default;
+                        CosmosDBSqlContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlContainerData.DeserializeSqlContainerData(document.RootElement);
+                        value = CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlContainerData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlContainerData> GetSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlContainerData> GetSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -858,19 +858,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlContainerData value = default;
+                        CosmosDBSqlContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlContainerData.DeserializeSqlContainerData(document.RootElement);
+                        value = CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlContainerData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -891,9 +891,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -904,20 +904,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL container. </param>
+        /// <param name="content"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, data);
+            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -935,20 +935,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL container. </param>
+        /// <param name="content"> The parameters to provide for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, SqlContainerCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlContainer(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, data);
+            using var message = CreateCreateUpdateSqlContainerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1158,9 +1158,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlStoredProcedureListResult>> ListSqlStoredProceduresAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlStoredProcedureListResult>> ListSqlStoredProceduresAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1441,9 +1441,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureListResult value = default;
+                        CosmosDBSqlStoredProcedureListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlStoredProcedureListResult.DeserializeSqlStoredProcedureListResult(document.RootElement);
+                        value = CosmosDBSqlStoredProcedureListResult.DeserializeCosmosDBSqlStoredProcedureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlStoredProcedureListResult> ListSqlStoredProcedures(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlStoredProcedureListResult> ListSqlStoredProcedures(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1474,9 +1474,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureListResult value = default;
+                        CosmosDBSqlStoredProcedureListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlStoredProcedureListResult.DeserializeSqlStoredProcedureListResult(document.RootElement);
+                        value = CosmosDBSqlStoredProcedureListResult.DeserializeCosmosDBSqlStoredProcedureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1520,7 +1520,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlStoredProcedureData>> GetSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlStoredProcedureData>> GetSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1535,13 +1535,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureData value = default;
+                        CosmosDBSqlStoredProcedureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
+                        value = CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlStoredProcedureData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlStoredProcedureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlStoredProcedureData> GetSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlStoredProcedureData> GetSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1572,19 +1572,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlStoredProcedureData value = default;
+                        CosmosDBSqlStoredProcedureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlStoredProcedureData.DeserializeSqlStoredProcedureData(document.RootElement);
+                        value = CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlStoredProcedureData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlStoredProcedureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1607,9 +1607,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1621,11 +1621,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL storedProcedure. </param>
+        /// <param name="content"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlStoredProcedureAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1633,9 +1633,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, data);
+            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1654,11 +1654,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL storedProcedure. </param>
+        /// <param name="content"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="storedProcedureName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, SqlStoredProcedureCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlStoredProcedure(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1666,9 +1666,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, data);
+            using var message = CreateCreateUpdateSqlStoredProcedureRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, storedProcedureName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlUserDefinedFunctionListResult>> ListSqlUserDefinedFunctionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlUserDefinedFunctionListResult>> ListSqlUserDefinedFunctionsAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1815,9 +1815,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionListResult value = default;
+                        CosmosDBSqlUserDefinedFunctionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlUserDefinedFunctionListResult.DeserializeSqlUserDefinedFunctionListResult(document.RootElement);
+                        value = CosmosDBSqlUserDefinedFunctionListResult.DeserializeCosmosDBSqlUserDefinedFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1834,7 +1834,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlUserDefinedFunctionListResult> ListSqlUserDefinedFunctions(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlUserDefinedFunctionListResult> ListSqlUserDefinedFunctions(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1848,9 +1848,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionListResult value = default;
+                        CosmosDBSqlUserDefinedFunctionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlUserDefinedFunctionListResult.DeserializeSqlUserDefinedFunctionListResult(document.RootElement);
+                        value = CosmosDBSqlUserDefinedFunctionListResult.DeserializeCosmosDBSqlUserDefinedFunctionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlUserDefinedFunctionData>> GetSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlUserDefinedFunctionData>> GetSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1909,13 +1909,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionData value = default;
+                        CosmosDBSqlUserDefinedFunctionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
+                        value = CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlUserDefinedFunctionData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlUserDefinedFunctionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlUserDefinedFunctionData> GetSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlUserDefinedFunctionData> GetSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1946,19 +1946,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlUserDefinedFunctionData value = default;
+                        CosmosDBSqlUserDefinedFunctionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlUserDefinedFunctionData.DeserializeSqlUserDefinedFunctionData(document.RootElement);
+                        value = CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlUserDefinedFunctionData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlUserDefinedFunctionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1981,9 +1981,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1995,11 +1995,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL userDefinedFunction. </param>
+        /// <param name="content"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlUserDefinedFunctionAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2007,9 +2007,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, data);
+            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2028,11 +2028,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL userDefinedFunction. </param>
+        /// <param name="content"> The parameters to provide for the current SQL userDefinedFunction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="userDefinedFunctionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, SqlUserDefinedFunctionCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlUserDefinedFunction(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2040,9 +2040,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(userDefinedFunctionName, nameof(userDefinedFunctionName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, data);
+            using var message = CreateCreateUpdateSqlUserDefinedFunctionRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, userDefinedFunctionName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2175,7 +2175,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlTriggerListResult>> ListSqlTriggersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlTriggerListResult>> ListSqlTriggersAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2189,9 +2189,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerListResult value = default;
+                        CosmosDBSqlTriggerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlTriggerListResult.DeserializeSqlTriggerListResult(document.RootElement);
+                        value = CosmosDBSqlTriggerListResult.DeserializeCosmosDBSqlTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2208,7 +2208,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlTriggerListResult> ListSqlTriggers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlTriggerListResult> ListSqlTriggers(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2222,9 +2222,9 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerListResult value = default;
+                        CosmosDBSqlTriggerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlTriggerListResult.DeserializeSqlTriggerListResult(document.RootElement);
+                        value = CosmosDBSqlTriggerListResult.DeserializeCosmosDBSqlTriggerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2268,7 +2268,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlTriggerData>> GetSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBSqlTriggerData>> GetSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2283,13 +2283,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerData value = default;
+                        CosmosDBSqlTriggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlTriggerData.DeserializeSqlTriggerData(document.RootElement);
+                        value = CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlTriggerData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlTriggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2305,7 +2305,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlTriggerData> GetSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBSqlTriggerData> GetSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2320,19 +2320,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        SqlTriggerData value = default;
+                        CosmosDBSqlTriggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlTriggerData.DeserializeSqlTriggerData(document.RootElement);
+                        value = CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlTriggerData)null, message.Response);
+                    return Response.FromValue((CosmosDBSqlTriggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData data)
+        internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2355,9 +2355,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2369,11 +2369,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL trigger. </param>
+        /// <param name="content"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateSqlTriggerAsync(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2381,9 +2381,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, data);
+            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2402,11 +2402,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> Cosmos DB database name. </param>
         /// <param name="containerName"> Cosmos DB container name. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
-        /// <param name="data"> The parameters to provide for the current SQL trigger. </param>
+        /// <param name="content"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, SqlTriggerCreateUpdateData data, CancellationToken cancellationToken = default)
+        public Response CreateUpdateSqlTrigger(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2414,9 +2414,9 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, data);
+            using var message = CreateCreateUpdateSqlTriggerRequest(subscriptionId, resourceGroupName, accountName, databaseName, containerName, triggerName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2537,9 +2537,9 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(location);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(location);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -2601,6 +2601,664 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                 case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CosmosDBSqlRoleDefinitionData>> GetSqlRoleDefinitionAsync(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var message = CreateGetSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleDefinitionData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CosmosDBSqlRoleDefinitionData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CosmosDBSqlRoleDefinitionData> GetSqlRoleDefinition(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var message = CreateGetSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleDefinitionData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CosmosDBSqlRoleDefinitionData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateUpdateSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="content"> The properties required to create or update a Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateUpdateSqlRoleDefinitionAsync(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateUpdateSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="content"> The properties required to create or update a Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="roleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateUpdateSqlRoleDefinition(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateUpdateSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteSqlRoleDefinitionAsync(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var message = CreateDeleteSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Definition. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleDefinitionId"> The GUID for the Role Definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteSqlRoleDefinition(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            using var message = CreateDeleteSqlRoleDefinitionRequest(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListSqlRoleDefinitionsRequest(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Definitions. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CosmosDBSqlRoleDefinitionList>> ListSqlRoleDefinitionsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListSqlRoleDefinitionsRequest(subscriptionId, resourceGroupName, accountName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleDefinitionList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CosmosDBSqlRoleDefinitionList.DeserializeCosmosDBSqlRoleDefinitionList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Definitions. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CosmosDBSqlRoleDefinitionList> ListSqlRoleDefinitions(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListSqlRoleDefinitionsRequest(subscriptionId, resourceGroupName, accountName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleDefinitionList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CosmosDBSqlRoleDefinitionList.DeserializeCosmosDBSqlRoleDefinitionList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Assignment with the given Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CosmosDBSqlRoleAssignmentData>> GetSqlRoleAssignmentAsync(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var message = CreateGetSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleAssignmentData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CosmosDBSqlRoleAssignmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB SQL Role Assignment with the given Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CosmosDBSqlRoleAssignmentData> GetSqlRoleAssignment(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var message = CreateGetSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleAssignmentData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CosmosDBSqlRoleAssignmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateUpdateSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="content"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateUpdateSqlRoleAssignmentAsync(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateUpdateSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates an Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="content"> The properties required to create or update a Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateUpdateSqlRoleAssignment(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCreateUpdateSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteSqlRoleAssignmentAsync(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var message = CreateDeleteSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes an existing Azure Cosmos DB SQL Role Assignment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteSqlRoleAssignment(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var message = CreateDeleteSqlRoleAssignmentRequest(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListSqlRoleAssignmentsRequest(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Assignments. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CosmosDBSqlRoleAssignmentList>> ListSqlRoleAssignmentsAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListSqlRoleAssignmentsRequest(subscriptionId, resourceGroupName, accountName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleAssignmentList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CosmosDBSqlRoleAssignmentList.DeserializeCosmosDBSqlRoleAssignmentList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves the list of all Azure Cosmos DB SQL Role Assignments. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CosmosDBSqlRoleAssignmentList> ListSqlRoleAssignments(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var message = CreateListSqlRoleAssignmentsRequest(subscriptionId, resourceGroupName, accountName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CosmosDBSqlRoleAssignmentList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CosmosDBSqlRoleAssignmentList.DeserializeCosmosDBSqlRoleAssignmentList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

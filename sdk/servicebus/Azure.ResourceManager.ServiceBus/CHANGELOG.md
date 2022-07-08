@@ -1,14 +1,46 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Base type of `DisasterRecoveryData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `MigrationConfigPropertiesData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `NetworkRuleSetData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusAuthorizationRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusQueueData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusSubscriptionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ServiceBusTopicData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ProxyResource` was removed.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.3 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.2 (2021-12-28)
 

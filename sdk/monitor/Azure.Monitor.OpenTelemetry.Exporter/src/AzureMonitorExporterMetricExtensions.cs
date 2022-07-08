@@ -23,9 +23,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
+            // TODO: Fallback to default location if location provided via options does not work.
+            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
+            {
+                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            }
+
             var exporter = new AzureMonitorMetricExporter(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)));
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options))
+            { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
 }

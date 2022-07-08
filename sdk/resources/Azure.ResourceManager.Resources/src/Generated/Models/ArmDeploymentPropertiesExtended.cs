@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -88,12 +88,6 @@ namespace Azure.ResourceManager.Resources.Models
         public ArmDeploymentMode? Mode { get; }
         /// <summary> The debug setting of the deployment. </summary>
         internal DebugSetting DebugSetting { get; }
-        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
-        public string DebugSettingDetailLevel
-        {
-            get => DebugSetting.DetailLevel;
-            set => DebugSetting.DetailLevel = value;
-        }
 
         /// <summary> The deployment on error behavior. </summary>
         public ErrorDeploymentExtended ErrorDeployment { get; }
@@ -104,6 +98,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Array of validated resources. </summary>
         public IReadOnlyList<SubResource> ValidatedResources { get; }
         /// <summary> The deployment error. </summary>
-        public ErrorDetail Error { get; }
+        public ResponseError Error { get; }
     }
 }

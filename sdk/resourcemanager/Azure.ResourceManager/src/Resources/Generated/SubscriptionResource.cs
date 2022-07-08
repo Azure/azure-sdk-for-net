@@ -40,8 +40,6 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourcesRestOperations _subscriptionResourcesRestClient;
         private readonly ClientDiagnostics _subscriptionTagsClientDiagnostics;
         private readonly TagsRestOperations _subscriptionTagsRestClient;
-        private readonly ClientDiagnostics _resourceLinkClientDiagnostics;
-        private readonly ResourceLinksRestOperations _resourceLinkRestClient;
         private readonly ClientDiagnostics _featureClientDiagnostics;
         private readonly FeaturesRestOperations _featureRestClient;
         private readonly SubscriptionData _data;
@@ -74,9 +72,6 @@ namespace Azure.ResourceManager.Resources
             _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
             _subscriptionTagsRestClient = new TagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionTagsApiVersion);
-            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceLinkResource.ResourceType, out string resourceLinkApiVersion);
-            _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceLinkApiVersion);
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
             _featureRestClient = new FeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, featureApiVersion);
@@ -126,6 +121,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ResourceProviderResource>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetResourceProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
@@ -141,6 +137,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ResourceProviderResource> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
@@ -162,6 +159,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGroupResource>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return await GetResourceGroups().GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
@@ -176,6 +174,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ResourceGroupResource> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return GetResourceGroups().Get(resourceGroupName, cancellationToken);
@@ -197,6 +196,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicyDefinitionResource>> GetSubscriptionPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -211,6 +211,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicyDefinitionResource> GetSubscriptionPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
@@ -232,6 +233,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetSubscriptionPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptionPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -246,6 +248,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SubscriptionPolicySetDefinitionResource> GetSubscriptionPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
@@ -608,92 +611,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets all the linked resources for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
-        /// Operation Id: ResourceLinks_ListAtSubscription
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLinkResource> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ResourceLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets all the linked resources for the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/links
-        /// Operation Id: ResourceLinks_ListAtSubscription
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLinkResource> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
-        {
-            Page<ResourceLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
-                scope.Start();
-                try
-                {
-                    var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
-                scope.Start();
-                try
-                {
-                    var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
         /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
         /// Request Path: /subscriptions/{subscriptionId}/locations
         /// Operation Id: Subscriptions_ListLocations
@@ -831,186 +748,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<SubscriptionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.AddTag");
-            scope.Start();
-            try
-            {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.SetTags");
-            scope.Start();
-            try
-            {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<SubscriptionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.SetTags");
-            scope.Start();
-            try
-            {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<SubscriptionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
-                return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

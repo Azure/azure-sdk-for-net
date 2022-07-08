@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, CreateManagementGroupOptions options, string cacheControl)
+        internal HttpMessage CreateCreateOrUpdateRequest(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.ManagementGroups
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -248,17 +248,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> Management group creation parameters. </param>
+        /// <param name="content"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string groupId, CreateManagementGroupOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(groupId, options, cacheControl);
+            using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -276,17 +276,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> Management group creation parameters. </param>
+        /// <param name="content"> Management group creation parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string groupId, CreateManagementGroupOptions options, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(groupId, options, cacheControl);
+            using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string groupId, PatchableManagementGroupData data, string cacheControl)
+        internal HttpMessage CreateUpdateRequest(string groupId, ManagementGroupPatch patch, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.ManagementGroups
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(patch);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -327,17 +327,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="data"> Management group patch parameters. </param>
+        /// <param name="patch"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(groupId, data, cacheControl);
+            using var message = CreateUpdateRequest(groupId, patch, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -358,17 +358,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// 
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="data"> Management group patch parameters. </param>
+        /// <param name="patch"> Management group patch parameters. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagementGroupData> Update(string groupId, PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupData> Update(string groupId, ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(groupId, data, cacheControl);
+            using var message = CreateUpdateRequest(groupId, patch, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityOptions options)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -561,22 +561,22 @@ namespace Azure.ResourceManager.ManagementGroups
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="options"> Management group name availability check parameters. </param>
+        /// <param name="content"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(options);
+            using var message = CreateCheckNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -593,14 +593,14 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary> Checks if the specified management group name is valid and unique. </summary>
-        /// <param name="options"> Management group name availability check parameters. </param>
+        /// <param name="content"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(options);
+            using var message = CreateCheckNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

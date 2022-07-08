@@ -132,22 +132,6 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TryGet()
-        {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
-            var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
-
-            GenericResource resource = await Client.GetGenericResources().GetIfExistsAsync(aset.Data.Id);
-            Assert.AreEqual(aset.Data.Id, resource.Data.Id);
-
-            var response = await Client.GetGenericResources().GetIfExistsAsync(new ResourceIdentifier(aset.Data.Id + "1"));
-            Assert.IsNull(response.Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);

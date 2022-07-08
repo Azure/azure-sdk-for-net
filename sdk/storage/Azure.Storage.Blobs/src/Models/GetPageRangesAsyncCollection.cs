@@ -10,7 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal class GetPageRangesAsyncCollection : StorageCollectionEnumerator<PageBlobRange>
+    internal class GetPageRangesAsyncCollection : StorageCollectionEnumerator<PageRangeItem>
     {
         // indicates if we are calling GetPageRange or GetPageRangeDiff.
         private readonly bool _diff;
@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Models
             _operationName = operationName;
         }
 
-        public override async ValueTask<Page<PageBlobRange>> GetNextPageAsync(
+        public override async ValueTask<Page<PageRangeItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool async,
@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Models
                 ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response;
                 if (async)
                 {
-                    response = await _client.GetPageRangesDiffPageableInternal(
+                    response = await _client.GetAllPageRangesDiffInternal(
                         marker: continuationToken,
                         pageSizeHint: pageSizeHint,
                         range: _range,
@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 else
                 {
-                    response = _client.GetPageRangesDiffPageableInternal(
+                    response = _client.GetAllPageRangesDiffInternal(
                         marker: continuationToken,
                         pageSizeHint: pageSizeHint,
                         range: _range,
@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs.Models
                         .EnsureCompleted();
                 }
 
-                return Page<PageBlobRange>.FromValues(
+                return Page<PageRangeItem>.FromValues(
                     values: response.ToPageBlobRanges(),
                     continuationToken: response.Value.NextMarker,
                     response: response.GetRawResponse());
@@ -95,7 +95,7 @@ namespace Azure.Storage.Blobs.Models
                 ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response;
                 if (async)
                 {
-                    response = await _client.GetPageRangesPageableInteral(
+                    response = await _client.GetAllPageRangesInteral(
                         marker: continuationToken,
                         pageSizeHint: pageSizeHint,
                         range: _range,
@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 else
                 {
-                    response = _client.GetPageRangesPageableInteral(
+                    response = _client.GetAllPageRangesInteral(
                         marker: continuationToken,
                         pageSizeHint: pageSizeHint,
                         range: _range,
@@ -118,7 +118,7 @@ namespace Azure.Storage.Blobs.Models
                         .EnsureCompleted();
                 }
 
-                return Page<PageBlobRange>.FromValues(
+                return Page<PageRangeItem>.FromValues(
                     values: response.ToPageBlobRanges(),
                     continuationToken: response.Value.NextMarker,
                     response: response.GetRawResponse());

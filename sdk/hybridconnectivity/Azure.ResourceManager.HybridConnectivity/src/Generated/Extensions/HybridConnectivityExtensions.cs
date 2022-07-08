@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmResource armResource, string endpointName, CancellationToken cancellationToken = default)
         {
             return await armResource.GetEndpointResources().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<EndpointResource> GetEndpointResource(this ArmResource armResource, string endpointName, CancellationToken cancellationToken = default)
         {
             return armResource.GetEndpointResources().Get(endpointName, cancellationToken);

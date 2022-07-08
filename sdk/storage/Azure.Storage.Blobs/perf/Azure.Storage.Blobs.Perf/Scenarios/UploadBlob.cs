@@ -13,11 +13,12 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
     /// The performance test scenario focused on uploading blobs to the Azure blobs storage.
     /// </summary>
     /// <seealso cref="Azure.Test.Perf.PerfTest{SizeOptions}" />
-    public sealed class UploadBlob : BlobTest<StorageTransferOptionsOptions>
+    public sealed class UploadBlob : BlobTest<Options.PartitionedTransferOptions>
     {
         private readonly Stream _stream;
 
-        public UploadBlob(StorageTransferOptionsOptions options) : base(options)
+        public UploadBlob(Options.PartitionedTransferOptions options)
+            : base(options, createBlob: false, singletonBlob: false)
         {
             _stream = RandomStream.Create(options.Size);
         }
@@ -42,7 +43,6 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
                 new BlobUploadOptions
                 {
                     TransferOptions = Options.StorageTransferOptions,
-                    TransferValidationOptions = Options.UploadValidationOptions
                 },
                 cancellationToken: cancellationToken);
         }

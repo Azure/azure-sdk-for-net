@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, Guid? publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application resource usage Id. </summary>
         public string BillingDetailsResourceUsageId
         {
-            get => BillingDetails.ResourceUsageId;
+            get => BillingDetails?.ResourceUsageId;
         }
 
         /// <summary> The managed application Jit access policy. </summary>
         public ArmApplicationJitAccessPolicy JitAccessPolicy { get; set; }
         /// <summary> The publisher tenant Id. </summary>
-        public string PublisherTenantId { get; }
+        public Guid? PublisherTenantId { get; }
         /// <summary> The  read-only authorizations property that is retrieved from the application package. </summary>
         public IReadOnlyList<ArmApplicationAuthorization> Authorizations { get; }
         /// <summary> The managed application management mode. </summary>

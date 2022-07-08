@@ -1,14 +1,43 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `KeyVaultResourceData` was removed.
+- Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ManagedHsmTrackedResourceData` was removed.
+- Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.0.0-beta.6 (2022-01-29)
 
@@ -116,11 +145,11 @@ ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
-VaultCollection vaultCollection = resourceGroup.GetVaults();
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
+KeyVaultCollection vaultCollection = resourceGroup.GetKeyVaults();
+KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));
 
-ArmOperation<VaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
-VaultResource vault = lro.Value;
+ArmOperation<KeyVaultResource> lro = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, "myVaultName", parameters);
+KeyVaultResource vault = lro.Value;
 ```
 
 #### Object Model Changes
@@ -137,6 +166,6 @@ VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(Loc
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-VaultProperties properties = new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, properties);
+KeyVaultProperties properties = new KeyVaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.WestUS2, properties);
 ```

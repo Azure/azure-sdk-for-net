@@ -61,12 +61,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<CosmosDBLocationResource>> GetAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBLocationResource>> GetAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
             scope.Start();
             try
@@ -90,12 +86,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<CosmosDBLocationResource> Get(string location, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBLocationResource> Get(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
             scope.Start();
             try
@@ -173,17 +165,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,76 +188,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<bool> Exists(string location, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = GetIfExists(location, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
-        /// Operation Id: Locations_Get
-        /// </summary>
-        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<CosmosDBLocationResource>> GetIfExistsAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<CosmosDBLocationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
-        /// Operation Id: Locations_Get
-        /// </summary>
-        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<CosmosDBLocationResource> GetIfExists(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<CosmosDBLocationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

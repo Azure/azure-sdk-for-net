@@ -24,14 +24,17 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -61,6 +64,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("maintenanceConfigurationId");
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            {
+                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -69,19 +77,20 @@ namespace Azure.ResourceManager.Sql
         {
             Optional<SqlSku> sku = default;
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ElasticPoolState> state = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<long> maxSizeBytes = default;
             Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
             Optional<bool> zoneRedundant = default;
             Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            Optional<int> highAvailabilityReplicaCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -101,6 +110,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -111,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -126,11 +140,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -205,14 +224,29 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("highAvailabilityReplicaCount"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ElasticPoolData(id, name, type, systemData, tags, location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value);
+            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount));
         }
     }
 }

@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "LoadBalancerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LoadBalancerResource(ArmClient client, LoadBalancerData data) : this(client, new ResourceIdentifier(data.Id))
+        internal LoadBalancerResource(ArmClient client, LoadBalancerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -109,6 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BackendAddressPoolResource>> GetBackendAddressPoolAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             return await GetBackendAddressPools().GetAsync(backendAddressPoolName, cancellationToken).ConfigureAwait(false);
@@ -123,6 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<BackendAddressPoolResource> GetBackendAddressPool(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             return GetBackendAddressPools().Get(backendAddressPoolName, cancellationToken);
@@ -144,6 +147,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FrontendIPConfigurationResource>> GetFrontendIPConfigurationAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             return await GetFrontendIPConfigurations().GetAsync(frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
@@ -158,6 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<FrontendIPConfigurationResource> GetFrontendIPConfiguration(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             return GetFrontendIPConfigurations().Get(frontendIPConfigurationName, cancellationToken);
@@ -180,6 +185,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<InboundNatRuleResource>> GetInboundNatRuleAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetInboundNatRules().GetAsync(inboundNatRuleName, expand, cancellationToken).ConfigureAwait(false);
@@ -195,6 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<InboundNatRuleResource> GetInboundNatRule(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetInboundNatRules().Get(inboundNatRuleName, expand, cancellationToken);
@@ -216,6 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<LoadBalancingRuleResource>> GetLoadBalancingRuleAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             return await GetLoadBalancingRules().GetAsync(loadBalancingRuleName, cancellationToken).ConfigureAwait(false);
@@ -230,6 +238,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<LoadBalancingRuleResource> GetLoadBalancingRule(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             return GetLoadBalancingRules().Get(loadBalancingRuleName, cancellationToken);
@@ -251,6 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<OutboundRuleResource>> GetOutboundRuleAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             return await GetOutboundRules().GetAsync(outboundRuleName, cancellationToken).ConfigureAwait(false);
@@ -265,6 +275,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<OutboundRuleResource> GetOutboundRule(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             return GetOutboundRules().Get(outboundRuleName, cancellationToken);
@@ -286,6 +297,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ProbeResource>> GetProbeAsync(string probeName, CancellationToken cancellationToken = default)
         {
             return await GetProbes().GetAsync(probeName, cancellationToken).ConfigureAwait(false);
@@ -300,6 +312,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ProbeResource> GetProbe(string probeName, CancellationToken cancellationToken = default)
         {
             return GetProbes().Get(probeName, cancellationToken);
@@ -360,7 +373,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -386,7 +399,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -399,6 +412,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a load balancer tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancerResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _loadBalancerRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a load balancer tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update load balancer tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<LoadBalancerResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancerResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _loadBalancerRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
+                return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

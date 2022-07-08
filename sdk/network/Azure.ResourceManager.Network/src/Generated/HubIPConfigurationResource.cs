@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Network
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics;
-        private readonly VirtualHubIpConfigurationRestOperations _hubIPConfigurationVirtualHubIpConfigurationRestClient;
+        private readonly ClientDiagnostics _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics;
+        private readonly VirtualHubIpConfigurationRestOperations _hubIPConfigurationVirtualHubIPConfigurationRestClient;
         private readonly HubIPConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HubIPConfigurationResource"/> class for mocking. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "HubIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HubIPConfigurationResource(ArmClient client, HubIPConfigurationData data) : this(client, new ResourceIdentifier(data.Id))
+        internal HubIPConfigurationResource(ArmClient client, HubIPConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HubIPConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hubIPConfigurationVirtualHubIpConfigurationApiVersion);
-            _hubIPConfigurationVirtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationVirtualHubIpConfigurationApiVersion);
+            _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hubIPConfigurationVirtualHubIPConfigurationApiVersion);
+            _hubIPConfigurationVirtualHubIPConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationVirtualHubIPConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HubIPConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HubIPConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
         /// Operation Id: VirtualHubIpConfiguration_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,18 +165,78 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
         /// Operation Id: VirtualHubIpConfiguration_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Hub Ip Configuration parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HubIPConfigurationResource>> UpdateAsync(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
+        /// Operation Id: VirtualHubIpConfiguration_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Hub Ip Configuration parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HubIPConfigurationResource> Update(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

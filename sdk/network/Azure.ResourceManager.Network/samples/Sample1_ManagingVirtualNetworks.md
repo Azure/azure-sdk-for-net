@@ -80,23 +80,6 @@ VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetAsync(
 Console.WriteLine(virtualNetwork.Data.Name);
 ```
 
-***Try to get a virtual network if it exists***
-
-```C# Snippet:Managing_Networks_GetAVirtualNetworkIfExists
-VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-
-VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.GetIfExistsAsync("foo");
-if (virtualNetwork != null)
-{
-    Console.WriteLine(virtualNetwork.Data.Name);
-}
-
-if (await virtualNetworkCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
-```
-
 ***Delete a virtual network***
 
 ```C# Snippet:Managing_Networks_DeleteAVirtualNetwork

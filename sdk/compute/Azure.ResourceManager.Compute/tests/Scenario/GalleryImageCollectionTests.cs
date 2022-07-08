@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("publisher"),
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
-                return ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
+                return ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, SupportedOperatingSystemType.Linux, identifier);
             }
         }
 

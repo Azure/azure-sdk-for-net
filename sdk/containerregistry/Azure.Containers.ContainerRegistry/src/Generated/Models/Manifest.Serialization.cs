@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class Manifest : IUtf8JsonSerializable
+    internal partial class Manifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static Manifest DeserializeManifest(JsonElement element)
         {
             Optional<int> schemaVersion = default;

@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.DataLake
 {
     internal class DataLakeClientConfiguration : StorageClientConfiguration
     {
-        public DataLakeClientOptions.ServiceVersion Version { get; internal set; }
+        public DataLakeClientOptions ClientOptions { get; internal set; }
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
@@ -21,26 +21,44 @@ namespace Azure.Storage.Files.DataLake
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
-            DataLakeClientOptions.ServiceVersion version,
-            DataLakeCustomerProvidedKey? customerProvidedKey,
-            UploadTransferValidationOptions uploadTransferValidationOptions,
-            DownloadTransferValidationOptions downloadTransferValidationOptions)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
+            DataLakeClientOptions clientOptions,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, customerProvidedKey)
         {
-            Version = version;
+        }
+
+        public DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions clientOptions,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, customerProvidedKey)
+        {
+        }
+
+        internal DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions clientOptions,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+        {
+            ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;
-            UploadTransferValidationOptions = uploadTransferValidationOptions;
-            DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            UploadTransferValidationOptions = clientOptions.UploadTransferValidationOptions;
+            DownloadTransferValidationOptions = clientOptions.DownloadTransferValidationOptions;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
             => new DataLakeClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
+                sasCredential: originalClientConfiguration.SasCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
-                version: originalClientConfiguration.Version,
-                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
-                uploadTransferValidationOptions: originalClientConfiguration.UploadTransferValidationOptions,
-                downloadTransferValidationOptions: originalClientConfiguration.DownloadTransferValidationOptions);
+                clientOptions: originalClientConfiguration.ClientOptions,
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
     }
 }

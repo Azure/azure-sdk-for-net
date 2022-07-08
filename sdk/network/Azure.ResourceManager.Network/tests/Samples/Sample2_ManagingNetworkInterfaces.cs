@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             PublicIPAddressData publicIPInput = new PublicIPAddressData()
             {
                 Location = resourceGroup.Data.Location,
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = "myDomain"
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = "ipConfig",
-                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                         PublicIPAddress = new PublicIPAddressData()
                         {
                             Id = publicIPAddress.Id
@@ -101,26 +101,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 
             NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
             Console.WriteLine(virtualNetwork.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Networks_GetANetworkInterfaceIfExists
-            NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-
-            NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetIfExistsAsync("foo");
-            if (virtualNetwork != null)
-            {
-                Console.WriteLine(virtualNetwork.Data.Name);
-            }
-
-            if (await networkInterfaceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Network interface 'bar' exists.");
-            }
             #endregion
         }
 

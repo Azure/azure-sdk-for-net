@@ -1,14 +1,44 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Base type of `AuthorizationRuleData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `ConsumerGroupData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `DisasterRecoveryData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `EventhubData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `EventHubsPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `NetworkRuleSetData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Base type of `SchemaGroupData` changed to `Azure.ResourceManager.Models.ResourceData`.
+- Type `ProxyResource` was removed.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.3 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models and methods to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- All properties of the type `object` were changed to `BinaryData`.
+- Removed `GetIfExists` methods from all the resource classes.
 
 ## 1.0.0-beta.2 (2021-12-28)
 
@@ -115,7 +145,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
-EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
+EventHubsNamespaceData parameters = new EventHubsNamespaceData(AzureLocation.WestUS)
 {
     Sku = new EventHubsSku(EventHubsSkuName.Standard)
     {
@@ -124,8 +154,8 @@ EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestU
 };
 parameters.Tags.Add("tag1", "value1");
 parameters.Tags.Add("tag2", "value2");
-EventHubNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubNamespaces();
-EventHubNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
+EventHubsNamespaceCollection eHNamespaceCollection = resourceGroup.GetEventHubsNamespaces();
+EventHubsNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpdate(WaitUntil.Completed, namespaceName, parameters).Value;
 
 //create eventhub
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
@@ -133,7 +163,7 @@ EventHubData eventHubData = new EventHubData()
 {
     MessageRetentionInDays = 4,
     PartitionCount = 4,
-    Status = EntityStatus.Active,
+    Status = EventHubEntityStatus.Active,
     CaptureDescription = new CaptureDescription()
     {
         Enabled = true,
@@ -145,7 +175,7 @@ EventHubData eventHubData = new EventHubData()
             Name = "EventHubArchive.AzureBlockBlob",
             BlobContainer = "Container",
             ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
-            StorageAccountResourceId = subscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew"
+            StorageAccountResourceId = new ResourceIdentifier(subscription.Id.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew")
         },
         SkipEmptyArchives = true
     }

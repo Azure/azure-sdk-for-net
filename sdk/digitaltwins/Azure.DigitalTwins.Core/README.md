@@ -14,8 +14,8 @@ For the best development experience, developers should use the official Microsof
 
 Install the Azure Digital Twins client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.DigitalTwins.Core
+```dotnetcli
+dotnet add package Azure.DigitalTwins.Core
 ```
 
 View the package details at [nuget.org][adt_nuget].

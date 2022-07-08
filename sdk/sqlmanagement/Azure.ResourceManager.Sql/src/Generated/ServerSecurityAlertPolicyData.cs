@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="creationOn"> Specifies the UTC creation time of the policy. </param>
-        internal ServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? creationOn) : base(id, name, resourceType, systemData)
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        internal ServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
         public int? RetentionDays { get; set; }
         /// <summary> Specifies the UTC creation time of the policy. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

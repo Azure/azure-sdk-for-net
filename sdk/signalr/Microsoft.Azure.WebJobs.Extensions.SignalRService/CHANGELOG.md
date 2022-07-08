@@ -1,14 +1,25 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
-
+* Upgraded MessagePack for performance and security improvements.
+* Upgraded `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.16.1 to 1.18.0
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.8.0 (2022-04-07)
+
+### Features Added
+* Added `SignalROptions`. Users can configure service endpoints, service transport type, and [JSON object serialization](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/samples/Sample02_CustomizingJsonSerialization.md) with `SignalROptions` in the startup class.
+* Support customizing client endpoint and server endpoint in multiple ways. It is useful when you want to integrate with application gateway. [Go here for more details.](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/samples/Sample03_IntegrationWithAppGateway.md)
+
+### Bugs Fixed
+* Fixed the message order problem.
+* Fixed the ackable message timeout problem when multiple SignalR endpoints exist.
 
 ## 1.7.0 (2022-02-22)
 **Following are the all changes in 1.7.0-beta.2 and 1.7.0-beta.1 versions.**

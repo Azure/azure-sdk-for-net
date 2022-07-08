@@ -11,28 +11,30 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class SqlTriggerTests : CosmosDBManagementClientBase
     {
-        private DatabaseAccountResource _databaseAccount;
-        private SqlDatabaseResource _sqlDatabase;
+        private CosmosDBAccountResource _databaseAccount;
+        private CosmosDBSqlDatabaseResource _sqlDatabase;
         private ResourceIdentifier _sqlContainerId;
-        private SqlContainerResource _sqlContainer;
+        private CosmosDBSqlContainerResource _sqlContainer;
         private string _triggerName;
 
         public SqlTriggerTests(bool isAsync) : base(isAsync)
         {
         }
 
-        protected SqlTriggerCollection SqlTriggerCollection => _sqlContainer.GetSqlTriggers();
+        protected CosmosDBSqlTriggerCollection SqlTriggerCollection => _sqlContainer.GetCosmosDBSqlTriggers();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
+            IgnoreTestInNonWindowsAgent();
+
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
+            _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB);
 
-            _sqlDatabase = await SqlDatabaseTests.CreateSqlDatabase(SessionRecording.GenerateAssetName("sql-db-"), null, _databaseAccount.GetSqlDatabases());
+            _sqlDatabase = await SqlDatabaseTests.CreateSqlDatabase(SessionRecording.GenerateAssetName("sql-db-"), null, _databaseAccount.GetCosmosDBSqlDatabases());
 
-            _sqlContainerId = (await SqlContainerTests.CreateSqlContainer(SessionRecording.GenerateAssetName("sql-container-"), null, _sqlDatabase.GetSqlContainers())).Id;
+            _sqlContainerId = (await SqlContainerTests.CreateSqlContainer(SessionRecording.GenerateAssetName("sql-container-"), null, _sqlDatabase.GetCosmosDBSqlContainers())).Id;
 
             await StopSessionRecordingAsync();
         }
@@ -48,15 +50,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _sqlContainer = await ArmClient.GetSqlContainerResource(_sqlContainerId).GetAsync();
+            _sqlContainer = await ArmClient.GetCosmosDBSqlContainerResource(_sqlContainerId).GetAsync();
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            SqlTriggerResource trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            if (trigger != null)
+            if (await SqlTriggerCollection.ExistsAsync(_triggerName))
             {
+                var id = SqlTriggerCollection.Id;
+                id = CosmosDBSqlTriggerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _triggerName);
+                CosmosDBSqlTriggerResource trigger = this.ArmClient.GetCosmosDBSqlTriggerResource(id);
                 await trigger.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var trigger = await CreateSqlTrigger(null);
             Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("First Hello World"));
-            Assert.AreEqual(trigger.Data.Resource.TriggerOperation, TriggerOperation.All);
-            Assert.AreEqual(trigger.Data.Resource.TriggerType, TriggerType.Pre);
+            Assert.AreEqual(trigger.Data.Resource.TriggerOperation, CosmosDBSqlTriggerOperation.All);
+            Assert.AreEqual(trigger.Data.Resource.TriggerType, CosmosDBSqlTriggerType.Pre);
 
             // Seems bug in swagger definition
             //Assert.AreEqual(TestThroughput1, container.Data.Options.Throughput);
@@ -77,18 +81,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await SqlTriggerCollection.ExistsAsync(_triggerName);
             Assert.True(ifExists);
 
-            SqlTriggerResource trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);
+            CosmosDBSqlTriggerResource trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);
             Assert.AreEqual(_triggerName, trigger2.Data.Resource.Id);
 
             VerifySqlTriggers(trigger, trigger2);
 
-            SqlTriggerCreateUpdateData updateOptions = new SqlTriggerCreateUpdateData(trigger.Id, _triggerName, trigger.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, trigger.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlTriggerCreateUpdateData(AzureLocation.WestUS, new Models.SqlTriggerResource(_triggerName)
+            var updateOptions = new CosmosDBSqlTriggerCreateOrUpdateContent(AzureLocation.WestUS, new Models.CosmosDBSqlTriggerResourceInfo(_triggerName)
             {
-                TriggerOperation = TriggerOperation.Create,
-                TriggerType = TriggerType.Post,
+                TriggerOperation = CosmosDBSqlTriggerOperation.Create,
+                TriggerType = CosmosDBSqlTriggerType.Post,
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
     response.setBody('Second Hello World');
@@ -98,8 +99,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             trigger = (await SqlTriggerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _triggerName, updateOptions)).Value;
             Assert.AreEqual(_triggerName, trigger.Data.Resource.Id);
             Assert.That(trigger.Data.Resource.Body, Contains.Substring("Second Hello World"));
-            Assert.AreEqual(trigger.Data.Resource.TriggerOperation, TriggerOperation.Create);
-            Assert.AreEqual(trigger.Data.Resource.TriggerType, TriggerType.Post);
+            Assert.AreEqual(trigger.Data.Resource.TriggerOperation, CosmosDBSqlTriggerOperation.Create);
+            Assert.AreEqual(trigger.Data.Resource.TriggerType, CosmosDBSqlTriggerType.Post);
 
             trigger2 = await SqlTriggerCollection.GetAsync(_triggerName);
             VerifySqlTriggers(trigger, trigger2);
@@ -125,18 +126,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var trigger = await CreateSqlTrigger(null);
             await trigger.DeleteAsync(WaitUntil.Completed);
 
-            trigger = await SqlTriggerCollection.GetIfExistsAsync(_triggerName);
-            Assert.Null(trigger);
+            bool exists = await SqlTriggerCollection.ExistsAsync(_triggerName);
+            Assert.IsFalse(exists);
         }
 
-        internal async Task<SqlTriggerResource> CreateSqlTrigger(AutoscaleSettings autoscale)
+        internal async Task<CosmosDBSqlTriggerResource> CreateSqlTrigger(AutoscaleSettings autoscale)
         {
             _triggerName = Recording.GenerateAssetName("sql-trigger-");
-            SqlTriggerCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlTriggerCreateUpdateData(AzureLocation.WestUS,
-                new Models.SqlTriggerResource(_triggerName)
+            var sqlDatabaseCreateUpdateOptions = new CosmosDBSqlTriggerCreateOrUpdateContent(AzureLocation.WestUS,
+                new Models.CosmosDBSqlTriggerResourceInfo(_triggerName)
                 {
-                    TriggerOperation = TriggerOperation.All,
-                    TriggerType = TriggerType.Pre,
+                    TriggerOperation = CosmosDBSqlTriggerOperation.All,
+                    TriggerType = CosmosDBSqlTriggerType.Pre,
                     Body = @"function () {
     var updatetext = getContext();
     var response = context.getResponse();
@@ -150,14 +151,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return sqlContainerLro.Value;
         }
 
-        private void VerifySqlTriggers(SqlTriggerResource expectedValue, SqlTriggerResource actualValue)
+        private void VerifySqlTriggers(CosmosDBSqlTriggerResource expectedValue, CosmosDBSqlTriggerResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
             Assert.AreEqual(expectedValue.Data.Resource.Body, actualValue.Data.Resource.Body);
             Assert.AreEqual(expectedValue.Data.Resource.TriggerType, actualValue.Data.Resource.TriggerType);
             Assert.AreEqual(expectedValue.Data.Resource.TriggerOperation, actualValue.Data.Resource.TriggerOperation);

@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.CosmosDB
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DatabaseAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
-        public virtual DatabaseAccountCollection GetDatabaseAccounts()
+        /// <summary> Gets a collection of CosmosDBAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
+        public virtual CosmosDBAccountCollection GetCosmosDBAccounts()
         {
-            return GetCachedClient(Client => new DatabaseAccountCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBAccountCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterResourceCollection GetClusterResources()
+        /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
+        public virtual CassandraClusterCollection GetCassandraClusters()
         {
-            return GetCachedClient(Client => new ClusterResourceCollection(Client, Id));
+            return GetCachedClient(Client => new CassandraClusterCollection(Client, Id));
         }
     }
 }

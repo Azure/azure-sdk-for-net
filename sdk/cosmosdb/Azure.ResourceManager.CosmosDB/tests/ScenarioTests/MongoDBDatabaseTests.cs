@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class MongoDBDatabaseTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccountResource _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         private string _databaseName;
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB)).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -36,22 +36,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
+            _databaseAccount = await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            MongoDBDatabaseResource database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
-            if (database != null)
+            if (await MongoDBDatabaseCollection.ExistsAsync(_databaseName))
             {
+                var id = MongoDBDatabaseCollection.Id;
+                id = MongoDBDatabaseResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                MongoDBDatabaseResource database = this.ArmClient.GetMongoDBDatabaseResource(id);
                 await database.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -77,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBDatabases(database, database2);
 
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            MongoDBDatabaseCreateUpdateData updateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS, database.Data.Resource)
+            var updateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS, database.Data.Resource)
             {
-                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+                Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }
             };
 
             database = (await MongoDBDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
@@ -106,12 +108,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBDatabaseThroughput()
         {
             var database = await CreateMongoDBDatabase(null);
-            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
+            MongoDBDatabaseThroughputSettingResource throughput = await database.GetMongoDBDatabaseThroughputSetting().GetAsync();
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
+            MongoDBDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task MongoDBDatabaseMigrateToAutoscale()
         {
             var database = await CreateMongoDBDatabase(null);
-            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
+            MongoDBDatabaseThroughputSettingResource throughput = await database.GetMongoDBDatabaseThroughputSetting().GetAsync();
 
             AssertManualThroughput(throughput.Data);
 
@@ -140,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 MaxThroughput = DefaultMaxThroughput,
             });
 
-            DatabaseAccountMongodbDatabaseThroughputSettingResource throughput = await database.GetDatabaseAccountMongodbDatabaseThroughputSetting().GetAsync();
+            MongoDBDatabaseThroughputSettingResource throughput = await database.GetMongoDBDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
             ThroughputSettingsData throughputData = (await throughput.MigrateMongoDBDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
@@ -154,8 +156,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var database = await CreateMongoDBDatabase(null);
             await database.DeleteAsync(WaitUntil.Completed);
 
-            database = await MongoDBDatabaseCollection.GetIfExistsAsync(_databaseName);
-            Assert.Null(database);
+            bool exists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         internal async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(AutoscaleSettings autoscale)
@@ -166,8 +168,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         internal static async Task<MongoDBDatabaseResource> CreateMongoDBDatabase(string name, AutoscaleSettings autoscale, MongoDBDatabaseCollection collection)
         {
-            MongoDBDatabaseCreateUpdateData mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateUpdateData(AzureLocation.WestUS,
-                new Models.MongoDBDatabaseResource(name))
+            var mongoDBDatabaseCreateUpdateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS,
+                new Models.MongoDBDatabaseResourceInfo(name))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
@@ -181,8 +183,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Resource.Id, actualValue.Data.Resource.Id);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Ts, actualValue.Data.Resource.Ts);
-            Assert.AreEqual(expectedValue.Data.Resource.Etag, actualValue.Data.Resource.Etag);
+            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
         }
     }
 }

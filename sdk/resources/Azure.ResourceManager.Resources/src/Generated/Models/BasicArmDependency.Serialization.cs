@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static BasicArmDependency DeserializeBasicArmDependency(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceName"))
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new BasicArmDependency(id.Value, resourceType.Value, resourceName.Value);
+            return new BasicArmDependency(id.Value, Optional.ToNullable(resourceType), resourceName.Value);
         }
     }
 }

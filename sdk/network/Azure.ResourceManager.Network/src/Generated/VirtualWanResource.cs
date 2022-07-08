@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualWanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualWanResource(ArmClient client, VirtualWanData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualWanResource(ArmClient client, VirtualWanData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -193,6 +193,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
+        /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
+        public virtual async Task<Response<VirtualWanResource>> UpdateAsync(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
+
+            using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _virtualWanRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wanParameters, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a VirtualWAN tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
+        /// Operation Id: VirtualWans_UpdateTags
+        /// </summary>
+        /// <param name="wanParameters"> Parameters supplied to Update VirtualWAN tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
+        public virtual Response<VirtualWanResource> Update(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
+
+            using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _virtualWanRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wanParameters, cancellationToken);
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -248,22 +300,22 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
-        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// Operation Id: generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil waitUntil, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnClientParams, nameof(vpnClientParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response, OperationFinalStateVia.Location);
+                var response = await _defaultRestClient.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -278,22 +330,22 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/GenerateVpnProfile
-        /// Operation Id: Generatevirtualwanvpnserverconfigurationvpnprofile
+        /// Operation Id: generatevirtualwanvpnserverconfigurationvpnprofile
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vpnClientParams"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vpnClientParams"/> is null. </exception>
-        public virtual ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(WaitUntil waitUntil, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnClientParams, nameof(vpnClientParams));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams, cancellationToken);
-                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vpnClientParams).Request, response, OperationFinalStateVia.Location);
+                var response = _defaultRestClient.Generatevirtualwanvpnserverconfigurationvpnprofile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<VpnProfileResponse>(new VpnProfileResponseOperationSource(), _defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -310,20 +362,20 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
         /// Operation Id: VpnSitesConfiguration_Download
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<ArmOperation> DownloadVpnSitesConfigurationAsync(WaitUntil waitUntil, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> DownloadVpnSitesConfigurationAsync(WaitUntil waitUntil, GetVpnSitesConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWanResource.DownloadVpnSitesConfiguration");
             scope.Start();
             try
             {
-                var response = await _vpnSitesConfigurationRestClient.DownloadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
+                var response = await _vpnSitesConfigurationRestClient.DownloadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,20 +392,20 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration
         /// Operation Id: VpnSitesConfiguration_Download
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="request"> Parameters supplied to download vpn-sites configuration. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to download vpn-sites configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual ArmOperation DownloadVpnSitesConfiguration(WaitUntil waitUntil, GetVpnSitesConfigurationRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation DownloadVpnSitesConfiguration(WaitUntil waitUntil, GetVpnSitesConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWanResource.DownloadVpnSitesConfiguration");
             scope.Start();
             try
             {
-                var response = _vpnSitesConfigurationRestClient.Download(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
-                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
+                var response = _vpnSitesConfigurationRestClient.Download(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation(_vpnSitesConfigurationClientDiagnostics, Pipeline, _vpnSitesConfigurationRestClient.CreateDownloadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -370,7 +422,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
         /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<VpnServerConfigurationsResponse>> GetVpnServerConfigurationsAssociatedWithVirtualWanAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -396,7 +448,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnServerConfigurations
         /// Operation Id: VpnServerConfigurationsAssociatedWithVirtualWan_List
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<VpnServerConfigurationsResponse> GetVpnServerConfigurationsAssociatedWithVirtualWan(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {

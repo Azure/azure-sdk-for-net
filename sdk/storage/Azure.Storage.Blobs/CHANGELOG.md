@@ -1,6 +1,29 @@
 # Release History
 
-## 12.12.0-beta.1 (Unreleased)
+## 12.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.13.0 (2022-07-07)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
+- Added support for clientside encryption V2.0
+  - GCM support
+  - V2.0 is considered a security upgrade, and it is recommended applications switch to server-side encryption or upgrade to clientside V2.0.
+- Fixed bug where calling AppendBlockFromUri() without AppendBlobAppendBlockFromUriOptions throws a null exception error
+
+## 12.12.0 (2022-05-02)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-04-12)
 - Added support for service version 2021-06-08.
 - Added pageable versions of PageBlobClient.GetPageRanges() and .GetPageRangesAsync().
 - Added ability to copy source blob tags for BlobBaseClient.SyncCopyFromUri() and .SyncCopyFromUriAsync().

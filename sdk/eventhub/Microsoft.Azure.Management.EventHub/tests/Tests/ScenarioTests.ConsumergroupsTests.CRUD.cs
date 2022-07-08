@@ -78,16 +78,19 @@ namespace EventHub.Tests.ScenarioTests
                     var createConsumergroupResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName,UserMetadata);
                     Assert.NotNull(createConsumergroupResponse);
                     Assert.Equal(createConsumergroupResponse.Name, consumergroupName);
+                    Assert.Equal(UserMetadata, createConsumergroupResponse.UserMetadata);
 
                     // Get Created ConsumerGroup
                     var getConsumergroupGetResponse = EventHubManagementClient.ConsumerGroups.Get(resourceGroup, namespaceName, eventhubName, consumergroupName);
                     Assert.NotNull(getConsumergroupGetResponse);
                     Assert.Equal(getConsumergroupGetResponse.Name, consumergroupName);
+                    Assert.Equal(UserMetadata, createConsumergroupResponse.UserMetadata);
 
                     // Get all ConsumerGroup   
-                    var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListByEventHub(resourceGroup, namespaceName, eventhubName);
-                    Assert.NotNull(getSubscriptionsListAllResponse);
-                    Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
+                    var listOfConsumerGroups = EventHubManagementClient.ConsumerGroups.ListByEventHub(resourceGroup, namespaceName, eventhubName);
+                    Assert.NotNull(listOfConsumerGroups);
+                    Assert.True(listOfConsumerGroups.All(ns => ns.Id.Contains(resourceGroup)));
+                    Assert.Equal(2, listOfConsumerGroups.Count());
 
                     //Update the Created consumergroup
                     createConsumergroupResponse.UserMetadata = "Updated the user meta data";
@@ -95,6 +98,12 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.NotNull(updateconsumergroupResponse);
                     Assert.Equal(updateconsumergroupResponse.Name, createConsumergroupResponse.Name);
                     Assert.Equal("Updated the user meta data", updateconsumergroupResponse.UserMetadata);
+
+                    // Get all ConsumerGroup   
+                    listOfConsumerGroups = EventHubManagementClient.ConsumerGroups.ListByEventHub(resourceGroup, namespaceName, eventhubName);
+                    Assert.NotNull(listOfConsumerGroups);
+                    Assert.True(listOfConsumerGroups.All(ns => ns.Id.Contains(resourceGroup)));
+                    Assert.Equal(2, listOfConsumerGroups.Count());
 
                     // Get Created ConsumerGroup
                     var getConsumergroupResponse = EventHubManagementClient.ConsumerGroups.Get(resourceGroup, namespaceName, eventhubName, consumergroupName);
@@ -104,6 +113,7 @@ namespace EventHub.Tests.ScenarioTests
 
                     // Delete Created ConsumerGroup and check for the NotFound exception 
                     EventHubManagementClient.ConsumerGroups.Delete(resourceGroup, namespaceName, eventhubName, consumergroupName);
+                    Assert.Throws<ErrorResponseException>(() => EventHubManagementClient.ConsumerGroups.Get(resourceGroup, namespaceName, eventhubName, consumergroupName));
 
                     // Delete Created EventHub  and check for the NotFound exception 
                     EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);

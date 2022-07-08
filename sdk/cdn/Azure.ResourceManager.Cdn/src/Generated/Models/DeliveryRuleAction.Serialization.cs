@@ -31,9 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "ModifyRequestHeader": return DeliveryRuleRequestHeaderAction.DeserializeDeliveryRuleRequestHeaderAction(element);
                     case "ModifyResponseHeader": return DeliveryRuleResponseHeaderAction.DeserializeDeliveryRuleResponseHeaderAction(element);
                     case "OriginGroupOverride": return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element);
-                    case "UrlRedirect": return UrlRedirectAction.DeserializeUrlRedirectAction(element);
-                    case "UrlRewrite": return UrlRewriteAction.DeserializeUrlRewriteAction(element);
-                    case "UrlSigning": return UrlSigningAction.DeserializeUrlSigningAction(element);
+                    case "RouteConfigurationOverride": return DeliveryRuleRouteConfigurationOverrideAction.DeserializeDeliveryRuleRouteConfigurationOverrideAction(element);
+                    case "UrlRedirect": return UriRedirectAction.DeserializeUriRedirectAction(element);
+                    case "UrlRewrite": return UriRewriteAction.DeserializeUriRewriteAction(element);
+                    case "UrlSigning": return UriSigningAction.DeserializeUriSigningAction(element);
                 }
             }
             DeliveryRuleActionType name = default;

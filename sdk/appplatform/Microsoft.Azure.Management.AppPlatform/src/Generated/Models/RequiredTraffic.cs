@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Required inbound or outbound traffic for Azure Spring Cloud instance.
+    /// Required inbound or outbound traffic for Azure Spring Apps resource.
     /// </summary>
     public partial class RequiredTraffic
     {

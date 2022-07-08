@@ -37,10 +37,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// states.</param>
         /// <param name="bypassTrafficSettings">List of rules for traffic to
         /// bypass.</param>
-        public FirewallPolicyIntrusionDetectionConfiguration(IList<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides = default(IList<FirewallPolicyIntrusionDetectionSignatureSpecification>), IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings = default(IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>))
+        /// <param name="privateRanges">IDPS Private IP address ranges are used
+        /// to identify traffic direction (i.e. inbound, outbound, etc.). By
+        /// default, only ranges defined by IANA RFC 1918 are considered
+        /// private IP addresses. To modify default ranges, specify your
+        /// Private IP address ranges with this property</param>
+        public FirewallPolicyIntrusionDetectionConfiguration(IList<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides = default(IList<FirewallPolicyIntrusionDetectionSignatureSpecification>), IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings = default(IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>), IList<string> privateRanges = default(IList<string>))
         {
             SignatureOverrides = signatureOverrides;
             BypassTrafficSettings = bypassTrafficSettings;
+            PrivateRanges = privateRanges;
             CustomInit();
         }
 
@@ -60,6 +66,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "bypassTrafficSettings")]
         public IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> BypassTrafficSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets IDPS Private IP address ranges are used to identify
+        /// traffic direction (i.e. inbound, outbound, etc.). By default, only
+        /// ranges defined by IANA RFC 1918 are considered private IP
+        /// addresses. To modify default ranges, specify your Private IP
+        /// address ranges with this property
+        /// </summary>
+        [JsonProperty(PropertyName = "privateRanges")]
+        public IList<string> PrivateRanges { get; set; }
 
     }
 }

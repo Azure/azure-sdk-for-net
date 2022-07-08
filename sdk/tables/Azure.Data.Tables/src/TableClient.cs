@@ -24,6 +24,7 @@ namespace Azure.Data.Tables
         private static readonly char[] ContinuationTokenSplit = { ' ' };
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
+        private readonly TableRestClient _batchOperations;
         private readonly string _version;
         private readonly bool _isCosmosEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
@@ -213,12 +214,20 @@ namespace Azure.Data.Tables
                 _tableSharedKeyCredential = credential;
             }
 
-            _pipeline =
-                HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { policy },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
         }
 
@@ -256,15 +265,20 @@ namespace Azure.Data.Tables
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            _pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies,
-                new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
-                new ResponseClassifier());
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                ResponseClassifier = new ResponseClassifier(),
+                RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
+            };
+            ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
+
+            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
         }
 
@@ -311,6 +325,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
+            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
         }
 
@@ -335,6 +350,7 @@ namespace Azure.Data.Tables
             {
                 _tableOperations = tableOperations;
             }
+            _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
             _accountName = accountName;
@@ -360,7 +376,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new(Name, permissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, permissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>
@@ -377,7 +398,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new(Name, rawPermissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, rawPermissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>
@@ -1466,8 +1492,7 @@ namespace Azure.Data.Tables
                 }
                 Dictionary<string, HttpMessage> requestLookup = new();
 
-                var batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
-                var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
+                var _batch = BuildChangeSet(_batchOperations, batchItems, requestLookup, batchId, changesetId);
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
 
                 return async

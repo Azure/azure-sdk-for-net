@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Sql.Models
         private const string OfflineChangingDwPerformanceTiersValue = "OfflineChangingDwPerformanceTiers";
         private const string OnlineChangingDwPerformanceTiersValue = "OnlineChangingDwPerformanceTiers";
         private const string DisabledValue = "Disabled";
+        private const string StoppingValue = "Stopping";
+        private const string StoppedValue = "Stopped";
+        private const string StartingValue = "Starting";
 
         /// <summary> Online. </summary>
         public static DatabaseStatus Online { get; } = new DatabaseStatus(OnlineValue);
@@ -86,6 +89,12 @@ namespace Azure.ResourceManager.Sql.Models
         public static DatabaseStatus OnlineChangingDwPerformanceTiers { get; } = new DatabaseStatus(OnlineChangingDwPerformanceTiersValue);
         /// <summary> Disabled. </summary>
         public static DatabaseStatus Disabled { get; } = new DatabaseStatus(DisabledValue);
+        /// <summary> Stopping. </summary>
+        public static DatabaseStatus Stopping { get; } = new DatabaseStatus(StoppingValue);
+        /// <summary> Stopped. </summary>
+        public static DatabaseStatus Stopped { get; } = new DatabaseStatus(StoppedValue);
+        /// <summary> Starting. </summary>
+        public static DatabaseStatus Starting { get; } = new DatabaseStatus(StartingValue);
         /// <summary> Determines if two <see cref="DatabaseStatus"/> values are the same. </summary>
         public static bool operator ==(DatabaseStatus left, DatabaseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseStatus"/> values are not the same. </summary>

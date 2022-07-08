@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="remotePrivateLinkServiceConnectionState"> Remote private link service connection state. </param>
         /// <param name="remotePrivateEndpointConnection"> Remote private endpoint connection details. </param>
         /// <param name="groupConnectivityInformation"> Group connectivity information. </param>
-        internal PrivateLinkServiceProxy(string id, PrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, SubResource remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation)
+        internal PrivateLinkServiceProxy(string id, DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState, SubResource remotePrivateEndpointConnection, IList<GroupConnectivityInformation> groupConnectivityInformation)
         {
             Id = id;
             RemotePrivateLinkServiceConnectionState = remotePrivateLinkServiceConnectionState;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> NRP resource ID. </summary>
         public string Id { get; set; }
         /// <summary> Remote private link service connection state. </summary>
-        public PrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get; set; }
+        public DeviceUpdatePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get; set; }
         /// <summary> Remote private endpoint connection details. </summary>
         internal SubResource RemotePrivateEndpointConnection { get; set; }
         /// <summary> Gets Id. </summary>

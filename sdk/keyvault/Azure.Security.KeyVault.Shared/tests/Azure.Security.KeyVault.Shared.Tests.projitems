@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)JsonStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEventListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)KeyVaultTestEnvironment.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PartiallyDeployedAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PremiumOnlyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestExtensions.cs" />
   </ItemGroup>

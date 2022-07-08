@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -209,66 +209,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(serviceObjectiveName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
-        /// Operation Id: ServiceObjectives_Get
-        /// </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual async Task<Response<ServiceObjectiveResource>> GetIfExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
-
-            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serviceObjectiveRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceObjectiveResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
-        /// Operation Id: ServiceObjectives_Get
-        /// </summary>
-        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
-        public virtual Response<ServiceObjectiveResource> GetIfExists(string serviceObjectiveName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
-
-            using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _serviceObjectiveRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceObjectiveName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServiceObjectiveResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ServiceObjectiveResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

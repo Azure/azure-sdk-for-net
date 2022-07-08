@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
-        /// <param name="errorDeploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
-        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? errorDeploymentType, string deploymentName)
+        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? deploymentType, string deploymentName)
         {
             ProvisioningState = provisioningState;
-            ErrorDeploymentType = errorDeploymentType;
+            DeploymentType = deploymentType;
             DeploymentName = deploymentName;
         }
 
         /// <summary> The state of the provisioning for the on error deployment. </summary>
         public string ProvisioningState { get; }
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
-        public ErrorDeploymentType? ErrorDeploymentType { get; }
+        public ErrorDeploymentType? DeploymentType { get; }
         /// <summary> The deployment to be used on error case. </summary>
         public string DeploymentName { get; }
     }

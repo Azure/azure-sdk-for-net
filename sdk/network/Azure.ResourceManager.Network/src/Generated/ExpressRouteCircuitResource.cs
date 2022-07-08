@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuitResource(ArmClient client, ExpressRouteCircuitData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ExpressRouteCircuitResource(ArmClient client, ExpressRouteCircuitData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitAuthorizationResource>> GetExpressRouteCircuitAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteCircuitAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitAuthorizationResource> GetExpressRouteCircuitAuthorization(string authorizationName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteCircuitAuthorizations().Get(authorizationName, cancellationToken);
@@ -140,6 +142,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitPeeringResource>> GetExpressRouteCircuitPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
             return await GetExpressRouteCircuitPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
@@ -154,6 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitPeeringResource> GetExpressRouteCircuitPeering(string peeringName, CancellationToken cancellationToken = default)
         {
             return GetExpressRouteCircuitPeerings().Get(peeringName, cancellationToken);
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
         /// Operation Id: ExpressRouteCircuits_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -238,7 +242,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
         /// Operation Id: ExpressRouteCircuits_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -251,6 +255,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update express route circuit tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCircuitResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an express route circuit tags.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
+        /// Operation Id: ExpressRouteCircuits_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update express route circuit tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<ExpressRouteCircuitResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
+                return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     {
         private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
-        private PrivateLinkResource LinkResource { get; set; }
+        private AppConfigurationPrivateLinkResource LinkResource { get; set; }
 
         public PrivateLinkResourceOperationTests(bool isAsync)
             : base(isAsync)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
                 ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
-                LinkResource = await ConfigStore.GetPrivateLinkResources().GetAsync("configurationStores");
+                LinkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAsync("configurationStores");
             }
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            PrivateLinkResource linkResource = await LinkResource.GetAsync();
+            AppConfigurationPrivateLinkResource linkResource = await LinkResource.GetAsync();
 
             Assert.IsTrue(LinkResource.Data.Name.Equals(linkResource.Data.Name));
         }

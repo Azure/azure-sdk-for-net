@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            FrontDoorRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRuleName = Recording.GenerateAssetName("AFDRule");
-            AfdRule afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
+            FrontDoorRuleResource afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
             await afdRule.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdRule.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            FrontDoorRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             string afdRuleName = Recording.GenerateAssetName("AFDRule");
-            AfdRule afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
-            PatchableAfdRuleData updateOptions = new PatchableAfdRuleData
+            FrontDoorRuleResource afdRule = await CreateAfdRule(afdRuleSet, afdRuleName);
+            FrontDoorRulePatch updateOptions = new FrontDoorRulePatch
             {
                 Order = 2
             };
             updateOptions.Conditions.Add(ResourceDataHelper.CreateDeliveryRuleCondition());
-            updateOptions.Actions.Add(ResourceDataHelper.UpdateDeliveryRuleOperation());
+            updateOptions.Actions.Add(ResourceDataHelper.CreateDeliveryRuleOperation());
             var lro = await afdRule.UpdateAsync(WaitUntil.Completed, updateOptions);
-            AfdRule updatedAfdRule = lro.Value;
+            FrontDoorRuleResource updatedAfdRule = lro.Value;
             ResourceDataHelper.AssertAfdRuleUpdate(updatedAfdRule, updateOptions);
         }
     }

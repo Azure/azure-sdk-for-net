@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteInstanceProcessResource>> GetSiteInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
             return await GetSiteInstanceProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteInstanceProcessResource> GetSiteInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {
             return GetSiteInstanceProcesses().Get(processId, cancellationToken);

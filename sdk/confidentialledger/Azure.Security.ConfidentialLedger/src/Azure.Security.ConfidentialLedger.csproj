@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" /> 
     <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

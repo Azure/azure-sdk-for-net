@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(vmtemplate1);
             Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
             // check for exists vm template
-            vmtemplate1 = await _virtualMachineTemplateCollection.GetIfExistsAsync(vmtemplateName);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
+            bool exists = await _virtualMachineTemplateCollection.ExistsAsync(vmtemplateName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

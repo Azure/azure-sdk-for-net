@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_CheckNameAvailability
         /// </summary>
         /// <param name="location"> the region. </param>
-        /// <param name="parameters"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
-                var response = await WebPubSubRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await WebPubSubRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_CheckNameAvailability
         /// </summary>
         /// <param name="location"> the region. </param>
-        /// <param name="parameters"> Parameters supplied to the operation. </param>
+        /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckWebPubSubNameAvailability(string location, NameAvailabilityParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
-                var response = WebPubSubRestClient.CheckNameAvailability(Id.SubscriptionId, location, parameters, cancellationToken);
+                var response = WebPubSubRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<SignalRServiceUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRServiceUsage> GetUsages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<SignalRServiceUsage> FirstPageFunc(int? pageSizeHint)
             {

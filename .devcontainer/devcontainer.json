@@ -1,13 +1,13 @@
 {
 	"name": "GitHub Codespaces (Default)",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"INSTALL_DOCKER": "true"
-		}
-	},
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"args": []
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "bash",
 		"go.useGoProxyToCheckForToolUpdates": false,
 		"go.useLanguageServer": true,
 		"go.gopath": "/go",
@@ -35,8 +35,8 @@
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/codespace/workspace,type=bind,consistency=cached",
 	"workspaceFolder": "/home/codespace/workspace",
 	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged" ],
+	
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"GitHub.vscode-pull-request-github",

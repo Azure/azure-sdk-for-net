@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDiagnosticAnalysisResource>> GetSiteSlotDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDiagnosticAnalyses().GetAsync(analysisName, cancellationToken).ConfigureAwait(false);
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDiagnosticAnalysisResource> GetSiteSlotDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDiagnosticAnalyses().Get(analysisName, cancellationToken);
@@ -137,6 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDiagnosticDetectorResource>> GetSiteSlotDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDiagnosticDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
@@ -151,6 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDiagnosticDetectorResource> GetSiteSlotDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDiagnosticDetectors().Get(detectorName, cancellationToken);

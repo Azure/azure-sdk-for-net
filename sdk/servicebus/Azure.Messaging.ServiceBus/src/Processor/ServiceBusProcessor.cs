@@ -519,7 +519,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="args">The event args containing information related to the message.</param>
         protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
-            await _processMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         /// <summary>
@@ -534,7 +541,14 @@ namespace Azure.Messaging.ServiceBus
 
         internal async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
-            await _processSessionMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processSessionMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         internal async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
@@ -709,7 +723,11 @@ namespace Azure.Messaging.ServiceBus
         /// Signals the processor to stop processing messaging. Should this method be
         /// called while the processor is not running, no action is taken. This method
         /// will not close the underlying receivers, but will cause the receivers to stop
-        /// receiving. To close the underlying receivers, <see cref="CloseAsync"/> should be called.
+        /// receiving. Any in-flight message handlers will be awaited, and this method will not return
+        /// until all in-flight message handlers have returned. To close the underlying receivers, <see cref="CloseAsync"/>
+        /// should be called. If <see cref="CloseAsync"/> is called, the processor cannot be restarted.
+        /// If you wish to resume processing at some point after calling this method, you can call
+        /// <see cref="StartProcessingAsync"/>.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to
@@ -717,7 +735,6 @@ namespace Azure.Messaging.ServiceBus
         /// canceled, the processor will keep running.</param>
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
             {
@@ -729,9 +746,17 @@ namespace Azure.Messaging.ServiceBus
                     Logger.StopProcessingStart(Identifier);
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    // Cancel the current running task.
+                    // Cancel the current running task. Catch any exception that are triggered due to customer token registrations, and
+                    // log these as warnings as we don't want to forego stopping due to these exceptions.
+                    try
+                    {
+                        RunningTaskTokenSource.Cancel();
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.ProcessorStoppingCancellationWarning(Identifier, exception.ToString());
+                    }
 
-                    RunningTaskTokenSource.Cancel();
                     RunningTaskTokenSource.Dispose();
                     RunningTaskTokenSource = null;
 
@@ -871,7 +896,7 @@ namespace Azure.Messaging.ServiceBus
                     catch (Exception ex)
                     {
                         // Don't bubble up exceptions raised from customer exception handler.
-                        Logger.ProcessorErrorHandlerThrewException(ex.ToString());
+                        Logger.ProcessorErrorHandlerThrewException(ex.ToString(), Identifier);
                     }
 
                     // This call will deadlock if awaited, as StopProcessingAsync awaits
@@ -922,9 +947,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
         /// </summary>
-        ///
         /// <param name="action">The action to invoke.</param>
-        ///
         /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
@@ -954,7 +977,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />. Any in-flight message handlers will
+        /// be awaited. Once all message handling has completed, the underlying links will be closed. After this point, the method will return.
+        /// This is equivalent to calling <see cref="DisposeAsync"/>.
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
@@ -978,8 +1003,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/>.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />. Any in-flight message handlers will
+        /// be awaited. Once all message handling has completed, the underlying links will be closed. After this point, the method will return.
+        /// This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
         public async ValueTask DisposeAsync()
         {

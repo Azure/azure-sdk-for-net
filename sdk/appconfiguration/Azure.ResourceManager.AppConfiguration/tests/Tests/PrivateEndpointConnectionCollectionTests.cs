@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
                     Location = "eastus",
-                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
+                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
                 };
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
+                    PrivateLinkServiceConnections = { new NetworkPrivateLinkServiceConnection()
                         {
                             Name ="myconnection",
                             PrivateLinkServiceId = ConfigStore.Data.Id,
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                         },
-                    Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
+                    Subnet = new SubnetData() { Id = new ResourceIdentifier("/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName) }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
             }
@@ -75,26 +76,26 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             // Only support update
-            List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
-            PrivateEndpointConnectionData privateEndpointConnectionData = connections.FirstOrDefault().Data;
-            privateEndpointConnectionData.PrivateLinkServiceConnectionState.Description = "Update descriptions";
-            PrivateEndpointConnectionResource privateEndpointConnection = (await ConfigStore.GetPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
+            AppConfigurationPrivateEndpointConnectionData privateEndpointConnectionData = connections.FirstOrDefault().Data;
+            privateEndpointConnectionData.ConnectionState.Description = "Update descriptions";
+            AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = (await ConfigStore.GetAppConfigurationPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
 
             Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
             Assert.IsTrue(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id));
-            Assert.IsTrue(privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Description.Equals("Update descriptions"));
+            Assert.IsTrue(privateEndpointConnection.Data.ConnectionState.Description.Equals("Update descriptions"));
         }
 
         [Test]
         public async Task GetTest()
         {
-            List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.First().Data.Name;
-            PrivateEndpointConnectionResource privateEndpointConnection = await ConfigStore.GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
+            AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
 
             Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
-            Assert.IsTrue(privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status == Models.ConnectionStatus.Approved);
+            Assert.IsTrue(privateEndpointConnection.Data.ConnectionState.Status == Models.ConnectionStatus.Approved);
         }
 
         [Test]
@@ -112,24 +113,6 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
             Assert.IsTrue(configurationStores.Count >= 2);
             Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
-        }
-
-        [Test]
-        public async Task GetIfExistsTest()
-        {
-            string configurationStoreName = Recording.GenerateAssetName("testapp-");
-            ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
-            {
-                PublicNetworkAccess = PublicNetworkAccess.Disabled
-            };
-            await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
-            ConfigurationStoreResource configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync(configurationStoreName);
-
-            Assert.IsTrue(configurationStore.Data.Name == configurationStoreName);
-
-            configurationStore = await ResGroup.GetConfigurationStores().GetIfExistsAsync("foo");
-
-            Assert.IsNull(configurationStore);
         }
     }
 }

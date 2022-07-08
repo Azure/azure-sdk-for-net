@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        internal InstanceViewStatus(string code, StatusLevelTypes? level, string displayStatus, string message, DateTimeOffset? time)
+        internal InstanceViewStatus(string code, ComputeStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
         {
             Code = code;
             Level = level;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The status code. </summary>
         public string Code { get; set; }
         /// <summary> The level code. </summary>
-        public StatusLevelTypes? Level { get; set; }
+        public ComputeStatusLevelType? Level { get; set; }
         /// <summary> The short localizable label for the status. </summary>
         public string DisplayStatus { get; set; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>

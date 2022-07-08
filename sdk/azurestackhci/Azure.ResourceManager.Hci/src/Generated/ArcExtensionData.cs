@@ -37,13 +37,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, ExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string typePropertiesExtensionParametersType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
@@ -55,12 +49,6 @@ namespace Azure.ResourceManager.Hci
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             Settings = settings;
             ProtectedSettings = protectedSettings;
-            CreatedBy = createdBy;
-            CreatedByType = createdByType;
-            CreatedOn = createdOn;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedByType = lastModifiedByType;
-            LastModifiedOn = lastModifiedOn;
         }
 
         /// <summary> Provisioning state of the Extension proxy resource. </summary>
@@ -83,17 +71,5 @@ namespace Azure.ResourceManager.Hci
         public BinaryData Settings { get; set; }
         /// <summary> Protected settings (may contain secrets). </summary>
         public BinaryData ProtectedSettings { get; set; }
-        /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
-        /// <summary> The type of identity that created the resource. </summary>
-        public Models.CreatedByType? CreatedByType { get; set; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
-        /// <summary> The type of identity that last modified the resource. </summary>
-        public Models.CreatedByType? LastModifiedByType { get; set; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
     }
 }

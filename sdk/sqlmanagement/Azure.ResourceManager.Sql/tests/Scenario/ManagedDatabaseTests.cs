@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public ManagedDatabaseTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

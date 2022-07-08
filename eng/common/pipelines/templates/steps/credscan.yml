@@ -28,16 +28,18 @@ steps:
       Write-Host "##vso[task.setvariable variable=SKIP_CREDSCAN]true"
     }
   displayName: CredScan setup
+  condition: succeededOrFailed()
+
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running
-  condition: and(succeededOrFailed(), ne('SKIP_CREDSCAN', true))
+  condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
     toolVersion: 2.2.7.8 
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
   displayName: CredScan result analysis
-  condition: and(succeededOrFailed(), ne('SKIP_CREDSCAN', true))
+  condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
     GdnBreakBaselineFiles: ${{ parameters.BaselineFilePath }}
     GdnBreakAllTools: false
@@ -50,4 +52,4 @@ steps:
 - pwsh: |
     Write-Host "Please check https://aka.ms/azsdk/credscan for more information about the cred scan failure."
   displayName: CredScan troubleshooting guide
-  condition: and(failed(), ne('SKIP_CREDSCAN', true))
+  condition: and(failed(), ne(variables['SKIP_CREDSCAN'], true))

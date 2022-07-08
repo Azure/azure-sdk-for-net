@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Dns.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ipv4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address");
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
             writer.WriteEndObject();
         }
 
         internal static ARecord DeserializeARecord(JsonElement element)
         {
-            Optional<string> ipv4Address = default;
+            Optional<string> iPv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"))
                 {
-                    ipv4Address = property.Value.GetString();
+                    iPv4Address = property.Value.GetString();
                     continue;
                 }
             }
-            return new ARecord(ipv4Address.Value);
+            return new ARecord(iPv4Address.Value);
         }
     }
 }

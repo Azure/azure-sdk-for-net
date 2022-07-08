@@ -20,6 +20,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -1578,6 +1579,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task Download_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3023,7 +3025,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(null)]
         [TestCase(BlobCopySourceTagsMode.Replace)]

@@ -17,22 +17,30 @@ namespace Azure.Core.Pipeline
 {
     internal readonly struct DiagnosticScope : IDisposable
     {
+        private const string AzureSdkScopeLabel = "az.sdk.scope";
+        private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
+        private readonly bool _suppressNestedClientActivities;
 
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind)
+        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientActivities) :
+            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientActivities)
         {
-            var activitySource = GetActivitySource(ns, scopeName);
-
-            IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
-
-            _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, null) : null;
         }
 
-        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind)
+        internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
+            // ActivityKind.Internal and Client both can represent public API calls depending on the SDK
+            _suppressNestedClientActivities = (kind == ActivityKind.Client || kind == ActivityKind.Internal) ? suppressNestedClientActivities : false;
+
+            // outer scope presence is enough to suppress any inner scope, regardless of inner scope configuation.
             IsEnabled = source.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(activitySource);
+
+            if (_suppressNestedClientActivities)
+            {
+                IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
+            }
 
             _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
         }
@@ -94,7 +102,8 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
-            _activityAdapter?.Start();
+            Activity? started = _activityAdapter?.Start();
+            started?.SetCustomProperty(AzureSdkScopeLabel, AzureSdkScopeValue);
         }
 
         public void SetStartTime(DateTime dateTime)
@@ -265,7 +274,7 @@ namespace Azure.Core.Pipeline
                 _links.Add(linkedActivity);
             }
 
-            public void Start()
+            public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
 
@@ -273,7 +282,7 @@ namespace Azure.Core.Pipeline
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
-                        return;
+                        return null;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)
@@ -284,7 +293,7 @@ namespace Azure.Core.Pipeline
 
                     if (_startTime != default)
                     {
-                        _currentActivity.SetStartTime(_startTime.DateTime);
+                        _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
                     if (_tagCollection != null)
@@ -299,6 +308,8 @@ namespace Azure.Core.Pipeline
                 }
 
                 _diagnosticSource.Write(_activityName + ".Start", _diagnosticSourceArgs ?? _currentActivity);
+
+                return _currentActivity;
             }
 
             private Activity? StartActivitySourceActivity()
@@ -370,8 +381,54 @@ namespace Azure.Core.Pipeline
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
-
+        private static Func<Activity, string, object?>? GetCustomPropertyMethod;
+        private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
+
+        public static object? GetCustomProperty(this Activity activity, string propertyName)
+        {
+            if (GetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("GetCustomProperty");
+                if (method == null)
+                {
+                    GetCustomPropertyMethod = (_, _) => null;
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+
+                    GetCustomPropertyMethod = Expression.Lambda<Func<Activity, string, object>>(
+                        Expression.Convert(Expression.Call(ActivityParameter, method, nameParameter), typeof(object)),
+                        ActivityParameter, nameParameter).Compile();
+                }
+            }
+
+            return GetCustomPropertyMethod(activity, propertyName);
+        }
+
+        public static void SetCustomProperty(this Activity activity, string propertyName, object propertyValue)
+        {
+            if (SetCustomPropertyMethod == null)
+            {
+                var method = typeof(Activity).GetMethod("SetCustomProperty");
+                if (method == null)
+                {
+                    SetCustomPropertyMethod = (_, _, _) => { };
+                }
+                else
+                {
+                    var nameParameter = Expression.Parameter(typeof(string));
+                    var valueParameter = Expression.Parameter(typeof(object));
+
+                    SetCustomPropertyMethod = Expression.Lambda<Action<Activity, string, object>>(
+                        Expression.Call(ActivityParameter, method, nameParameter, valueParameter),
+                        ActivityParameter, nameParameter, valueParameter).Compile();
+                }
+            }
+
+            SetCustomPropertyMethod(activity, propertyName, propertyValue);
+        }
 
         public static void SetW3CFormat(this Activity activity)
         {

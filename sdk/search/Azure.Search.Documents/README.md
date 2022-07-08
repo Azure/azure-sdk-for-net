@@ -455,6 +455,8 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
 deeper into the requests you're making against the service.
 
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
+
 ## Next steps
 
 * Go further with Azure.Search.Documents and our [samples][samples]

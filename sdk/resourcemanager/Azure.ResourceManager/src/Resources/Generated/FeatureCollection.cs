@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(featureName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
-        /// </summary>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual async Task<Response<FeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
-
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<FeatureResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
-        /// </summary>
-        /// <param name="featureName"> The name of the feature to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual Response<FeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
-
-            using var scope = _featureClientDiagnostics.CreateScope("FeatureCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<FeatureResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

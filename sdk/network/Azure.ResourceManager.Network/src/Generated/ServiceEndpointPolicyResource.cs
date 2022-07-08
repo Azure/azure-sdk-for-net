@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "ServiceEndpointPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceEndpointPolicyResource(ArmClient client, ServiceEndpointPolicyData data) : this(client, new ResourceIdentifier(data.Id))
+        internal ServiceEndpointPolicyResource(ArmClient client, ServiceEndpointPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -104,6 +105,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServiceEndpointPolicyDefinitionResource>> GetServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetServiceEndpointPolicyDefinitions().GetAsync(serviceEndpointPolicyDefinitionName, cancellationToken).ConfigureAwait(false);
@@ -118,6 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<ServiceEndpointPolicyDefinitionResource> GetServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetServiceEndpointPolicyDefinitions().Get(serviceEndpointPolicyDefinitionName, cancellationToken);
@@ -178,7 +181,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
         /// Operation Id: ServiceEndpointPolicies_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -204,7 +207,7 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
         /// Operation Id: ServiceEndpointPolicies_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -217,6 +220,58 @@ namespace Azure.ResourceManager.Network
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of a service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update service endpoint policy tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual async Task<Response<ServiceEndpointPolicyResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _serviceEndpointPolicyRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates tags of a service endpoint policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
+        /// Operation Id: ServiceEndpointPolicies_UpdateTags
+        /// </summary>
+        /// <param name="networkTagsObject"> Parameters supplied to update service endpoint policy tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Response<ServiceEndpointPolicyResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+
+            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _serviceEndpointPolicyRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
+                return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

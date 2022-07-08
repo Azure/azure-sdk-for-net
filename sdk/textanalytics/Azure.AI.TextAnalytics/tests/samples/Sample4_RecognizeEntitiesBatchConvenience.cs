@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)

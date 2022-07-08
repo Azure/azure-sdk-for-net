@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ArmApplicationDetails. </summary>
-        /// <param name="oid"> The client Oid. </param>
+        /// <param name="objectId"> The client Oid. </param>
         /// <param name="puid"> The client Puid. </param>
         /// <param name="applicationId"> The client application Id. </param>
-        internal ArmApplicationDetails(Guid? oid, string puid, Guid? applicationId)
+        internal ArmApplicationDetails(Guid? objectId, string puid, Guid? applicationId)
         {
-            Oid = oid;
+            ObjectId = objectId;
             Puid = puid;
             ApplicationId = applicationId;
         }
 
         /// <summary> The client Oid. </summary>
-        public Guid? Oid { get; }
+        public Guid? ObjectId { get; }
         /// <summary> The client Puid. </summary>
         public string Puid { get; }
         /// <summary> The client application Id. </summary>

@@ -239,15 +239,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, validateRequest, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -262,15 +262,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
-        /// <param name="validateRequest"> Request with the resources to validate. </param>
+        /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateResponse> Validate(ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateResponse> Validate(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, validateRequest, cancellationToken);
+                var response = DefaultRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,66 +245,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(usageName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
-        /// </summary>
-        /// <param name="usageName"> Name of usage metric to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionUsageResource>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
-
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SubscriptionUsageResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
-        /// </summary>
-        /// <param name="usageName"> Name of usage metric to return. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
-        public virtual Response<SubscriptionUsageResource> GetIfExists(string usageName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
-
-            using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, _locationName, usageName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SubscriptionUsageResource>(null, response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

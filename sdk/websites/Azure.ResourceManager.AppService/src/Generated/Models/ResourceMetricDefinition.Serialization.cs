@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> unit = default;
             Optional<string> primaryAggregationType = default;
             Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
@@ -60,11 +60,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ResourceMetricDefinition(id, name, type, systemData, kind.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties));
+            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties), kind.Value);
         }
     }
 }

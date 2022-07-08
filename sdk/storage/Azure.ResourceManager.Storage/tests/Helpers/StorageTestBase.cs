@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
         {
         }
 
-        public static StorageAccountCreateParameters GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
+        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
         {
             StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             StorageKind kindParameters = kind ?? DefaultKindStorage;
             string locationParameters = location ?? DefaultLocationString;
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(skuParameters, kindParameters, locationParameters);
+            StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(skuParameters, kindParameters, locationParameters);
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Identity = identity;
             return parameters;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 accountName = Recording.GenerateAssetName(prefix);
-                StorageAccountCheckNameAvailabilityParameters parameter = new StorageAccountCheckNameAvailabilityParameters(accountName);
+                StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
                 CheckNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
                 if (result.NameAvailable == true)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Assert.NotNull(account.Id.Name);
             Assert.NotNull(account.Data.Location);
             Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreationOn);
+            Assert.NotNull(account.Data.CreateOn);
             Assert.NotNull(account.Data.Sku);
             Assert.NotNull(account.Data.Sku.Name);
             Assert.NotNull(account.Data.Sku.Tier);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             }
         }
 
-        public static AccountSasParameters ParseAccountSASToken(string accountSasToken)
+        public static AccountSasContent ParseAccountSASToken(string accountSasToken)
         {
             string[] sasProperties = accountSasToken.Substring(1).Split(new char[] { '&' });
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             string ipAddressOrRangeParameters = string.Empty;
             DateTimeOffset sharedAccessStartTimeParameters = new DateTimeOffset();
             DateTimeOffset sharedAccessExpiryTimeParameters = new DateTimeOffset();
-            HttpProtocol? protocolsParameters = null;
+            StorageAccountHttpProtocol? protocolsParameters = null;
 
             foreach (var property in sasProperties)
             {
@@ -162,15 +162,15 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         break;
                     case "spr":
                         if (keyValue[1] == "https")
-                            protocolsParameters = HttpProtocol.Https;
+                            protocolsParameters = StorageAccountHttpProtocol.Https;
                         else if (keyValue[1] == "https,http")
-                            protocolsParameters = HttpProtocol.HttpsHttp;
+                            protocolsParameters = StorageAccountHttpProtocol.HttpsHttp;
                         break;
                     default:
                         break;
                 }
             }
-            AccountSasParameters parameters = new AccountSasParameters(serviceParameters, resourceTypesParameters, permissionsParameters, sharedAccessExpiryTimeParameters)
+            AccountSasContent parameters = new AccountSasContent(serviceParameters, resourceTypesParameters, permissionsParameters, sharedAccessExpiryTimeParameters)
             {
                 IPAddressOrRange = ipAddressOrRangeParameters,
                 Protocols = protocolsParameters,
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             return parameters;
         }
 
-        public static ServiceSasParameters ParseServiceSASToken(string serviceSAS, string canonicalizedResource)
+        public static ServiceSasContent ParseServiceSASToken(string serviceSAS, string canonicalizedResource)
         {
             string[] sasProperties = serviceSAS.Substring(1).Split(new char[] { '&' });
 
-            ServiceSasParameters parameters = new ServiceSasParameters(canonicalizedResource);
+            ServiceSasContent parameters = new ServiceSasContent(canonicalizedResource);
 
             foreach (var property in sasProperties)
             {
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
                         break;
                     case "spr":
                         if (keyValue[1] == "https")
-                            parameters.Protocols = HttpProtocol.Https;
+                            parameters.Protocols = StorageAccountHttpProtocol.Https;
                         else if (keyValue[1] == "https,http")
-                            parameters.Protocols = HttpProtocol.HttpsHttp;
+                            parameters.Protocols = StorageAccountHttpProtocol.HttpsHttp;
                         break;
                     case "si":
                         parameters.Identifier = keyValue[1];

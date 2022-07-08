@@ -6,12 +6,13 @@ In this example, we'll create a virtual network. Since the SDK follows the resou
 ## Import the namespaces
 These are the namespaces needed for this project:
 ```C#
+using System;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Network;
-using System;
-using System.Threading.Tasks;
 ```
 
 ## Create a Resource Group

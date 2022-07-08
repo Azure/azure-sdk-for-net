@@ -1696,6 +1696,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task AppendBlockFromUriAsync_NullOptions()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateIfNotExistsAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateIfNotExistsAsync();
+
+                // Act
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri);
+
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            }
+        }
+
+        [RecordedTest]
         public async Task AppendBlockAsync_NullStream_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArmApplicationManagedIdentityType))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ArmApplicationManagedIdentityType.Value.ToSerialString());
+                writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {

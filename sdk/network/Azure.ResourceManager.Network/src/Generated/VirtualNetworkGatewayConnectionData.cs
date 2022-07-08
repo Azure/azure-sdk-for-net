@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGatewayConnection data model. </summary>
-    public partial class VirtualNetworkGatewayConnectionData : NetworkResourceData
+    public partial class VirtualNetworkGatewayConnectionData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionData. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
@@ -63,14 +64,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="useLocalAzureIPAddress"> Use private local Azure IP for the connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
-        /// <param name="iPsecPolicies"> The IPSec Policies to be considered by this connection. </param>
+        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
         /// <param name="trafficSelectorPolicies"> The Traffic Selector Policies to be considered by this connection. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
-        internal VirtualNetworkGatewayConnectionData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, string resourceGuid, ProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkGatewayConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             AuthorizationKey = authorizationKey;
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             VirtualNetworkGateway2 = virtualNetworkGateway2;
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network
             EnableBgp = enableBgp;
             UseLocalAzureIPAddress = useLocalAzureIPAddress;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
-            IPsecPolicies = iPsecPolicies;
+            IPsecPolicies = ipsecPolicies;
             TrafficSelectorPolicies = trafficSelectorPolicies;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The authorizationKey. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The reference to virtual network gateway resource. </summary>
@@ -157,9 +158,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
         /// <summary> The resource GUID property of the virtual network gateway connection resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Bypass ExpressRoute Gateway for data forwarding. </summary>
         public bool? ExpressRouteGatewayBypass { get; set; }
     }

@@ -46,7 +46,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="encryption"> The encryption settings of the configuration store. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? creationOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
+        /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
+        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
+        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? creationOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -56,6 +60,10 @@ namespace Azure.ResourceManager.AppConfiguration
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            DisableLocalAuth = disableLocalAuth;
+            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
+            EnablePurgeProtection = enablePurgeProtection;
+            CreateMode = createMode;
         }
 
         /// <summary> The managed identity information, if configured. </summary>
@@ -93,5 +101,13 @@ namespace Azure.ResourceManager.AppConfiguration
         public IReadOnlyList<PrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        public bool? DisableLocalAuth { get; set; }
+        /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
+        public int? SoftDeleteRetentionInDays { get; set; }
+        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        public bool? EnablePurgeProtection { get; set; }
+        /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        public CreateMode? CreateMode { get; set; }
     }
 }

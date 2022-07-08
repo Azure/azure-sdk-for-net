@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ImmutabilityPolicyProperties DeserializeImmutabilityPolicyProperties(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IReadOnlyList<UpdateHistoryProperty>> updateHistory = default;
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<ImmutabilityPolicyState> state = default;
@@ -25,7 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("updateHistory"))
@@ -96,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ImmutabilityPolicyProperties(etag.Value, Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
+            return new ImmutabilityPolicyProperties(Optional.ToNullable(eTag), Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

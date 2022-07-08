@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-03-01-preview";
+            _apiVersion = apiVersion ?? "2022-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -395,19 +395,19 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="instanceName"> Instance name. </param>
-        /// <param name="data"> Updated tags. </param>
+        /// <param name="patch"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdateInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -428,19 +428,19 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="instanceName"> Instance name. </param>
-        /// <param name="data"> Updated tags. </param>
+        /// <param name="patch"> Updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="instanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeviceUpdateInstanceData> Update(string subscriptionId, string resourceGroupName, string accountName, string instanceName, PatchableDeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdateInstanceData> Update(string subscriptionId, string resourceGroupName, string accountName, string instanceName, DeviceUpdateInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, instanceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

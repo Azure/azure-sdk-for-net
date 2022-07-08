@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(frontendIPConfigurationName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
-        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
-        /// </summary>
-        /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<FrontendIPConfigurationResource>> GetIfExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
-
-            using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<FrontendIPConfigurationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
-        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
-        /// </summary>
-        /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual Response<FrontendIPConfigurationResource> GetIfExists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
-
-            using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<FrontendIPConfigurationResource>(null, response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

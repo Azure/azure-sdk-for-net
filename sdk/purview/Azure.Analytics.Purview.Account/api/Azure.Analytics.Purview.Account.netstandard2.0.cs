@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Account
     public partial class PurviewAccountClient
     {
         protected PurviewAccountClient() { }
-        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options = null) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewAccountClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Account.PurviewAccountClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetAccessKeys(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAccessKeysAsync(Azure.RequestContext context = null) { throw null; }

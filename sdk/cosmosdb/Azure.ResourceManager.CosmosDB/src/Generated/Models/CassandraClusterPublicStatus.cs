@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>
         internal CassandraClusterPublicStatus()
         {
-            ConnectionErrors = new ChangeTrackingList<ConnectionError>();
+            ConnectionErrors = new ChangeTrackingList<CassandraConnectionError>();
             DataCenters = new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
         }
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
-        internal CassandraClusterPublicStatus(string eTag, ManagedCassandraReaperStatus reaperStatus, IReadOnlyList<ConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
+        internal CassandraClusterPublicStatus(ETag? eTag, ManagedCassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
         {
             ETag = eTag;
             ReaperStatus = reaperStatus;
@@ -34,11 +35,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets the e tag. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> Gets the reaper status. </summary>
         public ManagedCassandraReaperStatus ReaperStatus { get; }
         /// <summary> List relevant information about any connection errors to the Datacenters. </summary>
-        public IReadOnlyList<ConnectionError> ConnectionErrors { get; }
+        public IReadOnlyList<CassandraConnectionError> ConnectionErrors { get; }
         /// <summary> List of the status of each datacenter in this cluster. </summary>
         public IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> DataCenters { get; }
     }

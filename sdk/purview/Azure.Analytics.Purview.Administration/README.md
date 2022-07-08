@@ -13,7 +13,7 @@ Azure Purview Administration contains the Purview Account and Purview MetdataPol
 Install the Azure Purview Administration client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Administration
+dotnet add package Azure.Analysis.Purview.Administration --prerelease
 ```
 
 ### Prerequisites

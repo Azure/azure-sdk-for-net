@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,66 +239,8 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(linkId, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
-        /// Operation Id: ReplicationLinks_Get
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual async Task<Response<ReplicationLinkResource>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
-
-            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ReplicationLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}
-        /// Operation Id: ReplicationLinks_Get
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual Response<ReplicationLinkResource> GetIfExists(string linkId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
-
-            using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _replicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ReplicationLinkResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

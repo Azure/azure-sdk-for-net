@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> GetServerDatabaseSchemaTableColumnSensitivityLabelAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return await GetServerDatabaseSchemaTableColumnSensitivityLabels().GetAsync(sensitivityLabelSource, cancellationToken).ConfigureAwait(false);
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetServerDatabaseSchemaTableColumnSensitivityLabel(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return GetServerDatabaseSchemaTableColumnSensitivityLabels().Get(sensitivityLabelSource, cancellationToken);

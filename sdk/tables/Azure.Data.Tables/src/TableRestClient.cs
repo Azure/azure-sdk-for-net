@@ -71,11 +71,9 @@ namespace Azure.Data.Tables
             {
                 case 202:
                     {
-                        var responses = await Multipart.ParseAsync(
-                                message.Response.ContentStream,
-                                message.Response.Headers.ContentType,
+                        var responses = await MultipartResponse.ParseAsync(
+                                message.Response,
                                 false,
-                                true,
                                 cancellationToken)
                             .ConfigureAwait(false);
 
@@ -85,13 +83,12 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = await ClientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
-
+                        RequestFailedException rfex = new(failedSubResponse);
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -111,13 +108,10 @@ namespace Azure.Data.Tables
             {
                 case 202:
                     {
-                        var responses = Multipart.ParseAsync(
-                                message.Response.ContentStream,
-                                message.Response.Headers.ContentType,
+                        var responses = MultipartResponse.Parse(
+                                message.Response,
                                 false,
-                                false,
-                                cancellationToken)
-                            .EnsureCompleted();
+                                cancellationToken);
 
                         var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
                         if (failedSubResponse == null)
@@ -125,7 +119,7 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        RequestFailedException rfex = ClientDiagnostics.CreateRequestFailedException(responses[0]);
+                        RequestFailedException rfex = new(failedSubResponse);
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }

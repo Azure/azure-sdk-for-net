@@ -50,23 +50,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
         /// Operation Id: Deployments_CreateOrUpdateAtScope
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="parameters"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ArmDeploymentInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -83,23 +83,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
         /// Operation Id: Deployments_CreateOrUpdateAtScope
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="parameters"> Additional parameters supplied to the operation. </param>
+        /// <param name="content"> Additional parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ArmDeploymentInput parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ArmDeploymentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id, deploymentName, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id, deploymentName, content, cancellationToken);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,66 +301,8 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(deploymentName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
-        /// Operation Id: Deployments_GetAtScope
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual async Task<Response<ArmDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ArmDeploymentResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
-        /// Operation Id: Deployments_GetAtScope
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        public virtual Response<ArmDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _armDeploymentDeploymentsRestClient.GetAtScope(Id, deploymentName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ArmDeploymentResource>(null, response.GetRawResponse());
-                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

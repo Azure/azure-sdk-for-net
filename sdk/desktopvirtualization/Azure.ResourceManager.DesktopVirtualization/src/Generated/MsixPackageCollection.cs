@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
         /// Operation Id: MSIXPackages_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
         /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
         /// Operation Id: MSIXPackages_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
         /// <param name="data"> Object containing  MSIX Package definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,66 +305,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(msixPackageFullName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
-        /// Operation Id: MSIXPackages_Get
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual async Task<Response<MsixPackageResource>> GetIfExistsAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-
-            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<MsixPackageResource>(null, response.GetRawResponse());
-                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}
-        /// Operation Id: MSIXPackages_Get
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        public virtual Response<MsixPackageResource> GetIfExists(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-
-            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<MsixPackageResource>(null, response.GetRawResponse());
-                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.DeleteAsync(WaitUntil.Completed);
 
             //validate if deleted successfully
-            FileShareResource fileShare3 = await _fileShareCollection.GetIfExistsAsync(fileShareName);
-            Assert.IsNull(fileShare3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _fileShareCollection.GetAsync(fileShareName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _fileShareCollection.ExistsAsync(fileShareName));
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task CreateDeleteListFileShareSnapshot()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareAccessPolicy()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
             SignedIdentifier sig1 = new SignedIdentifier("testSig1",
-                new AccessPolicy(startOn: start1,
-                    expiryOn: end1,
+                new StorageServiceAccessPolicy(startOn: start1,
+                    expireOn: end1,
                     permission: "rw"));
             SignedIdentifier sig2 = new SignedIdentifier("testSig2",
-                new AccessPolicy(startOn: start2,
-                    expiryOn: end2,
+                new StorageServiceAccessPolicy(startOn: start2,
+                    expireOn: end2,
                     permission: "rwdl"));
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task FileShareLease()
         {
             //update storage account to v2
-            PatchableStorageAccountData updateParameters = new PatchableStorageAccountData()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
                 Kind = StorageKind.StorageV2
             };
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string proposedLeaseID1 = "ca761232-ed42-11ce-bacd-00aa0057b223";
             string proposedLeaseID2 = "dd761232-ed42-11ce-bacd-00aa0057b444";
             LeaseShareResponse leaseResponse;
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
@@ -312,24 +312,24 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
 
             //renew lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             // change lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Change) { LeaseId = proposedLeaseID1, ProposedLeaseId = proposedLeaseID2 });
             Assert.AreEqual(proposedLeaseID2, leaseResponse.LeaseId);
 
             //break lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Break) { BreakPeriod = 20 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Break) { BreakPeriod = 20 });
             Assert.AreEqual("20", leaseResponse.LeaseTimeSeconds);
 
             //release lease share
-            leaseResponse = await share.LeaseAsync(parameters: new LeaseShareRequest(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
+            leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Release) { LeaseId = proposedLeaseID2 });
             Assert.IsNull(leaseResponse.LeaseId);
 
             //lease share snapshot
             leaseResponse = await share.LeaseAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"),
-                parameters: new LeaseShareRequest(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
+                content: new LeaseShareContent(LeaseShareAction.Acquire) { LeaseDuration = 60, ProposedLeaseId = proposedLeaseID1 });
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
@@ -371,32 +371,37 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             FileServiceData properties1 = _fileService.Data;
             FileServiceData properties2 = new FileServiceData();
-            properties2.Cors = new CorsRules();
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
-                100, new string[] { "x-ms-meta-*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
-                2, new string[] { "*" },
-                new string[] { "*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
-                2000, new string[] { "x-ms-meta-12345675754564*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
+            properties2.Cors = new StorageCorsRules()
+            {
+                CorsRules =
+                {
+                    new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                        100, new string[] { "x-ms-meta-*" },
+                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                        ),
+                    new StorageCorsRule(new string[] { "*" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
+                        2, new string[] { "*" },
+                        new string[] { "*" }
+                        ),
+                    new StorageCorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                        2000, new string[] { "x-ms-meta-12345675754564*" },
+                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                        )
+                }
+            };
 
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties3.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties3.Cors.CorsRules.Count);
+            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties3.Cors.CorsRulesValue[i];
+                var putRule = properties2.Cors.CorsRules[i];
+                var getRule = properties3.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -410,11 +415,11 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties4.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties4.Cors.CorsRules.Count);
+            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties4.Cors.CorsRulesValue[i];
+                var putRule = properties2.Cors.CorsRules[i];
+                var getRule = properties4.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2021-04-10";
+        public const string DefaultSasVersion = "2021-08-06";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -89,6 +89,8 @@ namespace Azure.Storage
 
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
+        public const string QueryDelimiter = "?";
+        public const string PathBackSlashDelimiter = "/";
 
         public const string FalseName = "false";
         public const string TrueName = "true";
@@ -435,7 +437,7 @@ namespace Azure.Storage
                 public const string ContainerVersion = "containerVersion";
                 public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
-                public const string PageBlob = "pageBlob";
+                public const string PageBlob = "PageBlob";
                 public const string AppendBlob = "AppendBlob";
                 public const string ContentOffset = "contentOffset";
                 public const string DestinationUrl = "destinationUrl";
@@ -631,15 +633,11 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
-            public const ClientSideEncryptionVersion CurrentVersion = ClientSideEncryptionVersion.V1_0;
-
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
 
             public const string AesCbcNoPadding = "AES/CBC/NoPadding";
-
-            public const string Aes = "AES";
 
             public const string EncryptionDataKey = "encryptiondata";
 
@@ -650,6 +648,24 @@ namespace Azure.Storage
             public const int EncryptionKeySizeBits = 256;
 
             public const string XMsRange = "x-ms-range";
+
+            internal static class V2
+            {
+                public const int EncryptionRegionDataSize = 4 * MB;
+                public const int NonceSize = 12;
+                public const int TagSize = 16;
+                public const int EncryptionRegionTotalSize = NonceSize + EncryptionRegionDataSize + TagSize;
+
+                public const int WrappedDataVersionLength = 8;
+            }
+
+            public const string BCRYPT_AES_ALGORITHM = "AES";
+
+            public const string BCRYPT_CHAIN_MODE_GCM = "ChainingModeGCM";
+
+            public const string BCRYPT_CHAINING_MODE = "ChainingMode";
+
+            internal const string BCryptdll = "BCrypt.dll";
         }
 
         /// <summary>

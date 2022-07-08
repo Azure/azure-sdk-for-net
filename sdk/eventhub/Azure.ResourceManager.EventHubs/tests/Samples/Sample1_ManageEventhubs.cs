@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #endregion
             #region Snippet:Managing_EventHubs_CreateNamespace
             string namespaceName = "myNamespace";
-            EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
+            EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(location))).Value;
             EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
             #endregion
             this.eventHubCollection = eventHubCollection;
@@ -65,23 +65,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         {
             #region Snippet:Managing_EventHubs_GetEventHub
             EventHubResource eventHub = await eventHubCollection.GetAsync("myEventHub");
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_EventHubs_GetEventHubIfExists
-            EventHubResource eventHub = await eventHubCollection.GetIfExistsAsync("foo");
-            if (eventHub != null)
-            {
-                Console.WriteLine("eventHub 'foo' exists");
-            }
-            if (await eventHubCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("eventHub 'bar' exists");
-            }
             #endregion
         }
 

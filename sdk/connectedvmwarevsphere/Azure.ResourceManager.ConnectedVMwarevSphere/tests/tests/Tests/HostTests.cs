@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             // check for exists host
-            host1 = await _hostCollection.GetIfExistsAsync(hostName);
-            Assert.AreEqual(host1.Id.Name, hostName);
+            bool exists = await _hostCollection.ExistsAsync(hostName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]

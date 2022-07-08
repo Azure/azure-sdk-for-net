@@ -70,17 +70,17 @@ var vnetData = new VirtualNetworkData()
             AddressPrefix = "10.10.2.0/24",
             Delegations =
             {
-                new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
+                new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
             },
-            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
         }
     },
 };
 vnetData.AddressPrefixes.Add("10.10.0.0/16");
 string vnetName = "myVnet";
 var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
+ResourceIdentifier subnetId = new ResourceIdentifier($"{vnet.Value.Data.Id}/subnets/ManagedInstance");
 
 //4. create ManagedInstance
 ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
@@ -89,10 +89,9 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     AdministratorLoginPassword = "abcdef123456789*",
     SubnetId = subnetId,
     PublicDataEndpointEnabled = false,
-    MaintenanceConfigurationId = "/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+    MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
     ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
     TimezoneId = "UTC",
-    StorageAccountType = new StorageAccountType("GRS"),
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
@@ -119,23 +118,6 @@ ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedIn
 
 ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
 Console.WriteLine(managedInstance.Data.Name);
-```
-
-***Try to get a managed instance if it exists***
-
-```C# Snippet:Managing_Sql_GetAManagedInstanceIfExists
-ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-ManagedInstanceResource managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-if (managedInstance != null)
-{
-    Console.WriteLine(managedInstance.Data.Name);
-}
-
-if (await managedInstanceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
 ```
 
 ***Delete a managed instance***

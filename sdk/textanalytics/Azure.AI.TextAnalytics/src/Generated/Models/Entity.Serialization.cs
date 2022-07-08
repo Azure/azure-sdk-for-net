@@ -10,8 +10,29 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Entity
+    internal partial class Entity : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("category");
+            writer.WriteStringValue(Category);
+            if (Optional.IsDefined(Subcategory))
+            {
+                writer.WritePropertyName("subcategory");
+                writer.WriteStringValue(Subcategory);
+            }
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            writer.WriteEndObject();
+        }
+
         internal static Entity DeserializeEntity(JsonElement element)
         {
             string text = default;

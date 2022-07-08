@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdSecretName = Recording.GenerateAssetName("AFDSecret-");
-            AfdSecret afdSecret = await CreateAfdSecret(afdProfile, afdSecretName);
+            FrontDoorSecretResource afdSecret = await CreateAfdSecret(afdProfileResource, afdSecretName);
             Assert.AreEqual(afdSecretName, afdSecret.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecret.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().CreateOrUpdateAsync(WaitUntil.Completed, afdSecretName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorSecrets().CreateOrUpdateAsync(WaitUntil.Completed, null, afdSecret.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorSecrets().CreateOrUpdateAsync(WaitUntil.Completed, afdSecretName, null));
         }
 
         [TestCase]
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdSecretName = Recording.GenerateAssetName("AFDSecret-");
-            _ = await CreateAfdSecret(afdProfile, afdSecretName);
+            _ = await CreateAfdSecret(afdProfileResource, afdSecretName);
             int count = 0;
-            await foreach (var tempSecret in afdProfile.GetAfdSecrets().GetAllAsync())
+            await foreach (var tempSecret in afdProfileResource.GetFrontDoorSecrets().GetAllAsync())
             {
                 count++;
             }
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdSecretName = Recording.GenerateAssetName("AFDSecret-");
-            AfdSecret afdSecret = await CreateAfdSecret(afdProfile, afdSecretName);
-            AfdSecret getAfdSecret = await afdProfile.GetAfdSecrets().GetAsync(afdSecretName);
+            FrontDoorSecretResource afdSecret = await CreateAfdSecret(afdProfileResource, afdSecretName);
+            FrontDoorSecretResource getAfdSecret = await afdProfileResource.GetFrontDoorSecrets().GetAsync(afdSecretName);
             ResourceDataHelper.AssertValidAfdSecret(afdSecret, getAfdSecret);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdSecrets().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorSecrets().GetAsync(null));
         }
     }
 }

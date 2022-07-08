@@ -25,5 +25,7 @@ namespace Azure.Graph.Rbac.Models
         public string UserPrincipalName { get; set; }
         /// <summary> The mail alias for the user. </summary>
         public string MailNickname { get; set; }
+        /// <summary> The primary email address of the user. </summary>
+        public string Mail { get; set; }
     }
 }

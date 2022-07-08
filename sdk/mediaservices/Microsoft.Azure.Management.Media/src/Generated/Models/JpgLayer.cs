@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.Media.Models
     /// <summary>
     /// Describes the settings to produce a JPEG image from the input video.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.JpgLayer")]
     public partial class JpgLayer : Layer
     {
         /// <summary>

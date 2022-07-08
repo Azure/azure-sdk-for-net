@@ -7,23 +7,37 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 tag: package-2021-11
+output-folder: $(this-folder)/Generated
 require: https://github.com/Azure/azure-rest-api-specs/blob/8fb0263a6adbb529a9a7bf3e56110f3abdd55c72/specification/eventhub/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-mgmt-debug:
-  show-request-path: true
+
+modelerfour:
+  flatten-payloads: false
+
 request-path-to-resource-name:
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: DisasterRecoveryAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}: EventHubsDisasterRecovery
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: EventHubsDisasterRecoveryAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}: EventHubAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: EventHubsNamespaceAuthorizationRule
+    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}: EventHubsConsumerGroup
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckEventHubNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+    Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
+    DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -34,83 +48,90 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+
+rename-mapping:
+  SchemaType: EventHubsSchemaType
+  SchemaCompatibility: EventHubsSchemaCompatibility
+  KeySource: EventHubsEncryptionKeySource
+  UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
-    - rename-model:
-        from: ArmDisasterRecovery
-        to: DisasterRecovery
-    - rename-model:
-        from: Eventhub
-        to: EventHub
-    - rename-model:
-        from: EHNamespace
-        to: EventHubNamespace
-    - rename-model:
-        from: Cluster
-        to: EventHubCluster
-    - rename-model:
-        from: EHNamespaceIdListResult
-        to: EventHubNamespaceIdListResult
-    - rename-model:
-        from: EHNamespaceListResult
-        to: EventHubNamespaceListResult
-    - rename-model:
-        from: NWRuleSetIpRules
-        to: NetworkRuleSetIPRules
-    - rename-model:
-        from: NWRuleSetVirtualNetworkRules
-        to: NetworkRuleSetVirtualNetworkRules
-    - rename-model:
-        from: CheckNameAvailabilityParameter
-        to: CheckNameAvailabilityOptions
-    - rename-model:
-        from: RegenerateAccessKeyParameters
-        to: RegenerateAccessKeyOptions
-    - rename-model:
-        from: Destination
-        to: EventHubDestination
-    - rename-model:
-        from: Encryption
-        to: EventHubEncryption
-# change the type name of Identity so that it can be replaced by ResourceIdentity
-    - from: swagger-document
-      where: $.definitions.Identity.properties.type["x-ms-enum"]["name"]
-      transform: return "ResourceIdentityType"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].put.operationId
-      transform: return "EventHubClusters_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].patch.operationId
-      transform: return "EventHubClusters_Update"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}'].delete.operationId
-      transform: return "EventHubClusters_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}'].put.operationId
-      transform: return "DisasterRecoveries_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}'].delete.operationId
-      transform: return "DisasterRecoveries_Delete"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].put.operationId
-      transform: return "EventHubNamespaces_CreateOrUpdate"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].patch.operationId
-      transform: return "EventHubNamespaces_Update"
-    - from: swagger-document
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}'].delete.operationId
-      transform: return "EventHubNamespaces_Delete"
-    - from: swagger-document
-      where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
+    - from: AuthorizationRules.json
+      where: $.definitions
       transform: >
-        $['x-ms-enum'] = {
-          "name": "ProvisioningStateDisasterRecovery",
-          "modelAsString": false
-        }
+        $.AuthorizationRule['x-ms-client-name'] = 'EventHubsAuthorizationRule';
+        $.AuthorizationRule.properties.properties.properties.rights.items['x-ms-enum'].name = 'EventHubsAccessRight';
+        $.AccessKeys['x-ms-client-name'] = 'EventHubsAccessKeys';
+        $.RegenerateAccessKeyParameters['x-ms-client-name'] = 'EventHubsRegenerateAccessKeyContent';
+        $.RegenerateAccessKeyParameters.properties.keyType['x-ms-enum'].name = 'EventHubsAccessKeyType';
+    - from: consumergroups.json
+      where: $.definitions
+      transform: >
+        $.ConsumerGroup['x-ms-client-name'] = 'EventHubsConsumerGroup';
+    - from: disasterRecoveryConfigs.json
+      where: $.definitions
+      transform: >
+        $.ArmDisasterRecovery['x-ms-client-name'] = 'EventHubsDisasterRecovery';
+        $.ArmDisasterRecovery.properties.properties.properties.provisioningState['x-ms-enum'].name = 'EventHubsDisasterRecoveryProvisioningState';
+        $.ArmDisasterRecovery.properties.properties.properties.role['x-ms-enum'].name = 'EventHubsDisasterRecoveryRole';
+        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubsNameAvailabilityContent';
+        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubsNameAvailabilityResult';
+    - from: Clusters-preview.json
+      where: $.definitions
+      transform: >
+        $.Cluster['x-ms-client-name'] = 'EventHubsCluster';
+        $.Cluster.properties.properties.properties.createdAt['format'] = 'date-time';
+        $.Cluster.properties.properties.properties.updatedAt['format'] = 'date-time';
+        $.ClusterSku['x-ms-client-name'] = 'EventHubsClusterSku';
+        $.ClusterSku.properties.name['x-ms-enum'].name = 'EventHubsClusterSkuName';
+    - from: eventhubs.json
+      where: $.definitions
+      transform: >
+        $.Eventhub['x-ms-client-name'] = 'EventHub';
+        $.Eventhub.properties.properties.properties.status['x-ms-enum'].name = 'EventHubEntityStatus';
+        $.Destination['x-ms-client-name'] = 'EventHubDestination';
+        $.Destination.properties.properties.properties.storageAccountResourceId['x-ms-format'] = 'arm-id';
+    - from: namespaces-preview.json
+      where: $.definitions
+      transform: >
+        $.EHNamespace['x-ms-client-name'] = 'EventHubsNamespace';
+        $.EHNamespace.properties.properties.properties.clusterArmId['x-ms-format'] = 'arm-id';
+        $.PrivateLinkResource['x-ms-client-name'] = 'EventHubsPrivateLinkResourceData';
+        $.PrivateEndpointConnectionProperties.properties.provisioningState['x-ms-enum'].name = 'EventHubsPrivateEndpointConnectionProvisioningState';
+        $.ConnectionState['x-ms-client-name'] = 'EventHubsPrivateLinkServiceConnectionState';
+        $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
+        $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
+        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
+    - from: CheckNameAvailability.json
+      where: $.definitions
+      transform: >
+        $.CheckNameAvailabilityParameter['x-ms-client-name'] = 'EventHubsNameAvailabilityContent';
+        $.CheckNameAvailabilityResult['x-ms-client-name'] = 'EventHubsNameAvailabilityResult';
+        $.UnavailableReason['x-ms-client-name'] = 'EventHubsNameUnavailableReason';
+    - from: networkrulessets-preview.json
+      where: $.definitions
+      transform: >
+        $.NetworkRuleSet['x-ms-client-name'] = 'EventHubsNetworkRuleSet';
+        $.NetworkRuleSet.properties.properties.properties.defaultAction['x-ms-enum'].name = 'EventHubsNetworkRuleSetDefaultAction';
+        $.NetworkRuleSet.properties.properties.properties.publicNetworkAccess['x-ms-enum'].name = 'EventHubsPublicNetworkAccessFlag';
+        $.NWRuleSetIpRules['x-ms-client-name'] = 'EventHubsNetworkRuleSetIPRules';
+        $.NWRuleSetIpRules.properties.action['x-ms-enum'].name = 'EventHubsNetworkRuleIPAction';
+        $.NWRuleSetVirtualNetworkRules['x-ms-client-name'] = 'EventHubsNetworkRuleSetVirtualNetworkRules';
+    - from: SchemaRegistry.json
+      where: $.definitions
+      transform: >
+        $.SchemaGroup['x-ms-client-name'] = 'EventHubsSchemaGroup';
+        delete $.SchemaGroup.properties.properties.properties.eTag['format'];
+#        $.SchemaGroup.properties.properties.properties.eTag['x-ms-format'] = 'etag';
+    - from: AvailableClusterRegions-preview.json
+      where: $.definitions
+      transform: >
+        $.AvailableCluster.properties.location['x-ms-format'] = 'azure-location';
 ```
 

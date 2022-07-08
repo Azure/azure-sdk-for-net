@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Uri probeURL = new Uri("https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt");
-            ValidateProbeInput validateProbeInput2 = new ValidateProbeInput(probeURL);
-            ValidateProbeOutput ValidateProbeOutput = await subscription.ValidateProbeAsync(validateProbeInput2);
-            Assert.True(ValidateProbeOutput.IsValid);
+            ValidateProbeContent validateProbeInput2 = new ValidateProbeContent(probeURL);
+            ValidateProbeResult validateProbeResult = await subscription.ValidateProbeAsync(validateProbeInput2);
+            Assert.True(validateProbeResult.IsValid);
             probeURL = new Uri("https://www.notexist.com/notexist/notexist.txt");
-            ValidateProbeInput validateProbeInput3 = new ValidateProbeInput(probeURL);
-            ValidateProbeOutput = await subscription.ValidateProbeAsync(validateProbeInput3);
-            Assert.False(ValidateProbeOutput.IsValid);
+            ValidateProbeContent validateProbeInput3 = new ValidateProbeContent(probeURL);
+            validateProbeResult = await subscription.ValidateProbeAsync(validateProbeInput3);
+            Assert.False(validateProbeResult.IsValid);
         }
     }
 }

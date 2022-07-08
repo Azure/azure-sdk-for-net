@@ -17,7 +17,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure Synapse Analytics access control client library for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.AccessControl/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.Synapse.AccessControl --version 0.1.0-preview.1
+dotnet add package Azure.Analytics.Synapse.AccessControl --prerelease
 ```
 
 ### Prerequisites
@@ -47,8 +47,8 @@ You will also need a **workspace endpoint**, which you may see as "Development e
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 ## Key concepts
@@ -135,7 +135,7 @@ var roleAssignmentDetails = new
     scope = assignedScope
 };
 
-Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
 BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
 JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
 string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();

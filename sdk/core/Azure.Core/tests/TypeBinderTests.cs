@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using NUnit.Framework;
 
-namespace Azure.Monitor.Query.Tests
+namespace Azure.Core.Tests
 {
     public class TypeBinderTests
     {

@@ -15,15 +15,10 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)  
 
-Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
-- via Package Manager: 
-   ```powershell
-   Install-Package Azure.Monitor.OpenTelemetry.Exporter
-   ```
-- via .NET CLI: 
-   ```dotnetcli
-   dotnet add package Azure.Monitor.OpenTelemetry.Exporter
-   ```
+Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter --prerelease
+```
 
 ### Authenticate the client
 

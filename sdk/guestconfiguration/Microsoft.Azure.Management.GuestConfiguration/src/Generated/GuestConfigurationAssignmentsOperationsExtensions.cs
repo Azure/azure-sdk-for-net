@@ -165,6 +165,68 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             }
 
             /// <summary>
+            /// List all guest configuration assignments for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IEnumerable<GuestConfigurationAssignment> SubscriptionList(this IGuestConfigurationAssignmentsOperations operations)
+            {
+                return operations.SubscriptionListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all guest configuration assignments for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<GuestConfigurationAssignment>> SubscriptionListAsync(this IGuestConfigurationAssignmentsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SubscriptionListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all guest configuration assignments for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            public static IEnumerable<GuestConfigurationAssignment> RGList(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName)
+            {
+                return operations.RGListAsync(resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all guest configuration assignments for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<GuestConfigurationAssignment>> RGListAsync(this IGuestConfigurationAssignmentsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RGListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all guest configuration assignments for a virtual machine.
             /// </summary>
             /// <param name='operations'>

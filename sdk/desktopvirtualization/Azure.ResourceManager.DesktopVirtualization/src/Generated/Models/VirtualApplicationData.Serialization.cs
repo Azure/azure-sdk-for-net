@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
@@ -124,11 +124,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -245,7 +250,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationData(id, name, type, systemData, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
+            return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value);
         }
     }
 }

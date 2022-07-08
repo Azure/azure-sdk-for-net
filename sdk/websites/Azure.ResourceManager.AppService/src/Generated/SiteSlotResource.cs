@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
@@ -126,6 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
@@ -147,6 +149,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotPrivateEndpointConnectionResource>> GetSiteSlotPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
@@ -161,6 +164,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotPrivateEndpointConnectionResource> GetSiteSlotPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
@@ -183,6 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> GetSiteSlotHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotHybridConnectionNamespaceRelays().GetAsync(namespaceName, relayName, cancellationToken).ConfigureAwait(false);
@@ -198,6 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> GetSiteSlotHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
@@ -219,6 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionResource>> GetSiteSlotVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotVirtualNetworkConnections().GetAsync(vnetName, cancellationToken).ConfigureAwait(false);
@@ -233,6 +240,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotVirtualNetworkConnectionResource> GetSiteSlotVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotVirtualNetworkConnections().Get(vnetName, cancellationToken);
@@ -254,6 +262,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDiagnosticResource>> GetSiteSlotDiagnosticAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDiagnostics().GetAsync(diagnosticCategory, cancellationToken).ConfigureAwait(false);
@@ -268,6 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDiagnosticResource> GetSiteSlotDiagnostic(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDiagnostics().Get(diagnosticCategory, cancellationToken);
@@ -296,6 +306,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotBackupResource>> GetSiteSlotBackupAsync(string backupId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotBackups().GetAsync(backupId, cancellationToken).ConfigureAwait(false);
@@ -310,6 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotBackupResource> GetSiteSlotBackup(string backupId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotBackups().Get(backupId, cancellationToken);
@@ -345,6 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotConfigAppSettingResource>> GetSiteSlotConfigAppSettingAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotConfigAppSettings().GetAsync(appSettingKey, cancellationToken).ConfigureAwait(false);
@@ -359,6 +372,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotConfigAppSettingResource> GetSiteSlotConfigAppSetting(string appSettingKey, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotConfigAppSettings().Get(appSettingKey, cancellationToken);
@@ -380,6 +394,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotConfigConnectionStringResource>> GetSiteSlotConfigConnectionStringAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotConfigConnectionStrings().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
@@ -394,6 +409,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotConfigConnectionStringResource> GetSiteSlotConfigConnectionString(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotConfigConnectionStrings().Get(connectionStringKey, cancellationToken);
@@ -429,6 +445,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotContinuousWebJobResource>> GetSiteSlotContinuousWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotContinuousWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
@@ -443,6 +460,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotContinuousWebJobResource> GetSiteSlotContinuousWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotContinuousWebJobs().Get(webJobName, cancellationToken);
@@ -464,6 +482,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDeploymentResource>> GetSiteSlotDeploymentAsync(string id, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDeployments().GetAsync(id, cancellationToken).ConfigureAwait(false);
@@ -478,6 +497,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDeploymentResource> GetSiteSlotDeployment(string id, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDeployments().Get(id, cancellationToken);
@@ -499,6 +519,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotDomainOwnershipIdentifierResource>> GetSiteSlotDomainOwnershipIdentifierAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDomainOwnershipIdentifiers().GetAsync(domainOwnershipIdentifierName, cancellationToken).ConfigureAwait(false);
@@ -513,6 +534,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotDomainOwnershipIdentifierResource> GetSiteSlotDomainOwnershipIdentifier(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDomainOwnershipIdentifiers().Get(domainOwnershipIdentifierName, cancellationToken);
@@ -541,6 +563,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotFunctionResource>> GetSiteSlotFunctionAsync(string functionName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
@@ -555,6 +578,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotFunctionResource> GetSiteSlotFunction(string functionName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotFunctions().Get(functionName, cancellationToken);
@@ -576,6 +600,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotHostNameBindingResource>> GetSiteSlotHostNameBindingAsync(string hostName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotHostNameBindings().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
@@ -590,6 +615,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotHostNameBindingResource> GetSiteSlotHostNameBinding(string hostName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotHostNameBindings().Get(hostName, cancellationToken);
@@ -611,6 +637,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotHybridconnectionResource>> GetSiteSlotHybridconnectionAsync(string entityName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotHybridconnections().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
@@ -625,6 +652,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotHybridconnectionResource> GetSiteSlotHybridconnection(string entityName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotHybridconnections().Get(entityName, cancellationToken);
@@ -646,6 +674,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotInstanceResource>> GetSiteSlotInstanceAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotInstances().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
@@ -660,6 +689,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotInstanceResource> GetSiteSlotInstance(string instanceId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotInstances().Get(instanceId, cancellationToken);
@@ -681,6 +711,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotProcessResource>> GetSiteSlotProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
@@ -695,6 +726,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotProcessResource> GetSiteSlotProcess(string processId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotProcesses().Get(processId, cancellationToken);
@@ -723,6 +755,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotPremierAddOnResource>> GetSiteSlotPremierAddOnAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotPremierAddOns().GetAsync(premierAddOnName, cancellationToken).ConfigureAwait(false);
@@ -737,6 +770,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotPremierAddOnResource> GetSiteSlotPremierAddOn(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotPremierAddOns().Get(premierAddOnName, cancellationToken);
@@ -765,6 +799,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotPublicCertificateResource>> GetSiteSlotPublicCertificateAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotPublicCertificates().GetAsync(publicCertificateName, cancellationToken).ConfigureAwait(false);
@@ -779,6 +814,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotPublicCertificateResource> GetSiteSlotPublicCertificate(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotPublicCertificates().Get(publicCertificateName, cancellationToken);
@@ -800,6 +836,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotSiteextensionResource>> GetSiteSlotSiteextensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotSiteextensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
@@ -814,6 +851,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotSiteextensionResource> GetSiteSlotSiteextension(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotSiteextensions().Get(siteExtensionId, cancellationToken);
@@ -842,6 +880,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFeaturesResource>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
             return await GetNetworkFeatures().GetAsync(view, cancellationToken).ConfigureAwait(false);
@@ -856,6 +895,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<NetworkFeaturesResource> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
         {
             return GetNetworkFeatures().Get(view, cancellationToken);
@@ -884,6 +924,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteTriggeredwebJobResource>> GetSiteTriggeredwebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             return await GetSiteTriggeredwebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
@@ -898,6 +939,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteTriggeredwebJobResource> GetSiteTriggeredwebJob(string webJobName, CancellationToken cancellationToken = default)
         {
             return GetSiteTriggeredwebJobs().Get(webJobName, cancellationToken);
@@ -919,6 +961,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotWebJobResource>> GetSiteSlotWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
@@ -933,6 +976,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<SiteSlotWebJobResource> GetSiteSlotWebJob(string webJobName, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotWebJobs().Get(webJobName, cancellationToken);
@@ -991,7 +1035,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_DeleteSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1019,7 +1063,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
         /// Operation Id: WebApps_DeleteSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2049,7 +2093,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/publishingcredentials/list
         /// Operation Id: WebApps_ListPublishingCredentialsSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<UserResource>> GetPublishingCredentialsSlotAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -2075,7 +2119,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/publishingcredentials/list
         /// Operation Id: WebApps_ListPublishingCredentialsSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<UserResource> GetPublishingCredentialsSlot(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -2515,21 +2559,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
             try
             {
-                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, key, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2546,21 +2590,21 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="keyType"> The type of host key. </param>
         /// <param name="keyName"> The name of the key. </param>
-        /// <param name="key"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public virtual Response<KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
+        public virtual Response<KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, KeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.CreateOrUpdateHostSecretSlot");
             scope.Start();
             try
             {
-                var response = _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, key, cancellationToken);
+                var response = _siteSlotWebAppsRestClient.CreateOrUpdateHostSecretSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyType, keyName, info, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3007,7 +3051,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/startOperation
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
@@ -3036,7 +3080,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/startOperation
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
@@ -3520,10 +3564,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetPrivateLinkResourcesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePrivateLinkResource> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetPrivateLinkResourcesSlot");
                 scope.Start();
@@ -3547,10 +3591,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetPrivateLinkResourcesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePrivateLinkResource> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.GetPrivateLinkResourcesSlot");
                 scope.Start();
@@ -3717,7 +3761,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromBackupBlob
         /// Operation Id: WebApps_RestoreFromBackupBlobSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
@@ -3747,7 +3791,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromBackupBlob
         /// Operation Id: WebApps_RestoreFromBackupBlobSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
@@ -3777,7 +3821,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromDeletedApp
         /// Operation Id: WebApps_RestoreFromDeletedAppSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
@@ -3807,7 +3851,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromDeletedApp
         /// Operation Id: WebApps_RestoreFromDeletedAppSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
@@ -3837,7 +3881,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreSnapshot
         /// Operation Id: WebApps_RestoreSnapshotSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
@@ -3867,7 +3911,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreSnapshot
         /// Operation Id: WebApps_RestoreSnapshotSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
@@ -3987,9 +4031,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary>
         /// Description for Swaps two deployment slots of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap
-        /// Operation Id: WebApps_SwapSlot
+        /// Operation Id: WebApps_SwapSlotSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
@@ -4017,9 +4061,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary>
         /// Description for Swaps two deployment slots of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap
-        /// Operation Id: WebApps_SwapSlot
+        /// Operation Id: WebApps_SwapSlotSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
@@ -4261,7 +4305,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/startNetworkTrace
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
@@ -4290,7 +4334,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/startNetworkTrace
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>

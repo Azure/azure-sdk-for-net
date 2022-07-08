@@ -111,44 +111,5 @@ namespace Azure.Storage.Blobs.Tests
         //    return base.ParallelUploadOneShotSuccessfulHashComputation(algorithm);
         //}
         #endregion
-
-        #region Added Tests
-        [TestCase(ValidationAlgorithm.MD5)]
-        [TestCase(ValidationAlgorithm.StorageCrc64)]
-        public async Task HashingAndClientSideEncryptionIncompatible(ValidationAlgorithm algorithm)
-        {
-            await using var disposingContainer = await GetDisposingContainerAsync();
-
-            // Arrange
-            const int dataSize = Constants.KB;
-            var data = GetRandomBuffer(dataSize);
-
-            var hashingOptions = new UploadTransferValidationOptions
-            {
-                Algorithm = algorithm
-            };
-
-            var encryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
-            {
-                KeyEncryptionKey = new Mock<Core.Cryptography.IKeyEncryptionKey>().Object,
-                KeyWrapAlgorithm = "foo"
-            };
-
-            var clientOptions = ClientBuilder.GetOptions();
-            clientOptions._clientSideEncryptionOptions = encryptionOptions;
-
-            var client = await GetResourceClientAsync(
-                disposingContainer.Container,
-                resourceLength: dataSize,
-                createResource: true,
-                options: clientOptions);
-
-            // Act
-            using var stream = new MemoryStream(data);
-
-            var exception = Assert.ThrowsAsync<ArgumentException>(async () => await ParallelUploadAsync(client, stream, hashingOptions, transferOptions: default));
-            Assert.AreEqual("Client-side encryption and transactional hashing are not supported at the same time.", exception.Message);
-        }
-        #endregion
     }
 }
