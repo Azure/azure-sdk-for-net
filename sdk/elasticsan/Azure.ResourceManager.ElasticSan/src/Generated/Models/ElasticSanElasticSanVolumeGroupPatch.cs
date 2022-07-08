@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
-        public EncryptionType? Encryption { get; set; }
+        public ElasticSanEncryptionType? Encryption { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>

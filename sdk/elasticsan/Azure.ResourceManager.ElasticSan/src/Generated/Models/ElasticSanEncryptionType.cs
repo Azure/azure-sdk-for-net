@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The type of key used to encrypt the data of the disk. </summary>
-    public readonly partial struct EncryptionType : IEquatable<EncryptionType>
+    public readonly partial struct ElasticSanEncryptionType : IEquatable<ElasticSanEncryptionType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EncryptionType(string value)
+        public ElasticSanEncryptionType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private const string EncryptionAtRestWithPlatformAndCustomerKeysValue = "EncryptionAtRestWithPlatformAndCustomerKeys";
 
         /// <summary> Volume is encrypted at rest with Platform managed key. It is the default encryption type. This is not a valid encryption type for disk encryption sets. </summary>
-        public static EncryptionType EncryptionAtRestWithPlatformKey { get; } = new EncryptionType(EncryptionAtRestWithPlatformKeyValue);
+        public static ElasticSanEncryptionType EncryptionAtRestWithPlatformKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithPlatformKeyValue);
         /// <summary> Volume is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
-        public static EncryptionType EncryptionAtRestWithCustomerKey { get; } = new EncryptionType(EncryptionAtRestWithCustomerKeyValue);
+        public static ElasticSanEncryptionType EncryptionAtRestWithCustomerKey { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithCustomerKeyValue);
         /// <summary> Volume is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
-        public static EncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new EncryptionType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
-        /// <summary> Determines if two <see cref="EncryptionType"/> values are the same. </summary>
-        public static bool operator ==(EncryptionType left, EncryptionType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="EncryptionType"/> values are not the same. </summary>
-        public static bool operator !=(EncryptionType left, EncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EncryptionType"/>. </summary>
-        public static implicit operator EncryptionType(string value) => new EncryptionType(value);
+        public static ElasticSanEncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new ElasticSanEncryptionType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
+        /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are the same. </summary>
+        public static bool operator ==(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ElasticSanEncryptionType"/> values are not the same. </summary>
+        public static bool operator !=(ElasticSanEncryptionType left, ElasticSanEncryptionType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ElasticSanEncryptionType"/>. </summary>
+        public static implicit operator ElasticSanEncryptionType(string value) => new ElasticSanEncryptionType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EncryptionType other && Equals(other);
+        public override bool Equals(object obj) => obj is ElasticSanEncryptionType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ElasticSanEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

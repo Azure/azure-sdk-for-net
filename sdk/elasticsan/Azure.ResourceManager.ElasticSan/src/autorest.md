@@ -38,20 +38,22 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
   MBps: Mbps
   LRS: Lrs
   Volume: ElasticSanVolume
-directive:
-  - from: elasticsan.json
-    where: $.definitions
-    transform: >
-      $.Sku.properties.name['x-ms-enum']['name'] = 'ElasticSanSkuName';
-      $.Sku.properties.tier['x-ms-enum']['name'] = 'ElasticSanTier';
-      $.VirtualNetworkRule.properties.state['x-ms-enum']['name'] = 'VirtualNetworkRuleState';
 
+prepend-rp-prefix:
+- EncryptionType
+- ProvisioningState
+
+rename-mapping:
+  Name: ElasticSanSkuName
+  Tier: ElasticSanTier
+  Action: VirtualNetworkRuleAction
+  State: VirtualNetworkRuleState
 ```
