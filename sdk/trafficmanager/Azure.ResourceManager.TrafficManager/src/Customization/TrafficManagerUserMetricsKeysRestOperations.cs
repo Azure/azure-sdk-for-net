@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// overcomoing issue when delete operation does not return any json content.
+        /// Overcoming situation when the rest delete request results with HTTP 200 but does not provide any json content in the response.
         /// </remarks>
         public async Task<Response<DeleteOperationResult>> DeleteAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// overcomoing issue when delete operation does not return any json content.
+        /// Overcoming situation when the rest delete request results with HTTP 200 but does not provide any json content in the response.
         /// </remarks>
         public Response<DeleteOperationResult> Delete(string subscriptionId, CancellationToken cancellationToken = default)
         {
