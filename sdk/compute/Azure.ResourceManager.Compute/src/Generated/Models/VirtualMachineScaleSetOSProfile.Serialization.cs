@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
             Optional<string> customData = default;
-            Optional<WindowsOSConfiguration> windowsConfiguration = default;
-            Optional<LinuxOSConfiguration> linuxConfiguration = default;
+            Optional<WindowsConfiguration> windowsConfiguration = default;
+            Optional<LinuxConfiguration> linuxConfiguration = default;
             Optional<IList<VaultSecretGroup>> secrets = default;
             Optional<bool> allowExtensionOperations = default;
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    windowsConfiguration = WindowsOSConfiguration.DeserializeWindowsOSConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linuxConfiguration = LinuxOSConfiguration.DeserializeLinuxOSConfiguration(property.Value);
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secrets"))

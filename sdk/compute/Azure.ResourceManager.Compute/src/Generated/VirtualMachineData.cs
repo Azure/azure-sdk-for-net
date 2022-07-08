@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, VmHardwareProfile hardwareProfile, DiskStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VmOSProfile osProfile, VmNetworkProfile networkProfile, VmSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, WritableSubResource virtualMachineScaleSet, WritableSubResource proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, WritableSubResource host, WritableSubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, WritableSubResource virtualMachineScaleSet, WritableSubResource proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, WritableSubResource host, WritableSubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
         {
             Plan = plan;
             Resources = resources;
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VmHardwareProfile HardwareProfile { get; set; }
+        public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public DiskStorageProfile StorageProfile { get; set; }
+        public StorageProfile StorageProfile { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VmOSProfile OSProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VmNetworkProfile NetworkProfile { get; set; }
+        public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
-        public VmSecurityProfile SecurityProfile { get; set; }
+        public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>

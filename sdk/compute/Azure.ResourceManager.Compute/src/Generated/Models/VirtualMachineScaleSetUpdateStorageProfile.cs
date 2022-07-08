@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The image reference. </summary>
-        public ImageReferenceInfo ImageReference { get; set; }
+        public ImageReference ImageReference { get; set; }
         /// <summary> The OS disk. </summary>
         public VirtualMachineScaleSetUpdateOSDisk OSDisk { get; set; }
         /// <summary> The data disks. </summary>

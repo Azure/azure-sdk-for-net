@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<RollingUpgradeProgressInfo> progress = default;
             Optional<ComputeApiError> error = default;
             Optional<UpgradeOperationInvoker> startedBy = default;
-            Optional<ImageReferenceInfo> targetImageReference = default;
+            Optional<ImageReference> targetImageReference = default;
             Optional<RollbackStatusInfo> rollbackInfo = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetImageReference = ImageReferenceInfo.DeserializeImageReferenceInfo(property.Value);
+                    targetImageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"))

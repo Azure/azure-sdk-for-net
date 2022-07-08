@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vhdContainers"> Specifies the container urls that are used to store operating system disks for the scale set. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **Delete**. For an Ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for Ephemeral OS Disk. </param>
-        internal VirtualMachineScaleSetOSDisk(string name, DiskCachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, SupportedOperatingSystemType? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption)
+        internal VirtualMachineScaleSetOSDisk(string name, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, SupportedOperatingSystemType? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption)
         {
             Name = name;
             Caching = caching;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk name. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the caching requirements. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **ReadOnly** &lt;br&gt;&lt;br&gt; **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard storage. ReadOnly for Premium storage**. </summary>
-        public DiskCachingType? Caching { get; set; }
+        public CachingType? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
         /// <summary> Specifies how the virtual machines in the scale set should be created.&lt;br&gt;&lt;br&gt; The only allowed value is: **FromImage** \u2013 This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </summary>

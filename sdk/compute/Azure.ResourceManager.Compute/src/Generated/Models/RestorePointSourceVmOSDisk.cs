@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmOSDisk(VmOSDiskOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, DiskCachingType? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Operating System type. </summary>
-        public VmOSDiskOperatingSystemType? OSType { get; }
+        public OperatingSystemType? OSType { get; }
         /// <summary> Gets the disk encryption settings. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; }
         /// <summary> Gets the disk name. </summary>
         public string Name { get; }
         /// <summary> Gets the caching type. </summary>
-        public DiskCachingType? Caching { get; }
+        public CachingType? Caching { get; }
         /// <summary> Gets the disk size in GB. </summary>
         public int? DiskSizeGB { get; }
         /// <summary> Gets the managed disk details. </summary>

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="capacityReservation"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, VmSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile)
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies properties of the network interfaces of the virtual machines in the scale set. </summary>
         public VirtualMachineScaleSetNetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machines in the scale set. </summary>
-        public VmSecurityProfile SecurityProfile { get; set; }
+        public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>

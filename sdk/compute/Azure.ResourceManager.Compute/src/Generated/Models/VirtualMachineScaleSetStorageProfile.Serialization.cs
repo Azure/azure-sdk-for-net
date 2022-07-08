@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetStorageProfile DeserializeVirtualMachineScaleSetStorageProfile(JsonElement element)
         {
-            Optional<ImageReferenceInfo> imageReference = default;
+            Optional<ImageReference> imageReference = default;
             Optional<VirtualMachineScaleSetOSDisk> osDisk = default;
             Optional<IList<VirtualMachineScaleSetDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    imageReference = ImageReferenceInfo.DeserializeImageReferenceInfo(property.Value);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDisk"))

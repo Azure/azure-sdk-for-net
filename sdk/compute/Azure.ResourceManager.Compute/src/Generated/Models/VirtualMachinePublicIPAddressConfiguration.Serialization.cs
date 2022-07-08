@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<ComputePublicIPAddressSku> sku = default;
+            Optional<PublicIPAddressSku> sku = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<ComputeDeleteOption> deleteOption = default;
             Optional<VirtualMachinePublicIPAddressDnsSettingsConfiguration> dnsSettings = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value);
+                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

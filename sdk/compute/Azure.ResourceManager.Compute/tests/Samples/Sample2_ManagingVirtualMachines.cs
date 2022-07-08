@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string vmName = "myVM";
             var input = new VirtualMachineData(resourceGroup.Data.Location)
             {
-                HardwareProfile = new VmHardwareProfile()
+                HardwareProfile = new HardwareProfile()
                 {
                     VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OSProfile = new VmOSProfile()
+                OSProfile = new OSProfile()
                 {
                     AdminUsername = "adminUser",
                     ComputerName = "myVM",
-                    LinuxConfiguration = new LinuxOSConfiguration()
+                    LinuxConfiguration = new LinuxConfiguration()
                     {
                         DisablePasswordAuthentication = true,
                         SshPublicKeys = {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         }
                     }
                 },
-                NetworkProfile = new VmNetworkProfile()
+                NetworkProfile = new NetworkProfile()
                 {
                     NetworkInterfaces =
                     {
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         }
                     }
                 },
-                StorageProfile = new DiskStorageProfile()
+                StorageProfile = new StorageProfile()
                 {
                     OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
                     {
                         OSType = SupportedOperatingSystemType.Linux,
-                        Caching = DiskCachingType.ReadWrite,
+                        Caching = CachingType.ReadWrite,
                         ManagedDisk = new ManagedDiskParameters()
                         {
                             StorageAccountType = StorageAccountType.StandardLRS
                         }
                     },
-                    ImageReference = new ImageReferenceInfo()
+                    ImageReference = new ImageReference()
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",

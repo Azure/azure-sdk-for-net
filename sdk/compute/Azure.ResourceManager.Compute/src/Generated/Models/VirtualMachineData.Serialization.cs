@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<VmHardwareProfile> hardwareProfile = default;
-            Optional<DiskStorageProfile> storageProfile = default;
+            Optional<HardwareProfile> hardwareProfile = default;
+            Optional<StorageProfile> storageProfile = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<VmOSProfile> osProfile = default;
-            Optional<VmNetworkProfile> networkProfile = default;
-            Optional<VmSecurityProfile> securityProfile = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<NetworkProfile> networkProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<WritableSubResource> availabilitySet = default;
             Optional<WritableSubResource> virtualMachineScaleSet = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hardwareProfile = VmHardwareProfile.DeserializeVmHardwareProfile(property0.Value);
+                            hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageProfile = DiskStorageProfile.DeserializeDiskStorageProfile(property0.Value);
+                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osProfile = VmOSProfile.DeserializeVmOSProfile(property0.Value);
+                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkProfile = VmNetworkProfile.DeserializeVmNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            securityProfile = VmSecurityProfile.DeserializeVmSecurityProfile(property0.Value);
+                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"))

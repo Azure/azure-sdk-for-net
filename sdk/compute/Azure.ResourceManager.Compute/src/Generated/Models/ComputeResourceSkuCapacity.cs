@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal ComputeResourceSkuCapacity(long? minimum, long? maximum, long? @default, ComputeResourceSkuCapacityScaleType? scaleType)
+        internal ComputeResourceSkuCapacity(long? minimum, long? maximum, long? @default, ResourceSkuCapacityScaleType? scaleType)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The default capacity. </summary>
         public long? Default { get; }
         /// <summary> The scale type applicable to the sku. </summary>
-        public ComputeResourceSkuCapacityScaleType? ScaleType { get; }
+        public ResourceSkuCapacityScaleType? ScaleType { get; }
     }
 }

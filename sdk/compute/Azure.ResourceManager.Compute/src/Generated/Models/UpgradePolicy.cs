@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="mode"> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are  automatically updated at the same time. </param>
         /// <param name="rollingUpgradePolicy"> The configuration parameters used while performing a rolling upgrade. </param>
         /// <param name="automaticOSUpgradePolicy"> Configuration parameters used for performing automatic OS Upgrade. </param>
-        internal UpgradePolicy(VmssUpgradeMode? mode, RollingUpgradePolicy rollingUpgradePolicy, AutomaticOSUpgradePolicy automaticOSUpgradePolicy)
+        internal UpgradePolicy(UpgradeMode? mode, RollingUpgradePolicy rollingUpgradePolicy, AutomaticOSUpgradePolicy automaticOSUpgradePolicy)
         {
             Mode = mode;
             RollingUpgradePolicy = rollingUpgradePolicy;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the mode of an upgrade to virtual machines in the scale set.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; **Manual** - You  control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action.&lt;br /&gt;&lt;br /&gt; **Automatic** - All virtual machines in the scale set are  automatically updated at the same time. </summary>
-        public VmssUpgradeMode? Mode { get; set; }
+        public UpgradeMode? Mode { get; set; }
         /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
         public RollingUpgradePolicy RollingUpgradePolicy { get; set; }
         /// <summary> Configuration parameters used for performing automatic OS Upgrade. </summary>

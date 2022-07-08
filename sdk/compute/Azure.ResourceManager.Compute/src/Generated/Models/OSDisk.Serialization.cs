@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<VirtualHardDisk> vhd = default;
             Optional<VirtualHardDisk> image = default;
-            Optional<DiskCachingType> caching = default;
+            Optional<CachingType> caching = default;
             Optional<bool> writeAcceleratorEnabled = default;
             Optional<DiffDiskSettings> diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToDiskCachingType();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))

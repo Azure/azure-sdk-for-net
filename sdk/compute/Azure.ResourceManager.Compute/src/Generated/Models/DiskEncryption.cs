@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of DiskEncryption. </summary>
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
-        /// <param name="dataDiskEncryptionType"> The type of key used to encrypt the data of the disk. </param>
-        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, DataDiskEncryptionType? dataDiskEncryptionType)
+        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
+        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, EncryptionType? encryptionType)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
-            DataDiskEncryptionType = dataDiskEncryptionType;
+            EncryptionType = encryptionType;
         }
 
         /// <summary> ResourceId of the disk encryption set to use for enabling encryption at rest. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
-        public DataDiskEncryptionType? DataDiskEncryptionType { get; set; }
+        public EncryptionType? EncryptionType { get; set; }
     }
 }

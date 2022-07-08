@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ResourceIdentifier> diskAccessId = default;
             Optional<DiskSecurityProfile> securityProfile = default;
             Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<float> completionPercent = default;
             Optional<CopyCompletionError> copyCompletionError = default;
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new DiskPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("completionPercent"))

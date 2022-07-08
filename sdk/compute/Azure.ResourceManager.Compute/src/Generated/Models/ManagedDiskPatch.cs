@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>
-        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }
     }

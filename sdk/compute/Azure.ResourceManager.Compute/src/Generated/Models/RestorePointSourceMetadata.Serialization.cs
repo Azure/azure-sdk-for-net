@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element)
         {
-            Optional<VmHardwareProfile> hardwareProfile = default;
+            Optional<HardwareProfile> hardwareProfile = default;
             Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
-            Optional<VmOSProfile> osProfile = default;
+            Optional<OSProfile> osProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<string> licenseType = default;
             Optional<string> vmId = default;
-            Optional<VmSecurityProfile> securityProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
             Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hardwareProfile = VmHardwareProfile.DeserializeVmHardwareProfile(property.Value);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osProfile = VmOSProfile.DeserializeVmOSProfile(property.Value);
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityProfile = VmSecurityProfile.DeserializeVmSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual machine zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public VmHardwareProfile HardwareProfile { get; set; }
+        public HardwareProfile HardwareProfile { get; set; }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public DiskStorageProfile StorageProfile { get; set; }
+        public StorageProfile StorageProfile { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VmOSProfile OSProfile { get; set; }
+        public OSProfile OSProfile { get; set; }
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public VmNetworkProfile NetworkProfile { get; set; }
+        public NetworkProfile NetworkProfile { get; set; }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
-        public VmSecurityProfile SecurityProfile { get; set; }
+        public SecurityProfile SecurityProfile { get; set; }
         /// <summary> Specifies the boot diagnostic settings state. &lt;br&gt;&lt;br&gt;Minimum api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>

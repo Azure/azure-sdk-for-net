@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetOSProfile> osProfile = default;
             Optional<VirtualMachineScaleSetStorageProfile> storageProfile = default;
             Optional<VirtualMachineScaleSetNetworkProfile> networkProfile = default;
-            Optional<VmSecurityProfile> securityProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
             Optional<string> licenseType = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityProfile = VmSecurityProfile.DeserializeVmSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"))

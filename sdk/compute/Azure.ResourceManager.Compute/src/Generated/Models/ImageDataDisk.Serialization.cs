@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> snapshot = default;
             Optional<WritableSubResource> managedDisk = default;
             Optional<Uri> blobUri = default;
-            Optional<DiskCachingType> caching = default;
+            Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToDiskCachingType();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))

@@ -125,7 +125,7 @@ rename-mapping:
   SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
   SshPublicKey: SshPublicKeyInfo
   SshPublicKeyResource: SshPublicKey
-  LogAnalyticsOperationResult: LogAnalyticsResult
+  LogAnalyticsOperationResult: LogAnalytics
   PrivateLinkResource: ComputePrivateLinkResourceData
   Disk: ManagedDisk
   Encryption: DiskEncryption
@@ -152,35 +152,6 @@ rename-mapping:
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
-  PublicNetworkAccess: DiskPublicNetworkAccess
-  NetworkProfile: VmNetworkProfile
-  ResourceSkuRestrictionsReasonCode: ComputeResourceSkuRestrictionsReasonCode
-  ResourceSkuRestrictionsType: ComputeResourceSkuRestrictionsType
-  OSProfile: VmOSProfile
-  StorageProfile: DiskStorageProfile
-  ResourceSkuZoneDetails: ComputeResourceSkuZoneDetails
-  HardwareProfile: VmHardwareProfile
-  ImageReference: ImageReferenceInfo
-  OperatingSystemType: VmOSDiskOperatingSystemType
-  ResourceSkuCapacityScaleType: ComputeResourceSkuCapacityScaleType
-  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
-  CachingTypes: DiskCachingType
-  DataDisk: DataDiskProfile
-  EncryptionType: DataDiskEncryptionType
-  LinuxConfiguration: LinuxOSConfiguration
-  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
-  ProtocolType: WinRMListenerProtocolType
-  PublicIPAddressSku: ComputePublicIPAddressSku
-  PublicIPAddressSkuName: ComputePublicIPAddressSkuName
-  PublicIPAddressSkuTier: ComputePublicIPAddressSkuTier
-  ReplicationMode: GalleryArtifactReplicationMode
-  ReplicationState: RegionalReplicationState
-  RunCommandResult: VmRunCommandResult
-  RunCommandInput: VmRunCommandInput
-  SecurityProfile: VmSecurityProfile
-  StatusLevelTypes: StatusLevelCode
-  UpgradeMode: VmssUpgradeMode
-  WindowsConfiguration: WindowsOSConfiguration
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> name = default;
             int lun = default;
-            Optional<DiskCachingType> caching = default;
+            Optional<CachingType> caching = default;
             Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             Optional<int> diskSizeGB = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToDiskCachingType();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))

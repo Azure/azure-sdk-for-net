@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var vmData = new VirtualMachineData(location)
             {
                 AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
-                NetworkProfile = new VmNetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-                OSProfile = new VmOSProfile
+                NetworkProfile = new NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
+                OSProfile = new OSProfile
                 {
                     ComputerName = "testVM",
                     AdminUsername = "username",
                     AdminPassword = "(YourPassword)",
-                    LinuxConfiguration = new LinuxOSConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
+                    LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
                 },
-                StorageProfile = new DiskStorageProfile()
+                StorageProfile = new StorageProfile()
                 {
-                    ImageReference = new ImageReferenceInfo()
+                    ImageReference = new ImageReference()
                     {
                         Offer = "UbuntuServer",
                         Publisher = "Canonical",
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         Version = "latest"
                     }
                 },
-                HardwareProfile = new VmHardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
+                HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
             };
             ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
             VirtualMachineResource vm = vmOperation.Value;
