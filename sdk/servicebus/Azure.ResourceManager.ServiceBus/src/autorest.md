@@ -52,6 +52,10 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+rename-mapping:
+  UnavailableReason: ServiceBusNameUnavailableReason
+  EntityStatus: ServiceBusMessagingEntityStatus
+
 directive:
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules'].get.operationId

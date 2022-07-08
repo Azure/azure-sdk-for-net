@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Specifies the reason for the unavailability of the service. </summary>
-    public enum UnavailableReason
+    public enum ServiceBusNameUnavailableReason
     {
         /// <summary> None. </summary>
         None,
