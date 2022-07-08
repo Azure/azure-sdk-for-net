@@ -43,6 +43,9 @@ list-exception:
 - /{roleAssignmentId}
 
 directive:
+  # The requested resource does not support http method 'DELETE'
+  - remove-operation: 'RoleManagementPolicies_Delete'
+  
   # Duplicate Schema name
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties
@@ -100,6 +103,10 @@ directive:
   - from: authorization-ProviderOperationsCalls.json
     where: $.definitions.ResourceType
     transform:  $['x-ms-client-name'] = "ProviderOperationsResourceType"
+
+  - from: authorization-ProviderOperationsCalls.json
+    where: $.definitions.ProviderOperation.properties.properties
+    transform:  $['x-nullable'] = true
 
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json

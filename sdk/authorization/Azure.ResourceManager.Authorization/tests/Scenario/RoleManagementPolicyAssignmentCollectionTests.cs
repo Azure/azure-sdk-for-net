@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
+        [Ignore("Not implemented exception")]
         [Test]
         public async Task CreateOrUpdate()
         {
