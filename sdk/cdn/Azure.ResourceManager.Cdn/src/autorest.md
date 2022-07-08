@@ -61,7 +61,6 @@ rename-rules:
   PUT: Put
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
-  Etag: ETag
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
