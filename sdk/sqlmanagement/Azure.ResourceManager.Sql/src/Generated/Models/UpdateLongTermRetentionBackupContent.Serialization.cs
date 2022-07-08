@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UpdateLongTermRetentionBackupOptions : IUtf8JsonSerializable
+    public partial class UpdateLongTermRetentionBackupContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

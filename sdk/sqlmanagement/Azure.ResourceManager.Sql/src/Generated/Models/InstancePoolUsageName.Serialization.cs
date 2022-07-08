@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class UsageName
+    public partial class InstancePoolUsageName
     {
-        internal static UsageName DeserializeUsageName(JsonElement element)
+        internal static InstancePoolUsageName DeserializeInstancePoolUsageName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UsageName(value.Value, localizedValue.Value);
+            return new InstancePoolUsageName(value.Value, localizedValue.Value);
         }
     }
 }
