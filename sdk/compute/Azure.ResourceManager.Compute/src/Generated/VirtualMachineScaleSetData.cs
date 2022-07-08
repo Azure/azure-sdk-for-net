@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the Vmss data model. </summary>
+    /// <summary> A class representing the VirtualMachineScaleSet data model. </summary>
     public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extendedLocation"> The extended location of the Virtual Machine Scale Set. </param>
         /// <param name="upgradePolicy"> The upgrade policy. </param>
         /// <param name="automaticRepairsPolicy"> Policy for automatic repairs. </param>
-        /// <param name="vmProfile"> The virtual machine profile. </param>
+        /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="overprovision"> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </param>
         /// <param name="doNotRunExtensionsOnOverprovisionedVms"> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orchestrationMode"> Specifies the orchestration mode for the virtual machine scale set. </param>
         /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VmssVmProfile vmProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Plan = plan;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
             ExtendedLocation = extendedLocation;
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
-            VmProfile = vmProfile;
+            VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
             DoNotRunExtensionsOnOverprovisionedVms = doNotRunExtensionsOnOverprovisionedVms;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>
-        public VmssVmProfile VmProfile { get; set; }
+        public VirtualMachineScaleSetVmProfile VirtualMachineProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>

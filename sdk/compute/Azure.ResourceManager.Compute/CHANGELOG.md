@@ -315,15 +315,18 @@ NetworkInterfaceResource nic = nicOperation.Value;
 VirtualMachineData vmData = new VirtualMachineData(location)
 {
     AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
-    NetworkProfile = new VmNetworkProfile { NetworkInterfaces = { new VmNetworkInterfaceReference() { Id = nic.Id } } },
-    OSProfile = new OSProfile
+    NetworkProfile = new VirtualMachineNetworkProfile
+    {
+        NetworkInterfaces = { new VirtualMachineNetworkInterfaceReference() { Id = nic.Id } }
+    },
+    OSProfile = new VirtualMachineOSProfile()
     {
         ComputerName = "testVM",
         AdminUsername = "username",
         AdminPassword = "(YourPassword)",
         LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
     },
-    StorageProfile = new StorageProfile()
+    StorageProfile = new VirtualMachineStorageProfile()
     {
         ImageReference = new ImageReference()
         {
@@ -333,7 +336,7 @@ VirtualMachineData vmData = new VirtualMachineData(location)
             Version = "latest"
         }
     },
-    HardwareProfile = new HardwareProfile() { VmSize = VmSizeType.StandardB1Ms },
+    HardwareProfile = new VirtualMachineHardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
 };
 ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
 VirtualMachineResource vm = vmOperation.Value;
@@ -363,7 +366,7 @@ var vmExtension = new VirtualMachineExtension
 
 After upgrade:
 ```C# Snippet:Changelog_CreateVMExtension
-var vmExtension = new VmExtensionData(AzureLocation.WestUS)
+var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",

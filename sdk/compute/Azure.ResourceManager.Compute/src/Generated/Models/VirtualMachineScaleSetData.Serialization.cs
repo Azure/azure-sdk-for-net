@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("automaticRepairsPolicy");
                 writer.WriteObjectValue(AutomaticRepairsPolicy);
             }
-            if (Optional.IsDefined(VmProfile))
+            if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile");
-                writer.WriteObjectValue(VmProfile);
+                writer.WriteObjectValue(VirtualMachineProfile);
             }
             if (Optional.IsDefined(Overprovision))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<UpgradePolicy> upgradePolicy = default;
             Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
-            Optional<VmssVmProfile> vmProfile = default;
+            Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
             Optional<string> provisioningState = default;
             Optional<bool> overprovision = default;
             Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vmProfile = VmssVmProfile.DeserializeVmssVmProfile(property0.Value);
+                            virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, vmProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

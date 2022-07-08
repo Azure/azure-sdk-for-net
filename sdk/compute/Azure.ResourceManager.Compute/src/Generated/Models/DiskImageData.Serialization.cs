@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVm))
+            if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine");
-                JsonSerializer.Serialize(writer, SourceVm);
+                JsonSerializer.Serialize(writer, SourceVirtualMachine);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> sourceVm = default;
+            Optional<WritableSubResource> sourceVirtualMachine = default;
             Optional<ImageStorageProfile> storageProfile = default;
             Optional<string> provisioningState = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceVm = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            sourceVirtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVm, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
         }
     }
 }

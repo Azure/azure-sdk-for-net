@@ -198,21 +198,21 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             return new VirtualMachineData(location)
             {
-                HardwareProfile = new HardwareProfile()
+                HardwareProfile = new()
                 {
-                    VmSize = VmSizeType.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OSProfile = new OSProfile()
+                OSProfile = new()
                 {
                     AdminUsername = adminUsername,
                     ComputerName = computerName,
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new()
                     {
                         DisablePasswordAuthentication = true,
-                        Ssh = new SshConfiguration()
+                        Ssh = new()
                         {
                             PublicKeys = {
-                                new SshPublicKeyInfo()
+                                new()
                                 {
                                     Path = $"/home/{adminUsername}/.ssh/authorized_keys",
                                     KeyData = dummySSHKey,
@@ -221,29 +221,29 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         }
                     }
                 },
-                NetworkProfile = new VmNetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
-                        new VmNetworkInterfaceReference()
+                        new VirtualMachineNetworkInterfaceReference()
                         {
                             Id = nicID,
                             Primary = true,
                         }
                     }
                 },
-                StorageProfile = new StorageProfile()
+                StorageProfile = new()
                 {
-                    OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
+                    OSDisk = new(DiskCreateOptionType.FromImage)
                     {
                         OSType = SupportedOperatingSystemType.Linux,
                         Caching = CachingType.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
+                        ManagedDisk = new()
                         {
                             StorageAccountType = StorageAccountType.StandardLRS
                         }
                     },
-                    ImageReference = new ImageReference()
+                    ImageReference = new()
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -266,30 +266,30 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             return new VirtualMachineScaleSetData(location)
             {
-                Sku = new ComputeSku()
+                Sku = new()
                 {
                     Name = "Standard_F2",
                     Capacity = capacity,
                     Tier = "Standard"
                 },
-                UpgradePolicy = new UpgradePolicy()
+                UpgradePolicy = new()
                 {
                     Mode = UpgradeMode.Manual,
                 },
-                VmProfile = new VmssVmProfile()
+                VirtualMachineProfile = new()
                 {
-                    OSProfile = new VmssOSProfile()
+                    OSProfile = new()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
-                        LinuxConfiguration = new LinuxConfiguration()
+                        LinuxConfiguration = new()
                         {
                             DisablePasswordAuthentication = true,
-                            Ssh = new SshConfiguration()
+                            Ssh = new()
                             {
                                 PublicKeys =
                                 {
-                                    new SshPublicKeyInfo()
+                                    new()
                                     {
                                         Path = $"/home/{adminUsername}/.ssh/authorized_keys",
                                         KeyData = dummySSHKey
@@ -298,17 +298,17 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             }
                         }
                     },
-                    StorageProfile = new VmssStorageProfile()
+                    StorageProfile = new()
                     {
-                        OSDisk = new VmssOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new(DiskCreateOptionType.FromImage)
                         {
                             Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VmssManagedDiskParameters()
+                            ManagedDisk = new()
                             {
                                 StorageAccountType = StorageAccountType.StandardLRS
                             }
                         },
-                        ImageReference = new ImageReference()
+                        ImageReference = new()
                         {
                             Publisher = "Canonical",
                             Offer = "UbuntuServer",
@@ -316,16 +316,16 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             Version = "latest"
                         }
                     },
-                    NetworkProfile = new VmssNetworkProfile()
+                    NetworkProfile = new()
                     {
                         NetworkInterfaceConfigurations =
                         {
-                            new VmssNetworkConfiguration("example")
+                            new("example")
                             {
                                 Primary = true,
                                 IPConfigurations =
                                 {
-                                    new VmssIPConfiguration("internal")
+                                    new("internal")
                                     {
                                         Primary = true,
                                         Subnet = new WritableSubResource()

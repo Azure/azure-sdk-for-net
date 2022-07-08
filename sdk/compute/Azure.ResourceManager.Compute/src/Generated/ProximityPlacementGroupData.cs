@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         {
             Zones = new ChangeTrackingList<string>();
             VirtualMachines = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
-            VmScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            VirtualMachineScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
             AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zones"> Specifies the Availability Zone where virtual machine, virtual machine scale set or availability set associated with the  proximity placement group can be created. </param>
         /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </param>
         /// <param name="virtualMachines"> A list of references to all virtual machines in the proximity placement group. </param>
-        /// <param name="vmScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
+        /// <param name="virtualMachineScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
         /// <param name="availabilitySets"> A list of references to all availability sets in the proximity placement group. </param>
         /// <param name="colocationStatus"> Describes colocation status of the Proximity Placement Group. </param>
         /// <param name="intent"> Specifies the user intent of the proximity placement group. </param>
-        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> vmScaleSets, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus, ProximityPlacementGroupPropertiesIntent intent) : base(id, name, resourceType, systemData, tags, location)
+        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus, ProximityPlacementGroupPropertiesIntent intent) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;
-            VmScaleSets = vmScaleSets;
+            VirtualMachineScaleSets = virtualMachineScaleSets;
             AvailabilitySets = availabilitySets;
             ColocationStatus = colocationStatus;
             Intent = intent;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
         public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines { get; }
         /// <summary> A list of references to all virtual machine scale sets in the proximity placement group. </summary>
-        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VmScaleSets { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachineScaleSets { get; }
         /// <summary> A list of references to all availability sets in the proximity placement group. </summary>
         public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> AvailabilitySets { get; }
         /// <summary> Describes colocation status of the Proximity Placement Group. </summary>

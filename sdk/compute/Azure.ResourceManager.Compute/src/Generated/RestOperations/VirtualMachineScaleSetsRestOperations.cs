@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListResult> ListByLocation(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListResult> ListByLocation(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -133,21 +133,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="data"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(vmssName, subscriptionId, resourceGroupName, data);
+            using var message = CreateCreateOrUpdateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Create or update a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="data"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(vmssName, subscriptionId, resourceGroupName, data);
+            using var message = CreateCreateOrUpdateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch)
+        internal HttpMessage CreateUpdateRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -211,21 +211,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="patch"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(vmssName, subscriptionId, resourceGroupName, patch);
+            using var message = CreateUpdateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="patch"> The scale set object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(vmssName, subscriptionId, resourceGroupName, patch);
+            using var message = CreateUpdateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string vmssName, string subscriptionId, string resourceGroupName, bool? forceDeletion)
+        internal HttpMessage CreateDeleteRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, bool? forceDeletion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             if (forceDeletion != null)
             {
                 uri.AppendQuery("forceDeletion", forceDeletion.Value, true);
@@ -287,20 +287,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string vmssName, string subscriptionId, string resourceGroupName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateDeleteRequest(vmssName, subscriptionId, resourceGroupName, forceDeletion);
+            using var message = CreateDeleteRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, forceDeletion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete a VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string vmssName, string subscriptionId, string resourceGroupName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateDeleteRequest(vmssName, subscriptionId, resourceGroupName, forceDeletion);
+            using var message = CreateDeleteRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, forceDeletion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand)
+        internal HttpMessage CreateGetRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetGetExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
@@ -365,20 +365,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Display information about a virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineScaleSetData>> GetAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetData>> GetAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetRequest(vmssName, subscriptionId, resourceGroupName, expand);
+            using var message = CreateGetRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -397,20 +397,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Display information about a virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineScaleSetData> Get(string vmssName, string subscriptionId, string resourceGroupName, VmssGetExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetData> Get(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetRequest(vmssName, subscriptionId, resourceGroupName, expand);
+            using var message = CreateGetRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeallocateRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreateDeallocateRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -457,20 +457,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeallocateAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeallocateAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateDeallocateRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateDeallocateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -483,20 +483,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deallocates specific virtual machines in a VM scale set. Shuts down the virtual machines and releases the compute resources. You are not billed for the compute resources that this virtual machine scale set deallocates. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Deallocate(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Deallocate(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateDeallocateRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateDeallocateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateDeleteInstancesRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion)
+        internal HttpMessage CreateDeleteInstancesRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/delete", false);
             if (forceDeletion != null)
             {
@@ -538,22 +538,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteInstancesAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteInstancesAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(vmInstanceIds, nameof(vmInstanceIds));
 
-            using var message = CreateDeleteInstancesRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds, forceDeletion);
+            using var message = CreateDeleteInstancesRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds, forceDeletion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -566,22 +566,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Deletes virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteInstances(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteInstances(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, bool? forceDeletion = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(vmInstanceIds, nameof(vmInstanceIds));
 
-            using var message = CreateDeleteInstancesRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds, forceDeletion);
+            using var message = CreateDeleteInstancesRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds, forceDeletion);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetInstanceViewRequest(string vmssName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateGetInstanceViewRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/instanceView", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -615,27 +615,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the status of a VM scale set instance. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssInstanceView>> GetInstanceViewAsync(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetInstanceView>> GetInstanceViewAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetInstanceViewRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetInstanceViewRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssInstanceView value = default;
+                        VirtualMachineScaleSetInstanceView value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssInstanceView.DeserializeVmssInstanceView(document.RootElement);
+                        value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,27 +644,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets the status of a VM scale set instance. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssInstanceView> GetInstanceView(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetInstanceView> GetInstanceView(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetInstanceViewRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetInstanceViewRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssInstanceView value = default;
+                        VirtualMachineScaleSetInstanceView value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssInstanceView.DeserializeVmssInstanceView(document.RootElement);
+                        value = VirtualMachineScaleSetInstanceView.DeserializeVirtualMachineScaleSetInstanceView(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -708,9 +708,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -735,9 +735,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListWithLinkResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListWithLinkResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -777,9 +777,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListWithLinkResult value = default;
+                        VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListWithLinkResult.DeserializeVmssListWithLinkResult(document.RootElement);
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListWithLinkResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListWithLinkResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -802,9 +802,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListWithLinkResult value = default;
+                        VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListWithLinkResult.DeserializeVmssListWithLinkResult(document.RootElement);
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListSkusRequest(string vmssName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListSkusRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/skus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -834,27 +834,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListSkusResult>> ListSkusAsync(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListSkusResult>> ListSkusAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListSkusRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateListSkusRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListSkusResult value = default;
+                        VirtualMachineScaleSetListSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListSkusResult.DeserializeVmssListSkusResult(document.RootElement);
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -863,27 +863,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListSkusResult> ListSkus(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListSkusResult> ListSkus(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListSkusRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateListSkusRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListSkusResult value = default;
+                        VirtualMachineScaleSetListSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListSkusResult.DeserializeVmssListSkusResult(document.RootElement);
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetOSUpgradeHistoryRequest(string vmssName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateGetOSUpgradeHistoryRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/osUpgradeHistory", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -913,27 +913,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListOSUpgradeHistory>> GetOSUpgradeHistoryAsync(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListOSUpgradeHistory>> GetOSUpgradeHistoryAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetOSUpgradeHistoryRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetOSUpgradeHistoryRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListOSUpgradeHistory value = default;
+                        VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListOSUpgradeHistory.DeserializeVmssListOSUpgradeHistory(document.RootElement);
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -942,27 +942,27 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListOSUpgradeHistory> GetOSUpgradeHistory(string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListOSUpgradeHistory> GetOSUpgradeHistory(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetOSUpgradeHistoryRequest(vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetOSUpgradeHistoryRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListOSUpgradeHistory value = default;
+                        VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListOSUpgradeHistory.DeserializeVmssListOSUpgradeHistory(document.RootElement);
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreatePowerOffRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds, bool? skipShutdown)
+        internal HttpMessage CreatePowerOffRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds, bool? skipShutdown)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/poweroff", false);
             if (skipShutdown != null)
             {
@@ -1003,21 +1003,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PowerOffAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> PowerOffAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreatePowerOffRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds, skipShutdown);
+            using var message = CreatePowerOffRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds, skipShutdown);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1030,21 +1030,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Power off (stop) one or more virtual machines in a VM scale set. Note that resources are still attached and you are getting charged for the resources. Instead, use deallocate to release resources and avoid charges. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PowerOff(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response PowerOff(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreatePowerOffRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds, skipShutdown);
+            using var message = CreatePowerOffRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds, skipShutdown);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateRestartRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreateRestartRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/restart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1085,20 +1085,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Restarts one or more virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestartAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RestartAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateRestartRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateRestartRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1111,20 +1111,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Restarts one or more virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Restart(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Restart(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateRestartRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateRestartRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateStartRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreateStartRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1165,20 +1165,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Starts one or more virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StartAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateStartRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateStartRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1191,20 +1191,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Starts one or more virtual machines in a VM scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Start(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Start(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateStartRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateStartRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateRedeployRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreateRedeployRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1245,20 +1245,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RedeployAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RedeployAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateRedeployRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateRedeployRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1271,20 +1271,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Shuts down all the virtual machines in the virtual machine scale set, moves them to a new node, and powers them back on. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Redeploy(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Redeploy(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateRedeployRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateRedeployRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreatePerformMaintenanceRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreatePerformMaintenanceRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/performMaintenance", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1325,20 +1325,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PerformMaintenanceAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> PerformMaintenanceAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreatePerformMaintenanceRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreatePerformMaintenanceRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1351,20 +1351,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PerformMaintenance(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response PerformMaintenance(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreatePerformMaintenanceRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreatePerformMaintenanceRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateInstancesRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds)
+        internal HttpMessage CreateUpdateInstancesRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1388,7 +1388,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/manualupgrade", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1402,21 +1402,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Upgrades one or more virtual machines to the latest SKU set in the VM scale set model. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateInstancesAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateInstancesAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(vmInstanceIds, nameof(vmInstanceIds));
 
-            using var message = CreateUpdateInstancesRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateUpdateInstancesRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1429,21 +1429,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Upgrades one or more virtual machines to the latest SKU set in the VM scale set model. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateInstances(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceRequiredIds vmInstanceIds, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmInstanceIds"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateInstances(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIds, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(vmInstanceIds, nameof(vmInstanceIds));
 
-            using var message = CreateUpdateInstancesRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateUpdateInstancesRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateReimageRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssReimageContent content)
+        internal HttpMessage CreateReimageRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetReimageContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/reimage", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1484,20 +1484,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReimageAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssReimageContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ReimageAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetReimageContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateReimageRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateReimageRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1510,20 +1510,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimages (upgrade the operating system) one or more virtual machines in a VM scale set which don&apos;t have a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the virtual machine is reset to initial state. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> Parameters for Reimaging VM ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Reimage(string vmssName, string subscriptionId, string resourceGroupName, VmssReimageContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Reimage(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetReimageContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateReimageRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateReimageRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateReimageAllRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds)
+        internal HttpMessage CreateReimageAllRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/reimageall", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1564,20 +1564,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReimageAllAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ReimageAllAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateReimageAllRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateReimageAllRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1590,20 +1590,20 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Reimages all the disks ( including data disks ) in the virtual machines in a VM scale set. This operation is only supported for managed disks. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmInstanceIds"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ReimageAll(string vmssName, string subscriptionId, string resourceGroupName, VmssVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ReimageAll(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetVmInstanceIds vmInstanceIds = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateReimageAllRequest(vmssName, subscriptionId, resourceGroupName, vmInstanceIds);
+            using var message = CreateReimageAllRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, vmInstanceIds);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1615,7 +1615,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(string vmssName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone, string placementGroupId)
+        internal HttpMessage CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone, string placementGroupId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/forceRecoveryServiceFabricPlatformUpdateDomainWalk", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("platformUpdateDomain", platformUpdateDomain, true);
@@ -1646,22 +1646,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
         /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
         /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(string vmssName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(vmssName, subscriptionId, resourceGroupName, platformUpdateDomain, zone, placementGroupId);
+            using var message = CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, platformUpdateDomain, zone, placementGroupId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1678,22 +1678,22 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="platformUpdateDomain"> The platform update domain for which a manual recovery walk is requested. </param>
         /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
         /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string vmssName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(vmssName, subscriptionId, resourceGroupName, platformUpdateDomain, zone, placementGroupId);
+            using var message = CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, platformUpdateDomain, zone, placementGroupId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1709,7 +1709,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateConvertToSinglePlacementGroupRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssConvertToSinglePlacementGroupContent content)
+        internal HttpMessage CreateConvertToSinglePlacementGroupRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetConvertToSinglePlacementGroupContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1721,7 +1721,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/convertToSinglePlacementGroup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1735,21 +1735,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> The input object for ConvertToSinglePlacementGroup API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ConvertToSinglePlacementGroupAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssConvertToSinglePlacementGroupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ConvertToSinglePlacementGroupAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetConvertToSinglePlacementGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateConvertToSinglePlacementGroupRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateConvertToSinglePlacementGroupRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1761,21 +1761,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Converts SinglePlacementGroup property to false for a existing virtual machine scale set. </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> The input object for ConvertToSinglePlacementGroup API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ConvertToSinglePlacementGroup(string vmssName, string subscriptionId, string resourceGroupName, VmssConvertToSinglePlacementGroupContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ConvertToSinglePlacementGroup(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetConvertToSinglePlacementGroupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateConvertToSinglePlacementGroupRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateConvertToSinglePlacementGroupRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateSetOrchestrationServiceStateRequest(string vmssName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content)
+        internal HttpMessage CreateSetOrchestrationServiceStateRequest(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1798,7 +1798,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
-            uri.AppendPath(vmssName, true);
+            uri.AppendPath(virtualMachineScaleSetName, true);
             uri.AppendPath("/setOrchestrationServiceState", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1812,21 +1812,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Changes ServiceState property for a given service. </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SetOrchestrationServiceStateAsync(string vmssName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SetOrchestrationServiceStateAsync(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSetOrchestrationServiceStateRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateSetOrchestrationServiceStateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1839,21 +1839,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Changes ServiceState property for a given service. </summary>
-        /// <param name="vmssName"> The name of the virtual machine scale set to create or update. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set to create or update. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="content"> The input object for SetOrchestrationServiceState API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SetOrchestrationServiceState(string vmssName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response SetOrchestrationServiceState(string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, OrchestrationServiceStateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSetOrchestrationServiceStateRequest(vmssName, subscriptionId, resourceGroupName, content);
+            using var message = CreateSetOrchestrationServiceStateRequest(virtualMachineScaleSetName, subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1886,7 +1886,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1897,9 +1897,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1925,9 +1925,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1968,9 +1968,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1997,9 +1997,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListResult value = default;
+                        VirtualMachineScaleSetListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListResult.DeserializeVmssListResult(document.RootElement);
+                        value = VirtualMachineScaleSetListResult.DeserializeVirtualMachineScaleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListWithLinkResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineScaleSetListWithLinkResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2038,9 +2038,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListWithLinkResult value = default;
+                        VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListWithLinkResult.DeserializeVmssListWithLinkResult(document.RootElement);
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2054,7 +2054,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListWithLinkResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineScaleSetListWithLinkResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2065,9 +2065,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmssListWithLinkResult value = default;
+                        VirtualMachineScaleSetListWithLinkResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListWithLinkResult.DeserializeVmssListWithLinkResult(document.RootElement);
+                        value = VirtualMachineScaleSetListWithLinkResult.DeserializeVirtualMachineScaleSetListWithLinkResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListSkusNextPageRequest(string nextLink, string vmssName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListSkusNextPageRequest(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2091,28 +2091,28 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListSkusResult>> ListSkusNextPageAsync(string nextLink, string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListSkusResult>> ListSkusNextPageAsync(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListSkusNextPageRequest(nextLink, vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateListSkusNextPageRequest(nextLink, virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListSkusResult value = default;
+                        VirtualMachineScaleSetListSkusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListSkusResult.DeserializeVmssListSkusResult(document.RootElement);
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2122,28 +2122,28 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListSkusResult> ListSkusNextPage(string nextLink, string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListSkusResult> ListSkusNextPage(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListSkusNextPageRequest(nextLink, vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateListSkusNextPageRequest(nextLink, virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListSkusResult value = default;
+                        VirtualMachineScaleSetListSkusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListSkusResult.DeserializeVmssListSkusResult(document.RootElement);
+                        value = VirtualMachineScaleSetListSkusResult.DeserializeVirtualMachineScaleSetListSkusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2151,7 +2151,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetOSUpgradeHistoryNextPageRequest(string nextLink, string vmssName, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateGetOSUpgradeHistoryNextPageRequest(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2167,28 +2167,28 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmssListOSUpgradeHistory>> GetOSUpgradeHistoryNextPageAsync(string nextLink, string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListOSUpgradeHistory>> GetOSUpgradeHistoryNextPageAsync(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetOSUpgradeHistoryNextPageRequest(nextLink, vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetOSUpgradeHistoryNextPageRequest(nextLink, virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListOSUpgradeHistory value = default;
+                        VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmssListOSUpgradeHistory.DeserializeVmssListOSUpgradeHistory(document.RootElement);
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2198,28 +2198,28 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets list of OS upgrades on a VM scale set instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vmssName"> The name of the VM scale set. </param>
+        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmssListOSUpgradeHistory> GetOSUpgradeHistoryNextPage(string nextLink, string vmssName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListOSUpgradeHistory> GetOSUpgradeHistoryNextPage(string nextLink, string virtualMachineScaleSetName, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateGetOSUpgradeHistoryNextPageRequest(nextLink, vmssName, subscriptionId, resourceGroupName);
+            using var message = CreateGetOSUpgradeHistoryNextPageRequest(nextLink, virtualMachineScaleSetName, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmssListOSUpgradeHistory value = default;
+                        VirtualMachineScaleSetListOSUpgradeHistory value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmssListOSUpgradeHistory.DeserializeVmssListOSUpgradeHistory(document.RootElement);
+                        value = VirtualMachineScaleSetListOSUpgradeHistory.DeserializeVirtualMachineScaleSetListOSUpgradeHistory(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

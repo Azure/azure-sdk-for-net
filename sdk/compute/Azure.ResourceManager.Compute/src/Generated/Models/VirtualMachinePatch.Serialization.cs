@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("availabilitySet");
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (Optional.IsDefined(Vmss))
+            if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                JsonSerializer.Serialize(writer, Vmss);
+                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {

@@ -42,24 +42,19 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var vmName = Recording.GenerateAssetName("testVM-");
             var vm = await CreateVirtualMachineAsync(vmName);
-            //// Create a PPG here and add this PPG to this virtual machine using Update
-            //var ppgName = Recording.GenerateAssetName("testPPG-");
-            //var ppgData = new ProximityPlacementGroupData(DefaultLocation) { };
-            //var ppgLRO = await _resourceGroup.GetProximityPlacementGroups().CreateOrUpdateAsync(ppgName, ppgData);
-            //var ppg = ppgLRO.Value;
             // update PPG requires the VM to be deallocated
             await vm.DeallocateAsync(WaitUntil.Completed);
             var update = new VirtualMachinePatch()
             {
-                HardwareProfile = new HardwareProfile
+                HardwareProfile = new()
                 {
-                    VmSize = VmSizeType.StandardF1
+                    VmSize = VirtualMachineSizeType.StandardF1
                 }
             };
             var lro = await vm.UpdateAsync(WaitUntil.Completed, update);
             VirtualMachineResource updatedVM = lro.Value;
 
-            Assert.AreEqual(VmSizeType.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
+            Assert.AreEqual(VirtualMachineSizeType.StandardF1, updatedVM.Data.HardwareProfile.VmSize);
         }
 
         [TestCase]

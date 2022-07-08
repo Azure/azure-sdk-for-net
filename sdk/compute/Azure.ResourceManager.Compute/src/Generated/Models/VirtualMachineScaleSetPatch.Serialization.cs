@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("automaticRepairsPolicy");
                 writer.WriteObjectValue(AutomaticRepairsPolicy);
             }
-            if (Optional.IsDefined(VmProfile))
+            if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile");
-                writer.WriteObjectValue(VmProfile);
+                writer.WriteObjectValue(VirtualMachineProfile);
             }
             if (Optional.IsDefined(Overprovision))
             {

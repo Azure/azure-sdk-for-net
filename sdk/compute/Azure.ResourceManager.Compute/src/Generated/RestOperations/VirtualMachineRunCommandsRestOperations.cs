@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandUpdate runCommand)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="runCommandName"/> or <paramref name="runCommand"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VmRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetByVmRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand)
+        internal HttpMessage CreateGetByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -463,26 +463,26 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmRunCommandData>> GetByVmAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandData>> GetByVirtualMachineAsync(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var message = CreateGetByVmRequest(subscriptionId, resourceGroupName, vmName, runCommandName, expand);
+            using var message = CreateGetByVirtualMachineRequest(subscriptionId, resourceGroupName, vmName, runCommandName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandData value = default;
+                        VirtualMachineRunCommandData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmRunCommandData.DeserializeVmRunCommandData(document.RootElement);
+                        value = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmRunCommandData)null, message.Response);
+                    return Response.FromValue((VirtualMachineRunCommandData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -497,32 +497,32 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmRunCommandData> GetByVm(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandData> GetByVirtualMachine(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            using var message = CreateGetByVmRequest(subscriptionId, resourceGroupName, vmName, runCommandName, expand);
+            using var message = CreateGetByVirtualMachineRequest(subscriptionId, resourceGroupName, vmName, runCommandName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandData value = default;
+                        VirtualMachineRunCommandData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmRunCommandData.DeserializeVmRunCommandData(document.RootElement);
+                        value = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmRunCommandData)null, message.Response);
+                    return Response.FromValue((VirtualMachineRunCommandData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListByVmRequest(string subscriptionId, string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateListByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -555,21 +555,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmRunCommandsListResult>> ListByVmAsync(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> ListByVirtualMachineAsync(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListByVmRequest(subscriptionId, resourceGroupName, vmName, expand);
+            using var message = CreateListByVirtualMachineRequest(subscriptionId, resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandsListResult value = default;
+                        VirtualMachineRunCommandsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmRunCommandsListResult.DeserializeVmRunCommandsListResult(document.RootElement);
+                        value = VirtualMachineRunCommandsListResult.DeserializeVirtualMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -585,21 +585,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmRunCommandsListResult> ListByVm(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> ListByVirtualMachine(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListByVmRequest(subscriptionId, resourceGroupName, vmName, expand);
+            using var message = CreateListByVirtualMachineRequest(subscriptionId, resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandsListResult value = default;
+                        VirtualMachineRunCommandsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmRunCommandsListResult.DeserializeVmRunCommandsListResult(document.RootElement);
+                        value = VirtualMachineRunCommandsListResult.DeserializeVirtualMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListByVmNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand)
+        internal HttpMessage CreateListByVirtualMachineNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -700,22 +700,22 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmRunCommandsListResult>> ListByVmNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineRunCommandsListResult>> ListByVirtualMachineNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListByVmNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmName, expand);
+            using var message = CreateListByVirtualMachineNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandsListResult value = default;
+                        VirtualMachineRunCommandsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmRunCommandsListResult.DeserializeVmRunCommandsListResult(document.RootElement);
+                        value = VirtualMachineRunCommandsListResult.DeserializeVirtualMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -732,22 +732,22 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmRunCommandsListResult> ListByVmNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineRunCommandsListResult> ListByVirtualMachineNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListByVmNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmName, expand);
+            using var message = CreateListByVirtualMachineNextPageRequest(nextLink, subscriptionId, resourceGroupName, vmName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmRunCommandsListResult value = default;
+                        VirtualMachineRunCommandsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmRunCommandsListResult.DeserializeVmRunCommandsListResult(document.RootElement);
+                        value = VirtualMachineRunCommandsListResult.DeserializeVirtualMachineRunCommandsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="vmExtensionName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VmExtensionPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -329,13 +329,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmExtensionData value = default;
+                        VirtualMachineExtensionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmExtensionData.DeserializeVmExtensionData(document.RootElement);
+                        value = VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmExtensionData)null, message.Response);
+                    return Response.FromValue((VirtualMachineExtensionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="vmExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmExtensionData> Get(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineExtensionData> Get(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -363,13 +363,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmExtensionData value = default;
+                        VirtualMachineExtensionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmExtensionData.DeserializeVmExtensionData(document.RootElement);
+                        value = VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmExtensionData)null, message.Response);
+                    return Response.FromValue((VirtualMachineExtensionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VmExtensionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineExtensionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmExtensionsListResult value = default;
+                        VirtualMachineExtensionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmExtensionsListResult.DeserializeVmExtensionsListResult(document.RootElement);
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VmExtensionsListResult> List(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineExtensionsListResult> List(string subscriptionId, string resourceGroupName, string vmName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        VmExtensionsListResult value = default;
+                        VirtualMachineExtensionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmExtensionsListResult.DeserializeVmExtensionsListResult(document.RootElement);
+                        value = VirtualMachineExtensionsListResult.DeserializeVirtualMachineExtensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

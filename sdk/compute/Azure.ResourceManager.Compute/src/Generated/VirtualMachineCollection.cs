@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachineResource>, IAsyncEnumerable<VirtualMachineResource>
     {
-        private readonly ClientDiagnostics _vmClientDiagnostics;
-        private readonly VirtualMachinesRestOperations _vmRestClient;
+        private readonly ClientDiagnostics _virtualMachineClientDiagnostics;
+        private readonly VirtualMachinesRestOperations _virtualMachineRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineCollection"/> class for mocking. </summary>
         protected VirtualMachineCollection()
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualMachineResource.ResourceType, out string vmApiVersion);
-            _vmRestClient = new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vmApiVersion);
+            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
+            _virtualMachineRestClient = new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _vmClientDiagnostics, Pipeline, _vmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _vmClientDiagnostics, Pipeline, _vmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, cancellationToken);
+                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = _vmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken);
+                var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
+                using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vmRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachineRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
+                using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _vmRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
+                using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vmRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
+                    var response = _virtualMachineRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
+                using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _vmRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
+                    var response = _virtualMachineRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _vmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _vmClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
+            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = _vmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken);
+                var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

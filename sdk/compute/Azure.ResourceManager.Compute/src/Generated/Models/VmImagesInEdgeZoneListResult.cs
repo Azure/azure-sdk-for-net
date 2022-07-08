@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VmImagesInEdgeZoneListResult. </summary>
         internal VmImagesInEdgeZoneListResult()
         {
-            Value = new ChangeTrackingList<VmImageBase>();
+            Value = new ChangeTrackingList<VirtualMachineImageBase>();
         }
 
         /// <summary> Initializes a new instance of VmImagesInEdgeZoneListResult. </summary>
         /// <param name="value"> The list of VMImages in EdgeZone. </param>
         /// <param name="nextLink"> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </param>
-        internal VmImagesInEdgeZoneListResult(IReadOnlyList<VmImageBase> value, string nextLink)
+        internal VmImagesInEdgeZoneListResult(IReadOnlyList<VirtualMachineImageBase> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of VMImages in EdgeZone. </summary>
-        public IReadOnlyList<VmImageBase> Value { get; }
+        public IReadOnlyList<VirtualMachineImageBase> Value { get; }
         /// <summary> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </summary>
         public string NextLink { get; }
     }

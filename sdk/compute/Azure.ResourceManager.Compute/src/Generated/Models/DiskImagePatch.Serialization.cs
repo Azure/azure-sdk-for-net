@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVm))
+            if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine");
-                JsonSerializer.Serialize(writer, SourceVm);
+                JsonSerializer.Serialize(writer, SourceVirtualMachine);
             }
             if (Optional.IsDefined(StorageProfile))
             {

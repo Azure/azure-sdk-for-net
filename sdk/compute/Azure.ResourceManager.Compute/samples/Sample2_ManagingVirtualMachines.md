@@ -51,11 +51,11 @@ VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 string vmName = "myVM";
 VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
 {
-    HardwareProfile = new HardwareProfile()
+    HardwareProfile = new VirtualMachineHardwareProfile()
     {
-        VmSize = VmSizeType.StandardF2
+        VmSize = VirtualMachineSizeType.StandardF2
     },
-    OSProfile = new OSProfile()
+    OSProfile = new VirtualMachineOSProfile()
     {
         AdminUsername = "adminUser",
         ComputerName = "myVM",
@@ -63,7 +63,7 @@ VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
         {
             DisablePasswordAuthentication = true,
             SshPublicKeys = {
-                new SshPublicKeyInfo()
+                new SshPublicKeyConfiguration()
                 {
                     Path = $"/home/adminUser/.ssh/authorized_keys",
                     KeyData = "<value of the public ssh key>",
@@ -71,24 +71,24 @@ VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
             }
         }
     },
-    NetworkProfile = new VmNetworkProfile()
+    NetworkProfile = new VirtualMachineNetworkProfile()
     {
         NetworkInterfaces =
         {
-            new VmNetworkInterfaceReference()
+            new VirtualMachineNetworkInterfaceReference()
             {
                 Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                 Primary = true,
             }
         }
     },
-    StorageProfile = new StorageProfile()
+    StorageProfile = new VirtualMachineStorageProfile()
     {
-        OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
+        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
         {
             OSType = SupportedOperatingSystemType.Linux,
             Caching = CachingType.ReadWrite,
-            ManagedDisk = new ManagedDiskParameters()
+            ManagedDisk = new VirtualMachineManagedDisk()
             {
                 StorageAccountType = StorageAccountType.StandardLRS
             }

@@ -49,8 +49,10 @@ rename-rules:
   VM: Vm
   VMs: Vms
   Vmos: VmOS
-  VMScaleSet: Vmss
-  VmScaleSet: Vmss
+  VMScaleSet: VirtualMachineScaleSet
+  VmScaleSet: VirtualMachineScaleSet
+  VmScaleSets: VirtualMachineScaleSets
+  VMScaleSets: VirtualMachineScaleSets
   DNS: Dns
   VPN: Vpn
   NAT: Nat
@@ -65,18 +67,13 @@ rename-rules:
   VCPUs: VCpus
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
-  VirtualMachineScaleSet: Vmss
-  VirtualMachine: Vm
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
 - /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}: VmRunCommand
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VmssVmRunCommand
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}: VirtualMachine
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}: VirtualMachineScaleSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
 
 override-operation-name:
   VirtualMachines_Start: PowerOn
@@ -129,7 +126,7 @@ rename-mapping:
   ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
   UpdateResource: ComputeResourcePatch
   SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
-  SshPublicKey: SshPublicKeyInfo
+  SshPublicKey: SshPublicKeyConfiguration
   SshPublicKeyResource: SshPublicKey
   LogAnalyticsOperationResult: LogAnalytics
   PrivateLinkResource: ComputePrivateLinkResourceData
@@ -158,9 +155,22 @@ rename-mapping:
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
-  NetworkProfile: VmNetworkProfile
-  NetworkInterfaceReference: VmNetworkInterfaceReference
+  NetworkProfile: VirtualMachineNetworkProfile
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
   Image: DiskImage
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VmDiskTypes: VirtualMachineDiskType
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMGuestPatchClassification_Linux: LinuxVmGuestPatchClassification
+  VMGuestPatchClassification_Windows: WindowsVmGuestPatchClassification
+  VMSizeProperties: VirtualMachineSizeProperties
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  StorageProfile: VirtualMachineStorageProfile
+  OSProfile: VirtualMachineOSProfile
+  OSDisk: VirtualMachineOSDisk
+  DataDisk: VirtualMachineDataDisk
+  HardwareProfile: VirtualMachineHardwareProfile
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -321,7 +331,7 @@ directive:
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
-  # fixing a swagger mistake, can be removed after https://github.com/Azure/azure-rest-api-specs/pull/19679 merges
+  # fixing a swagger mistake, can be removed after github.com/Azure/azure-rest-api-specs/pull/19679 merges
   - from: gallery.json
     where: $.definitions.SharingProfile.properties.communityGalleryInfo
     transform: >

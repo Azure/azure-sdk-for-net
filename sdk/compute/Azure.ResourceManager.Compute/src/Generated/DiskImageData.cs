@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
-        /// <param name="sourceVm"> The source virtual machine from which Image is created. </param>
+        /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        internal DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, WritableSubResource sourceVm, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
-            SourceVm = sourceVm;
+            SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;
             ProvisioningState = provisioningState;
             HyperVGeneration = hyperVGeneration;
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The extended location of the Image. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The source virtual machine from which Image is created. </summary>
-        internal WritableSubResource SourceVm { get; set; }
+        internal WritableSubResource SourceVirtualMachine { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SourceVmId
+        public ResourceIdentifier SourceVirtualMachineId
         {
-            get => SourceVm is null ? default : SourceVm.Id;
+            get => SourceVirtualMachine is null ? default : SourceVirtualMachine.Id;
             set
             {
-                if (SourceVm is null)
-                    SourceVm = new WritableSubResource();
-                SourceVm.Id = value;
+                if (SourceVirtualMachine is null)
+                    SourceVirtualMachine = new WritableSubResource();
+                SourceVirtualMachine.Id = value;
             }
         }
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
         /// <summary> The virtual machine profile. </summary>
-        public VmssUpdateVmProfile VmProfile { get; set; }
+        public VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get; set; }
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>

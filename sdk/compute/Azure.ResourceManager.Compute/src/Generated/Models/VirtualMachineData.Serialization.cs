@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("availabilitySet");
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (Optional.IsDefined(Vmss))
+            if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet");
-                JsonSerializer.Serialize(writer, Vmss);
+                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
             Optional<ComputePlan> plan = default;
-            Optional<IReadOnlyList<VmExtensionData>> resources = default;
+            Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
@@ -187,23 +187,23 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<StorageProfile> storageProfile = default;
+            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
+            Optional<VirtualMachineStorageProfile> storageProfile = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<VmNetworkProfile> networkProfile = default;
+            Optional<VirtualMachineOSProfile> osProfile = default;
+            Optional<VirtualMachineNetworkProfile> networkProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<WritableSubResource> availabilitySet = default;
-            Optional<WritableSubResource> vmss = default;
+            Optional<WritableSubResource> virtualMachineScaleSet = default;
             Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VmPriorityType> priority = default;
-            Optional<VmEvictionPolicyType> evictionPolicy = default;
+            Optional<VirtualMachinePriorityType> priority = default;
+            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
             Optional<BillingProfile> billingProfile = default;
             Optional<WritableSubResource> host = default;
             Optional<WritableSubResource> hostGroup = default;
             Optional<string> provisioningState = default;
-            Optional<VmInstanceView> instanceView = default;
+            Optional<VirtualMachineInstanceView> instanceView = default;
             Optional<string> licenseType = default;
             Optional<string> vmId = default;
             Optional<string> extensionsTimeBudget = default;
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmExtensionData> array = new List<VmExtensionData>();
+                    List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmExtensionData.DeserializeVmExtensionData(item));
+                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item));
                     }
                     resources = array;
                     continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
+                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkProfile = VmNetworkProfile.DeserializeVmNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vmss = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new VmPriorityType(property0.Value.GetString());
+                            priority = new VirtualMachinePriorityType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("evictionPolicy"))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            evictionPolicy = new VmEvictionPolicyType(property0.Value.GetString());
+                            evictionPolicy = new VirtualMachineEvictionPolicyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingProfile"))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = VmInstanceView.DeserializeVmInstanceView(property0.Value);
+                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("licenseType"))
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, vmss, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated));
+            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

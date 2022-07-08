@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ScaleInPolicy DeserializeScaleInPolicy(JsonElement element)
         {
-            Optional<IList<VmssScaleInRule>> rules = default;
+            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
             Optional<bool> forceDeletion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmssScaleInRule> array = new List<VmssScaleInRule>();
+                    List<VirtualMachineScaleSetScaleInRule> array = new List<VirtualMachineScaleSetScaleInRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new VmssScaleInRule(item.GetString()));
+                        array.Add(new VirtualMachineScaleSetScaleInRule(item.GetString()));
                     }
                     rules = array;
                     continue;

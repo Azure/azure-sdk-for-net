@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The source virtual machine from which Image is created. </summary>
-        internal WritableSubResource SourceVm { get; set; }
+        internal WritableSubResource SourceVirtualMachine { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SourceVmId
+        public ResourceIdentifier SourceVirtualMachineId
         {
-            get => SourceVm is null ? default : SourceVm.Id;
+            get => SourceVirtualMachine is null ? default : SourceVirtualMachine.Id;
             set
             {
-                if (SourceVm is null)
-                    SourceVm = new WritableSubResource();
-                SourceVm.Id = value;
+                if (SourceVirtualMachine is null)
+                    SourceVirtualMachine = new WritableSubResource();
+                SourceVirtualMachine.Id = value;
             }
         }
 

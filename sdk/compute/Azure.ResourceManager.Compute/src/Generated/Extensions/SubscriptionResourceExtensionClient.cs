@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute
     {
         private ClientDiagnostics _usageClientDiagnostics;
         private UsageRestOperations _usageRestClient;
-        private ClientDiagnostics _vmSizesClientDiagnostics;
-        private VirtualMachineSizesRestOperations _vmSizesRestClient;
-        private ClientDiagnostics _vmssClientDiagnostics;
-        private VirtualMachineScaleSetsRestOperations _vmssRestClient;
-        private ClientDiagnostics _vmClientDiagnostics;
-        private VirtualMachinesRestOperations _vmRestClient;
-        private ClientDiagnostics _vmImagesClientDiagnostics;
-        private VirtualMachineImagesRestOperations _vmImagesRestClient;
-        private ClientDiagnostics _vmImagesEdgeZoneClientDiagnostics;
-        private VirtualMachineImagesEdgeZoneRestOperations _vmImagesEdgeZoneRestClient;
+        private ClientDiagnostics _virtualMachineSizesClientDiagnostics;
+        private VirtualMachineSizesRestOperations _virtualMachineSizesRestClient;
+        private ClientDiagnostics _virtualMachineScaleSetClientDiagnostics;
+        private VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetRestClient;
+        private ClientDiagnostics _virtualMachineClientDiagnostics;
+        private VirtualMachinesRestOperations _virtualMachineRestClient;
+        private ClientDiagnostics _virtualMachineImagesClientDiagnostics;
+        private VirtualMachineImagesRestOperations _virtualMachineImagesRestClient;
+        private ClientDiagnostics _virtualMachineImagesEdgeZoneClientDiagnostics;
+        private VirtualMachineImagesEdgeZoneRestOperations _virtualMachineImagesEdgeZoneRestClient;
         private ClientDiagnostics _availabilitySetClientDiagnostics;
         private AvailabilitySetsRestOperations _availabilitySetRestClient;
         private ClientDiagnostics _proximityPlacementGroupClientDiagnostics;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations _capacityReservationGroupRestClient;
         private ClientDiagnostics _logAnalyticsClientDiagnostics;
         private LogAnalyticsRestOperations _logAnalyticsRestClient;
-        private ClientDiagnostics _vmRunCommandVmRunCommandsClientDiagnostics;
-        private VirtualMachineRunCommandsRestOperations _vmRunCommandVmRunCommandsRestClient;
+        private ClientDiagnostics _virtualMachineRunCommandClientDiagnostics;
+        private VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandRestClient;
         private ClientDiagnostics _managedDiskDisksClientDiagnostics;
         private DisksRestOperations _managedDiskDisksRestClient;
         private ClientDiagnostics _diskAccessClientDiagnostics;
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.Compute
 
         private ClientDiagnostics UsageClientDiagnostics => _usageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsageRestOperations UsageRestClient => _usageRestClient ??= new UsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _vmSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _vmSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineScaleSetClientDiagnostics => _vmssClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _vmssRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineScaleSetResource.ResourceType));
-        private ClientDiagnostics VirtualMachineClientDiagnostics => _vmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachinesRestOperations VirtualMachineRestClient => _vmRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
-        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _vmImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _vmImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _vmImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _vmImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineScaleSetClientDiagnostics => _virtualMachineScaleSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachineScaleSetsRestOperations VirtualMachineScaleSetRestClient => _virtualMachineScaleSetRestClient ??= new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineScaleSetResource.ResourceType));
+        private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
+        private ClientDiagnostics VirtualMachineImagesClientDiagnostics => _virtualMachineImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineImagesRestOperations VirtualMachineImagesRestClient => _virtualMachineImagesRestClient ??= new VirtualMachineImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VirtualMachineImagesEdgeZoneClientDiagnostics => _virtualMachineImagesEdgeZoneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineImagesEdgeZoneRestOperations VirtualMachineImagesEdgeZoneRestClient => _virtualMachineImagesEdgeZoneRestClient ??= new VirtualMachineImagesEdgeZoneRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvailabilitySetClientDiagnostics => _availabilitySetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, Diagnostics);
         private AvailabilitySetsRestOperations AvailabilitySetRestClient => _availabilitySetRestClient ??= new AvailabilitySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvailabilitySetResource.ResourceType));
         private ClientDiagnostics ProximityPlacementGroupClientDiagnostics => _proximityPlacementGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProximityPlacementGroupResource.ResourceType.Namespace, Diagnostics);
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations CapacityReservationGroupRestClient => _capacityReservationGroupRestClient ??= new CapacityReservationGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CapacityReservationGroupResource.ResourceType));
         private ClientDiagnostics LogAnalyticsClientDiagnostics => _logAnalyticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VmRunCommandVirtualMachineRunCommandsClientDiagnostics => _vmRunCommandVmRunCommandsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VmRunCommandResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineRunCommandsRestOperations VmRunCommandVirtualMachineRunCommandsRestClient => _vmRunCommandVmRunCommandsRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VmRunCommandResource.ResourceType));
+        private ClientDiagnostics VirtualMachineRunCommandClientDiagnostics => _virtualMachineRunCommandClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineRunCommandResource.ResourceType));
         private ClientDiagnostics ManagedDiskDisksClientDiagnostics => _managedDiskDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
         private DisksRestOperations ManagedDiskDisksRestClient => _managedDiskDisksRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDiskResource.ResourceType));
         private ClientDiagnostics DiskAccessClientDiagnostics => _diskAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccessResource.ResourceType.Namespace, Diagnostics);
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.Compute
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VmExtensionImageResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
-        /// <returns> An object representing collection of VmExtensionImageResources and their operations over a VmExtensionImageResource. </returns>
-        public virtual VmExtensionImageCollection GetVmExtensionImages(AzureLocation location, string publisherName)
+        /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
+        public virtual VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(AzureLocation location, string publisherName)
         {
-            return new VmExtensionImageCollection(Client, Id, location, publisherName);
+            return new VirtualMachineExtensionImageCollection(Client, Id, location, publisherName);
         }
 
         /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmSize>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<VmSize> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineSizes");
                 scope.Start();
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmImage>> GetVirtualMachineImageAsync(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
             scope.Start();
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmImage> GetVirtualMachineImage(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImage(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
             scope.Start();
@@ -721,10 +721,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImages");
                 scope.Start();
@@ -755,10 +755,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImages");
                 scope.Start();
@@ -784,10 +784,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers");
                 scope.Start();
@@ -813,10 +813,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers");
                 scope.Start();
@@ -841,10 +841,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
@@ -869,10 +869,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
@@ -899,10 +899,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus");
                 scope.Start();
@@ -929,10 +929,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus");
                 scope.Start();
@@ -958,10 +958,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesByEdgeZone");
                 scope.Start();
@@ -987,10 +987,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesByEdgeZone");
                 scope.Start();
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmImage>> GetVirtualMachineImagesEdgeZoneAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmImage> GetVirtualMachineImagesEdgeZone(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -1078,10 +1078,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1113,10 +1113,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1143,10 +1143,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1173,10 +1173,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1202,10 +1202,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1231,10 +1231,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1262,10 +1262,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VmImageBase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus");
                 scope.Start();
@@ -1293,10 +1293,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmImageBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Page<VmImageBase> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus");
                 scope.Start();
@@ -2030,11 +2030,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<RunCommandDocumentBase>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = await VmRunCommandVirtualMachineRunCommandsRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineRunCommandRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2045,11 +2045,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<RunCommandDocumentBase>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = await VmRunCommandVirtualMachineRunCommandsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineRunCommandRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2073,11 +2073,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<RunCommandDocumentBase> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = VmRunCommandVirtualMachineRunCommandsRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    var response = VirtualMachineRunCommandRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2088,11 +2088,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<RunCommandDocumentBase> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = VmRunCommandVirtualMachineRunCommandsRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    var response = VirtualMachineRunCommandRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2114,11 +2114,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
-                var response = await VmRunCommandVirtualMachineRunCommandsRestClient.GetAsync(Id.SubscriptionId, location, commandId, cancellationToken).ConfigureAwait(false);
+                var response = await VirtualMachineRunCommandRestClient.GetAsync(Id.SubscriptionId, location, commandId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2138,11 +2138,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VmRunCommandVirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
-                var response = VmRunCommandVirtualMachineRunCommandsRestClient.Get(Id.SubscriptionId, location, commandId, cancellationToken);
+                var response = VirtualMachineRunCommandRestClient.Get(Id.SubscriptionId, location, commandId, cancellationToken);
                 return response;
             }
             catch (Exception e)
