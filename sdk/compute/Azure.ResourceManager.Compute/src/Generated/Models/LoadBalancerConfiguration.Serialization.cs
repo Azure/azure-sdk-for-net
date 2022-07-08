@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<ResourceIdentifier> id = default;
             string name = default;
-            IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
+            IList<LoadBalancerFrontendIPConfiguration> frontendIpConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
                             }
-                            frontendIPConfigurations = array;
+                            frontendIpConfigurations = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LoadBalancerConfiguration(id.Value, name, frontendIPConfigurations);
+            return new LoadBalancerConfiguration(id.Value, name, frontendIpConfigurations);
         }
     }
 }
