@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var vmData = new VirtualMachineData(location)
             {
                 AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
-                NetworkProfile = new NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
+                NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
                 OSProfile = new OSProfile
                 {
                     ComputerName = "testVM",
