@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network
         public PrivateEndpointData()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
-            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
+            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
+            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? eTag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, resourceType, location, tags)
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? eTag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             ETag = eTag;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the private endpoint resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
-        public IList<NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
+        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
         /// <summary> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </summary>
-        public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
+        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> An array of custom dns configurations. </summary>
-        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; }
+        public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; }
     }
 }
