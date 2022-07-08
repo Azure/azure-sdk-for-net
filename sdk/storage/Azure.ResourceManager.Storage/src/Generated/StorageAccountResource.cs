@@ -100,37 +100,11 @@ namespace Azure.ResourceManager.Storage
             return new ManagementPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
         }
 
-        /// <summary> Gets a collection of BlobInventoryPolicyResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of BlobInventoryPolicyResources and their operations over a BlobInventoryPolicyResource. </returns>
-        public virtual BlobInventoryPolicyCollection GetBlobInventoryPolicies()
+        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
         {
-            return GetCachedClient(Client => new BlobInventoryPolicyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BlobInventoryPolicyResource>> GetBlobInventoryPolicyAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetBlobInventoryPolicies().GetAsync(blobInventoryPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<BlobInventoryPolicyResource> GetBlobInventoryPolicy(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetBlobInventoryPolicies().Get(blobInventoryPolicyName, cancellationToken);
+            return new BlobInventoryPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/inventoryPolicies/default"));
         }
 
         /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
@@ -470,7 +444,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountListKeysResult>> GetKeysAsync(ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountListKeysResult>> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
             scope.Start();
@@ -493,7 +467,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountListKeysResult> GetKeys(ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountListKeysResult> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
             scope.Start();
@@ -939,10 +913,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StoragePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StoragePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StoragePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StoragePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();
@@ -966,10 +940,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StoragePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StoragePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<StoragePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<StoragePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();

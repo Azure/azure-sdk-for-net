@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("shareQuota");
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (Optional.IsDefined(EnabledProtocols))
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols");
-                writer.WriteStringValue(EnabledProtocols.Value.ToString());
+                writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
             if (Optional.IsDefined(RootSquash))
             {
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.Storage
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<int> shareQuota = default;
-            Optional<EnabledProtocol> enabledProtocols = default;
+            Optional<FileShareEnabledProtocol> enabledProtocols = default;
             Optional<RootSquashType> rootSquash = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
             Optional<int> remainingRetentionDays = default;
-            Optional<ShareAccessTier> accessTier = default;
+            Optional<FileShareAccessTier> accessTier = default;
             Optional<DateTimeOffset> accessTierChangeTime = default;
             Optional<string> accessTierStatus = default;
             Optional<long> shareUsageBytes = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabledProtocols = new EnabledProtocol(property0.Value.GetString());
+                            enabledProtocols = new FileShareEnabledProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("rootSquash"))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessTier = new ShareAccessTier(property0.Value.GetString());
+                            accessTier = new FileShareAccessTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accessTierChangeTime"))
