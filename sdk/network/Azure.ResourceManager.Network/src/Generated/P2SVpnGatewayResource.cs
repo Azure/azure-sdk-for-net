@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<P2SVpnGatewayResource>> UpdateAsync(WaitUntil waitUntil, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<P2SVpnGatewayResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to update a virtual wan p2s vpn gateway tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual ArmOperation<P2SVpnGatewayResource> Update(WaitUntil waitUntil, TagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<P2SVpnGatewayResource> Update(WaitUntil waitUntil, NetworkTagsObject p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
 
