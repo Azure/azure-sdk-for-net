@@ -28,10 +28,9 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
-  VMM: Vmm
   VM: Vm
   VMs: Vms
   VMScaleSet: VmScaleSet
@@ -39,11 +38,13 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+  VMM: Vmm
 
 no-property-type-replacement:
 - VirtualMachineDeleteCheckpoint
