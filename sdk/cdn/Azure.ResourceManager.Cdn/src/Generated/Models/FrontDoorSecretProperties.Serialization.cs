@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecretProperties : IUtf8JsonSerializable
+    public partial class FrontDoorSecretProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretProperties DeserializeSecretProperties(JsonElement element)
+        internal static FrontDoorSecretProperties DeserializeFrontDoorSecretProperties(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecretProperties(type);
+            return new FrontDoorSecretProperties(type);
         }
     }
 }

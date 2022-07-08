@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityIssue
+    public partial class ConnectivityIssueInfo
     {
-        internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
+        internal static ConnectivityIssueInfo DeserializeConnectivityIssueInfo(JsonElement element)
         {
             Optional<IssueOrigin> origin = default;
             Optional<IssueSeverity> severity = default;
-            Optional<IssueType> type = default;
+            Optional<ConnectivityIssueType> type = default;
             Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new IssueType(property.Value.GetString());
+                    type = new ConnectivityIssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("context"))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
+            return new ConnectivityIssueInfo(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
         }
     }
 }

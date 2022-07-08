@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceConnection : IUtf8JsonSerializable
+    public partial class NetworkPrivateLinkServiceConnection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceConnection DeserializePrivateLinkServiceConnection(JsonElement element)
+        internal static NetworkPrivateLinkServiceConnection DeserializeNetworkPrivateLinkServiceConnection(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnection(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
+            return new NetworkPrivateLinkServiceConnection(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
         }
     }
 }

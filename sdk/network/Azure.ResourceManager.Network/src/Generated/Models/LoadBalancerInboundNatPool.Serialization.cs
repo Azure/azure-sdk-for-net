@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundNatPool : IUtf8JsonSerializable
+    public partial class LoadBalancerInboundNatPool : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static InboundNatPool DeserializeInboundNatPool(JsonElement element)
+        internal static LoadBalancerInboundNatPool DeserializeLoadBalancerInboundNatPool(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new InboundNatPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
+            return new LoadBalancerInboundNatPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, Optional.ToNullable(protocol), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -67,6 +67,7 @@ rename-rules:
   Mhsm: ManagedHsm
 
 prompted-enum-values: Default
+
 directive:
   - from: swagger-document
     where: $.paths
@@ -91,6 +92,7 @@ directive:
       $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
       $.MHSMNetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'ManagedHsmNetworkRuleBypassOption';
+      $.MHSMNetworkRuleSet.properties.defaultAction['x-ms-enum']['name'] = 'ManagedHsmNetworkRuleAction';
       $.MHSMPrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ManagedHsmActionsRequiredMessage';
       $.MHSMPrivateLinkResource['x-ms-client-name'] = 'ManagedHsmPrivateLinkResourceData';
       $.MHSMPrivateEndpointConnectionItem['x-ms-client-name'] = 'ManagedHsmPrivateEndpointConnectionItemData';
@@ -100,7 +102,7 @@ directive:
   - from: keyvault.json
     where: $.definitions
     transform: >
-      $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'NameAvailabilityReason';
+      $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
       $.CheckNameAvailabilityResult['x-ms-client-name'] = 'KeyVaultNameAvailabilityResult';
       $.Permissions.properties.keys.items['x-ms-enum']['name'] = 'IdentityAccessKeyPermission';
       $.Permissions.properties.secrets.items['x-ms-enum']['name'] = 'IdentityAccessSecretPermission';
@@ -129,6 +131,7 @@ directive:
       $.VaultAccessPolicyProperties['x-ms-client-name'] = 'KeyVaultAccessPolicyProperties';
       $.VaultListResult['x-ms-client-name'] = 'KeyVaultListResult';
       $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'KeyVaultNetworkRuleBypassOption';
+      $.NetworkRuleSet.properties.defaultAction['x-ms-enum']['name'] = 'KeyVaultNetworkRuleAction';
       $.NetworkRuleSet['x-ms-client-name'] = 'KeyVaultNetworkRuleSet';
       $.AccessPolicyEntry['x-ms-client-name'] = 'KeyVaultAccessPolicy';
       $.PrivateEndpointConnectionProvisioningState['x-ms-enum']['name'] = 'KeyVaultPrivateEndpointConnectionProvisioningState';

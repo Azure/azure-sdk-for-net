@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityHop
+    public partial class ConnectivityHopInfo
     {
-        internal static ConnectivityHop DeserializeConnectivityHop(JsonElement element)
+        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element)
         {
             Optional<string> type = default;
             Optional<string> id = default;
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> previousHopIds = default;
             Optional<IReadOnlyList<HopLink>> links = default;
             Optional<IReadOnlyList<HopLink>> previousLinks = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityIssue> array = new List<ConnectivityIssue>();
+                    List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
                     }
                     issues = array;
                     continue;
                 }
             }
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
+            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
         }
     }
 }

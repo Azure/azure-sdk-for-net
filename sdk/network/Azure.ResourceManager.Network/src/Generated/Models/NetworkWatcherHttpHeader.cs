@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The HTTP header. </summary>
-    public partial class HttpHeader
+    public partial class NetworkWatcherHttpHeader
     {
-        /// <summary> Initializes a new instance of HttpHeader. </summary>
-        public HttpHeader()
+        /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
+        public NetworkWatcherHttpHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpHeader. </summary>
+        /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
         /// <param name="name"> The name in HTTP header. </param>
         /// <param name="value"> The value in HTTP header. </param>
-        internal HttpHeader(string name, string value)
+        internal NetworkWatcherHttpHeader(string name, string value)
         {
             Name = name;
             Value = value;
