@@ -70,7 +70,7 @@ rename-mapping:
   VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
-  HTTPHeader: NetworkWatcherHTTPHeader
+  HttpHeader: NetworkWatcherHttpHeader
   IPVersion: NetworkIPVersion
   IPConfiguration: NetworkIPConfiguration
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -81,6 +81,16 @@ rename-mapping:
   CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
   ProtocolCustomSettingsFormat: ProtocolCustomSettings
   ServiceEndpointPropertiesFormat: ServiceEndpointProperties
+  ConnectionStatus: NetworkConnectionStatus
+  IssueType: ConnectivityIssueType
+  PrivateLinkServiceConnection: NetworkPrivateLinkServiceConnection
+  ConnectivityHop: ConnectivityHopInfo
+  ConnectivityIssue: ConnectivityIssueInfo
+  PreferredIPVersion: TestEvalPreferredIPVersion
+  InboundNatPool: LoadBalancerInboundNatPool
+  TagsObject: NetworkTagsObject
+  EndpointType: ConnectionMonitorEndpointType
+  ConnectionState: NetworkConnectionState
 
 format-by-name-rules:
   'tenantId': 'uuid'
