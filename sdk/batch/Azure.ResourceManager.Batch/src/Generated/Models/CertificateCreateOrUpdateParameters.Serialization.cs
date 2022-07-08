@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static CertificateCreateOrUpdateParameters DeserializeCertificateCreateOrUpdateParameters(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new CertificateCreateOrUpdateParameters(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), data.Value, password.Value, Optional.ToNullable(etag));
+            return new CertificateCreateOrUpdateParameters(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), data.Value, password.Value, Optional.ToNullable(eTag));
         }
     }
 }

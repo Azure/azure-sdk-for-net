@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> currentNodeCount = default;
             Optional<int> targetNodeCount = default;
             Optional<NodeStateCounts> nodeStateCounts = default;
-            Optional<bool> enableNodePublicIp = default;
+            Optional<bool> enableNodePublicIP = default;
             Optional<IDictionary<string, BinaryData>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableNodePublicIp = property.Value.GetBoolean();
+                    enableNodePublicIP = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("propertyBag"))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToDictionary(propertyBag));
         }
     }
 }

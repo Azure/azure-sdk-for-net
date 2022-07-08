@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData endpoint = default;
-            BinaryData marketplaceID = default;
-            BinaryData sellerID = default;
+            BinaryData marketplaceId = default;
+            BinaryData sellerId = default;
             Optional<SecretBase> mwsAuthToken = default;
             BinaryData accessKeyId = default;
             Optional<SecretBase> secretKey = default;
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("marketplaceID"))
                         {
-                            marketplaceID = BinaryData.FromString(property0.Value.GetRawText());
+                            marketplaceId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sellerID"))
                         {
-                            sellerID = BinaryData.FromString(property0.Value.GetRawText());
+                            sellerId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mwsAuthToken"))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonMwsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, marketplaceID, sellerID, mwsAuthToken.Value, accessKeyId, secretKey.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new AmazonMwsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, marketplaceId, sellerId, mwsAuthToken.Value, accessKeyId, secretKey.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
         }
     }
 }

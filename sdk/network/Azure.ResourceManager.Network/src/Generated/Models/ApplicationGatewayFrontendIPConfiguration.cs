@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateIPAddress"> PrivateIPAddress of the network interface IP Configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
         /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;

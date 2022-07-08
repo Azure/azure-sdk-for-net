@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string type = default;
             Optional<Serialization> serialization = default;
             Optional<Diagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<Compression> compression = default;
             Optional<string> partitionKey = default;
             Optional<InputWatermarkProperties> watermarkSettings = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("compression"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new InputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value);
+            return new InputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(eTag), compression.Value, partitionKey.Value, watermarkSettings.Value);
         }
     }
 }

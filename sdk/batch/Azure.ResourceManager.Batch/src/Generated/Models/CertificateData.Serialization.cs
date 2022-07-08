@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static CertificateData DeserializeCertificateData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new CertificateData(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(previousProvisioningState), Optional.ToNullable(previousProvisioningStateTransitionTime), publicData.Value, deleteCertificateError.Value, Optional.ToNullable(etag));
+            return new CertificateData(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(previousProvisioningState), Optional.ToNullable(previousProvisioningStateTransitionTime), publicData.Value, deleteCertificateError.Value, Optional.ToNullable(eTag));
         }
     }
 }

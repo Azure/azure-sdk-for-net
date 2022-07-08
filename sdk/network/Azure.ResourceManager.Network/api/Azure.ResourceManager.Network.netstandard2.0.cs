@@ -2204,7 +2204,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> TapConfigurations { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VmId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         public string WorkloadType { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceIPConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.IEnumerable
@@ -2710,8 +2710,8 @@ namespace Azure.ResourceManager.Network
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource>> ResetAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.P2SVpnGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.P2SVpnGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2SVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2SVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2sVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.P2SVpnGatewayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Network.Models.TagsObject p2sVpnGatewayParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PacketCaptureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>, System.Collections.IEnumerable
     {
@@ -7419,7 +7419,7 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class IPsecPolicy
     {
-        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, Azure.ResourceManager.Network.Models.IPsecEncryption iPsecEncryption, Azure.ResourceManager.Network.Models.IPsecIntegrity iPsecIntegrity, Azure.ResourceManager.Network.Models.IkeEncryption ikeEncryption, Azure.ResourceManager.Network.Models.IkeIntegrity ikeIntegrity, Azure.ResourceManager.Network.Models.DHGroup dhGroup, Azure.ResourceManager.Network.Models.PfsGroup pfsGroup) { }
+        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, Azure.ResourceManager.Network.Models.IPsecEncryption ipsecEncryption, Azure.ResourceManager.Network.Models.IPsecIntegrity ipsecIntegrity, Azure.ResourceManager.Network.Models.IkeEncryption ikeEncryption, Azure.ResourceManager.Network.Models.IkeIntegrity ikeIntegrity, Azure.ResourceManager.Network.Models.DHGroup dhGroup, Azure.ResourceManager.Network.Models.PfsGroup pfsGroup) { }
         public Azure.ResourceManager.Network.Models.DHGroup DhGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IkeEncryption IkeEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IkeIntegrity IkeIntegrity { get { throw null; } set { } }
@@ -9529,7 +9529,7 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class VpnClientIPsecParameters
     {
-        public VpnClientIPsecParameters(int saLifeTimeSeconds, int saDataSizeKilobytes, Azure.ResourceManager.Network.Models.IPsecEncryption iPsecEncryption, Azure.ResourceManager.Network.Models.IPsecIntegrity iPsecIntegrity, Azure.ResourceManager.Network.Models.IkeEncryption ikeEncryption, Azure.ResourceManager.Network.Models.IkeIntegrity ikeIntegrity, Azure.ResourceManager.Network.Models.DHGroup dhGroup, Azure.ResourceManager.Network.Models.PfsGroup pfsGroup) { }
+        public VpnClientIPsecParameters(int saLifeTimeSeconds, int saDataSizeKilobytes, Azure.ResourceManager.Network.Models.IPsecEncryption ipsecEncryption, Azure.ResourceManager.Network.Models.IPsecIntegrity ipsecIntegrity, Azure.ResourceManager.Network.Models.IkeEncryption ikeEncryption, Azure.ResourceManager.Network.Models.IkeIntegrity ikeIntegrity, Azure.ResourceManager.Network.Models.DHGroup dhGroup, Azure.ResourceManager.Network.Models.PfsGroup pfsGroup) { }
         public Azure.ResourceManager.Network.Models.DHGroup DhGroup { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IkeEncryption IkeEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IkeIntegrity IkeIntegrity { get { throw null; } set { } }

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
 
             //if single CA, primary flag will be set
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.True(getNicResponse.Value.Data.IPConfigurations[0].Primary);
             Assert.AreEqual(2, getNicResponse.Value.Data.IPConfigurations.Count);
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
             Assert.NotNull(getNicResponse.Value.Data.ResourceGuid);
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkInterfaceResource> getNicResponse = await networkInterfaceCollection.GetAsync(nicName);
             Assert.AreEqual(getNicResponse.Value.Data.Name, nicName);
             Assert.AreEqual("Succeeded", getNicResponse.Value.Data.ProvisioningState.ToString());
-            Assert.Null(getNicResponse.Value.Data.Vm);
+            Assert.Null(getNicResponse.Value.Data.VirtualMachine);
             Assert.Null(getNicResponse.Value.Data.MacAddress);
             Assert.AreEqual(1, getNicResponse.Value.Data.IPConfigurations.Count);
             Assert.AreEqual(ipConfigName, getNicResponse.Value.Data.IPConfigurations[0].Name);
