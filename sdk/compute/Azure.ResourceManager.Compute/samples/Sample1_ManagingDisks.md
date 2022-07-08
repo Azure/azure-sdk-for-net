@@ -50,7 +50,7 @@ ManagedDiskData input = new ManagedDiskData(resourceGroup.Data.Location)
 {
     Sku = new DiskSku()
     {
-        Name = DiskStorageAccountType.StandardLRS
+        Name = DiskStorageAccountType.StandardLrs
     },
     CreationData = new DiskCreationData(DiskCreateOption.Empty),
     DiskSizeGB = 1,
