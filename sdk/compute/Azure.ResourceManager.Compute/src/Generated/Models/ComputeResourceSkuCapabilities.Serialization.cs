@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuCapabilities
+    public partial class ComputeResourceSkuCapabilities
     {
-        internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element)
+        internal static ComputeResourceSkuCapabilities DeserializeComputeResourceSkuCapabilities(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> value = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapabilities(name.Value, value.Value);
+            return new ComputeResourceSkuCapabilities(name.Value, value.Value);
         }
     }
 }

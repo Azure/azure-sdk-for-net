@@ -35,7 +35,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -49,14 +49,17 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SSD: Ssd
   SAS: Sas
   VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
 
@@ -98,7 +101,6 @@ prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
 - DeleteOptions
-- ProtocolType
 - ResourceSku
 - ResourceSkuCapacity
 - ResourceSkuLocationInfo
@@ -109,7 +111,6 @@ prepend-rp-prefix:
 - ResourceSkuZoneDetails
 - ResourceSkuCapacityScaleType
 - EncryptionType
-- ProtocolType
 - PublicIPAddressSku
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
@@ -188,6 +189,7 @@ rename-mapping:
   RunCommandResult: VirtualMachineRunCommandResult
   UpgradeMode: VirtualMachineScaleSetUpgradeMode
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -354,4 +356,8 @@ directive:
     transform: >
       $.items = undefined;
       $["$ref"] = "#/definitions/CommunityGalleryInfo";
+  - from: compute.json
+    where: $.definitions
+    transform: >
+      $.WinRMListener.properties.protocol['x-ms-enum']['name'] = 'WinRMListenerProtocolType';
 ```
