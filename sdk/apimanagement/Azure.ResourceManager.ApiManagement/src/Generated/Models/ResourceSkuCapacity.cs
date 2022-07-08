@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal ResourceSkuCapacity(int? minimum, int? maximum, int? @default, ResourceSkuCapacityScaleType? scaleType)
+        internal ResourceSkuCapacity(int? minimum, int? maximum, int? @default, ApiManagementResourceSkuCapacityScaleType? scaleType)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The default capacity. </summary>
         public int? Default { get; }
         /// <summary> The scale type applicable to the sku. </summary>
-        public ResourceSkuCapacityScaleType? ScaleType { get; }
+        public ApiManagementResourceSkuCapacityScaleType? ScaleType { get; }
     }
 }
