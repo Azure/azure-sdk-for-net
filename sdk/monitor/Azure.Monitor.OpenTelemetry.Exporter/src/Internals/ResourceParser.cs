@@ -15,7 +15,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal string RoleName { get; private set; }
 
         internal string RoleInstance { get; private set; }
+
         internal static string Statsbeat_RoleName { get; private set; }
+
         internal static string Statsbeat_RoleInstance { get; private set; }
 
         internal void UpdateRoleNameAndInstance(Resource resource)
