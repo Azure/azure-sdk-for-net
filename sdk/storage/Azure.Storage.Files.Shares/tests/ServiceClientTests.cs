@@ -605,15 +605,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 new InvalidOperationException("SAS Uri cannot be generated. builder.Services does specify Files. builder.Services must either specify Files or specify all Services are accessible in the value."));
         }
 
-        [RecordedTest]
-        [TestCase("sco")]
-        [TestCase("soc")]
-        [TestCase("cos")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        [TestCase("oc")]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task AccountSas_ResourceTypeOrder(string resourceType)
+        private async Task InvokeAccountSasTest(
+            string permissions = "rwdylacuptfi",
+            string services = "bqtf",
+            string resourceType = "sco")
         {
             // Arrange
             await using DisposingShare test = await GetTestShareAsync();
@@ -626,8 +621,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Generate a SAS that would set the srt / ResourceTypes in a different order than
             // the .NET SDK would normally create the SAS
-            string permissions = "rwdylacuptfi";
-            string services = "bqtf";
             TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
                 permissions: permissions,
                 expiresOn: Recording.UtcNow.AddDays(1),
@@ -645,6 +638,19 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase("sco")]
+        [TestCase("soc")]
+        [TestCase("cos")]
+        [TestCase("ocs")]
+        [TestCase("os")]
+        [TestCase("oc")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ResourceTypeOrder(string resourceType)
+        {
+            await InvokeAccountSasTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
         [TestCase("bfqt")]
         [TestCase("qftb")]
         [TestCase("tqfb")]
@@ -654,33 +660,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
         public async Task AccountSas_ServiceOrder(string services)
         {
-            // Arrange
-            await using DisposingShare test = await GetTestShareAsync();
-            string directoryName = GetNewDirectoryName();
-            string fileName = GetNewFileName();
-            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync().ConfigureAwait(false);
-            ShareFileClient file = directory.GetFileClient(fileName);
-            await file.CreateAsync(Constants.MB).ConfigureAwait(false);
-
-            // Generate a SAS that would set the srt / ResourceTypes in a different order than
-            // the .NET SDK would normally create the SAS
-            string permissions = "rwdylacuptfi";
-            string resourceTypes = "sco";
-            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
-                permissions: permissions,
-                expiresOn: Recording.UtcNow.AddDays(1),
-                services: services,
-                resourceTypes: resourceTypes);
-
-            UriBuilder blobUriBuilder = new UriBuilder(file.Uri)
-            {
-                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
-            };
-
-            // Assert
-            ShareFileClient sasBlobClient = InstrumentClient(new ShareFileClient(blobUriBuilder.Uri, GetOptions()));
-            await sasBlobClient.GetPropertiesAsync();
+            await InvokeAccountSasTest(services: services);
         }
 
         [RecordedTest]
@@ -693,33 +673,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
         public async Task AccountSas_PermissionsOrder(string permissions)
         {
-            // Arrange
-            await using DisposingShare test = await GetTestShareAsync();
-            string directoryName = GetNewDirectoryName();
-            string fileName = GetNewFileName();
-            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync().ConfigureAwait(false);
-            ShareFileClient file = directory.GetFileClient(fileName);
-            await file.CreateAsync(Constants.MB).ConfigureAwait(false);
-
-            // Generate a SAS that would set the srt / ResourceTypes in a different order than
-            // the .NET SDK would normally create the SAS
-            string services = "bqtf";
-            string resourceTypes = "sco";
-            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
-                permissions: permissions,
-                expiresOn: Recording.UtcNow.AddDays(1),
-                services: services,
-                resourceTypes: resourceTypes);
-
-            UriBuilder blobUriBuilder = new UriBuilder(file.Uri)
-            {
-                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
-            };
-
-            // Assert
-            ShareFileClient sasBlobClient = InstrumentClient(new ShareFileClient(blobUriBuilder.Uri, GetOptions()));
-            await sasBlobClient.GetPropertiesAsync();
+            await InvokeAccountSasTest(permissions: permissions);
         }
         #endregion
 

@@ -68,9 +68,8 @@ namespace Azure.Storage.Test.Shared
         {
             ExpiresOn = expiresOn;
             SetCustomPermissions(permissions);
-            CustomSignedServices = services;
-            ValidateAndRawTypes(resourceTypes, s_resourceTypes);
-            CustomResourceTypes = resourceTypes;
+            SetCustomSignedServices(services);
+            SetCustomResourcesTypes(resourceTypes);
         }
 
         /// <summary>
