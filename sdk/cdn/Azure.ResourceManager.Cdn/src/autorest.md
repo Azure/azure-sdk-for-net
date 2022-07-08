@@ -29,6 +29,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  defaultCustomBlockResponseBody: any
 
 rename-rules:
   CPU: Cpu

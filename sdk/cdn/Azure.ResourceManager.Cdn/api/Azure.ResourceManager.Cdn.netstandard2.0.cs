@@ -4266,7 +4266,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class WafPolicySettings
     {
         public WafPolicySettings() { }
-        public string DefaultCustomBlockResponseBody { get { throw null; } set { } }
+        public System.BinaryData DefaultCustomBlockResponseBody { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get { throw null; } set { } }
         public System.Uri DefaultRedirectUri { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
