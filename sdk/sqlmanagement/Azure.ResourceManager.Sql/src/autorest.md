@@ -70,7 +70,9 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
+
 no-property-type-replacement: ResourceMoveDefinition
+
 override-operation-name:
   ServerTrustGroups_ListByInstance: GetServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
@@ -81,14 +83,34 @@ override-operation-name:
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
+
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}: ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: SubscriptionLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: ResourceGroupLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: SubscriptionLongTermRetentionBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: ResourceGroupLongTermRetentionBackup
+
+rename-mapping:
+  CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
+  UpdateLongTermRetentionBackupParameters: UpdateLongTermRetentionBackupContent
+  Name: InstancePoolUsageName
+  Usage: InstancePoolUsage
+  Usage.type: ResourceType
+  UsageListResult: InstancePoolUsageListResult
+  TimeZone: SqlTimeZone
+  Metric: SqlMetric
+  Server: SqlServer
+  Database: SqlDatabase
+  Job: SqlJob
+  SyncGroupsType: SyncGroupLogType
+  SampleName: SampleSchemaName
+  DayOfWeek: SqlDayOfWeek
+  ManagedInstancePrivateEndpointConnection.properties.privateLinkServiceConnectionState: ConnectionState
+  RestorePoint.properties.restorePointCreationDate: restorePointCreatedOn
 
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
@@ -120,69 +142,16 @@ directive:
     - rename-operation:
         from: ElasticPools_ListMetricDefinitions
         to: MetricDefinitions_ListElasticPool
-    - rename-model:
-        from: UnlinkParameters
-        to: UnlinkOptions
-    - rename-model:
-        from: CopyLongTermRetentionBackupParameters
-        to: CopyLongTermRetentionBackupOptions
-    - rename-model:
-        from: UpdateLongTermRetentionBackupParameters
-        to: UpdateLongTermRetentionBackupOptions
-    - rename-model:
-        from: Name
-        to: UsageName
-    - rename-model:
-        from: Usage
-        to: InstancePoolUsage
-    - rename-model:
-        from: UsageListResult
-        to: InstancePoolUsageListResult
-    - rename-model:
-        from: TimeZone
-        to: SqlTimeZone
-    - rename-model:
-        from: Metric
-        to: SqlMetric
-    - rename-model:
-        from: Server
-        to: SqlServer
-    - rename-model:
-        from: Database
-        to: SqlDatabase
-    - rename-model:
-        from: Job
-        to: SqlJob
+    # add format to Usage
+    - from: Usages.json
+      where: $.definitions.Usage.properties
+      transform: >
+        $.id["x-ms-format"] = "arm-id";
+        $.type["x-ms-format"] = "resource-type";
+    # why we have this change? If the modelAsString is false, this resource will become a singleton
     - from: BlobAuditing.json
-      where: $.parameters.BlobAuditingPolicyNameParameter
-      transform: >
-          $['x-ms-enum'] = {
-              "name": "BlobAuditingPolicyName",
-              "modelAsString": true
-          }
-    - from: SyncGroups.json
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/syncGroups/{syncGroupName}/logs'].get.parameters[?(@.name === "type")]
-      transform: >
-          $['x-ms-enum'] = {
-              "name": "SyncGroupLogType",
-              "modelAsString": true
-          }
-    - from: Databases.json
-      where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
-      transform: >
-          $['name'] = "SampleSchemaName"
-    - from: Databases.json
-      where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
-      transform: >
-          $['name'] = "SampleSchemaName"
-    - from: MaintenanceWindows.json
-      where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
-      transform: >
-          $['name'] = "SqlDayOfWeek"
-    - from: MaintenanceWindowOptions.json
-      where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
-      transform: >
-          $['name'] = "SqlDayOfWeek"
+      where: $.parameters.BlobAuditingPolicyNameParameter['x-ms-enum'].modelAsString
+      transform: return true;
     - from: swagger-document #DatabaseRecommendedActions.json, DatabaseAdvisors.json, ServerAdvisors.json
       where: $.definitions.RecommendedActionProperties.properties
       transform: >
@@ -192,19 +161,6 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.duration
       transform: >
           $.format = "duration";
-# shorten "privateLinkServiceConnectionState" property name
-    - from: ManagedInstances.json
-      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
-      transform: >
-          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    - from: ManagedInstancePrivateEndpointConnections.json
-      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
-      transform: >
-          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-    - from: swagger-document
-      where: $.definitions..restorePointCreationDate
-      transform: >
-          $['x-ms-client-name'] = 'restorePointCreatedOn';
     - from: swagger-document
       where: $.definitions..creationDate
       transform: >
@@ -276,3 +232,4 @@ directive:
       transform: >
           $['x-ms-format'] = 'arm-id'
       reason: Only update the format of properties named 'restorableDroppedDatabaseId'. There is also a path parameter with the same name and should remain a string.
+```
