@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResourceSkuCapacity
+    public partial class ApiManagementResourceSkuCapacity
     {
-        internal static ResourceSkuCapacity DeserializeResourceSkuCapacity(JsonElement element)
+        internal static ApiManagementResourceSkuCapacity DeserializeApiManagementResourceSkuCapacity(JsonElement element)
         {
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;
-            Optional<ResourceSkuCapacityScaleType> scaleType = default;
+            Optional<ApiManagementResourceSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"))
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scaleType = new ResourceSkuCapacityScaleType(property.Value.GetString());
+                    scaleType = new ApiManagementResourceSkuCapacityScaleType(property.Value.GetString());
                     continue;
                 }
             }
-            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
+            return new ApiManagementResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }
