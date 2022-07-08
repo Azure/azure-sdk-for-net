@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 
@@ -22,12 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string data, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Data = data;
             ProvisioningState = provisioningState;
         }
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> Certificate public data. </summary>
-        public string Data { get; set; }
+        public BinaryData Data { get; set; }
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

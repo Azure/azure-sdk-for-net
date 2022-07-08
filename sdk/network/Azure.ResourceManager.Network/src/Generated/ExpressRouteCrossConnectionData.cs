@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="primaryAzurePort"> The name of the primary port. </param>
         /// <param name="secondaryAzurePort"> The name of the secondary port. </param>
-        /// <param name="sTag"> The identifier of the circuit traffic. </param>
+        /// <param name="stag"> The identifier of the circuit traffic. </param>
         /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
         /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
         /// <param name="expressRouteCircuit"> The ExpressRouteCircuit. </param>
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
-        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string primaryAzurePort, string secondaryAzurePort, int? stag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             PrimaryAzurePort = primaryAzurePort;
             SecondaryAzurePort = secondaryAzurePort;
-            STag = sTag;
+            STag = stag;
             PeeringLocation = peeringLocation;
             BandwidthInMbps = bandwidthInMbps;
             ExpressRouteCircuit = expressRouteCircuit;

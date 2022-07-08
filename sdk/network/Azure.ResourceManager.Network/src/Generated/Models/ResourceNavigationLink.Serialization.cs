@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<ResourceType> linkedResourceType = default;
-            Optional<string> link = default;
+            Optional<ResourceIdentifier> link = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -109,7 +109,12 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("link"))
                         {
-                            link = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            link = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

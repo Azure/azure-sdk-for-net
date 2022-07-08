@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
             SignedIdentifier sig1 = new SignedIdentifier("testSig1",
-                new AccessPolicy(startOn: start1,
-                    expiryOn: end1,
+                new StorageServiceAccessPolicy(startOn: start1,
+                    expireOn: end1,
                     permission: "rw"));
             SignedIdentifier sig2 = new SignedIdentifier("testSig2",
-                new AccessPolicy(startOn: start2,
-                    expiryOn: end2,
+                new StorageServiceAccessPolicy(startOn: start2,
+                    expireOn: end2,
                     permission: "rwdl"));
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
@@ -371,32 +371,37 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             FileServiceData properties1 = _fileService.Data;
             FileServiceData properties2 = new FileServiceData();
-            properties2.Cors = new CorsRules();
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
-                100, new string[] { "x-ms-meta-*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
-                2, new string[] { "*" },
-                new string[] { "*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
-                2000, new string[] { "x-ms-meta-12345675754564*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
+            properties2.Cors = new StorageCorsRules()
+            {
+                CorsRules =
+                {
+                    new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                        100, new string[] { "x-ms-meta-*" },
+                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                        ),
+                    new StorageCorsRule(new string[] { "*" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
+                        2, new string[] { "*" },
+                        new string[] { "*" }
+                        ),
+                    new StorageCorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                        2000, new string[] { "x-ms-meta-12345675754564*" },
+                        new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
+                        )
+                }
+            };
 
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, properties2)).Value;
             FileServiceData properties3 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties3.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties3.Cors.CorsRules.Count);
+            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties3.Cors.CorsRulesValue[i];
+                var putRule = properties2.Cors.CorsRules[i];
+                var getRule = properties3.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -410,11 +415,11 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties4 = _fileService.Data;
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties4.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(properties2.Cors.CorsRules.Count, properties4.Cors.CorsRules.Count);
+            for (int i = 0; i < properties2.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties4.Cors.CorsRulesValue[i];
+                var putRule = properties2.Cors.CorsRules[i];
+                var getRule = properties4.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

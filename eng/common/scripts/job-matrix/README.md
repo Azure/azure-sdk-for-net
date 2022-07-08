@@ -120,26 +120,49 @@ Example:
 
 The `include` field defines any number of matrices to be appended to the base matrix after processing exclusions.
 
-#### exclude
-
-The `include` field defines any number of matrices to be removed from the base matrix. Exclude parameters can be a partial
-set, meaning as long as all exclude parameters match against a matrix entry (even if the matrix entry has additional parameters),
-then it will be excluded from the matrix. For example, the below entry will match the exclusion and be removed:
-
 ```
-matrix entry:
+# matrix entry format:
 {
     "a": 1,
     "b": 2,
     "c": 3,
 }
 
-"exclude": [
-    {
-        "a": 1,
-        "b": 2
-    }
-]
+# Include field in a matrix config
+{
+    "include": [
+        {
+            "a": 1,
+            "b": 2
+        }
+    ]
+}
+```
+
+
+#### exclude
+
+The `exclude` field defines any number of matrices to be removed from the base matrix. Exclude parameters can be a partial
+set, meaning as long as all exclude parameters match against a matrix entry (even if the matrix entry has additional parameters),
+then it will be excluded from the matrix. For example, the below entry will match the exclusion and be removed:
+
+```
+# matrix entry format:
+{
+    "a": 1,
+    "b": 2,
+    "c": 3,
+}
+
+# Exclude field in a matrix config
+{
+    "exclude": [
+        {
+            "a": 1,
+            "b": 2
+        }
+    ]
+}
 ```
 
 #### displayNames

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="disableVpnEncryption"> Vpn encryption to be disabled or not. </param>
         /// <param name="virtualHubs"> List of VirtualHubs in the VirtualWAN. </param>
         /// <param name="vpnSites"> List of VpnSites in the VirtualWAN. </param>
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
-        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags)
+        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
             VpnSites = vpnSites;

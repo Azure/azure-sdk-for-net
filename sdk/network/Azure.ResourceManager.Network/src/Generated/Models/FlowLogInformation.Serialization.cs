@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier storageId = default;
             bool enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogFormat> format = default;
+            Optional<FlowLogProperties> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            format = FlowLogFormat.DeserializeFlowLogFormat(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
                             continue;
                         }
                     }

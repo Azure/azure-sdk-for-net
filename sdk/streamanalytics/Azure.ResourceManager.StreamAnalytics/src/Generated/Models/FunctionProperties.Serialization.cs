@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             string type = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IList<FunctionInput>> inputs = default;
             Optional<FunctionOutput> output = default;
             Optional<FunctionBinding> binding = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new FunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
+            return new FunctionProperties(type, Optional.ToNullable(eTag), Optional.ToList(inputs), output.Value, binding.Value);
         }
     }
 }

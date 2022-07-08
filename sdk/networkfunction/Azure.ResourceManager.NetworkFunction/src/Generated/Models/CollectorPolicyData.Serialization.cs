@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static CollectorPolicyData DeserializeCollectorPolicyData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
+            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToNullable(eTag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

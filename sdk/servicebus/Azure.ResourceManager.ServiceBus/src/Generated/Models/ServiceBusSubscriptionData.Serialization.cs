@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<bool> deadLetteringOnMessageExpiration = default;
             Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
             Optional<int> maxDeliveryCount = default;
-            Optional<EntityStatus> status = default;
+            Optional<ServiceBusMessagingEntityStatus> status = default;
             Optional<bool> enableBatchedOperations = default;
             Optional<TimeSpan> autoDeleteOnIdle = default;
             Optional<string> forwardTo = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToEntityStatus();
+                            status = property0.Value.GetString().ToServiceBusMessagingEntityStatus();
                             continue;
                         }
                         if (property0.NameEquals("enableBatchedOperations"))

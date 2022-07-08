@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Cdn
         public FrontDoorSecretData() { }
         public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
         public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecretProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FrontDoorSecretResource : Azure.ResourceManager.ArmResource
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Cdn
 }
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
+    public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties
     {
         public AzureFirstPartyManagedCertificateProperties() { }
     }
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CustomDomainResourceState left, Azure.ResourceManager.Cdn.Models.CustomDomainResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CustomerCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
+    public partial class CustomerCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties
     {
         public CustomerCertificateProperties(Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
         public string CertificateAuthority { get { throw null; } }
@@ -1905,6 +1905,10 @@ namespace Azure.ResourceManager.Cdn.Models
         public int? Order { get { throw null; } set { } }
         public string RuleSetName { get { throw null; } }
     }
+    public partial class FrontDoorSecretProperties
+    {
+        public FrontDoorSecretProperties() { }
+    }
     public partial class FrontDoorSecurityPolicyPatch
     {
         public FrontDoorSecurityPolicyPatch() { }
@@ -2401,7 +2405,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.LogRankingMetric left, Azure.ResourceManager.Cdn.Models.LogRankingMetric right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
+    public partial class ManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties
     {
         public ManagedCertificateProperties() { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
@@ -3557,10 +3561,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretProperties
-    {
-        public SecretProperties() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecureDeliveryProtocolType : System.IEquatable<Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType>
     {
@@ -4074,7 +4074,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string KeyId { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKey KeySourceParameters { get { throw null; } set { } }
     }
-    public partial class UriSigningKeyProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
+    public partial class UriSigningKeyProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties
     {
         public UriSigningKeyProperties(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
         public string KeyId { get { throw null; } set { } }
@@ -4266,7 +4266,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class WafPolicySettings
     {
         public WafPolicySettings() { }
-        public string DefaultCustomBlockResponseBody { get { throw null; } set { } }
+        public System.BinaryData DefaultCustomBlockResponseBody { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get { throw null; } set { } }
         public System.Uri DefaultRedirectUri { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }

@@ -27,6 +27,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'defaultCustomBlockResponseBody': 'any'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -84,6 +85,9 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+rename-mapping:
+  SecretProperties: FrontDoorSecretProperties
+  
 directive:
   - from: swagger-document
     where: $.definitions..parameters
@@ -359,5 +363,6 @@ directive:
       $.MatchCondition.properties.operator['x-ms-client-name'] = 'matchOperator';
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
+      $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
   - remove-operation: Validate_Secret
 ```

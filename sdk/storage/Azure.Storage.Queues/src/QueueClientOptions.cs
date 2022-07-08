@@ -87,7 +87,7 @@ namespace Azure.Storage.Queues
             V2021_02_12 = 10,
 
             /// <summary>
-            /// The 2021-04-10 serivce version.
+            /// The 2021-04-10 service version.
             /// </summary>
             V2021_04_10 = 11,
 
