@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> inventoryItemId = default;
             Optional<string> moName = default;
             Optional<int> memorySizeMB = default;
-            Optional<int> numCPUs = default;
+            Optional<int> numCpus = default;
             Optional<int> numCoresPerSocket = default;
             Optional<OSType> osType = default;
             Optional<string> osName = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            numCPUs = property0.Value.GetInt32();
+                            numCpus = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("numCoresPerSocket"))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCPUs), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), provisioningState.Value);
+            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

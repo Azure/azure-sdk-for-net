@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal static KeyVaultPrivateEndpointConnectionItemData DeserializeKeyVaultPrivateEndpointConnectionItemData(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(eTag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
         internal static LogSearchRuleData DeserializeLogSearchRuleData(JsonElement element)
         {
             Optional<string> kind = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, kind.Value, Optional.ToNullable(etag));
+            return new LogSearchRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, kind.Value, Optional.ToNullable(eTag));
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element)
         {
             Optional<KnownDataCollectionEndpointResourceKind> kind = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(eTag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

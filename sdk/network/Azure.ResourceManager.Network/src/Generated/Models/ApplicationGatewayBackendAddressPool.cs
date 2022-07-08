@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
         /// <param name="backendAddresses"> Backend addresses. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             BackendIPConfigurations = backendIPConfigurations;
             BackendAddresses = backendAddresses;
             ProvisioningState = provisioningState;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchPrivateEndpointConnectionData DeserializeBatchPrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(etag));
+            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(eTag));
         }
     }
 }

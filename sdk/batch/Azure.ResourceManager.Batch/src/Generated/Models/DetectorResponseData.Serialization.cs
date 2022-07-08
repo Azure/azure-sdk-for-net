@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static DetectorResponseData DeserializeDetectorResponseData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new DetectorResponseData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(etag));
+            return new DetectorResponseData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(eTag));
         }
     }
 }

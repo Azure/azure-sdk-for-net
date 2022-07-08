@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="vpnProtocols"> VPN protocols for the VpnServerConfiguration. </param>
         /// <param name="vpnAuthenticationTypes"> VPN authentication types for the VpnServerConfiguration. </param>
         /// <param name="vpnClientRootCertificates"> VPN client root certificate of VpnServerConfiguration. </param>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="radiusServers"> Multiple Radius Server configuration for VpnServerConfiguration. </param>
         /// <param name="aadAuthenticationParameters"> The set of aad vpn authentication parameters. </param>
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: &apos;Updating&apos;, &apos;Deleting&apos;, and &apos;Failed&apos;. </param>
-        /// <param name="p2SVpnGateways"> List of references to P2SVpnGateways. </param>
-        internal VpnServerConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2SVpnGateways) : base(id, name, resourceType, location, tags)
+        /// <param name="p2sVpnGateways"> List of references to P2SVpnGateways. </param>
+        internal VpnServerConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2sVpnGateways) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
             VpnProtocols = vpnProtocols;
             VpnAuthenticationTypes = vpnAuthenticationTypes;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
             RadiusServers = radiusServers;
             AadAuthenticationParameters = aadAuthenticationParameters;
             ProvisioningState = provisioningState;
-            P2SVpnGateways = p2SVpnGateways;
+            P2SVpnGateways = p2sVpnGateways;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
