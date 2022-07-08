@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Communication.Chat
 {
@@ -14,15 +15,34 @@ namespace Azure.Communication.Chat
     public partial class ExternalMessageTemplate
     {
         /// <summary> Initializes a new instance of ExternalMessageTemplate. </summary>
-        public ExternalMessageTemplate()
+        /// <param name="name"> Name of the template. </param>
+        /// <param name="language"> The codes for the supported languages for templates. </param>
+        /// <param name="parameters"> Array of parameters for the content of the template. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="language"/> or <paramref name="parameters"/> is null. </exception>
+        public ExternalMessageTemplate(string name, string language, IEnumerable<string> parameters)
         {
-            Parameters = new ChangeTrackingList<string>();
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            Name = name;
+            Language = language;
+            Parameters = parameters.ToList();
         }
 
         /// <summary> Name of the template. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The codes for the supported languages for templates. </summary>
-        public string Language { get; set; }
+        public string Language { get; }
         /// <summary> Array of parameters for the content of the template. </summary>
         public IList<string> Parameters { get; }
     }

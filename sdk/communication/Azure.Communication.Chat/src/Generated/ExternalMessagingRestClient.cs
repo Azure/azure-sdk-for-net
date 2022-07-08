@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ExternalMessagingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-04-21-preview8")
+        public ExternalMessagingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendMessageRequest(string to, ExternalMessageType? type, string content, string mediaUri, ExternalMessageTemplate template)
+        internal HttpMessage CreateSendMessageRequest(string to, ExternalMessageType type, string content, string mediaUri, ExternalMessageTemplate template)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -50,10 +50,8 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendExternalMessageRequest()
+            var model = new SendExternalMessageRequest(to, type)
             {
-                To = to,
-                Type = type,
                 Content = content,
                 MediaUri = mediaUri,
                 Template = template
@@ -66,13 +64,19 @@ namespace Azure.Communication.Chat
 
         /// <summary> Sends a threadless external Cross-platform message. </summary>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The cross-platform threadless external message type. </param>
+        /// <param name="type"> The type of external message. Supports text, media, template. </param>
         /// <param name="content"> External message content. </param>
-        /// <param name="mediaUri"> A media url for the file. Required if the type is media. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SendExternalMessageResult>> SendMessageAsync(string to = null, ExternalMessageType? type = null, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public async Task<Response<SendExternalMessageResult>> SendMessageAsync(string to, ExternalMessageType type, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
         {
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+
             using var message = CreateSendMessageRequest(to, type, content, mediaUri, template);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -91,13 +95,19 @@ namespace Azure.Communication.Chat
 
         /// <summary> Sends a threadless external Cross-platform message. </summary>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The cross-platform threadless external message type. </param>
+        /// <param name="type"> The type of external message. Supports text, media, template. </param>
         /// <param name="content"> External message content. </param>
-        /// <param name="mediaUri"> A media url for the file. Required if the type is media. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SendExternalMessageResult> SendMessage(string to = null, ExternalMessageType? type = null, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public Response<SendExternalMessageResult> SendMessage(string to, ExternalMessageType type, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
         {
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+
             using var message = CreateSendMessageRequest(to, type, content, mediaUri, template);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)

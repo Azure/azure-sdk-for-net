@@ -37,7 +37,7 @@ namespace Azure.Communication.Chat
             To = to;
             MediaUri = mediaUri;
             Content = content;
-            MessageType = ExternalMessageType.Media;
+            MessageType = ExternalMessageType.Image;
         }
 
         /// <summary>

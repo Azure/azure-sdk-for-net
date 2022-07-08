@@ -52,8 +52,8 @@ namespace Azure.Communication.Chat
             _chatClientOptions = null!;
         }
 
-        #region Cross-platform threadless messaging Operations
-        /// <summary> Sends a Fire and Forget/Threadless/CPM notification message asynchronously. </summary>
+        #region External messaging Operations
+        /// <summary> Sends a Fire and Forget/Threadless/CPM external notification message asynchronously. </summary>
         /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>

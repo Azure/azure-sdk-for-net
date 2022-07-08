@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-04-21-preview8")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-09-07")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -867,99 +867,6 @@ namespace Azure.Communication.Chat
                         value = AddChatParticipantsResult.DeserializeAddChatParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateChatParticipantRequest(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime, IEnumerable<string> roleIds)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/chat/threads/", false);
-            uri.AppendPath(chatThreadId, true);
-            uri.AppendPath("/participants/:update", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            ChatParticipantInternal chatParticipantInternal = new ChatParticipantInternal(communicationIdentifier)
-            {
-                DisplayName = displayName,
-                ShareHistoryTime = shareHistoryTime
-            };
-            if (roleIds != null)
-            {
-                foreach (var value in roleIds)
-                {
-                    chatParticipantInternal.RoleIds.Add(value);
-                }
-            }
-            var model = chatParticipantInternal;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Update a participant from a thread. </summary>
-        /// <param name="chatThreadId"> Id of the parent chat thread. </param>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <param name="displayName"> Display name for the chat participant. </param>
-        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="roleIds"> Identifiers of roles for this chat participant. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="communicationIdentifier"/> is null. </exception>
-        public async Task<Response> UpdateChatParticipantAsync(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName = null, DateTimeOffset? shareHistoryTime = null, IEnumerable<string> roleIds = null, CancellationToken cancellationToken = default)
-        {
-            if (chatThreadId == null)
-            {
-                throw new ArgumentNullException(nameof(chatThreadId));
-            }
-            if (communicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(communicationIdentifier));
-            }
-
-            using var message = CreateUpdateChatParticipantRequest(chatThreadId, communicationIdentifier, displayName, shareHistoryTime, roleIds);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Update a participant from a thread. </summary>
-        /// <param name="chatThreadId"> Id of the parent chat thread. </param>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <param name="displayName"> Display name for the chat participant. </param>
-        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="roleIds"> Identifiers of roles for this chat participant. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="communicationIdentifier"/> is null. </exception>
-        public Response UpdateChatParticipant(string chatThreadId, CommunicationIdentifierModel communicationIdentifier, string displayName = null, DateTimeOffset? shareHistoryTime = null, IEnumerable<string> roleIds = null, CancellationToken cancellationToken = default)
-        {
-            if (chatThreadId == null)
-            {
-                throw new ArgumentNullException(nameof(chatThreadId));
-            }
-            if (communicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(communicationIdentifier));
-            }
-
-            using var message = CreateUpdateChatParticipantRequest(chatThreadId, communicationIdentifier, displayName, shareHistoryTime, roleIds);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

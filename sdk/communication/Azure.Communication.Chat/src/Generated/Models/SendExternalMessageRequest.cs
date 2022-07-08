@@ -5,23 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.Chat
 {
-    /// <summary> Details of the Cross-platform threadless external message to send. </summary>
+    /// <summary> Details of the message to send. </summary>
     internal partial class SendExternalMessageRequest
     {
         /// <summary> Initializes a new instance of SendExternalMessageRequest. </summary>
-        public SendExternalMessageRequest()
+        /// <param name="to"> The channel user identifiers of the recipient. </param>
+        /// <param name="type"> The type of external message. Supports text, media, template. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public SendExternalMessageRequest(string to, ExternalMessageType type)
         {
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+
+            To = to;
+            Type = type;
         }
 
         /// <summary> The channel user identifiers of the recipient. </summary>
-        public string To { get; set; }
-        /// <summary> The cross-platform threadless external message type. </summary>
-        public ExternalMessageType? Type { get; set; }
+        public string To { get; }
+        /// <summary> The type of external message. Supports text, media, template. </summary>
+        public ExternalMessageType Type { get; }
         /// <summary> External message content. </summary>
         public string Content { get; set; }
-        /// <summary> A media url for the file. Required if the type is media. </summary>
+        /// <summary> A media url for the file. Required if the type is one of the supported media types, e.g. image. </summary>
         public string MediaUri { get; set; }
         /// <summary> The template object used to create templates. </summary>
         public ExternalMessageTemplate Template { get; set; }

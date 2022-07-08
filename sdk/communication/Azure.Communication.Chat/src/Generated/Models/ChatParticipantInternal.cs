@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -26,20 +24,17 @@ namespace Azure.Communication.Chat
             }
 
             CommunicationIdentifier = communicationIdentifier;
-            RoleIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
         /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="roleIds"> Identifiers of roles for this chat participant. </param>
-        internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime, IList<string> roleIds)
+        internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime)
         {
             CommunicationIdentifier = communicationIdentifier;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
-            RoleIds = roleIds;
         }
 
         /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
@@ -48,7 +43,5 @@ namespace Azure.Communication.Chat
         public string DisplayName { get; set; }
         /// <summary> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
-        /// <summary> Identifiers of roles for this chat participant. </summary>
-        public IList<string> RoleIds { get; }
     }
 }

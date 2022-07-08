@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The cross-platform threadless external message type. </summary>
+    /// <summary> The type of external message. Supports text, media, template. </summary>
     public readonly partial struct ExternalMessageType : IEquatable<ExternalMessageType>
     {
         private readonly string _value;
@@ -22,16 +22,16 @@ namespace Azure.Communication.Chat
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TemplateValue = "template";
         private const string TextValue = "text";
-        private const string MediaValue = "media";
+        private const string ImageValue = "image";
+        private const string TemplateValue = "template";
 
-        /// <summary> template. </summary>
-        public static ExternalMessageType Template { get; } = new ExternalMessageType(TemplateValue);
         /// <summary> text. </summary>
         public static ExternalMessageType Text { get; } = new ExternalMessageType(TextValue);
-        /// <summary> media. </summary>
-        public static ExternalMessageType Media { get; } = new ExternalMessageType(MediaValue);
+        /// <summary> image. </summary>
+        public static ExternalMessageType Image { get; } = new ExternalMessageType(ImageValue);
+        /// <summary> template. </summary>
+        public static ExternalMessageType Template { get; } = new ExternalMessageType(TemplateValue);
         /// <summary> Determines if two <see cref="ExternalMessageType"/> values are the same. </summary>
         public static bool operator ==(ExternalMessageType left, ExternalMessageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExternalMessageType"/> values are not the same. </summary>

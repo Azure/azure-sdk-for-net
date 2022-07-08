@@ -15,16 +15,10 @@ namespace Azure.Communication.Chat
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(To))
-            {
-                writer.WritePropertyName("to");
-                writer.WriteStringValue(To);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
-            }
+            writer.WritePropertyName("to");
+            writer.WriteStringValue(To);
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
