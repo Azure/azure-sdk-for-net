@@ -160,6 +160,7 @@ rename-mapping:
   UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
   NetworkProfile: VmNetworkProfile
   NetworkInterfaceReference: VmNetworkInterfaceReference
+  Image: DiskImage
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

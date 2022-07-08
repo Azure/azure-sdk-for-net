@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A Class representing an Image along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetImage method.
+    /// A Class representing a DiskImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskImageResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDiskImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskImage method.
     /// </summary>
-    public partial class ImageResource : ArmResource
+    public partial class DiskImageResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ImageResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DiskImageResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _imageClientDiagnostics;
-        private readonly ImagesRestOperations _imageRestClient;
-        private readonly ImageData _data;
+        private readonly ClientDiagnostics _diskImageImagesClientDiagnostics;
+        private readonly ImagesRestOperations _diskImageImagesRestClient;
+        private readonly DiskImageData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ImageResource"/> class for mocking. </summary>
-        protected ImageResource()
+        /// <summary> Initializes a new instance of the <see cref="DiskImageResource"/> class for mocking. </summary>
+        protected DiskImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DiskImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ImageResource(ArmClient client, ImageData data) : this(client, data.Id)
+        internal DiskImageResource(ArmClient client, DiskImageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiskImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _imageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string imageApiVersion);
-            _imageRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, imageApiVersion);
+            _diskImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string diskImageImagesApiVersion);
+            _diskImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskImageImagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ImageData Data
+        public virtual DiskImageData Data
         {
             get
             {
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImageResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Get");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _diskImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImageResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Get");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Get");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _diskImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiskImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Delete");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Delete");
             scope.Start();
             try
             {
-                var response = await _imageRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_imageClientDiagnostics, Pipeline, _imageRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _diskImageImagesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Delete");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Delete");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_imageClientDiagnostics, Pipeline, _imageRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _diskImageImagesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ComputeArmOperation(_diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -200,16 +200,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImageResource>> UpdateAsync(WaitUntil waitUntil, ImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiskImageResource>> UpdateAsync(WaitUntil waitUntil, DiskImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Update");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Update");
             scope.Start();
             try
             {
-                var response = await _imageRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<ImageResource>(new ImageOperationSource(Client), _imageClientDiagnostics, Pipeline, _imageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _diskImageImagesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -230,16 +230,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update Image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ImageResource> Update(WaitUntil waitUntil, ImagePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiskImageResource> Update(WaitUntil waitUntil, DiskImagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.Update");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.Update");
             scope.Start();
             try
             {
-                var response = _imageRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ComputeArmOperation<ImageResource>(new ImageOperationSource(Client), _imageClientDiagnostics, Pipeline, _imageRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _diskImageImagesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new ComputeArmOperation<DiskImageResource>(new DiskImageOperationSource(Client), _diskImageImagesClientDiagnostics, Pipeline, _diskImageImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -260,20 +260,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ImageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.AddTag");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ImageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.AddTag");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ImageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.SetTags");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.SetTags");
             scope.Start();
             try
             {
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ImageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.SetTags");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.SetTags");
             scope.Start();
             try
             {
@@ -363,8 +363,8 @@ namespace Azure.ResourceManager.Compute
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -381,19 +381,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ImageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.RemoveTag");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _imageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _diskImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -410,19 +410,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ImageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _imageClientDiagnostics.CreateScope("ImageResource.RemoveTag");
+            using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _imageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                return Response.FromValue(new ImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _diskImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new DiskImageResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

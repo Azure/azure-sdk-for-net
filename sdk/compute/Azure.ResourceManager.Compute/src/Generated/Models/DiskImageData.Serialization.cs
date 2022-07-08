@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ImageData : IUtf8JsonSerializable
+    public partial class DiskImageData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        internal static ImageData DeserializeImageData(JsonElement element)
+        internal static DiskImageData DeserializeDiskImageData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVm, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVm, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
         }
     }
 }

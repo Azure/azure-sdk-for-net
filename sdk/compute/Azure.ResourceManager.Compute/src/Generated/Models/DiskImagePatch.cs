@@ -11,10 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
-    public partial class ImagePatch : ComputeResourcePatch
+    public partial class DiskImagePatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of ImagePatch. </summary>
-        public ImagePatch()
+        /// <summary> Initializes a new instance of DiskImagePatch. </summary>
+        public DiskImagePatch()
         {
         }
 
