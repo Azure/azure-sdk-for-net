@@ -52,6 +52,12 @@ rename-rules:
 override-operation-name:
   Services_CheckNameAvailability: CheckServiceNameAvailability
 
+prepend-rp-prefix:
+- ResourceSkuCapabilities
+- ResourceSkuZoneDetails
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+
 rename-mapping:
   Type: UnderlyingResourceType
   DiagnosticParameters.duration: DurationValue

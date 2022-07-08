@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ResourceSkuCapabilities
+    public partial class AppPlatformResourceSkuCapabilities
     {
-        internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element)
+        internal static AppPlatformResourceSkuCapabilities DeserializeAppPlatformResourceSkuCapabilities(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> value = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapabilities(name.Value, value.Value);
+            return new AppPlatformResourceSkuCapabilities(name.Value, value.Value);
         }
     }
 }

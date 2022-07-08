@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
-    public partial class ResourceSkuZoneDetails
+    public partial class AppPlatformResourceSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of ResourceSkuZoneDetails. </summary>
-        internal ResourceSkuZoneDetails()
+        /// <summary> Initializes a new instance of AppPlatformResourceSkuZoneDetails. </summary>
+        internal AppPlatformResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
+            Capabilities = new ChangeTrackingList<AppPlatformResourceSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of AppPlatformResourceSkuZoneDetails. </summary>
         /// <param name="name">
         /// Gets the set of zones that the SKU is available in with the
         /// specified capabilities.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets a list of capabilities that are available for the SKU in the
         /// specified list of zones.
         /// </param>
-        internal ResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapabilities> capabilities)
+        internal AppPlatformResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<AppPlatformResourceSkuCapabilities> capabilities)
         {
             Name = name;
             Capabilities = capabilities;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets a list of capabilities that are available for the SKU in the
         /// specified list of zones.
         /// </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<AppPlatformResourceSkuCapabilities> Capabilities { get; }
     }
 }
