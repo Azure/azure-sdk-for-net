@@ -90,10 +90,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }       
+        }
 
         /// <summary> Patches SIP configuration for resource. </summary>
-        /// <param name="body"> Configuration patch. </param>
+        /// <param name="body"> Sip configuration patch object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<SipConfiguration>> PatchAsync(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {
@@ -114,7 +114,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         }
 
         /// <summary> Patches SIP configuration for resource. </summary>
-        /// <param name="body"> Configuration patch. </param>
+        /// <param name="body"> Sip configuration patch object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SipConfiguration> Patch(SipConfiguration body = null, CancellationToken cancellationToken = default)
         {

@@ -15,15 +15,28 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <summary>
         /// Initializes a new instance of SipDomain.
         /// </summary>
+        /// <param name="domain"></param>
         /// <param name="domainType"></param>
-        public SipDomain(string domainType)
+        public SipDomain(string domain, string domainType)
         {
-            DomainType = domainType;
+            DomainUri = domain;
+            Type = domainType;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of SipDomain.
+        /// </summary>
+        /// <param name="domainType"></param>
+        public SipDomain(DomainType domainType)
+        {
+            Type = domainType;
         }
 
         /// <summary>
         /// Type of Domain
         /// </summary>
-        public string DomainType { get; set; }
+#pragma warning disable CA1056 // URI-like properties should not be strings
+        public string DomainUri { get; set; }
+#pragma warning restore CA1056 // URI-like properties should not be strings
     }
 }

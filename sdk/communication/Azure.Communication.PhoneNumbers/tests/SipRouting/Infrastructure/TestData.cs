@@ -10,7 +10,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public static readonly List<string> Fqdns = new List<string>(){ "sbs1.sipconfigtest.com", "sbs2.sipconfigtest.com" };
         public static readonly int[] TrunkPorts = { 1122, 1123 };
         public static readonly List<string> Domains = new List<string>() { "sipconfigtest1.com", "sipconfigtest2.com" };
-        public static readonly DomainType DomainType = new DomainType();
         public static readonly string CustomDomainType = DomainType.Custom.ToString();
 
         public static readonly List<SipTrunk> TrunkList = new List<SipTrunk>

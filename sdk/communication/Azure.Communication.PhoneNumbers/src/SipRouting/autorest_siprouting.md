@@ -24,7 +24,7 @@ generation1-convenience-client: true
 ``` yaml
 directive:
   from: swagger-document
-  where: $.paths.*[?(@.operationId == "SipRouting_Patch")].parameters..[?(@.description == "Configuration patch.")]
+  where: $.paths.*[?(@.operationId == "SipRouting_Patch")].parameters..[?(@.description == "Sip configuration patch object.",")]
   transform: >
     $.schema = {"$ref": "#/definitions/SipConfiguration"}
 ```
