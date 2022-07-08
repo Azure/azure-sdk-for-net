@@ -1,0 +1,1 @@
+<Project>  <ItemGroup>    <ProjectReference Include='D:\adp\azure-sdk-for-net\sdk\template\Azure.Template\tests\Azure.Template.Tests.csproj' />  </ItemGroup></Project>
