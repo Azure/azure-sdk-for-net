@@ -2514,6 +2514,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    public partial class ApiManagementResourceSkuCapacity
+    {
+        internal ApiManagementResourceSkuCapacity() { }
+        public int? Default { get { throw null; } }
+        public int? Maximum { get { throw null; } }
+        public int? Minimum { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApiManagementResourceSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApiManagementResourceSkuCapacityScaleType(string value) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType Manual { get { throw null; } }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApiManagementServiceApplyNetworkConfigurationContent
     {
         public ApiManagementServiceApplyNetworkConfigurationContent() { }
@@ -4160,37 +4187,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string District { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class ResourceSkuCapacity
-    {
-        internal ResourceSkuCapacity() { }
-        public int? Default { get { throw null; } }
-        public int? Maximum { get { throw null; } }
-        public int? Minimum { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuCapacityScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType Automatic { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType Manual { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType left, Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacityScaleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ResourceSkuResult
     {
         internal ResourceSkuResult() { }
-        public Azure.ResourceManager.ApiManagement.Models.ResourceSkuCapacity Capacity { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacity Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.SkuType? SkuName { get { throw null; } }
     }

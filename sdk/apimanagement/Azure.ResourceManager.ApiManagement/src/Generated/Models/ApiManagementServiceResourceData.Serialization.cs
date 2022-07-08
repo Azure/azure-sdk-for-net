@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             ApiManagementServiceSkuProperties sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(eTag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUrl.Value, gatewayRegionalUrl.Value, portalUrl.Value, managementApiUrl.Value, scmUrl.Value, developerPortalUrl.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
+            return new ApiManagementServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUrl.Value, gatewayRegionalUrl.Value, portalUrl.Value, managementApiUrl.Value, scmUrl.Value, developerPortalUrl.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
         }
     }
 }
