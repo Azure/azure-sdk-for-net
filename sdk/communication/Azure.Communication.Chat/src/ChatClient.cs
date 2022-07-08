@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _ExternalMessagingRestClient.SendMessageAsync(options.To, options.MessageType, options.Content, options.MediaUri.AbsoluteUri, options.Template, cancellationToken).ConfigureAwait(false);
+                return await _ExternalMessagingRestClient.SendMessageAsync(options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _ExternalMessagingRestClient.SendMessage(options.To, options.MessageType, options.Content, options.MediaUri.AbsoluteUri, options.Template, cancellationToken);
+                return _ExternalMessagingRestClient.SendMessage(options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template, cancellationToken);
             }
             catch (Exception ex)
             {
