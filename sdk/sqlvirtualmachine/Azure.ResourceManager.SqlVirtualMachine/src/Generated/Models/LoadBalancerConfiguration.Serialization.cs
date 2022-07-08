@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static LoadBalancerConfiguration DeserializeLoadBalancerConfiguration(JsonElement element)
         {
-            Optional<PrivateIPAddress> privateIpAddress = default;
-            Optional<string> publicIpAddressResourceId = default;
+            Optional<PrivateIPAddress> privateIPAddress = default;
+            Optional<string> publicIPAddressResourceId = default;
             Optional<string> loadBalancerResourceId = default;
             Optional<int> probePort = default;
             Optional<IList<string>> sqlVirtualMachineInstances = default;
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateIpAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
+                    privateIPAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"))
                 {
-                    publicIpAddressResourceId = property.Value.GetString();
+                    publicIPAddressResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("loadBalancerResourceId"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new LoadBalancerConfiguration(privateIpAddress.Value, publicIpAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVirtualMachineInstances));
+            return new LoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVirtualMachineInstances));
         }
     }
 }

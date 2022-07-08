@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<ElasticSanSku> sku = default;
             Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
             Optional<SanTierInfo> san = default;
-            Optional<ElasticSanVolumeGroupTierInfo> volumeGroup = default;
-            Optional<ElasticSanVolumeTierInfo> volume = default;
+            Optional<ElasticSanVolumeGroupTierInfo> elasticSanVolumeGroup = default;
+            Optional<ElasticSanVolumeTierInfo> elasticSanVolume = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    volumeGroup = ElasticSanVolumeGroupTierInfo.DeserializeElasticSanVolumeGroupTierInfo(property.Value);
+                    elasticSanVolumeGroup = ElasticSanVolumeGroupTierInfo.DeserializeElasticSanVolumeGroupTierInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volume"))
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    volume = ElasticSanVolumeTierInfo.DeserializeElasticSanVolumeTierInfo(property.Value);
+                    elasticSanVolume = ElasticSanVolumeTierInfo.DeserializeElasticSanVolumeTierInfo(property.Value);
                     continue;
                 }
             }
-            return new ResourceTypeSku(sku.Value, Optional.ToList(locationInfo), san.Value, volumeGroup.Value, volume.Value);
+            return new ResourceTypeSku(sku.Value, Optional.ToList(locationInfo), san.Value, elasticSanVolumeGroup.Value, elasticSanVolume.Value);
         }
     }
 }

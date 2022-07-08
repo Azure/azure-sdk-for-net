@@ -92,7 +92,6 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -126,7 +125,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -137,22 +136,22 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
   BGP: Bgp
   TCP: Tcp
   UDP: Udp
   ANY: Any
   LOA: Loa
+  P2S: P2S|p2s
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2
-  Stag: STag
-  VirtualMachine: Vm
+  Stag: STag|stag
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -367,7 +366,6 @@ directive:
     transform: >
       $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
       $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
-
 ```
 
 ### Tag: package-track2-preview

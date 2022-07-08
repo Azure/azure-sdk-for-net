@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
         /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Port = port;
             Protocol = protocol;
             CookieBasedAffinity = cookieBasedAffinity;

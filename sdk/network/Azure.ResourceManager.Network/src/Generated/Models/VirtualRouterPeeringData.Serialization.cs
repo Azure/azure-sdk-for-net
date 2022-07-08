@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<long> peerAsn = default;
-            Optional<string> peerIp = default;
+            Optional<string> peerIP = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("peerIp"))
                         {
-                            peerIp = property0.Value.GetString();
+                            peerIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualRouterPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIp.Value, Optional.ToNullable(provisioningState));
+            return new VirtualRouterPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

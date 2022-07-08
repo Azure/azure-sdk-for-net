@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Optional<string> managedBy = default;
             Optional<string> kind = default;
-            Optional<ETag> etag = default;
+            Optional<ETag> eTag = default;
             Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> ssoClientSecretKeyVaultPath = default;
             Optional<SsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
-            Optional<bool> startVMOnConnect = default;
+            Optional<bool> startVmOnConnect = default;
             Optional<MigrationRequestProperties> migrationRequest = default;
             Optional<bool> cloudPcResource = default;
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            startVMOnConnect = property0.Value.GetBoolean();
+                            startVmOnConnect = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("migrationRequest"))
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVMOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(eTag), identity.Value, sku.Value, plan);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<long> minSizeGiB = default;
             Optional<long> minIncrementSizeGiB = default;
             Optional<long> maxIopsPerGiB = default;
-            Optional<long> maxMBpsPerGiB = default;
+            Optional<long> maxMbpsPerGiB = default;
             Optional<long> maxIops = default;
-            Optional<long> maxMBps = default;
+            Optional<long> maxMbps = default;
             Optional<long> maxConnectedClientCount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxMBpsPerGiB = property.Value.GetInt64();
+                    maxMbpsPerGiB = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxIops"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxMBps = property.Value.GetInt64();
+                    maxMbps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxConnectedClientCount"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanVolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(maxIopsPerGiB), Optional.ToNullable(maxMBpsPerGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMBps), Optional.ToNullable(maxConnectedClientCount));
+            return new ElasticSanVolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(maxIopsPerGiB), Optional.ToNullable(maxMbpsPerGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMbps), Optional.ToNullable(maxConnectedClientCount));
         }
     }
 }
