@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VaultPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="VaultPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="VaultResource" />.
-    /// To get a <see cref="VaultPrivateEndpointConnectionCollection" /> instance call the GetVaultPrivateEndpointConnections method from an instance of <see cref="VaultResource" />.
+    /// A class representing a collection of <see cref="KeyVaultPrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="KeyVaultPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="KeyVaultResource" />.
+    /// To get a <see cref="KeyVaultPrivateEndpointConnectionCollection" /> instance call the GetKeyVaultPrivateEndpointConnections method from an instance of <see cref="KeyVaultResource" />.
     /// </summary>
     public partial class VaultPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<VaultPrivateEndpointConnectionResource>, IAsyncEnumerable<VaultPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VaultResource.ResourceType), nameof(id));
+            if (id.ResourceType != KeyVaultResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KeyVaultResource.ResourceType), nameof(id));
         }
 
         /// <summary>

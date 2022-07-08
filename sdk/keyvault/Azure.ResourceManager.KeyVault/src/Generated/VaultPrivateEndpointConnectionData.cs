@@ -14,8 +14,8 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the VaultPrivateEndpointConnection data model. </summary>
-    public partial class VaultPrivateEndpointConnectionData : ResourceData
+    /// <summary> A class representing the KeyVaultPrivateEndpointConnection data model. </summary>
+    public partial class KeyVaultPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of VaultPrivateEndpointConnectionData. </summary>
         public VaultPrivateEndpointConnectionData()
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal VaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, VaultPrivateLinkServiceConnectionState connectionState, VaultPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = eTag;
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public ETag? Etag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Approval state of the private link connection. </summary>
         public VaultPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
-        public VaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> Azure location of the key vault resource. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Tags assigned to the key vault resource. </summary>

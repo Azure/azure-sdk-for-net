@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> virtualNetworkSubnetId = default;
+            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             Optional<VirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,12 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("virtualNetworkSubnetId"))
                         {
-                            virtualNetworkSubnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ignoreMissingVnetServiceEndpoint"))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoIndex. </summary>
         /// <param name="key"> Cosmos DB MongoDB collection index keys. </param>
         /// <param name="options"> Cosmos DB MongoDB collection index key options. </param>
-        internal MongoIndex(MongoIndexKeys key, MongoIndexOptions options)
+        internal MongoIndex(MongoIndexKeys key, MongoIndexConfig options)
         {
             Key = key;
             Options = options;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB MongoDB collection index key options. </summary>
-        public MongoIndexOptions Options { get; set; }
+        public MongoIndexConfig Options { get; set; }
     }
 }

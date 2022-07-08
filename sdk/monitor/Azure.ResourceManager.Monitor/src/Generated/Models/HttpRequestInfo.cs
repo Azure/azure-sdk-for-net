@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of HttpRequestInfo. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
-        /// <param name="clientIpAddress"> the client Ip Address. </param>
+        /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
-        internal HttpRequestInfo(string clientRequestId, string clientIpAddress, string method, Uri uri)
+        internal HttpRequestInfo(string clientRequestId, string clientIPAddress, string method, Uri uri)
         {
             ClientRequestId = clientRequestId;
-            ClientIpAddress = clientIpAddress;
+            ClientIPAddress = clientIPAddress;
             Method = method;
             Uri = uri;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the client request id. </summary>
         public string ClientRequestId { get; }
         /// <summary> the client Ip Address. </summary>
-        public string ClientIpAddress { get; }
+        public string ClientIPAddress { get; }
         /// <summary> the Http request method. </summary>
         public string Method { get; }
         /// <summary> the Uri. </summary>

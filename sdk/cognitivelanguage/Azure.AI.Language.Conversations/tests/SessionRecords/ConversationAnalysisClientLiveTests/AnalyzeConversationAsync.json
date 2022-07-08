@@ -8,9 +8,9 @@
         "Content-Length": "233",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f368cd00ff0b3bacca39b380f14b5c21-1b48c97035d4e109-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "09c749a9aa9576b0291413bd7fc3015f",
+        "traceparent": "00-703ebeaa92ad95af51be0cbbfc6b28ae-90f8a36323f44bdc-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "46e0fb61fda16332d9c0075f6fed9367",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6a9e01d1-678f-42ff-add9-60658d341148",
+        "apim-request-id": "00dbd1c4-a113-47d1-a055-5db8534e9c1c",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Tue, 14 Jun 2022 20:30:51 GMT",
+        "Date": "Wed, 29 Jun 2022 00:00:59 GMT",
         "Pragma": "no-cache",
-        "request-id": "6a9e01d1-678f-42ff-add9-60658d341148",
+        "request-id": "00dbd1c4-a113-47d1-a055-5db8534e9c1c",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "122"
+        "x-envoy-upstream-service-time": "888"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -110,8 +110,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-06-15",
-                    "value": "2022-06-15"
+                    "timex": "2022-06-30",
+                    "value": "2022-06-30"
                   }
                 ],
                 "extraInformation": [
@@ -132,6 +132,6 @@
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
-    "RandomSeed": "977641150"
+    "RandomSeed": "987464995"
   }
 }

@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
             Optional<RouteTableData> routeTable = default;
             Optional<WritableSubResource> natGateway = default;
-            Optional<IList<ServiceEndpointPropertiesFormat>> serviceEndpoints = default;
+            Optional<IList<ServiceEndpointProperties>> serviceEndpoints = default;
             Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
             Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
-            Optional<IReadOnlyList<IPConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
             Optional<IReadOnlyList<IPConfigurationProfile>> ipConfigurationProfiles = default;
             Optional<IList<WritableSubResource>> ipAllocations = default;
             Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceEndpointPropertiesFormat> array = new List<ServiceEndpointPropertiesFormat>();
+                            List<ServiceEndpointProperties> array = new List<ServiceEndpointProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointPropertiesFormat.DeserializeServiceEndpointPropertiesFormat(item));
+                                array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item));
                             }
                             serviceEndpoints = array;
                             continue;
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IPConfiguration> array = new List<IPConfiguration>();
+                            List<NetworkIPConfiguration> array = new List<NetworkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfiguration.DeserializeIPConfiguration(item));
+                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item));
                             }
                             ipConfigurations = array;
                             continue;

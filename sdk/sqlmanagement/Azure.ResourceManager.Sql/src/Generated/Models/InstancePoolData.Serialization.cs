@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<int> vCores = default;
             Optional<InstancePoolLicenseType> licenseType = default;
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,12 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vCores"))

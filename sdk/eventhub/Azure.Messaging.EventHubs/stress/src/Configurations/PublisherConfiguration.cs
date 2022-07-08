@@ -50,7 +50,7 @@ internal class PublisherConfiguration
     ///   The amount of time to wait between enqueuing <see cref="PublishBatchSize"/> events.
     /// </summary>
     ///
-    public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(4000);
+    public TimeSpan? ProducerPublishingDelay = TimeSpan.FromMilliseconds(400);
 
     // Producer Configuration Values
 

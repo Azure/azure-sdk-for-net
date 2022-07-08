@@ -8,9 +8,9 @@
         "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-72f002685e7e79594a453827d6efa3cc-be93bdbe09f1ec23-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "8249bad3e88cda82aadfb38cfc3c2fe8",
+        "traceparent": "00-6a3f96e66a2c14f4fc9a01880a607eb8-9a321c85410b3145-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4fc777311ff8c76c4e2da7a309bdcc68",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
+        "apim-request-id": "f3c8bdc0-bd6e-4139-a2db-638ff9bcdbe8",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Tue, 14 Jun 2022 20:30:58 GMT",
+        "Date": "Wed, 29 Jun 2022 00:01:26 GMT",
         "Pragma": "no-cache",
-        "request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
+        "request-id": "f3c8bdc0-bd6e-4139-a2db-638ff9bcdbe8",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "395"
+        "x-envoy-upstream-service-time": "287"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -124,6 +124,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "1430188584"
+    "RandomSeed": "1145039336"
   }
 }

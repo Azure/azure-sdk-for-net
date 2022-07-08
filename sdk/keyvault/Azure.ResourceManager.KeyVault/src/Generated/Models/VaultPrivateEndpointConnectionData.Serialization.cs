@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.KeyVault
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new VaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

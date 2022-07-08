@@ -27,7 +27,6 @@ pr:
     - sdk/resources/
     - sdk/resourcemanager/
     - sdk/network/
-    - sdk/storage/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

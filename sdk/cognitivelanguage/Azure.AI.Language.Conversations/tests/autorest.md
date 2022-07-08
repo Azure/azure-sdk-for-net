@@ -61,4 +61,15 @@ directive:
   transform: |
     $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com).";
     $["format"] = "url";
+
+# Put all operations into a single REST client.
+- rename-operation:
+    from: AnalyzeConversation_SubmitJob
+    to: ConversationAnalysis_SubmitJob
+- rename-operation:
+    from: AnalyzeConversation_JobStatus
+    to: ConversationAnalysis_GetJobStatus
+- rename-operation:
+    from: AnalyzeConversation_CancelJob
+    to: ConversationAnalysis_CancelJob
 ```

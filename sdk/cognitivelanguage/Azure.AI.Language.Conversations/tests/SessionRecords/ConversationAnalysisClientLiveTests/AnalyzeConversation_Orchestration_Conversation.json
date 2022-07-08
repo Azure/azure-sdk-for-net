@@ -8,9 +8,9 @@
         "Content-Length": "243",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1e78cfefa2567f6b28a6303e0864bb47-e456a1015a67a017-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "ebf2dad9b91009a9ef2c4647b71afd76",
+        "traceparent": "00-c4f72886d203a78695e6ce15cc456e8c-f11abb8b1332753f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "11a078a0b5c2ca99ea5e98a880487226",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "82b3dc8e-d578-4dbc-a0ff-b4ed09b4ad6a",
+        "apim-request-id": "7d97d128-132f-4204-9a9b-d4bd8b913744",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Tue, 14 Jun 2022 20:30:50 GMT",
+        "Date": "Tue, 28 Jun 2022 22:38:42 GMT",
         "Pragma": "no-cache",
-        "request-id": "82b3dc8e-d578-4dbc-a0ff-b4ed09b4ad6a",
+        "request-id": "7d97d128-132f-4204-9a9b-d4bd8b913744",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "327"
+        "x-envoy-upstream-service-time": "668"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -119,8 +119,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-06-15",
-                            "value": "2022-06-15"
+                            "timex": "2022-06-29",
+                            "value": "2022-06-29"
                           }
                         ],
                         "extraInformation": [
@@ -153,6 +153,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "892142757"
+    "RandomSeed": "1398993686"
   }
 }

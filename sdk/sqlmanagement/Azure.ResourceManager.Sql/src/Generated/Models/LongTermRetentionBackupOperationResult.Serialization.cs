@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SystemData> systemData = default;
             Optional<Guid> requestId = default;
             Optional<string> operationType = default;
-            Optional<string> fromBackupResourceId = default;
-            Optional<string> toBackupResourceId = default;
+            Optional<ResourceIdentifier> fromBackupResourceId = default;
+            Optional<ResourceIdentifier> toBackupResourceId = default;
             Optional<BackupStorageRedundancy> targetBackupStorageRedundancy = default;
             Optional<string> status = default;
             Optional<string> message = default;
@@ -89,12 +89,22 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("fromBackupResourceId"))
                         {
-                            fromBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            fromBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("toBackupResourceId"))
                         {
-                            toBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            toBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetBackupStorageRedundancy"))

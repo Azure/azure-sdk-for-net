@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Authorization
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleAssignmentScheduleRequestId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleAssignmentScheduleRequestId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Authorization
         public string LinkedRoleEligibilityScheduleId { get { throw null; } }
         public string LinkedRoleEligibilityScheduleInstanceId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.MemberType? MemberType { get { throw null; } }
-        public string OriginRoleAssignmentId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier OriginRoleAssignmentId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PrincipalType? PrincipalType { get { throw null; } }
-        public string RoleAssignmentScheduleId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleAssignmentScheduleId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal RoleAssignmentPropertiesWithScope() { }
         public string PrincipalId { get { throw null; } }
-        public string RoleDefinitionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
     }
     public partial class RoleAssignmentScheduleInfo

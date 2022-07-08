@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static ImageData DeserializeImageData(JsonElement element)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
+            Optional<ExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new ImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
         }
     }
 }

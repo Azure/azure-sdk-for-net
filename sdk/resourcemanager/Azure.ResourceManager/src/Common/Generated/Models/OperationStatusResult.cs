@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         [InitializationConstructor]
-        internal OperationStatusResult(string status)
+        public OperationStatusResult(string status)
         {
             if (status == null)
             {

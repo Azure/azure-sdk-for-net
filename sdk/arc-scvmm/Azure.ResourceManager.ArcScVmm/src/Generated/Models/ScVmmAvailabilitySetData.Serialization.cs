@@ -8,8 +8,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     continue;
                 }
             }
-            return new ScVmmAvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, availabilitySetName.Value, vmmServerId.Value, provisioningState.Value);
+            return new ScVmmAvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilitySetName.Value, vmmServerId.Value, provisioningState.Value);
         }
     }
 }

@@ -63,7 +63,8 @@ function Login([string]$subscription, [string]$clusterGroup, [switch]$pushImages
 function DeployStressTests(
     [string]$searchDirectory = '.',
     [hashtable]$filters = @{},
-    [string]$environment = 'test',
+    # Default to playground environment
+    [string]$environment = 'pg',
     [string]$repository = '',
     [switch]$pushImages,
     [string]$clusterGroup = '',
@@ -80,11 +81,11 @@ function DeployStressTests(
     })]
     [System.IO.FileInfo]$LocalAddonsPath
 ) {
-    if ($environment -eq 'test') {
+    if ($environment -eq 'pg') {
         if ($clusterGroup -or $subscription) {
-            Write-Warning "Overriding cluster group and subscription with defaults for 'test' environment."
+            Write-Warning "Overriding cluster group and subscription with defaults for 'pg' environment."
         }
-        $clusterGroup = 'rg-stress-cluster-test'
+        $clusterGroup = 'rg-stress-cluster-pg'
         $subscription = 'Azure SDK Developer Playground'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
@@ -96,7 +97,7 @@ function DeployStressTests(
 
     if ($login) {
         if (!$clusterGroup -or !$subscription) {
-            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not test or prod."
+            throw "clusterGroup and subscription parameters must be specified when logging into an environment that is not pg or prod."
         }
         Login -subscription $subscription -clusterGroup $clusterGroup -pushImages:$pushImages
     }

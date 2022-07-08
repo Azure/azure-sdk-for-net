@@ -9,14 +9,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationAnalysisClientSamples(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationAnalysisClientSamples(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
 
         protected ConversationAuthoringClient ProjectsClient { get; private set; }
 
-        public async override Task StartTestRecordingAsync()
+        public override async Task StartTestRecordingAsync()
         {
             await base.StartTestRecordingAsync();
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new ConversationAnalysisClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)));
         }
     }
 }
