@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         public DdosCustomPolicyData()
         {
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
-            ProtocolCustomSettings = new ChangeTrackingList<ProtocolCustomSettingsFormat>();
+            ProtocolCustomSettings = new ChangeTrackingList<ProtocolCustomSettings>();
         }
 
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </param>
         /// <param name="protocolCustomSettings"> The protocol-specific DDoS policy customization parameters. </param>
-        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, resourceType, location, tags)
+        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettings> protocolCustomSettings) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </summary>
         public IReadOnlyList<WritableSubResource> PublicIPAddresses { get; }
         /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
-        public IList<ProtocolCustomSettingsFormat> ProtocolCustomSettings { get; }
+        public IList<ProtocolCustomSettings> ProtocolCustomSettings { get; }
     }
 }

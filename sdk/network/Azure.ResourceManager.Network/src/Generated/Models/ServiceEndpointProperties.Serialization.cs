@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceEndpointPropertiesFormat : IUtf8JsonSerializable
+    public partial class ServiceEndpointProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceEndpointPropertiesFormat DeserializeServiceEndpointPropertiesFormat(JsonElement element)
+        internal static ServiceEndpointProperties DeserializeServiceEndpointProperties(JsonElement element)
         {
             Optional<string> service = default;
             Optional<IList<AzureLocation>> locations = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceEndpointPropertiesFormat(service.Value, Optional.ToList(locations), Optional.ToNullable(provisioningState));
+            return new ServiceEndpointProperties(service.Value, Optional.ToList(locations), Optional.ToNullable(provisioningState));
         }
     }
 }
