@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VmPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="patch"> Parameters supplied to the Update Virtual Machine operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VmPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 

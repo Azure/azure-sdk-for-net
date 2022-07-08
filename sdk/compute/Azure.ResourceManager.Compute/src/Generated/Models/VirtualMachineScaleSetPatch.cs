@@ -12,10 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set. </summary>
-    public partial class VmssPatch : ComputeUpdateResourceData
+    public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of VmssPatch. </summary>
-        public VmssPatch()
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetPatch. </summary>
+        public VirtualMachineScaleSetPatch()
         {
         }
 

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class ComputeUpdateResourceData
+    public partial class ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of ComputeUpdateResourceData. </summary>
-        public ComputeUpdateResourceData()
+        /// <summary> Initializes a new instance of ComputeResourcePatch. </summary>
+        public ComputeResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

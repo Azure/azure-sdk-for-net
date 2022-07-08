@@ -127,7 +127,7 @@ rename-mapping:
   RestorePointExpandOptions: RestorePointExpand
   RestorePointCollectionExpandOptions: RestorePointCollectionExpand
   ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
-  UpdateResource: ComputeUpdateResourceData
+  UpdateResource: ComputeResourcePatch
   SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
   SshPublicKey: SshPublicKeyInfo
   SshPublicKeyResource: SshPublicKey

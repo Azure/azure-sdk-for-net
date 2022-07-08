@@ -14,10 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Update. </summary>
-    public partial class VmPatch : ComputeUpdateResourceData
+    public partial class VirtualMachinePatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of VmPatch. </summary>
-        public VmPatch()
+        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        public VirtualMachinePatch()
         {
             Zones = new ChangeTrackingList<string>();
         }

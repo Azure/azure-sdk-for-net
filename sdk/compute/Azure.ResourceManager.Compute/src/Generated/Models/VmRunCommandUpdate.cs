@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine run command. </summary>
-    public partial class VmRunCommandUpdate : ComputeUpdateResourceData
+    public partial class VmRunCommandUpdate : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of VmRunCommandUpdate. </summary>
         public VmRunCommandUpdate()

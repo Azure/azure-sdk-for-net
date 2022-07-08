@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VmssPatch patch)
+        internal HttpMessage CreateUpdateRequest(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VmssPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmssName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string vmssName, string subscriptionId, string resourceGroupName, VmssPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string vmssName, string subscriptionId, string resourceGroupName, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
