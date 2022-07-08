@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> operatingSystem = default;
             Optional<string> computeRole = default;
             Optional<string> handlerSchema = default;
-            Optional<bool> vmScaleSetEnabled = default;
+            Optional<bool> virtualMachineScaleSetEnabled = default;
             Optional<bool> supportsMultipleExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vmScaleSetEnabled = property0.Value.GetBoolean();
+                            virtualMachineScaleSetEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("supportsMultipleExtensions"))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(vmScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions));
+            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(virtualMachineScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions));
         }
     }
 }

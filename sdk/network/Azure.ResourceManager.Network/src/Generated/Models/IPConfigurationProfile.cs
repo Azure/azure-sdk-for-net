@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The reference to the subnet resource to create a container network interface ip configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration profile resource. </param>
-        internal IPConfigurationProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, SubnetData subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal IPConfigurationProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, SubnetData subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Subnet = subnet;
             ProvisioningState = provisioningState;
         }

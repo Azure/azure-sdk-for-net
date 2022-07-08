@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SamplingSettings> sampling = default;
             Optional<PipelineDiagnosticSettings> frontend = default;
             Optional<PipelineDiagnosticSettings> backend = default;
-            Optional<bool> logClientIp = default;
+            Optional<bool> logClientIP = default;
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
             Optional<Verbosity> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logClientIp = property0.Value.GetBoolean();
+                            logClientIP = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("httpCorrelationProtocol"))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIp), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
+            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
         }
     }
 }

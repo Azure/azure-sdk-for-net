@@ -35,7 +35,7 @@ rename-mapping:
   TrafficAnalyticsConfigurationProperties.trafficAnalyticsInterval: TrafficAnalyticsIntervalInMinutes
   TroubleshootingParameters.properties.storagePath: storageUri
   ProtocolConfiguration.HTTPConfiguration: HttpProtocolConfiguration
-  FlowLogFormatParameters: FlowLogFormat
+  FlowLogFormatParameters: FlowLogProperties
   TrafficAnalyticsProperties.networkWatcherFlowAnalyticsConfiguration: TrafficAnalyticsConfiguration
   UsageName: NetworkUsageName
   UsagesListResult: NetworkUsagesListResult
@@ -48,6 +48,7 @@ rename-mapping:
   FirewallPolicyRuleCollection: FirewallPolicyRuleCollectionInfo
   FirewallPolicyNatRuleCollection: FirewallPolicyNatRuleCollectionInfo
   FirewallPolicyFilterRuleCollection: FirewallPolicyFilterRuleCollectionInfo
+  ApplicationGateway.zones: AvailabilityZones
   ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
   ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
   ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
@@ -77,7 +78,9 @@ rename-mapping:
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
   DscpConfigurationPropertiesFormat.protocol: NetworkProtocolType
-
+  CustomDnsConfigPropertiesFormat: CustomDnsConfigProperties
+  ProtocolCustomSettingsFormat: ProtocolCustomSettings
+  ServiceEndpointPropertiesFormat: ServiceEndpointProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -98,6 +101,10 @@ format-by-name-rules:
   'resourceId': 'arm-id'
   'serviceResources': 'arm-id'
   'linkedResourceType': 'resource-type'
+  'data': 'any'
+  'body': 'any'
+  'validatedCertData': 'any'
+  'publicCertData': 'any'
   '*Guid': 'uuid'
   '*Time': 'datetime'
   '*Uri': 'Uri'
@@ -108,7 +115,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -119,22 +126,22 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
   BGP: Bgp
   TCP: Tcp
   UDP: Udp
   ANY: Any
   LOA: Loa
-  P2S: P2s
+  P2S: P2S|p2s
   IKEv1: IkeV1
   IKEv2: IkeV2
   IkeV2: IkeV2
-  Stag: STag
+  Stag: STag|stag
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -344,7 +351,11 @@ directive:
           'x-ms-format': 'arm-id'
       };
     reason: id should be read-only.
-
+  - from: virtualNetwork.json
+    where: $.definitions
+    transform: >
+      $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
+      $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
 ```
 
 ### Tag: package-track2-preview

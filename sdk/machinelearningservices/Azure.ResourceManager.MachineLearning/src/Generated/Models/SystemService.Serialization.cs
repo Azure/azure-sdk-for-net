@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static SystemService DeserializeSystemService(JsonElement element)
         {
             Optional<string> systemServiceType = default;
-            Optional<string> publicIpAddress = default;
+            Optional<string> publicIPAddress = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("publicIpAddress"))
                 {
-                    publicIpAddress = property.Value.GetString();
+                    publicIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new SystemService(systemServiceType.Value, publicIpAddress.Value, version.Value);
+            return new SystemService(systemServiceType.Value, publicIPAddress.Value, version.Value);
         }
     }
 }
