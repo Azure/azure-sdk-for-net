@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetOSDisk DeserializeVirtualMachineScaleSetOSDisk(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<CachingType> caching = default;
+            Optional<DiskCachingType> caching = default;
             Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             Optional<DiffDiskSettings> diffDiskSettings = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingType();
+                    caching = property.Value.GetString().ToDiskCachingType();
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"))

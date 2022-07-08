@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual machine scale set network profile. </summary>
         public VirtualMachineScaleSetUpdateNetworkProfile NetworkProfile { get; set; }
         /// <summary> The virtual machine scale set Security profile. </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public VmSecurityProfile SecurityProfile { get; set; }
         /// <summary> The virtual machine scale set diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. &lt;br&gt;**NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. &lt;br&gt;&lt;br&gt; You can easily view the output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>

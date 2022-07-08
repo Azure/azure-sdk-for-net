@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RestorePointSourceVmOSDisk DeserializeRestorePointSourceVmOSDisk(JsonElement element)
         {
-            Optional<OperatingSystemType> osType = default;
+            Optional<VmOSDiskOperatingSystemType> osType = default;
             Optional<DiskEncryptionSettings> encryptionSettings = default;
             Optional<string> name = default;
-            Optional<CachingType> caching = default;
+            Optional<DiskCachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<ManagedDiskParameters> managedDisk = default;
             Optional<WritableSubResource> diskRestorePoint = default;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OperatingSystemType(property.Value.GetString());
+                    osType = new VmOSDiskOperatingSystemType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryptionSettings"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingType();
+                    caching = property.Value.GetString().ToDiskCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))

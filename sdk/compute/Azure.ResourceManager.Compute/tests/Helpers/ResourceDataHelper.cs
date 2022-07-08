@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.DiskSizeGB, disk2.DiskSizeGB);
             Assert.AreEqual(disk1.ManagedBy, disk2.ManagedBy);
             Assert.AreEqual(disk1.Encryption?.DiskEncryptionSetId, disk2.Encryption?.DiskEncryptionSetId);
-            Assert.AreEqual(disk1.Encryption?.EncryptionType, disk2.Encryption?.EncryptionType);
+            Assert.AreEqual(disk1.Encryption?.DataDiskEncryptionType, disk2.Encryption?.DataDiskEncryptionType);
             Assert.AreEqual(disk1.CreationData?.CreateOption, disk2.CreationData?.CreateOption);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Id, disk2.CreationData?.ImageReference?.Id);
             Assert.AreEqual(disk1.CreationData?.ImageReference?.Lun, disk2.CreationData?.ImageReference?.Lun);
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         {
             return new VirtualMachineData(location)
             {
-                HardwareProfile = new HardwareProfile()
+                HardwareProfile = new VmHardwareProfile()
                 {
                     VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OSProfile = new OSProfile()
+                OSProfile = new VmOSProfile()
                 {
                     AdminUsername = adminUsername,
                     ComputerName = computerName,
-                    LinuxConfiguration = new LinuxConfiguration()
+                    LinuxConfiguration = new LinuxOSConfiguration()
                     {
                         DisablePasswordAuthentication = true,
                         Ssh = new SshConfiguration()
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         }
                     }
                 },
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new VmNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
@@ -232,18 +232,18 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         }
                     }
                 },
-                StorageProfile = new StorageProfile()
+                StorageProfile = new DiskStorageProfile()
                 {
                     OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
                     {
                         OSType = SupportedOperatingSystemType.Linux,
-                        Caching = CachingType.ReadWrite,
+                        Caching = DiskCachingType.ReadWrite,
                         ManagedDisk = new ManagedDiskParameters()
                         {
                             StorageAccountType = StorageAccountType.StandardLRS
                         }
                     },
-                    ImageReference = new ImageReference()
+                    ImageReference = new ImageReferenceInfo()
                     {
                         Publisher = "Canonical",
                         Offer = "UbuntuServer",
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 },
                 UpgradePolicy = new UpgradePolicy()
                 {
-                    Mode = UpgradeMode.Manual,
+                    Mode = VmssUpgradeMode.Manual,
                 },
                 VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
-                        LinuxConfiguration = new LinuxConfiguration()
+                        LinuxConfiguration = new LinuxOSConfiguration()
                         {
                             DisablePasswordAuthentication = true,
                             Ssh = new SshConfiguration()
@@ -302,13 +302,13 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                     {
                         OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                         {
-                            Caching = CachingType.ReadWrite,
+                            Caching = DiskCachingType.ReadWrite,
                             ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
                             {
                                 StorageAccountType = StorageAccountType.StandardLRS
                             }
                         },
-                        ImageReference = new ImageReference()
+                        ImageReference = new ImageReferenceInfo()
                         {
                             Publisher = "Canonical",
                             Offer = "UbuntuServer",

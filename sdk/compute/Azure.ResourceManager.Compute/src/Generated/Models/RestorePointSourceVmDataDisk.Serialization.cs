@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<int> lun = default;
             Optional<string> name = default;
-            Optional<CachingType> caching = default;
+            Optional<DiskCachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<ManagedDiskParameters> managedDisk = default;
             Optional<WritableSubResource> diskRestorePoint = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingType();
+                    caching = property.Value.GetString().ToDiskCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))

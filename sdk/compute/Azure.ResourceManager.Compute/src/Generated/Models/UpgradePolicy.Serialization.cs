@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UpgradePolicy DeserializeUpgradePolicy(JsonElement element)
         {
-            Optional<UpgradeMode> mode = default;
+            Optional<VmssUpgradeMode> mode = default;
             Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
             Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToUpgradeMode();
+                    mode = property.Value.GetString().ToVmssUpgradeMode();
                     continue;
                 }
                 if (property.NameEquals("rollingUpgradePolicy"))

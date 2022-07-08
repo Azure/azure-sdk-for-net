@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="startedBy"> Invoker of the Upgrade Operation. </param>
         /// <param name="targetImageReference"> Image Reference details. </param>
         /// <param name="rollbackInfo"> Information about OS rollback if performed. </param>
-        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, UpgradeOperationInvoker? startedBy, ImageReference targetImageReference, RollbackStatusInfo rollbackInfo)
+        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, UpgradeOperationInvoker? startedBy, ImageReferenceInfo targetImageReference, RollbackStatusInfo rollbackInfo)
         {
             RunningStatus = runningStatus;
             Progress = progress;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Invoker of the Upgrade Operation. </summary>
         public UpgradeOperationInvoker? StartedBy { get; }
         /// <summary> Image Reference details. </summary>
-        public ImageReference TargetImageReference { get; }
+        public ImageReferenceInfo TargetImageReference { get; }
         /// <summary> Information about OS rollback if performed. </summary>
         public RollbackStatusInfo RollbackInfo { get; }
     }

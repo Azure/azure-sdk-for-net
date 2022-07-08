@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests
             await vm.DeallocateAsync(WaitUntil.Completed);
             var update = new VirtualMachinePatch()
             {
-                HardwareProfile = new HardwareProfile
+                HardwareProfile = new VmHardwareProfile
                 {
                     VmSize = VirtualMachineSizeType.StandardF1
                 }

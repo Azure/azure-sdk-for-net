@@ -312,17 +312,17 @@ NetworkInterfaceResource nic = nicOperation.Value;
 var vmData = new VirtualMachineData(location)
 {
     AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
-    NetworkProfile = new Compute.Models.NetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
-    OSProfile = new OSProfile
+    NetworkProfile = new VmNetworkProfile { NetworkInterfaces = { new NetworkInterfaceReference() { Id = nic.Id } } },
+    OSProfile = new VmOSProfile
     {
         ComputerName = "testVM",
         AdminUsername = "username",
         AdminPassword = "(YourPassword)",
-        LinuxConfiguration = new LinuxConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
+        LinuxConfiguration = new LinuxOSConfiguration { DisablePasswordAuthentication = false, ProvisionVmAgent = true }
     },
-    StorageProfile = new StorageProfile()
+    StorageProfile = new DiskStorageProfile()
     {
-        ImageReference = new ImageReference()
+        ImageReference = new ImageReferenceInfo()
         {
             Offer = "UbuntuServer",
             Publisher = "Canonical",
@@ -330,7 +330,7 @@ var vmData = new VirtualMachineData(location)
             Version = "latest"
         }
     },
-    HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
+    HardwareProfile = new VmHardwareProfile() { VmSize = VirtualMachineSizeType.StandardB1Ms },
 };
 ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
 VirtualMachineResource vm = vmOperation.Value;

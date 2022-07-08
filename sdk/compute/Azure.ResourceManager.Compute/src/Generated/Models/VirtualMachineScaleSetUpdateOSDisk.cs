@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The caching type. </summary>
-        public CachingType? Caching { get; set; }
+        public DiskCachingType? Caching { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
         /// <summary> Specifies the size of the operating system disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </summary>

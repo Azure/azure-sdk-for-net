@@ -51,15 +51,15 @@ VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
 string vmName = "myVM";
 var input = new VirtualMachineData(resourceGroup.Data.Location)
 {
-    HardwareProfile = new HardwareProfile()
+    HardwareProfile = new VmHardwareProfile()
     {
         VmSize = VirtualMachineSizeType.StandardF2
     },
-    OSProfile = new OSProfile()
+    OSProfile = new VmOSProfile()
     {
         AdminUsername = "adminUser",
         ComputerName = "myVM",
-        LinuxConfiguration = new LinuxConfiguration()
+        LinuxConfiguration = new LinuxOSConfiguration()
         {
             DisablePasswordAuthentication = true,
             SshPublicKeys = {
@@ -71,7 +71,7 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
             }
         }
     },
-    NetworkProfile = new NetworkProfile()
+    NetworkProfile = new VmNetworkProfile()
     {
         NetworkInterfaces =
         {
@@ -82,18 +82,18 @@ var input = new VirtualMachineData(resourceGroup.Data.Location)
             }
         }
     },
-    StorageProfile = new StorageProfile()
+    StorageProfile = new DiskStorageProfile()
     {
         OSDisk = new OSDisk(DiskCreateOptionType.FromImage)
         {
             OSType = SupportedOperatingSystemType.Linux,
-            Caching = CachingType.ReadWrite,
+            Caching = DiskCachingType.ReadWrite,
             ManagedDisk = new ManagedDiskParameters()
             {
                 StorageAccountType = StorageAccountType.StandardLRS
             }
         },
-        ImageReference = new ImageReference()
+        ImageReference = new ImageReferenceInfo()
         {
             Publisher = "Canonical",
             Offer = "UbuntuServer",

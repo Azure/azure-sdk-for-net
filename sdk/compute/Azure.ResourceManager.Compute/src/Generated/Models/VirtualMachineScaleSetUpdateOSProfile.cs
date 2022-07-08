@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A base-64 encoded string of custom data. </summary>
         public string CustomData { get; set; }
         /// <summary> The Windows Configuration of the OS profile. </summary>
-        public WindowsConfiguration WindowsConfiguration { get; set; }
+        public WindowsOSConfiguration WindowsConfiguration { get; set; }
         /// <summary> The Linux Configuration of the OS profile. </summary>
-        public LinuxConfiguration LinuxConfiguration { get; set; }
+        public LinuxOSConfiguration LinuxConfiguration { get; set; }
         /// <summary> The List of certificates for addition to the VM. </summary>
         public IList<VaultSecretGroup> Secrets { get; }
     }
