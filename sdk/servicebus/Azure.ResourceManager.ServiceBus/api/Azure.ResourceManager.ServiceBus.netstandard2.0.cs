@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? RequiresDuplicateDetection { get { throw null; } set { } }
         public bool? RequiresSession { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ServiceBusQueueResource : Azure.ResourceManager.ArmResource
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ServiceBus
         public int? MaxDeliveryCount { get { throw null; } set { } }
         public long? MessageCount { get { throw null; } }
         public bool? RequiresSession { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class ServiceBusSubscriptionResource : Azure.ResourceManager.ArmResource
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ServiceBus
         public int? MaxSizeInMegabytes { get { throw null; } set { } }
         public bool? RequiresDuplicateDetection { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.EntityStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public int? SubscriptionCount { get { throw null; } }
         public bool? SupportOrdering { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
@@ -602,18 +602,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SendTo { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
-    }
-    public enum EntityStatus
-    {
-        Unknown = 0,
-        Active = 1,
-        Disabled = 2,
-        Restoring = 3,
-        SendDisabled = 4,
-        ReceiveDisabled = 5,
-        Creating = 6,
-        Deleting = 7,
-        Renaming = 8,
     }
     public partial class FailoverProperties
     {
@@ -731,6 +719,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string KeyVersion { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
     }
+    public enum ServiceBusMessagingEntityStatus
+    {
+        Unknown = 0,
+        Active = 1,
+        Disabled = 2,
+        Restoring = 3,
+        SendDisabled = 4,
+        ReceiveDisabled = 5,
+        Creating = 6,
+        Deleting = 7,
+        Renaming = 8,
+    }
     public partial class ServiceBusNameAvailabilityContent
     {
         public ServiceBusNameAvailabilityContent(string name) { }
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         internal ServiceBusNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.UnavailableReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason? Reason { get { throw null; } }
     }
     public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -758,6 +758,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+    }
+    public enum ServiceBusNameUnavailableReason
+    {
+        None = 0,
+        InvalidName = 1,
+        SubscriptionIsDisabled = 2,
+        NameInUse = 3,
+        NameInLockdown = 4,
+        TooManyNamespaceInCurrentSubscription = 5,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusNetworkRuleIPAction : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleIPAction>
@@ -910,14 +919,5 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
-    }
-    public enum UnavailableReason
-    {
-        None = 0,
-        InvalidName = 1,
-        SubscriptionIsDisabled = 2,
-        NameInUse = 3,
-        NameInLockdown = 4,
-        TooManyNamespaceInCurrentSubscription = 5,
     }
 }
