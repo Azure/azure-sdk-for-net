@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="appPackageUri"> The URL to the application package. </param>
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        internal ApplicationTypeVersionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> Azure resource etag. </param>
+        internal ApplicationTypeVersionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;
             DefaultParameterList = defaultParameterList;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
