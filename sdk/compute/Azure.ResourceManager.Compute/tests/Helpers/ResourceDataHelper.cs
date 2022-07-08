@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             {
                 HardwareProfile = new HardwareProfile()
                 {
-                    VmSize = VirtualMachineSizeType.StandardF2
+                    VmSize = VmSizeType.StandardF2
                 },
                 OSProfile = new OSProfile()
                 {
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                         }
                     }
                 },
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new VmNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
-                        new NetworkInterfaceReference()
+                        new VmNetworkInterfaceReference()
                         {
                             Id = nicID,
                             Primary = true,
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 {
                     Mode = UpgradeMode.Manual,
                 },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                VmProfile = new VmssVmProfile()
                 {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    OSProfile = new VmssOSProfile()
                     {
                         ComputerNamePrefix = computerNamePrefix,
                         AdminUsername = adminUsername,
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             }
                         }
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    StorageProfile = new VmssStorageProfile()
                     {
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new VmssOSDisk(DiskCreateOptionType.FromImage)
                         {
                             Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+                            ManagedDisk = new VmssManagedDiskParameters()
                             {
                                 StorageAccountType = StorageAccountType.StandardLRS
                             }
@@ -316,16 +316,16 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                             Version = "latest"
                         }
                     },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                    NetworkProfile = new VmssNetworkProfile()
                     {
                         NetworkInterfaceConfigurations =
                         {
-                            new VirtualMachineScaleSetNetworkConfiguration("example")
+                            new VmssNetworkConfiguration("example")
                             {
                                 Primary = true,
                                 IPConfigurations =
                                 {
-                                    new VirtualMachineScaleSetIPConfiguration("internal")
+                                    new VmssIPConfiguration("internal")
                                     {
                                         Primary = true,
                                         Subnet = new WritableSubResource()

@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute
             Optional<StorageProfile> storageProfile = default;
             Optional<AdditionalCapabilities> additionalCapabilities = default;
             Optional<OSProfile> osProfile = default;
-            Optional<NetworkProfile> networkProfile = default;
+            Optional<VmNetworkProfile> networkProfile = default;
             Optional<SecurityProfile> securityProfile = default;
             Optional<DiagnosticsProfile> diagnosticsProfile = default;
             Optional<WritableSubResource> availabilitySet = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = VmNetworkProfile.DeserializeVmNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"))

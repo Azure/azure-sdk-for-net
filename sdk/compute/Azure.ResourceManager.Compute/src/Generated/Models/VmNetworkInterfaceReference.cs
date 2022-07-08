@@ -10,18 +10,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class NetworkInterfaceReference : ComputeWriteableSubResourceData
+    public partial class VmNetworkInterfaceReference : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceReference. </summary>
-        public NetworkInterfaceReference()
+        /// <summary> Initializes a new instance of VmNetworkInterfaceReference. </summary>
+        public VmNetworkInterfaceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceReference. </summary>
+        /// <summary> Initializes a new instance of VmNetworkInterfaceReference. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal NetworkInterfaceReference(ResourceIdentifier id, bool? primary, ComputeDeleteOption? deleteOption) : base(id)
+        internal VmNetworkInterfaceReference(ResourceIdentifier id, bool? primary, ComputeDeleteOption? deleteOption) : base(id)
         {
             Primary = primary;
             DeleteOption = deleteOption;

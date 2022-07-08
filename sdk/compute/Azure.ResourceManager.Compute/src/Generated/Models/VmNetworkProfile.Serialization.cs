@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class NetworkProfile : IUtf8JsonSerializable
+    public partial class VmNetworkProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
+        internal static VmNetworkProfile DeserializeVmNetworkProfile(JsonElement element)
         {
-            Optional<IList<NetworkInterfaceReference>> networkInterfaces = default;
+            Optional<IList<VmNetworkInterfaceReference>> networkInterfaces = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             Optional<IList<VmNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
             foreach (var property in element.EnumerateObject())
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkInterfaceReference> array = new List<NetworkInterfaceReference>();
+                    List<VmNetworkInterfaceReference> array = new List<VmNetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item));
+                        array.Add(VmNetworkInterfaceReference.DeserializeVmNetworkInterfaceReference(item));
                     }
                     networkInterfaces = array;
                     continue;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new NetworkProfile(Optional.ToList(networkInterfaces), Optional.ToNullable(networkApiVersion), Optional.ToList(networkInterfaceConfigurations));
+            return new VmNetworkProfile(Optional.ToList(networkInterfaces), Optional.ToNullable(networkApiVersion), Optional.ToList(networkInterfaceConfigurations));
         }
     }
 }

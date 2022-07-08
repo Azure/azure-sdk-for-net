@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class NetworkInterfaceReference : IUtf8JsonSerializable
+    public partial class VmNetworkInterfaceReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceReference DeserializeNetworkInterfaceReference(JsonElement element)
+        internal static VmNetworkInterfaceReference DeserializeVmNetworkInterfaceReference(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new NetworkInterfaceReference(id.Value, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
+            return new VmNetworkInterfaceReference(id.Value, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
         }
     }
 }

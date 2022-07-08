@@ -158,6 +158,8 @@ rename-mapping:
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  NetworkProfile: VmNetworkProfile
+  NetworkInterfaceReference: VmNetworkInterfaceReference
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
