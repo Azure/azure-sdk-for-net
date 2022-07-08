@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> port = default;
             Optional<HttpConfigurationMethod> method = default;
             Optional<string> path = default;
-            Optional<IList<HttpHeader>> requestHeaders = default;
+            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
             Optional<IList<string>> validStatusCodeRanges = default;
             Optional<bool> preferHTTPS = default;
             foreach (var property in element.EnumerateObject())
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
                     }
                     requestHeaders = array;
                     continue;

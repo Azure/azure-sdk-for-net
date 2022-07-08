@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Managed Certificate used for https. </summary>
-    public partial class ManagedCertificateProperties : SecretProperties
+    public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
         public ManagedCertificateProperties()
