@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The ResourceSkuCapabilities. </summary>
-    public partial class ResourceSkuCapabilities
+    /// <summary> The AppPlatformResourceSkuCapabilities. </summary>
+    public partial class AppPlatformResourceSkuCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
-        internal ResourceSkuCapabilities()
+        /// <summary> Initializes a new instance of AppPlatformResourceSkuCapabilities. </summary>
+        internal AppPlatformResourceSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of AppPlatformResourceSkuCapabilities. </summary>
         /// <param name="name"> Gets an invariant to describe the feature. </param>
         /// <param name="value"> Gets an invariant if the feature is measured by quantity. </param>
-        internal ResourceSkuCapabilities(string name, string value)
+        internal AppPlatformResourceSkuCapabilities(string name, string value)
         {
             Name = name;
             Value = value;

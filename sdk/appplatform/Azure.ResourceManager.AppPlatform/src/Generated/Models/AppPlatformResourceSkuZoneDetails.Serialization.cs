@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ResourceSkuZoneDetails
+    public partial class AppPlatformResourceSkuZoneDetails
     {
-        internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element)
+        internal static AppPlatformResourceSkuZoneDetails DeserializeAppPlatformResourceSkuZoneDetails(JsonElement element)
         {
             Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<AppPlatformResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
+                    List<AppPlatformResourceSkuCapabilities> array = new List<AppPlatformResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(AppPlatformResourceSkuCapabilities.DeserializeAppPlatformResourceSkuCapabilities(item));
                     }
                     capabilities = array;
                     continue;
                 }
             }
-            return new ResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new AppPlatformResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }
