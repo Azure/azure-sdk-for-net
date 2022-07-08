@@ -171,6 +171,7 @@ rename-mapping:
   OSDisk: VirtualMachineOSDisk
   DataDisk: VirtualMachineDataDisk
   HardwareProfile: VirtualMachineHardwareProfile
+  PublicNetworkAccess: DiskPublicNetworkAccess
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
